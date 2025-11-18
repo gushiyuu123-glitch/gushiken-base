@@ -157,7 +157,7 @@
     max-width: 65%;
     overflow: hidden;
     text-overflow: ellipsis;
-     margin-left: 0 !important;   /* ← 左端へ寄せる */
+     margin-left: -30px !important;   /* ← 左端へ寄せる */
     transform: translateX(0) !important; /* ← 念のため完全固定 */
   }
 

@@ -4,13 +4,15 @@ import hero from "../assets/hero.jpg";
 export default function Hero() {
   const textRef = useRef(null);
 
+  // ✨ 静かなフェードイン
   useEffect(() => {
     const el = textRef.current;
     if (!el) return;
 
     el.style.opacity = 0;
-    el.style.transform = "translateY(18px)";
-    el.style.transition = "opacity 1.6s ease, transform 1.6s ease";
+    el.style.transform = "translateY(22px)";
+    el.style.transition =
+      "opacity 1.6s ease-out, transform 1.6s ease-out";
 
     requestAnimationFrame(() => {
       el.style.opacity = 1;
@@ -19,60 +21,120 @@ export default function Hero() {
   }, []);
 
   return (
-    <section className="relative w-full h-[92vh] md:h-screen overflow-hidden bg-[#0b0b0b]">
+    <section className="relative w-full h-[92vh] md:h-screen overflow-hidden">
 
+      {/* =======================
+          背景画像（微パララックス）
+      ======================== */}
       <div className="absolute inset-0 overflow-hidden">
         <img
           src={hero}
           className="
-            w-full h-full object-cover 
-            brightness-[0.92] md:brightness-[0.88]
+            w-full h-full object-cover
+            brightness-[0.95]
+            md:brightness-[0.92]
+            scale-[1.03]
+            md:scale-[1.06]
+            transition-transform duration-[18000ms]
             will-change-transform
-            hero-parallax
+            animate-[heroFloat_18s_ease-in-out_infinite]
           "
         />
       </div>
 
+      {/* =======================
+          金色 × 柔光グラデ
+      ======================== */}
+      {/* 左上から柔らかいゴールド光 */}
+      <div
+        className="absolute inset-0 pointer-events-none
+        bg-[radial-gradient(circle_at_18%_28%,rgba(230,200,150,0.18),transparent_60%)]
+      "
+      ></div>
+
+      {/* 横方向の柔黒グラデ */}
+      <div
+  className="
+    absolute inset-0 
+    bg-gradient-to-t
+    from-black/40 via-transparent to-transparent
+  "
+></div>
+
+
+      {/* 下部の自然な引き締め */}
       <div
         className="
           absolute inset-0 
-          bg-gradient-to-t from-black/55 via-black/20 to-transparent
-          md:bg-gradient-to-r md:from-black/40 md:via-black/20 md:to-transparent
+          bg-gradient-to-t
+          from-black/45 via-transparent to-transparent
+          pointer-events-none
         "
       ></div>
 
-      <div
-        ref={textRef}
-        className="
-          absolute 
-          bottom-16 left-6 right-6
-          md:left-16 md:bottom-24
-          max-w-md md:max-w-xl
-        "
-      >
+      {/* =======================
+          テキスト
+      ======================== */}
+    <div
+  ref={textRef}
+  className="
+    absolute
+    left-10 md:left-20 
+    bottom-24 md:bottom-32   /* ←これだけ上げる！ */
+    right-6
+    max-w-xl
+  "
+>
+
+
         <h1
           className="
-            text-white 
-            text-[2rem] tracking-[0.15em]
-            md:text-5xl md:tracking-[0.25em]
+            text-white
             font-light
+            leading-tight
+
+            text-[2.2rem]
+            md:text-[4rem]
+
+            tracking-[0.32em]
+            md:tracking-[0.38em]
+
+            mb-2
           "
           translate="no"
         >
-          GUSHIKEN DESIGN
+          GUSHIKEN
+          <br />
+          DESIGN
         </h1>
 
-        <p
-          className="
-            mt-3 
-            text-white/80 
-            text-base leading-loose tracking-wide
-            md:text-lg md:leading-relaxed
-          "
-        >
+        {/* 金の細線 */}
+        <div className="w-16 h-[1px] bg-white/40 mb-4"></div>
+
+       <p
+  className="
+    text-white/85    /* ← 80% → 85% に強化 */
+    text-sm md:text-lg
+    tracking-wide
+    leading-relaxed
+  "
+>
+
           美しさの再構築 — Reconstructing Beauty
         </p>
       </div>
+
+      {/* =======================
+          パララックス用キーフレーム
+      ======================== */}
+      <style>{`
+        @keyframes heroFloat {
+          0% { transform: scale(1.06) translateY(0px); }
+          50% { transform: scale(1.07) translateY(8px); }
+          100% { transform: scale(1.06) translateY(0px); }
+        }
+      `}</style>
+
     </section>
   );
 }
