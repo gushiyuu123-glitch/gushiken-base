@@ -4,7 +4,6 @@ import hero from "../assets/hero.jpg";
 export default function Hero() {
   const textRef = useRef(null);
 
-  // ✨ 静かなフェード + 浮きアニメ
   useEffect(() => {
     const el = textRef.current;
     if (!el) return;
@@ -20,9 +19,8 @@ export default function Hero() {
   }, []);
 
   return (
-    <section className="relative w-full h-[92vh] md:h-screen overflow-hidden">
+    <section className="relative w-full h-[92vh] md:h-screen overflow-hidden bg-[#0b0b0b]">
 
-      {/* 画像（パララックス風） */}
       <div className="absolute inset-0 overflow-hidden">
         <img
           src={hero}
@@ -35,7 +33,6 @@ export default function Hero() {
         />
       </div>
 
-      {/* グラデーション */}
       <div
         className="
           absolute inset-0 
@@ -44,7 +41,6 @@ export default function Hero() {
         "
       ></div>
 
-      {/* テキスト */}
       <div
         ref={textRef}
         className="

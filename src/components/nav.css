@@ -157,6 +157,8 @@
     max-width: 65%;
     overflow: hidden;
     text-overflow: ellipsis;
+     margin-left: 0 !important;   /* ← 左端へ寄せる */
+    transform: translateX(0) !important; /* ← 念のため完全固定 */
   }
 
   /* ハンバーガーの位置とサイズ最適化 */
@@ -190,5 +192,13 @@
   }
   .line-bottom-open {
     transform: translateY(-8px) rotate(-45deg);
+  }
+}
+/* =============================
+   PCではハンバーガーを非表示
+============================= */
+@media (min-width: 768px) {
+  .hamburger {
+    display: none !important;
   }
 }

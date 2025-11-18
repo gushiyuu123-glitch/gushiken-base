@@ -55,16 +55,6 @@ export default function Contact() {
             ※ 迷惑メールフォルダに入る場合がありますのでご確認ください。
           </p>
         </div>
-
-        {/* SNS */}
-        <div className="contact-sns">
-          <p className="contact-sns-label">SNS：</p>
-          <div className="contact-sns-links">
-            <a href="#" translate="no">Instagram</a>
-            <a href="#" translate="no">X（Twitter）</a>
-          </div>
-        </div>
-
         {/* フッター */}
         <p className="contact-footer">
           ※ ご相談内容は秘密厳守にて取り扱います。
