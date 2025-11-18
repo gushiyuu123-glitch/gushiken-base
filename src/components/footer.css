@@ -1,0 +1,54 @@
+.footer-section.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ナビリンク：うっすら白 → ホバーで金のライン */
+.footer-link {
+  position: relative;
+  color: rgba(255, 255, 255, 0.6);
+  transition: color 0.3s ease;
+}
+
+.footer-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -0.35rem;
+  width: 0;
+  height: 1px;
+  background: rgba(215, 195, 154, 0.75);
+  transition: width 0.35s cubic-bezier(.19,1,.22,1);
+}
+
+.footer-link:hover {
+  color: rgba(255, 255, 255, 0.95);
+}
+
+.footer-link:hover::after {
+  width: 100%;
+}
+
+/* SNSリンクもトーン合わせ */
+.footer-sns {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.9rem;
+  letter-spacing: 0.05em;
+  transition: color 0.3s ease;
+}
+
+.footer-sns:hover {
+  color: rgba(255, 255, 255, 0.98);
+}
+
+/* スマホ調整：縦積みのとき中央寄せ気味に */
+@media (max-width: 768px) {
+  .footer-section {
+    padding-top: 3.5rem;
+    padding-bottom: 3.5rem;
+  }
+
+  .footer-link {
+    font-size: 0.85rem;
+  }
+}

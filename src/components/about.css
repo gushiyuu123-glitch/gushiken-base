@@ -1,0 +1,122 @@
+/* =======================================================
+   BASE
+======================================================= */
+
+.about-section {
+  padding: 8rem 0;
+  background: linear-gradient(180deg, #0b0b0b 0%, #0a0a0a 70%, #0c0c0c 100%);
+  position: relative;
+}
+
+/* 左の 1px ゴールドライン */
+.about-gold-line {
+  position: absolute;
+  left: 0;
+  top: 2.5rem;
+  width: 1px;
+  height: 88%;
+  background: rgba(215,195,154,0.25);
+}
+
+
+/* 文章（導入） */
+.about-lead {
+  color: rgba(255,255,255,0.9);
+  font-size: 1.15rem;
+  line-height: 1.9;
+  letter-spacing: 0.03em;
+  padding-left: 1rem;
+  margin-bottom: 2.5rem;
+}
+
+/* 本文 */
+.about-body {
+  color: rgba(255,255,255,0.70);
+  font-size: 1rem;
+  line-height: 1.85;
+  letter-spacing: 0.03em;
+  padding-left: 1rem;
+  margin-bottom: 2.5rem;
+}
+
+/* 名前 */
+.about-name {
+  color: white;
+  font-size: 1.3rem;
+  font-weight: 300;
+  letter-spacing: 0.12em;
+  margin-bottom: 0.4rem;
+  padding-left: 1rem;
+}
+
+/* テキスト */
+.about-text {
+  color: rgba(255,255,255,0.55);
+  font-size: 0.9rem;
+  line-height: 1.75;
+  padding-left: 1rem;
+}
+
+/* 制作スタイルタイトル */
+.about-style-title {
+  color: white;
+  font-size: 1.15rem;
+  font-weight: 300;
+  letter-spacing: 0.12em;
+  margin-bottom: 0.25rem;
+  padding-left: 1rem;
+}
+
+/* 制作スタイル本文 */
+.about-style-text {
+  color: rgba(255,255,255,0.55);
+  font-size: 0.9rem;
+  line-height: 1.7;
+  padding-left: 1rem;
+}
+
+/* ラストの一文 → 遅れて浮上 */
+.about-last {
+  text-align: center;
+  margin-top: 4rem;
+
+  color: rgba(255,255,255,0.8);
+  font-size: 1.2rem;
+  letter-spacing: 0.05em;
+
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 1.2s ease 0.4s, transform 1.2s ease 0.4s;
+}
+
+/* section.show で発火 */
+.about-section.show .about-last {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* =======================================================
+   MOBILE
+======================================================= */
+
+@media (max-width: 768px) {
+
+  .about-section {
+    padding: 5rem 0;
+  }
+
+  .about-lead,
+  .about-body,
+  .about-text {
+    font-size: 1rem;
+    line-height: 1.75;
+  }
+
+  .about-style-title {
+    font-size: 1rem;
+  }
+
+  .about-last {
+    font-size: 1.05rem;
+  }
+}

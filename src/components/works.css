@@ -1,0 +1,245 @@
+/* ================================
+   WORKS SECTION — Sharp Edition
+================================== */
+
+.works-section {
+  width: 100%;
+  padding: 7rem 0;
+  display: flex;
+  justify-content: center;
+  background: linear-gradient(180deg, #0b0b0b 0%, #0a0a0a 40%, #0c0c0c 100%);
+}
+
+/* ---- コンテナ（タイトル＆グリッドを統合） ---- */
+.works-container {
+  width: 88%;
+  max-width: 1500px;
+  margin: 0 auto;
+}
+
+/* ---- タイトル ---- */
+.works-header {
+  margin-bottom: 3rem;
+}
+
+.works-title {
+  color: white;
+  font-size: 3rem;
+  font-weight: 300;
+  letter-spacing: 0.22em;
+  margin-bottom: 0.6rem;
+  position: relative;
+  padding-top: 2.5rem;
+}
+
+.works-title::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 52px;
+  height: 1px;
+  background: rgba(215,195,154,0.55);
+}
+
+.works-sub {
+  color: rgba(255,255,255,0.45);
+  font-size: 0.85rem;
+  letter-spacing: 0.18em;
+}
+
+/* ---- PC レイアウト ---- */
+.works-grid {
+  display: grid;
+  grid-template-columns: 1.45fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 2.2rem;
+}
+
+/* ---- カード共通 ---- */
+.work-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 0;
+
+  opacity: 0;
+  transform: translateY(45px) scale(0.96);
+  filter: blur(6px);
+  transition: all 1.2s cubic-bezier(.19,1,.22,1);
+}
+
+/* ---- フェードイン ---- */
+.work-card.show {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  filter: blur(0);
+}
+
+/* ---- PC のグリッド配置 ---- */
+.work-big {
+  grid-column: 1 / 2;
+  grid-row: 1 / 3;
+}
+
+.work-small:nth-of-type(2) {
+  grid-column: 2 / 3;
+  grid-row: 1 / 2;
+}
+
+.work-small:nth-of-type(3) {
+  grid-column: 2 / 3;
+  grid-row: 2 / 3;
+}
+
+/* ---- 画像 ---- */
+.work-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ---- テキスト ---- */
+.work-text {
+  position: absolute;
+  left: 2.4rem;
+  bottom: 2.4rem;
+  z-index: 5;
+  color: white;
+  font-family: "Poppins", sans-serif;
+}
+
+.work-text h3 {
+  font-size: 1.55rem;
+  font-weight: 300;
+  letter-spacing: 0.07em;
+  margin-bottom: 0.6rem;
+}
+
+.work-text p {
+  font-size: 0.92rem;
+  opacity: 0.87;
+  font-weight: 300;
+  font-family: "Noto Sans JP", sans-serif;
+}
+
+/* ---- 右側2枚だけの金ライン ---- */
+.work-small {
+  position: relative;
+}
+
+.work-small::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border: 1px solid rgba(215,195,154,0.35);
+  pointer-events: none;
+}
+/* ================================
+   📱 スマホ：横スクロールギャラリー
+================================ */
+@media (max-width: 768px) {
+
+  /* ① グリッド解除（PCレイアウトをリセット） */
+  .work-big,
+  .work-small {
+    grid-column: auto !important;
+    grid-row: auto !important;
+  }
+
+  /* ② works-grid を flex 化（最重要） */
+  .works-grid {
+    display: flex !important;
+    flex-direction: row !important;
+    overflow-x: auto !important;
+    scroll-snap-type: x mandatory;
+
+    gap: 1.6rem !important;
+    width: 100% !important;
+    padding: 0 1rem !important;
+
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .works-grid::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* ③ カード幅を固定（これがないと2枚目以降が消える） */
+  .work-card {
+    flex: 0 0 84%;
+    min-width: 84%;     /* ← 超重要 */
+    scroll-snap-align: center;
+    height: auto !important;
+  }
+
+  /* ④ 画像をスマホサイズ最適化 */
+  .work-card img {
+    width: 100% !important;
+    height: auto !important;
+    aspect-ratio: 1 / 1.25 !important;
+    object-fit: cover !important;
+    display: block;
+  }
+
+  /* ⑤ タイトル小型化 */
+  .works-title {
+    font-size: 1.9rem;
+    letter-spacing: 0.18em;
+    padding-top: 1.8rem;
+  }
+  .works-title::before {
+    width: 42px;
+  }
+  .works-sub {
+    font-size: 0.7rem;
+  }
+
+  /* ⑥ タップエフェクト（スマホだけ） */
+  .work-card::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0);
+    transition: background 0.3s ease;
+  }
+
+  .work-card:active::after {
+    background: rgba(0,0,0,0.32);
+  }
+
+  .work-card:active .work-text {
+    transform: translateY(-4px);
+    transition: transform 0.3s ease;
+  }
+}
+/* ===============================
+   📱 完全修正：横スクロール強制
+================================ */
+@media (max-width: 768px) {
+
+  /* ここで grid の width100% を殺す */
+  .works-grid {
+    display: flex !important;
+    flex-direction: row !important;
+    overflow-x: auto !important;
+    scroll-snap-type: x mandatory;
+    gap: 1.6rem !important;
+    padding: 0 1rem !important;
+  }
+
+  /* ★ 最重要修正：幅を 84% に強制 */
+  .work-card {
+    width: auto !important;      /* ← width:100% を無効化 */
+    flex: 0 0 84% !important;    /* ← 横並びを強制 */
+    min-width: 84% !important;   /* ← Safari 対策 */
+    height: auto !important;
+    scroll-snap-align: center;
+  }
+
+  .work-card img {
+    width: 100% !important;
+    height: auto !important;
+    aspect-ratio: 1 / 1.25 !important;
+    object-fit: cover !important;
+  }
+}

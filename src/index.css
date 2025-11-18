@@ -1,0 +1,69 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+/* Yuto世界観の変数 */
+:root {
+--black: #0D0D0D;
+--gold: #D7C39A;
+--white: #FAFAFA;
+--gray: #888888;
+}
+.philo-section.show {
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+}
+
+.philo-section {
+  padding-top: 8rem;
+  padding-bottom: 8rem;
+}
+.price-section.show {
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+}
+.about-section.show {
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+}
+.contact-section.show {
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+}
+.footer-section.show {
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+}
+.footer-link {
+  color: rgba(255,255,255,0.6);
+  transition: 0.25s;
+}
+.footer-link:hover {
+  color: white;
+}
+.hero-parallax {
+  transform: translateY(0);
+  transition: transform 0.25s ease-out;
+}
+
+@media (min-width: 768px) {
+  .hero-parallax {
+    transform: translateY(-8px);
+  }
+}
+.nav-link {
+  opacity: 0.7;
+  transition: opacity 0.3s ease;
+}
+.nav-link:hover {
+  opacity: 1;
+}
+
+.mobile-link {
+  opacity: 0.75;
+  transition: opacity 0.25s ease;
+}
+.mobile-link:hover {
+  opacity: 1;
+}

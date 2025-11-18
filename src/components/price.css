@@ -1,0 +1,158 @@
+/* =====================================================
+   PRICE SECTION BASE
+===================================================== */
+
+.price-section {
+  padding: 8rem 0;
+  background: linear-gradient(180deg, #0b0b0b 0%, #0a0a0a 70%, #0c0c0c 100%);
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 1.2s ease, transform 1.2s ease;
+}
+
+.price-section.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* 左の金ライン */
+.price-gold-line {
+  position: absolute;
+  left: 0;
+  top: 2rem;
+  width: 1px;
+  height: 88%;
+  background: rgba(215,195,154,0.25);
+}
+
+/* タイトル */
+.price-title {
+  color: white;
+  font-size: 2.6rem;
+  font-weight: 300;
+  letter-spacing: 0.22em;
+  margin-bottom: 3.5rem;
+  padding-left: 1rem;
+}
+
+/* =====================================================
+   GRID
+===================================================== */
+
+.price-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2.4rem;
+}
+
+/* =====================================================
+   CARD
+===================================================== */
+
+.price-card {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.08);
+  padding: 2rem;
+  border-radius: 0.75rem;
+  position: relative;
+  overflow: hidden;
+  transition: background 0.4s ease, border-color 0.4s ease;
+}
+
+.price-card:hover {
+  background: rgba(255,255,255,0.08);
+  border-color: rgba(215,195,154,0.45);
+}
+
+/* タイトル */
+.price-card-title {
+  color: white;
+  font-size: 1.4rem;
+  font-weight: 300;
+  letter-spacing: 0.12em;
+  margin-bottom: 0.5rem;
+}
+
+/* 説明 */
+.price-card-desc {
+  color: rgba(255,255,255,0.6);
+  font-size: 0.95rem;
+  line-height: 1.7;
+  margin-bottom: 1.2rem;
+}
+
+/* 価格 */
+.price-card-price {
+  color: white;
+  font-size: 2rem;
+  font-weight: 300;
+  letter-spacing: 0.03em;
+}
+
+/* =====================================================
+   光の縦ライン（PCのみの極薄エフェクト）
+===================================================== */
+
+.price-card-glow {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: -30%;
+  width: 30%;
+  background: linear-gradient(
+    to left,
+    rgba(215,195,154,0.18),
+    rgba(215,195,154,0)
+  );
+  opacity: 0;
+  transition: right 0.8s ease, opacity 1s ease;
+}
+
+.price-card:hover .price-card-glow {
+  right: 0;
+  opacity: 1;
+}
+
+/* =====================================================
+   注記
+===================================================== */
+
+.price-note {
+  margin-top: 3rem;
+  color: rgba(255,255,255,0.5);
+  font-size: 0.85rem;
+  letter-spacing: 0.05em;
+  line-height: 1.7;
+  padding-left: 1rem;
+}
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media (max-width: 768px) {
+
+  .price-section {
+    padding: 5rem 0;
+  }
+
+  .price-title {
+    font-size: 1.9rem;
+    letter-spacing: 0.18em;
+    margin-bottom: 2.5rem;
+  }
+
+  .price-grid {
+    grid-template-columns: 1fr;
+    gap: 1.6rem;
+  }
+
+  .price-card {
+    padding: 1.6rem;
+  }
+
+  .price-card-price {
+    font-size: 1.7rem;
+  }
+}
