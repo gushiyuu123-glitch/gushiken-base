@@ -21,7 +21,15 @@ export default function Nav() {
         ${active ? "nav-active" : "nav-hidden"}
       `}
     >
-      <div className="max-w-7xl mx-auto px-6 md:px-8 h-[64px] flex justify-between items-center">
+      <div
+  className="
+    w-full h-[58px]
+    flex items-center justify-between
+    px-4 md:px-8
+    nav-inner
+  "
+>
+
 
         {/* ─── LOGO ─── */}
         <h1

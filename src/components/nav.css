@@ -141,7 +141,7 @@
 ============================= */
 @media (max-width: 767px) {
 
-  /* nav全体の高さ・余白調整（タイトルとハンバーガーが被らないように） */
+  /* nav 高さ・余白 */
   .nav-root {
     height: 58px !important;
     padding: 0 12px !important;
@@ -149,56 +149,75 @@
     align-items: center;
   }
 
-  /* ロゴ（GUSHIKEN DESIGN）を確実に縮小 */
+  /* ロゴ（左寄せ） */
   .nav-logo {
-    font-size: 0.82rem !important;
+    font-size: 0.9rem !important;
     letter-spacing: 0.14em !important;
     white-space: nowrap;
     max-width: 100%;
     overflow: hidden;
     text-overflow: ellipsis;
-     margin-left: -20px !important;   /* ← 左端へ寄せる */
-    transform: translateX(0) !important; /* ← 念のため完全固定 */
+    margin-left: -10px !important;  /* ← 少しだけ左へ */
   }
 
-  /* ハンバーガーの位置とサイズ最適化 */
+  /* ハンバーガー本体 */
   .hamburger {
-    width: 30px !important;
-    height: 22px !important;
-    margin-left: auto !important;
+    width: 28px !important;
+    height: 20px !important;
+
     display: flex !important;
     flex-direction: column;
-    justify-content: space-between;
-    padding: 10px;
+    justify-content: center;
+
+    /* ⭐ これが最重要（線をくっつけない） */
+    gap: 5px !important;
+
+    margin-left: auto !important;
     z-index: 9999;
-    position: relative;
+    padding: 0px !important;
   }
 
-  /* 3本線（微調整） */
+  /* 3本線 */
   .line {
     width: 100% !important;
     height: 2px !important;
     background: white !important;
     border-radius: 2px;
     transition: all .4s cubic-bezier(.19,1,.22,1);
+    display: block !important; /* ← flex 圧縮対策 */
   }
 
   /* 開閉アニメ */
   .line-top-open {
-    transform: translateY(8px) rotate(45deg);
+    transform: translateY(6px) rotate(45deg);
   }
   .line-mid-open {
     opacity: 0;
   }
   .line-bottom-open {
-    transform: translateY(-8px) rotate(-45deg);
+    transform: translateY(-6px) rotate(-45deg);
   }
 }
+
 /* =============================
-   PCではハンバーガーを非表示
+   PCではハンバーガー非表示
 ============================= */
 @media (min-width: 768px) {
   .hamburger {
     display: none !important;
+  }
+}
+@media (max-width: 767px) {
+  .nav-inner {
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+  }
+
+  .nav-logo {
+    margin-left: 0 !important; /* ← 左端にピタッ */
+  }
+
+  .hamburger {
+    margin-right: 0 !important; /* ← 右端にピタッ */
   }
 }
