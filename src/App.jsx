@@ -8,6 +8,7 @@ import Footer from "./components/FOOTER";
 import Home from "./pages/Home";
 import WorksList from "./pages/WorksList";
 import PriceDetail from "./pages/PriceDetail";
+import ScrollToTop from "./components/ScrollToTop";
 
 function Layout() {
   const { pathname } = useLocation();
@@ -15,8 +16,10 @@ function Layout() {
 
   return (
     <>
-      {/* TOP → Nav / 他ページ → NavGlobal */}
-      {isHome ? <Nav /> : <NavGlobal />}
+      <ScrollToTop />   {/* ← ココが最強 */}
+
+  {/* TOP → Nav / 他ページ → NavGlobal */}
+  {isHome ? <Nav /> : <NavGlobal />}
 
       <Routes>
         <Route path="/" element={<Home />} />
