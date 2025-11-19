@@ -243,3 +243,29 @@
     object-fit: cover !important;
   }
 }
+/* ===========================
+   VIEW ALL WORKS ボタン
+=========================== */
+
+.works-viewall {
+  margin-top: 3rem;
+  text-align: center;
+}
+
+.viewall-btn {
+  display: inline-block;
+  padding: 0.65rem 2.2rem;
+  border: 1px solid rgba(217,185,138,0.65); /* 上質ゴールド */
+  color: rgba(217,185,138,0.9);
+  font-size: 0.85rem;
+  letter-spacing: 0.15em;
+  text-decoration: none;
+  backdrop-filter: blur(3px);
+  transition: all 0.35s ease;
+}
+
+.viewall-btn:hover {
+  color: #000;
+  background: rgba(217,185,138,0.85);
+  border-color: rgba(217,185,138,1);
+}

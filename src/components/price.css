@@ -126,6 +126,42 @@
   line-height: 1.7;
   padding-left: 1rem;
 }
+/* ===========================
+   PRICE CTA ボタン
+=========================== */
+
+.price-cta {
+  margin-top: 2.5rem;
+  text-align: center;
+}
+
+.price-btn {
+  display: inline-block;
+  padding: 0.65rem 2.2rem;
+  border: 1px solid rgba(217,185,138,0.65); /* ゴールド */
+  color: rgba(217,185,138,0.9);
+  font-size: 0.85rem;
+  letter-spacing: 0.15em;
+  text-decoration: none;
+  backdrop-filter: blur(3px);
+  transition: all 0.35s ease;
+}
+
+/* hover */
+.price-btn:hover {
+  color: #000;
+  background: rgba(217,185,138,0.85);
+  border-color: rgba(217,185,138,1);
+}
+
+/* スマホ最適化 */
+@media (max-width: 480px) {
+  .price-btn {
+    padding: 0.75rem 2.6rem;
+    font-size: 0.9rem;
+    letter-spacing: 0.12em;
+  }
+}
 
 /* =====================================================
    MOBILE

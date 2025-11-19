@@ -35,37 +35,42 @@ export default function Price() {
         </h2>
 
         {/* 料金カード */}
-        <div className="price-grid">
-          <PriceCard
-            title="Landing Page"
-            desc="1ページ構成のシンプルなサイト。"
-            price="¥80,000〜"
-          />
+       <PriceCard
+  title="ランディングページ（1ページ）"
+  desc="ブランド紹介やキャンペーンなど、単ページで完結するサイト。世界観を崩さず、必要な情報を魅力的にまとめます。"
+  price="¥80,000〜"
+/>
 
-          <PriceCard
-            title="Small Website"
-            desc="3〜5ページ。ブランド性を重視した構成。"
-            price="¥150,000〜"
-          />
+<PriceCard
+  title="小規模サイト（3〜5ページ）"
+  desc="サービス紹介・店舗サイト・ポートフォリオなど、しっかり構成されたWebサイトを制作します。"
+  price="¥150,000〜"
+/>
 
-          <PriceCard
-            title="Brand Site"
-            desc="写真・構成・世界観を含めて総合的に制作。"
-            price="¥250,000〜"
-          />
+<PriceCard
+  title="ブランドサイト"
+  desc="写真・文章・配色・世界観設計まで含めて、ブランド全体の“印象”をつくり込みます。"
+  price="¥250,000〜"
+/>
 
-          <PriceCard
-            title="Premium Design"
-            desc="こだわり抜いたビジュアル・演出・体験設計。"
-            price="¥350,000〜"
-          />
-        </div>
+<PriceCard
+  title="プレミアムデザイン"
+  desc="高度なアニメーション・体験設計・高級感ある演出を施した、唯一無二のデザインに仕上げます。"
+  price="¥350,000〜"
+/>
 
         {/* 注記 */}
-        <p className="price-note">
-          料金は、ページ数・素材（写真）・演出・機能によって変動します。<br />
-          明確なお見積りは、ヒアリング後にご提示いたします。
-        </p>
+    {/* 注記 */}
+<p className="price-note">
+  料金は、ページ数・素材（写真）・演出・機能によって変動します。<br />
+  明確なお見積りは、ヒアリング後にご提示いたします。
+</p>
+
+{/* ★ 料金ページへボタン */}
+<div className="price-cta">
+  <a href="/price" className="price-btn">料金ページへ</a>
+</div>
+
 
       </div>
     </section>

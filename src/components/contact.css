@@ -66,6 +66,7 @@
   padding: 2rem;
   border-radius: 0.75rem;
   margin-bottom: 3.5rem;
+  
 }
 
 .contact-box-label {
@@ -133,6 +134,43 @@
   font-size: 0.75rem;
   color: rgba(255,255,255,0.35);
   letter-spacing: 0.03em;
+}
+/* ===========================
+   CONTACT CTA ボタン
+=========================== */
+
+.contact-cta {
+  margin-top: 2rem;
+  text-align: center;
+}
+
+.contact-btn {
+  display: inline-block;
+  padding: 0.75rem 2.4rem;
+  border: 1px solid rgba(217,185,138,0.65);
+  color: rgba(217,185,138,0.9);
+  font-size: 0.85rem;
+  letter-spacing: 0.15em;
+  text-decoration: none;
+  backdrop-filter: blur(3px);
+  transition: all 0.35s ease;
+}
+
+/* Hover */
+.contact-btn:hover {
+  background: rgba(217,185,138,0.85);
+  color: #000;
+  border-color: rgba(217,185,138,1);
+}
+
+/* スマホ最適化 */
+@media (max-width: 480px) {
+  .contact-btn {
+    width: 100%;
+    padding: 0.9rem 0;
+    font-size: 0.95rem;
+    letter-spacing: 0.1em;
+  }
 }
 
 /* =====================================================

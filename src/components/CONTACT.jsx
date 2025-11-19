@@ -55,6 +55,13 @@ export default function Contact() {
             ※ 迷惑メールフォルダに入る場合がありますのでご確認ください。
           </p>
         </div>
+        {/* CTAボタン */}
+<div className="contact-cta">
+  <a href="mailto:gushikendesign@gmail.com" className="contact-btn">
+    メールで問い合わせる
+  </a>
+</div>
+
         {/* フッター */}
         <p className="contact-footer">
           ※ ご相談内容は秘密厳守にて取り扱います。

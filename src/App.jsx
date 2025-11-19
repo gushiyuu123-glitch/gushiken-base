@@ -1,24 +1,34 @@
 import React from "react";
+import { Routes, Route, useLocation } from "react-router-dom";
+
 import Nav from "./components/Nav";
-import Hero from "./components/Hero";
-import Works from "./components/Works";
-import Philosophy from "./components/Philosophy";
-import Price from "./components/Price";
-import ABOUT from "./components/ABOUT";
-import CONTACT from "./components/CONTACT";
-import FOOTER from "./components/FOOTER";
+import NavGlobal from "./components/NavGlobal";
+import Footer from "./components/FOOTER";
+
+import Home from "./pages/Home";
+import WorksList from "./pages/WorksList";
+import PriceDetail from "./pages/PriceDetail";
+
+function Layout() {
+  const { pathname } = useLocation();
+  const isHome = pathname === "/";
+
+  return (
+    <>
+      {/* TOP → Nav / 他ページ → NavGlobal */}
+      {isHome ? <Nav /> : <NavGlobal />}
+
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/works" element={<WorksList />} />
+        <Route path="/price" element={<PriceDetail />} />
+      </Routes>
+
+      <Footer />
+    </>
+  );
+}
 
 export default function App() {
-  return (
-    <div>
-      <Nav />
-      <Hero />
-      <Works />
-      <Philosophy />
-      <Price />   
-      <ABOUT />
-      <CONTACT />
-      <FOOTER />
-    </div>
-  );
+  return <Layout />;
 }

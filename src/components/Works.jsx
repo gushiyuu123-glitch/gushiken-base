@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from "react";
+import { Link } from "react-router-dom";
 import "./works.css";
 
 export default function Works() {
@@ -24,8 +25,6 @@ export default function Works() {
 
   return (
     <section id="works" className="works-section" ref={worksRef}>
-
-      {/* ★ コンテナ（header と grid を統一） */}
       <div className="works-container">
 
         {/* タイトルエリア */}
@@ -65,8 +64,13 @@ export default function Works() {
           </div>
 
         </div>
+
+        {/* ★ 作品一覧ページへ */}
+        <div className="works-viewall">
+          <Link to="/works" className="viewall-btn">VIEW ALL WORKS</Link>
+        </div>
+
       </div>
-      
     </section>
   );
 }
