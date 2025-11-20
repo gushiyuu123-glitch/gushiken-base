@@ -57,8 +57,8 @@ export default function Contact() {
         </div>
         {/* CTAボタン */}
 <div className="contact-cta">
-  <a href="mailto:gushikendesign@gmail.com" className="contact-btn">
-    メールで問い合わせる
+  <a href="tel:+1234567890" className="contact-btn">
+    電話で問い合わせる
   </a>
 </div>
 

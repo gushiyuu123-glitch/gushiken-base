@@ -2,8 +2,12 @@
 import React, { useEffect, useRef } from "react";
 import WorkItem from "../components/WorkItem";
 
-// 🔹 ダミー画像（後で差し替え）
-const placeholder = "https://placehold.co/800x600/f1f1f1/111?text=Preview";
+// 🔥 画像をここで import（全部 PNG ）
+import okinawa1 from "../assets/works/okinawa1.png";
+import okinawa2 from "../assets/works/okinawa2.png";
+import ryukaImg from "../assets/works/ryuka.png";
+import teaImg from "../assets/works/tea.png";
+import noahImg from "../assets/works/noah.png";
 
 export default function WorksList() {
   const rootRef = useRef(null);
@@ -12,145 +16,129 @@ export default function WorksList() {
     const root = rootRef.current;
     if (!root) return;
 
-    // セクション本体アニメ
-    const sectionObserver = new IntersectionObserver(
+    const observer = new IntersectionObserver(
       (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) root.classList.add("show");
+        entries.forEach((e) => {
+          if (e.isIntersecting) e.target.classList.add("show");
         });
       },
-      { threshold: 0.1 }
+      { threshold: 0.15 }
     );
-    sectionObserver.observe(root);
 
-    // 各アイテムのアニメ
-    const items = root.querySelectorAll(".work-item");
-    const itemObserver = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) entry.target.classList.add("show");
-        });
-      },
-      { threshold: 0.2 }
-    );
-    items.forEach((i) => itemObserver.observe(i));
-
-    return () => {
-      sectionObserver.disconnect();
-      itemObserver.disconnect();
-    };
+    root.querySelectorAll(".fade-up").forEach((el) => observer.observe(el));
+    return () => observer.disconnect();
   }, []);
 
   return (
     <section
       ref={rootRef}
       className="
-        bg-[#0b0b0b] min-h-screen
-        opacity-0 translate-y-10
-        transition-all duration-[1200ms]
-        ease-[cubic-bezier(.25,.46,.45,.94)]
-        py-24 px-5 md:px-10
+        bg-[#0b0b0b]
+        min-h-screen
+        py-24
+        px-6 md:px-12
       "
     >
-      {/* 見出し */}
+      {/* Title */}
       <h1
-        className="text-white text-[2.4rem] md:text-[2.8rem] tracking-[0.22em] font-light mb-12 md:mb-16"
-        translate="no"
+        className="
+          fade-up
+          text-white
+          text-[2.6rem] md:text-[3rem]
+          tracking-[0.22em]
+          font-light
+          mb-20
+        "
       >
-        WORKS — Gallery
+        WORKS — Portfolio
       </h1>
 
-      <div className="space-y-20">
+      <div className="space-y-24">
 
-        {/* BRAND / IDENTITY */}
-        <Category title="BRAND / IDENTITY">
+        {/* HOTEL */}
+        <Category title="HOTEL">
           <WorkItem
-            title="NEKOLOGY Branding"
-            desc="猫の温もりと静寂から生まれたブランド設計。"
-            link="https://example.com/nekology"
-            img={placeholder}
+            title="Okinawa Resort Hotel"
+            desc="光 × 余白 × 南国の高級ホテルサイト。"
+            link="https://okinawa-hotel.vercel.app"
+            img={okinawa1}
           />
 
           <WorkItem
-            title="Flow of Tea Aroma"
-            desc="お茶の香りを可視化する世界観デザイン。"
-            link="https://example.com/tea"
-            img={placeholder}
-          />
-
-          <WorkItem
-            title="琉海スニーカー（仮）"
-            desc="沖縄の海の色から構築したスニーカーブランディング。"
-            link="https://example.com/sneaker"
-            img={placeholder}
+            title="Horizon Blanc"
+            desc="朝光が差し込む、静寂のリゾートLP。"
+            link="https://okinawa-resort-hotel.vercel.app"
+            img={okinawa2}
           />
         </Category>
 
-        {/* WEBSITE / SERVICE */}
-        <Category title="WEBSITE / SERVICE">
+        {/* BEAUTY / SALON */}
+        <Category title="BEAUTY / SALON">
+          {/* 追加予定 */}
+        </Category>
+
+        {/* FOOD */}
+        <Category title="FOOD / RESTAURANT">
+          {/* 追加予定 */}
+        </Category>
+
+        {/* BRAND */}
+        <Category title="BRAND">
           <WorkItem
-            title="Okinawa Student Housing"
-            desc="国際学生向けの上質な不動産サイト。"
-            link="https://example.com/housing"
-            img={placeholder}
+            title="RYUKA — Fragrance"
+            desc="琉球の香りと光をテーマにしたブランドサイト。"
+            link="https://ryuka-official.vercel.app"
+            img={ryukaImg}
           />
 
           <WorkItem
-            title="FINE Okinawa Matchmaking"
-            desc="40代向けの落ち着いたマッチングサービス。"
-            link="https://example.com/fine"
-            img={placeholder}
-          />
-
-          <WorkItem
-            title="Cafe Lumina"
-            desc="光 × 余白 × 香りをテーマにしたカフェサイト。"
-            link="https://example.com/lumina"
-            img={placeholder}
+            title="The Flow of Tea"
+            desc="茶の香り・風景・静寂で構築した世界観サイト。"
+            link="https://flow-of-tea.vercel.app"
+            img={teaImg}
           />
         </Category>
 
-        {/* ART / CREATIVE */}
+        {/* ART */}
         <Category title="ART / CREATIVE">
           <WorkItem
-            title="NOAH Season Visual"
-            desc="AI × 沖縄 × 静寂の象徴、NOAHビジュアルワーク。"
-            link="https://example.com/noah"
-            img={placeholder}
-          />
-
-          <WorkItem
-            title="Sea Glass Diffusion"
-            desc="海ガラスの光屈折を表現したアートワーク。"
-            link="https://example.com/seaglass"
-            img={placeholder}
-          />
-
-          <WorkItem
-            title="Island Abstract"
-            desc="島 × 影 × 抽象、Yuto流ミニマルアート。"
-            link="https://example.com/abstract"
-            img={placeholder}
+            title="NOAH Visual Art"
+            desc="AI × 静寂 × 沖縄の世界観アート。"
+            link="https://gushiken-base.vercel.app"
+            img={noahImg}
           />
         </Category>
+
       </div>
     </section>
   );
 }
 
-/* ----------------------------------------
-   カテゴリ（BRAND / ART など）
------------------------------------------*/
+/* ===============================
+   CATEGORY ボックス
+================================ */
 function Category({ title, children }) {
   return (
-    <div>
+    <div className="fade-up">
       <h2
-        className="text-white text-lg md:text-xl tracking-[0.18em] mb-6"
-        translate="no"
+        className="
+          text-white
+          text-lg md:text-xl
+          tracking-[0.18em]
+          mb-7
+          font-light
+        "
       >
         {title}
       </h2>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-10">
+
+      <div
+        className="
+          grid
+          grid-cols-1 md:grid-cols-3
+          gap-10
+        "
+      >
         {children}
       </div>
     </div>

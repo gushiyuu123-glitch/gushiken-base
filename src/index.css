@@ -72,3 +72,13 @@
   transform: translateY(0) !important;
   filter: blur(0) !important;
 }
+.fade-up {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: all 900ms cubic-bezier(.25,.46,.45,.94);
+}
+
+.fade-up.show {
+  opacity: 1;
+  transform: translateY(0);
+}
