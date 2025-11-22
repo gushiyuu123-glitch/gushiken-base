@@ -12,38 +12,69 @@ export default function WorkItem({ title, desc, link, img }) {
         ? { href: link, target: "_blank", rel: "noopener noreferrer" }
         : { to: link })}
       className="
-        work-item fade-up block rounded-xl overflow-hidden
-        bg-[#111] border border-white/10
-        shadow-[0_0_25px_rgba(0,0,0,0.35)]
-        transition-all duration-700 hover:scale-[1.02]
+        group block rounded-[14px] overflow-hidden
+        bg-[#0a0a0a]    /* 純黒カード */
+        border border-white/[0.08]
+        shadow-[0_0_12px_rgba(0,0,0,0.22)]
+        transition-all duration-[750ms]
+        hover:shadow-[0_0_28px_rgba(0,0,0,0.34)]
+        hover:scale-[1.017]
       "
     >
-      {/* 画像エリア */}
-      <div className="relative w-full h-56 md:h-64 bg-black/40">
-        {img ? (
-          <img
-            src={img}
-            alt={title}
-            className="w-full h-full object-cover"
-          />
-        ) : (
-          <div className="w-full h-full flex items-center justify-center">
-            <span className="text-white/40 text-sm">No Image</span>
-          </div>
-        )}
+      {/* 画像層 */}
+      <div className="relative w-full aspect-[16/10] overflow-hidden">
+        <img
+          src={img}
+          alt={title}
+          className="
+            w-full h-full object-cover
+            brightness-[0.92]
+            transition-all duration-[1100ms]
+            ease-[cubic-bezier(.25,.46,.45,.94)]
+            group-hover:brightness-100
+            group-hover:scale-[1.035]
+          "
+        />
+
+        {/* 高級光線（斜めに走る） */}
+        <div
+          className="
+            absolute inset-0 pointer-events-none
+            opacity-0 group-hover:opacity-100
+            transition-opacity duration-[900ms]
+            bg-gradient-to-tr
+            from-transparent via-white/[0.08] to-transparent
+          "
+        ></div>
       </div>
 
       {/* テキスト層 */}
       <div className="p-6 text-white">
-        <h3 className="text-lg tracking-[0.14em] mb-1 font-light">
+        <h3
+          className="
+            text-[1.05rem]
+            tracking-[0.13em]
+            font-light
+            mb-2
+          "
+        >
           {title}
         </h3>
 
-        <p className="text-white/60 text-sm">
+        <p className="text-white/60 text-sm leading-[1.75] mb-4">
           {desc}
         </p>
 
-        <span className="text-white/80 text-xs tracking-[0.18em] mt-4 block">
+        <span
+          className="
+            text-white/75 text-[0.7rem]
+            tracking-[0.22em]
+            inline-block mt-1
+            transition-all duration-500
+            group-hover:tracking-[0.32em]
+            group-hover:text-white/90
+          "
+        >
           VIEW SITE →
         </span>
       </div>

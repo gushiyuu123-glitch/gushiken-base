@@ -82,3 +82,100 @@
   opacity: 1;
   transform: translateY(0);
 }
+.fade-up {
+  opacity: 0;
+  transform: translateY(26px);
+  transition:
+    opacity 0.9s cubic-bezier(.22,.56,.18,1),
+    transform 0.9s cubic-bezier(.22,.56,.18,1);
+}
+
+.fade-up.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+/* =======================
+   fade-up（高級ブランド仕様）
+======================= */
+.fade-up {
+  opacity: 0;
+  transform: translateY(26px);
+  transition:
+    opacity 0.9s cubic-bezier(.22,.56,.18,1),
+    transform 0.9s cubic-bezier(.22,.56,.18,1);
+}
+
+.fade-up.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* =======================
+   カテゴリ見出しの “微振動フェード”
+======================= */
+.category-title {
+  animation: breathe 4.2s ease-in-out infinite;
+  opacity: 0.92;
+}
+
+@keyframes breathe {
+  0%   { opacity: 0.92; letter-spacing: 0.16em; }
+  50%  { opacity: 1;    letter-spacing: 0.165em; }
+  100% { opacity: 0.92; letter-spacing: 0.16em; }
+}
+
+/* =======================
+   スマホ横スクロール
+======================= */
+.scroll-x-snap {
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+}
+
+.scroll-x-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* =======================
+   スクロール左右フェード（白1% × 金1px）
+======================= */
+.fade-left,
+.fade-right {
+  position: absolute;
+  top: 0;
+  width: 50px;
+  height: 100%;
+  pointer-events: none;
+}
+
+.fade-left {
+  left: 0;
+  background: linear-gradient(to right, rgba(255,255,255,0.03), transparent);
+  border-right: 1px solid rgba(217,185,138,0.12); /* gold 1px */
+}
+
+.fade-right {
+  right: 0;
+  background: linear-gradient(to left, rgba(255,255,255,0.03), transparent);
+  border-left: 1px solid rgba(217,185,138,0.12);
+}
+
+/* =======================
+   スクロールヒント矢印（→）
+======================= */
+.scroll-hint {
+  position: absolute;
+  right: 10px;
+  top: 40%;
+  font-size: 1.4rem;
+  color: rgba(255,255,255,0.45);
+  opacity: 0;
+  animation: hintFade 2.6s ease-out forwards;
+}
+
+@keyframes hintFade {
+  0%   { opacity: 0;   transform: translateX(0); }
+  20%  { opacity: .6;  transform: translateX(3px); }
+  60%  { opacity: .4;  transform: translateX(0); }
+  100% { opacity: 0; }
+}

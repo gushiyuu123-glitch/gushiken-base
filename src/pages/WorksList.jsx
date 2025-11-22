@@ -2,12 +2,21 @@
 import React, { useEffect, useRef } from "react";
 import WorkItem from "../components/WorkItem";
 
-// 🔥 画像をここで import（全部 PNG ）
-import okinawa1 from "../assets/works/okinawa1.png";
-import okinawa2 from "../assets/works/okinawa2.png";
-import ryukaImg from "../assets/works/ryuka.png";
-import teaImg from "../assets/works/tea.png";
-import noahImg from "../assets/works/noah.png";
+// === 画像 import ===
+import spaImg from "../assets/works/spa.webp";
+import lucentImg from "../assets/works/lucent.webp";
+import oriettaImg from "../assets/works/orietta.webp";
+
+import okinawa1 from "../assets/works/okinawa1.webp";
+import okinawa2 from "../assets/works/okinawa2.webp";
+import calmImg from "../assets/works/calm.webp";
+
+import ittoImg from "../assets/works/itto.webp";
+import kotiImg from "../assets/works/koti.webp";
+import ryukaImg from "../assets/works/ryuka.webp";
+
+import teaImg from "../assets/works/tea.webp";
+import rayImg from "../assets/works/ray.webp";
 
 export default function WorksList() {
   const rootRef = useRef(null);
@@ -17,12 +26,8 @@ export default function WorksList() {
     if (!root) return;
 
     const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((e) => {
-          if (e.isIntersecting) e.target.classList.add("show");
-        });
-      },
-      { threshold: 0.15 }
+      (entries) => entries.forEach((e) => e.isIntersecting && e.target.classList.add("show")),
+      { threshold: 0.18 }
     );
 
     root.querySelectorAll(".fade-up").forEach((el) => observer.observe(el));
@@ -30,117 +35,108 @@ export default function WorksList() {
   }, []);
 
   return (
-    <section
-      ref={rootRef}
-      className="
-        bg-[#0b0b0b]
-        min-h-screen
-        py-24
-        px-6 md:px-12
-      "
-    >
-      {/* Title */}
-      <h1
-        className="
-          fade-up
-          text-white
-          text-[2.6rem] md:text-[3rem]
-          tracking-[0.22em]
-          font-light
-          mb-20
-        "
-      >
-        WORKS — Portfolio
-      </h1>
+    <section className="bg-[#070604] min-h-screen py-24 px-6 md:px-10 lg:px-16">
+      <div ref={rootRef} className="max-w-6xl lg:max-w-7xl mx-auto">
 
-      <div className="space-y-24">
+        {/* === Title Block === */}
+        <div className="fade-up mb-20">
+          <p className="text-[0.7rem] md:text-xs tracking-[0.28em] text-white/40 mb-4">
+            SELECTED WORKS
+          </p>
 
-        {/* HOTEL */}
-        <Category title="HOTEL">
-          <WorkItem
-            title="Okinawa Resort Hotel"
-            desc="光 × 余白 × 南国の高級ホテルサイト。"
-            link="https://okinawa-hotel.vercel.app"
-            img={okinawa1}
-          />
+          <h1 className="text-white text-[2.4rem] md:text-[3rem] tracking-[0.22em] font-light">
+            WORKS — Portfolio
+          </h1>
 
-          <WorkItem
-            title="Horizon Blanc"
-            desc="朝光が差し込む、静寂のリゾートLP。"
-            link="https://okinawa-resort-hotel.vercel.app"
-            img={okinawa2}
-          />
-        </Category>
+          <p className="mt-6 text-sm md:text-[0.95rem] text-white/55 leading-relaxed max-w-xl">
+            沖縄 × 光 × 静寂 を軸にしたセレクション。
+            用途ごとに世界観を切り替えながらも統一トーンで構築。
+          </p>
+        </div>
 
-        {/* BEAUTY / SALON */}
-        <Category title="BEAUTY / SALON">
-          {/* 追加予定 */}
-        </Category>
+        <div className="fade-up w-16 h-px bg-white/12 mb-20" />
 
-        {/* FOOD */}
-        <Category title="FOOD / RESTAURANT">
-          {/* 追加予定 */}
-        </Category>
+        <div className="space-y-32">
 
-        {/* BRAND */}
-        <Category title="BRAND">
-          <WorkItem
-            title="RYUKA — Fragrance"
-            desc="琉球の香りと光をテーマにしたブランドサイト。"
-            link="https://ryuka-official.vercel.app"
-            img={ryukaImg}
-          />
+          {/* === BEAUTY === */}
+          <Category title="BEAUTY / SALON">
+            <WorkItem title="Okinawa White Spa" desc="白 × 静寂 × 上質な余白。" link="https://okinawa-white-spa.vercel.app" img={spaImg} />
+            <WorkItem title="Lucent Salon" desc="透明な光 × ミニマル。" link="https://lucent-salon.vercel.app" img={lucentImg} />
+            <WorkItem title="BLACK ORIETTA" desc="黒 × 金 × 高級香水。" link="https://black-orietta.vercel.app" img={oriettaImg} />
+          </Category>
 
-          <WorkItem
-            title="The Flow of Tea"
-            desc="茶の香り・風景・静寂で構築した世界観サイト。"
-            link="https://flow-of-tea.vercel.app"
-            img={teaImg}
-          />
-        </Category>
+          {/* === HOTEL === */}
+          <Category title="HOTEL">
+            <WorkItem title="Okinawa Resort Hotel" desc="光と青のホテルLP。" link="https://okinawa-hotel.vercel.app" img={okinawa1} />
+            <WorkItem title="Horizon Blanc" desc="朝光 × 静寂。" link="https://okinawa-resort-hotel.vercel.app" img={okinawa2} />
+            <WorkItem title="The Calm Okinawa" desc="海 × 透明感 × 静寂。" link="https://the-calm-okinawa.vercel.app" img={calmImg} />
+          </Category>
 
-        {/* ART */}
-        <Category title="ART / CREATIVE">
-          <WorkItem
-            title="NOAH Visual Art"
-            desc="AI × 静寂 × 沖縄の世界観アート。"
-            link="https://gushiken-base.vercel.app"
-            img={noahImg}
-          />
-        </Category>
+          {/* === FOOD / FURNITURE === */}
+          <Category title="FOOD / FURNITURE / BRAND">
+            <WorkItem title="Aburiya Itto" desc="和 × 炙り × ラグジュアリー。" link="https://aburiya-itto.vercel.app" img={ittoImg} />
+            <WorkItem title="Koti — Furniture" desc="北欧の光 × 木の温度。" link="https://koti-beta.vercel.app" img={kotiImg} />
+            <WorkItem title="RYUKA — Fragrance" desc="自然光 × 琉球の香り。" link="https://ryuka-official.vercel.app" img={ryukaImg} />
+          </Category>
 
+          {/* === ART === */}
+          <Category title="ART / CREATIVE">
+            <WorkItem title="The Flow of Tea" desc="茶 × 余白 × 世界観。" link="https://flow-of-tea.vercel.app" img={teaImg} />
+            <WorkItem title="Ray of Silence" desc="光と影の静寂アート。" link="https://ray-of-silence.vercel.app" img={rayImg} />
+          </Category>
+
+        </div>
       </div>
     </section>
   );
 }
 
-/* ===============================
-   CATEGORY ボックス
-================================ */
+/* ============================================================
+   CATEGORY（スマホ横スクロール＋フェード＋PC2→3最適化）
+============================================================ */
 function Category({ title, children }) {
   return (
-    <div className="fade-up">
-      <h2
-        className="
-          text-white
-          text-lg md:text-xl
-          tracking-[0.18em]
-          mb-7
-          font-light
-        "
-      >
-        {title}
-      </h2>
+    <section className="fade-up">
 
+      {/* 見出し */}
+      <div className="flex items-baseline justify-between mb-8">
+        <h2 className="category-title text-white text-[0.95rem] md:text-[1.05rem] font-light">
+          {title}
+        </h2>
+        <div className="hidden md:block w-32 h-px bg-white/8" />
+      </div>
+
+      {/* スマホ横スクロール */}
+      <div className="relative sm:hidden mb-4">
+        <div className="scroll-hint absolute">→</div>
+
+        <div className="fade-left"></div>
+        <div className="fade-right"></div>
+
+        <div
+          className="
+            flex gap-6 overflow-x-auto px-1 py-2
+            scroll-x-snap scroll-x-hide
+          "
+        >
+          {React.Children.map(children, (child) => (
+            <div className="min-w-[85%] snap-start">{child}</div>
+          ))}
+        </div>
+      </div>
+
+      {/* PC：2 → 3 カラム最適化 */}
       <div
         className="
-          grid
-          grid-cols-1 md:grid-cols-3
-          gap-10
+          hidden sm:grid
+          grid-cols-2
+          xl:grid-cols-3
+          gap-10 md:gap-12
         "
       >
         {children}
       </div>
-    </div>
+
+    </section>
   );
 }
