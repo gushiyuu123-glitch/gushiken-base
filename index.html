@@ -1,14 +1,106 @@
 <!doctype html>
-<html lang="en">
+<html lang="ja">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="google" content="notranslate" />
+
+    <!-- ===============================
+          基本設定
+    =============================== -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>gushiken-base</title>
+    <meta name="google" content="notranslate" />
+    <link rel="canonical" href="https://gushiken-base.vercel.app/" />
+    <meta name="robots" content="index, follow" />
+
+    <!-- ===============================
+          SEO
+    =============================== -->
+    <title>GUSHIKEN DESIGN — 光と静寂のWebデザイン</title>
+
+    <meta
+      name="description"
+      content="沖縄 × 光 × 静寂 を軸にした GUSHIKEN DESIGN の公式ポートフォリオ。ホテル・香水ブランド・美容サロン・アート作品まで、一貫した世界観と上質なUI/UXでサイト制作を行います。"
+    />
+    <meta
+      name="keywords"
+      content="Webデザイン, 沖縄, フリーランス, ホテルサイト, LP制作, ブランドデザイン, UIUX, ポートフォリオ, GUSHIKEN DESIGN"
+    />
+    <meta name="author" content="GUSHIKEN DESIGN" />
+
+    <!-- ===============================
+          OGP
+    =============================== -->
+    <meta property="og:title" content="GUSHIKEN DESIGN — 光と静寂のWebデザイン" />
+    <meta
+      property="og:description"
+      content="沖縄 × 光 × 静寂 を軸にした GUSHIKEN DESIGN の公式ポートフォリオ。ブランド・ホテル・美容サロン・アート作品を上質に制作。"
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://gushiken-base.vercel.app/" />
+    <meta property="og:image" content="/ogp.png" />
+    <meta property="og:site_name" content="GUSHIKEN DESIGN" />
+    <meta property="og:locale" content="ja_JP" />
+
+    <!-- ===============================
+          Twitter Card
+    =============================== -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="GUSHIKEN DESIGN — 光と静寂のWebデザイン" />
+    <meta name="twitter:description" content="沖縄 × 光 × 静寂 のポートフォリオ。" />
+    <meta name="twitter:image" content="/ogp.png" />
+
+    <!-- ===============================
+          Favicon（PNG）
+    =============================== -->
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+    <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48.png" />
+    <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png" />
+    <link rel="icon" type="image/png" sizes="256x256" href="/favicon-256.png" />
+    <link rel="icon" type="image/png" sizes="512x512" href="/favicon-512.png" />
+    <link rel="apple-touch-icon" href="/favicon-180.png" />
+
+    <!-- ===============================
+          カラーテーマ
+    =============================== -->
+    <meta name="theme-color" content="#0b0b0b" />
+
+    <!-- ===============================
+          フォント最適化（美学 × 速度）
+    =============================== -->
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@400;600&family=Poppins:wght@300;500&display=swap"
+    />
+
+    <!-- ===============================
+          PWA
+    =============================== -->
+    <link rel="manifest" href="/manifest.json" />
+
+    <!-- ===============================
+          Vite
+    =============================== -->
+    <script type="module" src="/src/main.jsx"></script>
+
+    <!-- ===============================
+          Service Worker
+    =============================== -->
+    <script>
+      if ("serviceWorker" in navigator) {
+        window.addEventListener("load", () => {
+          navigator.serviceWorker
+            .register("/sw.js")
+            .then(() => console.log("Service Worker registered — GUSHIKEN DESIGN"))
+            .catch((err) => console.error("SW registration failed:", err));
+        });
+      }
+    </script>
   </head>
+
   <body>
     <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>

@@ -1,5 +1,4 @@
 import React, { useEffect, useRef } from "react";
-import { Link } from "react-router-dom";
 import "./works.css";
 
 export default function Works() {
@@ -27,47 +26,62 @@ export default function Works() {
     <section id="works" className="works-section" ref={worksRef}>
       <div className="works-container">
 
-        {/* タイトルエリア */}
+        {/* タイトル */}
         <div className="works-header">
           <h2 className="works-title" translate="no">WORKS</h2>
           <p className="works-sub">SELECTED PROJECTS</p>
         </div>
 
-        {/* 作品グリッド */}
+        {/* グリッド */}
         <div className="works-grid">
 
-          {/* ORIETTA */}
-          <div className="work-card work-big">
-            <img src="/assets/orietta.png" alt="ORIETTA" />
+          {/* ORIETTA — メイン */}
+          <a
+            href="https://black-orietta.vercel.app/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="work-card work-big"
+          >
+            <img src="/assets/orietta.webp" alt="BLACK ORIETTA" />
             <div className="work-text">
               <h3>BLACK ORIETTA</h3>
               <p>闇に灯る、黄金の衝突。</p>
             </div>
-          </div>
+          </a>
 
-          {/* RYUKA */}
-          <div className="work-card work-small">
-            <img src="/assets/ryuka.png" alt="RYUKA" />
+          {/* SPA */}
+          <a
+            href="https://okinawa-white-spa.vercel.app/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="work-card work-small"
+          >
+            <img src="/assets/spa.webp" alt="Okinawa White Spa" />
             <div className="work-text small">
-              <h3>RYUKA Fragrance</h3>
-              <p>Okinawan essence of dawn and night.</p>
+              <h3>Okinawa White Spa</h3>
+              <p>White × Silence × Minimal Luxury.</p>
             </div>
-          </div>
+          </a>
 
-          {/* HOTEL */}
-          <div className="work-card work-small">
-            <img src="/assets/hotel.png" alt="Hotel" />
+          {/* KOTI */}
+          <a
+            href="https://koti-beta.vercel.app/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="work-card work-small"
+          >
+            <img src="/assets/koti.webp" alt="Koti Furniture" />
             <div className="work-text small">
-              <h3>The Calm Okinawa</h3>
-              <p>Silent luxury beyond the shoreline.</p>
+              <h3>Koti — Quiet Living</h3>
+              <p>Scandinavian calm × crafted minimalism.</p>
             </div>
-          </div>
+          </a>
 
         </div>
 
-        {/* ★ 作品一覧ページへ */}
+        {/* VIEW ALL */}
         <div className="works-viewall">
-          <Link to="/works" className="viewall-btn">VIEW ALL WORKS</Link>
+          <a href="/works" className="viewall-btn">VIEW ALL WORKS</a>
         </div>
 
       </div>
