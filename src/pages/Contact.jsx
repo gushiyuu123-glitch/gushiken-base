@@ -4,19 +4,20 @@ import styles from "../styles/contact.module.css";
 
 const FORMSPREE_ENDPOINT = "https://formspree.io/f/xdkjyvly";
 
-// ↑ あとで自分のFormspree IDに差し替える
-
 export default function Contact() {
   const rootRef = useRef(null);
+
   const [status, setStatus] = useState("idle"); // idle / loading / success / error
   const [message, setMessage] = useState("");
 
+  // --- フェードイン ---
   useEffect(() => {
     const el = rootRef.current;
     if (!el) return;
     el.classList.add(styles.show);
   }, []);
 
+  // --- フォーム送信 ---
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (status === "loading") return;
@@ -34,30 +35,28 @@ export default function Contact() {
         body: formData,
       });
 
-      if (!res.ok) {
-        throw new Error("送信エラー");
-      }
+      if (!res.ok) throw new Error("送信エラー");
 
       setStatus("success");
       setMessage("送信が完了しました。お問い合わせありがとうございます。");
+
       form.reset();
     } catch (err) {
       console.error(err);
       setStatus("error");
-      setMessage("送信に失敗しました。お手数ですが、時間をおいて再度お試しください。");
+      setMessage("送信に失敗しました。時間をおいて再度お試しください。");
     }
   };
 
   return (
     <section ref={rootRef} className={styles.contactSection}>
       <div className={styles.container}>
+
         {/* 左ゴールドライン */}
         <div className={styles.goldLine} />
 
         {/* タイトル */}
-        <h1 className={styles.title} translate="no">
-          CONTACT
-        </h1>
+        <h1 className={styles.title} translate="no">CONTACT</h1>
 
         {/* リード */}
         <p className={styles.lead}>
@@ -65,8 +64,9 @@ export default function Contact() {
           小さな内容でも構いません。まずはアイデアをお聞かせください。
         </p>
 
-        {/* FORM */}
+        {/* フォーム */}
         <form className={styles.form} onSubmit={handleSubmit}>
+          
           <FormField label="お名前" required htmlFor="name">
             <input
               id="name"
@@ -100,15 +100,8 @@ export default function Contact() {
           </FormField>
 
           <FormField label="ご希望のプラン" htmlFor="plan">
-            <select
-              id="plan"
-              name="plan"
-              className={styles.select}
-              defaultValue=""
-            >
-              <option value="" disabled>
-                未選択
-              </option>
+            <select id="plan" name="plan" className={styles.select} defaultValue="">
+              <option value="" disabled>未選択</option>
               <option value="lp">ランディングページ</option>
               <option value="small">小規模サイト（3〜5P）</option>
               <option value="brand">ブランドサイト</option>
@@ -116,15 +109,8 @@ export default function Contact() {
           </FormField>
 
           <FormField label="写真素材について" htmlFor="photo">
-            <select
-              id="photo"
-              name="photo"
-              className={styles.select}
-              defaultValue=""
-            >
-              <option value="" disabled>
-                未選択
-              </option>
+            <select id="photo" name="photo" className={styles.select} defaultValue="">
+              <option value="" disabled>未選択</option>
               <option value="have">写真あり</option>
               <option value="will-shoot">これから撮影予定</option>
               <option value="consult">相談したい</option>
@@ -132,15 +118,8 @@ export default function Contact() {
           </FormField>
 
           <FormField label="予算感（任意）" htmlFor="budget">
-            <select
-              id="budget"
-              name="budget"
-              className={styles.select}
-              defaultValue=""
-            >
-              <option value="" disabled>
-                未選択
-              </option>
+            <select id="budget" name="budget" className={styles.select} defaultValue="">
+              <option value="" disabled>未選択</option>
               <option value="80">8万円</option>
               <option value="150">15万円</option>
               <option value="300">30万円</option>
@@ -148,7 +127,7 @@ export default function Contact() {
             </select>
           </FormField>
 
-          <FormField label="詳細内容" htmlFor="detail" required>
+          <FormField label="詳細内容" required htmlFor="detail">
             <textarea
               id="detail"
               name="detail"
@@ -161,10 +140,10 @@ export default function Contact() {
           {/* 注意書き */}
           <p className={styles.note}>
             ※ 写真素材は、できるだけ明るく鮮明なものをご用意いただけると仕上がりが大きく向上します。<br />
-            ※ 通常 24 時間以内にご返信いたします。内容により前後する場合がございます。
+            ※ 通常 24 時間以内にご返信いたします。
           </p>
 
-          {/* 送信ボタン＋ステータス表示 */}
+          {/* CTA */}
           <div className={styles.cta}>
             <button
               type="submit"
@@ -190,15 +169,14 @@ export default function Contact() {
               </p>
             )}
           </div>
+
         </form>
       </div>
     </section>
   );
 }
 
-/* ---------------------------------------------------
-   共通フィールド
---------------------------------------------------- */
+/* 共通フィールドコンポーネント */
 function FormField({ label, children, required, htmlFor }) {
   return (
     <div className={styles.field}>
