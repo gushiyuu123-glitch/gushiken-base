@@ -91,18 +91,17 @@
     <!-- ===============================
           Service Worker（本番のみ）
     =============================== -->
-    <script>
-      if ("serviceWorker" in navigator) {
-        if (location.hostname !== "localhost") {
-          window.addEventListener("load", () => {
-            navigator.serviceWorker
-              .register("/sw.js")
-              .then(() => console.log("Service Worker registered — GUSHIKEN DESIGN"))
-              .catch((err) => console.error("SW registration failed:", err));
-          });
-        }
-      }
-    </script>
+   <script>
+  if (import.meta.env.PROD && "serviceWorker" in navigator) {
+    window.addEventListener("load", () => {
+      navigator.serviceWorker
+        .register("/sw.js")
+        .then(() => console.log("Service Worker registered — GUSHIKEN DESIGN"))
+        .catch((err) => console.error("SW registration failed:", err));
+    });
+  }
+</script>
+
   </head>
 
   <body>
