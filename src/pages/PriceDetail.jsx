@@ -17,20 +17,47 @@ export default function PriceDetail() {
       className="
         bg-[#0b0b0b] min-h-screen text-white
         opacity-0 translate-y-8
-        transition-all duration-[1100ms]
-        py-28 px-6
+        transition-all duration-[1100ms] ease-[cubic-bezier(.25,.46,.45,.94)]
+        py-28 md:py-32 px-6
       "
     >
-      <div className="max-w-5xl mx-auto">
+      <div className="max-w-5xl mx-auto relative">
+
+        {/* 左ゴールドライン（Contact と世界観合わせ） */}
+        <div
+          className="
+            hidden md:block
+            absolute left-0 top-10
+            w-px h-[86%]
+            bg-[rgba(217,185,138,0.28)]
+          "
+        />
 
         {/* ====================== */}
         {/* TITLE */}
         {/* ====================== */}
-        <h1 className="text-[2.6rem] tracking-[0.22em] font-light mb-8">
+        <h1
+          className="
+            text-[2.6rem]
+            tracking-[0.22em]
+            font-light
+            mb-8
+            pl-4
+          "
+        >
           PRICE — Detail
         </h1>
 
-        <p className="text-white/70 text-[1rem] leading-[1.9] mb-16 max-w-3xl">
+        <p
+          className="
+            text-white/70
+            text-[1rem]
+            leading-[1.9]
+            mb-16
+            max-w-3xl
+            pl-4
+          "
+        >
           制作料金の目安です。ページ数・写真素材の質、世界観演出の量により変動します。
           制作は、最初に方向性共有（世界観ボード）を行い、その後デザイン制作へと進みます。
           大きく「ランディングページ」「小規模サイト」「ブランドサイト」の3つのプランをご用意しています。
@@ -137,13 +164,12 @@ export default function PriceDetail() {
         </DetailBlock>
 
         {/* ====================== */}
-        {/* 運用・更新について（追加） */}
+        {/* 運用・更新について */}
         {/* ====================== */}
         <SectionTitle>運用・更新について</SectionTitle>
         <DetailBlock>
           <li>
-            公開後の更新（文章・写真差し替え等）は、
-            必要なタイミングでご依頼いただく
+            公開後の更新（文章・写真差し替え等）は、必要なタイミングでご依頼いただく
             <strong> 「単発対応」</strong>となります。
           </li>
           <li>作業内容に応じて、その都度お見積りを提示いたします。</li>
@@ -151,7 +177,7 @@ export default function PriceDetail() {
         </DetailBlock>
 
         {/* ====================== */}
-        {/* 受けない業務（追加） */}
+        {/* お受けしていない業務 */}
         {/* ====================== */}
         <SectionTitle>お受けしていない業務</SectionTitle>
         <DetailBlock>
@@ -176,18 +202,28 @@ export default function PriceDetail() {
         {/* ====================== */}
         {/* CTA */}
         {/* ====================== */}
-        <div className="text-center mt-10">
+        <div className="text-center mt-12">
           <Link
             to="/contact"
             className="
-              inline-block px-12 py-3
-              border border-gold text-gold
-              hover:bg-gold hover:text-black
+              inline-block
+              px-12 py-3
+              rounded-full
+              border border-[rgba(217,185,138,0.85)]
+              text-[rgba(217,185,138,0.94)]
+              bg-[rgba(255,255,255,0.02)]
+              tracking-[0.2em]
+              uppercase
               transition-all duration-300
-              tracking-[0.25em]
+              shadow-[0_0_18px_rgba(217,185,138,0.06)]
+              hover:bg-[rgba(217,185,138,0.92)]
+              hover:text-black
+              hover:border-[rgba(217,185,138,1)]
+              hover:-translate-y-[2px]
+              hover:shadow-[0_12px_24px_rgba(217,185,138,0.30)]
             "
           >
-            お問い合わせ
+            CONTACT
           </Link>
         </div>
       </div>
@@ -201,26 +237,35 @@ export default function PriceDetail() {
 
 function SectionTitle({ children }) {
   return (
-    <h2 className="text-[1.05rem] tracking-[0.18em] mb-4 text-white/80">
+    <h2
+      className="
+        text-[1.05rem]
+        tracking-[0.18em]
+        mb-4
+        text-white/80
+        pl-4
+      "
+    >
       {children}
     </h2>
   );
 }
 
+/* 単一プランカード（8万 / 15万 / 30万） */
 function PlanCard({ badge, title, price, summary, detail, bestFor }) {
   return (
     <div
       className="
-        bg-[#111]
-        border border-white/12
-        rounded-2xl
-        p-7 md:p-8
-        shadow-[0_0_26px_rgba(0,0,0,0.45)]
-        flex flex-col
-        gap-4
-        hover:-translate-y-1
-        hover:shadow-[0_0_34px_rgba(215,195,154,0.22)]
+        bg-white/5
+        border border-white/10
+        rounded-xl
+        p-6 md:p-7
+        shadow-[0_0_24px_rgba(0,0,0,0.5)]
+        flex flex-col gap-4
         transition-all duration-300
+        hover:-translate-y-1.5
+        hover:border-[rgba(217,185,138,0.55)]
+        hover:shadow-[0_0_32px_rgba(217,185,138,0.24)]
       "
     >
       <p className="text-[0.75rem] tracking-[0.22em] text-gold/80 mb-1">
@@ -250,11 +295,12 @@ function PlanCard({ badge, title, price, summary, detail, bestFor }) {
   );
 }
 
+/* 横ラインで区切るブロック */
 function DetailBlock({ children }) {
   return (
     <div className="my-6 md:my-8">
-      <div className="w-full h-[1px] bg-[rgba(215,195,154,0.28)] mb-4"></div>
-      <ul className="text-white/60 text-[0.95rem] leading-[1.85] space-y-1 pl-1">
+      <div className="w-full h-px bg-[rgba(215,195,154,0.28)] mb-4" />
+      <ul className="text-white/60 text-[0.95rem] leading-[1.85] space-y-1 pl-4">
         {children}
       </ul>
     </div>
