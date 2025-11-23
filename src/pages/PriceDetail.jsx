@@ -125,15 +125,40 @@ export default function PriceDetail() {
         <SectionTitle>写真素材について</SectionTitle>
         <DetailBlock>
           <li>
-            より美しい仕上がりのため、写真素材は
-            <strong> 明るい場所で、鮮明に撮影されたもの</strong>
+            美しい仕上がりのため、写真素材は
+            <strong> 明るい場所で鮮明に撮影されたもの</strong>
             をご提供ください。
           </li>
-          <li>写真の質は、デザイン全体の印象に大きく影響いたします。</li>
+          <li>写真の質はデザイン全体の印象に大きく影響します。</li>
           <li>
-            撮影が難しい場合は、
-            <strong> AI補正・簡易撮影アドバイス</strong> も可能ですのでご相談ください。
+            撮影が難しい場合は
+            <strong> AI補正・撮影アドバイス</strong> も可能です。
           </li>
+        </DetailBlock>
+
+        {/* ====================== */}
+        {/* 運用・更新について（追加） */}
+        {/* ====================== */}
+        <SectionTitle>運用・更新について</SectionTitle>
+        <DetailBlock>
+          <li>
+            公開後の更新（文章・写真差し替え等）は、
+            必要なタイミングでご依頼いただく
+            <strong> 「単発対応」</strong>となります。
+          </li>
+          <li>作業内容に応じて、その都度お見積りを提示いたします。</li>
+          <li>世界観を壊さない範囲で丁寧に対応いたします。</li>
+        </DetailBlock>
+
+        {/* ====================== */}
+        {/* 受けない業務（追加） */}
+        {/* ====================== */}
+        <SectionTitle>お受けしていない業務</SectionTitle>
+        <DetailBlock>
+          <li>SNS運用（毎日の投稿代行）</li>
+          <li>広告運用（Instagram / Google 広告）</li>
+          <li>毎日更新が前提となる継続タスク</li>
+          <li>ブログ記事量産・SEO記事執筆</li>
         </DetailBlock>
 
         {/* ====================== */}
@@ -141,9 +166,9 @@ export default function PriceDetail() {
         {/* ====================== */}
         <SectionTitle>注意事項</SectionTitle>
         <DetailBlock>
-          <li>記載の金額はすべて「税込・目安」です。</li>
-          <li>ご要望・機能追加の内容により、料金が変動する場合があります。</li>
-          <li>確定後の大幅な構成変更は、追加料金となる場合があります。</li>
+          <li>金額はすべて税込・目安です。</li>
+          <li>機能追加・ご要望の内容により料金が変動します。</li>
+          <li>確定後の大幅な構成変更は追加料金となる可能性があります。</li>
           <li>素材提出が遅れた場合、納期も延長されます。</li>
           <li>納期目安：3〜6週間。</li>
         </DetailBlock>
@@ -182,7 +207,6 @@ function SectionTitle({ children }) {
   );
 }
 
-/* 単一プランカード（8万 / 15万 / 30万） */
 function PlanCard({ badge, title, price, summary, detail, bestFor }) {
   return (
     <div
@@ -226,7 +250,6 @@ function PlanCard({ badge, title, price, summary, detail, bestFor }) {
   );
 }
 
-/* 横ラインで区切るブロック */
 function DetailBlock({ children }) {
   return (
     <div className="my-6 md:my-8">

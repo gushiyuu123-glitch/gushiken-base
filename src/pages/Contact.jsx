@@ -2,7 +2,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import styles from "../styles/contact.module.css";
 
-const FORMSPREE_ENDPOINT = "https://formspree.io/f/XXXXXXXX"; 
+const FORMSPREE_ENDPOINT = "https://formspree.io/f/xdkjyvly";
+
 // ↑ あとで自分のFormspree IDに差し替える
 
 export default function Contact() {
