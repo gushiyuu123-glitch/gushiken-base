@@ -3,36 +3,77 @@
 <head>
   <meta charset="UTF-8" />
   <title>Offline — GUSHIKEN DESIGN</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex" />
+
   <style>
+    /* ===============================
+       Base
+    =============================== */
     body {
       margin: 0;
       background: #0b0b0b;
-      color: white;
+      color: #ffffff;
       font-family: "Shippori Mincho B1", serif;
       display: flex;
       flex-direction: column;
-      align-items: center;
       justify-content: center;
-      height: 100vh;
+      align-items: center;
       text-align: center;
+      height: 100vh;
+      padding: 0 2rem;
+
+      opacity: 0;
+      animation: fadeIn 1.4s ease forwards;
     }
+
+    @keyframes fadeIn {
+      to { opacity: 1; }
+    }
+
+    /* ===============================
+       Gold Line
+    =============================== */
     .line {
-      width: 60px;
+      width: 64px;
       height: 1px;
-      background: rgba(217,185,138,0.45);
-      margin-bottom: 20px;
+      background: rgba(217,185,138,0.55);
+      margin-bottom: 24px;
+      opacity: 0.9;
     }
-    p {
-      opacity: 0.85;
-      letter-spacing: 0.15em;
-      font-size: 0.9rem;
+
+    /* ===============================
+       Text
+    =============================== */
+    .jp {
+      font-size: 0.95rem;
+      letter-spacing: 0.22em;
+      opacity: 0.88;
+      margin-bottom: 12px;
+    }
+
+    .en {
+      font-size: 0.75rem;
+      letter-spacing: 0.28em;
+      opacity: 0.6;
+    }
+
+    /* ===============================
+       Responsive
+    =============================== */
+    @media (max-width: 480px) {
+      .jp { font-size: 0.85rem; }
+      .en { font-size: 0.7rem; }
+      .line { width: 52px; }
     }
   </style>
 </head>
+
 <body>
   <div class="line"></div>
-  <p>オフライン状態です</p>
-  <p>Offline Mode — GUSHIKEN DESIGN</p>
+
+  <p class="jp">オフライン状態です</p>
+  <p class="en">OFFLINE MODE — GUSHIKEN DESIGN</p>
 </body>
 </html>

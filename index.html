@@ -8,8 +8,8 @@
     =============================== -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="google" content="notranslate" />
-    <link rel="canonical" href="https://gushiken-base.vercel.app/" />
     <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://gushiken-base.vercel.app/" />
 
     <!-- ===============================
           SEO
@@ -20,10 +20,12 @@
       name="description"
       content="沖縄 × 光 × 静寂 を軸にした GUSHIKEN DESIGN の公式ポートフォリオ。ホテル・香水ブランド・美容サロン・アート作品まで、一貫した世界観と上質なUI/UXでサイト制作を行います。"
     />
+
     <meta
       name="keywords"
       content="Webデザイン, 沖縄, フリーランス, ホテルサイト, LP制作, ブランドデザイン, UIUX, ポートフォリオ, GUSHIKEN DESIGN"
     />
+
     <meta name="author" content="GUSHIKEN DESIGN" />
 
     <!-- ===============================
@@ -51,13 +53,14 @@
     <!-- ===============================
           Favicon（PNG）
     =============================== -->
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png" />
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
-    <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48.png" />
-    <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96.png" />
+    <link rel="icon" type="image/png" sizes="16x16"  href="/favicon-16.png" />
+    <link rel="icon" type="image/png" sizes="32x32"  href="/favicon-32.png" />
+    <link rel="icon" type="image/png" sizes="48x48"  href="/favicon-48.png" />
+    <link rel="icon" type="image/png" sizes="96x96"  href="/favicon-96.png" />
     <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png" />
     <link rel="icon" type="image/png" sizes="256x256" href="/favicon-256.png" />
     <link rel="icon" type="image/png" sizes="512x512" href="/favicon-512.png" />
+
     <link rel="apple-touch-icon" href="/favicon-180.png" />
 
     <!-- ===============================
@@ -66,7 +69,7 @@
     <meta name="theme-color" content="#0b0b0b" />
 
     <!-- ===============================
-          フォント最適化（美学 × 速度）
+          フォント最適化
     =============================== -->
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -81,21 +84,23 @@
     <link rel="manifest" href="/manifest.json" />
 
     <!-- ===============================
-          Vite
+          Vite（React）
     =============================== -->
     <script type="module" src="/src/main.jsx"></script>
 
     <!-- ===============================
-          Service Worker
+          Service Worker（本番のみ）
     =============================== -->
     <script>
       if ("serviceWorker" in navigator) {
-        window.addEventListener("load", () => {
-          navigator.serviceWorker
-            .register("/sw.js")
-            .then(() => console.log("Service Worker registered — GUSHIKEN DESIGN"))
-            .catch((err) => console.error("SW registration failed:", err));
-        });
+        if (location.hostname !== "localhost") {
+          window.addEventListener("load", () => {
+            navigator.serviceWorker
+              .register("/sw.js")
+              .then(() => console.log("Service Worker registered — GUSHIKEN DESIGN"))
+              .catch((err) => console.error("SW registration failed:", err));
+          });
+        }
       }
     </script>
   </head>
