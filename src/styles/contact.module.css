@@ -1,0 +1,260 @@
+/* ===============================
+   SECTION
+================================ */
+.contactSection {
+  background: #0b0b0b;
+  min-height: 100vh;
+  padding: 7.5rem 0 6rem;
+  opacity: 0;
+  transform: translateY(20px);
+  transition:
+    opacity 1.2s cubic-bezier(.25,.46,.45,.94),
+    transform 1.2s cubic-bezier(.25,.46,.45,.94);
+}
+
+.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ===============================
+   CONTAINER
+================================ */
+.container {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 0 1.8rem;
+  position: relative;
+}
+
+/* 左ゴールドライン */
+.goldLine {
+  position: absolute;
+  left: 0;
+  top: 1.5rem;
+  width: 1px;
+  height: calc(100% - 3rem);
+  background: linear-gradient(
+    to bottom,
+    rgba(217, 185, 138, 0.55),
+    rgba(217, 185, 138, 0.08)
+  );
+}
+
+/* ===============================
+   TITLE
+================================ */
+.title {
+  color: #ffffff;
+  font-size: 2.6rem;
+  letter-spacing: 0.22em;
+  font-weight: 300;
+  margin-bottom: 2.2rem;
+  padding-left: 1rem;
+}
+
+/* ===============================
+   LEAD
+================================ */
+.lead {
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 1.05rem;
+  line-height: 1.9;
+  margin-bottom: 3.1rem;
+}
+
+/* ===============================
+   FORM
+================================ */
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.9rem;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.label {
+  color: rgba(255, 255, 255, 0.78);
+  font-size: 0.9rem;
+  letter-spacing: 0.08em;
+}
+
+.req {
+  color: #d9b98a;
+}
+
+/* ===============================
+   INPUT / SELECT / TEXTAREA 共通
+================================ */
+.input,
+.select,
+.textarea {
+  width: 100%;
+  padding: 0.9rem 1rem;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 0.6rem;
+  color: #ffffff;
+  font-size: 0.95rem;
+  letter-spacing: 0.03em;
+  outline: none;
+  transition:
+    border 0.25s ease,
+    box-shadow 0.25s ease,
+    background-color 0.25s ease;
+  box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+}
+
+.input::placeholder,
+.textarea::placeholder {
+  color: rgba(255, 255, 255, 0.35);
+}
+
+.input:focus,
+.select:focus,
+.textarea:focus {
+  border: 1px solid rgba(217, 185, 138, 0.75);
+  background: rgba(255, 255, 255, 0.05);
+  box-shadow: 0 0 0 1px rgba(217, 185, 138, 0.35);
+}
+
+.input:focus-visible,
+.select:focus-visible,
+.textarea:focus-visible {
+  outline: none;
+}
+
+/* TEXTAREA */
+.textarea {
+  resize: vertical;
+  min-height: 140px;
+}
+
+/* ===============================
+   NOTE
+================================ */
+.note {
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.45);
+  line-height: 1.7;
+  margin-top: 0.5rem;
+}
+
+/* ===============================
+   CTA
+================================ */
+.cta {
+  text-align: center;
+  margin-top: 1.8rem;
+}
+
+.submitBtn {
+  padding: 0.95rem 3.3rem;
+  border-radius: 9999px;
+  border: 1px solid rgba(217, 185, 138, 0.85);
+  background: rgba(255, 255, 255, 0.02);
+  color: rgba(217, 185, 138, 0.94);
+  letter-spacing: 0.2em;
+  font-size: 0.9rem;
+  cursor: pointer;
+  text-transform: uppercase;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease,
+    border-color 0.3s ease,
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+  box-shadow: 0 0 18px rgba(217, 185, 138, 0.06);
+}
+
+.submitBtn:hover {
+  background: rgba(217, 185, 138, 0.92);
+  color: #000000;
+  border-color: rgba(217, 185, 138, 1);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 24px rgba(217, 185, 138, 0.3);
+}
+
+.submitBtn:active {
+  transform: translateY(0);
+  box-shadow: 0 4px 10px rgba(217, 185, 138, 0.2);
+}
+
+/* ===============================
+   MOBILE
+================================ */
+@media (max-width: 768px) {
+  .contactSection {
+    padding: 6rem 0 4.5rem;
+  }
+
+  .container {
+    padding: 0 1.4rem;
+  }
+
+  .title {
+    font-size: 2rem;
+    letter-spacing: 0.2em;
+    margin-bottom: 2rem;
+  }
+
+  .lead {
+    font-size: 1rem;
+    line-height: 1.85;
+    margin-bottom: 2.6rem;
+  }
+
+  .goldLine {
+    height: calc(100% - 2.5rem);
+    opacity: 0.7;
+  }
+
+  .submitBtn {
+    width: 100%;
+    font-size: 0.95rem;
+    padding: 1.05rem 0;
+  }
+}
+/* 送信ボタン・状態系の追加分 */
+
+/* 送信中スタイル */
+.submitDisabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+/* ステータスメッセージ */
+.status {
+  margin-top: 0.8rem;
+  font-size: 0.8rem;
+  letter-spacing: 0.05em;
+}
+
+.statusSuccess {
+  color: rgba(217, 185, 138, 0.95);
+}
+
+.statusError {
+  color: rgba(255, 120, 120, 0.9);
+}
+.select {
+  color: white;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+}
+
+.select:focus {
+  border-color: rgba(217,185,138,0.55);
+  background: rgba(255,255,255,0.08);
+}
+
+/* option の背景も統一 */
+:global(select option) {
+  background: #0b0b0b;
+  color: rgba(255,255,255,0.92);
+}

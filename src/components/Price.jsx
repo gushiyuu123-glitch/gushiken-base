@@ -30,47 +30,50 @@ export default function Price() {
         <div className="price-gold-line"></div>
 
         {/* タイトル */}
-        <h2 className="price-title" translate="no">
-          PRICE
-        </h2>
+        <h2 className="price-title" translate="no">PRICE</h2>
 
-        {/* 料金カード */}
-       <PriceCard
-  title="ランディングページ（1ページ）"
-  desc="ブランド紹介やキャンペーンなど、単ページで完結するサイト。世界観を崩さず、必要な情報を魅力的にまとめます。"
-  price="¥80,000〜"
-/>
+        {/* リード文 */}
+        <p className="price-lead">
+          制作料金の目安です。ページ数・写真素材の質・世界観演出の量によって変動します。
+          ご希望に合わせて、3つの基本プランをご用意しています。
+        </p>
 
-<PriceCard
-  title="小規模サイト（3〜5ページ）"
-  desc="サービス紹介・店舗サイト・ポートフォリオなど、しっかり構成されたWebサイトを制作します。"
-  price="¥150,000〜"
-/>
+        {/* 3プランカード */}
+        <div className="price-grid">
 
-<PriceCard
-  title="ブランドサイト"
-  desc="写真・文章・配色・世界観設計まで含めて、ブランド全体の“印象”をつくり込みます。"
-  price="¥250,000〜"
-/>
+          <PriceCard
+            label="PLAN 01"
+            title="Landing Page（1ページ）"
+            desc="ブランド紹介・キャンペーンなど、単ページで完結するサイト。世界観を崩さず必要な情報を美しくまとめます。"
+            price="¥80,000〜"
+          />
 
-<PriceCard
-  title="プレミアムデザイン"
-  desc="高度なアニメーション・体験設計・高級感ある演出を施した、唯一無二のデザインに仕上げます。"
-  price="¥350,000〜"
-/>
+          <PriceCard
+            label="PLAN 02"
+            title="Small Website（3〜5ページ）"
+            desc="サービス紹介・店舗サイト・ポートフォリオなど、しっかり構成されたWebサイトを制作します。"
+            price="¥150,000〜"
+          />
+
+          <PriceCard
+            label="PLAN 03"
+            title="Brand Site"
+            desc="写真・配色・タイポグラフィ・余白を統一し、“世界観のあるブランドサイト” を設計します。"
+            price="¥300,000〜"
+          />
+
+        </div>
 
         {/* 注記 */}
-    {/* 注記 */}
-<p className="price-note">
-  料金は、ページ数・素材（写真）・演出・機能によって変動します。<br />
-  明確なお見積りは、ヒアリング後にご提示いたします。
-</p>
+        <p className="price-note">
+          料金は、ページ数・素材（写真）・演出の量によって変動します。<br />
+          明確なお見積りは、ヒアリング後にご提示いたします。
+        </p>
 
-{/* ★ 料金ページへボタン */}
-<div className="price-cta">
-  <a href="/price" className="price-btn">料金ページへ</a>
-</div>
-
+        {/* CTA */}
+        <div className="price-cta">
+          <a href="/price" className="price-btn">料金の詳細を見る</a>
+        </div>
 
       </div>
     </section>
@@ -80,14 +83,15 @@ export default function Price() {
 /* -------------------------------------------------
    カードコンポーネント
 --------------------------------------------------- */
-function PriceCard({ title, desc, price }) {
+function PriceCard({ label, title, desc, price }) {
   return (
     <div className="price-card">
+      <p className="price-card-label">{label}</p>
       <h3 className="price-card-title">{title}</h3>
-      <p className="price-card-desc">{desc}</p>
       <p className="price-card-price">{price}</p>
+      <p className="price-card-desc">{desc}</p>
 
-      {/* 光の縦ライン（PCのみ） */}
+      {/* 光の縦ライン（ホバーで発光） */}
       <div className="price-card-glow"></div>
     </div>
   );

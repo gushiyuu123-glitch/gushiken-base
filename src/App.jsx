@@ -8,6 +8,8 @@ import Footer from "./components/FOOTER";
 import Home from "./pages/Home";
 import WorksList from "./pages/WorksList";
 import PriceDetail from "./pages/PriceDetail";
+import Contact from "./pages/Contact";   // ← ★追加
+
 import ScrollToTop from "./components/ScrollToTop";
 
 function Layout() {
@@ -16,15 +18,16 @@ function Layout() {
 
   return (
     <>
-      <ScrollToTop />   {/* ← ココが最強 */}
+      <ScrollToTop />
 
-  {/* TOP → Nav / 他ページ → NavGlobal */}
-  {isHome ? <Nav /> : <NavGlobal />}
+      {/* TOP → Nav / 他ページ → NavGlobal */}
+      {isHome ? <Nav /> : <NavGlobal />}
 
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/works" element={<WorksList />} />
         <Route path="/price" element={<PriceDetail />} />
+        <Route path="/contact" element={<Contact />} />   {/* ← ★追加 */}
       </Routes>
 
       <Footer />

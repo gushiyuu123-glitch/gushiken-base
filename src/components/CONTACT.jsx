@@ -1,10 +1,10 @@
+// src/pages/Contact.jsx
 import React, { useEffect, useRef } from "react";
 import "./contact.css";
 
 export default function Contact() {
   const sectionRef = useRef(null);
 
-  // ✨ フェードイン
   useEffect(() => {
     const el = sectionRef.current;
     if (!el) return;
@@ -26,47 +26,31 @@ export default function Contact() {
     <section ref={sectionRef} id="contact" className="contact-section">
       <div className="contact-container">
 
-        {/* 左ゴールドライン */}
+        {/* 中央ゴールドライン */}
         <div className="contact-gold-line"></div>
 
         {/* タイトル */}
-        <h2 className="contact-title" translate="no">CONTACT</h2>
+        <h2 className="contact-title" translate="no">
+          CONTACT
+        </h2>
 
         {/* リード */}
         <p className="contact-lead">
-          制作のご相談・お見積りは、下記よりお問い合わせください。<br />
+          制作のご相談・お見積りは、専用のお問い合わせページより受け付けております。<br />
           小さな内容でも構いません。まずはアイデアをお聞かせください。
         </p>
 
-        {/* メールボックス */}
-        <div className="contact-box">
-          <p className="contact-box-label">メールでのお問い合わせ：</p>
-
-          <a
-            href="mailto:gushikendesign@gmail.com"
-            className="contact-mail"
-            translate="no"
-          >
-            gushikendesign@gmail.com
+        {/* CTA */}
+        <div className="contact-cta">
+          <a href="/contact" className="contact-btn">
+            お問い合わせページへ
           </a>
-
-          <p className="contact-box-note">
-            ※ 通常 24 時間以内にご返信いたします。<br />
-            ※ 迷惑メールフォルダに入る場合がありますのでご確認ください。
-          </p>
         </div>
-        {/* CTAボタン */}
-<div className="contact-cta">
-  <a href="tel:+1234567890" className="contact-btn">
-    電話で問い合わせる
-  </a>
-</div>
 
-        {/* フッター */}
+        {/* 注意 */}
         <p className="contact-footer">
           ※ ご相談内容は秘密厳守にて取り扱います。
         </p>
-
       </div>
     </section>
   );
