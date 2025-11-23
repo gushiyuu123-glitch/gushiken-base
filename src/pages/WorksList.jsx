@@ -6,6 +6,8 @@ import WorkItem from "../components/WorkItem";
 import spaImg from "../assets/works/spa.webp";
 import lucentImg from "../assets/works/lucent.webp";
 import oriettaImg from "../assets/works/orietta.webp";
+import lueurpinkImg from "../assets/works/lueurpink.webp";
+
 
 import okinawa1 from "../assets/works/okinawa1.webp";
 import okinawa2 from "../assets/works/okinawa2.webp";
@@ -62,6 +64,13 @@ export default function WorksList() {
           <Category title="BEAUTY / SALON">
             <WorkItem title="Okinawa White Spa" desc="白 × 静寂 × 上質な余白。" link="https://okinawa-white-spa.vercel.app" img={spaImg} />
             <WorkItem title="Lucent Salon" desc="透明な光 × ミニマル。" link="https://lucent-salon.vercel.app" img={lucentImg} />
+            <WorkItem
+  title="LUEUR PINK"
+  desc="透明感×上品ピンク。若い層向け美容室。"
+  link="https://lueur-pink.vercel.app"
+  img={lueurpinkImg}
+/>
+
             <WorkItem title="BLACK ORIETTA" desc="黒 × 金 × 高級香水。" link="https://black-orietta.vercel.app" img={oriettaImg} />
           </Category>
 
