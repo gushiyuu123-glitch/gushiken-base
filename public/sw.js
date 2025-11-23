@@ -1,16 +1,14 @@
 // =====================================================
-//  GUSHIKEN DESIGN — Safe Service Worker for SPA + PWA
+//  GUSHIKEN DESIGN — Ultra-Stable Service Worker (No White Screen)
 // =====================================================
 
-const CACHE_NAME = "gushiken-design-v3";
+const CACHE_NAME = "gushiken-design-v4";
 
-// ※ index.html はキャッシュしない（SPAが死ぬから）
-// ※ / はキャッシュしない（Vite の dev サーバーが死ぬから）
+// キャッシュする安全なファイルのみ
 const STATIC_ASSETS = [
   "/offline.html",
   "/manifest.json",
 
-  // Favicons
   "/favicon-16.png",
   "/favicon-32.png",
   "/favicon-48.png",
@@ -23,6 +21,10 @@ const STATIC_ASSETS = [
   "/ogp.png"
 ];
 
+// ===========================
+// Install
+// ===========================
+
 self.addEventListener("install", (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => cache.addAll(STATIC_ASSETS))
@@ -30,34 +32,31 @@ self.addEventListener("install", (event) => {
   self.skipWaiting();
 });
 
+// ===========================
+// Activate
+// ===========================
+
 self.addEventListener("activate", (event) => {
   event.waitUntil(
     caches.keys().then((keys) =>
-      Promise.all(
-        keys.filter((key) => key !== CACHE_NAME).map((key) => caches.delete(key))
-      )
+      Promise.all(keys.filter((k) => k !== CACHE_NAME).map((k) => caches.delete(k)))
     )
   );
   self.clients.claim();
 });
 
 // ===========================
-//   Fetch Handler（最重要）
+// Fetch Handler（最重要）
 // ===========================
+
 self.addEventListener("fetch", (event) => {
   const req = event.request;
   const url = new URL(req.url);
 
-  // 外部ドメインは無視
+  // 外部ドメインは対象外
   if (url.origin !== location.origin) return;
 
-  // API はキャッシュしない
-  if (req.url.includes("/api/")) return;
-
-  // --------------------------
-  // 1) HTML → Network First
-  // --------------------------
-  // SPA のため index.html のキャッシュは禁止
+  // HTML は絶対にキャッシュしない（白画面対策）
   if (req.headers.get("accept")?.includes("text/html")) {
     event.respondWith(
       fetch(req).catch(() => caches.match("/offline.html"))
@@ -65,13 +64,10 @@ self.addEventListener("fetch", (event) => {
     return;
   }
 
-  // --------------------------
-  // 2) 静的ファイル → Cache First
-  // --------------------------
+  // その他は Cache First（安全）
   event.respondWith(
     caches.match(req).then((cached) => {
       if (cached) return cached;
-
       return fetch(req)
         .then((res) => {
           return caches.open(CACHE_NAME).then((cache) => {

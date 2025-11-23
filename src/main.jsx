@@ -11,3 +11,10 @@ createRoot(document.getElementById('root')).render(
     </BrowserRouter>
   </StrictMode>,
 );
+if (
+  "serviceWorker" in navigator &&
+  location.hostname !== "localhost" &&
+  location.hostname !== "127.0.0.1"
+) {
+  navigator.serviceWorker.register("/service-worker.js");
+}
