@@ -6,7 +6,10 @@ export default function PriceDetail() {
   const rootRef = useRef(null);
 
   useEffect(() => {
-    rootRef.current?.classList.add("show");
+    const el = rootRef.current;
+    if (!el) return;
+
+    el.classList.add("show");
   }, []);
 
   return (
@@ -14,27 +17,38 @@ export default function PriceDetail() {
       ref={rootRef}
       className="
         bg-[#0b0b0b] min-h-screen text-white
-        opacity-0 translate-y-8
-        transition-all duration-[1100ms]
+        opacity-0 translate-y-10
+        transition-all duration-[1200ms]
+        ease-[cubic-bezier(.25,.46,.45,.94)]
         py-28 px-6
       "
     >
       <div className="max-w-5xl mx-auto">
 
-        {/* ====================== */}
-        {/* タイトル */}
-        {/* ====================== */}
-        <h1 className="text-[2.6rem] tracking-[0.22em] font-light mb-8">
-          PRICE — Detail
+        {/* ─────────────── */}
+        {/*   TITLE         */}
+        {/* ─────────────── */}
+        <h1
+          className="
+            text-[2.6rem] tracking-[0.22em]
+            font-light mb-8 pl-1
+          "
+        >
+          PRICE — DETAIL
         </h1>
 
-        <p className="text-white/70 text-[1rem] leading-[1.9] mb-16 max-w-3xl">
+        <p
+          className="
+            text-white/70 text-[1rem]
+            leading-[1.9] mb-16 max-w-3xl pl-1
+          "
+        >
           制作料金の目安です。ページ数・素材の質・世界観演出の量によって変動します。
         </p>
 
-        {/* ====================== */}
-        {/* 基本料金（カード2枚） */}
-        {/* ====================== */}
+        {/* ─────────────── */}
+        {/*   基本料金       */}
+        {/* ─────────────── */}
         <SectionTitle>基本料金</SectionTitle>
 
         <div className="grid gap-12 md:grid-cols-2 mb-24">
@@ -73,17 +87,17 @@ export default function PriceDetail() {
           />
         </div>
 
-        {/* ====================== */}
-        {/* 追加オプション */}
-        {/* ====================== */}
+        {/* ─────────────── */}
+        {/*   追加オプション  */}
+        {/* ─────────────── */}
         <DetailBlock title="追加オプション">
           <li>microCMS 導入：30,000円〜</li>
           <li>AI画像生成：相談可</li>
         </DetailBlock>
 
-        {/* ====================== */}
-        {/* 修正・公開 */}
-        {/* ====================== */}
+        {/* ─────────────── */}
+        {/*   修正・公開       */}
+        {/* ─────────────── */}
         <DetailBlock title="修正・公開について">
           <li>軽微なデザイン修正：2回まで無料</li>
           <li>文章差し替え：1回無料</li>
@@ -92,9 +106,9 @@ export default function PriceDetail() {
           <li>公開〜動作確認までは無料サポート</li>
         </DetailBlock>
 
-        {/* ====================== */}
-        {/* 注意事項 */}
-        {/* ====================== */}
+        {/* ─────────────── */}
+        {/*   注意事項         */}
+        {/* ─────────────── */}
         <DetailBlock title="注意事項">
           <li>写真の質は仕上がりに大きく影響します。</li>
           <li>確定後の大幅変更は追加料金となる場合があります。</li>
@@ -102,18 +116,21 @@ export default function PriceDetail() {
           <li>納期目安：3〜6週間。</li>
         </DetailBlock>
 
-        {/* ====================== */}
-        {/* CTA */}
-        {/* ====================== */}
+        {/* ─────────────── */}
+        {/*   CTA              */}
+        {/* ─────────────── */}
         <div className="text-center mt-10">
           <Link
             to="/#contact"
             className="
               inline-block px-12 py-3
-              border border-gold text-gold
-              hover:bg-gold hover:text-black
+              border border-[rgba(217,185,138,0.7)]
+              text-[rgba(217,185,138,0.85)]
+              hover:bg-[rgba(217,185,138,0.85)]
+              hover:text-black
               transition-all duration-300
               tracking-[0.25em]
+              backdrop-blur-[2px]
             "
           >
             お問い合わせ
@@ -124,19 +141,21 @@ export default function PriceDetail() {
   );
 }
 
-/* ============================================
+/* ======================================================
    共通パーツ
-============================================ */
+===================================================== */
 
 function SectionTitle({ children }) {
   return (
-    <h2 className="text-[1.15rem] tracking-[0.18em] mb-6 text-white/90">
+    <h2 className="text-[1.15rem] tracking-[0.18em] mb-6 text-white/90 pl-1">
       {children}
     </h2>
   );
 }
 
-/* カード2枚 */
+/* ─────────────── */
+/*   カードグループ   */
+/* ─────────────── */
 function PlanGroupCard({ label, caption, plans }) {
   return (
     <div
@@ -147,11 +166,11 @@ function PlanGroupCard({ label, caption, plans }) {
         p-8
         shadow-[0_0_28px_rgba(0,0,0,0.45)]
         hover:-translate-y-1
-        hover:shadow-[0_0_38px_rgba(215,195,154,0.25)]
+        hover:shadow-[0_0_38px_rgba(217,195,154,0.25)]
         transition-all duration-300
       "
     >
-      <p className="text-[0.8rem] tracking-[0.22em] text-gold/80 mb-2">
+      <p className="text-[0.8rem] tracking-[0.22em] text-[rgba(217,185,138,0.8)] mb-2">
         {label}
       </p>
 
@@ -164,7 +183,7 @@ function PlanGroupCard({ label, caption, plans }) {
               <h3 className="text-[1.05rem] text-white tracking-[0.05em]">
                 {p.name}
               </h3>
-              <span className="text-[1rem] text-gold whitespace-nowrap">
+              <span className="text-[1rem] text-[rgba(217,185,138,0.85)] whitespace-nowrap">
                 {p.price}
               </span>
             </div>
@@ -178,13 +197,24 @@ function PlanGroupCard({ label, caption, plans }) {
   );
 }
 
-/* 横ラインで区切るラグジュアリーなブロック */
+/* ─────────────── */
+/*   Detail Block    */
+/* ─────────────── */
 function DetailBlock({ title, children }) {
   return (
     <div className="my-16">
-      <div className="w-full h-[1px] bg-[rgba(215,195,154,0.28)] mb-4"></div>
+      {/* 金1pxライン（グラデ） */}
+      <div
+        className="
+          w-full h-[1px]
+          bg-gradient-to-r
+          from-[rgba(215,195,154,0.1)]
+          to-[rgba(215,195,154,0.35)]
+          mb-4
+        "
+      ></div>
 
-      <h3 className="text-[1.05rem] tracking-[0.18em] text-white/90 mb-3">
+      <h3 className="text-[1.05rem] tracking-[0.18em] text-white/90 mb-3 pl-1">
         {title}
       </h3>
 

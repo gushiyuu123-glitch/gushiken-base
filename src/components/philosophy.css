@@ -1,24 +1,57 @@
 /* =======================================================
-   GENERAL
+   PHILOSOPHY — Noah Ultra Precision Edition
 ======================================================= */
 
+/* アニメーション初期 */
 .philo-section {
   padding: 8rem 0;
   background: linear-gradient(180deg, #0b0b0b 0%, #0a0a0a 70%, #0c0c0c 100%);
   position: relative;
+
+  opacity: 0;
+  transform: translateY(18px);
+  transition:
+    opacity 1.2s cubic-bezier(.25,.46,.45,.94),
+    transform 1.2s cubic-bezier(.25,.46,.45,.94);
 }
 
-/* 左の 1px 金ライン */
+/* IntersectionObserverで “show” 付与されたら */
+.philo-section.show {
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+}
+
+/* ===========================================
+   左 1px 金ライン（後からじわっと出る）
+=========================================== */
 .philo-gold-line {
   position: absolute;
   left: 0;
   top: 2.5rem;
   width: 1px;
   height: 88%;
-  background: rgba(215,195,154,0.25);
+
+  background: linear-gradient(
+    to bottom,
+    rgba(215,195,154,0.55),
+    rgba(215,195,154,0.12)
+  );
+
+  opacity: 0;
+  transform: translateY(20px);
+  transition:
+    opacity 1.4s cubic-bezier(.25,.46,.45,.94) 0.35s,
+    transform 1.4s cubic-bezier(.25,.46,.45,.94) 0.35s;
 }
 
-/* 導入文 */
+.philo-section.show .philo-gold-line {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ===========================================
+   テキスト（導入文 / 本文）
+=========================================== */
 .philo-lead {
   color: rgba(255,255,255,0.9);
   font-size: 1.15rem;
@@ -28,7 +61,6 @@
   padding-left: 1rem;
 }
 
-/* 本文 */
 .philo-body {
   color: rgba(255,255,255,0.70);
   font-size: 1rem;
@@ -38,7 +70,9 @@
   padding-left: 1rem;
 }
 
-/* 三原則タイトル */
+/* ===========================================
+   三原則（Order / Tension / Silence）
+=========================================== */
 .philo-subtitle {
   color: white;
   font-size: 1.25rem;
@@ -48,7 +82,6 @@
   padding-left: 1rem;
 }
 
-/* 三原則テキスト */
 .philo-subtext {
   color: rgba(255,255,255,0.55);
   font-size: 0.9rem;
@@ -56,7 +89,9 @@
   padding-left: 1rem;
 }
 
-/* 締めの言葉（ゆっくり浮上） */
+/* ===========================================
+   締めの言葉（ディレイ浮上）
+=========================================== */
 .philo-last {
   margin-top: 4rem;
   color: rgba(255,255,255,0.82);
@@ -65,18 +100,19 @@
 
   opacity: 0;
   transform: translateY(12px);
-  transition: opacity 1.2s ease 0.4s, transform 1.2s ease 0.4s;
+  transition:
+    opacity 1.2s ease 0.6s,
+    transform 1.2s ease 0.6s;
   padding-left: 1rem;
 }
 
-/* section.show が付いたら発火 */
 .philo-section.show .philo-last {
   opacity: 1;
   transform: translateY(0);
 }
 
 /* =======================================================
-   MOBILE
+   📱 MOBILE — 完全最適化
 ======================================================= */
 @media (max-width: 768px) {
 
@@ -85,14 +121,18 @@
   }
 
   .philo-gold-line {
-    height: 92%;
-    opacity: 0.5;
+    height: 94%;
+    opacity: 0.6;
   }
 
   .philo-lead,
   .philo-body {
     font-size: 1rem;
     line-height: 1.8;
+  }
+
+  .philo-subtitle {
+    font-size: 1.15rem;
   }
 
   .philo-last {

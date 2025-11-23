@@ -1,37 +1,56 @@
 /* =====================================================
-   PRICE SECTION BASE
+   PRICE SECTION — Noah Final Edition
 ===================================================== */
 
+/* ------ 出現アニメ ------ */
 .price-section {
   padding: 8rem 0;
   background: linear-gradient(180deg, #0b0b0b 0%, #0a0a0a 70%, #0c0c0c 100%);
+  position: relative;
+
   opacity: 0;
-  transform: translateY(16px);
-  transition: opacity 1.2s ease, transform 1.2s ease;
+  transform: translateY(18px);
+  transition:
+    opacity 1.2s cubic-bezier(.25,.46,.45,.94),
+    transform 1.2s cubic-bezier(.25,.46,.45,.94);
 }
 
 .price-section.show {
-  opacity: 1;
-  transform: translateY(0);
+  opacity: 1 !important;
+  transform: translateY(0) !important;
 }
 
-/* 左の金ライン */
+/* ------ 左の金ライン ------ */
 .price-gold-line {
   position: absolute;
   left: 0;
   top: 2rem;
   width: 1px;
   height: 88%;
-  background: rgba(215,195,154,0.25);
+  background: linear-gradient(
+    to bottom,
+    rgba(215,195,154,0.55),
+    rgba(215,195,154,0.12)
+  );
+  opacity: 0;
+  transform: translateY(18px);
+  transition:
+    opacity 1.4s cubic-bezier(.25,.46,.45,.94) 0.3s,
+    transform 1.4s cubic-bezier(.25,.46,.45,.94) 0.3s;
 }
 
-/* タイトル */
+.price-section.show .price-gold-line {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ------ タイトル ------ */
 .price-title {
   color: white;
   font-size: 2.6rem;
   font-weight: 300;
   letter-spacing: 0.22em;
-  margin-bottom: 3.5rem;
+  margin-bottom: 3.8rem;
   padding-left: 1rem;
 }
 
@@ -50,38 +69,54 @@
 ===================================================== */
 
 .price-card {
-  background: rgba(255,255,255,0.05);
-  border: 1px solid rgba(255,255,255,0.08);
-  padding: 2rem;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.07);
+  padding: 2.2rem;
   border-radius: 0.75rem;
   position: relative;
   overflow: hidden;
-  transition: background 0.4s ease, border-color 0.4s ease;
+
+  opacity: 0;
+  transform: translateY(16px);
+  filter: blur(4px);
+  transition:
+    opacity 1s cubic-bezier(.25,.46,.45,.94),
+    transform 1s cubic-bezier(.25,.46,.45,.94),
+    filter 1s cubic-bezier(.25,.46,.45,.94),
+    background 0.4s ease,
+    border-color 0.4s ease;
 }
 
+.price-section.show .price-card {
+  opacity: 1;
+  transform: translateY(0);
+  filter: blur(0);
+}
+
+/* hover */
 .price-card:hover {
-  background: rgba(255,255,255,0.08);
+  background: rgba(255,255,255,0.07);
   border-color: rgba(215,195,154,0.45);
 }
 
-/* タイトル */
+/* ------ タイトル ------ */
 .price-card-title {
   color: white;
   font-size: 1.4rem;
   font-weight: 300;
   letter-spacing: 0.12em;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.6rem;
 }
 
-/* 説明 */
+/* ------ 説明 ------ */
 .price-card-desc {
   color: rgba(255,255,255,0.6);
   font-size: 0.95rem;
   line-height: 1.7;
-  margin-bottom: 1.2rem;
+  margin-bottom: 1.3rem;
 }
 
-/* 価格 */
+/* ------ 価格 ------ */
 .price-card-price {
   color: white;
   font-size: 2rem;
@@ -90,23 +125,24 @@
 }
 
 /* =====================================================
-   光の縦ライン（PCのみの極薄エフェクト）
+   光の縦ライン（淡く流れるゴールド）
 ===================================================== */
 
 .price-card-glow {
-  content: "";
   position: absolute;
   top: 0;
   bottom: 0;
-  right: -30%;
-  width: 30%;
+  right: -40%;
+  width: 35%;
   background: linear-gradient(
     to left,
     rgba(215,195,154,0.18),
     rgba(215,195,154,0)
   );
   opacity: 0;
-  transition: right 0.8s ease, opacity 1s ease;
+  transition:
+    right 0.9s ease,
+    opacity 1.2s ease;
 }
 
 .price-card:hover .price-card-glow {
@@ -120,25 +156,26 @@
 
 .price-note {
   margin-top: 3rem;
-  color: rgba(255,255,255,0.5);
+  color: rgba(255,255,255,0.55);
   font-size: 0.85rem;
   letter-spacing: 0.05em;
   line-height: 1.7;
   padding-left: 1rem;
 }
-/* ===========================
-   PRICE CTA ボタン
-=========================== */
+
+/* =====================================================
+   CTA BUTTON
+===================================================== */
 
 .price-cta {
-  margin-top: 2.5rem;
+  margin-top: 2.8rem;
   text-align: center;
 }
 
 .price-btn {
   display: inline-block;
   padding: 0.65rem 2.2rem;
-  border: 1px solid rgba(217,185,138,0.65); /* ゴールド */
+  border: 1px solid rgba(217,185,138,0.65);
   color: rgba(217,185,138,0.9);
   font-size: 0.85rem;
   letter-spacing: 0.15em;
@@ -147,20 +184,10 @@
   transition: all 0.35s ease;
 }
 
-/* hover */
 .price-btn:hover {
   color: #000;
   background: rgba(217,185,138,0.85);
   border-color: rgba(217,185,138,1);
-}
-
-/* スマホ最適化 */
-@media (max-width: 480px) {
-  .price-btn {
-    padding: 0.75rem 2.6rem;
-    font-size: 0.9rem;
-    letter-spacing: 0.12em;
-  }
 }
 
 /* =====================================================
@@ -176,12 +203,12 @@
   .price-title {
     font-size: 1.9rem;
     letter-spacing: 0.18em;
-    margin-bottom: 2.5rem;
+    margin-bottom: 2.6rem;
   }
 
   .price-grid {
     grid-template-columns: 1fr;
-    gap: 1.6rem;
+    gap: 1.8rem;
   }
 
   .price-card {
@@ -190,5 +217,18 @@
 
   .price-card-price {
     font-size: 1.7rem;
+  }
+
+  .price-card-glow {
+    display: none; /* ← スマホは非表示 */
+  }
+}
+
+/* スマホ・ボタン微調整 */
+@media (max-width: 480px) {
+  .price-btn {
+    padding: 0.75rem 2.6rem;
+    font-size: 0.9rem;
+    letter-spacing: 0.12em;
   }
 }

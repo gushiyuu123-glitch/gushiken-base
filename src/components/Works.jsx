@@ -8,17 +8,33 @@ export default function Works() {
     const items = worksRef.current?.querySelectorAll(".work-card");
     if (!items) return;
 
+    // ============ Fade-in Observer ============
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          if (entry.isIntersecting) entry.target.classList.add("show");
-          else entry.target.classList.remove("show");
+          if (entry.isIntersecting) {
+            entry.target.classList.add("show");
+            observer.unobserve(entry.target); // ← 一度だけ
+          }
         });
       },
-      { threshold: 0.25 }
+      { threshold: 0.22 }
     );
 
     items.forEach((item) => observer.observe(item));
+
+    // ============ Image Loaded Handler ============
+    items.forEach((item) => {
+      const img = item.querySelector("img");
+      if (!img) return;
+
+      if (img.complete) {
+        item.classList.add("img-loaded");
+      } else {
+        img.onload = () => item.classList.add("img-loaded");
+      }
+    });
+
     return () => observer.disconnect();
   }, []);
 
@@ -26,16 +42,12 @@ export default function Works() {
     <section id="works" className="works-section" ref={worksRef}>
       <div className="works-container">
 
-        {/* タイトル */}
         <div className="works-header">
           <h2 className="works-title" translate="no">WORKS</h2>
           <p className="works-sub">SELECTED PROJECTS</p>
         </div>
 
-        {/* グリッド */}
         <div className="works-grid">
-
-          {/* ORIETTA — メイン */}
           <a
             href="https://black-orietta.vercel.app/"
             target="_blank"
@@ -49,7 +61,6 @@ export default function Works() {
             </div>
           </a>
 
-          {/* SPA */}
           <a
             href="https://okinawa-white-spa.vercel.app/"
             target="_blank"
@@ -63,7 +74,6 @@ export default function Works() {
             </div>
           </a>
 
-          {/* KOTI */}
           <a
             href="https://koti-beta.vercel.app/"
             target="_blank"
@@ -76,10 +86,8 @@ export default function Works() {
               <p>Scandinavian calm × crafted minimalism.</p>
             </div>
           </a>
-
         </div>
 
-        {/* VIEW ALL */}
         <div className="works-viewall">
           <a href="/works" className="viewall-btn">VIEW ALL WORKS</a>
         </div>

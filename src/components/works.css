@@ -1,5 +1,5 @@
 /* ================================
-   WORKS SECTION — Sharp Edition
+   WORKS SECTION — Noah Precision Edition
 ================================== */
 
 .works-section {
@@ -10,7 +10,7 @@
   background: linear-gradient(180deg, #0b0b0b 0%, #0a0a0a 40%, #0c0c0c 100%);
 }
 
-/* ---- コンテナ（タイトル＆グリッドを統合） ---- */
+/* ---- コンテナ ---- */
 .works-container {
   width: 88%;
   max-width: 1500px;
@@ -64,7 +64,7 @@
 
   opacity: 0;
   transform: translateY(45px) scale(0.96);
-  filter: blur(6px);
+  filter: blur(3px);  /* ← blur 弱めに最適化 */
   transition: all 1.2s cubic-bezier(.19,1,.22,1);
 }
 
@@ -122,39 +122,38 @@
   font-family: "Noto Sans JP", sans-serif;
 }
 
-/* ---- 右側2枚だけの金ライン ---- */
-.work-small {
-  position: relative;
-}
-
+/* ---- 右側2枚：金ライン（フェード後に出す） ---- */
 .work-small::before {
   content: "";
   position: absolute;
   inset: 0;
-  border: 1px solid rgba(215,195,154,0.35);
+  border: 1px solid rgba(215,195,154,0); /* 初期：透明 */
+  transition: border-color 1.4s ease 0.3s;
   pointer-events: none;
 }
-/* ================================
-   📱 スマホ：横スクロールギャラリー
-================================ */
+
+.work-card.show.work-small::before {
+  border-color: rgba(215,195,154,0.35); /* フェード後に出現 */
+}
+
+/* ========================================
+   📱 スマホ版：横スクロール（完全統合版）
+======================================== */
 @media (max-width: 768px) {
 
-  /* ① グリッド解除（PCレイアウトをリセット） */
+  /* グリッド解除 */
   .work-big,
   .work-small {
     grid-column: auto !important;
     grid-row: auto !important;
   }
 
-  /* ② works-grid を flex 化（最重要） */
   .works-grid {
     display: flex !important;
     flex-direction: row !important;
     overflow-x: auto !important;
     scroll-snap-type: x mandatory;
-
     gap: 1.6rem !important;
-    width: 100% !important;
     padding: 0 1rem !important;
 
     -ms-overflow-style: none;
@@ -164,24 +163,24 @@
     display: none;
   }
 
-  /* ③ カード幅を固定（これがないと2枚目以降が消える） */
+  /* カード幅強制 */
   .work-card {
-    flex: 0 0 84%;
-    min-width: 84%;     /* ← 超重要 */
-    scroll-snap-align: center;
+    width: auto !important;
+    flex: 0 0 84% !important;
+    min-width: 84% !important;
     height: auto !important;
+    scroll-snap-align: center;
   }
 
-  /* ④ 画像をスマホサイズ最適化 */
+  /* 画像最適化 */
   .work-card img {
     width: 100% !important;
     height: auto !important;
     aspect-ratio: 1 / 1.25 !important;
     object-fit: cover !important;
-    display: block;
   }
 
-  /* ⑤ タイトル小型化 */
+  /* タイトル調整 */
   .works-title {
     font-size: 1.9rem;
     letter-spacing: 0.18em;
@@ -194,7 +193,7 @@
     font-size: 0.7rem;
   }
 
-  /* ⑥ タップエフェクト（スマホだけ） */
+  /* タップエフェクト */
   .work-card::after {
     content: "";
     position: absolute;
@@ -212,41 +211,10 @@
     transition: transform 0.3s ease;
   }
 }
-/* ===============================
-   📱 完全修正：横スクロール強制
-================================ */
-@media (max-width: 768px) {
 
-  /* ここで grid の width100% を殺す */
-  .works-grid {
-    display: flex !important;
-    flex-direction: row !important;
-    overflow-x: auto !important;
-    scroll-snap-type: x mandatory;
-    gap: 1.6rem !important;
-    padding: 0 1rem !important;
-  }
-
-  /* ★ 最重要修正：幅を 84% に強制 */
-  .work-card {
-    width: auto !important;      /* ← width:100% を無効化 */
-    flex: 0 0 84% !important;    /* ← 横並びを強制 */
-    min-width: 84% !important;   /* ← Safari 対策 */
-    height: auto !important;
-    scroll-snap-align: center;
-  }
-
-  .work-card img {
-    width: 100% !important;
-    height: auto !important;
-    aspect-ratio: 1 / 1.25 !important;
-    object-fit: cover !important;
-  }
-}
 /* ===========================
    VIEW ALL WORKS ボタン
 =========================== */
-
 .works-viewall {
   margin-top: 3rem;
   text-align: center;
@@ -255,7 +223,7 @@
 .viewall-btn {
   display: inline-block;
   padding: 0.65rem 2.2rem;
-  border: 1px solid rgba(217,185,138,0.65); /* 上質ゴールド */
+  border: 1px solid rgba(217,185,138,0.65);
   color: rgba(217,185,138,0.9);
   font-size: 0.85rem;
   letter-spacing: 0.15em;
@@ -269,4 +237,3 @@
   background: rgba(217,185,138,0.85);
   border-color: rgba(217,185,138,1);
 }
-

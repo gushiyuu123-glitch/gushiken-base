@@ -1,25 +1,56 @@
 /* =======================================================
-   BASE
+   ABOUT SECTION — Noah Final Edition
 ======================================================= */
 
 .about-section {
   padding: 8rem 0;
   background: linear-gradient(180deg, #0b0b0b 0%, #0a0a0a 70%, #0c0c0c 100%);
   position: relative;
+
+  opacity: 0;
+  transform: translateY(20px);
+  transition:
+    opacity 1.2s cubic-bezier(.25,.46,.45,.94),
+    transform 1.2s cubic-bezier(.25,.46,.45,.94);
 }
 
-/* 左の 1px ゴールドライン */
+.about-section.show {
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+}
+
+/* ===========================================
+   左 1px 金ライン（遅れて浮上）
+=========================================== */
 .about-gold-line {
   position: absolute;
   left: 0;
   top: 2.5rem;
   width: 1px;
   height: 88%;
-  background: rgba(215,195,154,0.25);
+
+  background: linear-gradient(
+    to bottom,
+    rgba(215,195,154,0.55),
+    rgba(215,195,154,0.1)
+  );
+
+  opacity: 0;
+  transform: translateY(22px);
+  transition:
+    opacity 1.4s cubic-bezier(.25,.46,.45,.94) 0.35s,
+    transform 1.4s cubic-bezier(.25,.46,.45,.94) 0.35s;
 }
 
+.about-section.show .about-gold-line {
+  opacity: 1;
+  transform: translateY(0);
+}
 
-/* 文章（導入） */
+/* ===========================================
+   テキスト（導入）
+=========================================== */
+
 .about-lead {
   color: rgba(255,255,255,0.9);
   font-size: 1.15rem;
@@ -42,7 +73,7 @@
 /* 名前 */
 .about-name {
   color: white;
-  font-size: 1.3rem;
+  font-size: 1.35rem;
   font-weight: 300;
   letter-spacing: 0.12em;
   margin-bottom: 0.4rem;
@@ -52,7 +83,7 @@
 /* テキスト */
 .about-text {
   color: rgba(255,255,255,0.55);
-  font-size: 0.9rem;
+  font-size: 0.92rem;
   line-height: 1.75;
   padding-left: 1rem;
 }
@@ -63,7 +94,7 @@
   font-size: 1.15rem;
   font-weight: 300;
   letter-spacing: 0.12em;
-  margin-bottom: 0.25rem;
+  margin-bottom: 0.3rem;
   padding-left: 1rem;
 }
 
@@ -75,21 +106,25 @@
   padding-left: 1rem;
 }
 
-/* ラストの一文 → 遅れて浮上 */
+/* ===========================================
+   ラスト（遅れて浮上）
+=========================================== */
+
 .about-last {
   text-align: center;
   margin-top: 4rem;
 
-  color: rgba(255,255,255,0.8);
-  font-size: 1.2rem;
-  letter-spacing: 0.05em;
+  color: rgba(255,255,255,0.82);
+  font-size: 1.25rem;
+  letter-spacing: 0.06em;
 
   opacity: 0;
-  transform: translateY(12px);
-  transition: opacity 1.2s ease 0.4s, transform 1.2s ease 0.4s;
+  transform: translateY(14px);
+  transition:
+    opacity 1.3s ease 0.55s,
+    transform 1.3s ease 0.55s;
 }
 
-/* section.show で発火 */
 .about-section.show .about-last {
   opacity: 1;
   transform: translateY(0);
@@ -113,10 +148,19 @@
   }
 
   .about-style-title {
-    font-size: 1rem;
+    font-size: 1.02rem;
   }
 
   .about-last {
     font-size: 1.05rem;
+  }
+
+  .about-name {
+    font-size: 1.2rem;
+  }
+
+  .about-gold-line {
+    height: 93%;
+    opacity: 0.55;
   }
 }
