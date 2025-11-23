@@ -1,11 +1,12 @@
 // =====================================================
-//  GUSHIKEN DESIGN — Service Worker (Production Only)
+//  GUSHIKEN DESIGN — Safe Service Worker for SPA + PWA
 // =====================================================
 
-const CACHE_NAME = "gushiken-design-v2";
+const CACHE_NAME = "gushiken-design-v3";
 
-// 注意：Vite のビルド後のパスに依存しない構成
-const STABLE_ASSETS = [
+// ※ index.html はキャッシュしない（SPAが死ぬから）
+// ※ / はキャッシュしない（Vite の dev サーバーが死ぬから）
+const STATIC_ASSETS = [
   "/offline.html",
   "/manifest.json",
 
@@ -19,86 +20,66 @@ const STABLE_ASSETS = [
   "/favicon-256.png",
   "/favicon-512.png",
 
-  // OGP
   "/ogp.png"
 ];
 
-// -------------------------------------------
-// Install
-// -------------------------------------------
-self.addEventListener("install", event => {
+self.addEventListener("install", (event) => {
   event.waitUntil(
-    caches.open(CACHE_NAME).then(cache => {
-      return cache.addAll(STABLE_ASSETS);
-    })
+    caches.open(CACHE_NAME).then((cache) => cache.addAll(STATIC_ASSETS))
   );
   self.skipWaiting();
 });
 
-// -------------------------------------------
-// Activate
-// -------------------------------------------
-self.addEventListener("activate", event => {
+self.addEventListener("activate", (event) => {
   event.waitUntil(
-    caches.keys().then(keys =>
+    caches.keys().then((keys) =>
       Promise.all(
-        keys
-          .filter(key => key !== CACHE_NAME)
-          .map(key => caches.delete(key))
+        keys.filter((key) => key !== CACHE_NAME).map((key) => caches.delete(key))
       )
     )
   );
   self.clients.claim();
 });
 
-// -------------------------------------------
-// Fetch
-// SPA + Offline 対応
-// -------------------------------------------
-self.addEventListener("fetch", event => {
-  const request = event.request;
-  const url = new URL(request.url);
+// ===========================
+//   Fetch Handler（最重要）
+// ===========================
+self.addEventListener("fetch", (event) => {
+  const req = event.request;
+  const url = new URL(req.url);
 
-  // ✦ 外部ドメインは触らない
+  // 外部ドメインは無視
   if (url.origin !== location.origin) return;
 
-  // ✦ API はキャッシュしない
-  if (request.url.includes("/api/")) return;
+  // API はキャッシュしない
+  if (req.url.includes("/api/")) return;
 
-  // --------------------------------------------------
-  // 1) キャッシュ優先（静的ファイル）
-  // --------------------------------------------------
-  if (STABLE_ASSETS.includes(url.pathname)) {
-    event.respondWith(caches.match(request));
-    return;
-  }
-
-  // --------------------------------------------------
-  // 2) HTML リクエスト → SPA fallback + offline
-  // --------------------------------------------------
-  if (request.headers.get("accept")?.includes("text/html")) {
+  // --------------------------
+  // 1) HTML → Network First
+  // --------------------------
+  // SPA のため index.html のキャッシュは禁止
+  if (req.headers.get("accept")?.includes("text/html")) {
     event.respondWith(
-      fetch(request).catch(() => caches.match("/offline.html"))
+      fetch(req).catch(() => caches.match("/offline.html"))
     );
     return;
   }
 
-  // --------------------------------------------------
-  // 3) 画像・CSS・JS → Cache first with network fallback
-  // --------------------------------------------------
+  // --------------------------
+  // 2) 静的ファイル → Cache First
+  // --------------------------
   event.respondWith(
-    caches.match(request).then(cacheRes => {
-      return (
-        cacheRes ||
-        fetch(request)
-          .then(networkRes => {
-            return caches.open(CACHE_NAME).then(cache => {
-              cache.put(request, networkRes.clone());
-              return networkRes;
-            });
-          })
-          .catch(() => caches.match("/offline.html"))
-      );
+    caches.match(req).then((cached) => {
+      if (cached) return cached;
+
+      return fetch(req)
+        .then((res) => {
+          return caches.open(CACHE_NAME).then((cache) => {
+            cache.put(req, res.clone());
+            return res;
+          });
+        })
+        .catch(() => caches.match("/offline.html"));
     })
   );
 });
