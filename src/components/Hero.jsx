@@ -47,16 +47,18 @@ export default function Hero() {
       />
 
       {/* ===== テキスト背後の光グラデ（暗くせずに深度） ===== */}
-      <div
-        className="
-          absolute left-0 bottom-0
-          w-full h-[200px]
-          bg-gradient-to-t
-          from-[rgba(255,255,255,0.16)]
-          to-transparent
-          pointer-events-none
-        "
-      />
+     {/* ===== テキスト背後の光グラデ（もっと薄く） ===== */}
+<div
+  className="
+    absolute left-0 bottom-0
+    w-full h-[200px]
+    bg-gradient-to-t
+    from-[rgba(255,255,255,0.10)]
+    to-transparent
+    pointer-events-none
+  "
+/>
+
 
       {/* ===== 超薄グラス効果（透明感 + 空気の層） ===== */}
       <div
