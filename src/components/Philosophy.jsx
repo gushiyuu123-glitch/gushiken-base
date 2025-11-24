@@ -36,7 +36,7 @@ export default function Philosophy() {
     >
       <div className="max-w-4xl mx-auto px-6 relative">
 
-        {/* 左ライン（ブランドの象徴） */}
+        {/* 左ライン（装飾） */}
         <div className="philo-gold-line"></div>
 
         {/* タイトル */}
@@ -55,19 +55,18 @@ export default function Philosophy() {
 
         {/* 導入文 */}
         <p className="philo-lead">
-          美しいものをつくることに、妥協はありません。<br />
-          デザインの核心は年数ではなく、
-          光・配置・余白に対する感覚だと考えています。
+          デザインは、“伝わる形に整えること”だと考えています。<br />
+          むずかしい演出ではなく、見る人が自然に理解できる設計を大切にしています。
         </p>
 
         {/* 本文 */}
         <p className="philo-body">
-          デザインは、情報を並べる行為ではなく、
-          「空気」をつくる行為だと思っています。<br />
-          光の方向、余白の緊張、配置の呼吸。
-          それらが揃った瞬間、画面は作品へと変わる。<br />
-          派手さではなく、静寂に美を宿す——
-          その美しさこそ、人の感情を動かす力を持っています。
+          サイトは、情報を並べただけでは魅力が伝わりません。<br />
+          文字の強弱、写真の余白、視線の流れ。<br />
+          そのひとつひとつが積み重なることで、はじめて世界観が生まれます。<br /><br />
+
+          特別なテクニックより、基本を丁寧に。<br />
+          その姿勢が「見やすさ」と「美しさ」を両立させる鍵だと思っています。
         </p>
 
         {/* 三原則 */}
@@ -75,27 +74,30 @@ export default function Philosophy() {
           <div>
             <h3 className="philo-subtitle">1. Order（秩序）</h3>
             <p className="philo-subtext">
-              すべての配置に理由をつくり、画面に整合性を与える。
+              情報の優先順位を整理し、迷わず読める導線をつくります。
             </p>
           </div>
 
           <div>
             <h3 className="philo-subtitle">2. Tension（緊張）</h3>
             <p className="philo-subtext">
-              わずかなズレと間隔が、視線の流れをつくり出す。
+              わずかな“間”やコントラストが、画面にリズムと表情を与えます。
             </p>
           </div>
 
           <div>
             <h3 className="philo-subtitle">3. Silence（静寂）</h3>
             <p className="philo-subtext">
-              余白に呼吸を与え、画面に深さと余韻を残す。
+              余白はただ空いている部分ではなく、印象を整える大切な要素です。
             </p>
           </div>
         </div>
 
-        {/* 締めの言葉 → ゆっくり浮上 */}
-        <p className="philo-last">美しさは偶然ではない。配置と光が、それを決める。</p>
+        {/* 締めの言葉 */}
+        <p className="philo-last">
+          見やすく、心地よく、長く使えるデザインを。<br />
+          その思いを軸に、ひとつひとつ丁寧に制作しています。
+        </p>
 
       </div>
     </section>

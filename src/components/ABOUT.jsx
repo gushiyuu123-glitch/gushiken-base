@@ -27,7 +27,7 @@ export default function About() {
       id="about"
       ref={sectionRef}
       className="
-        about-section 
+        about-section
         opacity-0 translate-y-10
         transition-all duration-[1200ms]
         ease-[cubic-bezier(.25,.46,.45,.94)]
@@ -48,68 +48,68 @@ export default function About() {
 
         {/* 導入文 */}
         <p className="about-lead">
-          美しさは偶然ではありません。<br />
-          光の方向、余白の緊張、配置の呼吸——  
-          それらが整ったとき、画面は「作品」へと変わります。
+          デザインは、“見やすさと世界観のバランス”だと考えています。<br />
+          光・余白・配置の関係を整えることで、情報は自然と伝わりやすくなります。
         </p>
 
         {/* 世界観コンセプト */}
         <p className="about-body">
-          私は、デザインを単なる制作物ではなく、  
-          “空気をつくる行為” だと考えています。  
-          情報を並べるのではなく、世界観を設計する。<br />
-          見た瞬間に心が動く。  
-          その「一瞬の体験」こそが、デザインの本質だと思っています。
+          ただ装飾するのではなく、読み手がストレスなく理解できる構造をつくること。<br />
+          その上で、写真・タイポグラフィ・レイアウトを組み合わせ、  
+          ブランドの空気を丁寧に形にしていきます。<br /><br />
+          「派手ではないのに、印象に残る」  
+          そんなデザインを目指しています。
         </p>
 
         {/* 制作者紹介 */}
         <div className="mb-16">
           <h3 className="about-name" translate="no">Gushiken Yuto</h3>
           <p className="about-text">
-            Designer / Front-end Creator  
-            沖縄を拠点に、世界観を重視したブランドサイトを制作しています。<br />
-            写真、レイアウト、アニメーションを総合して  
-            “空気のあるデザイン” を生み出すことを得意としています。
+            Designer / Front-end Creator<br />
+            沖縄を拠点に、ブランドサイト・サロン・ショップなど  
+            世界観を重視したデザイン制作を行っています。<br /><br />
+            理解しやすい構成と、静かで深い印象を与えるビジュアル。  
+            その両方を両立させるため、デザインとコーディングを一体で考えています。
           </p>
         </div>
 
         {/* 制作スタイル */}
         <div className="space-y-8 mb-20">
+
           <div>
-            <h4 className="about-style-title">・余白と整列を徹底する</h4>
+            <h4 className="about-style-title">・整列と余白を丁寧に扱う</h4>
             <p className="about-style-text">
-              画面に存在する全てのライン・距離に理由をつくり、  
-              デザイン全体の“秩序”を統一します。
+              情報の優先度に合わせて距離やレイアウトを調整し、
+              ストレスなく読み進められる画面をつくります。
             </p>
           </div>
 
           <div>
-            <h4 className="about-style-title">・世界観と写真の整合性を最優先</h4>
+            <h4 className="about-style-title">・世界観と写真の一貫性を大切に</h4>
             <p className="about-style-text">
-              配色・光の方向・質感を揃えることで、  
-              ブランドの空気を損なわずに伝えます。
+              明るさ・色味・質感を揃えることで、ブランドの印象が太く伝わります。
             </p>
           </div>
 
           <div>
-            <h4 className="about-style-title">・アニメーションは最小で美しく</h4>
+            <h4 className="about-style-title">・アニメーションは最小限で美しく</h4>
             <p className="about-style-text">
-              必要以上に動かさず、「深呼吸する画面」を意識して設計します。
+              動きすぎない“静かな演出”を意識し、サイト全体の空気を整えます。
             </p>
           </div>
 
           <div>
-            <h4 className="about-style-title">・デザインとコードを一体で考える</h4>
+            <h4 className="about-style-title">・デザインと技術の接続まで意識</h4>
             <p className="about-style-text">
-              レイアウト・演出・技術の接続性から逆算して、  
-              破綻のない美しい UI を構築します。
+              コードで再現できる構造を前提に設計し、破綻のない UI に仕上げます。
             </p>
           </div>
+
         </div>
 
-        {/* ラスト → 遅れて浮上 */}
+        {/* ラスト */}
         <p className="about-last">
-          あなたのブランドを、美しく設計します。
+          ブランドの“らしさ”を、美しく分かりやすく形にします。
         </p>
       </div>
     </section>
