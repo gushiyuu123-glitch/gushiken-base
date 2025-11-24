@@ -38,13 +38,15 @@ export default function Hero() {
       </div>
 
       {/* ===== 白の極薄レイヤー（明るすぎを抑えて深度残す） ===== */}
-      <div
-        className="
-          absolute inset-0
-          bg-[rgba(255,255,255,0.05)]
-          pointer-events-none
-        "
-      />
+{/* 背景をさらに薄くする白レイヤー */}
+<div
+  className="
+    absolute inset-0
+    bg-[rgba(255,255,255,0.03)]  /* ← 超上品な薄さ */
+    pointer-events-none
+  "
+/>
+
 
       {/* ===== テキスト背後の光グラデ（暗くせずに深度） ===== */}
      {/* ===== テキスト背後の光グラデ（もっと薄く） ===== */}
