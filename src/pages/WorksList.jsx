@@ -15,6 +15,7 @@ import calmImg from "../assets/works/calm.webp";
 
 import ittoImg from "../assets/works/itto.webp";
 import kotiImg from "../assets/works/koti.webp";
+import activedaysImg from "../assets/works/activedays.webp";
 import ryukaImg from "../assets/works/ryuka.webp";
 
 import teaImg from "../assets/works/tea.webp";
@@ -65,11 +66,11 @@ export default function WorksList() {
             <WorkItem title="Okinawa White Spa" desc="白 × 静寂 × 上質な余白。" link="https://okinawa-white-spa.vercel.app" img={spaImg} />
             <WorkItem title="Lucent Salon" desc="透明な光 × ミニマル。" link="https://lucent-salon.vercel.app" img={lucentImg} />
             <WorkItem
-  title="LUEUR PINK"
-  desc="透明感×上品ピンク。若い層向け美容室。"
-  link="https://lueur-pink.vercel.app"
-  img={lueurpinkImg}
-/>
+              title="LUEUR PINK"
+              desc="透明感×上品ピンク。若い層向け美容室。"
+              link="https://lueur-pink.vercel.app"
+              img={lueurpinkImg}
+            />
 
             <WorkItem title="BLACK ORIETTA" desc="黒 × 金 × 高級香水。" link="https://black-orietta.vercel.app" img={oriettaImg} />
           </Category>
@@ -85,6 +86,13 @@ export default function WorksList() {
           <Category title="FOOD / FURNITURE / BRAND">
             <WorkItem title="Aburiya Itto" desc="和 × 炙り × ラグジュアリー。" link="https://aburiya-itto.vercel.app" img={ittoImg} />
             <WorkItem title="Koti — Furniture" desc="北欧の光 × 木の温度。" link="https://koti-beta.vercel.app" img={kotiImg} />
+            {/* ★ ACTIVE DAYS：ここに自然に溶け込む */}
+            <WorkItem
+              title="ACTIVE DAYS"
+              desc="黒 × スポーティ × 都会的ジムブランド。"
+              link="https://active-days.vercel.app"
+              img={activedaysImg}
+            />
             <WorkItem title="RYUKA — Fragrance" desc="自然光 × 琉球の香り。" link="https://ryuka-official.vercel.app" img={ryukaImg} />
           </Category>
 
