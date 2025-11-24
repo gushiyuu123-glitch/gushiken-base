@@ -53,7 +53,7 @@ export default function Hero() {
     absolute left-0 bottom-0
     w-full h-[200px]
     bg-gradient-to-t
-    from-[rgba(255,255,255,0.10)]
+   from-[rgba(255,255,255,0.08)]
     to-transparent
     pointer-events-none
   "
