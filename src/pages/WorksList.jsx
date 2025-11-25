@@ -2,12 +2,13 @@
 import React, { useEffect, useRef } from "react";
 import WorkItem from "../components/WorkItem";
 
-// === 画像 import ===
+/* ============================
+   ★ Works Thumbnails Import
+============================ */
 import spaImg from "../assets/works/spa.webp";
 import lucentImg from "../assets/works/lucent.webp";
 import oriettaImg from "../assets/works/orietta.webp";
 import lueurpinkImg from "../assets/works/lueurpink.webp";
-
 
 import okinawa1 from "../assets/works/okinawa1.webp";
 import okinawa2 from "../assets/works/okinawa2.webp";
@@ -20,6 +21,9 @@ import ryukaImg from "../assets/works/ryuka.webp";
 
 import teaImg from "../assets/works/tea.webp";
 import rayImg from "../assets/works/ray.webp";
+
+/* ★ OkiLato（新作） */
+import okilatoImg from "../assets/works/okilato.webp";
 
 export default function WorksList() {
   const rootRef = useRef(null);
@@ -61,32 +65,55 @@ export default function WorksList() {
 
         <div className="space-y-32">
 
-          {/* === BEAUTY === */}
+          {/* =============================== */}
+          {/*     BEAUTY / SALON             */}
+          {/* =============================== */}
           <Category title="BEAUTY / SALON">
             <WorkItem title="Okinawa White Spa" desc="白 × 静寂 × 上質な余白。" link="https://okinawa-white-spa.vercel.app" img={spaImg} />
-            <WorkItem title="Lucent Salon" desc="透明な光 × ミニマル。" link="https://lucent-salon.vercel.app" img={lucentImg} />
+            {/* ↓ Lucentはスマホ特化へ移動したためここから削除 ↓ */}
             <WorkItem
               title="LUEUR PINK"
               desc="透明感×上品ピンク。若い層向け美容室。"
               link="https://lueur-pink.vercel.app"
               img={lueurpinkImg}
             />
-
             <WorkItem title="BLACK ORIETTA" desc="黒 × 金 × 高級香水。" link="https://black-orietta.vercel.app" img={oriettaImg} />
           </Category>
 
-          {/* === HOTEL === */}
+          {/* =============================== */}
+          {/*   ★ SMARTPHONE DESIGN 新設      */}
+          {/* =============================== */}
+          <Category title="SMARTPHONE / MOBILE DESIGN">
+            <WorkItem
+              title="OkiLato — Island Freshness"
+              desc="南国 × ターコイズ × スマホ特化設計。"
+              link="https://oki-lato.vercel.app"
+              img={okilatoImg}
+            />
+
+            <WorkItem
+              title="Lucent Salon"
+              desc="透明光 × スマホ最適化ミニマル。"
+              link="https://lucent-salon.vercel.app"
+              img={lucentImg}
+            />
+          </Category>
+
+          {/* =============================== */}
+          {/*           HOTEL                */}
+          {/* =============================== */}
           <Category title="HOTEL">
             <WorkItem title="Okinawa Resort Hotel" desc="光と青のホテルLP。" link="https://okinawa-hotel.vercel.app" img={okinawa1} />
             <WorkItem title="Horizon Blanc" desc="朝光 × 静寂。" link="https://okinawa-resort-hotel.vercel.app" img={okinawa2} />
             <WorkItem title="The Calm Okinawa" desc="海 × 透明感 × 静寂。" link="https://the-calm-okinawa.vercel.app" img={calmImg} />
           </Category>
 
-          {/* === FOOD / FURNITURE === */}
+          {/* =============================== */}
+          {/*  FOOD / FURNITURE / BRAND       */}
+          {/* =============================== */}
           <Category title="FOOD / FURNITURE / BRAND">
             <WorkItem title="Aburiya Itto" desc="和 × 炙り × ラグジュアリー。" link="https://aburiya-itto.vercel.app" img={ittoImg} />
             <WorkItem title="Koti — Furniture" desc="北欧の光 × 木の温度。" link="https://koti-beta.vercel.app" img={kotiImg} />
-            {/* ★ ACTIVE DAYS：ここに自然に溶け込む */}
             <WorkItem
               title="ACTIVE DAYS"
               desc="黒 × スポーティ × 都会的ジムブランド。"
@@ -96,7 +123,9 @@ export default function WorksList() {
             <WorkItem title="RYUKA — Fragrance" desc="自然光 × 琉球の香り。" link="https://ryuka-official.vercel.app" img={ryukaImg} />
           </Category>
 
-          {/* === ART === */}
+          {/* =============================== */}
+          {/*        ART / CREATIVE           */}
+          {/* =============================== */}
           <Category title="ART / CREATIVE">
             <WorkItem title="The Flow of Tea" desc="茶 × 余白 × 世界観。" link="https://flow-of-tea.vercel.app" img={teaImg} />
             <WorkItem title="Ray of Silence" desc="光と影の静寂アート。" link="https://ray-of-silence.vercel.app" img={rayImg} />
@@ -109,7 +138,7 @@ export default function WorksList() {
 }
 
 /* ============================================================
-   CATEGORY（スマホ横スクロール＋フェード＋PC2→3最適化）
+   CATEGORY（スマホ横スクロール＋PC2→3カラム最適化）
 ============================================================ */
 function Category({ title, children }) {
   return (
@@ -142,7 +171,7 @@ function Category({ title, children }) {
         </div>
       </div>
 
-      {/* PC：2 → 3 カラム最適化 */}
+      {/* PC：2 → 3 カラム */}
       <div
         className="
           hidden sm:grid
