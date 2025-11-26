@@ -5,7 +5,9 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "prebuild": "node scripts/bump-sw-stamp.cjs",
     "build": "node scripts/generate-sitemap.cjs && vite build",
+    "bump-sw": "node scripts/bump-sw-stamp.cjs",
     "check-no-touch": "node scripts/check-no-touch.cjs",
     "generate-sitemap": "node scripts/generate-sitemap.cjs",
     "lint": "eslint .",

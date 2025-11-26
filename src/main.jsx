@@ -32,6 +32,25 @@ if (
   });
 }
 
+// If a new service worker is waiting to activate, ask it to skipWaiting so the
+// new version takes control immediately. We do this in production only to avoid
+// interfering with local development flows.
+if (!import.meta.env.DEV && "serviceWorker" in navigator) {
+  try {
+    navigator.serviceWorker.getRegistration().then((reg) => {
+      if (reg && reg.waiting) {
+        try {
+          reg.waiting.postMessage({ type: 'SKIP_WAITING' });
+        } catch (e) {
+          // ignore
+        }
+      }
+    });
+  } catch (e) {
+    // ignore
+  }
+}
+
 // Development helper: unregister any service workers and clear caches when running locally.
 // This prevents stale caches from interfering with local development.
 if (import.meta.env.DEV && "serviceWorker" in navigator) {
