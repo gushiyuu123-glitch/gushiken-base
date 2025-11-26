@@ -31,3 +31,22 @@ if (
     }
   });
 }
+
+// Development helper: unregister any service workers and clear caches when running locally.
+// This prevents stale caches from interfering with local development.
+if (import.meta.env.DEV && "serviceWorker" in navigator) {
+  try {
+    navigator.serviceWorker.getRegistrations().then((regs) => {
+      regs.forEach((reg) => {
+        reg.unregister().catch(() => {});
+      });
+    });
+    if (window.caches && caches.keys) {
+      caches.keys().then((keys) => Promise.all(keys.map((k) => caches.delete(k))));
+    }
+    // eslint-disable-next-line no-console
+    console.info('Dev: cleared service workers and caches to avoid stale assets');
+  } catch (e) {
+    // ignore
+  }
+}
