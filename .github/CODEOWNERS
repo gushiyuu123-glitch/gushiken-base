@@ -1,0 +1,8 @@
+# Require approval from repository owner for UI files
+src/components/ @gushiyuu123-glitch
+src/pages/ @gushiyuu123-glitch
+src/layouts/ @gushiyuu123-glitch
+src/**/*.css @gushiyuu123-glitch
+src/**/*.scss @gushiyuu123-glitch
+public/**/*.html @gushiyuu123-glitch
+index.html @gushiyuu123-glitch
