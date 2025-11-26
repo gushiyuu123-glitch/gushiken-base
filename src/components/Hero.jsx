@@ -26,6 +26,7 @@ export default function Hero() {
       <div className="absolute inset-0 overflow-hidden">
         <img
           src={hero}
+          alt="GUSHIKEN DESIGN — hero"
           className="
             w-full h-full object-cover
             scale-[1.015]

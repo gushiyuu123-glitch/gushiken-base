@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+# Sitemap (update SITE_URL env if needed)
+Sitemap: https://gushiken-base.vercel.app/sitemap.xml
