@@ -57,19 +57,20 @@ export default function Footer() {
         </div>
 
         {/* ─ 中央：ミニマルナビ ─ */}
-        <nav
-          className="
-            flex flex-col md:flex-row
-            gap-3 md:gap-9
-            text-sm tracking-[0.10em]
-          "
-        >
-          <a href="#works"      className="footer-link" translate="no">WORKS</a>
-          <a href="#philosophy" className="footer-link" translate="no">PHILOSOPHY</a>
-          <a href="#about"      className="footer-link" translate="no">ABOUT</a>
-          <a href="#price"      className="footer-link" translate="no">PRICE</a>
-          <a href="#contact"    className="footer-link" translate="no">CONTACT</a>
-        </nav>
+       <nav
+  className="
+    flex flex-col md:flex-row
+    gap-3 md:gap-9
+    text-sm tracking-[0.10em]
+  "
+>
+  <a href="/#works"      className="footer-link">WORKS</a>
+  <a href="/#philosophy" className="footer-link">PHILOSOPHY</a>
+  <a href="/#about"      className="footer-link">ABOUT</a>
+  <a href="/#price"      className="footer-link">PRICE</a>
+  <a href="/#contact"    className="footer-link">CONTACT</a>
+</nav>
+
 
         {/* ─ 右：SNS ─ */}
         <div className="flex items-center gap-6">
