@@ -41,7 +41,7 @@ export default function Home() {
     }
 
     const link = document.querySelector('link[rel="canonical"]');
-    const url = process.env.SITE_URL || 'https://gushiken-base.vercel.app/';
+    const url = import.meta.env.VITE_SITE_URL || window.location.origin || 'https://gushiken-base.vercel.app/';
     if (link) {
       link.setAttribute('href', url);
     } else {
