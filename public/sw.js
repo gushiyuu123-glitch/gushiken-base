@@ -2,9 +2,9 @@
 //  GUSHIKEN DESIGN — Ultra-Stable Service Worker (No White Screen)
 // =====================================================
 
-const CACHE_NAME = "gushiken-design-v4";
+const CACHE_NAME = "gushiken-design-v5";
 
-// キャッシュする安全なファイルのみ
+// キャッシュする安全なファイルのみ（public にある実際のファイルに合わせる）
 const STATIC_ASSETS = [
   "/offline.html",
   "/manifest.json",
@@ -12,13 +12,16 @@ const STATIC_ASSETS = [
   "/favicon-16.png",
   "/favicon-32.png",
   "/favicon-48.png",
+  "/favicon-64.png",
   "/favicon-96.png",
-  "/favicon-180.png",
+  "/favicon-128.png",
   "/favicon-192.png",
   "/favicon-256.png",
   "/favicon-512.png",
 
-  "/ogp.png"
+  "/ogp.png",
+  "/sitemap.xml",
+  "/robots.txt"
 ];
 
 // ===========================
@@ -43,6 +46,13 @@ self.addEventListener("activate", (event) => {
     )
   );
   self.clients.claim();
+
+  // notify clients that a new SW has taken control
+  self.clients.matchAll().then((clients) => {
+    clients.forEach((client) => {
+      client.postMessage({ type: 'SW_UPDATED', version: CACHE_NAME });
+    });
+  });
 });
 
 // ===========================
@@ -78,4 +88,12 @@ self.addEventListener("fetch", (event) => {
         .catch(() => caches.match("/offline.html"));
     })
   );
+});
+
+// Allow the page to instruct the SW to skip waiting (for immediate activation)
+self.addEventListener('message', (event) => {
+  if (!event.data) return;
+  if (event.data.type === 'SKIP_WAITING') {
+    self.skipWaiting();
+  }
 });

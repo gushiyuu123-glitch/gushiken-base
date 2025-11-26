@@ -16,5 +16,18 @@ if (
   location.hostname !== "localhost" &&
   location.hostname !== "127.0.0.1"
 ) {
-  navigator.serviceWorker.register("/service-worker.js");
+  // NOTE: registration is handled in index.html for production; this adds a runtime
+  // listener for SW messages so the app can react when a new service worker activates.
+  navigator.serviceWorker.addEventListener('message', (evt) => {
+    try {
+      const data = evt.data;
+      if (data && data.type === 'SW_UPDATED') {
+        // auto reload to get new assets (can be changed to a user prompt)
+        console.info('ServiceWorker updated to', data.version, '- reloading page to refresh cache');
+        window.location.reload(true);
+      }
+    } catch (e) {
+      console.warn('SW message handling failed', e);
+    }
+  });
 }
