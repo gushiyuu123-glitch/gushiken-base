@@ -1,28 +1,35 @@
 const fs = require('fs');
 const path = require('path');
 
-// This script updates the CACHE_STAMP constant in public/sw.js to a
-// timestamp-based value so each deploy uses a new cache name and old
-// caches are evicted by the service worker.
-
+// Bump the CACHE_STAMP in public/sw.js to a timestamped value.
 const swPath = path.join(__dirname, '..', 'public', 'sw.js');
+
+function makeStamp() {
+  const now = new Date();
+  const y = now.getFullYear();
+  const m = String(now.getMonth() + 1).padStart(2, '0');
+  const d = String(now.getDate()).padStart(2, '0');
+  const hh = String(now.getHours()).padStart(2, '0');
+  const mm = String(now.getMinutes()).padStart(2, '0');
+  const ss = String(now.getSeconds()).padStart(2, '0');
+  return `v${y}${m}${d}${hh}${mm}${ss}`; // vYYYYMMDDhhmmss
+}
 
 if (!fs.existsSync(swPath)) {
   console.error('sw.js not found at', swPath);
-  process.exit(1);
+  process.exitCode = 1;
 }
 
-const now = new Date();
-const stamp = `v${now.getFullYear()}${String(now.getMonth()+1).padStart(2,'0')}${String(now.getDate()).padStart(2,'0')}-${String(now.getHours()).padStart(2,'0')}${String(now.getMinutes()).padStart(2,'0')}${String(now.getSeconds()).padStart(2,'0')}`;
-
+const stamp = makeStamp();
 let content = fs.readFileSync(swPath, 'utf8');
 
-const replaced = content.replace(/const CACHE_STAMP = \".*?\";?/s, `const CACHE_STAMP = \"${stamp}\";`);
+const newContent = content.replace(/const\s+CACHE_STAMP\s*=\s*"[^"]*"\s*;?/, `const CACHE_STAMP = "${stamp}";`);
 
-if (replaced === content) {
+if (newContent === content) {
   console.error('Failed to replace CACHE_STAMP in', swPath);
-  process.exit(1);
+  process.exitCode = 1;
 }
 
-fs.writeFileSync(swPath, replaced, 'utf8');
+fs.writeFileSync(swPath, newContent, 'utf8');
 console.log('Updated CACHE_STAMP to', stamp);
+

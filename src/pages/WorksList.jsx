@@ -20,8 +20,12 @@ import ryukaImg from "../assets/works/ryuka.webp";
 import teaImg from "../assets/works/tea.webp";
 import rayImg from "../assets/works/ray.webp";
 
-// ✅ OkiLato用サムネを追加
+// OkiLato サムネ
 import okilatoImg from "../assets/works/okilato.webp";
+
+// 🚀 FINE のサムネイル
+import fineImg from "../assets/works/fine.webp"; 
+// ↑ まだ画像ないなら仮で追加して、あとで差し替え可
 
 export default function WorksList() {
   const rootRef = useRef(null);
@@ -45,7 +49,7 @@ export default function WorksList() {
   return (
     <section className="bg-[#070604] min-h-screen py-24 px-6 md:px-10 lg:px-16">
       <div ref={rootRef} className="max-w-6xl lg:max-w-7xl mx-auto">
-        {/* === Title Block === */}
+        {/* === TOP BLOCK === */}
         <div className="fade-up mb-20">
           <p className="text-[0.7rem] md:text-xs tracking-[0.28em] text-white/40 mb-4">
             SELECTED WORKS
@@ -64,6 +68,7 @@ export default function WorksList() {
         <div className="fade-up w-16 h-px bg-white/12 mb-20" />
 
         <div className="space-y-32">
+
           {/* === BEAUTY === */}
           <Category title="BEAUTY / SALON">
             <WorkItem
@@ -86,7 +91,7 @@ export default function WorksList() {
             />
           </Category>
 
-          {/* === SMARTPHONE / MOBILE DESIGN === */}
+          {/* === SMARTPHONE === */}
           <Category title="SMARTPHONE / MOBILE DESIGN">
             <WorkItem
               title="OkiLato — Island Freshness"
@@ -124,7 +129,7 @@ export default function WorksList() {
             />
           </Category>
 
-          {/* === FOOD / FURNITURE / BRAND === */}
+          {/* === FOOD / BRAND === */}
           <Category title="FOOD / FURNITURE / BRAND">
             <WorkItem
               title="Aburiya Itto"
@@ -152,7 +157,17 @@ export default function WorksList() {
             />
           </Category>
 
-          {/* === ART / CREATIVE === */}
+          {/* === FINE（実案件）ここに追加 === */}
+          <Category title="MATCHING / REAL BUSINESS PROJECT">
+            <WorkItem
+              title="FINE — Okinawa Edition"
+              desc="40代からの穏やかな出会い。実際に稼働中の事業として制作。許可を得て掲載しています。"
+              link="https://fine-seven-kappa.vercel.app/"
+              img={fineImg}
+            />
+          </Category>
+
+          {/* === ART === */}
           <Category title="ART / CREATIVE">
             <WorkItem
               title="The Flow of Tea"
@@ -173,13 +188,13 @@ export default function WorksList() {
   );
 }
 
+
 /* ============================================================
-   CATEGORY（スマホ横スクロール＋フェード＋PC2→3最適化）
+   CATEGORY
 ============================================================ */
 function Category({ title, children }) {
   return (
     <section className="fade-up">
-      {/* 見出し */}
       <div className="flex items-baseline justify-between mb-8">
         <h2 className="category-title text-white text-[0.95rem] md:text-[1.05rem] font-light">
           {title}
@@ -206,7 +221,7 @@ function Category({ title, children }) {
         </div>
       </div>
 
-      {/* PC：2 → 3 カラム最適化 */}
+      {/* PC：2 → 3 カラム */}
       <div
         className="
           hidden sm:grid
