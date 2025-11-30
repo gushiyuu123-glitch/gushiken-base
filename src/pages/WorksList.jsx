@@ -162,7 +162,7 @@ export default function WorksList() {
             <WorkItem
               title="FINE — Okinawa Edition"
               desc="40代からの穏やかな出会い。実際に稼働中の事業として制作。許可を得て掲載しています。"
-              link="https://fine-seven-kappa.vercel.app/"
+              link="https://fine-okinawa.vercel.app/"
               img={fineImg}
             />
           </Category>
