@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
 
   <!-- =============================== -->
-  <!-- 基本設定 -->
+  <!-- 基本設定（SEO基礎） -->
   <!-- =============================== -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="google" content="notranslate" />
@@ -12,75 +12,36 @@
   <link rel="canonical" href="https://gushiken-base.vercel.app/" />
 
   <!-- =============================== -->
-  <!-- JSON-LD（構造化データ / 統合版） -->
+  <!-- title（検索に最も効く） -->
   <!-- =============================== -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "Person",
-        "@id": "https://gushiken-base.vercel.app/#yuto",
-        "name": "Yuto Gushiken",
-        "alternateName": "GUSHIKEN DESIGN",
-        "jobTitle": "Web Designer / Front-End Developer",
-        "url": "https://gushiken-base.vercel.app/",
-        "image": "https://gushiken-base.vercel.app/ogp.png",
-        "description": "沖縄 × 光 × 静寂 を軸にしたWebデザイナー。",
-        "sameAs": [
-          "https://gushiken-base.vercel.app/"
-        ]
-      },
-      {
-        "@type": "Organization",
-        "@id": "https://gushiken-base.vercel.app/#org",
-        "name": "GUSHIKEN DESIGN",
-        "url": "https://gushiken-base.vercel.app/",
-        "logo": "https://gushiken-base.vercel.app/ogp.png",
-        "description": "光と静寂をテーマにしたハイエンドWebデザインスタジオ。",
-        "founder": {
-          "@id": "https://gushiken-base.vercel.app/#yuto"
-        }
-      },
-      {
-        "@type": "WebSite",
-        "@id": "https://gushiken-base.vercel.app/#website",
-        "name": "GUSHIKEN DESIGN",
-        "url": "https://gushiken-base.vercel.app/",
-        "potentialAction": {
-          "@type": "SearchAction",
-          "target": "https://gushiken-base.vercel.app/?q={search_term}",
-          "query-input": "required name=search_term"
-        }
-      },
-      {
-        "@type": "WebPage",
-        "@id": "https://gushiken-base.vercel.app/#webpage",
-        "name": "GUSHIKEN DESIGN — 光と静寂のWebデザイン",
-        "url": "https://gushiken-base.vercel.app/",
-        "isPartOf": { "@id": "https://gushiken-base.vercel.app/#website" },
-        "about": { "@id": "https://gushiken-base.vercel.app/#org" },
-        "description": "沖縄 × 光 × 静寂 を軸としたハイエンドWebデザイン作品集。"
-      }
-    ]
-  }
-  </script>
+  <title>沖縄のフリーランスWebデザイナー｜GUSHIKEN DESIGN（ホームページ制作・LP制作・店舗/ホテル/サロン）</title>
 
   <!-- =============================== -->
-  <!-- SEO / Meta -->
+  <!-- Meta Description（検索で読まれる文） -->
   <!-- =============================== -->
-  <title>GUSHIKEN DESIGN — 光と静寂のWebデザイン</title>
+  <meta name="description"
+    content="GUSHIKEN DESIGNは沖縄を拠点とするフリーランスWebデザイナー。ホームページ制作、店舗・ホテル・サロンのサイト制作、LP制作、React/Viteを使った高速Web制作、UI/UX設計まで対応。集客できるサイトを上質デザインで制作します。" />
 
-  <meta name="google-site-verification" content="iG_ZrJCqMsY5q1LbjYgdRdGnKp4rr3RKKLk7D8HNZ1w" />
-  <meta name="description" content="沖縄 × 光 × 静寂 を軸にした GUSHIKEN DESIGN の公式ポートフォリオ。ホテル・香水ブランド・美容サロン・アート作品まで、一貫した世界観と上質なUI/UXでサイト制作を行います。" />
-  <meta name="keywords" content="Webデザイン, 沖縄, フリーランス, ホテルサイト, LP制作, ブランドデザイン, UIUX, ポートフォリオ, GUSHIKEN DESIGN" />
+  <!-- =============================== -->
+  <!-- Keywords（ロングテール対策） -->
+  <!-- =============================== -->
+  <meta name="keywords"
+    content="沖縄 ホームページ制作, 沖縄 Web制作, フリーランス Webデザイナー, LP制作, サイト制作, 店舗サイト制作, ホテルサイト制作, サロンサイト制作, UIUXデザイン, React, Vite, GUSHIKEN DESIGN" />
+
   <meta name="author" content="GUSHIKEN DESIGN" />
 
   <!-- =============================== -->
-  <!-- OGP -->
+  <!-- Google Search Console -->
   <!-- =============================== -->
-  <meta property="og:title" content="GUSHIKEN DESIGN — 光と静寂のWebデザイン" />
-  <meta property="og:description" content="沖縄 × 光 × 静寂 を軸にした GUSHIKEN DESIGN の公式ポートフォリオ" />
+  <meta name="google-site-verification" content="iG_ZrJCqMsY5q1LbjYgdRdGnKp4rr3RKKLk7D8HNZ1w" />
+
+  <!-- =============================== -->
+  <!-- OGP（SNSでの表示セット） -->
+  <!-- =============================== -->
+  <meta property="og:title"
+    content="沖縄のフリーランスWebデザイナー｜GUSHIKEN DESIGN（ホームページ制作・LP制作）」 />
+  <meta property="og:description"
+    content="沖縄でホームページ制作やLP制作、店舗/ホテル/サロンのサイト制作に強いフリーランスWebデザイナー。デザイン×高速構築で集客につながるサイトを制作。" />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://gushiken-base.vercel.app/" />
   <meta property="og:image" content="https://gushiken-base.vercel.app/ogp.png" />
@@ -91,12 +52,58 @@
   <!-- Twitter -->
   <!-- =============================== -->
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="GUSHIKEN DESIGN — 光と静寂のWebデザイン" />
-  <meta name="twitter:description" content="沖縄 × 光 × 静寂 のポートフォリオ。" />
+  <meta name="twitter:title" content="沖縄のフリーランスWebデザイナー｜GUSHIKEN DESIGN" />
+  <meta name="twitter:description" content="沖縄のホームページ制作・LP制作・店舗系サイト制作に強いフリーランスWebデザイナー。" />
   <meta name="twitter:image" content="https://gushiken-base.vercel.app/ogp.png" />
 
   <!-- =============================== -->
-  <!-- Favicon / Icons -->
+  <!-- JSON-LD（構造化データ／検索で超重要） -->
+  <!-- =============================== -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Person",
+        "@id": "https://gushiken-base.vercel.app/#yuto",
+        "name": "Yuto Gushiken",
+        "alternateName": "GUSHIKEN DESIGN",
+        "jobTitle": "フリーランスWebデザイナー",
+        "url": "https://gushiken-base.vercel.app/",
+        "image": "https://gushiken-base.vercel.app/ogp.png",
+        "description": "沖縄のホームページ制作・LP制作・店舗/サロン/ホテルのWebサイト制作に強いWebデザイナー。React/Viteで高速サイト構築とUI/UX設計を提供。",
+        "sameAs": []
+      },
+      {
+        "@type": "Organization",
+        "@id": "https://gushiken-base.vercel.app/#org",
+        "name": "GUSHIKEN DESIGN",
+        "url": "https://gushiken-base.vercel.app/",
+        "logo": "https://gushiken-base.vercel.app/ogp.png",
+        "description": "沖縄の企業・店舗・個人向けにホームページ制作、LP制作、UI/UXデザインを提供するWeb制作スタジオ。",
+        "founder": { "@id": "https://gushiken-base.vercel.app/#yuto" }
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://gushiken-base.vercel.app/#website",
+        "name": "GUSHIKEN DESIGN",
+        "url": "https://gushiken-base.vercel.app/"
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://gushiken-base.vercel.app/#webpage",
+        "name": "沖縄のフリーランスWebデザイナー — GUSHIKEN DESIGN",
+        "url": "https://gushiken-base.vercel.app/",
+        "description": "沖縄でホームページ制作・LP制作・店舗サイト制作を行うフリーランスWebデザイナーのポートフォリオ。",
+        "isPartOf": { "@id": "https://gushiken-base.vercel.app/#website" },
+        "about": { "@id": "https://gushiken-base.vercel.app/#org" }
+      }
+    ]
+  }
+  </script>
+
+  <!-- =============================== -->
+  <!-- Favicon -->
   <!-- =============================== -->
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png" />
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
@@ -117,7 +124,8 @@
   <!-- =============================== -->
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@400;600&family=Poppins:wght@300;500&display=swap" />
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@400;600&family=Poppins:wght@300;500&display=swap" />
 
   <!-- =============================== -->
   <!-- PWA / Manifest -->
@@ -129,24 +137,18 @@
   <!-- =============================== -->
   <script type="module" src="/src/main.jsx"></script>
 
-
   <!-- =============================== -->
-  <!-- Service Worker（本番のみ） -->
+  <!-- Service Worker -->
   <!-- =============================== -->
   <script type="module">
     if (import.meta.env.PROD && "serviceWorker" in navigator) {
       window.addEventListener("load", () => {
-        navigator.serviceWorker
-          .register("/sw.js")
-          .then(() => console.log("Service Worker registered — GUSHIKEN DESIGN"))
-          .catch((err) => console.error("SW registration failed:", err));
+        navigator.serviceWorker.register("/sw.js");
       });
     }
   </script>
 </head>
-
 <body>
   <div id="root"></div>
-
 </body>
 </html>
