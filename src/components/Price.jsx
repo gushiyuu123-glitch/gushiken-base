@@ -59,7 +59,7 @@ export default function Price() {
             label="PLAN 03"
             title="Brand Site"
             desc="写真・配色・タイポグラフィ・余白を統一し、“世界観のあるブランドサイト” を設計します。"
-            price="¥300,000〜"
+            price="¥250,000〜"
           />
 
         </div>

@@ -81,7 +81,7 @@ export default function PriceDetail() {
           <PlanCard
             badge="PLAN 03"
             title="Brand Site"
-            price="¥300,000〜"
+            price="¥250,000〜"
             summary="世界観特化のブランドサイト。"
             detail="光・余白・写真を活かし、“空気”をデザインします。"
             bestFor="ブランドイメージを深く伝えたい方に。"
