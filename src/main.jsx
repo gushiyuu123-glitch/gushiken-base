@@ -11,6 +11,13 @@ createRoot(document.getElementById('root')).render(
     </BrowserRouter>
   </StrictMode>,
 );
+
+// 🟩 React描画後にrootをフェード表示（チラ見え防止）
+window.addEventListener('DOMContentLoaded', () => {
+  const r = document.getElementById('root');
+  if (r) r.classList.add('show');
+});
+
 if (
   "serviceWorker" in navigator &&
   location.hostname !== "localhost" &&
