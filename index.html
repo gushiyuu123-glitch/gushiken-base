@@ -1,10 +1,11 @@
 <!doctype html>
 <html lang="ja">
+
 <head>
   <meta charset="UTF-8" />
 
   <!-- =============================== -->
-  <!-- 初期フェード（チラ見え防止） -->
+  <!-- 初期フェード（FOUC防止） -->
   <!-- =============================== -->
   <style>
     #root { opacity: 0; transition: opacity .25s ease; }
@@ -17,21 +18,21 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="google" content="notranslate" />
   <meta name="robots" content="index, follow" />
-  <link rel="canonical" href="https://gushiken-base.vercel.app/" />
+  <link rel="canonical" href="https://gushikendesign.com/" />
 
   <!-- =============================== -->
-  <!-- 表：世界観 / 裏：商用SEO → 二重構造 title -->
+  <!-- TITLE（SEO最適化） -->
   <!-- =============================== -->
   <title>GUSHIKEN DESIGN ｜ 沖縄のフリーランスWebデザイナー・ホームページ制作</title>
 
   <!-- =============================== -->
-  <!-- Meta Description -->
+  <!-- Meta Description（SEO用） -->
   <!-- =============================== -->
   <meta name="description"
-    content="GUSHIKEN DESIGNは沖縄のフリーランスWebデザイナーとして、ホームページ制作・LP制作・店舗/ホテル/サロンサイト制作・UI/UXデザインまで対応。React/Viteを用いた高速Web制作で集客に強いサイトを制作します。" />
+    content="GUSHIKEN DESIGNは沖縄のフリーランスWebデザイナーとして、ホームページ制作・LP制作・店舗/ホテル/サロンサイト制作・UI/UXデザインまで対応。React/Viteによる高速Web制作で集客に強いサイトを構築します。" />
 
   <!-- =============================== -->
-  <!-- Keywords -->
+  <!-- Keywords（任意・SEO補助） -->
   <!-- =============================== -->
   <meta name="keywords"
     content="沖縄 ホームページ制作, 沖縄 Web制作, フリーランス Webデザイナー, LP制作, サイト制作, 店舗サイト制作, ホテルサイト制作, サロンサイト制作, UIUXデザイン, React, Vite, GUSHIKEN DESIGN" />
@@ -42,13 +43,13 @@
   <meta name="google-site-verification" content="iG_ZrJCqMsY5q1LbjYgdRdGnKp4rr3RKKLk7D8HNZ1w" />
 
   <!-- =============================== -->
-  <!-- OGP -->
+  <!-- OGP（SNS共有用） -->
   <!-- =============================== -->
-  <meta property="og:title" content="沖縄のフリーランスWebデザイナー｜GUSHIKEN DESIGN（ホームページ制作・LP制作）」 />
-  <meta property="og:description" content="沖縄でホームページ制作、LP制作、店舗/サロン/ホテルのサイト制作に強いフリーランスWebデザイナー。美しい世界観 × 集客できるWeb設計。" />
+  <meta property="og:title" content="沖縄のフリーランスWebデザイナー｜GUSHIKEN DESIGN（ホームページ制作・LP制作）" />
+  <meta property="og:description" content="沖縄でホームページ制作、LP制作、店舗/サロン/ホテルサイト制作に強いWebデザイナー。美しい世界観 × 集客できるUI/UX設計。" />
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://gushiken-base.vercel.app/" />
-  <meta property="og:image" content="https://gushiken-base.vercel.app/ogp.png" />
+  <meta property="og:url" content="https://gushikendesign.com/" />
+  <meta property="og:image" content="https://gushikendesign.com/ogp.png" />
   <meta property="og:site_name" content="GUSHIKEN DESIGN" />
   <meta property="og:locale" content="ja_JP" />
 
@@ -56,10 +57,10 @@
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="沖縄のフリーランスWebデザイナー｜GUSHIKEN DESIGN" />
   <meta name="twitter:description" content="沖縄のホームページ制作・LP制作・店舗系サイト制作に強いフリーランスWebデザイナー。" />
-  <meta name="twitter:image" content="https://gushiken-base.vercel.app/ogp.png" />
+  <meta name="twitter:image" content="https://gushikendesign.com/ogp.png" />
 
   <!-- =============================== -->
-  <!-- hidden h1（SEO用） -->
+  <!-- hidden h1（SEO強化） -->
   <!-- =============================== -->
   <style>
     .visually-hidden {
@@ -72,7 +73,7 @@
 </head>
 
 <body>
-  <!-- head ではなく body に置く：正しい構造 -->
+  <!-- 正しい位置：body内 -->
   <h1 class="visually-hidden">
     沖縄のフリーランスWebデザイナー｜ホームページ制作・LP制作・店舗/ホテル/サロンサイト制作｜GUSHIKEN DESIGN
   </h1>
@@ -81,7 +82,7 @@
   <div id="root"></div>
 
   <!-- =============================== -->
-  <!-- JSON-LD（SEO強化） -->
+  <!-- JSON-LD（構造化データ / SEO強化） -->
   <!-- =============================== -->
   <script type="application/ld+json">
   {
@@ -89,32 +90,39 @@
     "@graph": [
       {
         "@type": "Person",
-        "@id": "https://gushiken-base.vercel.app/#yuto",
+        "@id": "https://gushikendesign.com/#yuto",
         "name": "Yuto Gushiken",
         "alternateName": "GUSHIKEN DESIGN",
         "jobTitle": "フリーランスWebデザイナー",
-        "url": "https://gushiken-base.vercel.app/",
-        "image": "https://gushiken-base.vercel.app/ogp.png",
+        "url": "https://gushikendesign.com/",
+        "image": "https://gushikendesign.com/ogp.png",
         "description": "沖縄のホームページ制作・LP制作・店舗/サロン/ホテルのWebサイト制作に強いWebデザイナー。React/Viteで高速サイト構築を提供。",
         "sameAs": []
       },
       {
         "@type": "Organization",
-        "@id": "https://gushiken-base.vercel.app/#org",
+        "@id": "https://gushikendesign.com/#org",
         "name": "GUSHIKEN DESIGN",
-        "url": "https://gushiken-base.vercel.app/",
-        "logo": "https://gushiken-base.vercel.app/ogp.png",
+        "url": "https://gushikendesign.com/",
+        "logo": "https://gushikendesign.com/ogp.png",
         "description": "沖縄でホームページ制作・LP制作・UI/UXデザインを提供するWeb制作スタジオ。",
-        "founder": { "@id": "https://gushiken-base.vercel.app/#yuto" }
+        "founder": { "@id": "https://gushikendesign.com/#yuto" }
       },
       {
         "@type": "WebPage",
-        "@id": "https://gushiken-base.vercel.app/#webpage",
+        "@id": "https://gushikendesign.com/#webpage",
         "name": "沖縄のフリーランスWebデザイナー — GUSHIKEN DESIGN",
-        "url": "https://gushiken-base.vercel.app/",
+        "url": "https://gushikendesign.com/",
         "description": "沖縄でホームページ制作・店舗サイト制作・LP制作を行うフリーランスWebデザイナーの公式ポートフォリオ。",
-        "isPartOf": { "@id": "https://gushiken-base.vercel.app/#website" },
-        "about": { "@id": "https://gushiken-base.vercel.app/#org" }
+        "isPartOf": { "@id": "https://gushikendesign.com/#website" },
+        "about": { "@id": "https://gushikendesign.com/#org" }
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://gushikendesign.com/#website",
+        "url": "https://gushikendesign.com/",
+        "name": "GUSHIKEN DESIGN",
+        "publisher": { "@id": "https://gushikendesign.com/#org" }
       }
     ]
   }
@@ -126,7 +134,7 @@
   <script type="module" src="/src/main.jsx"></script>
 
   <!-- =============================== -->
-  <!-- Service Worker -->
+  <!-- PWA Service Worker -->
   <!-- =============================== -->
   <script type="module">
     if (import.meta.env.PROD && "serviceWorker" in navigator) {
