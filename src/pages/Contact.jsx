@@ -171,6 +171,24 @@ export default function Contact() {
           </div>
 
         </form>
+        {/* 直接のご連絡 */}
+<div className={styles.altContacts}>
+  <p className={styles.altTitle}>その他のご連絡方法</p>
+
+  <a
+    href="https://line.me/ti/p/gD5Aj8QPPJ"
+    className={styles.altLink}
+    target="_blank"
+    rel="noopener noreferrer"
+  >
+    LINEで相談する（推奨）
+  </a>
+
+  <a href="tel:09019452830" className={styles.altLink}>
+    090-1945-2830（お急ぎの方はこちら）
+  </a>
+</div>
+
       </div>
     </section>
   );

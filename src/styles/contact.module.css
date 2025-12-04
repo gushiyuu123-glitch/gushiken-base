@@ -258,3 +258,29 @@
   background: #0b0b0b;
   color: rgba(255,255,255,0.92);
 }
+.altContacts {
+  margin-top: 40px;
+  text-align: center;
+  opacity: 0.85;
+}
+
+.altTitle {
+  font-size: 0.9rem;
+  letter-spacing: 0.08em;
+  color: #c0b49c; /* 控えめなゴールド */
+  margin-bottom: 10px;
+}
+
+.altLink {
+  display: block;
+  margin: 6px 0;
+  font-size: 0.95rem;
+  letter-spacing: 0.03em;
+  color: #e6e2da; /* 白〜淡ベージュ */
+  text-decoration: none;
+  transition: opacity 0.25s ease;
+}
+
+.altLink:hover {
+  opacity: 0.6;
+}

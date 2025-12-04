@@ -25,7 +25,7 @@ export default function Contact() {
   return (
     <section ref={sectionRef} id="contact" className="contact-section">
       <div className="contact-container">
-
+        
         {/* 中央ゴールドライン */}
         <div className="contact-gold-line"></div>
 
@@ -36,7 +36,7 @@ export default function Contact() {
 
         {/* リード */}
         <p className="contact-lead">
-          制作のご相談・お見積りは、専用のお問い合わせページより受け付けております。<br />
+          制作のご相談・お見積りは、お問い合わせページより受け付けております。<br />
           小さな内容でも構いません。まずはアイデアをお聞かせください。
         </p>
 
@@ -44,6 +44,24 @@ export default function Contact() {
         <div className="contact-cta">
           <a href="/contact" className="contact-btn">
             お問い合わせページへ
+          </a>
+        </div>
+
+        {/* サブ導線（LINE・電話） */}
+        <div className="contact-sub-links">
+          <p className="contact-sub-title">その他のご連絡方法</p>
+
+          <a
+            href="https://line.me/ti/p/gD5Aj8QPPJ"
+            className="contact-sub-link"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            LINEで相談する
+          </a>
+
+          <a href="tel:09019452830" className="contact-sub-link">
+            090-1945-2830（お急ぎの方はこちら）
           </a>
         </div>
 

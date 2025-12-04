@@ -138,3 +138,30 @@
     font-size: 1rem;
   }
 }
+/* === Sub Contact Links（LINE・電話） === */
+.contact-sub-links {
+  margin-top: 40px;
+  text-align: center;
+  opacity: 0.85;
+}
+
+.contact-sub-title {
+  font-size: 0.9rem;
+  letter-spacing: 0.08em;
+  color: #b8a98a; /* 控えめゴールド */
+  margin-bottom: 12px;
+}
+
+.contact-sub-link {
+  display: block;
+  margin: 6px 0;
+  font-size: 0.95rem;
+  letter-spacing: 0.03em;
+  color: #e5e1da; /* 白〜薄いベージュで高級感 */
+  text-decoration: none;
+  transition: opacity 0.25s ease;
+}
+
+.contact-sub-link:hover {
+  opacity: 0.6;
+}
