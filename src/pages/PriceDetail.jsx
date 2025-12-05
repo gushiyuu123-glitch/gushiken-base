@@ -63,7 +63,7 @@ export default function PriceDetail() {
           <PlanCard
             badge="PLAN 01"
             title="Landing Page"
-            price="¥80,000〜"
+            price="¥60,000〜"
             summary="1ページ構成のランディングページ。"
             detail="商品紹介・キャンペーン案内など、1ページで魅力を伝える構成です。"
             bestFor="まずはサイトを持ってみたい方に。"
@@ -72,7 +72,7 @@ export default function PriceDetail() {
           <PlanCard
             badge="PLAN 02"
             title="Small Website"
-            price="¥150,000〜"
+            price="¥120,000〜"
             summary="3〜5ページの小規模サイト。"
             detail="店舗・サロン・個人サイトなど、必要な情報を丁寧に整理して設計します。"
             bestFor="メニュー・アクセスなどをしっかり載せたい方に。"
@@ -80,8 +80,8 @@ export default function PriceDetail() {
 
           <PlanCard
             badge="PLAN 03"
-            title="Brand Site"
-            price="¥250,000〜"
+            title="Brand Site（6ページ以上）"
+            price="¥180,000〜"
             summary="世界観特化のブランドサイト。"
             detail="光・余白・写真を活かし、“空気”をデザインします。"
             bestFor="ブランドイメージを深く伝えたい方に。"

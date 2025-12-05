@@ -45,21 +45,21 @@ export default function Price() {
             label="PLAN 01"
             title="Landing Page（1ページ）"
             desc="ブランド紹介・キャンペーンなど、単ページで完結するサイト。世界観を崩さず必要な情報を美しくまとめます。"
-            price="¥80,000〜"
+            price="¥60,000〜"
           />
 
           <PriceCard
             label="PLAN 02"
             title="Small Website（3〜5ページ）"
             desc="サービス紹介・店舗サイト・ポートフォリオなど、しっかり構成されたWebサイトを制作します。"
-            price="¥150,000〜"
+            price="¥120,000〜"
           />
 
           <PriceCard
             label="PLAN 03"
-            title="Brand Site"
+            title="Brand Site（6ページ以上）"
             desc="写真・配色・タイポグラフィ・余白を統一し、“世界観のあるブランドサイト” を設計します。"
-            price="¥250,000〜"
+            price="¥180,000〜"
           />
 
         </div>
