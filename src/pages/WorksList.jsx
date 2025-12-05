@@ -26,6 +26,7 @@ import okilatoImg from "../assets/works/okilato.webp";
 // 🚀 FINE のサムネイル
 import fineImg from "../assets/works/fine.webp"; 
 // ↑ まだ画像ないなら仮で追加して、あとで差し替え可
+import stillimg from "../assets/works/still-ec.webp"; 
 
 export default function WorksList() {
   const rootRef = useRef(null);
@@ -128,7 +129,15 @@ export default function WorksList() {
               img={calmImg}
             />
           </Category>
-
+{/* === EC BRAND PROJECT === */}
+<Category title="EC / BRAND DESIGN">
+  <WorkItem
+    title="STILL — Minimal EC"
+    desc="静寂 × 緊張感 × ファッション。架空ブランドの高級EC制作。"
+    link="https://still-ec.vercel.app"
+    img={stillimg}
+  />
+</Category>
           {/* === FOOD / BRAND === */}
           <Category title="FOOD / FURNITURE / BRAND">
             <WorkItem
@@ -156,6 +165,7 @@ export default function WorksList() {
               img={ryukaImg}
             />
           </Category>
+
 
           {/* === FINE（実案件）ここに追加 === */}
           <Category title="MATCHING / REAL BUSINESS PROJECT">
