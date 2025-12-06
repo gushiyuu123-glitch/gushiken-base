@@ -8,13 +8,13 @@ export default function Works() {
     const items = worksRef.current?.querySelectorAll(".work-card");
     if (!items) return;
 
-    // ============ Fade-in Observer ============
+    // Fade-in Observer
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             entry.target.classList.add("show");
-            observer.unobserve(entry.target); // ← 一度だけ
+            observer.unobserve(entry.target);
           }
         });
       },
@@ -23,7 +23,7 @@ export default function Works() {
 
     items.forEach((item) => observer.observe(item));
 
-    // ============ Image Loaded Handler ============
+    // Image Loaded Handler
     items.forEach((item) => {
       const img = item.querySelector("img");
       if (!img) return;
@@ -42,25 +42,30 @@ export default function Works() {
     <section id="works" className="works-section" ref={worksRef}>
       <div className="works-container">
 
+        {/* HEADER */}
         <div className="works-header">
           <h2 className="works-title" translate="no">WORKS</h2>
           <p className="works-sub">SELECTED PROJECTS</p>
         </div>
 
+        {/* GRID */}
         <div className="works-grid">
+
+          {/* ★ Natural Objects（大） */}
           <a
-            href="https://black-orietta.vercel.app/"
+            href="https://neutral-objects.vercel.app/"
             target="_blank"
             rel="noopener noreferrer"
             className="work-card work-big"
           >
-            <img src="/assets/orietta.webp" alt="BLACK ORIETTA" />
+            <img src="/neutral.webp" alt="Natural Objects" />
             <div className="work-text">
-              <h3>BLACK ORIETTA</h3>
-              <p>闇に灯る、黄金の衝突。</p>
+              <h3>Neutral Objects</h3>
+              <p>Light × Silence × Everyday Minimalism.</p>
             </div>
           </a>
 
+          {/* Spa（小） */}
           <a
             href="https://okinawa-white-spa.vercel.app/"
             target="_blank"
@@ -74,6 +79,7 @@ export default function Works() {
             </div>
           </a>
 
+          {/* Koti（小） */}
           <a
             href="https://koti-beta.vercel.app/"
             target="_blank"
@@ -86,10 +92,14 @@ export default function Works() {
               <p>Scandinavian calm × crafted minimalism.</p>
             </div>
           </a>
+
         </div>
 
+        {/* ★ VIEW ALL WORKS ボタン（復元） */}
         <div className="works-viewall">
-          <a href="/works" className="viewall-btn">VIEW ALL WORKS</a>
+          <a href="/works" className="viewall-btn">
+            VIEW ALL WORKS
+          </a>
         </div>
 
       </div>

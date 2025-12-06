@@ -27,6 +27,7 @@ import okilatoImg from "../assets/works/okilato.webp";
 import fineImg from "../assets/works/fine.webp"; 
 // ↑ まだ画像ないなら仮で追加して、あとで差し替え可
 import stillimg from "../assets/works/still-ec.webp"; 
+import neutralObjectsImg from "../assets/works/neutral-objects.webp";
 
 export default function WorksList() {
   const rootRef = useRef(null);
@@ -132,12 +133,20 @@ export default function WorksList() {
 {/* === EC BRAND PROJECT === */}
 <Category title="EC / BRAND DESIGN">
   <WorkItem
+    title="Neutral Objects — Lifestyle Brand"
+    desc="光 × 余白 × 静けさ。最新の生活雑貨ブランドEC。"
+    link="https://neutral-objects.vercel.app"
+    img={neutralObjectsImg}
+  />
+
+  <WorkItem
     title="STILL — Minimal EC"
     desc="静寂 × 緊張感 × ファッション。架空ブランドの高級EC制作。"
     link="https://still-ec.vercel.app"
     img={stillimg}
   />
 </Category>
+
           {/* === FOOD / BRAND === */}
           <Category title="FOOD / FURNITURE / BRAND">
             <WorkItem
