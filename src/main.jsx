@@ -4,10 +4,17 @@ import { BrowserRouter } from "react-router-dom";
 import './index.css';
 import App from './App.jsx';
 
+// 🟦 追加：Vercel Analytics
+import { Analytics } from "@vercel/analytics/react";
+
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <BrowserRouter>
       <App />
+
+      {/* 🟦 ここに追加：Analytics */}
+      <Analytics />
+
     </BrowserRouter>
   </StrictMode>,
 );
@@ -23,13 +30,10 @@ if (
   location.hostname !== "localhost" &&
   location.hostname !== "127.0.0.1"
 ) {
-  // NOTE: registration is handled in index.html for production; this adds a runtime
-  // listener for SW messages so the app can react when a new service worker activates.
   navigator.serviceWorker.addEventListener('message', (evt) => {
     try {
       const data = evt.data;
       if (data && data.type === 'SW_UPDATED') {
-        // auto reload to get new assets (can be changed to a user prompt)
         console.info('ServiceWorker updated to', data.version, '- reloading page to refresh cache');
         window.location.reload(true);
       }
@@ -39,27 +43,18 @@ if (
   });
 }
 
-// If a new service worker is waiting to activate, ask it to skipWaiting so the
-// new version takes control immediately. We do this in production only to avoid
-// interfering with local development flows.
 if (!import.meta.env.DEV && "serviceWorker" in navigator) {
   try {
     navigator.serviceWorker.getRegistration().then((reg) => {
       if (reg && reg.waiting) {
         try {
           reg.waiting.postMessage({ type: 'SKIP_WAITING' });
-        } catch (e) {
-          // ignore
-        }
+        } catch (e) {}
       }
     });
-  } catch (e) {
-    // ignore
-  }
+  } catch (e) {}
 }
 
-// Development helper: unregister any service workers and clear caches when running locally.
-// This prevents stale caches from interfering with local development.
 if (import.meta.env.DEV && "serviceWorker" in navigator) {
   try {
     navigator.serviceWorker.getRegistrations().then((regs) => {
@@ -70,9 +65,6 @@ if (import.meta.env.DEV && "serviceWorker" in navigator) {
     if (window.caches && caches.keys) {
       caches.keys().then((keys) => Promise.all(keys.map((k) => caches.delete(k))));
     }
-    // eslint-disable-next-line no-console
     console.info('Dev: cleared service workers and caches to avoid stale assets');
-  } catch (e) {
-    // ignore
-  }
+  } catch (e) {}
 }
