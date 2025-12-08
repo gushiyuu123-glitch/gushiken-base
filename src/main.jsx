@@ -4,17 +4,18 @@ import { BrowserRouter } from "react-router-dom";
 import './index.css';
 import App from './App.jsx';
 
-// 🟦 追加：Vercel Analytics
-import { Analytics } from "@vercel/analytics/react";
+// 🟦 Vercel Web Analytics - inject() must run on client side
+import { inject } from '@vercel/analytics';
+
+// 🟦 Initialize Vercel Web Analytics on client side
+if (typeof window !== 'undefined') {
+  inject();
+}
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <BrowserRouter>
       <App />
-
-      {/* 🟦 ここに追加：Analytics */}
-      <Analytics />
-
     </BrowserRouter>
   </StrictMode>,
 );
@@ -49,10 +50,14 @@ if (!import.meta.env.DEV && "serviceWorker" in navigator) {
       if (reg && reg.waiting) {
         try {
           reg.waiting.postMessage({ type: 'SKIP_WAITING' });
-        } catch (e) {}
+        } catch {
+          // ignore error
+        }
       }
     });
-  } catch (e) {}
+  } catch {
+    // ignore error
+  }
 }
 
 if (import.meta.env.DEV && "serviceWorker" in navigator) {
@@ -66,5 +71,7 @@ if (import.meta.env.DEV && "serviceWorker" in navigator) {
       caches.keys().then((keys) => Promise.all(keys.map((k) => caches.delete(k))));
     }
     console.info('Dev: cleared service workers and caches to avoid stale assets');
-  } catch (e) {}
+  } catch {
+    // ignore error
+  }
 }

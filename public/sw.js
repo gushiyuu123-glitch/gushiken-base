@@ -5,7 +5,7 @@
 // Cache naming: use a stable prefix and a deployment stamp so older caches are
 // reliably removed. Bump this stamp on deploy to force clients to refresh.
 const CACHE_PREFIX = "gushiken-design-";
-const CACHE_STAMP = "v20251126203330"; // bump this value on deploy (e.g. v6, v7...) or include timestamp
+const CACHE_STAMP = "v20251208024245"; // bump this value on deploy (e.g. v6, v7...) or include timestamp
 const CACHE_NAME = `${CACHE_PREFIX}${CACHE_STAMP}`;
 
 // キャッシュする安全なファイルのみ（public にある実際のファイルに合わせる）
