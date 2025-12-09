@@ -7,7 +7,6 @@ import spaImg from "../assets/works/spa.webp";
 import lucentImg from "../assets/works/lucent.webp";
 import oriettaImg from "../assets/works/orietta.webp";
 import lueurpinkImg from "../assets/works/lueurpink.webp";
-
 import okinawa1 from "../assets/works/okinawa1.webp";
 import okinawa2 from "../assets/works/okinawa2.webp";
 import calmImg from "../assets/works/calm.webp";
@@ -48,7 +47,7 @@ export default function WorksList() {
   return (
     <section className="bg-[#070604] min-h-screen py-24 px-6 md:px-10 lg:px-16">
       <div ref={rootRef} className="max-w-6xl lg:max-w-7xl mx-auto">
-        
+
         {/* === TOP BLOCK === */}
         <div className="fade-up mb-20">
           <p className="text-[0.7rem] md:text-xs tracking-[0.28em] text-white/40 mb-4">
@@ -69,8 +68,12 @@ export default function WorksList() {
 
         <div className="space-y-32">
 
+
           {/* === BEAUTY === */}
-          <Category title="BEAUTY / SALON">
+          <Category
+            title="BEAUTY / SALON"
+            subtitle="美容・サロン向けの上質な余白デザイン"
+          >
             <WorkItem
               title="Okinawa White Spa"
               desc={`白 × 静寂 × 上質な余白。\n非日常の白を設計したリラクゼーションUI。`}
@@ -91,8 +94,12 @@ export default function WorksList() {
             />
           </Category>
 
+
           {/* === SMARTPHONE === */}
-          <Category title="SMARTPHONE / MOBILE DESIGN">
+          <Category
+            title="SMARTPHONE / MOBILE DESIGN"
+            subtitle="スマホでの体験を最優先したUI設計"
+          >
             <WorkItem
               title="OkiLato — Island Freshness"
               desc={`南国 × ターコイズ。\nスマホ特化レイアウトで体験を最適化。`}
@@ -107,8 +114,12 @@ export default function WorksList() {
             />
           </Category>
 
+
           {/* === HOTEL === */}
-          <Category title="HOTEL">
+          <Category
+            title="HOTEL"
+            subtitle="沖縄の光と空気感をUIに落とし込んだホテルデザイン"
+          >
             <WorkItem
               title="Okinawa Resort Hotel"
               desc={`光と青のホテルLP。\n沖縄の朝光を再現したビジュアル設計。`}
@@ -129,8 +140,12 @@ export default function WorksList() {
             />
           </Category>
 
-          {/* === EC BRAND PROJECT === */}
-          <Category title="EC / BRAND DESIGN">
+
+          {/* === EC BRAND === */}
+          <Category
+            title="EC / BRAND DESIGN"
+            subtitle="世界観 × 技術を統合したECデザイン"
+          >
             <WorkItem
               title="Neutral Objects — Lifestyle Brand"
               desc={`光 × 余白 × 静けさ。\nオブジェ写真を中心に据えた編集型EC。`}
@@ -147,14 +162,18 @@ export default function WorksList() {
 
             <WorkItem
               title="Okinawa Select — Modern Okinawan Objects"
-              desc={`沖縄素材 × 上質ミニマル。\n右スライドCart・ContextAPI管理・PC/SP完全分離など、最新EC技術を統合したプロトタイプ。`}
+              desc={`沖縄素材 × 上質ミニマル。\n右スライドCart・ContextAPI管理・PC/SP完全分離など最新EC技術を統合したプロトタイプ。`}
               link="https://okinawa-select.vercel.app"
               img={OkinawaSelectImg}
             />
           </Category>
 
+
           {/* === FOOD / BRAND === */}
-          <Category title="FOOD / FURNITURE / BRAND">
+          <Category
+            title="FOOD / FURNITURE / BRAND"
+            subtitle="飲食・家具・ブランドUIに最適化した世界観設計"
+          >
             <WorkItem
               title="Aburiya Itto"
               desc={`和 × 炙り × ラグジュアリー。\n和の陰影を活かした料理ブランディング。`}
@@ -181,8 +200,12 @@ export default function WorksList() {
             />
           </Category>
 
-          {/* === REAL BUSINESS PROJECT === */}
-          <Category title="MATCHING / REAL BUSINESS PROJECT">
+
+          {/* === REAL PROJECT === */}
+          <Category
+            title="MATCHING / REAL BUSINESS PROJECT"
+            subtitle="実際の事業で使用されているUI/UXデザイン"
+          >
             <WorkItem
               title="FINE — Okinawa Edition"
               desc={`40代からの穏やかな出会い。\n安心感を設計した大人向けUI。`}
@@ -191,8 +214,12 @@ export default function WorksList() {
             />
           </Category>
 
+
           {/* === ART === */}
-          <Category title="ART / CREATIVE">
+          <Category
+            title="ART / CREATIVE"
+            subtitle="光・影・静寂をテーマにしたアート表現"
+          >
             <WorkItem
               title="The Flow of Tea"
               desc={`茶 × 余白 × 世界観。\n茶の所作を静かに伝える構成美。`}
@@ -206,26 +233,31 @@ export default function WorksList() {
               img={rayImg}
             />
           </Category>
+
         </div>
       </div>
     </section>
   );
 }
 
+
 /* ============================================================
    CATEGORY
 ============================================================ */
-function Category({ title, children }) {
+function Category({ title, subtitle, children }) {
   return (
     <section className="fade-up">
-      <div className="flex items-baseline justify-between mb-8">
-        <h2 className="category-title text-white text-[0.95rem] md:text-[1.05rem] font-light">
+      {/* タイトル + 日本語サブ */}
+      <div className="mb-3">
+        <h2 className="text-white text-[1rem] md:text-[1.1rem] font-light tracking-wide">
           {title}
         </h2>
-        <div className="hidden md:block w-32 h-px bg-white/8" />
+        <p className="text-white/40 text-[0.75rem] mt-1 tracking-wide">
+          {subtitle}
+        </p>
       </div>
 
-      {/* スマホ横スクロール */}
+      {/* SP 横スクロール */}
       <div className="relative sm:hidden mb-4">
         <div className="scroll-hint absolute">→</div>
         <div className="fade-left" />
@@ -238,7 +270,7 @@ function Category({ title, children }) {
         </div>
       </div>
 
-      {/* PC：2 → 3 カラム */}
+      {/* PC グリッド */}
       <div className="hidden sm:grid grid-cols-2 xl:grid-cols-3 gap-10 md:gap-12">
         {children}
       </div>
