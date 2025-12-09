@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from "react";
+import { Link } from "react-router-dom"
 import "./price.css";
 
 export default function Price() {
@@ -70,10 +71,12 @@ export default function Price() {
           明確なお見積りは、ヒアリング後にご提示いたします。
         </p>
 
-        {/* CTA */}
-        <div className="price-cta">
-          <a href="/price" className="price-btn">料金の詳細を見る</a>
-        </div>
+  <div className="price-cta">
+  <Link to="/price" className="price-btn">
+    料金の詳細を見る
+  </Link>
+</div>
+
 
       </div>
       {/* 事務系サイトへのサブ導線（世界観を壊さない控えめリンク） */}

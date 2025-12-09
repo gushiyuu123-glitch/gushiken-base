@@ -15,6 +15,7 @@ export default function PriceDetail() {
     <section
       ref={rootRef}
       className="
+       price-section                    // ★これ追加
         bg-[#0b0b0b] min-h-screen text-white
         opacity-0 translate-y-8
         transition-all duration-[1100ms] ease-[cubic-bezier(.25,.46,.45,.94)]

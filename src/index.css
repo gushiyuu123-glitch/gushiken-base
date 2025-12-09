@@ -125,13 +125,13 @@
 }
 
 .fade-left {
-  left: 0;
+  left: -49px;
   background: linear-gradient(to right, rgba(255,255,255,0.03), transparent);
   border-right: 1px solid rgba(217,185,138,0.12);
 }
 
 .fade-right {
-  right: 0;
+  right: -45px;
   background: linear-gradient(to left, rgba(255,255,255,0.03), transparent);
   border-left: 1px solid rgba(217,185,138,0.12);
 }

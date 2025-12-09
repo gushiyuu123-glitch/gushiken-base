@@ -23,12 +23,17 @@ function Layout() {
       {/* TOP → Nav / 他ページ → NavGlobal */}
       {isHome ? <Nav /> : <NavGlobal />}
 
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/works" element={<WorksList />} />
-        <Route path="/price" element={<PriceDetail />} />
-        <Route path="/contact" element={<Contact />} />   {/* ← ★追加 */}
-      </Routes>
+<Routes>
+  <Route path="/" element={<Home />} />
+  <Route path="/works" element={<WorksList />} />
+
+  {/* ここ修正！！！！！！！！！！！ */}
+  <Route path="/price" element={<PriceDetail />} />
+  {/* ここ修正！！！！！！！！！！！ */}
+
+  <Route path="/contact" element={<Contact />} />
+</Routes>
+
 
       <Footer />
     </>
