@@ -77,24 +77,25 @@ export default function Price() {
 
       </div>
       {/* 事務系サイトへのサブ導線（世界観を壊さない控えめリンク） */}
-<div className="flex justify-center mt-10 mb-4">
+<div className="flex justify-center mt-12 mb-6">
   <a
     href="https://office.gushikendesign.com/"
     target="_blank"
     rel="noopener noreferrer"
     className="
       inline-block
-      px-6 py-3
-      border border-[#c9a166]
-      text-[#c9a166]
-      text-sm font-medium
+      px-7 py-3
+      border border-[#d9c8a6]/40
+      text-[#d9c8a6]/70
+      text-sm tracking-wider
       rounded-md
-      whitespace-nowrap
-      hover:bg-[#c9a166]/10
-      transition
+      transition-all duration-300
+      hover:border-[#d9c8a6]/80
+      hover:text-[#d9c8a6]
+      hover:bg-[#d9c8a6]/5
     "
   >
-    事務所・企業向け Webプランのご案内はこちら
+    事務所・企業向け シンプルWebプランのご案内はこちら
   </a>
 </div>
 

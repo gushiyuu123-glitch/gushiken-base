@@ -3,38 +3,45 @@
 @tailwind utilities;
 
 
-/* Yuto世界観の変数 */
+/* ======================================
+   Yuto 世界観の変数
+====================================== */
 :root {
---black: #0D0D0D;
---gold: #D7C39A;
---white: #FAFAFA;
---gray: #888888;
-}
-.philo-section.show {
-  opacity: 1 !important;
-  transform: translateY(0) !important;
+  --black: #0D0D0D;
+  --gold: #D7C39A;
+  --white: #FAFAFA;
+  --gray: #888888;
 }
 
-.philo-section {
-  padding-top: 8rem;
-  padding-bottom: 8rem;
+
+/* ======================================
+   SECTION フェードイン（nav と無関係）
+====================================== */
+.philo-section,
+.price-section,
+.about-section,
+.contact-section,
+.footer-section {
+  opacity: 0;
+  transform: translateY(26px);
+  transition:
+    opacity 0.9s cubic-bezier(.22,.56,.18,1),
+    transform 0.9s cubic-bezier(.22,.56,.18,1);
 }
-.price-section.show {
-  opacity: 1 !important;
-  transform: translateY(0) !important;
-}
-.about-section.show {
-  opacity: 1 !important;
-  transform: translateY(0) !important;
-}
-.contact-section.show {
-  opacity: 1 !important;
-  transform: translateY(0) !important;
-}
+
+.philo-section.show,
+.price-section.show,
+.about-section.show,
+.contact-section.show,
 .footer-section.show {
   opacity: 1 !important;
   transform: translateY(0) !important;
 }
+
+
+/* ======================================
+   フッターリンク
+====================================== */
 .footer-link {
   color: rgba(255,255,255,0.6);
   transition: 0.25s;
@@ -42,6 +49,11 @@
 .footer-link:hover {
   color: white;
 }
+
+
+/* ======================================
+   HERO パララックス
+====================================== */
 .hero-parallax {
   transform: translateY(0);
   transition: transform 0.25s ease-out;
@@ -52,51 +64,11 @@
     transform: translateY(-8px);
   }
 }
-.nav-link {
-  opacity: 0.7;
-  transition: opacity 0.3s ease;
-}
-.nav-link:hover {
-  opacity: 1;
-}
 
-.mobile-link {
-  opacity: 0.75;
-  transition: opacity 0.25s ease;
-}
-.mobile-link:hover {
-  opacity: 1;
-}
-.show {
-  opacity: 1 !important;
-  transform: translateY(0) !important;
-  filter: blur(0) !important;
-}
-.fade-up {
-  opacity: 0;
-  transform: translateY(24px);
-  transition: all 900ms cubic-bezier(.25,.46,.45,.94);
-}
 
-.fade-up.show {
-  opacity: 1;
-  transform: translateY(0);
-}
-.fade-up {
-  opacity: 0;
-  transform: translateY(26px);
-  transition:
-    opacity 0.9s cubic-bezier(.22,.56,.18,1),
-    transform 0.9s cubic-bezier(.22,.56,.18,1);
-}
-
-.fade-up.show {
-  opacity: 1;
-  transform: translateY(0);
-}
-/* =======================
-   fade-up（高級ブランド仕様）
-======================= */
+/* ======================================
+   fade-up（ブランド仕様）
+====================================== */
 .fade-up {
   opacity: 0;
   transform: translateY(26px);
@@ -110,9 +82,10 @@
   transform: translateY(0);
 }
 
-/* =======================
-   カテゴリ見出しの “微振動フェード”
-======================= */
+
+/* ======================================
+   カテゴリ見出しアニメ
+====================================== */
 .category-title {
   animation: breathe 4.2s ease-in-out infinite;
   opacity: 0.92;
@@ -124,21 +97,23 @@
   100% { opacity: 0.92; letter-spacing: 0.16em; }
 }
 
-/* =======================
-   スマホ横スクロール
-======================= */
+
+/* ======================================
+   横スクロール（navと無関係）
+====================================== */
 .scroll-x-snap {
   scroll-snap-type: x mandatory;
   -webkit-overflow-scrolling: touch;
 }
-
 .scroll-x-hide::-webkit-scrollbar {
   display: none;
 }
 
-/* =======================
-   スクロール左右フェード（白1% × 金1px）
-======================= */
+
+/* ======================================
+   スクロール左右フェード
+   nav に干渉しないよう z-index を固定
+====================================== */
 .fade-left,
 .fade-right {
   position: absolute;
@@ -146,12 +121,13 @@
   width: 50px;
   height: 100%;
   pointer-events: none;
+  z-index: 1; /* ★ nav の下に固定 */
 }
 
 .fade-left {
   left: 0;
   background: linear-gradient(to right, rgba(255,255,255,0.03), transparent);
-  border-right: 1px solid rgba(217,185,138,0.12); /* gold 1px */
+  border-right: 1px solid rgba(217,185,138,0.12);
 }
 
 .fade-right {
@@ -160,9 +136,10 @@
   border-left: 1px solid rgba(217,185,138,0.12);
 }
 
-/* =======================
-   スクロールヒント矢印（→）
-======================= */
+
+/* ======================================
+   スクロールヒント矢印
+====================================== */
 .scroll-hint {
   position: absolute;
   right: 10px;
@@ -171,6 +148,7 @@
   color: rgba(255,255,255,0.45);
   opacity: 0;
   animation: hintFade 2.6s ease-out forwards;
+  z-index: 1; /* nav から絶対に下 */
 }
 
 @keyframes hintFade {
