@@ -76,6 +76,19 @@ export default function Price() {
         </div>
 
       </div>
+      {/* 事務系サイトへのサブ導線（世界観を壊さない控えめリンク） */}
+<div className="price-sub-link">
+  <a
+    href="https://office.gushikendesign.com/"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="price-sub-link-a"
+  >
+    事務所・企業向け “シンプルWebプラン（実用重視）” のご案内はこちら
+  </a>
+</div>
+
+
     </section>
   );
 }

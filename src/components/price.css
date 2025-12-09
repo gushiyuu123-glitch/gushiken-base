@@ -168,3 +168,21 @@
     padding: 0.85rem 0;
   }
 }
+.price-sub-link {
+  text-align: center;
+  margin-top: 42px;
+}
+
+.price-sub-link-a {
+  color: #c7b28a; /* 落ち着いた金 */
+  font-size: 15px;
+  letter-spacing: 0.03em;
+  border-bottom: 1px solid rgba(199, 178, 138, 0.38);
+  padding-bottom: 3px;
+  transition: 0.25s ease;
+}
+
+.price-sub-link-a:hover {
+  color: #e8d7b8;
+  border-color: #e8d7b8;
+}
