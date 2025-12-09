@@ -95,7 +95,7 @@ export default function Price() {
       hover:bg-[#d9c8a6]/5
     "
   >
-    事務所・企業向け シンプルWebプランのご案内はこちら
+    事務所・企業向け シンプルWebプランのご案内はこちら →
   </a>
 </div>
 
