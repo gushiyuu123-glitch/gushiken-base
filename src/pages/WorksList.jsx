@@ -20,14 +20,11 @@ import ryukaImg from "../assets/works/ryuka.webp";
 import teaImg from "../assets/works/tea.webp";
 import rayImg from "../assets/works/ray.webp";
 
-// OkiLato サムネ
 import okilatoImg from "../assets/works/okilato.webp";
-
-// 🚀 FINE のサムネイル
-import fineImg from "../assets/works/fine.webp"; 
-// ↑ まだ画像ないなら仮で追加して、あとで差し替え可
-import stillimg from "../assets/works/still-ec.webp"; 
+import fineImg from "../assets/works/fine.webp";
+import stillimg from "../assets/works/still-ec.webp";
 import neutralObjectsImg from "../assets/works/neutral-objects.webp";
+import OkinawaSelectImg from "../assets/works/OkinawaSelect.webp";
 
 export default function WorksList() {
   const rootRef = useRef(null);
@@ -51,6 +48,7 @@ export default function WorksList() {
   return (
     <section className="bg-[#070604] min-h-screen py-24 px-6 md:px-10 lg:px-16">
       <div ref={rootRef} className="max-w-6xl lg:max-w-7xl mx-auto">
+        
         {/* === TOP BLOCK === */}
         <div className="fade-up mb-20">
           <p className="text-[0.7rem] md:text-xs tracking-[0.28em] text-white/40 mb-4">
@@ -75,19 +73,19 @@ export default function WorksList() {
           <Category title="BEAUTY / SALON">
             <WorkItem
               title="Okinawa White Spa"
-              desc="白 × 静寂 × 上質な余白。"
+              desc={`白 × 静寂 × 上質な余白。\n非日常の白を設計したリラクゼーションUI。`}
               link="https://okinawa-white-spa.vercel.app"
               img={spaImg}
             />
             <WorkItem
               title="LUEUR PINK"
-              desc="透明感×上品ピンク。若い層向け美容室。"
+              desc={`透明感 × 上品ピンク。\n若年層向けに最適化した軽量モーションUI。`}
               link="https://lueur-pink.vercel.app"
               img={lueurpinkImg}
             />
             <WorkItem
               title="BLACK ORIETTA"
-              desc="黒 × 金 × 高級香水。"
+              desc={`黒 × 金 × 高級香水。\n重厚なラグジュアリートーンの演出設計。`}
               link="https://black-orietta.vercel.app"
               img={oriettaImg}
             />
@@ -97,13 +95,13 @@ export default function WorksList() {
           <Category title="SMARTPHONE / MOBILE DESIGN">
             <WorkItem
               title="OkiLato — Island Freshness"
-              desc="南国 × ターコイズ。スマホ特化ジェラートブランド。"
+              desc={`南国 × ターコイズ。\nスマホ特化レイアウトで体験を最適化。`}
               link="https://oki-lato.vercel.app"
               img={okilatoImg}
             />
             <WorkItem
               title="Lucent Salon"
-              desc="透明な光 × スマホ特化ミニマル。"
+              desc={`透明な光 × ミニマル。\n美容 × 透明感をUIへ落とし込んだ設計。`}
               link="https://lucent-salon.vercel.app"
               img={lucentImg}
             />
@@ -113,74 +111,81 @@ export default function WorksList() {
           <Category title="HOTEL">
             <WorkItem
               title="Okinawa Resort Hotel"
-              desc="光と青のホテルLP。"
+              desc={`光と青のホテルLP。\n沖縄の朝光を再現したビジュアル設計。`}
               link="https://okinawa-hotel.vercel.app"
               img={okinawa1}
             />
             <WorkItem
               title="Horizon Blanc"
-              desc="朝光 × 静寂。"
+              desc={`朝光 × 静寂。\n白の階調を活かした余白デザイン。`}
               link="https://okinawa-resort-hotel.vercel.app"
               img={okinawa2}
             />
             <WorkItem
               title="The Calm Okinawa"
-              desc="海 × 透明感 × 静寂。"
+              desc={`海 × 透明感 × 静寂。\n水面の光をUIへ抽象化した構成。`}
               link="https://the-calm-okinawa.vercel.app"
               img={calmImg}
             />
           </Category>
-{/* === EC BRAND PROJECT === */}
-<Category title="EC / BRAND DESIGN">
-  <WorkItem
-    title="Neutral Objects — Lifestyle Brand"
-    desc="光 × 余白 × 静けさ。最新の生活雑貨ブランドEC。"
-    link="https://neutral-objects.vercel.app"
-    img={neutralObjectsImg}
-  />
 
-  <WorkItem
-    title="STILL — Minimal EC"
-    desc="静寂 × 緊張感 × ファッション。架空ブランドの高級EC制作。"
-    link="https://still-ec.vercel.app"
-    img={stillimg}
-  />
-</Category>
+          {/* === EC BRAND PROJECT === */}
+          <Category title="EC / BRAND DESIGN">
+            <WorkItem
+              title="Neutral Objects — Lifestyle Brand"
+              desc={`光 × 余白 × 静けさ。\nオブジェ写真を中心に据えた編集型EC。`}
+              link="https://neutral-objects.vercel.app"
+              img={neutralObjectsImg}
+            />
+
+            <WorkItem
+              title="STILL — Minimal EC"
+              desc={`静寂 × 緊張感 × ファッション。\nストイックな構成美を追求したEC。`}
+              link="https://still-ec.vercel.app"
+              img={stillimg}
+            />
+
+            <WorkItem
+              title="Okinawa Select — Modern Okinawan Objects"
+              desc={`沖縄素材 × 上質ミニマル。\n右スライドCart・ContextAPI管理・PC/SP完全分離など、最新EC技術を統合したプロトタイプ。`}
+              link="https://okinawa-select.vercel.app"
+              img={OkinawaSelectImg}
+            />
+          </Category>
 
           {/* === FOOD / BRAND === */}
           <Category title="FOOD / FURNITURE / BRAND">
             <WorkItem
               title="Aburiya Itto"
-              desc="和 × 炙り × ラグジュアリー。"
+              desc={`和 × 炙り × ラグジュアリー。\n和の陰影を活かした料理ブランディング。`}
               link="https://aburiya-itto.vercel.app"
               img={ittoImg}
             />
             <WorkItem
               title="Koti — Furniture"
-              desc="北欧の光 × 木の温度。"
+              desc={`北欧の光 × 木の温度。\n柔らかな北欧光をUIに落とし込んだ家具ブランド。`}
               link="https://koti-beta.vercel.app"
               img={kotiImg}
             />
             <WorkItem
               title="ACTIVE DAYS"
-              desc="黒 × スポーティ × 都会的ジムブランド。"
+              desc={`黒 × スポーティ × 都会的。\nフィットネス特有の動感をUIへ構築。`}
               link="https://active-days.vercel.app"
               img={activedaysImg}
             />
             <WorkItem
               title="RYUKA — Fragrance"
-              desc="自然光 × 琉球の香り。"
+              desc={`自然光 × 琉球の香り。\n香りの余韻を余白で可視化したデザイン。`}
               link="https://ryuka-official.vercel.app"
               img={ryukaImg}
             />
           </Category>
 
-
-          {/* === FINE（実案件）ここに追加 === */}
+          {/* === REAL BUSINESS PROJECT === */}
           <Category title="MATCHING / REAL BUSINESS PROJECT">
             <WorkItem
               title="FINE — Okinawa Edition"
-              desc="40代からの穏やかな出会い。実際に稼働中の事業として制作。許可を得て掲載しています。"
+              desc={`40代からの穏やかな出会い。\n安心感を設計した大人向けUI。`}
               link="https://fine-okinawa.vercel.app/"
               img={fineImg}
             />
@@ -190,13 +195,13 @@ export default function WorksList() {
           <Category title="ART / CREATIVE">
             <WorkItem
               title="The Flow of Tea"
-              desc="茶 × 余白 × 世界観。"
+              desc={`茶 × 余白 × 世界観。\n茶の所作を静かに伝える構成美。`}
               link="https://flow-of-tea.vercel.app"
               img={teaImg}
             />
             <WorkItem
               title="Ray of Silence"
-              desc="光と影の静寂アート。"
+              desc={`光 × 影 × 静寂。\nミニマル光学のアート表現。`}
               link="https://ray-of-silence.vercel.app"
               img={rayImg}
             />
@@ -206,7 +211,6 @@ export default function WorksList() {
     </section>
   );
 }
-
 
 /* ============================================================
    CATEGORY
@@ -224,16 +228,10 @@ function Category({ title, children }) {
       {/* スマホ横スクロール */}
       <div className="relative sm:hidden mb-4">
         <div className="scroll-hint absolute">→</div>
-
         <div className="fade-left" />
         <div className="fade-right" />
 
-        <div
-          className="
-            flex gap-6 overflow-x-auto px-1 py-2
-            scroll-x-snap scroll-x-hide
-          "
-        >
+        <div className="flex gap-6 overflow-x-auto px-1 py-2 scroll-x-snap scroll-x-hide">
           {React.Children.map(children, (child) => (
             <div className="min-w-[85%] snap-start">{child}</div>
           ))}
@@ -241,14 +239,7 @@ function Category({ title, children }) {
       </div>
 
       {/* PC：2 → 3 カラム */}
-      <div
-        className="
-          hidden sm:grid
-          grid-cols-2
-          xl:grid-cols-3
-          gap-10 md:gap-12
-        "
-      >
+      <div className="hidden sm:grid grid-cols-2 xl:grid-cols-3 gap-10 md:gap-12">
         {children}
       </div>
     </section>
