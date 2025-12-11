@@ -18,7 +18,7 @@ import kotiImg from "../assets/works/koti.webp";
 import activedaysImg from "../assets/works/activedays.webp";
 import ryukaImg from "../assets/works/ryuka.webp";
 
-import teaImg from "../assets/works/tea.webp";
+import teaImg from "../assets/works/aziwau.webp";
 import rayImg from "../assets/works/ray.webp";
 
 import okilatoImg from "../assets/works/okilato.webp";
