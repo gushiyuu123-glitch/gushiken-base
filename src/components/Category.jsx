@@ -56,26 +56,26 @@ export default function Category({ title, subtitle, children }) {
       {/* ▶ SP — 横スク展示（余韻フェード付き）      */}
       {/* =========================================== */}
       <div className="sm:hidden w-full relative mb-16">
+{/* 左フェード */}
+<div
+  className="
+    pointer-events-none 
+    absolute top-0 left-0 h-full w-[28px]
+    bg-gradient-to-r from-black/10 to-transparent
+    z-10
+  "
+/>
 
-        {/* 左フェード */}
-        <div
-          className="
-            pointer-events-none 
-            absolute top-0 left-0 h-full w-[34px]
-            bg-gradient-to-r from-[#070604] to-transparent
-            z-10
-          "
-        />
+{/* 右フェード */}
+<div
+  className="
+    pointer-events-none 
+    absolute top-0 right-0 h-full w-[28px]
+    bg-gradient-to-l from-black/10 to-transparent
+    z-10
+  "
+/>
 
-        {/* 右フェード */}
-        <div
-          className="
-            pointer-events-none 
-            absolute top-0 right-0 h-full w-[34px]
-            bg-gradient-to-l from-[#070604] to-transparent
-            z-10
-          "
-        />
 
         {/* 横スク本体 */}
         <div
