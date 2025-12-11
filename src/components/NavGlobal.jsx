@@ -34,10 +34,6 @@ export default function NavGlobal() {
         {/* 右メニュー */}
         <div className="flex gap-10 text-sm tracking-wider">
 
-          <Link to="/" className={`${isActive("/")} hover:opacity-100`}>
-            HOME
-          </Link>
-
           <Link to="/works" className={`${isActive("/works")} hover:opacity-100`}>
             WORKS
           </Link>
