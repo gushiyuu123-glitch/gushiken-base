@@ -329,7 +329,7 @@ function Category({ title, subtitle, children }) {
         {/* 左フェード */}
         <div className="
           pointer-events-none 
-          absolute top-0 left-0 h-full w-3
+          absolute top-0 left-0 h-full w-2
           bg-gradient-to-r from-[#070604] to-transparent
           z-10
         " />
@@ -337,7 +337,7 @@ function Category({ title, subtitle, children }) {
         {/* 右フェード */}
         <div className="
           pointer-events-none 
-          absolute top-0 right-0 h-full w-3
+          absolute top-0 right-0 h-full w-2
           bg-gradient-to-l from-[#070604] to-transparent
           z-10
         " />
