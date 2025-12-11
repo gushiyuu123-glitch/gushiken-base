@@ -8,31 +8,49 @@ export default function WorkItem({ title, desc, link, img }) {
   return (
     <>
       {/* ========================================================= */}
-      {/* PC VERSION — 黒 × 金 × 展示会                         */}
+      {/* PC VERSION — SANKOU × Dior Gold Exhibition              */}
       {/* ========================================================= */}
       <Tag
         {...(isExternal
           ? { href: link, target: "_blank", rel: "noopener noreferrer" }
           : { to: link })}
-       className="
-    hidden sm:block group relative rounded-[14px] overflow-hidden
-    bg-[#0a0a0a]
-    border border-white/[0.08]
-    shadow-[0_0_18px_rgba(255,255,255,0.03)]
-    transition-all
-    duration-[780ms]
-    hover:shadow-[0_0_26px_rgba(255,255,255,0.08)]
-    hover:scale-[1.016]
-  "
-  style={{
-    transitionDelay: "40ms" // ← 高級感の正体
-  }}
->
+        className="
+          hidden sm:block group relative rounded-[16px] overflow-hidden
+          bg-[#0a0a0a]
+          border border-white/[0.10]
+          shadow-[0_0_14px_rgba(0,0,0,0.45)]
+          transition-all duration-[900ms] ease-[cubic-bezier(.22,.61,.36,1)]
+          hover:scale-[1.018]
+          hover:shadow-[0_18px_34px_rgba(0,0,0,0.55)]
+        "
+        style={{
+          transitionDelay: "35ms",
+        }}
+      >
 
-        {/* 金ノイズ背景 */}
-        <div className="absolute inset-0 pointer-events-none opacity-[0.06] bg-[url('/grain-gold.png')] mix-blend-overlay" />
+        {/* ===== Gold Glow Frame（展示会の照明の反射） ===== */}
+        <div
+          className="
+            absolute inset-0 rounded-[16px] pointer-events-none
+            opacity-0 group-hover:opacity-[0.26]
+            transition-all duration-[1100ms]
+            group-hover:blur-[18px]
+          "
+          style={{
+            boxShadow: "0 0 30px rgba(215, 188, 140, 0.45)",
+            transitionDelay: "80ms",
+          }}
+        />
 
-        {/* 画像 */}
+        {/* ===== 金ノイズ（金属的な微粒子） ===== */}
+        <div className="
+          absolute inset-0 pointer-events-none
+          opacity-[0.07]
+          bg-[url('/grain-gold.png')]
+          mix-blend-overlay
+        " />
+
+        {/* =================== 画像 =================== */}
         <div className="relative w-full aspect-[16/10] overflow-hidden">
           <img
             src={img}
@@ -40,19 +58,34 @@ export default function WorkItem({ title, desc, link, img }) {
             loading="lazy"
             className="
               w-full h-full object-cover
-              brightness-[0.85]
-              transition-all duration-[1300ms]
-              ease-[cubic-bezier(.25,.46,.45,.94)]
-              group-hover:brightness-100
-              group-hover:scale-[1.045]
+              brightness-[0.83]
+              transition-all duration-[1400ms]
+              ease-[cubic-bezier(.23,.54,.32,1)]
+              group-hover:brightness-[1.06]
+              group-hover:scale-[1.055]
             "
           />
 
-          {/* フィルムグレイン */}
-          <div className="absolute inset-0 pointer-events-none opacity-[0.06] bg-[url('/grain.png')]" />
+          {/* Bloom（右上だけ光が滲む） */}
+          <div
+            className="
+              absolute top-0 right-0 w-[60%] h-[60%]
+              pointer-events-none
+              opacity-[0]
+              group-hover:opacity-[0.45]
+              transition-all duration-[1300ms]
+            "
+            style={{
+              background:
+                "radial-gradient(circle at top right, rgba(255,244,214,0.32), transparent 70%)",
+            }}
+          />
+
+          {/* Film Grain */}
+          <div className="absolute inset-0 pointer-events-none opacity-[0.04] bg-[url('/grain.png')]" />
         </div>
 
-        {/* テキスト */}
+        {/* =================== テキスト =================== */}
         <div className="p-7 pb-9 text-white relative">
           <h3 className="
             text-[1.05rem]
@@ -73,60 +106,74 @@ export default function WorkItem({ title, desc, link, img }) {
             {desc}
           </p>
 
-          <span
-            className="
-              text-white/60 text-[0.72rem]
-              tracking-[0.28em]
-              inline-block mt-1
-              transition-all duration-500
-              group-hover:tracking-[0.35em]
-              group-hover:text-white/90
-            "
-          >
+          <span className="
+            text-white/60 text-[0.72rem]
+            tracking-[0.26em]
+            inline-block mt-1
+            transition-all duration-[600ms]
+            group-hover:tracking-[0.34em]
+            group-hover:text-white/90
+          ">
             VIEW SITE →
           </span>
         </div>
       </Tag>
 
       {/* ========================================================= */}
-      {/* SP VERSION — 静かなミニ展示                              */}
+      {/* SP VERSION — 静寂ミニ展示（控えめ Bloom を追加）        */}
       {/* ========================================================= */}
       <Tag
         {...(isExternal
           ? { href: link, target: "_blank", rel: "noopener noreferrer" }
           : { to: link })}
         className="
-    sm:hidden block rounded-[16px] overflow-hidden
-    bg-[#0d0d0d]
-    border border-white/10
-    shadow-[0_0_10px_rgba(0,0,0,0.3)]
-    backdrop-blur-[1px]
-  "
->
-        {/* 金ノイズ背景（SP） */}
-        <div className="absolute inset-0 pointer-events-none opacity-[0.06] bg-[url('/grain-gold.png')] mix-blend-overlay" />
+          sm:hidden block rounded-[18px] overflow-hidden relative
+          bg-[#0d0d0d]
+          border border-white/[0.12]
+          shadow-[0_0_10px_rgba(0,0,0,0.35)]
+          transition-all duration-700
+        "
+      >
 
-        <div className="w-full aspect-[4/3] overflow-hidden">
+        {/* SP 金ノイズ */}
+        <div className="
+          absolute inset-0 pointer-events-none opacity-[0.07]
+          bg-[url('/grain-gold.png')] mix-blend-overlay
+        " />
+
+        {/* 画像 */}
+        <div className="relative w-full aspect-[4/3] overflow-hidden">
           <img
             src={img}
             alt={title}
             loading="lazy"
             className="
               w-full h-full object-cover
-              brightness-[0.88]
+              brightness-[0.92]
               transition-all duration-[1000ms]
-              group-hover:brightness-100
-              group-hover:scale-[1.03]
             "
           />
-          <div className="absolute inset-0 pointer-events-none opacity-[0.06] bg-[url('/grain.png')]" />
+
+          {/* SP は控えめ Bloom */}
+          <div
+            className="
+              absolute top-0 right-0 w-[58%] h-[58%]
+              pointer-events-none opacity-[0.23]
+            "
+            style={{
+              background:
+                "radial-gradient(circle at top right, rgba(255,237,210,0.22), transparent 70%)",
+            }}
+          />
+
+          <div className="absolute inset-0 pointer-events-none opacity-[0.04] bg-[url('/grain.png')]" />
         </div>
 
         {/* テキスト */}
         <div className="px-5 pt-5 pb-7 text-white">
           <h3 className="
             text-[0.95rem]
-            tracking-[0.16em]
+            tracking-[0.17em]
             font-light
             mb-3
             text-white/90
@@ -135,8 +182,7 @@ export default function WorkItem({ title, desc, link, img }) {
           </h3>
 
           <p className="
-            text-white/55
-            text-[0.82rem]
+            text-white/55 text-[0.83rem]
             leading-[1.75]
             whitespace-pre-line
             line-clamp-4
@@ -145,7 +191,7 @@ export default function WorkItem({ title, desc, link, img }) {
             {desc}
           </p>
 
-          <span className="text-white/65 text-[0.68rem] tracking-[0.22em]">
+          <span className="text-white/70 text-[0.68rem] tracking-[0.22em]">
             VIEW SITE →
           </span>
         </div>
