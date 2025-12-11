@@ -43,9 +43,22 @@ export default function WorksList() {
     root.querySelectorAll(".fade-up").forEach((el) => observer.observe(el));
     return () => observer.disconnect();
   }, []);
+useEffect(() => {
+  const handle = () => {
+    document.body.classList.toggle("scrolled", window.scrollY > 40);
+  };
+  window.addEventListener("scroll", handle);
+  return () => window.removeEventListener("scroll", handle);
+}, []);
+
+
 
   return (
+
     <section className="bg-[#070604] min-h-screen py-24 px-6 md:px-10 lg:px-16">
+      {/* Ambient Glow（背景環境光） */}
+<div className="ambient-glow"></div>
+
       <div ref={rootRef} className="max-w-6xl lg:max-w-7xl mx-auto">
 
    {/* === TOP BLOCK — SANKOU EXHIBITION ENTRY === */}
@@ -285,7 +298,8 @@ function Category({ title, subtitle, children }) {
       <div className="mb-10">
 
         {/* 金の極薄ライン */}
-        <div className="w-10 h-px bg-gradient-to-r from-white/20 to-white/5 mb-4" />
+        <div className="w-12 h-px bg-white/20 drop-shadow-[0_0_3px_rgba(255,255,255,0.23)] mb-6" />
+
 
         <h2 className="
           text-white 
@@ -315,7 +329,7 @@ function Category({ title, subtitle, children }) {
         {/* 左フェード */}
         <div className="
           pointer-events-none 
-          absolute top-0 left-0 h-full w-10
+          absolute top-0 left-0 h-full w-3
           bg-gradient-to-r from-[#070604] to-transparent
           z-10
         " />
@@ -323,7 +337,7 @@ function Category({ title, subtitle, children }) {
         {/* 右フェード */}
         <div className="
           pointer-events-none 
-          absolute top-0 right-0 h-full w-10
+          absolute top-0 right-0 h-full w-3
           bg-gradient-to-l from-[#070604] to-transparent
           z-10
         " />

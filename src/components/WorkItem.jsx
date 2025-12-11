@@ -14,18 +14,20 @@ export default function WorkItem({ title, desc, link, img }) {
         {...(isExternal
           ? { href: link, target: "_blank", rel: "noopener noreferrer" }
           : { to: link })}
-        className="
-          hidden sm:block
-          group rounded-[18px] overflow-hidden
-          bg-[#0a0a0a]
-          border border-white/[0.06]
-          shadow-[0_0_26px_rgba(0,0,0,0.32)]
-          transition-all duration-[900ms] delay-[20ms]
-          hover:shadow-[0_0_40px_rgba(0,0,0,0.45)]
-          hover:-translate-y-[4px]
-          relative
-        "
-      >
+       className="
+    hidden sm:block group relative rounded-[14px] overflow-hidden
+    bg-[#0a0a0a]
+    border border-white/[0.08]
+    shadow-[0_0_18px_rgba(255,255,255,0.03)]
+    transition-all
+    duration-[780ms]
+    hover:shadow-[0_0_26px_rgba(255,255,255,0.08)]
+    hover:scale-[1.016]
+  "
+  style={{
+    transitionDelay: "40ms" // ← 高級感の正体
+  }}
+>
 
         {/* 金ノイズ背景 */}
         <div className="absolute inset-0 pointer-events-none opacity-[0.06] bg-[url('/grain-gold.png')] mix-blend-overlay" />
@@ -94,17 +96,13 @@ export default function WorkItem({ title, desc, link, img }) {
           ? { href: link, target: "_blank", rel: "noopener noreferrer" }
           : { to: link })}
         className="
-          sm:hidden
-          block rounded-[20px] overflow-hidden
-          bg-[#0c0c0c]
-          border border-white/[0.08]
-          shadow-[0_0_20px_rgba(0,0,0,0.30)]
-          transition-all duration-[650ms] delay-[20ms]
-          active:scale-[0.985]
-          relative
-        "
-      >
-
+    sm:hidden block rounded-[16px] overflow-hidden
+    bg-[#0d0d0d]
+    border border-white/10
+    shadow-[0_0_10px_rgba(0,0,0,0.3)]
+    backdrop-blur-[1px]
+  "
+>
         {/* 金ノイズ背景（SP） */}
         <div className="absolute inset-0 pointer-events-none opacity-[0.06] bg-[url('/grain-gold.png')] mix-blend-overlay" />
 

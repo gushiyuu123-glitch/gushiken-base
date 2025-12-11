@@ -157,3 +157,43 @@
   60%  { opacity: .4;  transform: translateX(0); }
   100% { opacity: 0; }
 }
+/* ===========================================
+   Ambient Glow（背景環境光：展示室の照明）
+=========================================== */
+.ambient-glow {
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+}
+
+.ambient-glow::before,
+.ambient-glow::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(120px);
+  opacity: 0.05;
+}
+
+.ambient-glow::before {
+  top: 22%;
+  left: -8%;
+  width: 280px;
+  height: 280px;
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.ambient-glow::after {
+  bottom: 18%;
+  right: -6%;
+  width: 340px;
+  height: 340px;
+  background: rgba(160, 160, 160, 0.18);
+}
+
+/* スクロールで少し光が強くなる */
+body.scrolled .ambient-glow::before,
+body.scrolled .ambient-glow::after {
+  opacity: 0.085;
+}
