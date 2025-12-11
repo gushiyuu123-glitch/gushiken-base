@@ -49,7 +49,7 @@ export default function WorkItem({ title, desc, link, img }) {
           />
 
           {/* フィルムグレイン */}
-          <div className="absolute inset-0 pointer-events-none opacity-[0.18] bg-[url('/grain.png')]" />
+          <div className="absolute inset-0 pointer-events-none opacity-[0.06] bg-[url('/grain.png')]" />
         </div>
 
         {/* テキスト */}
@@ -119,7 +119,7 @@ export default function WorkItem({ title, desc, link, img }) {
               group-hover:scale-[1.03]
             "
           />
-          <div className="absolute inset-0 pointer-events-none opacity-[0.22] bg-[url('/grain.png')]" />
+          <div className="absolute inset-0 pointer-events-none opacity-[0.06] bg-[url('/grain.png')]" />
         </div>
 
         {/* テキスト */}
