@@ -48,21 +48,54 @@ export default function WorksList() {
     <section className="bg-[#070604] min-h-screen py-24 px-6 md:px-10 lg:px-16">
       <div ref={rootRef} className="max-w-6xl lg:max-w-7xl mx-auto">
 
-        {/* === TOP BLOCK === */}
-        <div className="fade-up mb-20">
-          <p className="text-[0.7rem] md:text-xs tracking-[0.28em] text-white/40 mb-4">
-            SELECTED WORKS
-          </p>
+   {/* === TOP BLOCK — SANKOU EXHIBITION ENTRY === */}
+<div className="fade-up mb-28">
 
-          <h1 className="text-white text-[2.4rem] md:text-[3rem] tracking-[0.22em] font-light">
-            WORKS — Portfolio
-          </h1>
+  {/* 極薄ライン（入口サイン） */}
+  <div className="w-12 h-px bg-gradient-to-r from-white/20 to-white/5 mb-6" />
 
-          <p className="mt-6 text-sm md:text-[0.95rem] text-white/55 leading-relaxed max-w-xl">
-            沖縄 × 光 × 静寂 を軸にしたセレクション。
-            用途ごとに世界観を切り替えながらも統一トーンで構築。
-          </p>
-        </div>
+  {/* サブタイトル */}
+  <p
+    className="
+      text-[0.65rem] md:text-[0.75rem]
+      tracking-[0.32em]
+      text-white/30
+      mb-3
+    "
+  >
+    SELECTED WORKS
+  </p>
+
+  {/* タイトル */}
+  <h1
+    className="
+      text-white
+      text-[2.6rem] md:text-[3.4rem]
+      tracking-[0.28em]
+      font-light
+      leading-[1.2]
+    "
+  >
+    WORKS —<br className="md:hidden" />
+    Portfolio
+  </h1>
+
+  {/* 説明（柔らかい光の残り香） */}
+  <p
+    className="
+      mt-7 
+      text-[0.9rem] md:text-[1rem]
+      text-white/45 
+      leading-relaxed 
+      max-w-xl
+      tracking-[0.04em]
+    "
+  >
+    沖縄 × 光 × 静寂 を軸にしたセレクション。<br />
+    用途ごとに世界観を切り替えながらも、統一された静かなトーンで構築。
+  </p>
+</div>
+
 
         <div className="fade-up w-16 h-px bg-white/12 mb-20" />
 
@@ -239,39 +272,85 @@ export default function WorksList() {
     </section>
   );
 }
-
-
 /* ============================================================
-   CATEGORY
+   CATEGORY — SANKOU Exhibition Style（PC/SP 完全分離）
 ============================================================ */
 function Category({ title, subtitle, children }) {
   return (
-    <section className="fade-up">
-      {/* タイトル + 日本語サブ */}
-      <div className="mb-3">
-        <h2 className="text-white text-[1rem] md:text-[1.1rem] font-light tracking-wide">
+    <section className="fade-up w-full">
+
+      {/* ---------------------------------------------------- */}
+      {/* タイトルブロック（展示会ラベル） */}
+      {/* ---------------------------------------------------- */}
+      <div className="mb-10">
+
+        {/* 金の極薄ライン */}
+        <div className="w-10 h-px bg-gradient-to-r from-white/20 to-white/5 mb-4" />
+
+        <h2 className="
+          text-white 
+          text-[1rem] md:text-[1.1rem]
+          font-light 
+          tracking-[0.22em]
+          mb-1
+        ">
           {title}
         </h2>
-        <p className="text-white/40 text-[0.75rem] mt-1 tracking-wide">
+
+        <p className="
+          text-white/35 
+          text-[0.75rem] 
+          tracking-[0.14em]
+          leading-relaxed
+        ">
           {subtitle}
         </p>
       </div>
 
-      {/* SP 横スクロール */}
-      <div className="relative sm:hidden mb-4">
-        <div className="scroll-hint absolute">→</div>
-        <div className="fade-left" />
-        <div className="fade-right" />
+      {/* ====================================================== */}
+      {/* SP VERSION — GALLERY SCROLL (専用 DOM)                */}
+      {/* ====================================================== */}
+      <div className="sm:hidden w-full relative mb-14">
 
-        <div className="flex gap-6 overflow-x-auto px-1 py-2 scroll-x-snap scroll-x-hide">
+        {/* 左フェード */}
+        <div className="
+          pointer-events-none 
+          absolute top-0 left-0 h-full w-10
+          bg-gradient-to-r from-[#070604] to-transparent
+          z-10
+        " />
+
+        {/* 右フェード */}
+        <div className="
+          pointer-events-none 
+          absolute top-0 right-0 h-full w-10
+          bg-gradient-to-l from-[#070604] to-transparent
+          z-10
+        " />
+
+        {/* 横スク本体 */}
+        <div
+          className="
+            flex gap-6 
+            overflow-x-auto 
+            scroll-x-snap no-scrollbar
+            pr-4
+          "
+        >
           {React.Children.map(children, (child) => (
-            <div className="min-w-[85%] snap-start">{child}</div>
+            <div className="snap-start min-w-[82%]">{child}</div>
           ))}
         </div>
       </div>
 
-      {/* PC グリッド */}
-      <div className="hidden sm:grid grid-cols-2 xl:grid-cols-3 gap-10 md:gap-12">
+      {/* ====================================================== */}
+      {/* PC VERSION — EXHIBITION GRID (専用 DOM)                */}
+      {/* ====================================================== */}
+      <div className="
+        hidden sm:grid
+        grid-cols-2 xl:grid-cols-3 
+        gap-x-12 gap-y-16
+      ">
         {children}
       </div>
     </section>
