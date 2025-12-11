@@ -119,83 +119,111 @@ export default function WorkItem({ title, desc, link, img }) {
         </div>
       </Tag>
 
-      {/* ========================================================= */}
-      {/* SP VERSION — 静寂ミニ展示（控えめ Bloom を追加）        */}
-      {/* ========================================================= */}
-      <Tag
-        {...(isExternal
-          ? { href: link, target: "_blank", rel: "noopener noreferrer" }
-          : { to: link })}
-        className="
-          sm:hidden block rounded-[18px] overflow-hidden relative
-          bg-[#0d0d0d]
-          border border-white/[0.12]
-          shadow-[0_0_10px_rgba(0,0,0,0.35)]
-          transition-all duration-700
-        "
-      >
+{/* ========================================================= */}
+{/* SP VERSION — 静寂ミニ展示（完全版）                     */}
+{/* ========================================================= */}
+<Tag
+  {...(isExternal
+    ? { href: link, target: "_blank", rel: "noopener noreferrer" }
+    : { to: link })}
+  className="
+    sm:hidden block rounded-[18px] overflow-hidden relative
+    bg-[#0d0d0d]
+    border border-white/[0.12]
+    shadow-[0_0_12px_rgba(0,0,0,0.35)]
+    transition-all duration-700
+  "
+>
 
-        {/* SP 金ノイズ */}
-        <div className="
-          absolute inset-0 pointer-events-none opacity-[0.07]
-          bg-[url('/grain-gold.png')] mix-blend-overlay
-        " />
+  {/* 金ノイズ（SP 専用） */}
+  <div
+    className="
+      absolute inset-0 pointer-events-none
+      opacity-[0.06]
+      bg-[url('/grain-gold.png')] mix-blend-overlay
+    "
+  />
 
-        {/* 画像 */}
-        <div className="relative w-full aspect-[4/3] overflow-hidden">
-          <img
-            src={img}
-            alt={title}
-            loading="lazy"
-            className="
-              w-full h-full object-cover
-              brightness-[0.92]
-              transition-all duration-[1000ms]
-            "
-          />
+  {/* ========================== */}
+  {/* 画像エリア（完全版）       */}
+  {/* ========================== */}
+  <div className="relative w-full aspect-[4/3] overflow-hidden">
+    <img
+      src={img}
+      alt={title}
+      loading="lazy"
+      className="
+        w-full h-full object-cover
+        object-[center_38%]              /* ← 枠はそのまま、構図だけ引く */
+        brightness-[0.93]
+        transition-all duration-[1000ms]
+      "
+    />
 
-          {/* SP は控えめ Bloom */}
-          <div
-            className="
-              absolute top-0 right-0 w-[58%] h-[58%]
-              pointer-events-none opacity-[0.23]
-            "
-            style={{
-              background:
-                "radial-gradient(circle at top right, rgba(255,237,210,0.22), transparent 70%)",
-            }}
-          />
+    {/* Bloom（SP 用に最適化） */}
+    <div
+      className="
+        absolute top-0 right-0
+        w-[55%] h-[55%]
+        pointer-events-none
+        opacity-[0.20]
+      "
+      style={{
+        background:
+          "radial-gradient(circle at top right, rgba(255,235,210,0.18), transparent 70%)",
+      }}
+    />
 
-          <div className="absolute inset-0 pointer-events-none opacity-[0.04] bg-[url('/grain.png')]" />
-        </div>
+    {/* フィルムグレイン（弱め） */}
+    <div
+      className="
+        absolute inset-0 pointer-events-none
+        opacity-[0.04]
+        bg-[url('/grain.png')]
+      "
+    />
+  </div>
 
-        {/* テキスト */}
-        <div className="px-5 pt-5 pb-7 text-white">
-          <h3 className="
-            text-[0.95rem]
-            tracking-[0.17em]
-            font-light
-            mb-3
-            text-white/90
-          ">
-            {title}
-          </h3>
+  {/* ========================== */}
+  {/* テキストエリア（完全版）   */}
+  {/* ========================== */}
+  <div className="px-5 pt-5 pb-7 text-white">
+    <h3
+      className="
+        text-[0.96rem]
+        tracking-[0.17em]
+        font-light
+        mb-3
+        text-white/90
+      "
+    >
+      {title}
+    </h3>
 
-          <p className="
-            text-white/55 text-[0.83rem]
-            leading-[1.75]
-            whitespace-pre-line
-            line-clamp-4
-            mb-5
-          ">
-            {desc}
-          </p>
+    <p
+      className="
+        text-white/55 text-[0.83rem]
+        leading-[1.75]
+        whitespace-pre-line
+        line-clamp-4
+        mb-5
+      "
+    >
+      {desc}
+    </p>
 
-          <span className="text-white/70 text-[0.68rem] tracking-[0.22em]">
-            VIEW SITE →
-          </span>
-        </div>
-      </Tag>
+    <span
+      className="
+        text-white/70
+        text-[0.68rem]
+        tracking-[0.22em]
+      "
+    >
+      VIEW SITE →
+    </span>
+  </div>
+</Tag>
+
     </>
   );
 }

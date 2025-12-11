@@ -1,5 +1,7 @@
 // src/pages/WorksList.jsx
 import React, { useEffect, useRef } from "react";
+import Category from "../components/Category";
+
 import WorkItem from "../components/WorkItem";
 
 // === 画像 import ===
@@ -281,91 +283,6 @@ useEffect(() => {
           </Category>
 
         </div>
-      </div>
-    </section>
-  );
-}
-/* ============================================================
-   CATEGORY — SANKOU Exhibition Style（PC/SP 完全分離）
-============================================================ */
-function Category({ title, subtitle, children }) {
-  return (
-    <section className="fade-up w-full">
-
-      {/* ---------------------------------------------------- */}
-      {/* タイトルブロック（展示会ラベル） */}
-      {/* ---------------------------------------------------- */}
-      <div className="mb-10">
-
-        {/* 金の極薄ライン */}
-        <div className="w-12 h-px bg-white/20 drop-shadow-[0_0_3px_rgba(255,255,255,0.23)] mb-6" />
-
-
-        <h2 className="
-          text-white 
-          text-[1rem] md:text-[1.1rem]
-          font-light 
-          tracking-[0.22em]
-          mb-1
-        ">
-          {title}
-        </h2>
-
-        <p className="
-          text-white/35 
-          text-[0.75rem] 
-          tracking-[0.14em]
-          leading-relaxed
-        ">
-          {subtitle}
-        </p>
-      </div>
-
-      {/* ====================================================== */}
-      {/* SP VERSION — GALLERY SCROLL (専用 DOM)                */}
-      {/* ====================================================== */}
-      <div className="sm:hidden w-full relative mb-14">
-
-        {/* 左フェード */}
-        <div className="
-          pointer-events-none 
-          absolute top-0 left-0 h-full w-2
-          bg-gradient-to-r from-[#070604] to-transparent
-          z-10
-        " />
-
-        {/* 右フェード */}
-        <div className="
-          pointer-events-none 
-          absolute top-0 right-0 h-full w-2
-          bg-gradient-to-l from-[#070604] to-transparent
-          z-10
-        " />
-
-        {/* 横スク本体 */}
-        <div
-          className="
-            flex gap-6 
-            overflow-x-auto 
-            scroll-x-snap no-scrollbar
-            pr-4
-          "
-        >
-          {React.Children.map(children, (child) => (
-            <div className="snap-start min-w-[82%]">{child}</div>
-          ))}
-        </div>
-      </div>
-
-      {/* ====================================================== */}
-      {/* PC VERSION — EXHIBITION GRID (専用 DOM)                */}
-      {/* ====================================================== */}
-      <div className="
-        hidden sm:grid
-        grid-cols-2 xl:grid-cols-3 
-        gap-x-12 gap-y-16
-      ">
-        {children}
       </div>
     </section>
   );

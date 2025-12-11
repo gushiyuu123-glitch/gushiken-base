@@ -8,38 +8,50 @@ import Footer from "./components/FOOTER";
 import Home from "./pages/Home";
 import WorksList from "./pages/WorksList";
 import PriceDetail from "./pages/PriceDetail";
-import Contact from "./pages/Contact";   // ← ★追加
+import Contact from "./pages/Contact";
 
 import ScrollToTop from "./components/ScrollToTop";
 
+// ================================
+// Layout（全ページ共通レイアウト）
+// ================================
 function Layout() {
   const { pathname } = useLocation();
   const isHome = pathname === "/";
 
   return (
     <>
+      {/* ページ遷移ごとに位置リセット */}
       <ScrollToTop />
 
-      {/* TOP → Nav / 他ページ → NavGlobal */}
+      {/* ホームだけ特別なナビ、それ以外はグローバル */}
       {isHome ? <Nav /> : <NavGlobal />}
 
-<Routes>
-  <Route path="/" element={<Home />} />
-  <Route path="/works" element={<WorksList />} />
+      {/* ページ本体 */}
+      <main id="page-root">
+        <Routes>
+          <Route path="/" element={<Home />} />
 
-  {/* ここ修正！！！！！！！！！！！ */}
-  <Route path="/price" element={<PriceDetail />} />
-  {/* ここ修正！！！！！！！！！！！ */}
+          {/* 制作実績 */}
+          <Route path="/works" element={<WorksList />} />
 
-  <Route path="/contact" element={<Contact />} />
-</Routes>
+          {/* 料金ページ（修正版） */}
+          <Route path="/price" element={<PriceDetail />} />
 
+          {/* お問い合わせ */}
+          <Route path="/contact" element={<Contact />} />
+        </Routes>
+      </main>
 
+      {/* 全ページ共通フッター */}
       <Footer />
     </>
   );
 }
 
+// ================================
+// App（最終的に返すルート）
+// ================================
 export default function App() {
   return <Layout />;
 }
