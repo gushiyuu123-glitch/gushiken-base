@@ -119,33 +119,49 @@ export default function WorkItem({ title, desc, link, img }) {
         </div>
       </Tag>
 
+
 {/* ========================================================= */}
-{/* SP VERSION — 静寂ミニ展示（完全版）                     */}
+{/* SP VERSION — Dior Gold Exhibition Mini（最強版）       */}
 {/* ========================================================= */}
 <Tag
   {...(isExternal
     ? { href: link, target: "_blank", rel: "noopener noreferrer" }
     : { to: link })}
   className="
-    sm:hidden block rounded-[18px] overflow-hidden relative
-    bg-[#0d0d0d]
-    border border-white/[0.12]
-    shadow-[0_0_12px_rgba(0,0,0,0.35)]
-    transition-all duration-700
+    sm:hidden block 
+    rounded-[20px] overflow-hidden relative
+    bg-[#0b0b0b]
+    border border-white/[0.14]
+    shadow-[0_4px_18px_rgba(0,0,0,0.55)]
+    transition-all duration-[900ms]
+    active:scale-[0.985]
   "
 >
 
-  {/* 金ノイズ（SP 専用） */}
+  {/* ===== Outer Gold Glow（枠の光） ===== */}
+  <div
+    className="
+      absolute inset-0 pointer-events-none rounded-[20px]
+      opacity-0
+      transition-all duration-[1100ms]
+    "
+    style={{
+      boxShadow: "0 0 28px rgba(215,190,150,0.32)",
+    }}
+  />
+
+  {/* ===== Gold Dust（微粒子ノイズ） ===== */}
   <div
     className="
       absolute inset-0 pointer-events-none
-      opacity-[0.06]
-      bg-[url('/grain-gold.png')] mix-blend-overlay
+      opacity-[0.10]
+      bg-[url('/grain-gold.png')]
+      mix-blend-overlay
     "
   />
 
   {/* ========================== */}
-  {/* 画像エリア（完全版）       */}
+  {/* 画像エリア（高級感の中心） */}
   {/* ========================== */}
   <div className="relative w-full aspect-[4/3] overflow-hidden">
     <img
@@ -154,44 +170,45 @@ export default function WorkItem({ title, desc, link, img }) {
       loading="lazy"
       className="
         w-full h-full object-cover
-        object-[center_38%]              /* ← 枠はそのまま、構図だけ引く */
-        brightness-[0.93]
-        transition-all duration-[1000ms]
+        object-center
+        brightness-[0.88]
+        transition-all duration-[1400ms]
       "
     />
 
-    {/* Bloom（SP 用に最適化） */}
+    {/* ===== Bloom（右上の光の滲み） ===== */}
     <div
       className="
         absolute top-0 right-0
-        w-[55%] h-[55%]
+        w-[65%] h-[65%]
         pointer-events-none
-        opacity-[0.20]
+        opacity-[0.28]
+        blur-[10px]
       "
       style={{
         background:
-          "radial-gradient(circle at top right, rgba(255,235,210,0.18), transparent 70%)",
+          "radial-gradient(circle at top right, rgba(255,240,215,0.32), transparent 70%)",
       }}
     />
 
-    {/* フィルムグレイン（弱め） */}
+    {/* ===== Film Grain（弱粒子） ===== */}
     <div
       className="
         absolute inset-0 pointer-events-none
-        opacity-[0.04]
+        opacity-[0.06]
         bg-[url('/grain.png')]
       "
     />
   </div>
 
   {/* ========================== */}
-  {/* テキストエリア（完全版）   */}
+  {/* テキスト（洗練 & 静寂）    */}
   {/* ========================== */}
-  <div className="px-5 pt-5 pb-7 text-white">
+  <div className="px-5 pt-6 pb-7 text-white">
     <h3
       className="
-        text-[0.96rem]
-        tracking-[0.17em]
+        text-[1.0rem]
+        tracking-[0.20em]
         font-light
         mb-3
         text-white/90
@@ -202,11 +219,11 @@ export default function WorkItem({ title, desc, link, img }) {
 
     <p
       className="
-        text-white/55 text-[0.83rem]
-        leading-[1.75]
+        text-white/55 text-[0.85rem]
+        leading-[1.9]
         whitespace-pre-line
         line-clamp-4
-        mb-5
+        mb-6
       "
     >
       {desc}
@@ -214,15 +231,16 @@ export default function WorkItem({ title, desc, link, img }) {
 
     <span
       className="
-        text-white/70
-        text-[0.68rem]
-        tracking-[0.22em]
+        text-white/75
+        text-[0.72rem]
+        tracking-[0.28em]
       "
     >
       VIEW SITE →
     </span>
   </div>
 </Tag>
+
 
     </>
   );
