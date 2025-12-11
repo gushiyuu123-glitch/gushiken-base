@@ -43,11 +43,6 @@ export default function NavGlobal() {
             PRICE
           </Link>
 
-          {/* ▼ CONTACT は外部アンカーなので active 判定なし */}
-          <a href="/#contact" className="opacity-60 hover:opacity-100">
-            CONTACT
-          </a>
-
         </div>
       </div>
     </nav>
