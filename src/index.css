@@ -161,10 +161,7 @@
    Ambient Glow（背景環境光：展示室の照明）
 =========================================== */
 .ambient-glow {
-  pointer-events: none;
-  position: fixed;
-  inset: 0;
-  z-index: 0;
+  display: none;
 }
 
 .ambient-glow::before,
