@@ -5,25 +5,29 @@ export default function Works() {
   const worksRef = useRef(null);
 
   useEffect(() => {
-    const items = worksRef.current?.querySelectorAll(".work-card");
-    if (!items) return;
-
-    // Fade-in Observer
-    const observer = new IntersectionObserver(
+    const root = worksRef.current;
+    if (!root) return;
+  const items = root.querySelectorAll(".work-card, .works-viewall");
+    /* -----------------------------
+       FADE-IN + SCALE-IN Observer
+    ----------------------------- */
+    const io = new IntersectionObserver(
       (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("show");
-            observer.unobserve(entry.target);
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            e.target.classList.add("show");
+            io.unobserve(e.target);
           }
         });
       },
-      { threshold: 0.22 }
+      { threshold: 0.2 }
     );
 
-    items.forEach((item) => observer.observe(item));
+    items.forEach((item) => io.observe(item));
 
-    // Image Loaded Handler
+    /* -----------------------------
+       IMAGE LOADED → Smooth Reveal
+    ----------------------------- */
     items.forEach((item) => {
       const img = item.querySelector("img");
       if (!img) return;
@@ -35,58 +39,68 @@ export default function Works() {
       }
     });
 
-    return () => observer.disconnect();
+    return () => io.disconnect();
   }, []);
 
   return (
     <section id="works" className="works-section" ref={worksRef}>
       <div className="works-container">
 
-        {/* HEADER */}
-        <div className="works-header">
+        {/* ======================================================
+            HEADER — Exhibit Title Block（SANKOU × Minimal）
+        ====================================================== */}
+        <div className="works-header fade-up">
           <h2 className="works-title" translate="no">WORKS</h2>
           <p className="works-sub">SELECTED PROJECTS</p>
         </div>
 
-        {/* GRID */}
+        {/* ======================================================
+            EXHIBITION GRID（PC） / SCROLL GALLERY（SP）
+        ====================================================== */}
         <div className="works-grid">
 
-          {/* ★ Natural Objects（大） */}
+          {/* ------------------------ */}
+          {/* BIG CARD — Neutral Objects */}
+          {/* ------------------------ */}
           <a
             href="https://neutral-objects.vercel.app/"
             target="_blank"
             rel="noopener noreferrer"
             className="work-card work-big"
           >
-            <img src="/neutral.webp" alt="Natural Objects" />
+            <img src="/neutral.webp" alt="Neutral Objects" loading="lazy" />
             <div className="work-text">
               <h3>Neutral Objects</h3>
               <p>Light × Silence × Everyday Minimalism.</p>
             </div>
           </a>
 
-          {/* Spa（小） */}
+          {/* ------------------------ */}
+          {/* SMALL CARD — Spa */}
+          {/* ------------------------ */}
           <a
             href="https://okinawa-white-spa.vercel.app/"
             target="_blank"
             rel="noopener noreferrer"
             className="work-card work-small"
           >
-            <img src="/assets/spa.webp" alt="Okinawa White Spa" />
+            <img src="/assets/spa.webp" alt="Okinawa White Spa" loading="lazy" />
             <div className="work-text small">
               <h3>Okinawa White Spa</h3>
               <p>White × Silence × Minimal Luxury.</p>
             </div>
           </a>
 
-          {/* Koti（小） */}
+          {/* ------------------------ */}
+          {/* SMALL CARD — Koti */}
+          {/* ------------------------ */}
           <a
             href="https://koti-beta.vercel.app/"
             target="_blank"
             rel="noopener noreferrer"
             className="work-card work-small"
           >
-            <img src="/assets/koti.webp" alt="Koti Furniture" />
+            <img src="/assets/koti.webp" alt="Koti Furniture" loading="lazy" />
             <div className="work-text small">
               <h3>Koti — Quiet Living</h3>
               <p>Scandinavian calm × crafted minimalism.</p>
@@ -95,8 +109,10 @@ export default function Works() {
 
         </div>
 
-        {/* ★ VIEW ALL WORKS ボタン（復元） */}
-        <div className="works-viewall">
+        {/* ======================================================
+            VIEW ALL WORKS BUTTON
+        ====================================================== */}
+        <div className="works-viewall fade-up">
           <a href="/works" className="viewall-btn">
             VIEW ALL WORKS
           </a>

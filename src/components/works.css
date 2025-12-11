@@ -1,23 +1,27 @@
-/* ================================
-   WORKS SECTION — Noah Precision Edition
-================================== */
+/* ============================================================
+   WORKS SECTION — Noah Precision Complete Edition
+   SANKOU Exhibition × Dior Glow × Gallery Logic
+=========================================================== */
 
+/* SECTION 背景 */
 .works-section {
   width: 100%;
   padding: 7rem 0;
+  background: linear-gradient(180deg, #0b0b0b 0%, #0a0a0a 40%, #0c0c0c 100%);
   display: flex;
   justify-content: center;
-  background: linear-gradient(180deg, #0b0b0b 0%, #0a0a0a 40%, #0c0c0c 100%);
 }
 
-/* ---- コンテナ ---- */
+/* コンテナ */
 .works-container {
   width: 88%;
   max-width: 1500px;
   margin: 0 auto;
 }
 
-/* ---- タイトル ---- */
+/* ------------------------------------------- */
+/*               HEADER（タイトル）            */
+/* ------------------------------------------- */
 .works-header {
   margin-bottom: 3rem;
 }
@@ -28,8 +32,8 @@
   font-weight: 300;
   letter-spacing: 0.22em;
   margin-bottom: 0.6rem;
-  position: relative;
   padding-top: 2.5rem;
+  position: relative;
 }
 
 .works-title::before {
@@ -48,7 +52,9 @@
   letter-spacing: 0.18em;
 }
 
-/* ---- PC レイアウト ---- */
+/* ------------------------------------------- */
+/*          PC GRID LAYOUT（展示配置）         */
+/* ------------------------------------------- */
 .works-grid {
   display: grid;
   grid-template-columns: 1.45fr 1fr;
@@ -56,206 +62,51 @@
   gap: 2.2rem;
 }
 
-/* ---- カード共通 ---- */
+/* 大カード配置 */
+.work-big {
+  grid-column: 1 / 2;
+  grid-row: 1 / 3;
+}
+
+/* 右側2枚 */
+.work-small:nth-of-type(2) {
+  grid-column: 2 / 3;
+  grid-row: 1;
+}
+.work-small:nth-of-type(3) {
+  grid-column: 2 / 3;
+  grid-row: 2;
+}
+
+/* ------------------------------------------- */
+/*                  CARD 共通                 */
+/* ------------------------------------------- */
 .work-card {
   position: relative;
   overflow: hidden;
   border-radius: 0;
+  display: block;
 
   opacity: 0;
-  transform: translateY(45px) scale(0.96);
-  filter: blur(3px);  /* ← blur 弱めに最適化 */
+  transform: translateY(45px) scale(0.97);
+  filter: blur(3px);
   transition: all 1.2s cubic-bezier(.19,1,.22,1);
 }
 
-/* ---- フェードイン ---- */
+/* フェードイン後 */
 .work-card.show {
   opacity: 1;
   transform: translateY(0) scale(1);
   filter: blur(0);
 }
 
-/* ---- PC のグリッド配置 ---- */
-.work-big {
-  grid-column: 1 / 2;
-  grid-row: 1 / 3;
-}
-
-.work-small:nth-of-type(2) {
-  grid-column: 2 / 3;
-  grid-row: 1 / 2;
-}
-
-.work-small:nth-of-type(3) {
-  grid-column: 2 / 3;
-  grid-row: 2 / 3;
-}
-
-/* ---- 画像 ---- */
-.work-card img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-/* ---- テキスト ---- */
-.work-text {
-  position: absolute;
-  left: 2.4rem;
-  bottom: 2.4rem;
-  z-index: 5;
-  color: white;
-  font-family: "Poppins", sans-serif;
-}
-
-.work-text h3 {
-  font-size: 1.55rem;
-  font-weight: 300;
-  letter-spacing: 0.07em;
-  margin-bottom: 0.6rem;
-}
-
-.work-text p {
-  font-size: 0.92rem;
-  opacity: 0.87;
-  font-weight: 300;
-  font-family: "Noto Sans JP", sans-serif;
-}
-
-/* ---- 右側2枚：金ライン（フェード後に出す） ---- */
-.work-small::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border: 1px solid rgba(215,195,154,0); /* 初期：透明 */
-  transition: border-color 1.4s ease 0.3s;
-  pointer-events: none;
-}
-
-.work-card.show.work-small::before {
-  border-color: rgba(215,195,154,0.35); /* フェード後に出現 */
-}
-
-/* ========================================
-   📱 スマホ版：横スクロール（完全統合版）
-======================================== */
-@media (max-width: 768px) {
-
-  /* グリッド解除 */
-  .work-big,
-  .work-small {
-    grid-column: auto !important;
-    grid-row: auto !important;
-  }
-
-  .works-grid {
-    display: flex !important;
-    flex-direction: row !important;
-    overflow-x: auto !important;
-    scroll-snap-type: x mandatory;
-    gap: 1.6rem !important;
-    padding: 0 1rem !important;
-
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-  }
-  .works-grid::-webkit-scrollbar {
-    display: none;
-  }
-
-  /* カード幅強制 */
-  .work-card {
-    width: auto !important;
-    flex: 0 0 84% !important;
-    min-width: 84% !important;
-    height: auto !important;
-    scroll-snap-align: center;
-  }
-
-  /* 画像最適化 */
-  .work-card img {
-    width: 100% !important;
-    height: auto !important;
-    aspect-ratio: 1 / 1.25 !important;
-    object-fit: cover !important;
-  }
-
-  /* タイトル調整 */
-  .works-title {
-    font-size: 1.9rem;
-    letter-spacing: 0.18em;
-    padding-top: 1.8rem;
-  }
-  .works-title::before {
-    width: 42px;
-  }
-  .works-sub {
-    font-size: 0.7rem;
-  }
-
-  /* タップエフェクト */
-  .work-card::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: rgba(0,0,0,0);
-    transition: background 0.3s ease;
-  }
-
-  .work-card:active::after {
-    background: rgba(0,0,0,0.32);
-  }
-
-  .work-card:active .work-text {
-    transform: translateY(-4px);
-    transition: transform 0.3s ease;
-  }
-}
-
-/* ===========================
-   VIEW ALL WORKS ボタン
-=========================== */
-.works-viewall {
-  margin-top: 3rem;
-  text-align: center;
-}
-
-.viewall-btn {
-  display: inline-block;
-  padding: 0.65rem 2.2rem;
-  border: 1px solid rgba(217,185,138,0.65);
-  color: rgba(217,185,138,0.9);
-  font-size: 0.85rem;
-  letter-spacing: 0.15em;
-  text-decoration: none;
-  backdrop-filter: blur(3px);
-  transition: all 0.35s ease;
-}
-
-.viewall-btn:hover {
-  color: #000;
-  background: rgba(217,185,138,0.85);
-  border-color: rgba(217,185,138,1);
-}
-/* =============================== */
-/* 基本カード設定                  */
-/* =============================== */
-.work-card {
-  position: relative;
-  overflow: hidden;
-  display: block;
-  border-radius: 4px;
-  transition: transform 0.8s cubic-bezier(.25,.46,.45,.94),
-              box-shadow 0.8s cubic-bezier(.25,.46,.45,.94);
-}
-
-/* ホバー時のズーム & シャドウ */
+/* Dior hover zoom */
 .work-card:hover {
   transform: translateY(-6px) scale(1.04);
   box-shadow: 0 18px 40px rgba(0,0,0,0.18);
 }
 
-/* 画像アニメ */
+/* IMAGE */
 .work-card img {
   width: 100%;
   height: 100%;
@@ -263,22 +114,19 @@
   transition: transform 1s cubic-bezier(.25,.46,.45,.94);
 }
 
-/* ホバーで画像ズーム */
 .work-card:hover img {
   transform: scale(1.08);
 }
 
-/* =============================== */
-/* テキストのベール（視認性UP）    */
-/* =============================== */
-
+/* ------------------------------------------- */
+/*               TEXT VEIL（視認性UP）        */
+/* ------------------------------------------- */
 .work-text {
   position: absolute;
   bottom: 0;
   left: 0;
   width: 100%;
 
-  /* 透明な黒ベール（上品で存在を消しすぎない） */
   background: linear-gradient(
     to top,
     rgba(0,0,0,0.38),
@@ -292,40 +140,199 @@
 }
 
 .work-text h3 {
-  font-size: 1.1rem;
-  font-weight: 400;
-  letter-spacing: 0.04em;
-  margin-bottom: 6px;
+  font-size: 1.55rem;
+  font-weight: 300;
+  letter-spacing: 0.07em;
+  margin-bottom: 0.6rem;
 }
 
 .work-text p {
-  font-size: 0.85rem;
-  opacity: 0.9;
-  letter-spacing: 0.02em;
+  font-size: 0.92rem;
+  opacity: 0.87;
 }
 
-/* =============================== */
-/* small カード調整                */
-/* =============================== */
+/* small カード調整 */
 .work-text.small {
   padding: 18px 20px;
 }
 
-/* ホバーでテキストを少し強めに表示 */
-.work-card:hover .work-text {
-  opacity: 1;
+/* ------------------------------------------- */
+/* 金ライン（右側2枚）                         */
+/* ------------------------------------------- */
+.work-small::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border: 1px solid rgba(215,195,154,0);
+  transition: border-color 1.4s ease 0.3s;
 }
 
-/* =============================== */
-/* フェード（元からある機能強化）  */
-/* =============================== */
-.work-card.show {
+.work-card.show.work-small::before {
+  border-color: rgba(215,195,154,0.35);
+}
+
+/* ------------------------------------------- */
+/* SP：横スクロール GALLERY                    */
+/* ------------------------------------------- */
+@media (max-width: 768px) {
+  .works-grid {
+    display: flex !important;
+    overflow-x: auto;
+    flex-direction: row;
+    gap: 1.6rem;
+    padding: 0 1rem;
+
+    scroll-snap-type: x mandatory;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .works-grid::-webkit-scrollbar { display: none; }
+
+  .work-card {
+    flex: 0 0 84%;
+    min-width: 84%;
+    scroll-snap-align: center;
+    height: auto;
+  }
+
+  .work-card img {
+    aspect-ratio: 1 / 1.25;
+    height: auto;
+  }
+
+  .works-title {
+    font-size: 1.9rem;
+    padding-top: 1.8rem;
+  }
+  .works-title::before { width: 42px; }
+
+  .works-sub { font-size: 0.7rem; }
+
+  /* タップエフェクト */
+  .work-card::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0);
+    transition: background 0.3s ease;
+  }
+  .work-card:active::after {
+    background: rgba(0,0,0,0.32);
+  }
+}
+/* ============================================================
+   VIEW ALL WORKS — Dior × SANKOU Hybrid Luxury Button
+============================================================ */
+
+.works-viewall {
+  width: 100%;
+  text-align: center;
+  margin-top: 3.5rem !important;
+  z-index: 5;
+  display: block;
+  position: relative;
+
+  /* fade-in 初期状態 */
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.9s cubic-bezier(.25,.46,.45,.94);
+}
+
+.works-viewall.show {
   opacity: 1;
   transform: translateY(0);
 }
 
-.work-card {
+/* ------------------------------- */
+/*   BUTTON BASE                   */
+/* ------------------------------- */
+
+.viewall-btn {
+  display: inline-block;
+  padding: 0.65rem 2.6rem;
+
+  border: 1px solid rgba(217,185,138,0.55);
+  border-radius: 2px;
+
+  color: rgba(217,185,138,0.92);
+  font-size: 0.85rem;
+  letter-spacing: 0.15em;
+  text-decoration: none;
+
+  position: relative;
+  overflow: hidden;
+
+  backdrop-filter: blur(3px);
+
+  /* SANKOU：ゆっくり広がる */
+  transition:
+    color 0.45s ease,
+    border-color 0.6s ease,
+    transform 0.65s cubic-bezier(.19,1,.22,1),
+    box-shadow 0.8s ease;
+}
+
+/* ---------------------------------------------- */
+/* Dior：華奢な金色の光がボタン縁を包む           */
+/* ---------------------------------------------- */
+
+.viewall-btn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+
+  /* 右上の金 bloom（ほぼ見えないくらい薄く） */
+  background:
+    radial-gradient(
+      circle at 85% 20%,
+      rgba(255,226,170,0.23),
+      transparent 65%
+    );
+
   opacity: 0;
-  transform: translateY(20px);
-  transition: all 1s cubic-bezier(.25,.46,.45,.94);
+  transition: opacity 0.9s ease;
+  pointer-events: none;
+}
+
+/* ---------------------------------------------- */
+/* Dior：金縁が滲む “frame glow”                  */
+/* ---------------------------------------------- */
+
+.viewall-btn::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  box-shadow: 0 0 28px rgba(217,185,138,0.45);
+  opacity: 0;
+  transition: opacity 1s ease;
+  pointer-events: none;
+}
+
+/* ---------------------------------------------- */
+/* HOVER — Dior × SANKOU 両方を発動               */
+/* ---------------------------------------------- */
+
+.viewall-btn:hover {
+  color: #000;
+  background: rgba(217,185,138,0.87);
+  border-color: rgba(217,185,138,1);
+
+  /* SANKOU 的な膨張感 */
+  transform: scale(1.038);
+  box-shadow:
+    0 18px 40px rgba(0,0,0,0.28),
+    0 0 25px rgba(217,185,138,0.35);
+}
+
+/* gold bloom */
+.viewall-btn:hover::before {
+  opacity: 0.18; /* ← 控えめにすることで高級感 */
+}
+
+/* frame glow */
+.viewall-btn:hover::after {
+  opacity: 0.35;
 }
