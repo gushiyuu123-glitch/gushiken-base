@@ -274,13 +274,22 @@ body.scrolled .ambient-glow::after {
   filter: blur(140px);
   transition: opacity 2.2s ease, filter 2.2s ease;
 }
-.sp-slide-in {
+/* ============================================================
+   SP Exhibition Slide-in Animation（順番に登場）
+============================================================ */
+.sp-card-animate {
   opacity: 0;
-  transform: translateX(26px);
-  transition: opacity 1.1s ease, transform 1.1s ease;
+  transform: translateY(26px);
+  animation: spCardIn 1s cubic-bezier(.25,.46,.45,.94) forwards;
 }
 
-.sp-slide-in.show {
-  opacity: 1 !important;
-  transform: translateX(0) !important;
+@keyframes spCardIn {
+  0% {
+    opacity: 0;
+    transform: translateY(26px) scale(0.97);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
 }

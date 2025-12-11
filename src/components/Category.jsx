@@ -87,9 +87,20 @@ export default function Category({ title, subtitle, children }) {
             pr-4
           "
         >
-          {React.Children.map(children, (child) => (
-            <div className="snap-start min-w-[82%]">{child}</div>
-          ))}
+  {React.Children.map(children, (child, i) => (
+  <div
+    className={`
+      snap-start min-w-[82%]
+      sp-card-animate
+    `}
+    style={{
+      animationDelay: `${i * 0.18}s`,
+    }}
+  >
+    {child}
+  </div>
+))}
+
         </div>
       </div>
 
