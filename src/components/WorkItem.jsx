@@ -119,9 +119,8 @@ export default function WorkItem({ title, desc, link, img }) {
         </div>
       </Tag>
 
-
 {/* ========================================================= */}
-{/* SP VERSION — Dior Gold Exhibition Mini（最強版）       */}
+{/* SP VERSION — Dior Gold Exhibition Mini（完全版）        */}
 {/* ========================================================= */}
 <Tag
   {...(isExternal
@@ -129,40 +128,42 @@ export default function WorkItem({ title, desc, link, img }) {
     : { to: link })}
   className="
     sm:hidden block 
-    rounded-[20px] overflow-hidden relative
+    rounded-[22px] overflow-hidden relative
     bg-[#0b0b0b]
-    border border-white/[0.14]
-    shadow-[0_4px_18px_rgba(0,0,0,0.55)]
+    border border-white/[0.16]
+    shadow-[0_14px_48px_rgba(0,0,0,0.85)]        /* 深影 */
     transition-all duration-[900ms]
     active:scale-[0.985]
+    sp-slide-in                                   /* ← スライドイン */
   "
 >
-
-  {/* ===== Outer Gold Glow（枠の光） ===== */}
+  {/* ===== Outer Gold Glow（枠グロウ） ===== */}
   <div
     className="
-      absolute inset-0 pointer-events-none rounded-[20px]
+      absolute inset-0 pointer-events-none rounded-[22px]
       opacity-0
-      transition-all duration-[1100ms]
+      group-hover:opacity-[0.32]
+      transition-all duration-[1200ms]
+      blur-[14px]
     "
     style={{
-      boxShadow: "0 0 28px rgba(215,190,150,0.32)",
+      boxShadow: "0 0 38px rgba(215,190,150,0.38)",
     }}
   />
 
-  {/* ===== Gold Dust（微粒子ノイズ） ===== */}
+  {/* ===== 金ノイズ ===== */}
   <div
     className="
       absolute inset-0 pointer-events-none
-      opacity-[0.10]
+      opacity-[0.12]
       bg-[url('/grain-gold.png')]
       mix-blend-overlay
     "
   />
 
-  {/* ========================== */}
+  {/* ============================= */}
   {/* 画像エリア（高級感の中心） */}
-  {/* ========================== */}
+  {/* ============================= */}
   <div className="relative w-full aspect-[4/3] overflow-hidden">
     <img
       src={img}
@@ -170,45 +171,45 @@ export default function WorkItem({ title, desc, link, img }) {
       loading="lazy"
       className="
         w-full h-full object-cover
-        object-center
-        brightness-[0.88]
+        brightness-[0.86]
+        scale-[1.02]
         transition-all duration-[1400ms]
       "
     />
 
-    {/* ===== Bloom（右上の光の滲み） ===== */}
+    {/* ===== Bloom（強め） ===== */}
     <div
       className="
         absolute top-0 right-0
-        w-[65%] h-[65%]
+        w-[75%] h-[75%]
         pointer-events-none
-        opacity-[0.28]
-        blur-[10px]
+        opacity-[0.45]
+        blur-[20px]
       "
       style={{
         background:
-          "radial-gradient(circle at top right, rgba(255,240,215,0.32), transparent 70%)",
+          "radial-gradient(circle at top right, rgba(255,240,215,0.45), transparent 70%)",
       }}
     />
 
-    {/* ===== Film Grain（弱粒子） ===== */}
+    {/* ===== Film Grain ===== */}
     <div
       className="
         absolute inset-0 pointer-events-none
-        opacity-[0.06]
+        opacity-[0.05]
         bg-[url('/grain.png')]
       "
     />
   </div>
 
-  {/* ========================== */}
-  {/* テキスト（洗練 & 静寂）    */}
-  {/* ========================== */}
+  {/* ============================= */}
+  {/* テキスト（静寂 × 高級）      */}
+  {/* ============================= */}
   <div className="px-5 pt-6 pb-7 text-white">
     <h3
       className="
-        text-[1.0rem]
-        tracking-[0.20em]
+        text-[1.02rem]
+        tracking-[0.22em]
         font-light
         mb-3
         text-white/90
@@ -219,7 +220,7 @@ export default function WorkItem({ title, desc, link, img }) {
 
     <p
       className="
-        text-white/55 text-[0.85rem]
+        text-white/55 text-[0.86rem]
         leading-[1.9]
         whitespace-pre-line
         line-clamp-4
@@ -233,7 +234,8 @@ export default function WorkItem({ title, desc, link, img }) {
       className="
         text-white/75
         text-[0.72rem]
-        tracking-[0.28em]
+        tracking-[0.30em]
+        transition-all duration-700
       "
     >
       VIEW SITE →
