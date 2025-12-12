@@ -27,7 +27,7 @@ export default function Legal() {
           <section>
             <h2 className="text-lg mb-2 tracking-[0.12em]">所在地</h2>
             <p>
-              プライバシー保護のため、請求をいただいた場合に限り
+              プライバシー保護のため、正式なご依頼・請求をいただいた際に限り
               遅滞なく開示いたします。
             </p>
           </section>
@@ -38,7 +38,7 @@ export default function Legal() {
             <p>
               メールアドレス：gushikendesign@gmail.com
               <br />
-              ※原則 24 時間以内に返信いたします。
+              ※原則 24 時間以内にご返信いたします。
             </p>
           </section>
 
@@ -46,20 +46,20 @@ export default function Legal() {
           <section>
             <h2 className="text-lg mb-2 tracking-[0.12em]">販売価格について</h2>
             <p>
-              制作内容・ページ数・仕様に応じて個別にお見積もりいたします。
-              料金表ページに税込の目安価格を掲載しています。
+              制作内容・ページ数・機能・世界観に応じてお見積りを作成します。
+              「料金ページ」に税込の目安価格を掲載しています。
             </p>
           </section>
 
-          {/* 商品代金以外の費用 */}
+          {/* 商品代金以外の必要料金 */}
           <section>
             <h2 className="text-lg mb-2 tracking-[0.12em]">
               商品代金以外の必要料金
             </h2>
             <p>
-              ・ドメイン／サーバー利用料（外部サービス利用時）
+              ・ドメイン／サーバー利用料（必要な場合）
               <br />
-              ・銀行振込の際の振込手数料
+              ・銀行振込時の振込手数料
             </p>
           </section>
 
@@ -67,9 +67,9 @@ export default function Legal() {
           <section>
             <h2 className="text-lg mb-2 tracking-[0.12em]">お支払い方法</h2>
             <p>
-              ・銀行振込
+              ・銀行振込（請求書に記載の口座へお振込いただきます）
               <br />
-              ・その他（ご要望に応じて相談可）
+              ・その他の決済方法をご希望の場合はご相談ください
             </p>
           </section>
 
@@ -77,8 +77,9 @@ export default function Legal() {
           <section>
             <h2 className="text-lg mb-2 tracking-[0.12em]">お支払い時期</h2>
             <p>
-              契約締結後、着手金として制作費の 50％ をお支払いいただきます。
-              残額は納品前の最終確認時にお支払い頂きます。
+              契約締結後、制作着手前に制作費の <strong>50％</strong> をお支払いいただきます。
+              <br />
+              残金は、デザイン・動作確認が完了した段階（公開前）でご請求いたします。
             </p>
           </section>
 
@@ -86,8 +87,8 @@ export default function Legal() {
           <section>
             <h2 className="text-lg mb-2 tracking-[0.12em]">商品の提供方法</h2>
             <p>
-              制作したデータは、Web公開・ファイル共有サービス・メール等を通じて
-              デジタル形式で納品いたします。
+              Web公開、ファイル共有サービス、メールなど、
+              デジタルデータ形式にて納品します。
             </p>
           </section>
 
@@ -97,25 +98,29 @@ export default function Legal() {
               商品の引き渡し時期
             </h2>
             <p>
-              制作内容により異なりますが、通常 2〜6 週間以内に納品いたします。
+              制作内容により異なりますが、通常は <strong>2〜6 週間</strong> 程度で納品します。
+              写真素材の提出時期や修正回数により納期が前後する場合があります。
             </p>
           </section>
 
           {/* 返品・キャンセル */}
           <section>
-            <h2 className="text-lg mb-2 tracking-[0.12em]">返品・キャンセルについて</h2>
+            <h2 className="text-lg mb-2 tracking-[0.12em]">
+              返品・キャンセルについて
+            </h2>
             <p>
-              デジタルサービスの性質上、初稿提出後のキャンセルおよび返金は
-              お受けしておりません。
+              デジタル制作物の特性上、
+              <strong>初稿（完成イメージ案）提出後のキャンセルおよび返金には対応しておりません。</strong>
               <br />
-              詳細は「返金規約」をご確認ください。
+              初稿前のキャンセル料、および返金条件は
+              「返金規約」にて詳しく定めています。
             </p>
           </section>
 
           {/* 価格表記 */}
           <section>
             <h2 className="text-lg mb-2 tracking-[0.12em]">表示価格について</h2>
-            <p>本サイトに掲載されている価格はすべて税込表示です。</p>
+            <p>掲載されている金額はすべて税込表示です。</p>
           </section>
 
         </div>

@@ -15,7 +15,7 @@ export default function PriceDetail() {
     <section
       ref={rootRef}
       className="
-       price-section                    // ★これ追加
+        price-section
         bg-[#0b0b0b] min-h-screen text-white
         opacity-0 translate-y-8
         transition-all duration-[1100ms] ease-[cubic-bezier(.25,.46,.45,.94)]
@@ -53,8 +53,9 @@ export default function PriceDetail() {
             mb-16 max-w-3xl pl-4
           "
         >
-          世界観・写真の質・ページ構成によって、最適なご提案をしています。
-          初回ヒアリング後に「世界観ボード」を作成し、方向性を共有したうえでデザイン制作へ進みます。
+          世界観・写真の質・ページ構成に合わせて最適なご提案をしています。
+          初回ヒアリング後は「世界観ボード」を作成し、方向性を共有したうえで
+          デザイン制作へ進みます。
         </p>
 
         {/* ============= プランと料金 ============= */}
@@ -104,23 +105,21 @@ export default function PriceDetail() {
             タイトル設定・メタタグ・OGP・構造化など、
             <strong> 基本的なSEO対策はすべて制作料金に含まれています。</strong>
           </li>
-          <li>デザイン性とSEOを両立し、検索に強い構造で仕上げます。</li>
-          <li>Googleに正しく評価されるための設定もこちらで行います。</li>
-       <li>
-  SNS（特に Instagram）から訪れた方がお問い合わせへ進みやすいよう、
-  <strong>サイト側の導線設計を最適化</strong>することも可能です。
-  （※SNS運用代行は含まれません）
-</li>
-
+          <li>検索に強く、かつ美しいデザインで仕上げます。</li>
+          <li>Googleに正しく評価される初期設定もすべて対応します。</li>
+          <li>
+            Instagram からのお問い合わせ導線を最適化する設計も可能です。
+            （※SNS運用代行は含まれません）
+          </li>
         </DetailBlock>
 
         {/* ============= イメージ共有 ============= */}
         <SectionTitle>イメージ共有について</SectionTitle>
         <DetailBlock>
           <li>
-            デザインの方向性は、ポートフォリオ内で
-            「この雰囲気が好き」という作品の
-            <strong> タイトルをお知らせいただくだけ</strong>でも十分です。
+            「この作品の雰囲気が好き」と
+            <strong>ポートフォリオ内のタイトルをお知らせいただくだけ</strong>
+            でも十分です。
           </li>
           <li>
             ポートフォリオ：
@@ -133,19 +132,17 @@ export default function PriceDetail() {
               GUSHIKEN BASE — Works Collection
             </a>
           </li>
-          <li>
-            言語化が難しい場合も、こちらで世界観を丁寧に整理し形に落とし込みます。
-          </li>
+          <li>言語化が難しい場合も、こちらで世界観を丁寧に整理します。</li>
         </DetailBlock>
 
         {/* ============= 制作の流れ ============= */}
         <SectionTitle>制作の流れ</SectionTitle>
         <DetailBlock>
-          <li>① ヒアリング（目的・世界観・競合イメージ）</li>
+          <li>① ヒアリング（目的・世界観・参考イメージ）</li>
           <li>② 世界観ボードの提示</li>
           <li>③ 着手金 50% → 制作開始</li>
-          <li>④ デザイン制作 → 修正</li>
-          <li>⑤ コーディング・動作確認</li>
+          <li>④ デザイン制作（初稿の提出）</li>
+          <li>⑤ 修正 → コーディング → 動作確認</li>
           <li>⑥ 残額お支払い → 公開</li>
         </DetailBlock>
 
@@ -160,13 +157,15 @@ export default function PriceDetail() {
         </DetailBlock>
 
         {/* ============= キャンセル ============= */}
-        <SectionTitle>キャンセルについて</SectionTitle>
+        <SectionTitle>キャンセルについて（重要）</SectionTitle>
         <DetailBlock>
           <li>
-            デザイン制作の性質上、
-            <strong>着手金（50%）は返金不可</strong> です。
+            デザイン制作の性質上、<strong>着手金（50%）は返金不可</strong> です。
           </li>
-          <li>制作途中のキャンセルの場合、残額は発生しません。</li>
+          <li>
+            初稿（完成イメージ）提出後のキャンセルは、
+            <strong>制作工程の大部分が完了しているため、100%の料金が発生いたします。</strong>
+          </li>
           <li>
             キャンセルされた制作物の
             <strong> 著作権・利用権は当方に帰属</strong> します。
@@ -176,11 +175,11 @@ export default function PriceDetail() {
         {/* ============= 写真素材 ============= */}
         <SectionTitle>写真素材について</SectionTitle>
         <DetailBlock>
-          <li>仕上がりの美しさは、写真の質に大きく影響します。</li>
+          <li>最終的な仕上がりは写真の質によって大きく変わります。</li>
           <li>
             <strong>明るく鮮明な写真</strong> をご提供ください。
           </li>
-          <li>必要に応じて AI補正・撮影アドバイスも可能です。</li>
+          <li>必要に応じて AI 補正や撮影アドバイスも可能です。</li>
         </DetailBlock>
 
         {/* ============= 更新 ============= */}
@@ -253,8 +252,8 @@ function SectionTitle({ children }) {
         tracking-[0.18em]
         text-white/80
         pl-4
-        mt-16   /* セクション始まりのトップ距離 */
-        mb-2    /* タイトルと本文の距離を近く */
+        mt-16
+        mb-2
       "
     >
       {children}

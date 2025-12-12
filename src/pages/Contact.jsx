@@ -184,9 +184,6 @@ export default function Contact() {
     LINEで相談する（推奨）
   </a>
 
-  <a href="tel:09019452830" className={styles.altLink}>
-    090-1945-2830（お急ぎの方はこちら）
-  </a>
 </div>
 
       </div>
