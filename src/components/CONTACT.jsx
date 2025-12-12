@@ -60,9 +60,6 @@ export default function Contact() {
             LINEで相談する
           </a>
 
-          <a href="tel:09019452830" className="contact-sub-link">
-            090-1945-2830（お急ぎの方はこちら）
-          </a>
         </div>
 
         {/* 注意 */}
