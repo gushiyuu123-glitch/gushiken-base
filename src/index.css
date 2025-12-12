@@ -66,14 +66,14 @@ body {
    CATEGORY TITLE BREATH MOTION（呼吸アニメ）
 ============================================================ */
 .category-title {
-  animation: breathe 4.2s ease-in-out infinite;
-  opacity: 0.92;
+  animation: breatheStable 4.2s ease-in-out infinite;
 }
 
-@keyframes breathe {
-  0%,100% { opacity: 0.92; letter-spacing: 0.16em; }
-  50%     { opacity: 1;    letter-spacing: 0.165em; }
+@keyframes breatheStable {
+  0%,100% { opacity: 0.92; }
+  50%     { opacity: 1; }
 }
+
 
 /* ============================================================
    HORIZONTAL SCROLL (SP 専用)
@@ -261,10 +261,11 @@ body.scrolled .ambient-glow::after {
   filter: blur(22px);
 }
 
-.category-title.show + .category-title-wrapper::before {
+.category-title-wrapper.show::before {
   opacity: 0.18;
   transform: scale(1);
 }
+
 /* ============================================================
    SCROLL START — Ambient Lighting Boost（展示照明 ON）
 ============================================================ */
@@ -292,13 +293,4 @@ body.scrolled .ambient-glow::after {
     opacity: 1;
     transform: translateY(0) scale(1);
   }
-}
-/* ==== Safariの文字再計算バグを完全に止める ==== */
-.safari-text-fix {
-  -webkit-text-size-adjust: 100%;
-  text-size-adjust: 100%;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  backface-visibility: hidden;
-  transform: translateZ(0);
 }

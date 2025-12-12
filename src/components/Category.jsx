@@ -11,95 +11,92 @@ export default function Category({ title, subtitle, children }) {
     <section className="fade-up w-full relative">
 
       {/* Exhibition Title Block */}
-      <div className="mb-12 relative">
-        <div
-          className="
-            w-12 h-px 
-            bg-gradient-to-r from-white/30 to-white/5
-            drop-shadow-[0_0_4px_rgba(255,255,255,0.2)]
-            mb-6
-          "
-        />
+<div className="mb-12 relative">
 
-        <h2
-          className="
-            category-title
-            text-white 
-            text-[1.02rem] md:text-[1.15rem]
-            font-light 
-            tracking-[0.22em]
-            mb-1
-          "
-        >
-          {title}
-        </h2>
+  {/* 金の極薄ライン */}
+  <div className="w-12 h-px bg-gradient-to-r from-white/30 to-white/5 mb-6" />
 
-        <p
-          className="
-            text-white/38 
-            text-[0.78rem] 
-            tracking-[0.14em]
-            leading-relaxed
-          "
-        >
-          {subtitle}
-        </p>
-      </div>
+  {/* ★ 修正版：タイトルラッパー */}
+  <div className="category-title-wrapper fade-up">
+    <h2
+      className="
+        category-title
+        text-white 
+        text-[1.02rem] md:text-[1.15rem]
+        font-light 
+        tracking-[0.22em]
+        mb-1
+      "
+    >
+      {title}
+    </h2>
+  </div>
 
-      {/* =================================================== */}
-      {/* SP — 横スク展示（安定化したカードラップ）       */}
-      {/* =================================================== */}
-      <div className="sm:hidden w-full relative mb-16">
+  {/* 説明 */}
+  <p
+    className="
+      text-white/38 
+      text-[0.78rem] 
+      tracking-[0.14em]
+      leading-relaxed
+    "
+  >
+    {subtitle}
+  </p>
+</div>
 
-        {/* 左フェード */}
-        <div
-          className="
-            pointer-events-none 
-            absolute top-0 left-0 h-full w-[28px]
-            bg-gradient-to-r from-black/10 to-transparent
-            z-10
-          "
-        />
+{/* =========================================== */}
+{/* ▶ SP — 横スク展示（完全安定版）            */}
+{/* =========================================== */}
+<div className="sm:hidden w-full relative mb-16">
 
-        {/* 右フェード */}
-        <div
-          className="
-            pointer-events-none 
-            absolute top-0 right-0 h-full w-[28px]
-            bg-gradient-to-l from-black/10 to-transparent
-            z-10
-          "
-        />
+  {/* 左フェード */}
+  <div
+    className="
+      pointer-events-none 
+      absolute top-0 left-0 h-full w-[28px]
+      bg-gradient-to-r from-black/10 to-transparent
+      z-10
+    "
+  />
 
-        {/* 横スク本体 */}
-        <div
-          className="
-            flex gap-6 
-            overflow-x-auto 
-            scroll-x-snap
-            no-scrollbar
-            pr-4
-          "
-        >
-          {React.Children.map(children, (child, i) => (
-            <div
-              className="
-                snap-start 
-                min-w-[82%]
-                sp-card-animate
-              "
-              style={{
-                animationDelay: `${i * 0.18}s`,
-              }}
-            >
-              {/* ★ 高さ安定コンテナ（字間の影響をゼロにする） */}
-              <div className="w-[100%] mx-auto">
-                {child}
-              </div>
-            </div>
-          ))}
+  {/* 右フェード */}
+  <div
+    className="
+      pointer-events-none 
+      absolute top-0 right-0 h-full w-[28px]
+      bg-gradient-to-l from-black/10 to-transparent
+      z-10
+    "
+  />
+
+  {/* 横スク本体 */}
+  <div
+    className="
+      flex gap-6 
+      overflow-x-auto 
+      scroll-x-snap
+      no-scrollbar
+      pr-4
+    "
+  >
+    {React.Children.map(children, (child, i) => (
+      <div
+        className="
+          snap-start 
+          min-w-[82%]
+        "
+      >
+        {/* ★ 高さ完全固定ラッパー（絶対揺れない） */}
+        <div className="block will-change-auto">
+          {React.cloneElement(child, {
+            spIndex: i, // WorkItem にアニメを渡すため
+          })}
         </div>
       </div>
+    ))}
+  </div>
+</div>
 
       {/* =================================================== */}
       {/* PC — Exhibition Grid                               */}

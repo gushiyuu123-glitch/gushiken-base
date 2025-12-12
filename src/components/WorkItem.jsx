@@ -8,7 +8,7 @@ export default function WorkItem({ title, desc, link, img }) {
   return (
     <>
       {/* ========================================================= */}
-      {/* PC VERSION — SANKOU × Dior Gold Exhibition              */}
+      {/* PC VERSION — 揺れゼロ安定版                                 */}
       {/* ========================================================= */}
       <Tag
         {...(isExternal
@@ -23,12 +23,8 @@ export default function WorkItem({ title, desc, link, img }) {
           hover:scale-[1.018]
           hover:shadow-[0_18px_34px_rgba(0,0,0,0.55)]
         "
-        style={{
-          transitionDelay: "35ms",
-        }}
       >
-
-        {/* ===== Gold Glow Frame（展示会の照明の反射） ===== */}
+        {/* ===== Glow Frame ===== */}
         <div
           className="
             absolute inset-0 rounded-[16px] pointer-events-none
@@ -38,19 +34,20 @@ export default function WorkItem({ title, desc, link, img }) {
           "
           style={{
             boxShadow: "0 0 30px rgba(215, 188, 140, 0.45)",
-            transitionDelay: "80ms",
           }}
         />
 
-        {/* ===== 金ノイズ（金属的な微粒子） ===== */}
-        <div className="
-          absolute inset-0 pointer-events-none
-          opacity-[0.07]
-          bg-[url('/grain-gold.png')]
-          mix-blend-overlay
-        " />
+        {/* ===== Gold Noise ===== */}
+        <div
+          className="
+            absolute inset-0 pointer-events-none
+            opacity-[0.07]
+            bg-[url('/grain-gold.png')]
+            mix-blend-overlay
+          "
+        />
 
-        {/* =================== 画像 =================== */}
+        {/* ===== IMAGE ===== */}
         <div className="relative w-full aspect-[16/10] overflow-hidden">
           <img
             src={img}
@@ -66,13 +63,11 @@ export default function WorkItem({ title, desc, link, img }) {
             "
           />
 
-          {/* Bloom（右上だけ光が滲む） */}
           <div
             className="
               absolute top-0 right-0 w-[60%] h-[60%]
               pointer-events-none
-              opacity-[0]
-              group-hover:opacity-[0.45]
+              opacity-0 group-hover:opacity-[0.45]
               transition-all duration-[1300ms]
             "
             style={{
@@ -80,184 +75,159 @@ export default function WorkItem({ title, desc, link, img }) {
                 "radial-gradient(circle at top right, rgba(255,244,214,0.32), transparent 70%)",
             }}
           />
-
-          {/* Film Grain */}
-          <div className="absolute inset-0 pointer-events-none opacity-[0.04] bg-[url('/grain.png')]" />
         </div>
 
-        {/* =================== テキスト =================== */}
+        {/* ===== TEXT AREA（揺れ防止版） ===== */}
         <div className="p-7 pb-9 text-white relative">
-          <h3 className="
-            text-[1.05rem]
-            tracking-[0.18em]
-            font-light
-            mb-3
-            text-white/90
-          ">
-            {title}
-          </h3>
+          <div className="min-h-[150px]"> {/* ← ここで高さを固定 */}
+            <h3
+              className="
+                text-[1.05rem]
+                tracking-[0.18em]
+                font-light
+                mb-3
+                text-white/90
+                leading-[1.45]
+                transform-gpu
+              "
+            >
+              {title}
+            </h3>
 
-          <p className="
-            text-white/55 text-[0.85rem]
-            leading-[1.9]
-            whitespace-pre-line
-            mb-5
-          ">
-            {desc}
-          </p>
+            <p
+              className="
+                text-white/55 text-[0.85rem]
+                leading-[1.9]
+                whitespace-pre-line
+                mb-5
+                transform-gpu
+              "
+              style={{ maxWidth: "360px" }} // ← 折り返し安定
+            >
+              {desc}
+            </p>
 
-          <span className="
-            text-white/60 text-[0.72rem]
-            tracking-[0.26em]
-            inline-block mt-1
-            transition-all duration-[600ms]
-            group-hover:tracking-[0.34em]
-            group-hover:text-white/90
-          ">
-            VIEW SITE →
-          </span>
+            <span
+              className="
+                text-white/60 text-[0.72rem]
+                tracking-[0.26em]
+                inline-block mt-1
+                transition-all duration-[600ms]
+                group-hover:tracking-[0.34em]
+                group-hover:text-white/90
+                transform-gpu
+              "
+            >
+              VIEW SITE →
+            </span>
+          </div>
         </div>
       </Tag>
 
-{/* ========================================================= */}
-{/* SP VERSION — Dior Gold Exhibition Mini（完全版）        */}
-{/* ========================================================= */}
-<Tag
-  {...(isExternal
-    ? { href: link, target: "_blank", rel: "noopener noreferrer" }
-    : { to: link })}
-  className="
-    sm:hidden block 
-    rounded-[22px] overflow-hidden relative
-    bg-[#0b0b0b]
-    border border-white/[0.16]
-    shadow-[0_14px_48px_rgba(0,0,0,0.85)]        /* 深影 */
-    transition-all duration-[900ms]
-    active:scale-[0.985]
-    sp-slide-in                                   /* ← スライドイン */
-  "
->
-  {/* ===== Outer Gold Glow（枠グロウ） ===== */}
-  <div
-    className="
-      absolute inset-0 pointer-events-none rounded-[22px]
-      opacity-0
-      group-hover:opacity-[0.32]
-      transition-all duration-[1200ms]
-      blur-[14px]
-    "
-    style={{
-      boxShadow: "0 0 38px rgba(215,190,150,0.38)",
-    }}
-  />
+      {/* ========================================================= */}
+      {/* SP VERSION — 揺れゼロ安定版                                 */}
+      {/* ========================================================= */}
+      <Tag
+        {...(isExternal
+          ? { href: link, target: "_blank", rel: "noopener noreferrer" }
+          : { to: link })}
+        className="
+          sm:hidden block 
+          rounded-[22px] overflow-hidden relative
+          bg-[#0b0b0b]
+          border border-white/[0.16]
+          shadow-[0_14px_48px_rgba(0,0,0,0.85)]
+          transition-all duration-[900ms]
+          active:scale-[0.985]
+          sp-slide-in
+        "
+      >
+        {/* Glow */}
+        <div
+          className="
+            absolute inset-0 pointer-events-none rounded-[22px]
+            opacity-0
+            transition-all duration-[1200ms]
+            blur-[14px]
+          "
+          style={{ boxShadow: "0 0 38px rgba(215,190,150,0.38)" }}
+        />
 
-  {/* ===== 金ノイズ ===== */}
-  <div
-    className="
-      absolute inset-0 pointer-events-none
-      opacity-[0.12]
-      bg-[url('/grain-gold.png')]
-      mix-blend-overlay
-    "
-  />
+        {/* ===== IMAGE ===== */}
+        <div className="relative w-full aspect-[4/3] overflow-hidden">
+          <img
+            src={img}
+            alt={title}
+            loading="lazy"
+            className="
+              w-full h-full object-cover
+              brightness-[0.86]
+              scale-[1.02]
+              transition-all duration-[1400ms]
+            "
+          />
 
-  {/* ============================= */}
-  {/* 画像エリア（高級感の中心） */}
-  {/* ============================= */}
-  <div className="relative w-full aspect-[4/3] overflow-hidden">
-    <img
-      src={img}
-      alt={title}
-      loading="lazy"
-      className="
-        w-full h-full object-cover
-        brightness-[0.86]
-        scale-[1.02]
-        transition-all duration-[1400ms]
-      "
-    />
+          <div
+            className="
+              absolute top-0 right-0
+              w-[75%] h-[75%]
+              pointer-events-none
+              opacity-[0.45]
+              blur-[20px]
+            "
+            style={{
+              background:
+                "radial-gradient(circle at top right, rgba(255,240,215,0.45), transparent 70%)",
+            }}
+          />
+        </div>
 
-    {/* ===== Bloom（強め） ===== */}
-    <div
-      className="
-        absolute top-0 right-0
-        w-[75%] h-[75%]
-        pointer-events-none
-        opacity-[0.45]
-        blur-[20px]
-      "
-      style={{
-        background:
-          "radial-gradient(circle at top right, rgba(255,240,215,0.45), transparent 70%)",
-      }}
-    />
+        {/* ===== TEXT AREA（SPも高さ固定） ===== */}
+        <div className="px-5 pt-6 pb-7 text-white">
+          <div className="min-h-[130px] mx-auto"> {/* ここが安定化の要 */}
+            <h3
+              className="
+                text-[1.02rem]
+                tracking-[0.22em]
+                font-light
+                mb-3
+                text-white/90
+                leading-[1.45]
+                whitespace-nowrap   /* ← タイトル揺れ防止 */
+                transform-gpu
+              "
+            >
+              {title}
+            </h3>
 
-    {/* ===== Film Grain ===== */}
-    <div
-      className="
-        absolute inset-0 pointer-events-none
-        opacity-[0.05]
-        bg-[url('/grain.png')]
-      "
-    />
-  </div>
-{/* ============================= */}
-{/* テキスト（静寂 × 高級 / 安定版） */}
-{/* ============================= */}
-<div className="px-5 pt-6 pb-7 text-white safari-text-fix">
+            <p
+              className="
+                text-white/55 text-[0.86rem]
+                leading-[1.9]
+                whitespace-pre-line
+                line-clamp-4
+                mb-6
+                transform-gpu
+              "
+              style={{ maxWidth: "260px" }}
+            >
+              {desc}
+            </p>
 
-
-  {/* ★ 文字が動かない固定幅ボックス ★ */}
-  <div className="w-full max-w-[260px] mx-auto">
-    
-    <h3
-      className="
-        text-[1.02rem]
-        tracking-[0.22em]
-        font-light
-        mb-3
-        text-white/90
-        whitespace-nowrap  /* ← 折り返し禁止で安定 */
-      "
-    >
-      {title}
-    </h3>
-
-    <p
-      className="
-        text-white/55 text-[0.86rem]
-        leading-[1.9]
-        whitespace-pre-line
-        line-clamp-4
-        mb-6
-        text-ellipsis
-      "
-      style={{
-        maxWidth: "260px",    // ← 説明文も固定幅で高さが一定
-      }}
-    >
-      {desc}
-    </p>
-
-    <span
-      className="
-        block
-        text-white/75
-        text-[0.72rem]
-        tracking-[0.30em]
-        transition-all duration-700
-        whitespace-nowrap
-      "
-    >
-      VIEW SITE →
-    </span>
-
-  </div>
-</div>
-
-</Tag>
-
-
+            <span
+              className="
+                block
+                text-white/75
+                text-[0.72rem]
+                tracking-[0.30em]
+                transform-gpu
+              "
+            >
+              VIEW SITE →
+            </span>
+          </div>
+        </div>
+      </Tag>
     </>
   );
 }
