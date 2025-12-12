@@ -13,19 +13,23 @@
     =============================== */
     body {
       margin: 0;
-      background: #0b0b0b;
+      background: radial-gradient(
+        circle at 50% 40%,
+        #111 0%,
+        #0a0a0a 55%,
+        #070707 100%
+      );
       color: #ffffff;
       font-family: "Shippori Mincho B1", serif;
+
       display: flex;
-      flex-direction: column;
       justify-content: center;
       align-items: center;
-      text-align: center;
       height: 100vh;
       padding: 0 2rem;
 
       opacity: 0;
-      animation: fadeIn 1.4s ease forwards;
+      animation: fadeIn 1.6s ease forwards;
     }
 
     @keyframes fadeIn {
@@ -33,13 +37,32 @@
     }
 
     /* ===============================
-       Gold Line
+       Container
+    =============================== */
+    .wrap {
+      text-align: center;
+      transform: translateY(-6px);
+    }
+
+    /* ===============================
+       Gold Aura Line
     =============================== */
     .line {
-      width: 64px;
+      width: 72px;
       height: 1px;
-      background: rgba(217,185,138,0.55);
-      margin-bottom: 24px;
+      margin: 0 auto 28px;
+
+      background: linear-gradient(
+        to right,
+        transparent,
+        rgba(217,185,138,0.75),
+        transparent
+      );
+
+      box-shadow:
+        0 0 8px rgba(217,185,138,0.35),
+        0 0 18px rgba(217,185,138,0.18);
+
       opacity: 0.9;
     }
 
@@ -48,15 +71,15 @@
     =============================== */
     .jp {
       font-size: 0.95rem;
-      letter-spacing: 0.22em;
-      opacity: 0.88;
-      margin-bottom: 12px;
+      letter-spacing: 0.24em;
+      opacity: 0.9;
+      margin-bottom: 14px;
     }
 
     .en {
-      font-size: 0.75rem;
-      letter-spacing: 0.28em;
-      opacity: 0.6;
+      font-size: 0.7rem;
+      letter-spacing: 0.32em;
+      opacity: 0.55;
     }
 
     /* ===============================
@@ -64,16 +87,18 @@
     =============================== */
     @media (max-width: 480px) {
       .jp { font-size: 0.85rem; }
-      .en { font-size: 0.7rem; }
-      .line { width: 52px; }
+      .en { font-size: 0.65rem; }
+      .line { width: 56px; }
     }
   </style>
 </head>
 
 <body>
-  <div class="line"></div>
+  <div class="wrap">
+    <div class="line"></div>
 
-  <p class="jp">オフライン状態です</p>
-  <p class="en">OFFLINE MODE — GUSHIKEN DESIGN</p>
+    <p class="jp">オフライン状態です</p>
+    <p class="en">OFFLINE MODE — GUSHIKEN DESIGN</p>
+  </div>
 </body>
 </html>

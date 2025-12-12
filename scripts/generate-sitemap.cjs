@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 
 // Base URL can be overridden with SITE_URL env variable
-const BASE = process.env.SITE_URL || 'https://gushiken-base.vercel.app';
+const BASE = process.env.SITE_URL || 'https://gushikendesign.com/';
 
 const routes = ['/', '/works', '/price', '/contact'];
 

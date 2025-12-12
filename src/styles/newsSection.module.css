@@ -1,0 +1,137 @@
+/* =============================== */
+/* 全体レイアウト */
+/* =============================== */
+.wrapper {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 96px 24px 104px;
+  color: white;
+}
+
+/* =============================== */
+/* タイトル */
+/* =============================== */
+.title {
+  text-align: center;
+  font-size: 34px;
+  letter-spacing: 0.14em;
+  margin-bottom: 14px;
+  font-weight: 600;
+
+  /* うっすら残光（影ではなく余韻） */
+  text-shadow: 0 1px 6px rgba(255, 255, 255, 0.08);
+}
+
+.underline {
+  width: 44px;
+  height: 0.5px;
+  background: linear-gradient(
+    to right,
+    transparent,
+    rgba(255, 255, 255, 0.35),
+    transparent
+  );
+  margin: 0 auto 52px;
+}
+
+/* =============================== */
+/* リスト */
+/* =============================== */
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 36px;
+}
+
+.item {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding-bottom: 18px;
+
+  /* 線は「存在するが主張しない」 */
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+
+  text-decoration: none;
+  color: white;
+  transition: opacity 0.35s ease, transform 0.35s ease;
+  will-change: transform, opacity;
+}
+
+.item:hover {
+  opacity: 0.72;
+  transform: translateY(-1px);
+}
+
+/* =============================== */
+/* 日付（注釈扱い） */
+/* =============================== */
+.date {
+  opacity: 0.5;
+  font-size: 13px;
+  letter-spacing: 0.1em;
+  white-space: nowrap;
+
+  /* 数字の詰まりを美しく */
+  font-feature-settings: "palt";
+}
+
+/* =============================== */
+/* タイトル */
+/* =============================== */
+.itemTitle {
+  font-size: 18px;
+  flex: 1;
+  margin-left: 28px;
+  line-height: 1.7;
+  font-weight: 300;
+  letter-spacing: 0.02em;
+}
+
+/* =============================== */
+/* MORE ボタン */
+/* =============================== */
+.moreWrap {
+  text-align: center;
+  margin-top: 56px;
+}
+
+.more {
+  padding: 9px 26px;
+  border-radius: 22px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  color: white;
+  font-size: 14px;
+  letter-spacing: 0.08em;
+  text-decoration: none;
+  transition: background 0.35s ease, border-color 0.35s ease;
+}
+
+.more:hover {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.32);
+}
+
+/* =============================== */
+/* SP 最適化 */
+/* =============================== */
+@media (max-width: 640px) {
+  .wrapper {
+    padding: 72px 20px 84px;
+  }
+
+  .item {
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .itemTitle {
+    margin-left: 0;
+    font-size: 16px;
+    line-height: 1.6;
+  }
+
+  .date {
+    font-size: 12px;
+  }
+}

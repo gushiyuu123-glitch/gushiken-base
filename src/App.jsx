@@ -16,6 +16,8 @@ import Terms from "./pages/Terms";
 import Refund from "./pages/Refund";
 import Legal from "./pages/Legal";
 import Privacy from "./pages/Privacy";
+import NewsList from "./pages/NewsList";
+import NewsDetail from "./pages/NewsDetail";
 
 // ================================
 // Layout（全ページ共通レイアウト）
@@ -50,6 +52,8 @@ function Layout() {
     <Route path="/refund" element={<Refund />} />
     <Route path="/legal" element={<Legal />} />
     <Route path="/privacy" element={<Privacy />} />
+<Route path="/news" element={<NewsList />} />
+<Route path="/news/:id" element={<NewsDetail />} />
 
   </Routes>
 </main>

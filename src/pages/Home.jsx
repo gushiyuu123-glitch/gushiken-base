@@ -5,7 +5,7 @@ import Philosophy from "../components/Philosophy";
 import Price from "../components/Price";
 import ABOUT from "../components/ABOUT";
 import CONTACT from "../components/CONTACT";
-
+import NewsSection from "../components/NewsSection";
 export default function Home() {
 
   // ============================
@@ -86,6 +86,9 @@ export default function Home() {
 
 <section id="contact" className="home-section">
   <CONTACT />
+</section>
+<section id="news" className="home-section">
+  <NewsSection />
 </section>
 
 </div>
