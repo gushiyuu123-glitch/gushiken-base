@@ -66,12 +66,17 @@ body {
    CATEGORY TITLE BREATH MOTION（呼吸アニメ）
 ============================================================ */
 .category-title {
-  animation: breatheStable 4.2s ease-in-out infinite;
+  opacity: 0.92;
+  animation: breatheLux 4.2s ease-in-out infinite;
 }
 
-@keyframes breatheStable {
-  0%,100% { opacity: 0.92; }
-  50%     { opacity: 1; }
+@keyframes breatheLux {
+  0%, 100% {
+    opacity: 0.92;
+  }
+  50% {
+    opacity: 1;
+  }
 }
 
 
