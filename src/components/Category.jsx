@@ -10,12 +10,8 @@ export default function Category({ title, subtitle, children }) {
   return (
     <section className="fade-up w-full relative">
 
-      {/* --------------------------------------------- */}
-      {/* ▶ Exhibition Title Block（展示室ラベル） */}
-      {/* --------------------------------------------- */}
+      {/* Exhibition Title Block */}
       <div className="mb-12 relative">
-
-        {/* 金の極薄ライン（展示会の入口サイン） */}
         <div
           className="
             w-12 h-px 
@@ -25,7 +21,6 @@ export default function Category({ title, subtitle, children }) {
           "
         />
 
-        {/* 呼吸アニメ付き見出し */}
         <h2
           className="
             category-title
@@ -39,7 +34,6 @@ export default function Category({ title, subtitle, children }) {
           {title}
         </h2>
 
-        {/* 説明（柔らかい静寂） */}
         <p
           className="
             text-white/38 
@@ -52,30 +46,30 @@ export default function Category({ title, subtitle, children }) {
         </p>
       </div>
 
-      {/* =========================================== */}
-      {/* ▶ SP — 横スク展示（余韻フェード付き）      */}
-      {/* =========================================== */}
+      {/* =================================================== */}
+      {/* SP — 横スク展示（安定化したカードラップ）       */}
+      {/* =================================================== */}
       <div className="sm:hidden w-full relative mb-16">
-{/* 左フェード */}
-<div
-  className="
-    pointer-events-none 
-    absolute top-0 left-0 h-full w-[28px]
-    bg-gradient-to-r from-black/10 to-transparent
-    z-10
-  "
-/>
 
-{/* 右フェード */}
-<div
-  className="
-    pointer-events-none 
-    absolute top-0 right-0 h-full w-[28px]
-    bg-gradient-to-l from-black/10 to-transparent
-    z-10
-  "
-/>
+        {/* 左フェード */}
+        <div
+          className="
+            pointer-events-none 
+            absolute top-0 left-0 h-full w-[28px]
+            bg-gradient-to-r from-black/10 to-transparent
+            z-10
+          "
+        />
 
+        {/* 右フェード */}
+        <div
+          className="
+            pointer-events-none 
+            absolute top-0 right-0 h-full w-[28px]
+            bg-gradient-to-l from-black/10 to-transparent
+            z-10
+          "
+        />
 
         {/* 横スク本体 */}
         <div
@@ -87,26 +81,29 @@ export default function Category({ title, subtitle, children }) {
             pr-4
           "
         >
-  {React.Children.map(children, (child, i) => (
-  <div
-    className={`
-      snap-start min-w-[82%]
-      sp-card-animate
-    `}
-    style={{
-      animationDelay: `${i * 0.18}s`,
-    }}
-  >
-    {child}
-  </div>
-))}
-
+          {React.Children.map(children, (child, i) => (
+            <div
+              className="
+                snap-start 
+                min-w-[82%]
+                sp-card-animate
+              "
+              style={{
+                animationDelay: `${i * 0.18}s`,
+              }}
+            >
+              {/* ★ 高さ安定コンテナ（字間の影響をゼロにする） */}
+              <div className="w-[100%] mx-auto">
+                {child}
+              </div>
+            </div>
+          ))}
         </div>
       </div>
 
-      {/* =========================================== */}
-      {/* ▶ PC — Exhibition Grid（展示配置）         */}
-      {/* =========================================== */}
+      {/* =================================================== */}
+      {/* PC — Exhibition Grid                               */}
+      {/* =================================================== */}
       <div
         className="
           hidden sm:grid
