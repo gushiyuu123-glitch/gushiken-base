@@ -293,3 +293,12 @@ body.scrolled .ambient-glow::after {
     transform: translateY(0) scale(1);
   }
 }
+/* ==== Safariの文字再計算バグを完全に止める ==== */
+.safari-text-fix {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+}

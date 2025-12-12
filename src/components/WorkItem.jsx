@@ -201,11 +201,15 @@ export default function WorkItem({ title, desc, link, img }) {
       "
     />
   </div>
+{/* ============================= */}
+{/* テキスト（静寂 × 高級 / 安定版） */}
+{/* ============================= */}
+<div className="px-5 pt-6 pb-7 text-white safari-text-fix">
 
-  {/* ============================= */}
-  {/* テキスト（静寂 × 高級）      */}
-  {/* ============================= */}
-  <div className="px-5 pt-6 pb-7 text-white">
+
+  {/* ★ 文字が動かない固定幅ボックス ★ */}
+  <div className="w-full max-w-[260px] mx-auto">
+    
     <h3
       className="
         text-[1.02rem]
@@ -213,6 +217,7 @@ export default function WorkItem({ title, desc, link, img }) {
         font-light
         mb-3
         text-white/90
+        whitespace-nowrap  /* ← 折り返し禁止で安定 */
       "
     >
       {title}
@@ -225,22 +230,31 @@ export default function WorkItem({ title, desc, link, img }) {
         whitespace-pre-line
         line-clamp-4
         mb-6
+        text-ellipsis
       "
+      style={{
+        maxWidth: "260px",    // ← 説明文も固定幅で高さが一定
+      }}
     >
       {desc}
     </p>
 
     <span
       className="
+        block
         text-white/75
         text-[0.72rem]
         tracking-[0.30em]
         transition-all duration-700
+        whitespace-nowrap
       "
     >
       VIEW SITE →
     </span>
+
   </div>
+</div>
+
 </Tag>
 
 
