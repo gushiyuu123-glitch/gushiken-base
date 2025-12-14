@@ -1,20 +1,21 @@
 import React, { useEffect, useRef } from "react";
-import { Link } from "react-router-dom"
+import { Link } from "react-router-dom";
 import "./price.css";
 
 export default function Price() {
   const sectionRef = useRef(null);
 
-  // ✨ フェードイン
+  // フェードイン（初回のみ）
   useEffect(() => {
     const el = sectionRef.current;
     if (!el) return;
 
     const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) el.classList.add("show");
-        });
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          el.classList.add("show");
+          observer.unobserve(el);
+        }
       },
       { threshold: 0.15 }
     );
@@ -28,99 +29,95 @@ export default function Price() {
       <div className="max-w-5xl mx-auto px-6 relative">
 
         {/* 左ゴールドライン */}
-        <div className="price-gold-line"></div>
+        <div className="price-gold-line" />
 
         {/* タイトル */}
         <h2 className="price-title" translate="no">PRICE</h2>
 
         {/* リード文 */}
         <p className="price-lead">
-          制作料金の目安です。ページ数・写真素材の質・世界観演出の量によって変動します。
-          ご希望に合わせて、3つの基本プランをご用意しています。
+          制作料金の目安です。<br />
+          ページ数や構成、演出内容に応じて調整しますが、
+          <strong> 制作前のヒアリングで内容を整理し、必ず総額をお伝えします。</strong>
+          <br />
+          <span className="price-lead-note">
+            現在はポートフォリオ拡充フェーズのため、
+            初回のお客様向けに価格を抑えています。
+          </span>
         </p>
 
-        {/* 3プランカード */}
+        {/* プラン */}
         <div className="price-grid">
-
           <PriceCard
             label="PLAN 01"
             title="Landing Page（1ページ）"
-            desc="ブランド紹介・キャンペーンなど、単ページで完結するサイト。世界観を崩さず必要な情報を美しくまとめます。"
+            desc="ブランド紹介・キャンペーンなど、単ページで完結するWebサイト。世界観を崩さず、必要な情報を美しく整理します。"
             price="¥60,000〜"
           />
 
           <PriceCard
             label="PLAN 02"
             title="Small Website（3〜5ページ）"
-            desc="サービス紹介・店舗サイト・ポートフォリオなど、しっかり構成されたWebサイトを制作します。"
+            desc="サービス紹介・店舗サイト・ポートフォリオなど、構成を重視したWebサイト。初めての方にも安心な設計です。"
             price="¥120,000〜"
           />
 
           <PriceCard
             label="PLAN 03"
             title="Brand Site（6ページ以上）"
-            desc="写真・配色・タイポグラフィ・余白を統一し、“世界観のあるブランドサイト” を設計します。"
+            desc="写真・配色・タイポグラフィ・余白を統一し、世界観そのものを伝えるブランドサイトを設計します。"
             price="¥180,000〜"
           />
-
         </div>
 
         {/* 注記 */}
         <p className="price-note">
-          料金は、ページ数・素材（写真）・演出の量によって変動します。<br />
-          明確なお見積りは、ヒアリング後にご提示いたします。
+          ご相談時にご要望やご予算をお伺いし、
+          制作内容を整理したうえで総額をご提示します。<br />
+          <strong>
+            制作途中で金額が変わることはありませんので、安心してご相談ください。
+          </strong>
         </p>
 
-  <div className="price-cta">
-  <Link to="/price" className="price-btn">
-    料金の詳細を見る
-  </Link>
-</div>
+        {/* CTA */}
+        <div className="price-cta">
+          <Link to="/contact" className="price-btn">
+            制作の相談をする
+          </Link>
 
+          {/* サブ導線：価格詳細 */}
+          <div className="mt-4 text-center">
+            <Link
+              to="/price"
+              className="
+                inline-block
+                text-sm tracking-wider
+                text-[#d9c8a6]/70
+                transition-colors duration-300
+                hover:text-[#d9c8a6]
+              "
+            >
+              料金の詳細を見る →
+            </Link>
+          </div>
+        </div>
 
       </div>
-      {/* 事務系サイトへのサブ導線（世界観を壊さない控えめリンク） */}
-<div className="flex justify-center mt-12 mb-6">
-  <a
-    href="https://office.gushikendesign.com/"
-    target="_blank"
-    rel="noopener noreferrer"
-    className="
-      inline-block
-      px-7 py-3
-      border border-[#d9c8a6]/40
-      text-[#d9c8a6]/70
-      text-sm tracking-wider
-      rounded-md
-      transition-all duration-300
-      hover:border-[#d9c8a6]/80
-      hover:text-[#d9c8a6]
-      hover:bg-[#d9c8a6]/5
-    "
-  >
-    事務所・企業向け シンプルWebプランのご案内はこちら →
-  </a>
-</div>
-
-
-
     </section>
   );
 }
 
-/* -------------------------------------------------
-   カードコンポーネント
---------------------------------------------------- */
-function PriceCard({ label, title, desc, price }) {
+/* -----------------------------
+   Card
+----------------------------- */
+const PriceCard = React.memo(function PriceCard({ label, title, desc, price }) {
   return (
     <div className="price-card">
       <p className="price-card-label">{label}</p>
       <h3 className="price-card-title">{title}</h3>
       <p className="price-card-price">{price}</p>
       <p className="price-card-desc">{desc}</p>
-
-      {/* 光の縦ライン（ホバーで発光） */}
-      <div className="price-card-glow"></div>
+      <div className="price-card-glow" />
     </div>
   );
-}
+});

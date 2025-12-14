@@ -23,6 +23,7 @@ export default function PriceDetail() {
       "
     >
       <div className="max-w-5xl mx-auto relative">
+
         {/* 左ゴールドライン */}
         <div
           className="
@@ -46,19 +47,24 @@ export default function PriceDetail() {
           PRICE — Detail
         </h1>
 
-        {/* 説明 */}
-        <p
-          className="
-            text-white/70 text-[1rem] leading-[1.9]
-            mb-16 max-w-3xl pl-4
-          "
-        >
-          世界観・写真の質・ページ構成に合わせて最適なご提案をしています。
-          初回ヒアリング後は「世界観ボード」を作成し、方向性を共有したうえで
-          デザイン制作へ進みます。
+        {/* 導入文（安心版） */}
+      <p
+  className="
+    text-white/70 text-[1rem] leading-[1.9]
+    mb-12 md:mb-16 max-w-3xl pl-4
+    md:text-[1rem] text-[0.95rem]
+  "
+>
+
+          世界観・写真の質・ページ構成に合わせて、最適な形をご提案しています。<br />
+          初回ヒアリング後は「世界観ボード」を作成し、
+          方向性を共有したうえでデザイン制作へ進みます。<br />
+          <strong className="text-white/85">
+            制作前に内容と金額を確定し、途中で費用が変わることはありません。
+          </strong>
         </p>
 
-        {/* ============= プランと料金 ============= */}
+        {/* プラン */}
         <SectionTitle>プランと料金</SectionTitle>
 
         <div className="grid gap-10 md:gap-12 md:grid-cols-3 mb-24">
@@ -68,58 +74,54 @@ export default function PriceDetail() {
             price="¥60,000〜"
             summary="1ページ構成のランディングページ。"
             detail="商品紹介・キャンペーン案内など、1ページで魅力を伝える構成です。"
-            bestFor="まずはサイトを持ってみたい方に。"
+            bestFor="まずはWebサイトを持ってみたい方に。"
           />
 
           <PlanCard
             badge="PLAN 02"
             title="Small Website"
             price="¥120,000〜"
-            summary="3〜5ページの小規模サイト。"
+            summary="3〜5ページ構成のWebサイト。"
             detail="店舗・サロン・個人サイトなど、必要な情報を丁寧に整理して設計します。"
-            bestFor="メニュー・アクセスなどをしっかり載せたい方に。"
+            bestFor="サービス内容やアクセス情報をしっかり伝えたい方に。"
           />
 
           <PlanCard
             badge="PLAN 03"
             title="Brand Site（6ページ以上）"
             price="¥180,000〜"
-            summary="世界観特化のブランドサイト。"
-            detail="光・余白・写真を活かし、“空気”をデザインします。"
+            summary="世界観重視のブランドサイト。"
+            detail="光・余白・写真を活かし、空気感まで含めてデザインします。"
             bestFor="ブランドイメージを深く伝えたい方に。"
           />
         </div>
 
-        {/* ============= 追加オプション ============= */}
+        {/* 追加オプション */}
         <SectionTitle>追加オプション</SectionTitle>
         <DetailBlock>
           <li>microCMS（記事投稿機能）：¥30,000〜</li>
-          <li>AI画像生成：相談可</li>
+          <li>AI画像生成・補正：内容に応じてご相談</li>
           <li>独自ドメイン / サーバー設定：¥20,000〜</li>
         </DetailBlock>
 
-        {/* ============= SEO・SNS ============= */}
+        {/* SEO */}
         <SectionTitle>SEO・SNS について</SectionTitle>
         <DetailBlock>
           <li>
-            タイトル設定・メタタグ・OGP・構造化など、
-            <strong> 基本的なSEO対策はすべて制作料金に含まれています。</strong>
+            タイトル・メタタグ・OGP・構造化など、
+            <strong> 基本的なSEO初期設定はすべて制作料金に含まれています。</strong>
           </li>
-          <li>検索に強く、かつ美しいデザインで仕上げます。</li>
-          <li>Googleに正しく評価される初期設定もすべて対応します。</li>
-          <li>
-            Instagram からのお問い合わせ導線を最適化する設計も可能です。
-            （※SNS運用代行は含まれません）
-          </li>
+          <li>検索に正しく評価される設計を前提に制作します。</li>
+          <li>SNSからの導線設計も可能です（運用代行は含みません）。</li>
         </DetailBlock>
 
-        {/* ============= イメージ共有 ============= */}
+        {/* イメージ共有 */}
         <SectionTitle>イメージ共有について</SectionTitle>
         <DetailBlock>
           <li>
             「この作品の雰囲気が好き」と
-            <strong>ポートフォリオ内のタイトルをお知らせいただくだけ</strong>
-            でも十分です。
+            <strong> ポートフォリオの作品名をお伝えいただくだけ</strong>
+            でも問題ありません。
           </li>
           <li>
             ポートフォリオ：
@@ -132,89 +134,53 @@ export default function PriceDetail() {
               GUSHIKEN BASE — Works Collection
             </a>
           </li>
-          <li>言語化が難しい場合も、こちらで世界観を丁寧に整理します。</li>
+          <li>言語化が難しい場合はこちらで整理します。</li>
         </DetailBlock>
 
-        {/* ============= 制作の流れ ============= */}
+        {/* 制作の流れ */}
         <SectionTitle>制作の流れ</SectionTitle>
         <DetailBlock>
           <li>① ヒアリング（目的・世界観・参考イメージ）</li>
-          <li>② 世界観ボードの提示</li>
+          <li>② 世界観ボードの共有</li>
           <li>③ 着手金 50% → 制作開始</li>
-          <li>④ デザイン制作（初稿の提出）</li>
-          <li>⑤ 修正 → コーディング → 動作確認</li>
+          <li>④ デザイン初稿提出</li>
+          <li>⑤ 修正・コーディング・最終確認</li>
           <li>⑥ 残額お支払い → 公開</li>
         </DetailBlock>
 
-        {/* ============= お支払い ============= */}
+        {/* 支払い */}
         <SectionTitle>お支払いについて</SectionTitle>
         <DetailBlock>
           <li>
             ご依頼確定後、<strong>着手金 50%</strong> をお支払いいただきます。
           </li>
-          <li>確認後、構成・デザイン制作を開始します。</li>
-          <li>残金 50% は公開前にお支払いいただきます。</li>
+          <li>残額は公開前にお支払いください。</li>
         </DetailBlock>
 
-        {/* ============= キャンセル ============= */}
-        <SectionTitle>キャンセルについて（重要）</SectionTitle>
+        {/* キャンセル */}
+        <SectionTitle>キャンセルについて</SectionTitle>
         <DetailBlock>
           <li>
-            デザイン制作の性質上、<strong>着手金（50%）は返金不可</strong> です。
+            着手後のキャンセルについては、
+            <strong> 着手金の返金はできません。</strong>
           </li>
           <li>
-            初稿（完成イメージ）提出後のキャンセルは、
-            <strong>制作工程の大部分が完了しているため、100%の料金が発生いたします。</strong>
-          </li>
-          <li>
-            キャンセルされた制作物の
-            <strong> 著作権・利用権は当方に帰属</strong> します。
+            初稿提出後は制作工程が進行しているため、
+            <strong> 全額のご請求</strong> となります。
           </li>
         </DetailBlock>
 
-        {/* ============= 写真素材 ============= */}
-        <SectionTitle>写真素材について</SectionTitle>
-        <DetailBlock>
-          <li>最終的な仕上がりは写真の質によって大きく変わります。</li>
-          <li>
-            <strong>明るく鮮明な写真</strong> をご提供ください。
-          </li>
-          <li>必要に応じて AI 補正や撮影アドバイスも可能です。</li>
-        </DetailBlock>
-
-        {/* ============= 更新 ============= */}
-        <SectionTitle>運用・更新について</SectionTitle>
-        <DetailBlock>
-          <li>
-            公開後の更新は、必要なタイミングでご依頼いただく
-            <strong>単発対応</strong> です。
-          </li>
-          <li>内容に応じてお見積りをご提示します。</li>
-        </DetailBlock>
-
-        {/* ============= NG業務 ============= */}
-        <SectionTitle>お受けしていない業務</SectionTitle>
-        <DetailBlock>
-          <li>SNS運用代行（毎日投稿）</li>
-          <li>広告運用（Instagram / Google 広告）</li>
-          <li>毎日更新が前提の継続タスク</li>
-          <li>ブログ記事量産・SEO記事執筆</li>
-        </DetailBlock>
-
-        {/* ============= 注意事項 ============= */}
+        {/* 注意 */}
         <SectionTitle>注意事項</SectionTitle>
         <DetailBlock>
-          <li>掲載金額はすべて税込・目安です。</li>
-          <li>ご要望により料金が変動する場合があります。</li>
-          <li>大幅な構成変更は追加料金となる場合があります。</li>
-          <li>写真素材の提出が遅れると納期も延びます。</li>
-          <li>
-            納期目安：<strong>3〜6週間</strong>
-          </li>
+          <li>記載金額はすべて税込・目安です。</li>
+          <li>制作前に必ず総額を確定します。</li>
+          <li>納期目安：<strong>3〜6週間</strong></li>
         </DetailBlock>
 
         {/* CTA */}
-        <div className="text-center mt-12">
+  <div className="text-center mt-16 md:mt-12">
+
           <Link
             to="/contact"
             className="
@@ -235,25 +201,42 @@ export default function PriceDetail() {
             CONTACT
           </Link>
         </div>
+    {/* ▼▼ ここが移設したボタン（超重要） ▼▼ */}
+<div className="text-center mt-8 md:mt-10">
+  <a
+    href="https://office.gushikendesign.com/"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="
+      inline-block
+      text-[0.8rem] md:text-sm
+      tracking-wider
+      text-[#d9c8a6]/45 md:text-[#d9c8a6]/55
+      transition-colors duration-300
+      hover:text-[#d9c8a6]
+    "
+  >
+    事務所・企業向けのシンプルWebプランをご検討の方はこちら →
+  </a>
+</div>
+
       </div>
     </section>
   );
 }
 
-/* ================================
-   共通パーツ（距離調整版）
-================================ */
+/* ============================= */
 
 function SectionTitle({ children }) {
   return (
     <h2
       className="
-        text-[1.05rem]
-        tracking-[0.18em]
-        text-white/80
+        text-[1rem] md:text-[1.05rem]
+        tracking-[0.22em] md:tracking-[0.18em]
+        text-white/85
         pl-4
-        mt-16
-        mb-2
+        mt-14 md:mt-16
+        mb-3
       "
     >
       {children}
@@ -261,24 +244,23 @@ function SectionTitle({ children }) {
   );
 }
 
+
 function PlanCard({ badge, title, price, summary, detail, bestFor }) {
   return (
-    <div
-      className="
-        bg-white/5 border border-white/10 rounded-xl
-        p-6 md:p-7 shadow-[0_0_24px_rgba(0,0,0,0.5)]
-        flex flex-col gap-4
-        transition-all duration-300
-        hover:-translate-y-1.5 hover:border-[rgba(217,185,138,0.55)]
-        hover:shadow-[0_0_32px_rgba(217,185,138,0.24)]
-      "
-    >
-      <p className="text-[0.75rem] tracking-[0.22em] text-gold/80 mb-1">{badge}</p>
-      <h3 className="text-[1.15rem] tracking-[0.08em] text-white">{title}</h3>
-      <p className="text-[1.2rem] tracking-[0.03em] text-gold mb-1">{price}</p>
-      <p className="text-[0.9rem] text-white/80 leading-relaxed">{summary}</p>
-      <p className="text-[0.85rem] text-white/60 leading-relaxed">{detail}</p>
-      <p className="text-[0.8rem] text-white/50 leading-relaxed mt-1">{bestFor}</p>
+    <div className="
+      bg-white/5 border border-white/10 rounded-xl
+      p-6 md:p-7 shadow-[0_0_24px_rgba(0,0,0,0.5)]
+      flex flex-col gap-4
+      transition-all duration-300
+      hover:-translate-y-1.5 hover:border-[rgba(217,185,138,0.55)]
+      hover:shadow-[0_0_32px_rgba(217,185,138,0.24)]
+    ">
+      <p className="text-[0.75rem] tracking-[0.22em] text-gold/80">{badge}</p>
+      <h3 className="text-[1.15rem] tracking-[0.08em]">{title}</h3>
+      <p className="text-[1.2rem] text-gold">{price}</p>
+      <p className="text-[0.9rem] text-white/80">{summary}</p>
+      <p className="text-[0.85rem] text-white/60">{detail}</p>
+      <p className="text-[0.8rem] text-white/50">{bestFor}</p>
     </div>
   );
 }
