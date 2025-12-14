@@ -7,7 +7,9 @@ export default function Works() {
   useEffect(() => {
     const root = worksRef.current;
     if (!root) return;
-  const items = root.querySelectorAll(".work-card, .works-viewall");
+
+    const items = root.querySelectorAll(".work-card, .works-viewall");
+
     /* -----------------------------
        FADE-IN + SCALE-IN Observer
     ----------------------------- */
@@ -47,7 +49,7 @@ export default function Works() {
       <div className="works-container">
 
         {/* ======================================================
-            HEADER — Exhibit Title Block（SANKOU × Minimal）
+            HEADER — Exhibit Title Block
         ====================================================== */}
         <div className="works-header fade-up">
           <h2 className="works-title" translate="no">WORKS</h2>
@@ -55,29 +57,49 @@ export default function Works() {
         </div>
 
         {/* ======================================================
-            EXHIBITION GRID（PC） / SCROLL GALLERY（SP）
+            EXHIBITION GRID
         ====================================================== */}
         <div className="works-grid">
 
-          {/* ------------------------ */}
-          {/* BIG CARD — Neutral Objects */}
-          {/* ------------------------ */}
+          {/* ======================== */}
+          {/* BIG CARD — RÉSONANCE */}
+          {/* ======================== */}
           <a
-            href="https://neutral-objects.vercel.app/"
+            href="https://resonance-restaurant.vercel.app/"
             target="_blank"
             rel="noopener noreferrer"
             className="work-card work-big"
           >
-            <img src="/neutral.webp" alt="Neutral Objects" loading="lazy" />
+            <img
+  src="/assets/resonance.webp"
+  alt="RÉSONANCE Restaurant"
+  loading="lazy"
+/>
             <div className="work-text">
+              <h3>RÉSONANCE</h3>
+              <p>Time × Heat × Silence. A cinematic dining experience.</p>
+            </div>
+          </a>
+
+          {/* ======================== */}
+          {/* SMALL CARD — Neutral Objects */}
+          {/* ======================== */}
+          <a
+            href="https://neutral-objects.vercel.app/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="work-card work-small"
+          >
+            <img src="/neutral.webp" alt="Neutral Objects" loading="lazy" />
+            <div className="work-text small">
               <h3>Neutral Objects</h3>
               <p>Light × Silence × Everyday Minimalism.</p>
             </div>
           </a>
 
-          {/* ------------------------ */}
-          {/* SMALL CARD — Spa */}
-          {/* ------------------------ */}
+          {/* ======================== */}
+          {/* SMALL CARD — Okinawa White Spa */}
+          {/* ======================== */}
           <a
             href="https://okinawa-white-spa.vercel.app/"
             target="_blank"
@@ -91,26 +113,10 @@ export default function Works() {
             </div>
           </a>
 
-          {/* ------------------------ */}
-          {/* SMALL CARD — Koti */}
-          {/* ------------------------ */}
-          <a
-            href="https://koti-beta.vercel.app/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="work-card work-small"
-          >
-            <img src="/assets/koti.webp" alt="Koti Furniture" loading="lazy" />
-            <div className="work-text small">
-              <h3>Koti — Quiet Living</h3>
-              <p>Scandinavian calm × crafted minimalism.</p>
-            </div>
-          </a>
-
         </div>
 
         {/* ======================================================
-            VIEW ALL WORKS BUTTON
+            VIEW ALL WORKS
         ====================================================== */}
         <div className="works-viewall fade-up">
           <a href="/works" className="viewall-btn">

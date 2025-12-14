@@ -26,6 +26,8 @@ import fineImg from "../assets/works/fine.webp";
 import stillimg from "../assets/works/still-ec.webp";
 import neutralObjectsImg from "../assets/works/neutral-objects.webp";
 import OkinawaSelectImg from "../assets/works/OkinawaSelect.webp";
+// 画像 import 追加
+import resonanceImg from "../assets/works/resonance.webp";
 
 export default function WorksList() {
   const rootRef = useRef(null);
@@ -235,36 +237,39 @@ useEffect(() => {
 
 
           {/* === FOOD / BRAND === */}
-          <Category
-            title="FOOD / FURNITURE / BRAND"
-            subtitle="飲食・家具・ブランドUIに最適化した世界観設計"
-          >
-            <WorkItem
-              title="Aburiya Itto"
-              desc={`和 × 炙り × ラグジュアリー。\n和の陰影を活かした料理ブランディング。`}
-              link="https://aburiya-itto.vercel.app"
-              img={ittoImg}
-            />
-            <WorkItem
-              title="Koti — Furniture"
-              desc={`北欧の光 × 木の温度。\n柔らかな北欧光をUIに落とし込んだ家具ブランド。`}
-              link="https://koti-beta.vercel.app"
-              img={kotiImg}
-            />
-            <WorkItem
-              title="ACTIVE DAYS"
-              desc={`黒 × スポーティ × 都会的。\nフィットネス特有の動感をUIへ構築。`}
-              link="https://active-days.vercel.app"
-              img={activedaysImg}
-            />
-            <WorkItem
-              title="RYUKA — Fragrance"
-              desc={`自然光 × 琉球の香り。\n香りの余韻を余白で可視化したデザイン。`}
-              link="https://ryuka-official.vercel.app"
-              img={ryukaImg}
-            />
-          </Category>
+        <Category
+  title="FOOD / FURNITURE / BRAND"
+  subtitle="飲食・家具・ブランドUIに最適化した世界観設計"
+>
+  {/* === RÉSONANCE（最上段・象徴） === */}
+  <WorkItem
+    title="RÉSONANCE — Restaurant"
+    desc={`時間 × 熱 × 静寂。\nスクロールを通して“一夜の体験”を設計したシネマティック・レストランUI。`}
+    link="https://resonance-restaurant.vercel.app/"
+    img={resonanceImg}
+  />
 
+  <WorkItem
+    title="Aburiya Itto"
+    desc={`和 × 炙り × ラグジュアリー。\n和の陰影を活かした料理ブランディング。`}
+    link="https://aburiya-itto.vercel.app"
+    img={ittoImg}
+  />
+
+  <WorkItem
+    title="Koti — Furniture"
+    desc={`北欧の光 × 木の温度。\n柔らかな北欧光をUIに落とし込んだ家具ブランド。`}
+    link="https://koti-beta.vercel.app"
+    img={kotiImg}
+  />
+
+  <WorkItem
+    title="ACTIVE DAYS"
+    desc={`黒 × スポーティ × 都会的。\nフィットネス特有の動感をUIへ構築。`}
+    link="https://active-days.vercel.app"
+    img={activedaysImg}
+  />
+</Category>
 
           {/* === REAL PROJECT === */}
           <Category
@@ -281,23 +286,31 @@ useEffect(() => {
 
 
           {/* === ART === */}
-          <Category
-            title="ART / CREATIVE"
-            subtitle="光・影・静寂をテーマにしたアート表現"
-          >
-            <WorkItem
-              title="The Flow of Tea"
-              desc={`茶 × 余白 × 世界観。\n茶の所作を静かに伝える構成美。`}
-              link="https://flow-of-tea.vercel.app"
-              img={teaImg}
-            />
-            <WorkItem
-              title="Ray of Silence"
-              desc={`光 × 影 × 静寂。\nミニマル光学のアート表現。`}
-              link="https://ray-of-silence.vercel.app"
-              img={rayImg}
-            />
-          </Category>
+        <Category
+  title="ART / CREATIVE"
+  subtitle="光・影・静寂をテーマにしたアート表現"
+>
+  <WorkItem
+    title="RYUKA — Fragrance"
+    desc={`自然光 × 琉球の香り。\n香りの余韻を“余白”で可視化した抽象的ブランド表現。`}
+    link="https://ryuka-official.vercel.app"
+    img={ryukaImg}
+  />
+
+  <WorkItem
+    title="The Flow of Tea"
+    desc={`茶 × 余白 × 世界観。\n茶の所作を静かに伝える構成美。`}
+    link="https://flow-of-tea.vercel.app"
+    img={teaImg}
+  />
+
+  <WorkItem
+    title="Ray of Silence"
+    desc={`光 × 影 × 静寂。\nミニマル光学のアート表現。`}
+    link="https://ray-of-silence.vercel.app"
+    img={rayImg}
+  />
+</Category>
 
         </div>
       </div>
