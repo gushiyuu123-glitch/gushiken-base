@@ -183,6 +183,12 @@ export default function PriceDetail() {
           <li>制作前に必ず総額を確定します。</li>
           <li>納期目安：<strong>3〜6週間</strong></li>
         </DetailBlock>
+<SectionTitle>対応できないこと</SectionTitle>
+<DetailBlock>
+  <li>
+    短納期・価格最優先・制作意図の共有が難しいご依頼には対応していません。
+  </li>
+</DetailBlock>
 
         {/* CTA */}
         <div className="text-center mt-16">

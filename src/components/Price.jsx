@@ -34,7 +34,15 @@ export default function Price() {
         {/* タイトル */}
         <h2 className="price-title" translate="no">PRICE</h2>
 
-        {/* リード文 */}
+        {/* 思想コピー（★ここが核） */}
+        <p className="price-philosophy">
+          Webサイトは、<br />
+          「作って終わりの看板」ではありません。<br /><br />
+          お店の空気や価値を、<br />
+          24時間、代わりに伝え続ける窓口です。
+        </p>
+
+        {/* リード文（安心・実務） */}
         <p className="price-lead">
           制作料金の目安です。<br />
           ページ数や構成、演出内容に応じて調整しますが、
@@ -80,31 +88,30 @@ export default function Price() {
         </p>
 
         {/* CTA */}
-<div className="price-cta">
+        <div className="price-cta">
 
-  {/* メイン導線：価格詳細（先に理解） */}
-  <div className="mb-4 text-center">
-    <Link
-      to="/price"
-      className="
-        inline-block
-        text-sm tracking-wider
-        text-[#d9c8a6]/70
-        transition-colors duration-300
-        hover:text-[#d9c8a6]
-      "
-    >
-      料金の詳細を見る →
-    </Link>
-  </div>
+          {/* 先に理解 */}
+          <div className="mb-4 text-center">
+            <Link
+              to="/price"
+              className="
+                inline-block
+                text-sm tracking-wider
+                text-[#d9c8a6]/70
+                transition-colors duration-300
+                hover:text-[#d9c8a6]
+              "
+            >
+              料金の詳細を見る →
+            </Link>
+          </div>
 
-  {/* サブ導線：相談（決断） */}
-  <Link to="/contact" className="price-btn">
-    制作の相談をする
-  </Link>
+          {/* その後に決断 */}
+          <Link to="/contact" className="price-btn">
+            制作の相談をする
+          </Link>
 
-</div>
-
+        </div>
 
       </div>
     </section>
