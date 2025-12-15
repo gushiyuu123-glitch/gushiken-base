@@ -19,7 +19,7 @@ export default function PriceDetail() {
         bg-[#0b0b0b] min-h-screen text-white
         opacity-0 translate-y-8
         transition-all duration-[1100ms] ease-[cubic-bezier(.25,.46,.45,.94)]
-        py-28 md:py-32 px-6
+        py-24 md:py-32 px-6
       "
     >
       <div className="max-w-5xl mx-auto relative">
@@ -37,7 +37,7 @@ export default function PriceDetail() {
         {/* TITLE */}
         <h1
           className="
-            text-[2.6rem]
+            text-[2.2rem] md:text-[2.6rem]
             tracking-[0.22em]
             font-light
             mb-8
@@ -47,20 +47,24 @@ export default function PriceDetail() {
           PRICE — Detail
         </h1>
 
-        {/* 導入文（安心版） */}
-      <p
-  className="
-    text-white/70 text-[1rem] leading-[1.9]
-    mb-12 md:mb-16 max-w-3xl pl-4
-    md:text-[1rem] text-[0.95rem]
-  "
->
-
-          世界観・写真の質・ページ構成に合わせて、最適な形をご提案しています。<br />
+        {/* 導入文（安心・確定・SP最適化） */}
+        <p
+          className="
+            text-white/70
+            text-[0.95rem] md:text-[1rem]
+            leading-[1.9]
+            mb-12 md:mb-16
+            max-w-3xl
+            pl-4
+          "
+        >
+          Webサイトの目的・世界観・写真素材の状況に合わせて、
+          最適な構成とデザインをご提案しています。<br />
           初回ヒアリング後は「世界観ボード」を作成し、
-          方向性を共有したうえでデザイン制作へ進みます。<br />
+          方向性を共有したうえで制作へ進みます。<br /><br />
           <strong className="text-white/85">
-            制作前に内容と金額を確定し、途中で費用が変わることはありません。
+            制作前に内容と総額を確定し、
+            制作途中で費用が変わることはありません。
           </strong>
         </p>
 
@@ -73,7 +77,7 @@ export default function PriceDetail() {
             title="Landing Page"
             price="¥60,000〜"
             summary="1ページ構成のランディングページ。"
-            detail="商品紹介・キャンペーン案内など、1ページで魅力を伝える構成です。"
+            detail="ブランド紹介・キャンペーンなど、必要な情報を1ページに美しく整理します。"
             bestFor="まずはWebサイトを持ってみたい方に。"
           />
 
@@ -82,8 +86,8 @@ export default function PriceDetail() {
             title="Small Website"
             price="¥120,000〜"
             summary="3〜5ページ構成のWebサイト。"
-            detail="店舗・サロン・個人サイトなど、必要な情報を丁寧に整理して設計します。"
-            bestFor="サービス内容やアクセス情報をしっかり伝えたい方に。"
+            detail="サービス内容・店舗情報・導線を丁寧に整理し、安心感のある構成に仕上げます。"
+            bestFor="情報をしっかり伝えたい方に。"
           />
 
           <PlanCard
@@ -91,36 +95,46 @@ export default function PriceDetail() {
             title="Brand Site（6ページ以上）"
             price="¥180,000〜"
             summary="世界観重視のブランドサイト。"
-            detail="光・余白・写真を活かし、空気感まで含めてデザインします。"
-            bestFor="ブランドイメージを深く伝えたい方に。"
+            detail="写真・配色・余白・動きまで含め、ブランドの空気感をデザインします。"
+            bestFor="世界観そのものを伝えたい方に。"
           />
         </div>
+
+        {/* 写真・ビジュアルについて（重要） */}
+        <SectionTitle>写真素材・ビジュアルについて</SectionTitle>
+        <DetailBlock>
+          <li>仕上がりの印象は写真の質に大きく左右されます。</li>
+          <li>
+            写真が不足している場合でも、
+            <strong> サイト全体の完成度を保つための高品質なビジュアル補完</strong>
+            を行うことがあります。
+          </li>
+          <li>世界観を損なわない範囲で、自然に馴染む表現を重視します。</li>
+        </DetailBlock>
 
         {/* 追加オプション */}
         <SectionTitle>追加オプション</SectionTitle>
         <DetailBlock>
           <li>microCMS（記事投稿機能）：¥30,000〜</li>
-          <li>AI画像生成・補正：内容に応じてご相談</li>
           <li>独自ドメイン / サーバー設定：¥20,000〜</li>
         </DetailBlock>
 
         {/* SEO */}
-        <SectionTitle>SEO・SNS について</SectionTitle>
+        <SectionTitle>SEO・初期設定について</SectionTitle>
         <DetailBlock>
           <li>
-            タイトル・メタタグ・OGP・構造化など、
-            <strong> 基本的なSEO初期設定はすべて制作料金に含まれています。</strong>
+            タイトル・メタタグ・OGP・構造化データなど、
+            <strong> 基本的なSEO初期設定は制作料金に含まれています。</strong>
           </li>
-          <li>検索に正しく評価される設計を前提に制作します。</li>
-          <li>SNSからの導線設計も可能です（運用代行は含みません）。</li>
+          <li>検索エンジンに正しく評価される構造で設計します。</li>
         </DetailBlock>
 
         {/* イメージ共有 */}
         <SectionTitle>イメージ共有について</SectionTitle>
         <DetailBlock>
           <li>
-            「この作品の雰囲気が好き」と
-            <strong> ポートフォリオの作品名をお伝えいただくだけ</strong>
+            「この作品の雰囲気が近い」と
+            <strong> ポートフォリオ内の作品名をお伝えいただくだけ</strong>
             でも問題ありません。
           </li>
           <li>
@@ -144,30 +158,22 @@ export default function PriceDetail() {
           <li>② 世界観ボードの共有</li>
           <li>③ 着手金 50% → 制作開始</li>
           <li>④ デザイン初稿提出</li>
-          <li>⑤ 修正・コーディング・最終確認</li>
+          <li>⑤ 修正・実装・最終確認</li>
           <li>⑥ 残額お支払い → 公開</li>
         </DetailBlock>
 
         {/* 支払い */}
         <SectionTitle>お支払いについて</SectionTitle>
         <DetailBlock>
-          <li>
-            ご依頼確定後、<strong>着手金 50%</strong> をお支払いいただきます。
-          </li>
+          <li>ご依頼確定後、<strong>着手金 50%</strong> をお支払いいただきます。</li>
           <li>残額は公開前にお支払いください。</li>
         </DetailBlock>
 
         {/* キャンセル */}
         <SectionTitle>キャンセルについて</SectionTitle>
         <DetailBlock>
-          <li>
-            着手後のキャンセルについては、
-            <strong> 着手金の返金はできません。</strong>
-          </li>
-          <li>
-            初稿提出後は制作工程が進行しているため、
-            <strong> 全額のご請求</strong> となります。
-          </li>
+          <li><strong>着手金の返金はできません。</strong></li>
+          <li>初稿提出後のキャンセルは全額ご請求となります。</li>
         </DetailBlock>
 
         {/* 注意 */}
@@ -179,8 +185,7 @@ export default function PriceDetail() {
         </DetailBlock>
 
         {/* CTA */}
-  <div className="text-center mt-16 md:mt-12">
-
+        <div className="text-center mt-16">
           <Link
             to="/contact"
             className="
@@ -201,24 +206,25 @@ export default function PriceDetail() {
             CONTACT
           </Link>
         </div>
-    {/* ▼▼ ここが移設したボタン（超重要） ▼▼ */}
-<div className="text-center mt-8 md:mt-10">
-  <a
-    href="https://office.gushikendesign.com/"
-    target="_blank"
-    rel="noopener noreferrer"
-    className="
-      inline-block
-      text-[0.8rem] md:text-sm
-      tracking-wider
-      text-[#d9c8a6]/45 md:text-[#d9c8a6]/55
-      transition-colors duration-300
-      hover:text-[#d9c8a6]
-    "
-  >
-    事務所・企業向けのシンプルWebプランをご検討の方はこちら →
-  </a>
-</div>
+
+        {/* 事務所向けサブ導線 */}
+        <div className="text-center mt-8 md:mt-10">
+          <a
+            href="https://office.gushikendesign.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="
+              inline-block
+              text-[0.8rem] md:text-sm
+              tracking-wider
+              text-[#d9c8a6]/50
+              transition-colors duration-300
+              hover:text-[#d9c8a6]
+            "
+          >
+            事務所・企業向けのシンプルWebプランをご検討の方はこちら →
+          </a>
+        </div>
 
       </div>
     </section>
@@ -243,7 +249,6 @@ function SectionTitle({ children }) {
     </h2>
   );
 }
-
 
 function PlanCard({ badge, title, price, summary, detail, bestFor }) {
   return (

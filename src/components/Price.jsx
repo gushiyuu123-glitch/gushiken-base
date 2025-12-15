@@ -80,27 +80,31 @@ export default function Price() {
         </p>
 
         {/* CTA */}
-        <div className="price-cta">
-          <Link to="/contact" className="price-btn">
-            制作の相談をする
-          </Link>
+<div className="price-cta">
 
-          {/* サブ導線：価格詳細 */}
-          <div className="mt-4 text-center">
-            <Link
-              to="/price"
-              className="
-                inline-block
-                text-sm tracking-wider
-                text-[#d9c8a6]/70
-                transition-colors duration-300
-                hover:text-[#d9c8a6]
-              "
-            >
-              料金の詳細を見る →
-            </Link>
-          </div>
-        </div>
+  {/* メイン導線：価格詳細（先に理解） */}
+  <div className="mb-4 text-center">
+    <Link
+      to="/price"
+      className="
+        inline-block
+        text-sm tracking-wider
+        text-[#d9c8a6]/70
+        transition-colors duration-300
+        hover:text-[#d9c8a6]
+      "
+    >
+      料金の詳細を見る →
+    </Link>
+  </div>
+
+  {/* サブ導線：相談（決断） */}
+  <Link to="/contact" className="price-btn">
+    制作の相談をする
+  </Link>
+
+</div>
+
 
       </div>
     </section>
