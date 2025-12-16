@@ -59,60 +59,76 @@ export default function Works() {
         {/* ======================================================
             EXHIBITION GRID
         ====================================================== */}
-        <div className="works-grid">
+        <div className="works-grid-wrapper">
+          {/* ===== Swipe Hint (SP only) ===== */}
+          <div className="works-swipe-hint">
+            <span>SWIPE</span>
+            <span className="arrow">→</span>
+          </div>
 
-          {/* ======================== */}
-          {/* BIG CARD — RÉSONANCE */}
-          {/* ======================== */}
-          <a
-            href="https://resonance-restaurant.vercel.app/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="work-card work-big"
-          >
-            <img
-  src="/assets/resonance.webp"
-  alt="RÉSONANCE Restaurant"
-  loading="lazy"
-/>
-            <div className="work-text">
-              <h3>RÉSONANCE</h3>
-              <p>Time × Heat × Silence. A cinematic dining experience.</p>
-            </div>
-          </a>
+          <div className="works-grid">
 
-          {/* ======================== */}
-          {/* SMALL CARD — Neutral Objects */}
-          {/* ======================== */}
-          <a
-            href="https://neutral-objects.vercel.app/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="work-card work-small"
-          >
-            <img src="/neutral.webp" alt="Neutral Objects" loading="lazy" />
-            <div className="work-text small">
-              <h3>Neutral Objects</h3>
-              <p>Light × Silence × Everyday Minimalism.</p>
-            </div>
-          </a>
+            {/* ======================== */}
+            {/* BIG CARD — RÉSONANCE */}
+            {/* ======================== */}
+            <a
+              href="https://resonance-restaurant.vercel.app/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="work-card work-big"
+            >
+              <img
+                src="/assets/resonance.webp"
+                alt="RÉSONANCE Restaurant"
+                loading="lazy"
+              />
+              <div className="work-text">
+                <h3>RÉSONANCE</h3>
+                <p>Time × Heat × Silence. A cinematic dining experience.</p>
+              </div>
+            </a>
 
-          {/* ======================== */}
-          {/* SMALL CARD — Okinawa White Spa */}
-          {/* ======================== */}
-          <a
-            href="https://okinawa-white-spa.vercel.app/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="work-card work-small"
-          >
-            <img src="/assets/spa.webp" alt="Okinawa White Spa" loading="lazy" />
-            <div className="work-text small">
-              <h3>Okinawa White Spa</h3>
-              <p>White × Silence × Minimal Luxury.</p>
-            </div>
-          </a>
+            {/* ======================== */}
+            {/* SMALL CARD — CAPE. OKINAWA */}
+            {/* ======================== */}
+            <a
+              href="https://cape-okinawa.vercel.app/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="work-card work-small"
+            >
+              <img
+                src="/assets/cape-okinawa.webp"
+                alt="CAPE. OKINAWA Cafe"
+                loading="lazy"
+              />
+              <div className="work-text small">
+                <h3>CAPE. OKINAWA</h3>
+                <p>Sea × Light × Silence. A quiet coastal cafe experience.</p>
+              </div>
+            </a>
 
+            {/* ======================== */}
+            {/* SMALL CARD — Okinawa White Spa */}
+            {/* ======================== */}
+            <a
+              href="https://okinawa-white-spa.vercel.app/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="work-card work-small"
+            >
+              <img
+                src="/assets/spa.webp"
+                alt="Okinawa White Spa"
+                loading="lazy"
+              />
+              <div className="work-text small">
+                <h3>Okinawa White Spa</h3>
+                <p>White × Silence × Minimal Luxury.</p>
+              </div>
+            </a>
+
+          </div>
         </div>
 
         {/* ======================================================

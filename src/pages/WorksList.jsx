@@ -28,6 +28,8 @@ import neutralObjectsImg from "../assets/works/neutral-objects.webp";
 import OkinawaSelectImg from "../assets/works/OkinawaSelect.webp";
 // 画像 import 追加
 import resonanceImg from "../assets/works/resonance.webp";
+// 画像 import 追加
+import capeOkinawaImg from "../assets/works/cape-okinawa.webp";
 
 export default function WorksList() {
   const rootRef = useRef(null);
@@ -248,6 +250,13 @@ useEffect(() => {
     link="https://resonance-restaurant.vercel.app/"
     img={resonanceImg}
   />
+{/* === CAPE. OKINAWA（Cafe / Portfolio Work） === */}
+<WorkItem
+  title="CAPE. OKINAWA — Cafe"
+  desc={`海 × 光 × 静寂。\n体験の流れそのものを設計した、展示型カフェWeb。`}
+  link="https://cape-okinawa.vercel.app/"
+  img={capeOkinawaImg}
+/>
 
   <WorkItem
     title="Aburiya Itto"

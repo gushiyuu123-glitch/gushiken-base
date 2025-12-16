@@ -336,3 +336,57 @@
 .viewall-btn:hover::after {
   opacity: 0.35;
 }
+/* =========================
+   Swipe Hint Wrapper
+========================= */
+.works-grid-wrapper {
+  position: relative;
+}
+
+/* =========================
+   Swipe Hint (Mobile)
+========================= */
+.works-swipe-hint {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .works-swipe-hint {
+    position: absolute;
+    right: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 5;
+
+    display: flex;
+    align-items: center;
+    gap: 6px;
+
+    font-size: 10px;
+    letter-spacing: 0.28em;
+    color: rgba(255, 255, 255, 0.55);
+
+    pointer-events: none;
+    animation: swipePulse 2.6s ease-in-out infinite;
+  }
+
+  .works-swipe-hint .arrow {
+    font-size: 14px;
+    transform: translateY(-1px);
+  }
+}
+
+@keyframes swipePulse {
+  0% {
+    opacity: 0.25;
+    transform: translate(0, -50%);
+  }
+  50% {
+    opacity: 0.85;
+    transform: translate(-6px, -50%);
+  }
+  100% {
+    opacity: 0.25;
+    transform: translate(0, -50%);
+  }
+}
