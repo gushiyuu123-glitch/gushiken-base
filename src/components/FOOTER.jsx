@@ -97,9 +97,7 @@ export default function Footer() {
             <a href="/privacy" className="footer-link">PRIVACY</a>
 
           </div>
-        </div>
-      </div>
-<p className="footer-project-label mb-1">
+          <p className="footer-project-label mb-1">
   EXPERIMENTAL PROJECT
 </p>
 <a
@@ -111,6 +109,10 @@ export default function Footer() {
 >
   Quiet AI Image Library
 </a>
+
+        </div>
+        
+      </div>
 
       {/* ─ コピーライト ─ */}
       <p
