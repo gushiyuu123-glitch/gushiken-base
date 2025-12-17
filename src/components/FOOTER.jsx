@@ -99,6 +99,18 @@ export default function Footer() {
           </div>
         </div>
       </div>
+<p className="footer-project-label mb-1">
+  EXPERIMENTAL PROJECT
+</p>
+<a
+  href="https://quiet-ai.gushiken.design/"
+  target="_blank"
+  rel="noopener noreferrer"
+  className="footer-project-link"
+  translate="no"
+>
+  Quiet AI Image Library
+</a>
 
       {/* ─ コピーライト ─ */}
       <p
