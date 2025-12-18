@@ -101,7 +101,7 @@ export default function Footer() {
   EXPERIMENTAL PROJECT
 </p>
 <a
-  href="https://quiet-ai.gushiken.design/"
+  href="https://quiet-ai.gushikendesign.com/"
   target="_blank"
   rel="noopener noreferrer"
   className="footer-project-link"
