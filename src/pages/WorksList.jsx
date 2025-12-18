@@ -288,7 +288,7 @@ useEffect(() => {
             <WorkItem
               title="FINE — Okinawa Edition"
               desc={`40代からの穏やかな出会い。\n安心感を設計した大人向けUI。`}
-              link="https://fine-okinawa.vercel.app/"
+              link="https://www.fine-okinawa.com/"
               img={fineImg}
             />
           </Category>
