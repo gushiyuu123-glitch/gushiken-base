@@ -8,24 +8,41 @@ import CONTACT from "../components/CONTACT";
 import NewsSection from "../components/NewsSection";
 export default function Home() {
 
-  // ============================
-  // セクションのフェード処理
-  // ============================
-  useEffect(() => {
-    const sections = document.querySelectorAll(".home-section");
+// ============================
+// Dior / SANKOU Fade System v2
+// ============================
+useEffect(() => {
+  const elements = document.querySelectorAll(".home-section");
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((e) => {
-          if (e.isIntersecting) e.target.classList.add("home-show");
-        });
-      },
-      { threshold: 0.2 }
-    );
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
 
-    sections.forEach((s) => observer.observe(s));
-    return () => observer.disconnect();
-  }, []);
+        const el = entry.target;
+
+        // ランダムディレイ（0〜120ms）
+        const delay = Math.random() * 120;
+        el.style.animationDelay = `${delay}ms`;
+
+        el.classList.add("home-show");
+
+        // 一度発火したら監視解除（パフォーマンス向上）
+        observer.unobserve(el);
+      });
+    },
+    {
+      root: null,
+      threshold: 0.15,
+      rootMargin: "0px 0px -10% 0px", // 少し早めに発火
+    }
+  );
+
+  elements.forEach((el) => observer.observe(el));
+
+  return () => observer.disconnect();
+}, []);
+
 // ============================
 // META（SEO）
 // ============================
