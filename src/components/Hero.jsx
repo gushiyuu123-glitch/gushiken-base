@@ -19,7 +19,7 @@ export default function Hero() {
         />
       </div>
 
-      {/* ===== Gold Ambient Light（Diorの奥行き） ===== */}
+      {/* ===== Gold Ambient Light ===== */}
       <div className="absolute inset-0 pointer-events-none">
         <div
           className="
@@ -62,7 +62,7 @@ export default function Hero() {
           "
           translate="no"
         >
-          GUSHIKEN<br />DESIGN
+          GUSHIKEN<br/>DESIGN
         </h1>
 
         {/* ライン */}

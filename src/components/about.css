@@ -1,148 +1,122 @@
 /* =======================================================
-   ABOUT SECTION — Dior Silence × SANKOU Structure × aq-fade
+   ABOUT — Silent UI v4.2 × Dior Glow Edition
 ======================================================= */
 
 .about-section {
-  padding: 8rem 0;
+  padding: 7rem 0;
   background: linear-gradient(180deg, #0b0b0b 0%, #0a0a0a 70%, #0c0c0c 100%);
   position: relative;
-
-  /* aq-fade が制御するため、透明設定は削除 */
-  opacity: 1 !important;
-  transform: none !important;
+  overflow: hidden;
 }
 
-/* ===========================================
-   左 1px 金ライン（装飾）
-=========================================== */
+/* 縦ライン */
 .about-gold-line {
   position: absolute;
   left: 0;
-  top: 2.5rem;
+  top: 2.8rem;
   width: 1px;
   height: 88%;
-
   background: linear-gradient(
     to bottom,
-    rgba(215,195,154,0.55),
-    rgba(215,195,154,0.1)
+    rgba(215,195,154,0.50),
+    rgba(215,195,154,0.12)
   );
-
-  /* アニメーションは aq-fade が管理するので透明禁止 */
-  opacity: 1 !important;
-  transform: none !important;
+  pointer-events: none;
 }
 
-/* ===========================================
-   テキスト（導入）
-=========================================== */
+/* 導入文 */
 .about-lead {
-  color: rgba(255,255,255,0.9);
+  color: rgba(255,255,255,0.92);
   font-size: 1.15rem;
   line-height: 1.9;
-  letter-spacing: 0.03em;
-  padding-left: 1rem;
   margin-bottom: 2.5rem;
+  padding-left: 1rem;
 }
 
+/* 本文 */
 .about-body {
   color: rgba(255,255,255,0.70);
   font-size: 1rem;
   line-height: 1.85;
-  letter-spacing: 0.03em;
-  padding-left: 1rem;
   margin-bottom: 2.5rem;
+  padding-left: 1rem;
 }
 
-/* 名前 */
+/* 制作者名 */
 .about-name {
-  color: white;
+  color: #fff;
   font-size: 1.35rem;
   font-weight: 300;
-  letter-spacing: 0.12em;
-  margin-bottom: 0.4rem;
+  letter-spacing: 0.14em;
+  margin-bottom: 0.6rem;
   padding-left: 1rem;
 }
 
-/* テキスト */
+/* 制作者紹介文 */
 .about-text {
-  color: rgba(255,255,255,0.55);
-  font-size: 0.92rem;
-  line-height: 1.75;
+  color: rgba(255,255,255,0.60);
+  font-size: 0.95rem;
+  line-height: 1.85;
   padding-left: 1rem;
 }
 
-/* 制作スタイルタイトル */
+/* 見出し */
 .about-style-title {
   color: white;
   font-size: 1.15rem;
   font-weight: 300;
-  letter-spacing: 0.12em;
-  margin-bottom: 0.3rem;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.25rem;
   padding-left: 1rem;
 }
 
-/* 制作スタイル本文 */
+/* テキスト */
 .about-style-text {
   color: rgba(255,255,255,0.55);
   font-size: 0.9rem;
-  line-height: 1.7;
+  line-height: 1.75;
   padding-left: 1rem;
 }
 
-/* ===========================================
-   ラスト（締め）
-=========================================== */
+/* ラスト文 */
 .about-last {
-  text-align: center;
-  margin-top: 4rem;
-
-  color: rgba(255,255,255,0.82);
-  font-size: 1.25rem;
-  letter-spacing: 0.06em;
-
-  /* 最初から表示（aq-fadeが動かす） */
-  opacity: 1 !important;
-  transform: none !important;
+  margin-top: 3rem;
+  color: rgba(255,255,255,0.85);
+  font-size: 1.2rem;
+  letter-spacing: 0.04em;
+  padding-left: 1rem;
 }
 
-/* ===========================================
-   旧 fade / show システムを完全無効化
-=========================================== */
+/* -------------------------------------------
+   古い fade を安全にリセット（必要なら）
+------------------------------------------- */
+.fade-up,
+.fade-up.show,
 .about-section.show,
-.about-gold-line.show,
 .about-last.show {
-  all: unset;
+  opacity: unset !important;
+  transform: unset !important;
 }
 
-/* =======================================================
+/* -------------------------------------------
    MOBILE
-======================================================= */
+------------------------------------------- */
 @media (max-width: 768px) {
   .about-section {
     padding: 5rem 0;
   }
 
   .about-lead,
-  .about-body,
-  .about-text {
+  .about-body {
     font-size: 1rem;
     line-height: 1.75;
   }
 
-  .about-style-title {
-    font-size: 1.02rem;
+  .about-name {
+    font-size: 1.25rem;
   }
 
   .about-last {
     font-size: 1.05rem;
-  }
-
-  .about-name {
-    font-size: 1.2rem;
-  }
-
-  .about-gold-line {
-    height: 93%;
   }
 }

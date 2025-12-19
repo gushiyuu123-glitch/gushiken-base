@@ -1,43 +1,47 @@
-import { StrictMode, useEffect } from "react";
+import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
 import "./index.css";
 import App from "./App.jsx";
-
-// Vercel Analytics
 import { Analytics } from "@vercel/analytics/react";
 
-// ===========================
-//  Root Render
-// ===========================
+// ============================================
+// Render
+// ============================================
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <BrowserRouter>
       <App />
-
-      {/* Vercel Analytics */}
       <Analytics />
     </BrowserRouter>
   </StrictMode>
 );
 
-// ===========================
-//  ① 初期フェード（FOUC防止）
-// ===========================
-window.addEventListener("DOMContentLoaded", () => {
+// ============================================
+// ① 初期フェード（FOUC 完全防止版）
+// ============================================
+window.addEventListener("load", () => {
   const r = document.getElementById("root");
-  if (r) r.classList.add("show");
+  if (!r) return;
+
+  // CSS 読み込み後の次のフレームで確実に付ける
+  requestAnimationFrame(() => {
+    r.classList.add("show");
+  });
+
+  // 保険：もし何かで遅延した場合 500ms で必ず付く
+  setTimeout(() => r.classList.add("show"), 500);
 });
 
-// ===========================
-//  ② スクロール検知（Ambient Glow用）
-// ===========================
+// ============================================
+// ② Ambient Glow（1度だけ発火）
+// ============================================
 let glowActivated = false;
+
 const activateGlow = () => {
-  if (!glowActivated) {
-    document.body.classList.add("scrolled");
-    glowActivated = true;
-  }
+  if (glowActivated) return;
+  glowActivated = true;
+  document.body.classList.add("scrolled");
 };
 
 window.addEventListener(
@@ -48,59 +52,50 @@ window.addEventListener(
   { passive: true }
 );
 
-// ===========================
-//  ③ Service Worker 更新時の即時反映
-// ===========================
+// ============================================
+// ③ SW：更新即反映
+// ============================================
 if (
   "serviceWorker" in navigator &&
   location.hostname !== "localhost" &&
   location.hostname !== "127.0.0.1"
 ) {
-  navigator.serviceWorker.addEventListener("message", (evt) => {
-    try {
-      const data = evt.data;
-      if (data?.type === "SW_UPDATED") {
-        console.info(
-          "ServiceWorker updated to",
-          data.version,
-          "- refreshing page..."
-        );
-        window.location.reload(true);
-      }
-    } catch (e) {
-      console.warn("Failed to handle SW message", e);
-    }
+  navigator.serviceWorker.addEventListener(
+    "message",
+    (evt) => {
+      try {
+        if (evt?.data?.type === "SW_UPDATED") {
+          console.info("SW updated - refreshing...");
+          window.location.reload(true);
+        }
+      } catch (e) {}
+    },
+    { once: true } // ← 重複防止（重要）
+  );
+}
+
+// ============================================
+// ④ 正式リリース環境：SW waiting → 即更新
+// ============================================
+if (!import.meta.env.DEV && "serviceWorker" in navigator) {
+  navigator.serviceWorker.getRegistration().then((reg) => {
+    if (reg?.waiting) reg.waiting.postMessage({ type: "SKIP_WAITING" });
   });
 }
 
-// ===========================
-//  ④ 本番：SWが待ち状態なら即更新
-// ===========================
-if (!import.meta.env.DEV && "serviceWorker" in navigator) {
-  try {
-    navigator.serviceWorker.getRegistration().then((reg) => {
-      if (reg?.waiting) {
-        reg.waiting.postMessage({ type: "SKIP_WAITING" });
-      }
-    });
-  } catch (e) {}
-}
-
-// ===========================
-//  ⑤ 開発環境：SWを完全クリア（事故防止）
-// ===========================
+// ============================================
+// ⑤ 開発環境：SW完全クリア（事故防止）
+// ============================================
 if (import.meta.env.DEV && "serviceWorker" in navigator) {
-  try {
-    navigator.serviceWorker.getRegistrations().then((regs) => {
-      regs.forEach((reg) => reg.unregister().catch(() => {}));
+  navigator.serviceWorker.getRegistrations().then((regs) => {
+    regs.forEach((reg) => reg.unregister().catch(() => {}));
+  });
+
+  if (window.caches?.keys) {
+    caches.keys().then((keys) => {
+      keys.forEach((k) => caches.delete(k));
     });
+  }
 
-    if (window.caches?.keys) {
-      caches.keys().then((keys) =>
-        Promise.all(keys.map((k) => caches.delete(k)))
-      );
-    }
-
-    console.info("Dev: cleared SW + caches to avoid stale builds");
-  } catch (e) {}
+  console.info("Dev: cleared SW + caches to avoid stale builds");
 }

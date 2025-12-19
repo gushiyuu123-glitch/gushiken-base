@@ -8,9 +8,7 @@ export default function Works() {
     const root = worksRef.current;
     if (!root) return;
 
-    // ==========================================
-    // 画像ロード後の "img-loaded" だけ残す（UX）
-    // ==========================================
+    // 画像ロード後の仕上げクラス付与
     const cards = root.querySelectorAll(".work-card");
 
     cards.forEach((card) => {
@@ -26,20 +24,16 @@ export default function Works() {
   }, []);
 
   return (
-    <section id="works" className="aq-fade" ref={worksRef}>
+    <section id="works" ref={worksRef} className="aq-fade aq-root">
       <div className="works-container">
 
-        {/* ======================================================
-            HEADER
-        ====================================================== */}
+        {/* HEADER */}
         <div className="works-header aq-fade delay-1">
           <h2 className="works-title" translate="no">WORKS</h2>
           <p className="works-sub">SELECTED PROJECTS</p>
         </div>
 
-        {/* ======================================================
-            GRID
-        ====================================================== */}
+        {/* GRID */}
         <div className="works-grid-wrapper">
 
           {/* Swipe hint */}
@@ -107,9 +101,7 @@ export default function Works() {
           </div>
         </div>
 
-        {/* ======================================================
-            VIEW ALL WORKS
-        ====================================================== */}
+        {/* VIEW ALL */}
         <div className="works-viewall aq-fade delay-5">
           <a href="/works" className="viewall-btn">
             VIEW ALL WORKS

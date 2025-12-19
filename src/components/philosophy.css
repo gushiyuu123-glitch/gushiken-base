@@ -10,10 +10,6 @@
   background: linear-gradient(180deg, #0b0b0b 0%, #0a0a0a 70%, #0c0c0c 100%);
   position: relative;
   overflow: hidden;
-
-  /* aq-fade が制御するため、初期透明は消す */
-  opacity: 1 !important;
-  transform: none !important;
 }
 
 /* -------------------------------------------
@@ -37,15 +33,11 @@
   top: 2.5rem;
   width: 1px;
   height: 88%;
-
   background: linear-gradient(
     to bottom,
     rgba(215,195,154,0.55),
     rgba(215,195,154,0.12)
   );
-
-  opacity: 1;
-  transform: none;
 }
 
 /* -------------------------------------------
@@ -60,6 +52,7 @@
   padding-left: 1rem;
 
   animation: breathe 4.6s ease-in-out infinite;
+  animation-fill-mode: both;   /* ← aq-fade と干渉させない */
 }
 
 @keyframes breathe {
@@ -87,7 +80,7 @@
 }
 
 /* -------------------------------------------
-   三原則（Order / Tension / Silence）
+   三原則
 ------------------------------------------- */
 .philo-subtitle {
   color: white;
@@ -106,7 +99,7 @@
 }
 
 /* -------------------------------------------
-   締めの言葉
+   締め
 ------------------------------------------- */
 .philo-last {
   margin-top: 4rem;
@@ -114,25 +107,22 @@
   font-size: 1.25rem;
   letter-spacing: 0.06em;
   padding-left: 1rem;
-
-  /* aq-fade が制御するため初期透明は不要 */
-  opacity: 1;
-  transform: none;
 }
 
 /* -------------------------------------------
-   旧fade-up / show 系は全廃棄（競合防止）
+   古いfadeを安全に上書き
 ------------------------------------------- */
 .fade-up,
 .fade-up.show,
 .philo-section.show,
 .philo-gold-line.show,
 .philo-last.show {
-  all: unset;
+  opacity: unset !important;
+  transform: unset !important;
 }
 
 /* -------------------------------------------
-   📱 MOBILE
+   MOBILE
 ------------------------------------------- */
 @media (max-width: 768px) {
   .philo-section {

@@ -6,7 +6,7 @@ export default function Philosophy() {
     <section
       id="philosophy"
       className="
-        philo-section aq-fade
+        philo-section aq-fade aq-root
         bg-[#0b0b0b]
       "
     >
@@ -26,6 +26,7 @@ export default function Philosophy() {
             mb-10
             pl-1
           "
+          translate="no"
         >
           PHILOSOPHY
         </h2>
@@ -73,7 +74,7 @@ export default function Philosophy() {
         </div>
 
         {/* 締め */}
-        <p className="philo-last aq-fade delay-7">
+        <p className="philo-last aq-fade delay-6">
           見やすく、心地よく、長く愛されるデザインを。<br />
           その思いを軸に、ひとつひとつ丁寧に制作しています。
         </p>
