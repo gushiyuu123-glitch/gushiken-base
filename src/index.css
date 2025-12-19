@@ -209,3 +209,7 @@ body.scrolled .ambient-glow::after {
 /* ============================================================
    END — Silent UI Framework v4.2.1
 ============================================================ */
+.price-section.show {
+  opacity: 1;
+  transform: translateY(0);
+}

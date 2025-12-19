@@ -1,19 +1,18 @@
-/* ======================================
-   🌕 GUSHIKEN DESIGN — Premium Navigation
-   CSS Modules 完全対応・安全設計
-====================================== */
+/* ======================================================
+   🌕 GUSHIKEN DESIGN — Premium Navigation v5
+   Noah Final Edition（CSS Modules 完全対応）
+====================================================== */
 
-/* --------------------------------------
-   ROOT NAV
--------------------------------------- */
+/* ------------------------------------------------------
+   ROOT NAV — ガラス × ゴールドライン × 静かな影
+------------------------------------------------------ */
 :local(.navRoot) {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 70px;
-  z-index: 999999999;
-  pointer-events: auto;
+  z-index: 999999;
 
   background: rgba(0, 0, 0, 0.42);
   backdrop-filter: blur(22px);
@@ -25,24 +24,26 @@
 
   transition:
     opacity .55s cubic-bezier(.19,1,.22,1),
-    transform .55s cubic-bezier(.19,1,.22,1);
+    transform .55s cubic-bezier(.19,1,.22,1),
+    background .55s ease;
 }
 
-/* スクロール出現用 */
-:local(.navActive) {
-  opacity: 1;
-  transform: translateY(0);
+/* スクロールで少し濃くする（透明な高級感） */
+:local(.navSolid) {
+  background: rgba(0,0,0,0.62);
+  border-bottom-color: rgba(215,195,154,0.28);
 }
 
+/* スクロールで隠す（※使用する場合） */
 :local(.navHidden) {
   opacity: 0;
-  transform: translateY(0);
-  pointer-events: auto;
+  transform: translateY(-16px);
+  pointer-events: none;
 }
 
-/* --------------------------------------
+/* ------------------------------------------------------
    INNER
--------------------------------------- */
+------------------------------------------------------ */
 :local(.navInner) {
   max-width: 1350px;
   margin: 0 auto;
@@ -54,20 +55,25 @@
   align-items: center;
 }
 
-/* --------------------------------------
-   LOGO
--------------------------------------- */
+/* ------------------------------------------------------
+   LOGO（GUSHIKEN DESIGN）
+------------------------------------------------------ */
 :local(.navLogo) {
   color: #fff;
   font-size: 1.15rem;
   font-weight: 300;
   letter-spacing: 0.28em;
   cursor: pointer;
+  transition: opacity .35s ease;
 }
 
-/* --------------------------------------
+:local(.navLogo:hover) {
+  opacity: 0.75;
+}
+
+/* ------------------------------------------------------
    PC NAV
--------------------------------------- */
+------------------------------------------------------ */
 :local(.navPc) {
   display: flex;
   gap: 55px;
@@ -78,6 +84,7 @@
   :local(.navPc) { display: none; }
 }
 
+/* nav item */
 :local(.navItem) {
   position: relative;
   padding: 6px 4px 10px;
@@ -85,8 +92,16 @@
 
   font-size: 0.9rem;
   letter-spacing: 0.18em;
-  color: rgba(255,255,255,0.85);
-  transition: color .35s ease;
+  color: rgba(255,255,255,0.82);
+
+  transition:
+    color .35s ease,
+    opacity .35s ease;
+}
+
+:local(.navItemActive) {
+  color: #D7C39A;
+  opacity: 1;
 }
 
 :local(.navItem)::after {
@@ -106,14 +121,16 @@
 
 :local(.navItem:hover) {
   color: #fff;
+  opacity: 1;
 }
+
 :local(.navItem:hover)::after {
   width: 100%;
 }
 
-/* --------------------------------------
-   HAMBURGER
--------------------------------------- */
+/* ------------------------------------------------------
+   HAMBURGER（SP）
+------------------------------------------------------ */
 :local(.hamburger) {
   display: none;
 }
@@ -126,6 +143,7 @@
     width: 28px;
     height: 20px;
     cursor: pointer;
+    z-index: 9999999;
   }
 
   :local(.hamburger) span {
@@ -136,6 +154,7 @@
     transition: .45s cubic-bezier(.19,1,.22,1);
   }
 
+  /* X 状態 */
   :local(.hamburgerOpen) span:nth-child(1) {
     transform: translateY(9px) rotate(45deg);
   }
@@ -147,9 +166,9 @@
   }
 }
 
-/* --------------------------------------
-   MOBILE NAV
--------------------------------------- */
+/* ------------------------------------------------------
+   MOBILE NAV（Dior 展示会風オーバーレイ）
+------------------------------------------------------ */
 :local(.mobileNav) {
   position: fixed;
   top: 70px;
@@ -162,8 +181,6 @@
 
   transform: translateY(-100%);
   opacity: 0;
-
-  /* ← 非表示時はクリック不可（最重要） */
   pointer-events: none;
 
   transition:
@@ -173,22 +190,26 @@
   display: flex;
   flex-direction: column;
   padding-top: 18px;
-  z-index: 999999;
+  z-index: 999998;
 }
 
 :local(.mobileOpen) {
   transform: translateY(0);
   opacity: 1;
-  pointer-events: auto; /* ← 開いた時だけクリック可 */
+  pointer-events: auto;
 }
 
+/* メニュー項目 */
 :local(.mobileNav) a {
   padding: 22px 32px;
   font-size: 1.05rem;
   letter-spacing: 0.19em;
   color: rgba(255,255,255,0.88);
   border-bottom: 1px solid rgba(255,255,255,0.08);
-  transition: all .35s ease;
+
+  transition:
+    color .35s ease,
+    background .35s ease;
 }
 
 :local(.mobileNav) a:hover {

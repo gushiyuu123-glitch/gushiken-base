@@ -8,17 +8,16 @@ export default function PriceDetail() {
   useEffect(() => {
     const el = rootRef.current;
     if (!el) return;
-    el.classList.add("show");
+    // Silent UI v4.2 のフェードを発火
+    el.classList.add("aq-show");
   }, []);
 
   return (
     <section
       ref={rootRef}
       className="
-        price-section
+        aq-fade                      /* ← ここで統一フェードを使う */
         bg-[#0b0b0b] min-h-screen text-white
-        opacity-0 translate-y-8
-        transition-all duration-[1100ms] ease-[cubic-bezier(.25,.46,.45,.94)]
         py-24 md:py-32 px-6
       "
     >
@@ -47,7 +46,7 @@ export default function PriceDetail() {
           PRICE — Detail
         </h1>
 
-        {/* 導入文（安心・確定・SP最適化） */}
+        {/* 導入文 */}
         <p
           className="
             text-white/70
@@ -100,7 +99,7 @@ export default function PriceDetail() {
           />
         </div>
 
-        {/* 写真・ビジュアルについて（重要） */}
+        {/* 写真・ビジュアルについて */}
         <SectionTitle>写真素材・ビジュアルについて</SectionTitle>
         <DetailBlock>
           <li>仕上がりの印象は写真の質に大きく左右されます。</li>
@@ -183,12 +182,14 @@ export default function PriceDetail() {
           <li>制作前に必ず総額を確定します。</li>
           <li>納期目安：<strong>3〜6週間</strong></li>
         </DetailBlock>
-<SectionTitle>対応できないこと</SectionTitle>
-<DetailBlock>
-  <li>
-    短納期・価格最優先・制作意図の共有が難しいご依頼には対応していません。
-  </li>
-</DetailBlock>
+
+        {/* 対応できないこと */}
+        <SectionTitle>対応できないこと</SectionTitle>
+        <DetailBlock>
+          <li>
+            短納期・価格最優先・制作意図の共有が難しいご依頼には対応していません。
+          </li>
+        </DetailBlock>
 
         {/* CTA */}
         <div className="text-center mt-16">
@@ -258,14 +259,16 @@ function SectionTitle({ children }) {
 
 function PlanCard({ badge, title, price, summary, detail, bestFor }) {
   return (
-    <div className="
-      bg-white/5 border border-white/10 rounded-xl
-      p-6 md:p-7 shadow-[0_0_24px_rgba(0,0,0,0.5)]
-      flex flex-col gap-4
-      transition-all duration-300
-      hover:-translate-y-1.5 hover:border-[rgba(217,185,138,0.55)]
-      hover:shadow-[0_0_32px_rgba(217,185,138,0.24)]
-    ">
+    <div
+      className="
+        bg-white/5 border border-white/10 rounded-xl
+        p-6 md:p-7 shadow-[0_0_24px_rgba(0,0,0,0.5)]
+        flex flex-col gap-4
+        transition-all duration-300
+        hover:-translate-y-1.5 hover:border-[rgba(217,185,138,0.55)]
+        hover:shadow-[0_0_32px_rgba(217,185,138,0.24)]
+      "
+    >
       <p className="text-[0.75rem] tracking-[0.22em] text-gold/80">{badge}</p>
       <h3 className="text-[1.15rem] tracking-[0.08em]">{title}</h3>
       <p className="text-[1.2rem] text-gold">{price}</p>

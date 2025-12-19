@@ -38,10 +38,11 @@ export default function NavGlobal() {
             WORKS
           </Link>
 
-          {/* ▼ 料金ページ ▼ */}
+         {/* ▼ 料金ページ ▼ */}
           <Link to="/price" className={`${isActive("/price")} hover:opacity-100`}>
             PRICE
           </Link>
+
 
         </div>
       </div>
