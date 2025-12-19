@@ -26,41 +26,47 @@ export default function Home() {
     sections.forEach((s) => observer.observe(s));
     return () => observer.disconnect();
   }, []);
+// ============================
+// META（SEO）
+// ============================
+useEffect(() => {
+  // --------------------------
+  // 1. <title>
+  // --------------------------
+  document.title = "GUSHIKEN DESIGN | 沖縄のフリーランスWebデザイナー";
 
-  // ============================
-  // META（SEO）
-  // ============================
-  useEffect(() => {
-    document.title = "GUSHIKEN DESIGN — 光と静寂のWebデザイン";
+  // --------------------------
+  // 2. <meta name='description'>
+  // --------------------------
+  const desc = document.querySelector('meta[name="description"]');
 
-    const desc = document.querySelector('meta[name="description"]');
-    const description =
-      "沖縄 × 光 × 静寂 を軸にした GUSHIKEN DESIGN の公式ポートフォリオ。";
+  const description =
+    "沖縄のフリーランスWebデザイナー GUSHIKEN DESIGN。高品質なWebサイト制作、ブランドサイト、事業サイト、UI/UX設計まで一貫対応。カフェ・美容・店舗・コーポレート向けテンプレートも販売中。";
 
-    if (desc) {
-      desc.setAttribute("content", description);
-    } else {
-      const m = document.createElement("meta");
-      m.name = "description";
-      m.content = description;
-      document.head.appendChild(m);
-    }
+  if (desc) {
+    desc.setAttribute("content", description);
+  } else {
+    const m = document.createElement("meta");
+    m.name = "description";
+    m.content = description;
+    document.head.appendChild(m);
+  }
 
-    const canonical = document.querySelector('link[rel="canonical"]');
-    const url =
-      import.meta.env.VITE_SITE_URL ||
-      window.location.origin ||
-      "https://gushiken-base.vercel.app/";
+  // --------------------------
+  // 3. カノニカルURL
+  // --------------------------
+  const canonical = document.querySelector('link[rel="canonical"]');
+  const url = "https://gushikendesign.com/";
 
-    if (canonical) {
-      canonical.setAttribute("href", url);
-    } else {
-      const l = document.createElement("link");
-      l.rel = "canonical";
-      l.href = url;
-      document.head.appendChild(l);
-    }
-  }, []);
+  if (canonical) {
+    canonical.setAttribute("href", url);
+  } else {
+    const l = document.createElement("link");
+    l.rel = "canonical";
+    l.href = url;
+    document.head.appendChild(l);
+  }
+}, []);
 
   return (
    <div className="home-wrapper">
