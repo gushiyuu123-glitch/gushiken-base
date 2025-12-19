@@ -1,60 +1,38 @@
-/* =====================================================
-   PRICE SECTION BASE（Dior Fade v4 対応）
-===================================================== */
+/* =======================================================
+   PRICE — Silent UI v4.2（完全統一版）
+   by GUSHIKEN DESIGN × NOA
+======================================================= */
 
-/* 初期：非表示（グローバルfadeと整合） */
-.price-section.aq-section {
-  opacity: 0;
-  transform: translateY(24px);
-  transition: opacity 1.2s ease, transform 1.2s ease;
-}
-
-/* 表示トリガー（IntersectionObserverで付与） */
-.price-section.aq-section.aq-show {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* 内側要素（.aq-fade） */
-.aq-fade {
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 1s ease, transform 1s ease;
-}
-
-.aq-fade.aq-show {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* 遅延 */
-.delay-1 { transition-delay: 0.12s; }
-.delay-2 { transition-delay: 0.24s; }
-.delay-3 { transition-delay: 0.36s; }
-.delay-4 { transition-delay: 0.48s; }
-.delay-5 { transition-delay: 0.60s; }
-.delay-6 { transition-delay: 0.72s; }
-
-/* =====================================================
-   ORIGINAL PRICE DESIGN
-===================================================== */
-
+/* -------------------------------------------
+   セクション（Fadeは aq-fade に任せる）
+------------------------------------------- */
 .price-section {
   padding: 8rem 0;
   background: linear-gradient(180deg, #0b0b0b 0%, #0a0a0a 70%, #0c0c0c 100%);
+  position: relative;
+  overflow: hidden;
 }
 
-/* 左ゴールドライン */
+/* -------------------------------------------
+   左ゴールドライン（常時表示）
+------------------------------------------- */
 .price-gold-line {
   position: absolute;
   left: 0;
   top: 2rem;
   width: 1px;
   height: 88%;
-  background: rgba(215,195,154,0.25);
+  background: linear-gradient(
+    to bottom,
+    rgba(215,195,154,0.55),
+    rgba(215,195,154,0.18)
+  );
+  pointer-events: none;
 }
 
-/* タイトル */
+/* -------------------------------------------
+   タイトル
+------------------------------------------- */
 .price-title {
   color: white;
   font-size: 2.6rem;
@@ -64,7 +42,17 @@
   padding-left: 1rem;
 }
 
-/* リード文 */
+/* -------------------------------------------
+   リード / 哲学
+------------------------------------------- */
+.price-philosophy {
+  margin: 2.5rem 0 2rem;
+  font-size: 0.95rem;
+  line-height: 1.9;
+  color: rgba(217,200,166,0.85);
+  letter-spacing: 0.08em;
+}
+
 .price-lead {
   color: rgba(255,255,255,0.8);
   font-size: 1rem;
@@ -74,24 +62,39 @@
   letter-spacing: 0.04em;
 }
 
-/* 3グリッド（PC） */
+.price-lead-note {
+  color: rgba(255,255,255,0.6);
+}
+
+/* -------------------------------------------
+   GRID
+------------------------------------------- */
 .price-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 2rem;
 }
 
-/* カード */
+/* -------------------------------------------
+   カード
+------------------------------------------- */
 .price-card {
   background: rgba(255,255,255,0.04);
   border: 1px solid rgba(255,255,255,0.08);
-  padding: 2rem;
   border-radius: 0.9rem;
+  padding: 2rem;
   position: relative;
   overflow: hidden;
-  transition: all 0.4s ease;
+  transition: all 0.45s cubic-bezier(.25,.46,.45,.94);
+  z-index: 1;
 }
 
+.price-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(217,185,138,0.45);
+}
+
+/* ラベル */
 .price-card-label {
   color: rgba(217,185,138,0.85);
   font-size: 0.75rem;
@@ -99,6 +102,7 @@
   margin-bottom: 0.4rem;
 }
 
+/* タイトル */
 .price-card-title {
   color: white;
   font-size: 1.2rem;
@@ -106,20 +110,28 @@
   margin-bottom: 0.6rem;
 }
 
+/* 価格（前面固定） */
 .price-card-price {
   color: #d9b98a;
   font-size: 1.35rem;
   margin-bottom: 1rem;
   letter-spacing: 0.05em;
+  position: relative;
+  z-index: 10;
 }
 
+/* 説明 */
 .price-card-desc {
   color: rgba(255,255,255,0.65);
   line-height: 1.8;
   font-size: 0.9rem;
+  position: relative;
+  z-index: 10;
 }
 
-/* 光の縦ライン */
+/* -------------------------------------------
+   Glow（背面固定）
+------------------------------------------- */
 .price-card-glow {
   content: "";
   position: absolute;
@@ -127,9 +139,15 @@
   bottom: 0;
   right: -30%;
   width: 30%;
-  background: linear-gradient(to left, rgba(217,185,138,0.25), rgba(217,185,138,0));
+  background: linear-gradient(
+    to left,
+    rgba(217,185,138,0.25),
+    rgba(217,185,138,0)
+  );
   opacity: 0;
   transition: right 0.8s ease, opacity 1s ease;
+  z-index: 0;               /* ← 重要 */
+  pointer-events: none;
 }
 
 .price-card:hover .price-card-glow {
@@ -137,12 +155,9 @@
   opacity: 1;
 }
 
-.price-card:hover {
-  transform: translateY(-3px);
-  border-color: rgba(217,185,138,0.5);
-}
-
-/* 注記 */
+/* -------------------------------------------
+   注記
+------------------------------------------- */
 .price-note {
   margin-top: 3rem;
   color: rgba(255,255,255,0.56);
@@ -151,7 +166,9 @@
   padding-left: 1rem;
 }
 
-/* CTAボタン */
+/* -------------------------------------------
+   CTA
+------------------------------------------- */
 .price-cta {
   margin-top: 2.5rem;
   text-align: center;
@@ -173,10 +190,9 @@
   color: #000;
 }
 
-/* =====================================================
+/* -------------------------------------------
    MOBILE
-===================================================== */
-
+------------------------------------------- */
 @media (max-width: 768px) {
   .price-grid {
     grid-template-columns: 1fr;
@@ -196,31 +212,4 @@
     width: 100%;
     padding: 0.85rem 0;
   }
-}
-
-.price-sub-link {
-  text-align: center;
-  margin-top: 42px;
-}
-
-.price-sub-link-a {
-  color: #c7b28a;
-  font-size: 15px;
-  letter-spacing: 0.03em;
-  border-bottom: 1px solid rgba(199, 178, 138, 0.38);
-  padding-bottom: 3px;
-  transition: 0.25s ease;
-}
-
-.price-sub-link-a:hover {
-  color: #e8d7b8;
-  border-color: #e8d7b8;
-}
-
-.price-philosophy {
-  margin: 2.5rem 0 2rem;
-  font-size: 0.95rem;
-  line-height: 1.9;
-  color: rgba(217,200,166,0.85);
-  letter-spacing: 0.08em;
 }

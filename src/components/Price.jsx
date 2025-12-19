@@ -12,15 +12,17 @@ export default function Price() {
 
     const io = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) {
-          // 自分自身
-          el.classList.add("aq-show");
+        if (!entry.isIntersecting) return;
 
-          // 内側の fade 要素も全部解放
-          el.querySelectorAll(".aq-fade").forEach((x) => x.classList.add("aq-show"));
+        // section 自体
+        el.classList.add("aq-show");
 
-          io.unobserve(el);
-        }
+        // 内側全ての aq-fade
+        el.querySelectorAll(".aq-fade").forEach((x) => {
+          x.classList.add("aq-show");
+        });
+
+        io.unobserve(el);
       },
       { threshold: 0.2 }
     );
@@ -30,13 +32,12 @@ export default function Price() {
   }, []);
 
   return (
-    <section id="price" ref={sectionRef} className="price-section aq-section">
+    <section id="price" ref={sectionRef} className="price-section aq-fade">
       <div className="max-w-5xl mx-auto px-6 relative">
 
-        {/* 左ゴールドライン */}
-        <div className="price-gold-line aq-fade delay-1" />
+        {/* gold line */}
+        <div className="price-gold-line" />
 
-        {/* タイトル */}
         <h2
           translate="no"
           className="
@@ -48,7 +49,6 @@ export default function Price() {
           PRICE
         </h2>
 
-        {/* 思想コピー */}
         <p className="price-philosophy aq-fade delay-2">
           Webサイトは、<br />
           「作って終わりの看板」ではありません。<br /><br />
@@ -56,7 +56,6 @@ export default function Price() {
           24時間、代わりに伝え続ける窓口です。
         </p>
 
-        {/* リード文 */}
         <p className="price-lead aq-fade delay-3">
           制作料金の目安です。<br />
           ページ数や構成、演出内容に応じて調整しますが、
@@ -68,7 +67,6 @@ export default function Price() {
           </span>
         </p>
 
-        {/* プラン一覧 */}
         <div className="price-grid aq-fade delay-4">
           <PriceCard
             label="PLAN 01"
@@ -92,18 +90,13 @@ export default function Price() {
           />
         </div>
 
-        {/* 注記 */}
         <p className="price-note aq-fade delay-5">
           ご相談時にご要望やご予算をお伺いし、
           制作内容を整理したうえで総額をご提示します。<br />
-          <strong>
-            制作途中で金額が変わることはありませんので、安心してご相談ください。
-          </strong>
+          <strong>制作途中で金額が変わることはありません。</strong>
         </p>
 
-        {/* CTA */}
         <div className="price-cta aq-fade delay-6">
-
           <div className="mb-4 text-center">
             <Link
               to="/price"
@@ -120,7 +113,6 @@ export default function Price() {
           <Link to="/contact" className="price-btn">
             制作の相談をする
           </Link>
-
         </div>
 
       </div>
@@ -128,16 +120,16 @@ export default function Price() {
   );
 }
 
-/* -----------------------------
-   Card Component
------------------------------ */
 const PriceCard = React.memo(function PriceCard({ label, title, desc, price }) {
   return (
     <div className="price-card">
       <p className="price-card-label">{label}</p>
       <h3 className="price-card-title">{title}</h3>
       <p className="price-card-price">{price}</p>
+
       <p className="price-card-desc">{desc}</p>
+
+      {/* glow (背面固定) */}
       <div className="price-card-glow" />
     </div>
   );

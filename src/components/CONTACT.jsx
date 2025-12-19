@@ -1,4 +1,3 @@
-// src/pages/Contact.jsx
 import React, { useEffect, useRef } from "react";
 import "./contact.css";
 
@@ -9,47 +8,36 @@ export default function Contact() {
     const el = sectionRef.current;
     if (!el) return;
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            // セクション本体
-            el.classList.add("aq-show");
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting) return;
 
-            // 内側のフェード対象
-            el.querySelectorAll(".aq-fade").forEach((item) => {
-              item.classList.add("aq-show");
-            });
+        /** セクション本体 */
+        el.classList.add("aq-show");
 
-            observer.unobserve(el);
-          }
+        /** 内側の fade 要素 */
+        el.querySelectorAll(".aq-fade").forEach((item) => {
+          item.classList.add("aq-show");
         });
+
+        io.unobserve(el);
       },
       { threshold: 0.18 }
     );
 
-    observer.observe(el);
-    return () => observer.disconnect();
+    io.observe(el);
+    return () => io.disconnect();
   }, []);
 
   return (
-    <section
-      ref={sectionRef}
-      id="contact"
-      className="contact-section aq-section"
-    >
+    <section ref={sectionRef} id="contact" className="contact-section aq-fade">
       <div className="contact-container">
 
-        {/* 中央ゴールドライン */}
-        <div className="contact-gold-line aq-fade delay-1"></div>
+        {/* 左ゴールドライン（固定装飾なので fade させない） */}
+        <div className="contact-gold-line"></div>
 
         {/* タイトル */}
-        <h2
-          className="
-            contact-title aq-fade delay-1
-          "
-          translate="no"
-        >
+        <h2 className="contact-title aq-fade delay-1" translate="no">
           CONTACT
         </h2>
 
@@ -66,7 +54,7 @@ export default function Contact() {
           </a>
         </div>
 
-        {/* サブ導線（LINE・電話） */}
+        {/* サブ導線 */}
         <div className="contact-sub-links aq-fade delay-4">
           <p className="contact-sub-title">その他のご連絡方法</p>
 

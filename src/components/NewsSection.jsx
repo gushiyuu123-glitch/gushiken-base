@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import { getNewsList } from "../lib/microcms";
 import styles from "../styles/newsSection.module.css";
 import { Link } from "react-router-dom";
@@ -8,37 +8,6 @@ export default function NewsSection() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
 
-  const sectionRef = useRef(null);
-
-  /* ---------------------------------------------
-     Dior Exhibition Fade v4（セクションフェード）
-  --------------------------------------------- */
-  useEffect(() => {
-    const el = sectionRef.current;
-    if (!el) return;
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          el.classList.add("aq-show");
-
-          el.querySelectorAll(".aq-fade").forEach((x) => {
-            x.classList.add("aq-show");
-          });
-
-          observer.unobserve(el);
-        }
-      },
-      { threshold: 0.18 }
-    );
-
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, []);
-
-  /* ---------------------------------------------
-     microCMS fetch
-  --------------------------------------------- */
   useEffect(() => {
     let mounted = true;
 
@@ -56,38 +25,34 @@ export default function NewsSection() {
         setLoading(false);
       });
 
-    return () => (mounted = false);
+    return () => {
+      mounted = false;
+    };
   }, []);
 
   return (
-    <section
-      ref={sectionRef}
-      className={`${styles.wrapper} aq-section`}
-      aria-labelledby="news-heading"
-    >
+    <section className={styles.wrapper} aria-labelledby="news-heading">
       {/* タイトル */}
-      <h2 id="news-heading" className={`${styles.title} aq-fade delay-1`}>
+      <h2 id="news-heading" className={styles.title}>
         NEWS
       </h2>
-      <div className={`${styles.underline} aq-fade delay-2`} />
+      <div className={styles.underline} />
 
-      {/* ローディング */}
+      {/* ローディング / エラー */}
       {loading && (
-        <p className={`${styles.loading} aq-fade delay-3`} aria-live="polite">
+        <p className={styles.loading} aria-live="polite">
           Loading…
         </p>
       )}
-
-      {/* エラー */}
       {error && !loading && (
-        <p className={`${styles.error} aq-fade delay-3`} aria-live="assertive">
+        <p className={styles.error} aria-live="assertive">
           お知らせを読み込めませんでした
         </p>
       )}
 
       {/* リスト */}
       {!loading && !error && (
-        <div className={`${styles.list} aq-fade delay-3`}>
+        <div className={styles.list}>
           {news.map((item) => {
             const date = item.publishedAt || item.createdAt || null;
 
@@ -110,7 +75,7 @@ export default function NewsSection() {
 
       {/* もっと見る */}
       {!loading && !error && news.length > 0 && (
-        <div className={`${styles.moreWrap} aq-fade delay-4`}>
+        <div className={styles.moreWrap}>
           <Link to="/news" className={styles.more}>
             もっと見る →
           </Link>

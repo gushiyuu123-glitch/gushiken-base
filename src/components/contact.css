@@ -1,31 +1,17 @@
 /* =====================================================
-   CONTACT — Dior Exhibition Fade v4
-   GUSHIKEN DESIGN × Noah
+   CONTACT — Silent UI v4.2 (Dior Exhibition Edition)
 ===================================================== */
 
 /* ----------------------------------------------
-   セクション基盤（aq-section）
+   Section
 ---------------------------------------------- */
 .contact-section {
   background: #0b0b0b;
   padding: 8rem 0;
-
-  /* 初期状態：非表示（aq-sectionとして統一） */
-  opacity: 0;
-  transform: translateY(24px);
-  transition:
-    opacity 1.2s cubic-bezier(.25,.46,.45,.94),
-    transform 1.2s cubic-bezier(.25,.46,.45,.94);
-}
-
-/* 表示開始（IntersectionObserver で付与） */
-.contact-section.aq-show {
-  opacity: 1;
-  transform: translateY(0);
 }
 
 /* ----------------------------------------------
-   コンテナ
+   Container
 ---------------------------------------------- */
 .contact-container {
   max-width: 760px;
@@ -36,7 +22,7 @@
 }
 
 /* ----------------------------------------------
-   左ゴールドライン
+   Gold Line（装飾は fade しない）
 ---------------------------------------------- */
 .contact-gold-line {
   position: absolute;
@@ -49,23 +35,11 @@
     rgba(215,195,154,0.55),
     rgba(215,195,154,0.12)
   );
-
-  opacity: 0;
-  transform: translateY(18px);
-
-  transition:
-    opacity 1.4s cubic-bezier(.25,.46,.45,.94) 0.3s,
-    transform 1.4s cubic-bezier(.25,.46,.45,.94) 0.3s;
-}
-
-/* フェード発火 */
-.contact-gold-line.aq-show {
-  opacity: 1;
-  transform: translateY(0);
+  pointer-events: none;
 }
 
 /* ----------------------------------------------
-   タイトル
+   Title
 ---------------------------------------------- */
 .contact-title {
   color: white;
@@ -73,19 +47,10 @@
   font-weight: 300;
   letter-spacing: 0.22em;
   margin-bottom: 2.2rem;
-
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 1s ease, transform 1s ease;
-}
-
-.contact-title.aq-show {
-  opacity: 1;
-  transform: translateY(0);
 }
 
 /* ----------------------------------------------
-   リード
+   Lead Text
 ---------------------------------------------- */
 .contact-lead {
   color: rgba(255,255,255,0.90);
@@ -93,24 +58,11 @@
   line-height: 1.9;
   letter-spacing: 0.04em;
   margin-bottom: 3rem;
-
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 1s ease, transform 1s ease;
-}
-
-.contact-lead.aq-show {
-  opacity: 1;
-  transform: translateY(0);
 }
 
 /* ----------------------------------------------
-   CTAボタン
+   CTA Button
 ---------------------------------------------- */
-.contact-cta {
-  margin-top: 2rem;
-}
-
 .contact-btn {
   display: inline-block;
   padding: 0.9rem 2.8rem;
@@ -122,7 +74,6 @@
   border-radius: 4px;
   text-decoration: none;
   box-shadow: 0 0 18px rgba(217,185,138,0.05);
-
   transition: all 0.35s ease;
 }
 
@@ -134,9 +85,8 @@
 }
 
 /* ----------------------------------------------
-   サブリンク
+   Sub Links
 ---------------------------------------------- */
-
 .contact-sub-links {
   margin-top: 40px;
   opacity: 0.85;
@@ -164,7 +114,7 @@
 }
 
 /* ----------------------------------------------
-   下部注意文
+   Footer Note
 ---------------------------------------------- */
 .contact-footer {
   margin-top: 4rem;
@@ -174,7 +124,7 @@
 }
 
 /* ----------------------------------------------
-   MOBILE
+   Mobile
 ---------------------------------------------- */
 @media (max-width: 768px) {
   .contact-section {

@@ -1,8 +1,8 @@
 /* =====================================================
-   FOOTER — Noah Final Edition
+   FOOTER — Silent UI v4.2 × Noah Final Edition
 ===================================================== */
 
-/* ▼ 深度フェード（全セクション統一） */
+/* ▼ Section Fade（全セクション共通ルール） */
 .footer-section {
   opacity: 0;
   transform: translateY(20px);
@@ -11,13 +11,13 @@
     transform 1.2s cubic-bezier(.25,.46,.45,.94);
 }
 
-.footer-section.show {
+.footer-section.aq-show {
   opacity: 1 !important;
   transform: translateY(0) !important;
 }
 
 /* =====================================================
-   ▼ ナビゲーションリンク（WORKS / ABOUT）
+   ▼ Navigation Links（WORKS / ABOUT 等）
 ===================================================== */
 .footer-link {
   position: relative;
@@ -50,7 +50,7 @@
 }
 
 /* =====================================================
-   ▼ SNS リンク（静かで強い光）
+   ▼ SNS Links（静かな光）
 ===================================================== */
 .footer-sns {
   color: rgba(255,255,255,0.6);
@@ -80,7 +80,7 @@
 }
 
 /* =====================================================
-   ▼ Experimental Project Link
+   ▼ Experimental Project Links
 ===================================================== */
 .footer-project-link {
   font-size: 0.75rem;
@@ -117,7 +117,7 @@
 }
 
 /* =====================================================
-   ▼ 法務リンク（NEW!）
+   ▼ Legal Links（法務）
 ===================================================== */
 .footer-legal {
   color: rgba(255,255,255,0.38);
@@ -131,7 +131,7 @@
 }
 
 /* =====================================================
-   ▼ MOBILE
+   ▼ Mobile
 ===================================================== */
 @media (max-width: 768px) {
   .footer-section {
@@ -139,10 +139,7 @@
     padding-bottom: 3.5rem !important;
   }
 
-  .footer-link {
-    font-size: 0.85rem;
-  }
-
+  .footer-link,
   .footer-sns {
     font-size: 0.85rem;
   }

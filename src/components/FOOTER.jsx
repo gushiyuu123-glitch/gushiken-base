@@ -9,12 +9,12 @@ export default function Footer() {
     if (!el) return;
 
     const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) el.classList.add("show");
-        });
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          el.classList.add("aq-show");
+        }
       },
-      { threshold: 0.2 }
+      { threshold: 0.18 }
     );
 
     observer.observe(el);
@@ -26,7 +26,7 @@ export default function Footer() {
       ref={sectionRef}
       className="
         footer-section
-        aq-fade             /* ← 統一フェード */
+        aq-section
         bg-[#0b0b0b]
         border-t border-white/10
         pt-16 pb-10
@@ -39,12 +39,9 @@ export default function Footer() {
           gap-12
         "
       >
-        {/* ─ ① ブランド ─ */}
+        {/* ブランド */}
         <div>
-          <h3
-            className="text-white text-xl tracking-[0.18em] font-light mb-2"
-            translate="no"
-          >
+          <h3 className="text-white text-xl tracking-[0.18em] font-light mb-2" translate="no">
             GUSHIKEN DESIGN
           </h3>
           <p className="text-white/40 text-sm tracking-wide">
@@ -52,7 +49,7 @@ export default function Footer() {
           </p>
         </div>
 
-        {/* ─ ② メインナビ ─ */}
+        {/* ナビ */}
         <nav className="flex flex-col gap-3 text-sm tracking-[0.14em]">
           <a href="/#works" className="footer-link">WORKS</a>
           <a href="/#philosophy" className="footer-link">PHILOSOPHY</a>
@@ -61,10 +58,8 @@ export default function Footer() {
           <a href="/#contact" className="footer-link">CONTACT</a>
         </nav>
 
-        {/* ─ ③ プロジェクト & SNS & 法務 ─ */}
+        {/* プロジェクト + SNS + 法務 */}
         <div className="flex flex-col gap-4 text-sm tracking-[0.12em]">
-
-          {/* プロジェクト */}
           <div className="flex flex-col gap-2">
             <p className="footer-project-label">EXPERIMENTAL PROJECTS</p>
 
@@ -89,13 +84,11 @@ export default function Footer() {
             </a>
           </div>
 
-          {/* SNS */}
           <div className="flex items-center gap-6 mt-3">
             <a href="#" className="footer-sns" translate="no">Instagram</a>
             <a href="#" className="footer-sns" translate="no">X (Twitter)</a>
           </div>
 
-          {/* 法務 */}
           <div className="flex flex-col gap-1 mt-3 text-xs tracking-[0.15em]">
             <a href="/legal"  className="footer-legal">特商法表記</a>
             <a href="/terms"  className="footer-legal">利用規約</a>
@@ -105,7 +98,6 @@ export default function Footer() {
         </div>
       </div>
 
-      {/* ─ コピーライト ─ */}
       <p
         className="
           text-center text-white/30

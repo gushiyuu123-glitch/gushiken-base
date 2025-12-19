@@ -3,9 +3,9 @@
 @tailwind utilities;
 
 /* ============================================================
-   Silent UI Framework v4.2 — Complete Edition
+   Silent UI Framework v4.2.1 — Final Dior Edition
    GUSHIKEN DESIGN × NOA
-   Dior Exhibition / SANKOU × Minimal Silence
+   (Fade System / Ambient Glow / Dior Cards / SP Animations)
 ============================================================ */
 
 /* ------------------------------------------------------------
@@ -23,7 +23,7 @@
 }
 
 /* ------------------------------------------------------------
-   BASE RESET
+   BASE RESET / GLOBAL
 ------------------------------------------------------------ */
 body {
   background: var(--black);
@@ -37,10 +37,10 @@ body {
 }
 
 /* ============================================================
-   1) Unified Fade System（全セクション統一演出）
+   1) Unified Fade System（全セクション統一）
 ============================================================ */
 
-/* 初期状態 */
+/* 初期状態（非表示） */
 .aq-fade {
   opacity: 0;
   transform: translate3d(0, 24px, 0);
@@ -50,11 +50,11 @@ body {
   will-change: opacity, transform;
 }
 
-/* 表示状態 */
+/* 表示状態（Observerで付与） */
 .aq-show {
-  opacity: 1;
-  transform: translate3d(0, 0, 0);
-  will-change: opacity, transform;
+  opacity: 1 !important;
+  transform: translate3d(0, 0, 0) !important;
+  transition-delay: 0ms !important; /* ← 動作安定のためリセット */
 }
 
 /* 遅延ユーティリティ */
@@ -65,7 +65,7 @@ body {
 .delay-5 { transition-delay: 0.60s; }
 
 /* ============================================================
-   2) Category Title 呼吸（ゆれる光）
+   2) Category Title 呼吸アニメ（光のゆらぎ）
 ============================================================ */
 .category-title {
   opacity: 0.92;
@@ -78,10 +78,14 @@ body {
 }
 
 /* ============================================================
-   3) Ambient Glow（背景の光：極薄）
+   3) Ambient Glow（背景の光 / Dior 展示の極薄光）
 ============================================================ */
+
+/* display:none の代わりに opacity:0（Safariバグ対策） */
 .ambient-glow {
-  display: none;
+  position: relative;
+  opacity: 0;
+  transition: opacity 2s ease;
 }
 
 .ambient-glow::before,
@@ -110,15 +114,19 @@ body {
   background: rgba(155,155,155,0.12);
 }
 
+/* スクロール後、光が滲む */
+body.scrolled .ambient-glow {
+  opacity: 1;
+}
+
 body.scrolled .ambient-glow::before,
 body.scrolled .ambient-glow::after {
   opacity: 0.12;
   filter: blur(140px);
-  transition: opacity 2s ease, filter 2s ease;
 }
 
 /* ============================================================
-   4) Dior Card Glow System（高級カード）
+   4) Dior Card Glow System（カード高級演出）
 ============================================================ */
 
 .dior-card {
@@ -128,7 +136,7 @@ body.scrolled .ambient-glow::after {
 }
 
 .dior-card:hover {
-  transform: translateY(-1px);
+  transform: translateY(-2px); /* ← 全カード共通に統一 */
   box-shadow:
     0 10px 24px rgba(0,0,0,0.32),
     0 -6px 18px rgba(255,255,240,0.05);
@@ -138,7 +146,7 @@ body.scrolled .ambient-glow::after {
   content: "";
   position: absolute;
   inset: 0;
-  background: radial-gradient(circle at 22% 18%, rgba(255,240,200,0.20), transparent 70%);
+  background: radial-gradient(circle at 22% 18%, rgba(255,240,200,0.18), transparent 70%);
   opacity: 0;
   transition: opacity 1.1s ease;
 }
@@ -167,7 +175,7 @@ body.scrolled .ambient-glow::after {
 }
 
 /* ============================================================
-   5) Horizontal Scroll (SP) — スライドガイド
+   5) Horizontal Scroll (SP)
 ============================================================ */
 .scroll-x-snap {
   scroll-snap-type: x mandatory;
@@ -179,7 +187,7 @@ body.scrolled .ambient-glow::after {
 }
 
 /* ============================================================
-   6) SP Slide-in（カード）
+   6) SP Card Slide-in
 ============================================================ */
 .sp-card-animate {
   opacity: 0;
@@ -188,10 +196,16 @@ body.scrolled .ambient-glow::after {
 }
 
 @keyframes spCardIn {
-  0%   { opacity: 0; transform: translate3d(0, 26px, 0) scale(0.985); }
-  100% { opacity: 1; transform: translate3d(0, 0, 0) scale(1); }
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 26px, 0) scale(0.985);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
 }
 
 /* ============================================================
-   End of Silent UI Framework v4.2
+   END — Silent UI Framework v4.2.1
 ============================================================ */

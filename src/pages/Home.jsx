@@ -8,40 +8,42 @@ import CONTACT from "../components/CONTACT";
 import NewsSection from "../components/NewsSection";
 
 export default function Home() {
+// ============================
+//  Silent UI v4.2 — Global Fade System
+// ============================
+useEffect(() => {
+  const elements = Array.from(
+    document.querySelectorAll(".aq-fade:not(.aq-show)")
+  );
 
-  // ============================
-  //  aq-fade — Global Fade System
-  // ============================
-  useEffect(() => {
-    const elements = document.querySelectorAll(".aq-fade");
+  if (elements.length === 0) return;
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (!entry.isIntersecting) return;
+  const io = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
 
-          const el = entry.target;
+        const el = entry.target;
 
-          // ランダムディレイ（0〜120ms）
-          const delay = Math.random() * 120;
-          el.style.animationDelay = `${delay}ms`;
+        // ---- ランダムディレイ（180〜260msの範囲で自然） ----
+        const delay = 180 + Math.random() * 80; // 180〜260
+        el.style.transitionDelay = `${delay}ms`;
 
-          el.classList.add("aq-show");
+        el.classList.add("aq-show");
 
-          observer.unobserve(el);
-        });
-      },
-      {
-        root: null,
-        threshold: 0.15,
-        rootMargin: "0px 0px -10% 0px",
-      }
-    );
+        io.unobserve(el);
+      });
+    },
+    {
+      threshold: 0.16,
+      rootMargin: "0px 0px -8% 0px",
+    }
+  );
 
-    elements.forEach((el) => observer.observe(el));
+  elements.forEach((el) => io.observe(el));
 
-    return () => observer.disconnect();
-  }, []);
+  return () => io.disconnect();
+}, []);
 
   // ============================
   // META（SEO）
