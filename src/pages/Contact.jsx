@@ -10,14 +10,24 @@ export default function Contact() {
   const [status, setStatus] = useState("idle"); // idle / loading / success / error
   const [message, setMessage] = useState("");
 
-  // --- フェードイン ---
+  /* ---------------------------------------------
+     Page Fade-in（Silent UI v4.2）
+  --------------------------------------------- */
   useEffect(() => {
-    const el = rootRef.current;
-    if (!el) return;
-    el.classList.add(styles.show);
+    const root = rootRef.current;
+    if (!root) return;
+
+    // ページ全体
+    root.classList.add(styles.show);
+
+    // 内側の aq-fade（段階表示）
+    const innerFade = root.querySelectorAll(".aq-fade");
+    innerFade.forEach((el) => el.classList.add("aq-show"));
   }, []);
 
-  // --- フォーム送信 ---
+  /* ---------------------------------------------
+     Form Submit
+  --------------------------------------------- */
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (status === "loading") return;
@@ -39,8 +49,8 @@ export default function Contact() {
 
       setStatus("success");
       setMessage("送信が完了しました。お問い合わせありがとうございます。");
-
       form.reset();
+
     } catch (err) {
       console.error(err);
       setStatus("error");
@@ -49,24 +59,29 @@ export default function Contact() {
   };
 
   return (
-    <section ref={rootRef} className={styles.contactSection}>
+    <section
+      ref={rootRef}
+      className={`${styles.contactSection} aq-fade`} // Silent UI v4.2
+    >
       <div className={styles.container}>
 
-        {/* 左ゴールドライン */}
+        {/* 金ライン */}
         <div className={styles.goldLine} />
 
-        {/* タイトル */}
-        <h1 className={styles.title} translate="no">CONTACT</h1>
+        {/* TITLE */}
+        <h1 className={`${styles.title} aq-fade delay-1`} translate="no">
+          CONTACT
+        </h1>
 
-        {/* リード */}
-        <p className={styles.lead}>
+        {/* LEAD */}
+        <p className={`${styles.lead} aq-fade delay-2`}>
           制作のご相談・お見積りは、下記フォームよりお問い合わせください。<br />
           小さな内容でも構いません。まずはアイデアをお聞かせください。
         </p>
 
-        {/* フォーム */}
-        <form className={styles.form} onSubmit={handleSubmit}>
-          
+        {/* FORM */}
+        <form className={`${styles.form} aq-fade delay-3`} onSubmit={handleSubmit}>
+
           <FormField label="お名前" required htmlFor="name">
             <input
               id="name"
@@ -137,14 +152,14 @@ export default function Contact() {
             />
           </FormField>
 
-          {/* 注意書き */}
-          <p className={styles.note}>
-            ※ 写真素材は、できるだけ明るく鮮明なものをご用意いただけると仕上がりが大きく向上します。<br />
+          {/* 注意 */}
+          <p className={`${styles.note} aq-fade delay-4`}>
+            ※ 写真素材が明るいほど仕上がりが向上します。<br />
             ※ 通常 24 時間以内にご返信いたします。
           </p>
 
           {/* CTA */}
-          <div className={styles.cta}>
+          <div className={`${styles.cta} aq-fade delay-5`}>
             <button
               type="submit"
               className={`${styles.submitBtn} ${
@@ -171,27 +186,29 @@ export default function Contact() {
           </div>
 
         </form>
-        {/* 直接のご連絡 */}
-<div className={styles.altContacts}>
-  <p className={styles.altTitle}>その他のご連絡方法</p>
 
-  <a
-    href="https://line.me/ti/p/gD5Aj8QPPJ"
-    className={styles.altLink}
-    target="_blank"
-    rel="noopener noreferrer"
-  >
-    LINEで相談する（推奨）
-  </a>
+        {/* その他の連絡方法 */}
+        <div className={`${styles.altContacts} aq-fade delay-6`}>
+          <p className={styles.altTitle}>その他のご連絡方法</p>
 
-</div>
+          <a
+            href="https://line.me/ti/p/gD5Aj8QPPJ"
+            className={styles.altLink}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            LINEで相談する（推奨）
+          </a>
+        </div>
 
       </div>
     </section>
   );
 }
 
-/* 共通フィールドコンポーネント */
+/* ---------------------------------------------
+   共通フィールド
+--------------------------------------------- */
 function FormField({ label, children, required, htmlFor }) {
   return (
     <div className={styles.field}>
