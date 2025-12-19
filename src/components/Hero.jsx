@@ -2,75 +2,67 @@ import React, { useEffect, useRef } from "react";
 import hero from "../assets/hero3.png";
 
 export default function Hero() {
+  const h1Ref = useRef(null);
+  const lineRef = useRef(null);
   const textRef = useRef(null);
 
   useEffect(() => {
-    const el = textRef.current;
-    if (!el) return;
+    const animate = (el, delay = 0) => {
+      if (!el) return;
+      el.style.opacity = 0;
+      el.style.transform = "translateY(24px)";
+      el.style.transition = `opacity 1.4s ease ${delay}ms, transform 1.4s ease ${delay}ms`;
 
-    el.style.opacity = 0;
-    el.style.transform = "translateY(22px)";
-    el.style.transition =
-      "opacity 1.6s ease-out, transform 1.6s ease-out";
+      requestAnimationFrame(() => {
+        el.style.opacity = 1;
+        el.style.transform = "translateY(0)";
+      });
+    };
 
-    requestAnimationFrame(() => {
-      el.style.opacity = 1;
-      el.style.transform = "translateY(0)";
-    });
+    animate(h1Ref.current, 0);
+    animate(lineRef.current, 150);
+    animate(textRef.current, 280);
   }, []);
 
   return (
     <section className="relative w-full h-[92vh] md:h-screen overflow-hidden">
-
-      {/* ===== 背景（よりクリアに） ===== */}
+      
+      {/* ===== 背景 ===== */}
       <div className="absolute inset-0 overflow-hidden">
         <img
           src={hero}
           alt="GUSHIKEN DESIGN — hero"
           className="
             w-full h-full object-cover
+            brightness-[1.06]
             scale-[1.015]
-            brightness-[1.08]
-            transition-transform duration-[20000ms]
-            will-change-transform
-            animate-[heroFloat_20s_ease-in-out_infinite]
+            animate-[heroFloat_22s_ease-in-out_infinite]
           "
         />
       </div>
 
-      {/* ===== 超薄ホワイト層（濁りを完全除去） ===== */}
+      {/* ===== Gold Ambient Light（Diorの奥行き） ===== */}
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="
+          absolute left-[12%] top-[28%]
+          w-[420px] h-[420px]
+          bg-[rgba(220,190,140,0.085)]
+          blur-[140px]
+          rounded-full
+        "></div>
+      </div>
+
+      {/* ===== 下グラデ ===== */}
       <div
         className="
-          absolute inset-0
-          bg-[rgba(255,255,255,0.015)]
+          absolute left-0 bottom-0 w-full h-[260px]
+          bg-gradient-to-t from-[rgba(0,0,0,0.16)] to-transparent
           pointer-events-none
         "
       />
 
-      {/* ===== 下グラデ（透明 × 黒の影 → 立体感UP） ===== */}
+      {/* ===== Text ===== */}
       <div
-        className="
-          absolute left-0 bottom-0
-          w-full h-[240px]
-          bg-gradient-to-t
-          from-[rgba(0,0,0,0.10)]
-          to-[rgba(0,0,0,0)]
-          pointer-events-none
-        "
-      />
-
-      {/* ===== 透明空気層（ブラー削除 → 超クリア） ===== */}
-      <div
-        className="
-          absolute inset-0
-          bg-transparent
-          pointer-events-none
-        "
-      />
-
-      {/* ===== テキスト ===== */}
-      <div
-        ref={textRef}
         className="
           absolute
           left-8 md:left-20
@@ -80,20 +72,25 @@ export default function Hero() {
         "
       >
         <h1
+          ref={h1Ref}
           className="
             text-white font-light leading-[1.12]
-            text-[2rem] md:text-[4rem]
+            text-[2.1rem] md:text-[4.2rem]
             tracking-[0.26em] md:tracking-[0.30em]
             mb-3
           "
           translate="no"
         >
-          GUSHIKEN<br />DESIGN
+          GUSHIKEN<br/>DESIGN
         </h1>
 
-        <div className="w-20 h-[1px] bg-white/55 mb-5"></div>
+        <div
+          ref={lineRef}
+          className="w-20 h-[1px] bg-white/55 mb-5"
+        ></div>
 
         <p
+          ref={textRef}
           className="
             text-white/90
             text-[0.9rem] md:text-[1.15rem]
@@ -109,9 +106,9 @@ export default function Hero() {
       {/* ===== Keyframes ===== */}
       <style>{`
         @keyframes heroFloat {
-          0%   { transform: scale(1.015) translate(0px, 0px); }
-          50%  { transform: scale(1.018) translate(5px, 4px); }
-          100% { transform: scale(1.015) translate(0px, 0px); }
+          0%   { transform: scale(1.015) translate(0, 0); }
+          50%  { transform: scale(1.018) translate(4px, 8px); }
+          100% { transform: scale(1.015) translate(0, 0); }
         }
       `}</style>
     </section>
