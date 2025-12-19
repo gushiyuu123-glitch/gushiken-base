@@ -8,13 +8,14 @@ export default function WorkItem({ title, desc, link, img }) {
   return (
     <>
       {/* ========================================================= */}
-      {/* PC VERSION — 揺れゼロ安定版                                 */}
+      {/* PC VERSION — 揺れゼロ + aq-fade                          */}
       {/* ========================================================= */}
       <Tag
         {...(isExternal
           ? { href: link, target: "_blank", rel: "noopener noreferrer" }
           : { to: link })}
         className="
+          aq-fade
           hidden sm:block group relative rounded-[16px] overflow-hidden
           bg-[#0a0a0a]
           border border-white/[0.10]
@@ -32,9 +33,7 @@ export default function WorkItem({ title, desc, link, img }) {
             transition-all duration-[1100ms]
             group-hover:blur-[18px]
           "
-          style={{
-            boxShadow: "0 0 30px rgba(215, 188, 140, 0.45)",
-          }}
+          style={{ boxShadow: "0 0 30px rgba(215, 188, 140, 0.45)" }}
         />
 
         {/* ===== Gold Noise ===== */}
@@ -77,9 +76,9 @@ export default function WorkItem({ title, desc, link, img }) {
           />
         </div>
 
-        {/* ===== TEXT AREA（揺れ防止版） ===== */}
+        {/* ===== TEXT AREA ===== */}
         <div className="p-7 pb-9 text-white relative">
-          <div className="min-h-[150px]"> {/* ← ここで高さを固定 */}
+          <div className="min-h-[150px]">
             <h3
               className="
                 text-[1.05rem]
@@ -102,7 +101,7 @@ export default function WorkItem({ title, desc, link, img }) {
                 mb-5
                 transform-gpu
               "
-              style={{ maxWidth: "360px" }} // ← 折り返し安定
+              style={{ maxWidth: "360px" }}
             >
               {desc}
             </p>
@@ -125,13 +124,14 @@ export default function WorkItem({ title, desc, link, img }) {
       </Tag>
 
       {/* ========================================================= */}
-      {/* SP VERSION — 揺れゼロ安定版                                 */}
+      {/* SP VERSION — 揺れゼロ + aq-fade                           */}
       {/* ========================================================= */}
       <Tag
         {...(isExternal
           ? { href: link, target: "_blank", rel: "noopener noreferrer" }
           : { to: link })}
         className="
+          aq-fade
           sm:hidden block 
           rounded-[22px] overflow-hidden relative
           bg-[#0b0b0b]
@@ -182,9 +182,9 @@ export default function WorkItem({ title, desc, link, img }) {
           />
         </div>
 
-        {/* ===== TEXT AREA（SPも高さ固定） ===== */}
+        {/* ===== TEXT AREA（SP） ===== */}
         <div className="px-5 pt-6 pb-7 text-white">
-          <div className="min-h-[130px] mx-auto"> {/* ここが安定化の要 */}
+          <div className="min-h-[130px] mx-auto">
             <h3
               className="
                 text-[1.02rem]
@@ -193,7 +193,7 @@ export default function WorkItem({ title, desc, link, img }) {
                 mb-3
                 text-white/90
                 leading-[1.45]
-                whitespace-nowrap   /* ← タイトル揺れ防止 */
+                whitespace-nowrap
                 transform-gpu
               "
             >

@@ -34,135 +34,86 @@ import capeOkinawaImg from "../assets/works/cape-okinawa.webp";
 export default function WorksList() {
   const rootRef = useRef(null);
 
+  /* -------------------------------------------------------
+     Silent UI v4.2 — aq-fade (Dior/SANKOU Exhibition)
+  -------------------------------------------------------- */
   useEffect(() => {
     const root = rootRef.current;
     if (!root) return;
 
+    const items = root.querySelectorAll(".aq-fade");
+
     const observer = new IntersectionObserver(
-      (entries) =>
+      (entries) => {
         entries.forEach((e) => {
-          if (e.isIntersecting) e.target.classList.add("show");
-        }),
-      { threshold: 0.18 }
+          if (e.isIntersecting) {
+            e.target.classList.add("aq-show");
+          }
+        });
+      },
+      { threshold: 0.14 }
     );
 
-    root.querySelectorAll(".fade-up").forEach((el) => observer.observe(el));
+    items.forEach((el) => observer.observe(el));
     return () => observer.disconnect();
   }, []);
-useEffect(() => {
-  const handle = () => {
-    document.body.classList.toggle("scrolled", window.scrollY > 40);
-  };
-  window.addEventListener("scroll", handle);
-  return () => window.removeEventListener("scroll", handle);
-}, []);
 
-useEffect(() => {
-  const items = document.querySelectorAll(".sp-slide-in");
+  /* -------------------------------------------------------
+     SP slide-in
+  -------------------------------------------------------- */
+  useEffect(() => {
+    const items = document.querySelectorAll(".sp-slide-in");
 
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("show");
-        }
-      });
-    },
-    { threshold: 0.2 }
-  );
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) entry.target.classList.add("show");
+        });
+      },
+      { threshold: 0.2 }
+    );
 
-  items.forEach((el) => observer.observe(el));
-  return () => observer.disconnect();
-}, []);
-
+    items.forEach((el) => observer.observe(el));
+    return () => observer.disconnect();
+  }, []);
 
   return (
-
     <section className="bg-[#070604] min-h-screen py-24 px-6 md:px-10 lg:px-16">
-      {/* Ambient Glow（背景環境光） */}
-<div className="ambient-glow"></div>
+      <div className="ambient-glow"></div>
 
+      {/* ★ rootRef → aq-fade が全部ここから発火 */}
       <div ref={rootRef} className="max-w-6xl lg:max-w-7xl mx-auto">
 
-   {/* === TOP BLOCK — SANKOU EXHIBITION ENTRY === */}
-<div className="fade-up mb-28">
+        {/* ===== TOP BLOCK ===== */}
+        <div className="aq-fade mb-28">
+          <div className="w-12 h-px bg-gradient-to-r from-white/20 to-white/5 mb-6" />
 
-  {/* 極薄ライン（入口サイン） */}
-  <div className="w-12 h-px bg-gradient-to-r from-white/20 to-white/5 mb-6" />
+          <p className="text-[0.65rem] md:text-[0.75rem] tracking-[0.32em] text-white/30 mb-3">
+            SELECTED WORKS
+          </p>
 
-  {/* サブタイトル */}
-  <p
-    className="
-      text-[0.65rem] md:text-[0.75rem]
-      tracking-[0.32em]
-      text-white/30
-      mb-3
-    "
-  >
-    SELECTED WORKS
-  </p>
+          <h1 className="text-white text-[2.6rem] md:text-[3.4rem] tracking-[0.28em] font-light leading-[1.2] aq-fade delay-1">
+            WORKS —<br className="md:hidden" />
+            Portfolio
+          </h1>
 
-  {/* タイトル */}
-  <h1
-    className="
-      text-white
-      text-[2.6rem] md:text-[3.4rem]
-      tracking-[0.28em]
-      font-light
-      leading-[1.2]
-    "
-  >
-    WORKS —<br className="md:hidden" />
-    Portfolio
-  </h1>
+          <p className="mt-7 text-[0.9rem] md:text-[1rem] text-white/45 leading-relaxed max-w-xl tracking-[0.04em] aq-fade delay-2">
+            沖縄 × 光 × 静寂 を軸にしたセレクション。<br />
+            用途ごとに世界観を切り替えながらも、統一された静かなトーンで構築。
+          </p>
+        </div>
 
-  {/* 説明（柔らかい光の残り香） */}
-  <p
-    className="
-      mt-7 
-      text-[0.9rem] md:text-[1rem]
-      text-white/45 
-      leading-relaxed 
-      max-w-xl
-      tracking-[0.04em]
-    "
-  >
-    沖縄 × 光 × 静寂 を軸にしたセレクション。<br />
-    用途ごとに世界観を切り替えながらも、統一された静かなトーンで構築。
-  </p>
-</div>
+        <div className=" w-16 h-px bg-white/12 mb-20 aq-fade" />
 
+        <div className="space-y-32 ">
 
-        <div className="fade-up w-16 h-px bg-white/12 mb-20" />
-
-        <div className="space-y-32">
-
-
-          {/* === BEAUTY === */}
-          <Category
-            title="BEAUTY / SALON"
-            subtitle="美容・サロン向けの上質な余白デザイン"
-          >
-            <WorkItem
-              title="Okinawa White Spa"
-              desc={`白 × 静寂 × 上質な余白。\n非日常の白を設計したリラクゼーションUI。`}
-              link="https://okinawa-white-spa.vercel.app"
-              img={spaImg}
-            />
-            <WorkItem
-              title="LUEUR PINK"
-              desc={`透明感 × 上品ピンク。\n若年層向けに最適化した軽量モーションUI。`}
-              link="https://lueur-pink.vercel.app"
-              img={lueurpinkImg}
-            />
-            <WorkItem
-              title="BLACK ORIETTA"
-              desc={`黒 × 金 × 高級香水。\n重厚なラグジュアリートーンの演出設計。`}
-              link="https://black-orietta.vercel.app"
-              img={oriettaImg}
-            />
+          {/* ===== CATEGORY ===== */}
+          {/* すべて aq-fade 内で動くので Category 内も発火する */}
+          <Category title="BEAUTY / SALON" subtitle="美容・サロン向けの上質な余白デザイン">
+            <WorkItem title="Okinawa White Spa" desc={`白 × 静寂 × 上質な余白。\n非日常の白を設計したリラクゼーションUI。`} link="https://okinawa-white-spa.vercel.app" img={spaImg}/>
+            <WorkItem title="LUEUR PINK" desc={`透明感 × 上品ピンク。\n若年層向けに最適化した軽量モーションUI。`} link="https://lueur-pink.vercel.app" img={lueurpinkImg}/>
+            <WorkItem title="BLACK ORIETTA" desc={`黒 × 金 × 高級香水。\n重厚なラグジュアリートーンの演出設計。`} link="https://black-orietta.vercel.app" img={oriettaImg}/>
           </Category>
-
 
           {/* === SMARTPHONE === */}
           <Category
