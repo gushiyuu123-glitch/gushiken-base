@@ -1,32 +1,10 @@
-import React, { useEffect, useRef } from "react";
+import React from "react";
 import hero from "../assets/hero3.png";
 
 export default function Hero() {
-  const h1Ref = useRef(null);
-  const lineRef = useRef(null);
-  const textRef = useRef(null);
-
-  useEffect(() => {
-    const animate = (el, delay = 0) => {
-      if (!el) return;
-      el.style.opacity = 0;
-      el.style.transform = "translateY(24px)";
-      el.style.transition = `opacity 1.4s ease ${delay}ms, transform 1.4s ease ${delay}ms`;
-
-      requestAnimationFrame(() => {
-        el.style.opacity = 1;
-        el.style.transform = "translateY(0)";
-      });
-    };
-
-    animate(h1Ref.current, 0);
-    animate(lineRef.current, 150);
-    animate(textRef.current, 280);
-  }, []);
-
   return (
     <section className="relative w-full h-[92vh] md:h-screen overflow-hidden">
-      
+
       {/* ===== 背景 ===== */}
       <div className="absolute inset-0 overflow-hidden">
         <img
@@ -43,13 +21,15 @@ export default function Hero() {
 
       {/* ===== Gold Ambient Light（Diorの奥行き） ===== */}
       <div className="absolute inset-0 pointer-events-none">
-        <div className="
-          absolute left-[12%] top-[28%]
-          w-[420px] h-[420px]
-          bg-[rgba(220,190,140,0.085)]
-          blur-[140px]
-          rounded-full
-        "></div>
+        <div
+          className="
+            absolute left-[12%] top-[28%]
+            w-[420px] h-[420px]
+            bg-[rgba(220,190,140,0.085)]
+            blur-[140px]
+            rounded-full
+          "
+        ></div>
       </div>
 
       {/* ===== 下グラデ ===== */}
@@ -71,9 +51,10 @@ export default function Hero() {
           max-w-xl
         "
       >
+        {/* タイトル */}
         <h1
-          ref={h1Ref}
           className="
+            aq-fade delay-1
             text-white font-light leading-[1.12]
             text-[2.1rem] md:text-[4.2rem]
             tracking-[0.26em] md:tracking-[0.30em]
@@ -81,17 +62,21 @@ export default function Hero() {
           "
           translate="no"
         >
-          GUSHIKEN<br/>DESIGN
+          GUSHIKEN<br />DESIGN
         </h1>
 
+        {/* ライン */}
         <div
-          ref={lineRef}
-          className="w-20 h-[1px] bg-white/55 mb-5"
+          className="
+            aq-fade delay-2
+            w-20 h-[1px] bg-white/55 mb-5
+          "
         ></div>
 
+        {/* サブテキスト */}
         <p
-          ref={textRef}
           className="
+            aq-fade delay-3
             text-white/90
             text-[0.9rem] md:text-[1.15rem]
             leading-relaxed

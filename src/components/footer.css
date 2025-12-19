@@ -17,7 +17,7 @@
 }
 
 /* =====================================================
-   ▼ リンク（WORKS / ABOUT と同じ質感）
+   ▼ ナビゲーションリンク（WORKS / ABOUT）
 ===================================================== */
 .footer-link {
   position: relative;
@@ -64,7 +64,6 @@
   color: rgba(255,255,255,0.98);
 }
 
-/* 下に淡い 1px の気配ライン（プロ級の仕草） */
 .footer-sns::after {
   content: "";
   position: absolute;
@@ -79,11 +78,10 @@
 .footer-sns:hover::after {
   width: 100%;
 }
-/* =====================================================
-   ▼ Experimental Project Link（Quiet AI Image Library）
-   ※ 既存 footer-link / footer-sns と非衝突
-===================================================== */
 
+/* =====================================================
+   ▼ Experimental Project Link
+===================================================== */
 .footer-project-link {
   font-size: 0.75rem;
   letter-spacing: 0.18em;
@@ -93,7 +91,6 @@
   transition: color 0.6s cubic-bezier(.25,.46,.45,.94);
 }
 
-/* 静かな下線（主役リンクより弱く） */
 .footer-project-link::after {
   content: "";
   position: absolute;
@@ -113,7 +110,6 @@
   width: 100%;
 }
 
-/* ラベル（EXPERIMENTAL PROJECT 用） */
 .footer-project-label {
   font-size: 0.65rem;
   letter-spacing: 0.18em;
@@ -121,7 +117,21 @@
 }
 
 /* =====================================================
-   ▼ スマホ最適化
+   ▼ 法務リンク（NEW!）
+===================================================== */
+.footer-legal {
+  color: rgba(255,255,255,0.38);
+  transition: opacity 0.35s ease;
+  letter-spacing: 0.12em;
+  text-decoration: none;
+}
+
+.footer-legal:hover {
+  opacity: 0.75;
+}
+
+/* =====================================================
+   ▼ MOBILE
 ===================================================== */
 @media (max-width: 768px) {
   .footer-section {

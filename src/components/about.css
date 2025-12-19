@@ -1,5 +1,5 @@
 /* =======================================================
-   ABOUT SECTION — Noah Final Edition
+   ABOUT SECTION — Dior Silence × SANKOU Structure × aq-fade
 ======================================================= */
 
 .about-section {
@@ -7,20 +7,13 @@
   background: linear-gradient(180deg, #0b0b0b 0%, #0a0a0a 70%, #0c0c0c 100%);
   position: relative;
 
-  opacity: 0;
-  transform: translateY(20px);
-  transition:
-    opacity 1.2s cubic-bezier(.25,.46,.45,.94),
-    transform 1.2s cubic-bezier(.25,.46,.45,.94);
-}
-
-.about-section.show {
+  /* aq-fade が制御するため、透明設定は削除 */
   opacity: 1 !important;
-  transform: translateY(0) !important;
+  transform: none !important;
 }
 
 /* ===========================================
-   左 1px 金ライン（遅れて浮上）
+   左 1px 金ライン（装飾）
 =========================================== */
 .about-gold-line {
   position: absolute;
@@ -35,22 +28,14 @@
     rgba(215,195,154,0.1)
   );
 
-  opacity: 0;
-  transform: translateY(22px);
-  transition:
-    opacity 1.4s cubic-bezier(.25,.46,.45,.94) 0.35s,
-    transform 1.4s cubic-bezier(.25,.46,.45,.94) 0.35s;
-}
-
-.about-section.show .about-gold-line {
-  opacity: 1;
-  transform: translateY(0);
+  /* アニメーションは aq-fade が管理するので透明禁止 */
+  opacity: 1 !important;
+  transform: none !important;
 }
 
 /* ===========================================
    テキスト（導入）
 =========================================== */
-
 .about-lead {
   color: rgba(255,255,255,0.9);
   font-size: 1.15rem;
@@ -60,7 +45,6 @@
   margin-bottom: 2.5rem;
 }
 
-/* 本文 */
 .about-body {
   color: rgba(255,255,255,0.70);
   font-size: 1rem;
@@ -107,9 +91,8 @@
 }
 
 /* ===========================================
-   ラスト（遅れて浮上）
+   ラスト（締め）
 =========================================== */
-
 .about-last {
   text-align: center;
   margin-top: 4rem;
@@ -118,24 +101,24 @@
   font-size: 1.25rem;
   letter-spacing: 0.06em;
 
-  opacity: 0;
-  transform: translateY(14px);
-  transition:
-    opacity 1.3s ease 0.55s,
-    transform 1.3s ease 0.55s;
+  /* 最初から表示（aq-fadeが動かす） */
+  opacity: 1 !important;
+  transform: none !important;
 }
 
-.about-section.show .about-last {
-  opacity: 1;
-  transform: translateY(0);
+/* ===========================================
+   旧 fade / show システムを完全無効化
+=========================================== */
+.about-section.show,
+.about-gold-line.show,
+.about-last.show {
+  all: unset;
 }
 
 /* =======================================================
    MOBILE
 ======================================================= */
-
 @media (max-width: 768px) {
-
   .about-section {
     padding: 5rem 0;
   }
@@ -161,6 +144,5 @@
 
   .about-gold-line {
     height: 93%;
-    opacity: 0.55;
   }
 }

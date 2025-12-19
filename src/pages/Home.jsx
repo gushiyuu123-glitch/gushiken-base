@@ -6,115 +6,112 @@ import Price from "../components/Price";
 import ABOUT from "../components/ABOUT";
 import CONTACT from "../components/CONTACT";
 import NewsSection from "../components/NewsSection";
+
 export default function Home() {
 
-// ============================
-// Dior / SANKOU Fade System v2
-// ============================
-useEffect(() => {
-  const elements = document.querySelectorAll(".home-section");
+  // ============================
+  //  aq-fade — Global Fade System
+  // ============================
+  useEffect(() => {
+    const elements = document.querySelectorAll(".aq-fade");
 
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (!entry.isIntersecting) return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
 
-        const el = entry.target;
+          const el = entry.target;
 
-        // ランダムディレイ（0〜120ms）
-        const delay = Math.random() * 120;
-        el.style.animationDelay = `${delay}ms`;
+          // ランダムディレイ（0〜120ms）
+          const delay = Math.random() * 120;
+          el.style.animationDelay = `${delay}ms`;
 
-        el.classList.add("home-show");
+          el.classList.add("aq-show");
 
-        // 一度発火したら監視解除（パフォーマンス向上）
-        observer.unobserve(el);
-      });
-    },
-    {
-      root: null,
-      threshold: 0.15,
-      rootMargin: "0px 0px -10% 0px", // 少し早めに発火
+          observer.unobserve(el);
+        });
+      },
+      {
+        root: null,
+        threshold: 0.15,
+        rootMargin: "0px 0px -10% 0px",
+      }
+    );
+
+    elements.forEach((el) => observer.observe(el));
+
+    return () => observer.disconnect();
+  }, []);
+
+  // ============================
+  // META（SEO）
+  // ============================
+  useEffect(() => {
+    document.title = "GUSHIKEN DESIGN | 沖縄のフリーランスWebデザイナー";
+
+    // --------------------------
+    // Description
+    // --------------------------
+    const description =
+      "沖縄のフリーランスWebデザイナー GUSHIKEN DESIGN。高品質なWebサイト制作、ブランドサイト、事業サイト、UI/UX設計まで一貫対応。カフェ・美容・店舗・コーポレート向けテンプレートも販売中。";
+
+    const desc = document.querySelector('meta[name="description"]');
+    if (desc) {
+      desc.setAttribute("content", description);
+    } else {
+      const m = document.createElement("meta");
+      m.name = "description";
+      m.content = description;
+      document.head.appendChild(m);
     }
-  );
 
-  elements.forEach((el) => observer.observe(el));
+    // --------------------------
+    // Canonical
+    // --------------------------
+    const canonicalURL = "https://gushikendesign.com/";
+    const canonical = document.querySelector('link[rel="canonical"]');
 
-  return () => observer.disconnect();
-}, []);
-
-// ============================
-// META（SEO）
-// ============================
-useEffect(() => {
-  // --------------------------
-  // 1. <title>
-  // --------------------------
-  document.title = "GUSHIKEN DESIGN | 沖縄のフリーランスWebデザイナー";
-
-  // --------------------------
-  // 2. <meta name='description'>
-  // --------------------------
-  const desc = document.querySelector('meta[name="description"]');
-
-  const description =
-    "沖縄のフリーランスWebデザイナー GUSHIKEN DESIGN。高品質なWebサイト制作、ブランドサイト、事業サイト、UI/UX設計まで一貫対応。カフェ・美容・店舗・コーポレート向けテンプレートも販売中。";
-
-  if (desc) {
-    desc.setAttribute("content", description);
-  } else {
-    const m = document.createElement("meta");
-    m.name = "description";
-    m.content = description;
-    document.head.appendChild(m);
-  }
-
-  // --------------------------
-  // 3. カノニカルURL
-  // --------------------------
-  const canonical = document.querySelector('link[rel="canonical"]');
-  const url = "https://gushikendesign.com/";
-
-  if (canonical) {
-    canonical.setAttribute("href", url);
-  } else {
-    const l = document.createElement("link");
-    l.rel = "canonical";
-    l.href = url;
-    document.head.appendChild(l);
-  }
-}, []);
+    if (canonical) {
+      canonical.setAttribute("href", canonicalURL);
+    } else {
+      const l = document.createElement("link");
+      l.rel = "canonical";
+      l.href = canonicalURL;
+      document.head.appendChild(l);
+    }
+  }, []);
 
   return (
-   <div className="home-wrapper">
+    <div className="home-wrapper">
 
-  <section className="home-section">
-    <Hero />
-  </section>
-<section id="works" className="home-section">
-  <Works />
-</section>
+      <section className="aq-fade">
+        <Hero />
+      </section>
 
-<section id="philosophy" className="home-section">
-  <Philosophy />
-</section>
+      <section id="works" className="aq-fade">
+        <Works />
+      </section>
 
-<section id="about" className="home-section">
-  <ABOUT />
-</section>
+      <section id="philosophy" className="aq-fade">
+        <Philosophy />
+      </section>
 
-<section id="price" className="home-section">
-  <Price />
-</section>
+      <section id="about" className="aq-fade">
+        <ABOUT />
+      </section>
 
-<section id="contact" className="home-section">
-  <CONTACT />
-</section>
-<section id="news" className="home-section">
-  <NewsSection />
-</section>
+      <section id="price" className="aq-fade">
+        <Price />
+      </section>
 
-</div>
+      <section id="contact" className="aq-fade">
+        <CONTACT />
+      </section>
 
+      <section id="news" className="aq-fade">
+        <NewsSection />
+      </section>
+
+    </div>
   );
 }

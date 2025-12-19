@@ -5,16 +5,32 @@ export default function Nav() {
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState(false);
 
+  // ============================
+  // Scroll active（ヘッダーの黒背景）
+  // ============================
   useEffect(() => {
-    const handleScroll = () => setActive(window.scrollY > 10);
-    window.addEventListener("scroll", handleScroll);
-    handleScroll();
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+    const handleScroll = () => {
+      // 余計な再レンダリングを防ぐ
+      const scrolled = window.scrollY > 10;
+      if (scrolled !== active) setActive(scrolled);
+    };
 
+    window.addEventListener("scroll", handleScroll);
+    handleScroll(); // 初期実行
+
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [active]);
+
+  // ============================
   // SP メニュー時 body 固定
+  // ============================
   useEffect(() => {
-    document.body.classList.toggle("nav-open", open);
+    const body = document.body;
+    if (open) {
+      body.classList.add("nav-open");
+    } else {
+      body.classList.remove("nav-open");
+    }
   }, [open]);
 
   return (

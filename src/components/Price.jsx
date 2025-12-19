@@ -5,45 +5,59 @@ import "./price.css";
 export default function Price() {
   const sectionRef = useRef(null);
 
-  // フェードイン（初回のみ）
+  // Dior Fade v4 — Observer
   useEffect(() => {
     const el = sectionRef.current;
     if (!el) return;
 
-    const observer = new IntersectionObserver(
+    const io = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          el.classList.add("show");
-          observer.unobserve(el);
+          // 自分自身
+          el.classList.add("aq-show");
+
+          // 内側の fade 要素も全部解放
+          el.querySelectorAll(".aq-fade").forEach((x) => x.classList.add("aq-show"));
+
+          io.unobserve(el);
         }
       },
-      { threshold: 0.15 }
+      { threshold: 0.2 }
     );
 
-    observer.observe(el);
-    return () => observer.disconnect();
+    io.observe(el);
+    return () => io.disconnect();
   }, []);
 
   return (
-    <section id="price" ref={sectionRef} className="price-section">
+    <section id="price" ref={sectionRef} className="price-section aq-section">
       <div className="max-w-5xl mx-auto px-6 relative">
 
         {/* 左ゴールドライン */}
-        <div className="price-gold-line" />
+        <div className="price-gold-line aq-fade delay-1" />
 
         {/* タイトル */}
-        <h2 className="price-title" translate="no">PRICE</h2>
+        <h2
+          translate="no"
+          className="
+            price-title aq-fade delay-1
+            text-[2.4rem] tracking-[0.22em]
+            text-white font-light mb-12 pl-1
+          "
+        >
+          PRICE
+        </h2>
 
-        {/* 思想コピー（★ここが核） */}
-        <p className="price-philosophy">
+        {/* 思想コピー */}
+        <p className="price-philosophy aq-fade delay-2">
           Webサイトは、<br />
           「作って終わりの看板」ではありません。<br /><br />
           お店の空気や価値を、<br />
           24時間、代わりに伝え続ける窓口です。
         </p>
 
-        {/* リード文（安心・実務） */}
-        <p className="price-lead">
+        {/* リード文 */}
+        <p className="price-lead aq-fade delay-3">
           制作料金の目安です。<br />
           ページ数や構成、演出内容に応じて調整しますが、
           <strong> 制作前のヒアリングで内容を整理し、必ず総額をお伝えします。</strong>
@@ -54,8 +68,8 @@ export default function Price() {
           </span>
         </p>
 
-        {/* プラン */}
-        <div className="price-grid">
+        {/* プラン一覧 */}
+        <div className="price-grid aq-fade delay-4">
           <PriceCard
             label="PLAN 01"
             title="Landing Page（1ページ）"
@@ -79,7 +93,7 @@ export default function Price() {
         </div>
 
         {/* 注記 */}
-        <p className="price-note">
+        <p className="price-note aq-fade delay-5">
           ご相談時にご要望やご予算をお伺いし、
           制作内容を整理したうえで総額をご提示します。<br />
           <strong>
@@ -88,17 +102,14 @@ export default function Price() {
         </p>
 
         {/* CTA */}
-        <div className="price-cta">
+        <div className="price-cta aq-fade delay-6">
 
-          {/* 先に理解 */}
           <div className="mb-4 text-center">
             <Link
               to="/price"
               className="
-                inline-block
-                text-sm tracking-wider
-                text-[#d9c8a6]/70
-                transition-colors duration-300
+                inline-block text-sm tracking-wider
+                text-[#d9c8a6]/70 transition-colors duration-300
                 hover:text-[#d9c8a6]
               "
             >
@@ -106,7 +117,6 @@ export default function Price() {
             </Link>
           </div>
 
-          {/* その後に決断 */}
           <Link to="/contact" className="price-btn">
             制作の相談をする
           </Link>
@@ -119,7 +129,7 @@ export default function Price() {
 }
 
 /* -----------------------------
-   Card
+   Card Component
 ----------------------------- */
 const PriceCard = React.memo(function PriceCard({ label, title, desc, price }) {
   return (

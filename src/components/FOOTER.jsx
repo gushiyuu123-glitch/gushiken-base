@@ -14,7 +14,7 @@ export default function Footer() {
           if (entry.isIntersecting) el.classList.add("show");
         });
       },
-      { threshold: 0.1 }
+      { threshold: 0.2 }
     );
 
     observer.observe(el);
@@ -26,9 +26,7 @@ export default function Footer() {
       ref={sectionRef}
       className="
         footer-section
-        opacity-0 translate-y-10
-        transition-all duration-[1200ms]
-        ease-[cubic-bezier(.25,.46,.45,.94)]
+        aq-fade             /* ← 統一フェード */
         bg-[#0b0b0b]
         border-t border-white/10
         pt-16 pb-10
@@ -43,7 +41,10 @@ export default function Footer() {
       >
         {/* ─ ① ブランド ─ */}
         <div>
-          <h3 className="text-white text-xl tracking-[0.18em] font-light mb-2" translate="no">
+          <h3
+            className="text-white text-xl tracking-[0.18em] font-light mb-2"
+            translate="no"
+          >
             GUSHIKEN DESIGN
           </h3>
           <p className="text-white/40 text-sm tracking-wide">
@@ -53,11 +54,11 @@ export default function Footer() {
 
         {/* ─ ② メインナビ ─ */}
         <nav className="flex flex-col gap-3 text-sm tracking-[0.14em]">
-          <a href="/#works"      className="footer-link">WORKS</a>
+          <a href="/#works" className="footer-link">WORKS</a>
           <a href="/#philosophy" className="footer-link">PHILOSOPHY</a>
-          <a href="/#about"      className="footer-link">ABOUT</a>
-          <a href="/#price"      className="footer-link">PRICE</a>
-          <a href="/#contact"    className="footer-link">CONTACT</a>
+          <a href="/#about" className="footer-link">ABOUT</a>
+          <a href="/#price" className="footer-link">PRICE</a>
+          <a href="/#contact" className="footer-link">CONTACT</a>
         </nav>
 
         {/* ─ ③ プロジェクト & SNS & 法務 ─ */}
@@ -90,22 +91,17 @@ export default function Footer() {
 
           {/* SNS */}
           <div className="flex items-center gap-6 mt-3">
-            <a href="#" className="footer-sns" translate="no">
-              Instagram
-            </a>
-            <a href="#" className="footer-sns" translate="no">
-              X (Twitter)
-            </a>
+            <a href="#" className="footer-sns" translate="no">Instagram</a>
+            <a href="#" className="footer-sns" translate="no">X (Twitter)</a>
           </div>
 
           {/* 法務 */}
           <div className="flex flex-col gap-1 mt-3 text-xs tracking-[0.15em]">
-            <a href="/legal"  className="text-white/40 hover:text-white/80 transition-colors">特商法表記</a>
-            <a href="/terms"  className="text-white/40 hover:text-white/80 transition-colors">利用規約</a>
-            <a href="/refund" className="text-white/40 hover:text-white/80 transition-colors">返金規約</a>
-            <a href="/privacy" className="footer-link">PRIVACY</a>
+            <a href="/legal"  className="footer-legal">特商法表記</a>
+            <a href="/terms"  className="footer-legal">利用規約</a>
+            <a href="/refund" className="footer-legal">返金規約</a>
+            <a href="/privacy" className="footer-legal">PRIVACY</a>
           </div>
-
         </div>
       </div>
 

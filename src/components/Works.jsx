@@ -8,74 +8,54 @@ export default function Works() {
     const root = worksRef.current;
     if (!root) return;
 
-    const items = root.querySelectorAll(".work-card, .works-viewall");
+    // ==========================================
+    // 画像ロード後の "img-loaded" だけ残す（UX）
+    // ==========================================
+    const cards = root.querySelectorAll(".work-card");
 
-    /* -----------------------------
-       FADE-IN + SCALE-IN Observer
-    ----------------------------- */
-    const io = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((e) => {
-          if (e.isIntersecting) {
-            e.target.classList.add("show");
-            io.unobserve(e.target);
-          }
-        });
-      },
-      { threshold: 0.2 }
-    );
-
-    items.forEach((item) => io.observe(item));
-
-    /* -----------------------------
-       IMAGE LOADED → Smooth Reveal
-    ----------------------------- */
-    items.forEach((item) => {
-      const img = item.querySelector("img");
+    cards.forEach((card) => {
+      const img = card.querySelector("img");
       if (!img) return;
 
       if (img.complete) {
-        item.classList.add("img-loaded");
+        card.classList.add("img-loaded");
       } else {
-        img.onload = () => item.classList.add("img-loaded");
+        img.onload = () => card.classList.add("img-loaded");
       }
     });
-
-    return () => io.disconnect();
   }, []);
 
   return (
-    <section id="works" className="works-section" ref={worksRef}>
+    <section id="works" className="aq-fade" ref={worksRef}>
       <div className="works-container">
 
         {/* ======================================================
-            HEADER — Exhibit Title Block
+            HEADER
         ====================================================== */}
-        <div className="works-header fade-up">
+        <div className="works-header aq-fade delay-1">
           <h2 className="works-title" translate="no">WORKS</h2>
           <p className="works-sub">SELECTED PROJECTS</p>
         </div>
 
         {/* ======================================================
-            EXHIBITION GRID
+            GRID
         ====================================================== */}
         <div className="works-grid-wrapper">
-          {/* ===== Swipe Hint (SP only) ===== */}
-          <div className="works-swipe-hint">
+
+          {/* Swipe hint */}
+          <div className="works-swipe-hint aq-fade delay-2">
             <span>SWIPE</span>
             <span className="arrow">→</span>
           </div>
 
           <div className="works-grid">
 
-            {/* ======================== */}
             {/* BIG CARD — RÉSONANCE */}
-            {/* ======================== */}
             <a
               href="https://resonance-restaurant.vercel.app/"
               target="_blank"
               rel="noopener noreferrer"
-              className="work-card work-big"
+              className="work-card work-big aq-fade delay-2"
             >
               <img
                 src="/assets/resonance.webp"
@@ -88,14 +68,12 @@ export default function Works() {
               </div>
             </a>
 
-            {/* ======================== */}
-            {/* SMALL CARD — CAPE. OKINAWA */}
-            {/* ======================== */}
+            {/* SMALL — CAPE */}
             <a
               href="https://cape-okinawa.vercel.app/"
               target="_blank"
               rel="noopener noreferrer"
-              className="work-card work-small"
+              className="work-card work-small aq-fade delay-3"
             >
               <img
                 src="/assets/cape-okinawa.webp"
@@ -108,14 +86,12 @@ export default function Works() {
               </div>
             </a>
 
-            {/* ======================== */}
-            {/* SMALL CARD — Okinawa White Spa */}
-            {/* ======================== */}
+            {/* SMALL — Spa */}
             <a
               href="https://okinawa-white-spa.vercel.app/"
               target="_blank"
               rel="noopener noreferrer"
-              className="work-card work-small"
+              className="work-card work-small aq-fade delay-4"
             >
               <img
                 src="/assets/spa.webp"
@@ -134,7 +110,7 @@ export default function Works() {
         {/* ======================================================
             VIEW ALL WORKS
         ====================================================== */}
-        <div className="works-viewall fade-up">
+        <div className="works-viewall aq-fade delay-5">
           <a href="/works" className="viewall-btn">
             VIEW ALL WORKS
           </a>
