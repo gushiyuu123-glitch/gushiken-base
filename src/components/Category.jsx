@@ -6,7 +6,7 @@ export default function Category({ title, subtitle, children }) {
     <section
       className="
         aq-fade w-full relative
-        [overscroll-behavior-x:none]   /* ページ側の横バウンス無効化 */
+        [overscroll-behavior-x:none]
       "
     >
 
@@ -30,13 +30,14 @@ export default function Category({ title, subtitle, children }) {
         </p>
       </div>
 
-      {/* ----- SP 横スク（縦×横 最適バランス版）----- */}
+      {/* ----- SP 横スク（縦×横 完全両立版） ----- */}
       <div className="sm:hidden w-full relative mb-16 pt-4">
 
         {/* 左右フェード */}
         <div className="pointer-events-none absolute top-0 left-0 h-full w-[28px] bg-gradient-to-r from-black/10 to-transparent z-10" />
         <div className="pointer-events-none absolute top-0 right-0 h-full w-[28px] bg-gradient-to-l from-black/10 to-transparent z-10" />
 
+        {/* 横スクコンテナ */}
         <div
           className="
             flex gap-6 
@@ -45,9 +46,9 @@ export default function Category({ title, subtitle, children }) {
             no-scrollbar
             pr-10
 
-            /* バウンス防止だけ残す */
-            [overscroll-behavior-x:contain]
-
+            /* ===== 触り心地の最適化 ===== */
+            [touch-action:pan-x_pan-y]     /* ← Safari に縦も横も許可させる */
+            [overscroll-behavior-x:contain] /* ← 横バウンス防止 */
             will-change-transform
             transform-gpu
           "

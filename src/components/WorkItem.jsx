@@ -124,7 +124,7 @@ export default function WorkItem({ title, desc, link, img }) {
       </Tag>
 
       {/* ========================================================= */}
-      {/* SP VERSION — 揺れゼロ + aq-fade                           */}
+      {/* SP VERSION — Silent Touch Optimized                        */}
       {/* ========================================================= */}
       <Tag
         {...(isExternal
@@ -133,13 +133,15 @@ export default function WorkItem({ title, desc, link, img }) {
         className="
           aq-fade
           sm:hidden block 
-          rounded-[22px] overflow-hidden relative
+          rounded-[22px] relative overflow-clip
           bg-[#0b0b0b]
           border border-white/[0.16]
           shadow-[0_14px_48px_rgba(0,0,0,0.85)]
           transition-all duration-[900ms]
           active:scale-[0.985]
           sp-slide-in
+
+          [touch-action:pan-y pan-x]    /* ← ★縦スク優先＋横スク許可 */
         "
       >
         {/* Glow */}
@@ -188,12 +190,12 @@ export default function WorkItem({ title, desc, link, img }) {
             <h3
               className="
                 text-[1.02rem]
-                tracking-[0.22em]
                 font-light
                 mb-3
                 text-white/90
                 leading-[1.45]
-                whitespace-nowrap
+                tracking-[0.18em]
+                break-words
                 transform-gpu
               "
             >
@@ -209,7 +211,7 @@ export default function WorkItem({ title, desc, link, img }) {
                 mb-6
                 transform-gpu
               "
-              style={{ maxWidth: "260px" }}
+              style={{ maxWidth: '260px' }}
             >
               {desc}
             </p>
