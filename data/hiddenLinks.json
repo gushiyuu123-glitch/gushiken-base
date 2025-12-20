@@ -1,0 +1,20 @@
+[
+  {
+    "id": "door01",
+    "title": "Door_01 — JS LAB",
+    "subtitle": "A Chamber Outside the Visible",
+    "url": "https://jslab.example.com"
+  },
+  {
+    "id": "door02",
+    "title": "Door_02 — Noah Novel",
+    "subtitle": "A Room Never Listed on Maps",
+    "url": "https://noahnovel.example.com"
+  },
+  {
+    "id": "door03",
+    "title": "Door_03 — Lost Works",
+    "subtitle": "Fragments That Never Reached the Surface",
+    "url": "https://lostworks.example.com"
+  }
+]

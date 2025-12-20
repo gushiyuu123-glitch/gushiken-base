@@ -19,7 +19,7 @@ import NewsDetail from "./pages/NewsDetail";
 
 import ScrollToTop from "./components/ScrollToTop";
 
-
+import Layer0 from "./pages/Layer0";
 // ================================
 // Layout（全ページ共通レイアウト）
 // ================================
@@ -57,6 +57,7 @@ function Layout() {
           {/* ニュース */}
           <Route path="/news" element={<NewsList />} />
           <Route path="/news/:id" element={<NewsDetail />} />
+          <Route path="/layer0" element={<Layer0 />} />
         </Routes>
       </main>
 

@@ -47,6 +47,14 @@ export default function Footer() {
           <p className="text-white/40 text-sm tracking-wide">
             Okinawa, Japan
           </p>
+<a 
+  href="/layer0"
+  className="footer-lab opacity-25 hover:opacity-60 transition"
+>
+  HIDDEN LABORATORY
+</a>
+
+
         </div>
 
         {/* ナビ */}
