@@ -183,52 +183,59 @@ export default function WorkItem({ title, desc, link, img }) {
             }}
           />
         </div>
+{/* ===== TEXT AREA（SP 最適化） ===== */}
+<div className="px-5 pt-6 pb-8 text-white">
+  <div className="min-h-[148px] mx-auto">
 
-        {/* ===== TEXT AREA（SP） ===== */}
-        <div className="px-5 pt-6 pb-7 text-white">
-          <div className="min-h-[130px] mx-auto">
-            <h3
-              className="
-                text-[1.02rem]
-                font-light
-                mb-3
-                text-white/90
-                leading-[1.45]
-                tracking-[0.18em]
-                break-words
-                transform-gpu
-              "
-            >
-              {title}
-            </h3>
+    {/* --- TITLE --- */}
+    <h3
+      className="
+        text-[1.02rem]
+        font-light
+        text-white/90
+        leading-[1.35]
+        tracking-[0.12em]   /* ← 字間を最適値にした */
+        break-words
+        mb-[0.55rem]        /* ← 呼吸感 */
+        transform-gpu
+      "
+      style={{ maxWidth: "260px" }}
+    >
+      {title}
+    </h3>
 
-            <p
-              className="
-                text-white/55 text-[0.86rem]
-                leading-[1.9]
-                whitespace-pre-line
-                line-clamp-4
-                mb-6
-                transform-gpu
-              "
-              style={{ maxWidth: '260px' }}
-            >
-              {desc}
-            </p>
+    {/* --- DESCRIPTION --- */}
+    <p
+      className="
+        text-white/55
+        text-[0.86rem]
+        leading-[1.8]
+        whitespace-pre-line
+        line-clamp-4
+        mb-6
+        transform-gpu
+      "
+      style={{ maxWidth: "260px" }}
+    >
+      {desc}
+    </p>
 
-            <span
-              className="
-                block
-                text-white/75
-                text-[0.72rem]
-                tracking-[0.30em]
-                transform-gpu
-              "
-            >
-              VIEW SITE →
-            </span>
-          </div>
-        </div>
+    {/* --- CTA --- */}
+    <span
+      className="
+        block
+        text-white/75
+        text-[0.72rem]
+        tracking-[0.30em]
+        transform-gpu
+      "
+    >
+      VIEW SITE →
+    </span>
+
+  </div>
+</div>
+
       </Tag>
     </>
   );
