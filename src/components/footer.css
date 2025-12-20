@@ -157,3 +157,10 @@
 .footer-lab:hover {
   color: rgba(255,255,255,0.6);
 }
+/* footer.module.css へ追加 */
+.hiddenLink {
+  position: relative;
+  display: inline-block;
+  padding: 6px 12px; /* 見た目は変わらない */
+  margin: -6px -12px; /* でもタップ範囲は広がる */
+}
