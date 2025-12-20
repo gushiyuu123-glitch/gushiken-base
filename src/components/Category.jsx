@@ -6,7 +6,7 @@ export default function Category({ title, subtitle, children }) {
     <section
       className="
         aq-fade w-full relative
-        [overscroll-behavior-x:none]   /* ← ページ側の横バウンスを無効化 */
+        [overscroll-behavior-x:none]   /* ページ側の横バウンス無効化 */
       "
     >
 
@@ -30,32 +30,29 @@ export default function Category({ title, subtitle, children }) {
         </p>
       </div>
 
-      {/* ----- SP 横スク（完全版） ----- */}
-      <div className="sm:hidden w-full relative mb-16">
+      {/* ----- SP 横スク（縦×横 最適バランス版）----- */}
+      <div className="sm:hidden w-full relative mb-16 pt-4">
 
         {/* 左右フェード */}
         <div className="pointer-events-none absolute top-0 left-0 h-full w-[28px] bg-gradient-to-r from-black/10 to-transparent z-10" />
         <div className="pointer-events-none absolute top-0 right-0 h-full w-[28px] bg-gradient-to-l from-black/10 to-transparent z-10" />
 
-        {/* 横スクコンテナ */}
         <div
           className="
             flex gap-6 
-            overflow-x-auto 
+            overflow-x-auto
             scroll-x-snap
             no-scrollbar
+            pr-10
 
-            /* ← これが iOS の滑らかさを決定づける */
-            pr-10                    /* 右端に余白を作り iOS に“横スクエリア”だと認識させる */
-            touch-pan-x              /* 横スクを OS に許可 */
-            [touch-action:pan-x]     /* 明示的に横方向だけ許可 */
-            [overscroll-behavior-x:contain]  /* 横方向の画面外バウンス停止 */
+            /* バウンス防止だけ残す */
+            [overscroll-behavior-x:contain]
 
-            will-change-transform 
+            will-change-transform
             transform-gpu
           "
           style={{
-            WebkitOverflowScrolling: "touch", /* 慣性スクロール (Momentum Scroll) */
+            WebkitOverflowScrolling: "touch",
           }}
         >
           {React.Children.map(children, (child) => (
