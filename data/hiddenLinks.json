@@ -1,20 +1,23 @@
 [
   {
     "id": "door01",
-    "title": "Door_01 — JS LAB",
-    "subtitle": "A Chamber Outside the Visible",
-    "url": "https://jslab.example.com"
+    "code": "DOOR_01",
+    "title": "JS LAB",
+    "subtitle": "EXPERIMENTAL SCRIPTS",
+    "url": "https://your-domain.com/js-lab"
   },
   {
     "id": "door02",
-    "title": "Door_02 — Noah Novel",
-    "subtitle": "A Room Never Listed on Maps",
-    "url": "https://noahnovel.example.com"
+    "code": "DOOR_02",
+    "title": "NOAH NOVEL",
+    "subtitle": "A CHAMBER OUTSIDE THE VISIBLE",
+    "url": "https://your-domain.com/noah-novel"
   },
   {
     "id": "door03",
-    "title": "Door_03 — Lost Works",
-    "subtitle": "Fragments That Never Reached the Surface",
-    "url": "https://lostworks.example.com"
+    "code": "DOOR_03",
+    "title": "LOST WORKS",
+    "subtitle": "ROOM NEVER LISTED ON MAPS",
+    "url": "https://your-domain.com/lost-works"
   }
 ]
