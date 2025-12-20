@@ -4,20 +4,20 @@
     "code": "DOOR_01",
     "title": "JS LAB",
     "subtitle": "EXPERIMENTAL SCRIPTS",
-    "url": "https://your-domain.com/js-lab"
+    "url": "https://experiment-site-chi.vercel.app/"
   },
   {
     "id": "door02",
     "code": "DOOR_02",
     "title": "NOAH NOVEL",
     "subtitle": "A CHAMBER OUTSIDE THE VISIBLE",
-    "url": "https://your-domain.com/noah-novel"
+    "url": "https://noah-project-rosy.vercel.app/"
   },
   {
     "id": "door03",
     "code": "DOOR_03",
     "title": "LOST WORKS",
     "subtitle": "ROOM NEVER LISTED ON MAPS",
-    "url": "https://your-domain.com/lost-works"
+    "url": "https://（本物のURL）"
   }
 ]
