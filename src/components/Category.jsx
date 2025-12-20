@@ -1,54 +1,19 @@
 // src/components/Category.jsx
-import React, { useRef, useEffect } from "react";
+import React from "react";
 
 export default function Category({ title, subtitle, children }) {
-  const scrollRef = useRef(null);
-
-  useEffect(() => {
-    const el = scrollRef.current;
-    if (!el) return;
-
-    let startX = 0;
-    let startY = 0;
-
-    // iOS Safari 専用：縦スクと横スクの衝突回避
-    const onTouchStart = (e) => {
-      const t = e.touches[0];
-      startX = t.clientX;
-      startY = t.clientY;
-    };
-
-    const onTouchMove = (e) => {
-      const t = e.touches[0];
-      const dx = Math.abs(t.clientX - startX);
-      const dy = Math.abs(t.clientY - startY);
-
-      // ★ dx > dy → 横スクしたい
-      if (dx > dy) {
-        // 横スクを許可（縦スクは止める）
-        e.stopPropagation();
-      } else {
-        // 縦スク動作 → 横スクエリアが邪魔しない
-        e.preventDefault();
-        e.stopPropagation();
-      }
-    };
-
-    el.addEventListener("touchstart", onTouchStart, { passive: true });
-    el.addEventListener("touchmove", onTouchMove, { passive: false });
-
-    return () => {
-      el.removeEventListener("touchstart", onTouchStart);
-      el.removeEventListener("touchmove", onTouchMove);
-    };
-  }, []);
-
   return (
-    <section className="aq-fade w-full relative">
+    <section
+      className="
+        aq-fade w-full relative
+        [overscroll-behavior-x:none]   /* ← ページ側の横バウンスを無効化 */
+      "
+    >
 
-      {/* Title */}
+      {/* ----- Title ----- */}
       <div className="mb-12 relative">
         <div className="w-12 h-px bg-gradient-to-r from-white/30 to-white/5 mb-6" />
+
         <h2
           className="
             text-white 
@@ -59,36 +24,47 @@ export default function Category({ title, subtitle, children }) {
         >
           {title}
         </h2>
+
         <p className="text-white/38 text-[0.78rem] tracking-[0.14em] leading-relaxed">
           {subtitle}
         </p>
       </div>
 
-      {/* SP 横スク */}
+      {/* ----- SP 横スク（完全版） ----- */}
       <div className="sm:hidden w-full relative mb-16">
 
+        {/* 左右フェード */}
         <div className="pointer-events-none absolute top-0 left-0 h-full w-[28px] bg-gradient-to-r from-black/10 to-transparent z-10" />
         <div className="pointer-events-none absolute top-0 right-0 h-full w-[28px] bg-gradient-to-l from-black/10 to-transparent z-10" />
 
+        {/* 横スクコンテナ */}
         <div
-          ref={scrollRef}
           className="
             flex gap-6 
             overflow-x-auto 
             scroll-x-snap
             no-scrollbar
-            pr-4
-            md:will-change-transform md:transform-gpu
+
+            /* ← これが iOS の滑らかさを決定づける */
+            pr-10                    /* 右端に余白を作り iOS に“横スクエリア”だと認識させる */
+            touch-pan-x              /* 横スクを OS に許可 */
+            [touch-action:pan-x]     /* 明示的に横方向だけ許可 */
+            [overscroll-behavior-x:contain]  /* 横方向の画面外バウンス停止 */
+
+            will-change-transform 
+            transform-gpu
           "
-          style={{ WebkitOverflowScrolling: "touch" }}
+          style={{
+            WebkitOverflowScrolling: "touch", /* 慣性スクロール (Momentum Scroll) */
+          }}
         >
-          {React.Children.map(children, (child, i) => (
+          {React.Children.map(children, (child) => (
             <div className="snap-start min-w-[82%]">{child}</div>
           ))}
         </div>
       </div>
 
-      {/* PC grid */}
+      {/* ----- PC grid ----- */}
       <div className="hidden sm:grid grid-cols-2 xl:grid-cols-3 gap-x-12 gap-y-16 auto-rows-[1fr]">
         {children}
       </div>
