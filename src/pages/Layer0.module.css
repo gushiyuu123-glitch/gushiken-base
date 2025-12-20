@@ -1,4 +1,4 @@
-/* ====== 全体 ====== */
+/* ====== 全体レイヤー ====== */
 .page {
   position: relative;
   min-height: 100vh;
@@ -8,17 +8,32 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 0 2rem;
+  padding: 0 1.8rem;
+  color: #f5f5f5;
 }
 
-/* ====== 背景 漂う黒 ====== */
+/* ====== 背景：静かな闇の揺らぎ ====== */
 .bg {
   position: absolute;
-  inset: 0;
-  background: radial-gradient(circle at 50% 50%, #0a0a0a, #020204 80%);
-  filter: blur(8px);
+  inset: -10%;
+  background:
+    radial-gradient(circle at 50% 30%, #141414 0%, #050507 42%, #020204 80%);
+  filter: blur(10px);
+  opacity: 0.96;
   animation: drift 16s ease-in-out infinite;
-  opacity: 0.95;
+  z-index: 0;
+}
+
+.noise {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.18;
+  mix-blend-mode: soft-light;
+  background-image: url("/grain-gold.png"); /* 既にあるノイズ画像を流用想定 */
+  background-size: 320px 320px;
+  animation: noiseShift 8s linear infinite;
+  z-index: 1;
 }
 
 @keyframes drift {
@@ -26,147 +41,299 @@
     transform: scale(1) translate(0, 0);
   }
   50% {
-    transform: scale(1.06) translate(-6px, 4px);
+    transform: scale(1.04) translate(-6px, 4px);
   }
   100% {
     transform: scale(1) translate(0, 0);
   }
 }
 
-/* ====== 内側 ====== */
+@keyframes noiseShift {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(12px, -10px, 0);
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+/* ====== 中央コンテンツ ====== */
 .inner {
   position: relative;
   z-index: 2;
   text-align: center;
-  color: white;
+  max-width: 560px;
+  padding: 3.2rem 0 2.8rem;
 }
 
-/* ====== タイトル群 ====== */
+/* ラベル・タイトル */
 .layerLabel {
-  font-size: 11px;
-  letter-spacing: 0.35em;
-  opacity: 0.4;
+  font-size: 0.7rem;
+  letter-spacing: 0.38em;
+  text-transform: uppercase;
+  opacity: 0.45;
   margin-bottom: 2rem;
 }
 
 .title {
-  font-size: 1.6rem;
-  letter-spacing: 0.06em;
+  font-size: 1.7rem;
+  letter-spacing: 0.08em;
+  font-weight: 300;
   opacity: 0;
-  transform: translateY(6px);
-  animation: fadeIn 1.8s ease-out forwards;
+  transform: translateY(8px);
+  animation: fadeInUp 1.3s cubic-bezier(.23,.8,.24,1) forwards;
 }
 
 .sub {
-  font-size: 0.9rem;
-  color: rgba(255,255,255,0.45);
-  margin-top: 1rem;
-  margin-bottom: 3rem;
+  font-size: 0.86rem;
+  color: rgba(255, 255, 255, 0.58);
+  margin-top: 1.2rem;
+  margin-bottom: 3.2rem;
   opacity: 0;
-  transform: translateY(8px);
-  animation: fadeIn 2.4s ease-out forwards;
-  animation-delay: 0.4s;
+  transform: translateY(10px);
+  animation: fadeInUp 1.5s cubic-bezier(.23,.8,.24,1) forwards;
+  animation-delay: 0.18s;
 }
 
-@keyframes fadeIn {
+@keyframes fadeInUp {
   to {
     opacity: 1;
     transform: translateY(0);
   }
 }
 
-/* ====== 扉リンク ====== */
-.doors {
-  display: flex;
-  flex-direction: column;
-  gap: 18px;
-  width: 100%;
-  max-width: 380px;
-  margin: 0 auto;
-}
-
-.door {
-  display: block;
-  padding: 14px 22px;
-  border: 1px solid rgba(255,255,255,0.08);
-  background: rgba(255,255,255,0.015);
-  backdrop-filter: blur(4px);
-  color: rgba(255,255,255,0.82);
-  letter-spacing: 0.18em;
-  text-decoration: none;
-  font-size: 0.78rem;
-  transition: 0.8s cubic-bezier(.25,.8,.25,1);
-}
-
-.door:hover {
-  border-color: rgba(255,255,255,0.28);
-  background: rgba(255,255,255,0.05);
-  transform: translateY(-2px);
-}
-.container {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  background: #050505;
-  color: #ddd;
-  padding: 40px 0;
-  letter-spacing: 0.06em;
-  animation: fadein 0.9s ease-out forwards;
+/* ====== ブラックホール生成ゾーン ====== */
+.holeWrap {
+  position: relative;
+  width: 220px;
+  height: 220px;
+  margin: 0 auto 3.4rem;
   opacity: 0;
+  transform: scale(0.88) translateY(4px);
+  transition:
+    opacity 1.2s cubic-bezier(.23,.8,.24,1),
+    transform 1.2s cubic-bezier(.23,.8,.24,1);
 }
 
-@keyframes fadein {
-  to {
+.holeVisible {
+  opacity: 1;
+  transform: scale(1) translateY(0);
+}
+
+/* 中心核 */
+.holeCore {
+  position: absolute;
+  inset: 50%;
+  width: 0;
+  height: 0;
+  transform: translate(-50%, -50%);
+  border-radius: 999px;
+  background:
+    radial-gradient(circle at 50% 45%, #000, #000 40%, #020103 70%, transparent 80%);
+  box-shadow:
+    0 0 60px rgba(0, 0, 0, 0.95),
+    0 0 120px rgba(0, 0, 0, 1);
+  animation: coreBirth 2.3s cubic-bezier(.19,1,.22,1) forwards,
+             corePulse 5.6s ease-in-out infinite 2.3s;
+}
+
+@keyframes coreBirth {
+  0% {
+    width: 0;
+    height: 0;
+    opacity: 0;
+  }
+  40% {
+    width: 34px;
+    height: 34px;
+    opacity: 1;
+  }
+  100% {
+    width: 64px;
+    height: 64px;
     opacity: 1;
   }
 }
 
-.heading {
-  font-size: 0.65rem;
+@keyframes corePulse {
+  0% {
+    transform: translate(-50%, -50%) scale(1);
+    filter: blur(0px);
+  }
+  40% {
+    transform: translate(-50%, -50%) scale(1.06);
+    filter: blur(1px);
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+    filter: blur(0px);
+  }
+}
+
+/* 重力リング */
+.holeRing {
+  position: absolute;
+  inset: 50%;
+  width: 140px;
+  height: 140px;
+  transform: translate(-50%, -50%);
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  box-shadow:
+    0 0 26px rgba(255, 240, 210, 0.18),
+    0 0 80px rgba(0, 0, 0, 0.85);
+  background:
+    radial-gradient(circle at 50% 40%, rgba(255, 240, 210, 0.08), transparent 70%);
+  opacity: 0;
+  animation: ringBirth 1.8s ease-out forwards 0.5s,
+             ringOrbit 16s linear infinite 2.2s;
+}
+
+@keyframes ringBirth {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+@keyframes ringOrbit {
+  0% {
+    transform: translate(-50%, -50%) rotate(0deg) scale(1);
+  }
+  50% {
+    transform: translate(-50%, -50%) rotate(7deg) scale(1.01);
+  }
+  100% {
+    transform: translate(-50%, -50%) rotate(0deg) scale(1);
+  }
+}
+
+/* ====== 扉リスト ====== */
+.doors {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+  max-width: 360px;
+  margin: 0 auto;
+  opacity: 0;
+  transform: translateY(10px);
+  pointer-events: none;
+  transition:
+    opacity 1s cubic-bezier(.23,.8,.24,1),
+    transform 1s cubic-bezier(.23,.8,.24,1);
+}
+
+.doorsVisible {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.door {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 18px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  background:
+    radial-gradient(circle at 10% 0%, rgba(255, 255, 255, 0.04), transparent 60%),
+    rgba(4, 4, 7, 0.92);
+  color: #f0f0f0;
+  text-decoration: none;
+  font-size: 0.78rem;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
-  margin-bottom: 16px;
+  overflow: hidden;
+  transition: transform 0.7s cubic-bezier(.19,1,.22,1),
+              border-color 0.7s ease,
+              background 0.7s ease,
+              box-shadow 0.7s ease;
+}
+
+.door::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(120deg,
+      transparent 0%,
+      rgba(255, 248, 220, 0.16) 40%,
+      transparent 80%);
+  opacity: 0;
+  transform: translateX(-40%);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.door:hover {
+  transform: translateY(-2px);
+  border-color: rgba(255, 255, 255, 0.32);
+  background:
+    radial-gradient(circle at 20% 0%, rgba(255, 255, 255, 0.06), transparent 60%),
+    rgba(5, 5, 10, 0.96);
+  box-shadow:
+    0 16px 40px rgba(0, 0, 0, 0.8),
+    0 0 40px rgba(255, 240, 210, 0.22);
+}
+
+.door:hover::before {
+  opacity: 1;
+  transform: translateX(0%);
+}
+
+.doorCode {
+  font-size: 0.62rem;
   opacity: 0.55;
 }
 
-.title {
-  font-size: 1.9rem;
-  letter-spacing: 0.12em;
-  margin-bottom: 28px;
-  font-weight: 300;
+.doorTitle {
+  font-size: 0.78rem;
+  letter-spacing: 0.16em;
 }
 
-.subtitle {
-  font-size: 0.85rem;
-  opacity: 0.45;
-  margin-bottom: 48px;
-}
+/* ====== レスポンシブ ====== */
+@media (max-width: 640px) {
+  .page {
+    padding: 0 1.4rem;
+  }
 
-.doorList {
-  display: flex;
-  flex-direction: column;
-  gap: 18px;
-  width: 100%;
-  max-width: 340px;
-}
+  .inner {
+    padding-top: 2.8rem;
+  }
 
-.doorButton {
-  display: block;
-  text-align: center;
-  padding: 14px 0;
-  border: 1px solid rgba(255,255,255,0.1);
-  background: rgba(255,255,255,0.02);
-  border-radius: 12px;
-  color: #e8e8e8;
-  font-size: 0.85rem;
-  text-decoration: none;
-  letter-spacing: 0.18em;
-  transition: all 0.4s ease;
-}
+  .title {
+    font-size: 1.4rem;
+    line-height: 1.5;
+  }
 
-.doorButton:hover {
-  border-color: rgba(255,255,255,0.35);
-  background: rgba(255,255,255,0.06);
-  transform: translateY(-2px);
+  .holeWrap {
+    width: 190px;
+    height: 190px;
+    margin-bottom: 2.6rem;
+  }
+
+  .doors {
+    gap: 14px;
+    max-width: 320px;
+  }
+
+  .door {
+    padding: 12px 16px;
+    font-size: 0.75rem;
+  }
+
+  .doorTitle {
+    font-size: 0.74rem;
+    letter-spacing: 0.14em;
+  }
 }
