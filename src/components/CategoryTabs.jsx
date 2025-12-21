@@ -7,43 +7,78 @@ export default function CategoryTabs({
   categoryList,
 }) {
   return (
-    <div
-      className="
-        aq-fade mb-20
-        flex flex-wrap justify-center
-        gap-3 md:gap-4
-        overflow-x-auto md:overflow-visible
-        no-scrollbar
-        pt-2 pb-3 px-2 md:px-0
-      "
-    >
-      {categoryList.map((cat) => {
-        const active = activeCategory === cat;
+    <div className="aq-fade mb-16">
+      {/* SP: 横スク */}
+      <div
+        className="
+          flex md:hidden
+          overflow-x-auto no-scrollbar
+          gap-3
+          px-3 py-2
+        "
+      >
+        {categoryList.map((cat) => {
+          const active = activeCategory === cat;
+          return (
+            <button
+              key={cat}
+              onClick={() => setActiveCategory(cat)}
+              className={`
+                px-4 py-[0.35rem]
+                text-[0.64rem]
+                tracking-[0.16em]
+                rounded-full
+                border
+                whitespace-nowrap
+                transition-all duration-300
+                ${
+                  active
+                    ? "bg-white text-black border-white"
+                    : "border-white/20 text-white/45 hover:text-white/75"
+                }
+              `}
+            >
+              {cat}
+            </button>
+          );
+        })}
+      </div>
 
-        return (
-          <button
-            key={cat}
-            onClick={() => setActiveCategory(cat)}
-            className={`
-              px-5 py-[0.48rem]
-              text-[0.72rem]
-              tracking-[0.22em]
-              rounded-[16px]
-              backdrop-blur-[2px]
-              transition-all duration-[480ms]
-              whitespace-nowrap
-              shadow-[0_0_10px_rgba(255,255,255,0.05)]
-              ${
-                active
-                  ? "text-black bg-white border-white shadow-[0_0_15px_rgba(255,255,255,0.18)]"
-                  : "text-white/55 border border-white/14 hover:text-white/80 hover:border-white/30"
-              }
-            `}
-          >
-            {cat}
-          </button>
-        );
-      })}
+      {/* PC: 中央寄せ + wrap */}
+      <div
+        className="
+          hidden md:flex
+          flex-wrap justify-center
+          gap-3
+          px-2 pt-2 pb-3
+        "
+      >
+        {categoryList.map((cat) => {
+          const active = activeCategory === cat;
+          return (
+            <button
+              key={cat}
+              onClick={() => setActiveCategory(cat)}
+              className={`
+                px-5 py-[0.48rem]
+                text-[0.72rem]
+                tracking-[0.22em]
+                rounded-full
+                border
+                whitespace-nowrap
+                transition-all duration-380
+                ${
+                  active
+                    ? "bg-white text-black border-white"
+                    : "border-white/18 text-white/55 hover:text-white/80"
+                }
+              `}
+            >
+              {cat}
+            </button>
+          );
+        })}
+      </div>
     </div>
   );
 }

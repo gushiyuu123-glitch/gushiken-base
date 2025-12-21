@@ -35,34 +35,31 @@ export default function Category({ title, subtitle, children }) {
       {/* =======================================================
           SP 横スクロール（Gushiken Silent Scroll Edition）
       ======================================================== */}
-      <div className="sm:hidden w-full relative mb-16 pt-4">
+  {/* ----- SP 横スク ------ */}
+<div className="sm:hidden w-full relative mb-16 pt-4">
 
-        {/* 左右フェード（黒背景最適化版） */}
-        <div className="pointer-events-none absolute top-0 left-0 h-full w-[32px] bg-gradient-to-r from-[#070604] to-transparent z-10" />
-        <div className="pointer-events-none absolute top-0 right-0 h-full w-[32px] bg-gradient-to-l from-[#070604] to-transparent z-10" />
-
-        {/* 横スクロールラッパー */}
-        <div
-          className="
-            flex gap-6
-            overflow-x-auto
-            scroll-x-snap
-            no-scrollbar
-            pr-10
-            [touch-action:pan-x_pan-y]
-            [overscroll-behavior-x:contain]
-            will-change-transform
-            transform-gpu
-          "
-          style={{ WebkitOverflowScrolling: "touch" }}
-        >
-          {items.map((child, i) => (
-            <div key={i} className="snap-start min-w-[82%]">
-              {child}
-            </div>
-          ))}
-        </div>
+  {/* 横スク */} 
+  <div
+    className="
+      flex gap-6
+      overflow-x-auto
+      scroll-x-snap
+      no-scrollbar
+      pr-10
+      [touch-action:pan-x_pan-y]
+      [overscroll-behavior-x:contain]
+      will-change-transform
+      transform-gpu
+    "
+    style={{ WebkitOverflowScrolling: "touch" }}
+  >
+    {items.map((child, i) => (
+      <div key={i} className="snap-start min-w-[82%]">
+        {child}
       </div>
+    ))}
+  </div>
+</div>
 
       {/* =======================================================
           PC GRID（ストレスゼロの展示型レイアウト）
