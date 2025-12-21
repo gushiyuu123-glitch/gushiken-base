@@ -8,10 +8,11 @@ export default function Category({ title, subtitle, children }) {
     <section
       className="
         aq-fade w-full relative
+        pb-10 sm:pb-0
         [overscroll-behavior-x:none]
       "
     >
-      {/* ----- Title ----- */}
+      {/* ===== Title Block ===== */}
       <div className="mb-12 relative">
         <div className="w-12 h-px bg-gradient-to-r from-white/30 to-white/5 mb-6" />
 
@@ -31,13 +32,16 @@ export default function Category({ title, subtitle, children }) {
         </p>
       </div>
 
-      {/* ----- SP 横スク ------ */}
+      {/* =======================================================
+          SP 横スクロール（Gushiken Silent Scroll Edition）
+      ======================================================== */}
       <div className="sm:hidden w-full relative mb-16 pt-4">
-        {/* 左右フェード */}
-        <div className="pointer-events-none absolute top-0 left-0 h-full w-[28px] bg-gradient-to-r from-black/10 to-transparent z-10" />
-        <div className="pointer-events-none absolute top-0 right-0 h-full w-[28px] bg-gradient-to-l from-black/10 to-transparent z-10" />
 
-        {/* 横スク */}
+        {/* 左右フェード（黒背景最適化版） */}
+        <div className="pointer-events-none absolute top-0 left-0 h-full w-[32px] bg-gradient-to-r from-[#070604] to-transparent z-10" />
+        <div className="pointer-events-none absolute top-0 right-0 h-full w-[32px] bg-gradient-to-l from-[#070604] to-transparent z-10" />
+
+        {/* 横スクロールラッパー */}
         <div
           className="
             flex gap-6
@@ -60,8 +64,17 @@ export default function Category({ title, subtitle, children }) {
         </div>
       </div>
 
-      {/* ----- PC GRID ----- */}
-      <div className="hidden sm:grid grid-cols-2 xl:grid-cols-3 gap-x-12 gap-y-16 auto-rows-[1fr]">
+      {/* =======================================================
+          PC GRID（ストレスゼロの展示型レイアウト）
+      ======================================================== */}
+      <div
+        className="
+          hidden sm:grid
+          grid-cols-2 xl:grid-cols-3
+          gap-x-12 gap-y-16
+          auto-rows-[1fr]
+        "
+      >
         {items}
       </div>
     </section>

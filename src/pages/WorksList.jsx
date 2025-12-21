@@ -1,27 +1,27 @@
 // src/pages/WorksList.jsx
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Category from "../components/Category";
 import WorkItem from "../components/WorkItem";
-import { worksData } from "../data/worksData"; // ← JSON から読み込むだけ！
+import CategoryTabs from "../components/CategoryTabs";
+import { worksData } from "../data/worksData";
 
 export default function WorksList() {
   const rootRef = useRef(null);
 
+  const [activeCategory, setActiveCategory] = useState("ALL");
+
   /* -------------------------------------------------------
-     Silent UI v4.2 — aq-fade
+     aq-fade
   -------------------------------------------------------- */
   useEffect(() => {
     const root = rootRef.current;
     if (!root) return;
 
     const items = root.querySelectorAll(".aq-fade");
-
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((e) => {
-          if (e.isIntersecting) {
-            e.target.classList.add("aq-show");
-          }
+          if (e.isIntersecting) e.target.classList.add("aq-show");
         });
       },
       { threshold: 0.14 }
@@ -36,7 +36,6 @@ export default function WorksList() {
   -------------------------------------------------------- */
   useEffect(() => {
     const items = document.querySelectorAll(".sp-slide-in");
-
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -50,14 +49,24 @@ export default function WorksList() {
     return () => observer.disconnect();
   }, []);
 
+  /* -------------------------------------------------------
+     カテゴリー絞り込み
+  -------------------------------------------------------- */
+  const filteredData =
+    activeCategory === "ALL"
+      ? worksData
+      : worksData.filter((b) => b.category === activeCategory);
+
+  const categoryList = ["ALL", ...worksData.map((b) => b.category)];
+
   return (
     <section className="bg-[#070604] min-h-screen py-24 px-6 md:px-10 lg:px-16">
       <div className="ambient-glow"></div>
 
       <div ref={rootRef} className="max-w-6xl lg:max-w-7xl mx-auto">
 
-        {/* ===== TOP BLOCK ===== */}
-        <div className="aq-fade mb-28">
+        {/* ------- TOP BLOCK ------- */}
+        <div className="aq-fade mb-24 md:mb-28">
           <div className="w-12 h-px bg-gradient-to-r from-white/20 to-white/5 mb-6" />
 
           <p className="text-[0.65rem] md:text-[0.75rem] tracking-[0.32em] text-white/30 mb-3">
@@ -75,13 +84,18 @@ export default function WorksList() {
           </p>
         </div>
 
-        <div className="w-16 h-px bg-white/12 mb-20 aq-fade" />
+        <div className="w-16 h-px bg-white/12 mb-16 aq-fade" />
 
-        {/* =====================================================
-            ★ 完全 JSON ⟶ UI 自動生成ゾーン
-        ====================================================== */}
+        {/* ------- CATEGORY TABS ------- */}
+        <CategoryTabs
+          activeCategory={activeCategory}
+          setActiveCategory={setActiveCategory}
+          categoryList={categoryList}
+        />
+
+        {/* ------- WORKS LIST ------- */}
         <div className="space-y-32">
-          {worksData.map((block) => (
+          {filteredData.map((block) => (
             <Category
               key={block.category}
               title={block.category}
