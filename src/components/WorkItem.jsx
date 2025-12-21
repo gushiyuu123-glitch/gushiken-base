@@ -1,14 +1,25 @@
+// src/components/WorkItem.jsx
 import React from "react";
 import { Link } from "react-router-dom";
 
-export default function WorkItem({ title, desc, link, img }) {
-  const isExternal = /^https?:\/\//.test(link);
+export default function WorkItem({ title = "", desc = "", link = "/", img = "" }) {
+  /* ----------------------------------------------------------
+     リンク種別を安全に判定
+  ---------------------------------------------------------- */
+  const isExternal =
+    /^https?:\/\//.test(link) ||
+    link.startsWith("mailto:") ||
+    link.startsWith("tel:");
+
   const Tag = isExternal ? "a" : Link;
 
+  /* ----------------------------------------------------------
+     本体レンダリング
+  ---------------------------------------------------------- */
   return (
     <>
       {/* ========================================================= */}
-      {/* PC VERSION — 揺れゼロ + aq-fade                          */}
+      {/* PC VERSION — Minimal Glow + aq-fade                      */}
       {/* ========================================================= */}
       <Tag
         {...(isExternal
@@ -25,7 +36,7 @@ export default function WorkItem({ title, desc, link, img }) {
           hover:shadow-[0_18px_34px_rgba(0,0,0,0.55)]
         "
       >
-        {/* ===== Glow Frame ===== */}
+        {/* Glow Frame */}
         <div
           className="
             absolute inset-0 rounded-[16px] pointer-events-none
@@ -36,7 +47,7 @@ export default function WorkItem({ title, desc, link, img }) {
           style={{ boxShadow: "0 0 30px rgba(215, 188, 140, 0.45)" }}
         />
 
-        {/* ===== Gold Noise ===== */}
+        {/* Gold Noise */}
         <div
           className="
             absolute inset-0 pointer-events-none
@@ -46,7 +57,7 @@ export default function WorkItem({ title, desc, link, img }) {
           "
         />
 
-        {/* ===== IMAGE ===== */}
+        {/* IMAGE */}
         <div className="relative w-full aspect-[16/10] overflow-hidden">
           <img
             src={img}
@@ -76,7 +87,7 @@ export default function WorkItem({ title, desc, link, img }) {
           />
         </div>
 
-        {/* ===== TEXT AREA ===== */}
+        {/* TEXT */}
         <div className="p-7 pb-9 text-white relative">
           <div className="min-h-[150px]">
             <h3
@@ -124,7 +135,7 @@ export default function WorkItem({ title, desc, link, img }) {
       </Tag>
 
       {/* ========================================================= */}
-      {/* SP VERSION — Silent Touch Optimized                        */}
+      {/* SP VERSION — Silent Touch Optimized                      */}
       {/* ========================================================= */}
       <Tag
         {...(isExternal
@@ -140,8 +151,7 @@ export default function WorkItem({ title, desc, link, img }) {
           transition-all duration-[900ms]
           active:scale-[0.985]
           sp-slide-in
-
-          [touch-action:pan-y pan-x]    /* ← ★縦スク優先＋横スク許可 */
+          [touch-action:pan-y pan-x]
         "
       >
         {/* Glow */}
@@ -155,7 +165,7 @@ export default function WorkItem({ title, desc, link, img }) {
           style={{ boxShadow: "0 0 38px rgba(215,190,150,0.38)" }}
         />
 
-        {/* ===== IMAGE ===== */}
+        {/* IMAGE */}
         <div className="relative w-full aspect-[4/3] overflow-hidden">
           <img
             src={img}
@@ -183,59 +193,54 @@ export default function WorkItem({ title, desc, link, img }) {
             }}
           />
         </div>
-{/* ===== TEXT AREA（SP 最適化） ===== */}
-<div className="px-5 pt-6 pb-8 text-white">
-  <div className="min-h-[148px] mx-auto">
 
-    {/* --- TITLE --- */}
-    <h3
-      className="
-        text-[1.02rem]
-        font-light
-        text-white/90
-        leading-[1.35]
-        tracking-[0.12em]   /* ← 字間を最適値にした */
-        break-words
-        mb-[0.55rem]        /* ← 呼吸感 */
-        transform-gpu
-      "
-      style={{ maxWidth: "260px" }}
-    >
-      {title}
-    </h3>
+        {/* TEXT */}
+        <div className="px-5 pt-6 pb-8 text-white">
+          <div className="min-h-[148px] mx-auto">
+            <h3
+              className="
+                text-[1.02rem]
+                font-light
+                text-white/90
+                leading-[1.35]
+                tracking-[0.12em]
+                break-words
+                mb-[0.55rem]
+                transform-gpu
+              "
+              style={{ maxWidth: "260px" }}
+            >
+              {title}
+            </h3>
 
-    {/* --- DESCRIPTION --- */}
-    <p
-      className="
-        text-white/55
-        text-[0.86rem]
-        leading-[1.8]
-        whitespace-pre-line
-        line-clamp-4
-        mb-6
-        transform-gpu
-      "
-      style={{ maxWidth: "260px" }}
-    >
-      {desc}
-    </p>
+            <p
+              className="
+                text-white/55
+                text-[0.86rem]
+                leading-[1.8]
+                whitespace-pre-line
+                line-clamp-4
+                mb-6
+                transform-gpu
+              "
+              style={{ maxWidth: "260px" }}
+            >
+              {desc}
+            </p>
 
-    {/* --- CTA --- */}
-    <span
-      className="
-        block
-        text-white/75
-        text-[0.72rem]
-        tracking-[0.30em]
-        transform-gpu
-      "
-    >
-      VIEW SITE →
-    </span>
-
-  </div>
-</div>
-
+            <span
+              className="
+                block
+                text-white/75
+                text-[0.72rem]
+                tracking-[0.30em]
+                transform-gpu
+              "
+            >
+              VIEW SITE →
+            </span>
+          </div>
+        </div>
       </Tag>
     </>
   );
