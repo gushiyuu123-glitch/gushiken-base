@@ -60,7 +60,15 @@ export default function WorksList() {
   const categoryList = ["ALL", ...worksData.map((b) => b.category)];
 
   return (
-    <section className="bg-[#070604] min-h-screen py-24 px-6 md:px-10 lg:px-16">
+    <section
+  className="
+    bg-[#070604]
+    min-h-screen
+    py-24 px-6 md:px-10 lg:px-16
+    overflow-x-hidden
+    [overscroll-behavior-y:contain]
+  "
+>
       <div className="ambient-glow"></div>
 
       <div ref={rootRef} className="max-w-6xl lg:max-w-7xl mx-auto">
