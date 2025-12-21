@@ -348,3 +348,12 @@
   50% { opacity: 0.85; transform: translate(-6px, -50%); }
   100% { opacity: 0.25; transform: translate(0, -50%); }
 }
+@media (max-width: 768px) {
+  .works-swipe-hint {
+    position: absolute;
+    top: -6px;
+    right: 0;
+    z-index: 40;
+    pointer-events: none;
+  }
+}
