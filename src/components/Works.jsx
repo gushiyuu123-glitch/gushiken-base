@@ -26,16 +26,16 @@ export default function Works() {
   return (
     <section id="works" ref={worksRef} className="aq-fade aq-root">
       <div className="works-container">
-
         {/* HEADER */}
         <div className="works-header aq-fade delay-1">
-          <h2 className="works-title" translate="no">WORKS</h2>
+          <h2 className="works-title" translate="no">
+            WORKS
+          </h2>
           <p className="works-sub">SELECTED PROJECTS</p>
         </div>
 
         {/* GRID */}
         <div className="works-grid-wrapper">
-
           {/* Swipe hint */}
           <div className="works-swipe-hint aq-fade delay-2">
             <span>SWIPE</span>
@@ -43,7 +43,6 @@ export default function Works() {
           </div>
 
           <div className="works-grid">
-
             {/* BIG CARD — RÉSONANCE */}
             <a
               href="https://resonance-restaurant.vercel.app/"
@@ -62,25 +61,27 @@ export default function Works() {
               </div>
             </a>
 
-            {/* SMALL — CAPE */}
+            {/* SMALL — BLUE SHORE HOTEL (Hotel LP) */}
             <a
-              href="https://cape-okinawa.vercel.app/"
+              href="https://lux-hotel-lp.vercel.app/"
               target="_blank"
               rel="noopener noreferrer"
               className="work-card work-small aq-fade delay-3"
             >
               <img
-                src="/assets/cape-okinawa.webp"
-                alt="CAPE. OKINAWA Cafe"
+                src="/assets/lux-hotel-lp.webp"
+                alt="Blue Shore Hotel Landing Page"
                 loading="lazy"
               />
               <div className="work-text small">
-                <h3>CAPE. OKINAWA</h3>
-                <p>Sea × Light × Silence. A quiet coastal cafe experience.</p>
+                <h3>BLUE SHORE HOTEL</h3>
+                <p>
+                  Sea × Light × Quiet Luxury. A cinematic hotel landing page.
+                </p>
               </div>
             </a>
 
-            {/* SMALL — Spa */}
+            {/* SMALL — Okinawa White Spa */}
             <a
               href="https://okinawa-white-spa.vercel.app/"
               target="_blank"
@@ -97,7 +98,6 @@ export default function Works() {
                 <p>White × Silence × Minimal Luxury.</p>
               </div>
             </a>
-
           </div>
         </div>
 
@@ -107,7 +107,6 @@ export default function Works() {
             VIEW ALL WORKS
           </a>
         </div>
-
       </div>
     </section>
   );

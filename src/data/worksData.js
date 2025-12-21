@@ -75,49 +75,56 @@ export const worksData = [
       },
     ],
   },
-
-  /* ----------------------------------------------------------
-    HOTEL
-  ---------------------------------------------------------- */
-  {
-    category: "HOTEL",
-    subtitle: "沖縄の光と空気感をUIに落とし込んだホテルデザイン",
-    items: [
-      {
-        title: "Okinawa Resort Hotel",
-        desc: "光と青のホテルLP。\n沖縄の朝光を再現したビジュアル設計。",
-        link: "https://okinawa-hotel.vercel.app",
-        img: "/works/okinawa1.webp",
-        tags: [
-          "沖縄", "光", "青", "海", "ミニマル",
-          "Hotel", "Branding",
-          "GSAP", "Motion"
-        ],
-      },
-      {
-        title: "Horizon Blanc",
-        desc: "朝光 × 静寂。\n白の階調を活かした余白デザイン。",
-        link: "https://okinawa-resort-hotel.vercel.app",
-        img: "/works/okinawa2.webp",
-        tags: [
-          "白", "光", "静寂", "余白",
-          "Hotel", "Branding",
-          "Parallax", "Motion"
-        ],
-      },
-      {
-        title: "The Calm Okinawa",
-        desc: "海 × 透明感 × 静寂。\n水面の光をUIへ抽象化した構成。",
-        link: "https://the-calm-okinawa.vercel.app",
-        img: "/works/calm.webp",
-        tags: [
-          "沖縄", "海", "透明感", "静寂", "光",
-          "Hotel", "Branding",
-          "Cinematic Scroll", "GSAP"
-        ],
-      },
-    ],
-  },
+{
+  category: "HOTEL",
+  subtitle: "沖縄の光と空気感をUIに落とし込んだホテルデザイン",
+  items: [
+    {
+      title: "Blue Shore Hotel — Luxury Okinawa",
+      desc: "Sea × Light × Quiet Luxury。\n沖縄の“静けさ”を光と余白で再現したホテルLP。",
+      link: "https://lux-hotel-lp.vercel.app",
+      img: "/works/lux-hotel-lp.webp",
+      tags: [
+        "沖縄", "海", "静寂", "光", "透明感",
+        "Hotel", "Luxury", "Branding",
+        "GSAP", "Cinematic Scroll", "PC/SP 分離"
+      ],
+    },
+    {
+      title: "Okinawa Resort Hotel",
+      desc: "光と青のホテルLP。\n沖縄の朝光を再現したビジュアル設計。",
+      link: "https://okinawa-hotel.vercel.app",
+      img: "/works/okinawa1.webp",
+      tags: [
+        "沖縄", "光", "青", "海", "ミニマル",
+        "Hotel", "Branding",
+        "GSAP", "Motion"
+      ],
+    },
+    {
+      title: "Horizon Blanc",
+      desc: "朝光 × 静寂。\n白の階調を活かした余白デザイン。",
+      link: "https://okinawa-resort-hotel.vercel.app",
+      img: "/works/okinawa2.webp",
+      tags: [
+        "白", "光", "静寂", "余白",
+        "Hotel", "Branding",
+        "Parallax", "Motion"
+      ],
+    },
+    {
+      title: "The Calm Okinawa",
+      desc: "海 × 透明感 × 静寂。\n水面の光をUIへ抽象化した構成。",
+      link: "https://the-calm-okinawa.vercel.app",
+      img: "/works/calm.webp",
+      tags: [
+        "沖縄", "海", "透明感", "静寂", "光",
+        "Hotel", "Branding",
+        "Cinematic Scroll", "GSAP"
+      ],
+    },
+  ],
+},
 
   /* ----------------------------------------------------------
     EC / BRAND DESIGN
