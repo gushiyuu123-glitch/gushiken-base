@@ -351,8 +351,8 @@
 @media (max-width: 768px) {
   .works-swipe-hint {
     position: absolute;
-    top: -6px;
-    right: 0;
+    top: -30px;
+    right: 75%;
     z-index: 40;
     pointer-events: none;
   }
