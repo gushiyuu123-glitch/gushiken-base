@@ -3,9 +3,6 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 export default function WorkItem({ title = "", desc = "", link = "/", img = "" }) {
-  /* ----------------------------------------------------------
-     リンク種別を安全に判定
-  ---------------------------------------------------------- */
   const isExternal =
     /^https?:\/\//.test(link) ||
     link.startsWith("mailto:") ||
@@ -13,13 +10,10 @@ export default function WorkItem({ title = "", desc = "", link = "/", img = "" }
 
   const Tag = isExternal ? "a" : Link;
 
-  /* ----------------------------------------------------------
-     本体レンダリング
-  ---------------------------------------------------------- */
   return (
     <>
       {/* ========================================================= */}
-      {/* PC VERSION — Minimal Glow + aq-fade                      */}
+      {/* PC VERSION — Silent Gold Glow + aq-fade                  */}
       {/* ========================================================= */}
       <Tag
         {...(isExternal
@@ -33,18 +27,19 @@ export default function WorkItem({ title = "", desc = "", link = "/", img = "" }
           shadow-[0_0_14px_rgba(0,0,0,0.45)]
           transition-all duration-[900ms] ease-[cubic-bezier(.22,.61,.36,1)]
           hover:scale-[1.018]
-          hover:shadow-[0_18px_34px_rgba(0,0,0,0.55)]
+          hover:shadow-[0_22px_34px_rgba(0,0,0,0.55)]
+          transform-gpu
         "
       >
         {/* Glow Frame */}
         <div
           className="
             absolute inset-0 rounded-[16px] pointer-events-none
-            opacity-0 group-hover:opacity-[0.26]
-            transition-all duration-[1100ms]
-            group-hover:blur-[18px]
+            opacity-0 group-hover:opacity-[0.28]
+            transition-all duration-[1200ms]
+            group-hover:blur-[22px]
           "
-          style={{ boxShadow: "0 0 30px rgba(215, 188, 140, 0.45)" }}
+          style={{ boxShadow: "0 0 44px rgba(221,198,150,0.42)" }}
         />
 
         {/* Gold Noise */}
@@ -65,24 +60,26 @@ export default function WorkItem({ title = "", desc = "", link = "/", img = "" }
             loading="lazy"
             className="
               w-full h-full object-cover
-              brightness-[0.83]
+              brightness-[0.85]
               transition-all duration-[1400ms]
               ease-[cubic-bezier(.23,.54,.32,1)]
-              group-hover:brightness-[1.06]
+              group-hover:brightness-[1.05]
               group-hover:scale-[1.055]
+              transform-gpu
             "
           />
 
           <div
             className="
-              absolute top-0 right-0 w-[60%] h-[60%]
+              absolute top-0 right-0 w-[62%] h-[62%]
               pointer-events-none
-              opacity-0 group-hover:opacity-[0.45]
+              opacity-0 group-hover:opacity-[0.48]
               transition-all duration-[1300ms]
+              blur-[22px]
             "
             style={{
               background:
-                "radial-gradient(circle at top right, rgba(255,244,214,0.32), transparent 70%)",
+                "radial-gradient(circle at top right, rgba(255,244,214,0.33), transparent 70%)",
             }}
           />
         </div>
@@ -135,7 +132,7 @@ export default function WorkItem({ title = "", desc = "", link = "/", img = "" }
       </Tag>
 
       {/* ========================================================= */}
-      {/* SP VERSION — Silent Touch Optimized                      */}
+      {/* SP VERSION — Silent Touch Optimized v2.1                 */}
       {/* ========================================================= */}
       <Tag
         {...(isExternal
@@ -147,11 +144,12 @@ export default function WorkItem({ title = "", desc = "", link = "/", img = "" }
           rounded-[22px] relative overflow-clip
           bg-[#0b0b0b]
           border border-white/[0.16]
-          shadow-[0_14px_48px_rgba(0,0,0,0.85)]
+          shadow-[0_14px_42px_rgba(0,0,0,0.78)]
           transition-all duration-[900ms]
           active:scale-[0.985]
           sp-slide-in
-          [touch-action:pan-y pan-x]
+          [touch-action:pan-x_pan-y]
+          transform-gpu
         "
       >
         {/* Glow */}
@@ -162,7 +160,7 @@ export default function WorkItem({ title = "", desc = "", link = "/", img = "" }
             transition-all duration-[1200ms]
             blur-[14px]
           "
-          style={{ boxShadow: "0 0 38px rgba(215,190,150,0.38)" }}
+          style={{ boxShadow: "0 0 34px rgba(215,190,150,0.32)" }}
         />
 
         {/* IMAGE */}
@@ -173,9 +171,10 @@ export default function WorkItem({ title = "", desc = "", link = "/", img = "" }
             loading="lazy"
             className="
               w-full h-full object-cover
-              brightness-[0.86]
+              brightness-[0.85]
               scale-[1.02]
               transition-all duration-[1400ms]
+              transform-gpu
             "
           />
 
@@ -184,12 +183,12 @@ export default function WorkItem({ title = "", desc = "", link = "/", img = "" }
               absolute top-0 right-0
               w-[75%] h-[75%]
               pointer-events-none
-              opacity-[0.45]
+              opacity-[0.42]
               blur-[20px]
             "
             style={{
               background:
-                "radial-gradient(circle at top right, rgba(255,240,215,0.45), transparent 70%)",
+                "radial-gradient(circle at top right, rgba(255,240,215,0.44), transparent 70%)",
             }}
           />
         </div>

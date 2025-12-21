@@ -36,13 +36,14 @@ export default function WorksList() {
   -------------------------------------------------------- */
   useEffect(() => {
     const items = document.querySelectorAll(".sp-slide-in");
+
     const observer = new IntersectionObserver(
       (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) entry.target.classList.add("show");
+        entries.forEach((e) => {
+          if (e.isIntersecting) e.target.classList.add("show");
         });
       },
-      { threshold: 0.2 }
+      { threshold: 0.18 }
     );
 
     items.forEach((el) => observer.observe(el));
@@ -59,16 +60,29 @@ export default function WorksList() {
 
   const categoryList = ["ALL", ...worksData.map((b) => b.category)];
 
+  /* -------------------------------------------------------
+     タブ切替時：上に戻る + 横スライドアニメ
+  -------------------------------------------------------- */
+  const handleChangeCategory = (cat) => {
+    setActiveCategory(cat);
+
+    // スムーズスクロールで上まで戻す
+    window.scrollTo({
+      top: rootRef.current.offsetTop - 40,
+      behavior: "smooth",
+    });
+  };
+
   return (
     <section
-  className="
-    bg-[#070604]
-    min-h-screen
-    py-24 px-6 md:px-10 lg:px-16
-    overflow-x-hidden
-    [overscroll-behavior-y:contain]
-  "
->
+      className="
+        bg-[#070604]
+        min-h-screen
+        py-24 px-6 md:px-10 lg:px-16
+        overflow-x-hidden
+        [overscroll-behavior-y:none]
+      "
+    >
       <div className="ambient-glow"></div>
 
       <div ref={rootRef} className="max-w-6xl lg:max-w-7xl mx-auto">
@@ -97,31 +111,46 @@ export default function WorksList() {
         {/* ------- CATEGORY TABS ------- */}
         <CategoryTabs
           activeCategory={activeCategory}
-          setActiveCategory={setActiveCategory}
+          setActiveCategory={handleChangeCategory}
           categoryList={categoryList}
         />
 
         {/* ------- WORKS LIST ------- */}
         <div className="space-y-32">
           {filteredData.map((block) => (
-            <Category
+            <div
               key={block.category}
-              title={block.category}
-              subtitle={block.subtitle}
+              className="
+                opacity-0 translate-x-[18px]
+                animate-[slideIn_0.68s_cubic-bezier(.22,.61,.36,1)_forwards]
+              "
             >
-              {block.items.map((item) => (
-                <WorkItem
-                  key={item.title}
-                  title={item.title}
-                  desc={item.desc}
-                  link={item.link}
-                  img={item.img}
-                />
-              ))}
-            </Category>
+              <Category
+                title={block.category}
+                subtitle={block.subtitle}
+              >
+                {block.items.map((item) => (
+                  <WorkItem
+                    key={item.title}
+                    title={item.title}
+                    desc={item.desc}
+                    link={item.link}
+                    img={item.img}
+                  />
+                ))}
+              </Category>
+            </div>
           ))}
         </div>
       </div>
+
+      {/* スライドアニメ */}
+      <style>{`
+        @keyframes slideIn {
+          0% { opacity: 0; transform: translateX(22px); }
+          100% { opacity: 1; transform: translateX(0); }
+        }
+      `}</style>
     </section>
   );
 }
