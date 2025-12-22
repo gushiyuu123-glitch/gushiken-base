@@ -133,6 +133,28 @@ export const worksData = [
     category: "EC / BRAND DESIGN",
     subtitle: "世界観 × 技術を統合したECデザイン",
     items: [
+           {
+        title: "STILL — Minimal EC",
+        desc: "静寂 × 緊張感 × ファッション。\nストイックな構成美を追求したEC。",
+        link: "https://still-ec.vercel.app",
+        img: "/works/still-ec.webp",
+        tags: [
+          "黒", "静寂", "モード", "緊張感",
+          "EC", "Fashion",
+          "Motion", "GSAP"
+        ],
+      },
+       {
+        title: "Okinawa Select — Modern Okinawan Objects",
+        desc: "沖縄素材 × 上質ミニマル。\n右スライドCart・ContextAPI管理・PC/SP完全分離など最新EC技術を統合したプロトタイプ。",
+        link: "https://okinawa-select.vercel.app",
+        img: "/works/OkinawaSelect.webp",
+        tags: [
+          "沖縄", "自然光", "ミニマル", "白",
+          "EC", "Branding",
+          "ContextAPI", "Cart Animation", "PC/SP 分離"
+        ],
+      },
       {
         title: "Neutral Objects — Lifestyle Brand",
         desc: "光 × 余白 × 静けさ。\nオブジェ写真を中心に据えた編集型EC。",
@@ -144,28 +166,7 @@ export const worksData = [
           "Motion"
         ],
       },
-      {
-        title: "STILL — Minimal EC",
-        desc: "静寂 × 緊張感 × ファッション。\nストイックな構成美を追求したEC。",
-        link: "https://still-ec.vercel.app",
-        img: "/works/still-ec.webp",
-        tags: [
-          "黒", "静寂", "モード", "緊張感",
-          "EC", "Fashion",
-          "Motion", "GSAP"
-        ],
-      },
-      {
-        title: "Okinawa Select — Modern Okinawan Objects",
-        desc: "沖縄素材 × 上質ミニマル。\n右スライドCart・ContextAPI管理・PC/SP完全分離など最新EC技術を統合したプロトタイプ。",
-        link: "https://okinawa-select.vercel.app",
-        img: "/works/OkinawaSelect.webp",
-        tags: [
-          "沖縄", "自然光", "ミニマル", "白",
-          "EC", "Branding",
-          "ContextAPI", "Cart Animation", "PC/SP 分離"
-        ],
-      },
+     
     ],
   },
 
