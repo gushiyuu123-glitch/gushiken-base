@@ -12,7 +12,7 @@ export default function Philosophy() {
     >
       <div className="max-w-4xl mx-auto px-6 relative">
 
-        {/* 左ライン（装飾） */}
+        {/* 左ライン */}
         <div className="philo-gold-line aq-fade delay-1"></div>
 
         {/* タイトル */}
@@ -21,25 +21,22 @@ export default function Philosophy() {
             aq-fade delay-1
             text-[2.6rem]
             tracking-[0.20em]
-            text-white
-            font-light
-            mb-3
-            pl-1
+            text-white font-light
+            mb-3 pl-1
           "
           translate="no"
         >
           PHILOSOPHY
         </h2>
 
-        {/* サブタイトル（翻訳レイヤー） */}
+        {/* サブタイトル */}
         <p
           className="
             aq-fade delay-1
             text-white/60
             tracking-[0.12em]
             text-[0.9rem]
-            mb-10
-            pl-1
+            mb-10 pl-1
           "
         >
           ― 制作の考え方（デザインの方針） ―
@@ -48,18 +45,21 @@ export default function Philosophy() {
         {/* 導入文 */}
         <p className="philo-lead aq-fade delay-2">
           私が大切にしているのは、<br />
-          <span className="text-white/95">“見やすさ” と “美しさ” が自然に両立したデザイン。</span><br />
+          <span className="text-white/95">
+            “見やすさ” と “美しさ” が自然に両立したデザイン。
+          </span>
+          <br />
           派手さよりも、読み手に素直に伝わる構造を重視しています。
         </p>
 
         {/* 本文 */}
         <p className="philo-body aq-fade delay-3">
-          情報をただ並べるだけでは、魅力は届きません。<br />
-          文字の強弱、余白の置き方、視線の流れ。<br />
-          そのひとつひとつを丁寧に整えることで、サイト全体の“雰囲気”が生まれます。<br /><br />
+          情報をただ並べるだけでは魅力は届きません。<br />
+          文字の強弱、余白、視線の流れ。<br />
+          それらを丁寧に整えることで、サイト全体に“落ち着いた雰囲気”が生まれます。<br /><br />
 
-          特別な装飾ではなく、<span className="text-white/90">基本を正しく積み重ねること。</span><br />
-          それが、落ち着いていて長く使われるデザインにつながります。
+          特別な装飾ではなく、<span className="text-white/90">基本の積み重ね</span>を大切にすること。<br />
+          それが、長く愛されるデザインにつながると考えています。
         </p>
 
         {/* 三原則 */}
@@ -90,7 +90,10 @@ export default function Philosophy() {
 
         {/* 締め */}
         <p className="philo-last aq-fade delay-7">
-          <span className="text-white/95">見やすく、静かで、長く愛されるデザインを。</span><br />
+          <span className="text-white/95">
+            見やすく、静かで、長く愛されるデザインを。
+          </span>
+          <br />
           その想いを軸に、ひとつひとつ丁寧に制作しています。
         </p>
 
