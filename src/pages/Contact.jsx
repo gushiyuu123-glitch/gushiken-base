@@ -7,7 +7,7 @@ const FORMSPREE_ENDPOINT = "https://formspree.io/f/xdkjyvly";
 export default function Contact() {
   const rootRef = useRef(null);
 
-  const [status, setStatus] = useState("idle"); // idle / loading / success / error
+  const [status, setStatus] = useState("idle");
   const [message, setMessage] = useState("");
 
   /* ---------------------------------------------
@@ -17,12 +17,8 @@ export default function Contact() {
     const root = rootRef.current;
     if (!root) return;
 
-    // ページ全体
     root.classList.add(styles.show);
-
-    // 内側の aq-fade（段階表示）
-    const innerFade = root.querySelectorAll(".aq-fade");
-    innerFade.forEach((el) => el.classList.add("aq-show"));
+    root.querySelectorAll(".aq-fade").forEach((el) => el.classList.add("aq-show"));
   }, []);
 
   /* ---------------------------------------------
@@ -59,10 +55,7 @@ export default function Contact() {
   };
 
   return (
-    <section
-      ref={rootRef}
-      className={`${styles.contactSection} aq-fade`} // Silent UI v4.2
-    >
+    <section ref={rootRef} className={`${styles.contactSection} aq-fade`}>
       <div className={styles.container}>
 
         {/* 金ライン */}
@@ -73,45 +66,26 @@ export default function Contact() {
           CONTACT
         </h1>
 
-        {/* LEAD */}
+        {/* LEAD（修正版） */}
         <p className={`${styles.lead} aq-fade delay-2`}>
-          制作のご相談・お見積りは、下記フォームよりお問い合わせください。<br />
-          小さな内容でも構いません。まずはアイデアをお聞かせください。
+          「まず相談だけしたい」という段階でも大丈夫です。<br />
+          お店の雰囲気・伝えたいこと・なんとなくのイメージだけでも構いません。<br />
+          言語化が難しい部分はこちらで整理し、最適な形をご提案します。
         </p>
 
         {/* FORM */}
         <form className={`${styles.form} aq-fade delay-3`} onSubmit={handleSubmit}>
 
           <FormField label="お名前" required htmlFor="name">
-            <input
-              id="name"
-              name="name"
-              type="text"
-              required
-              className={styles.input}
-              autoComplete="name"
-            />
+            <input id="name" name="name" type="text" required className={styles.input} autoComplete="name" />
           </FormField>
 
           <FormField label="メールアドレス" required htmlFor="email">
-            <input
-              id="email"
-              name="email"
-              type="email"
-              required
-              className={styles.input}
-              autoComplete="email"
-            />
+            <input id="email" name="email" type="email" required className={styles.input} autoComplete="email" />
           </FormField>
 
           <FormField label="電話番号（任意）" htmlFor="tel">
-            <input
-              id="tel"
-              name="tel"
-              type="tel"
-              className={styles.input}
-              autoComplete="tel"
-            />
+            <input id="tel" name="tel" type="tel" className={styles.input} autoComplete="tel" />
           </FormField>
 
           <FormField label="ご希望のプラン" htmlFor="plan">
@@ -143,18 +117,12 @@ export default function Contact() {
           </FormField>
 
           <FormField label="詳細内容" required htmlFor="detail">
-            <textarea
-              id="detail"
-              name="detail"
-              rows={6}
-              required
-              className={styles.textarea}
-            />
+            <textarea id="detail" name="detail" rows={6} required className={styles.textarea} />
           </FormField>
 
-          {/* 注意 */}
+          {/* 注意（改善） */}
           <p className={`${styles.note} aq-fade delay-4`}>
-            ※ 写真素材が明るいほど仕上がりが向上します。<br />
+            ※ 写真がなくても問題ありません。イメージに合わせて最適な形を一緒に考えます。<br />
             ※ 通常 24 時間以内にご返信いたします。
           </p>
 
@@ -162,9 +130,7 @@ export default function Contact() {
           <div className={`${styles.cta} aq-fade delay-5`}>
             <button
               type="submit"
-              className={`${styles.submitBtn} ${
-                status === "loading" ? styles.submitDisabled : ""
-              }`}
+              className={`${styles.submitBtn} ${status === "loading" ? styles.submitDisabled : ""}`}
               disabled={status === "loading"}
             >
               {status === "loading" ? "送信中..." : "送　信"}
@@ -187,9 +153,9 @@ export default function Contact() {
 
         </form>
 
-        {/* その他の連絡方法 */}
+        {/* その他の連絡方法（改善） */}
         <div className={`${styles.altContacts} aq-fade delay-6`}>
-          <p className={styles.altTitle}>その他のご連絡方法</p>
+          <p className={styles.altTitle}>もっと気軽に連絡したい方へ</p>
 
           <a
             href="https://line.me/ti/p/gD5Aj8QPPJ"
@@ -197,7 +163,7 @@ export default function Contact() {
             target="_blank"
             rel="noopener noreferrer"
           >
-            LINEで相談する（推奨）
+            LINEで相談する（最も簡単です）
           </a>
         </div>
 
@@ -206,9 +172,8 @@ export default function Contact() {
   );
 }
 
-/* ---------------------------------------------
-   共通フィールド
---------------------------------------------- */
+/* --------------------------------------------- */
+
 function FormField({ label, children, required, htmlFor }) {
   return (
     <div className={styles.field}>

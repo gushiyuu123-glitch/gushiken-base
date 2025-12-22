@@ -43,59 +43,99 @@ export default function Price() {
           className="
             price-title aq-fade delay-1
             text-[2.4rem] tracking-[0.22em]
-            text-white font-light mb-12 pl-1
+            text-white font-light mb-4 pl-1
           "
         >
           PRICE
         </h2>
 
-        <p className="price-philosophy aq-fade delay-2">
-          Webサイトは、<br />
-          「作って終わりの看板」ではありません。<br /><br />
-          お店の空気や価値を、<br />
-          24時間、代わりに伝え続ける窓口です。
+        {/* 翻訳レイヤー */}
+        <p
+          className="
+            aq-fade delay-1
+            text-white/60
+            tracking-[0.12em]
+            text-[0.9rem]
+            mb-12
+            pl-1
+          "
+        >
+          ― 料金について（制作費の目安） ―
         </p>
 
+        {/* 導入文 */}
+        <p className="price-philosophy aq-fade delay-2">
+          Webサイトは、<br />
+          ただ “作って終わりの看板” ではありません。<br /><br />
+          あなたのお店やブランドの「空気」と「価値」を、  
+          24時間静かに伝え続ける窓口です。
+        </p>
+
+        {/* リード文（安心感と分かりやすさ） */}
         <p className="price-lead aq-fade delay-3">
-          制作料金の目安です。<br />
-          ページ数や構成、演出内容に応じて調整しますが、
-          <strong> 制作前のヒアリングで内容を整理し、必ず総額をお伝えします。</strong>
-          <br />
+          下記は制作料金の目安です。<br />
+          ページ数や内容によって調整しますが、  
+          <strong>制作前のヒアリングで内容を整理し、必ず総額をお伝えします。</strong><br />
           <span className="price-lead-note">
-            現在はポートフォリオ拡充フェーズのため、
-            初回のお客様向けに価格を抑えています。
+            現在はポートフォリオ強化期間のため、  
+            初回のお客様は通常よりも抑えた価格で対応しています。
           </span>
         </p>
 
+        {/* 価格表 */}
         <div className="price-grid aq-fade delay-4">
+
           <PriceCard
             label="PLAN 01"
             title="Landing Page（1ページ）"
-            desc="ブランド紹介・キャンペーンなど、単ページで完結するWebサイト。世界観を崩さず、必要な情報を美しく整理します。"
             price="¥60,000〜"
+            desc={
+              <>
+                キャンペーン・ブランド紹介など、  
+                <strong>1ページで魅力をまとめたい方向け。</strong><br />
+                必要な情報だけを上品に整理し、  
+                「読みやすく伝わる」構成で仕上げます。
+              </>
+            }
           />
 
           <PriceCard
             label="PLAN 02"
             title="Small Website（3〜5ページ）"
-            desc="サービス紹介・店舗サイト・ポートフォリオなど、構成を重視したWebサイト。初めての方にも安心な設計です。"
             price="¥120,000〜"
+            desc={
+              <>
+                カフェ・サロン・スタジオ・個人事業など、  
+                <strong>テンプレでは物足りない方に最適。</strong><br />
+                構成と導線を丁寧に整理し、  
+                初めての方でも使いやすいサイトに仕上げます。
+              </>
+            }
           />
 
           <PriceCard
             label="PLAN 03"
             title="Brand Site（6ページ以上）"
-            desc="写真・配色・タイポグラフィ・余白を統一し、世界観そのものを伝えるブランドサイトを設計します。"
             price="¥180,000〜"
+            desc={
+              <>
+                写真・色・文字・余白を統一した、  
+                <strong>ブランド全体の世界観を届けるサイト。</strong><br />
+                「雰囲気」や「らしさ」を大事にしたい方へ。
+              </>
+            }
           />
+
         </div>
 
+        {/* まとめ・安心文 */}
         <p className="price-note aq-fade delay-5">
-          ご相談時にご要望やご予算をお伺いし、
-          制作内容を整理したうえで総額をご提示します。<br />
-          <strong>制作途中で金額が変わることはありません。</strong>
+          ご相談内容をヒアリングし、  
+          目的やご予算に合わせて最適な形をご提案します。<br />
+          <strong>制作途中で金額が変わることはありませんのでご安心ください。</strong>
         </p>
 
+        {/* CTA */}
         <div className="price-cta aq-fade delay-6">
           <div className="mb-4 text-center">
             <Link

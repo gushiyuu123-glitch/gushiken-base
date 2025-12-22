@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import Hero from "../components/Hero";
+import HeroSP from "../components/HeroSP";
 import Works from "../components/Works";
 import Philosophy from "../components/Philosophy";
 import Price from "../components/Price";
@@ -86,8 +87,11 @@ useEffect(() => {
   return (
     <div className="home-wrapper">
 
-      <section className="aq-fade">
+      <section className="hidden md:block aq-fade">
         <Hero />
+      </section>
+      <section className="md:hidden aq-fade">
+        <HeroSP />
       </section>
 
       <section id="works" className="aq-fade">

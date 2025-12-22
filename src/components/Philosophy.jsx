@@ -23,7 +23,7 @@ export default function Philosophy() {
             tracking-[0.20em]
             text-white
             font-light
-            mb-10
+            mb-3
             pl-1
           "
           translate="no"
@@ -31,20 +31,35 @@ export default function Philosophy() {
           PHILOSOPHY
         </h2>
 
+        {/* サブタイトル（翻訳レイヤー） */}
+        <p
+          className="
+            aq-fade delay-1
+            text-white/60
+            tracking-[0.12em]
+            text-[0.9rem]
+            mb-10
+            pl-1
+          "
+        >
+          ― 制作の考え方（デザインの方針） ―
+        </p>
+
         {/* 導入文 */}
         <p className="philo-lead aq-fade delay-2">
-          デザインは、“情報を美しく整理すること”だと考えています。<br />
-          派手な演出よりも、自然に理解できる設計を大切にしています。
+          私が大切にしているのは、<br />
+          <span className="text-white/95">“見やすさ” と “美しさ” が自然に両立したデザイン。</span><br />
+          派手さよりも、読み手に素直に伝わる構造を重視しています。
         </p>
 
         {/* 本文 */}
         <p className="philo-body aq-fade delay-3">
-          ただ情報を並べただけでは魅力は伝わりません。<br />
-          文字の強弱、写真の余白、視線の流れ。<br />
-          そのひとつひとつが重なり合うことで、世界観が立ち上がります。<br /><br />
+          情報をただ並べるだけでは、魅力は届きません。<br />
+          文字の強弱、余白の置き方、視線の流れ。<br />
+          そのひとつひとつを丁寧に整えることで、サイト全体の“雰囲気”が生まれます。<br /><br />
 
-          特別なテクニックではなく、基本を丁寧に整えること。<br />
-          それが「見やすさ」と「美しさ」を両立させる鍵だと考えています。
+          特別な装飾ではなく、<span className="text-white/90">基本を正しく積み重ねること。</span><br />
+          それが、落ち着いていて長く使われるデザインにつながります。
         </p>
 
         {/* 三原則 */}
@@ -53,30 +68,30 @@ export default function Philosophy() {
           <div className="aq-fade delay-4">
             <h3 className="philo-subtitle">1. Order（秩序）</h3>
             <p className="philo-subtext">
-              情報の優先順位を整え、迷わず読める導線をつくります。
+              情報の優先順位を整理し、迷わず読める導線をつくる。
             </p>
           </div>
 
           <div className="aq-fade delay-5">
             <h3 className="philo-subtitle">2. Tension（緊張）</h3>
             <p className="philo-subtext">
-              わずかな“間”やコントラストが、画面にリズムと表情を与えます。
+              わずかな“間”やコントラストが、画面に表情とリズムを与える。
             </p>
           </div>
 
           <div className="aq-fade delay-6">
             <h3 className="philo-subtitle">3. Silence（静寂）</h3>
             <p className="philo-subtext">
-              余白はただの空白ではなく、印象を整える大切な要素です。
+              余白は空白ではなく、印象を整えるための大切な要素。
             </p>
           </div>
 
         </div>
 
         {/* 締め */}
-        <p className="philo-last aq-fade delay-6">
-          見やすく、心地よく、長く愛されるデザインを。<br />
-          その思いを軸に、ひとつひとつ丁寧に制作しています。
+        <p className="philo-last aq-fade delay-7">
+          <span className="text-white/95">見やすく、静かで、長く愛されるデザインを。</span><br />
+          その想いを軸に、ひとつひとつ丁寧に制作しています。
         </p>
 
       </div>

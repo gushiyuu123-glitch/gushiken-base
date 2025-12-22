@@ -8,7 +8,6 @@ export default function PriceDetail() {
   useEffect(() => {
     const el = rootRef.current;
     if (!el) return;
-    // Silent UI v4.2 のフェードを発火
     el.classList.add("aq-show");
   }, []);
 
@@ -16,14 +15,14 @@ export default function PriceDetail() {
     <section
       ref={rootRef}
       className="
-        aq-fade                      /* ← ここで統一フェードを使う */
+        aq-fade 
         bg-[#0b0b0b] min-h-screen text-white
         py-24 md:py-32 px-6
       "
     >
       <div className="max-w-5xl mx-auto relative">
 
-        {/* 左ゴールドライン */}
+        {/* gold line */}
         <div
           className="
             hidden md:block
@@ -39,35 +38,43 @@ export default function PriceDetail() {
             text-[2.2rem] md:text-[2.6rem]
             tracking-[0.22em]
             font-light
-            mb-8
+            mb-4
             pl-4
           "
         >
           PRICE — Detail
         </h1>
 
-        {/* 導入文 */}
         <p
           className="
-            text-white/70
+            text-white/60
+            tracking-[0.14em]
+            text-[0.9rem]
+            pl-4
+            mb-12
+          "
+        >
+          ― 料金の詳細と制作の進め方 ―
+        </p>
+
+        {/* Intro */}
+        <p
+          className="
+            text-white/75
             text-[0.95rem] md:text-[1rem]
             leading-[1.9]
-            mb-12 md:mb-16
+            mb-14 md:mb-16
             max-w-3xl
             pl-4
           "
         >
-          Webサイトの目的・世界観・写真素材の状況に合わせて、
-          最適な構成とデザインをご提案しています。<br />
-          初回ヒアリング後は「世界観ボード」を作成し、
-          方向性を共有したうえで制作へ進みます。<br /><br />
-          <strong className="text-white/85">
-            制作前に内容と総額を確定し、
-            制作途中で費用が変わることはありません。
-          </strong>
+          Webサイトは、お店やブランドの「空気」を最初に伝える場所です。<br />
+          そのため、初回のヒアリングでは目的・世界観・参考イメージを丁寧にお伺いし、  
+          <strong className="text-white/90">方向性を共有するための“世界観ボード”を作成します。</strong><br /><br />
+          制作前に必ず総額を確定し、途中で費用が変わることはありません。
         </p>
 
-        {/* プラン */}
+        {/* SECTION：プラン */}
         <SectionTitle>プランと料金</SectionTitle>
 
         <div className="grid gap-10 md:gap-12 md:grid-cols-3 mb-24">
@@ -76,8 +83,8 @@ export default function PriceDetail() {
             title="Landing Page"
             price="¥60,000〜"
             summary="1ページ構成のランディングページ。"
-            detail="ブランド紹介・キャンペーンなど、必要な情報を1ページに美しく整理します。"
-            bestFor="まずはWebサイトを持ってみたい方に。"
+            detail="ブランド紹介・キャンペーンなど、1ページで魅力を伝えたい方向け。必要な情報を上品に整理し、美しく読みやすい構成にします。"
+            bestFor="まずはWebサイトを持ちたい方へ。"
           />
 
           <PlanCard
@@ -85,8 +92,8 @@ export default function PriceDetail() {
             title="Small Website"
             price="¥120,000〜"
             summary="3〜5ページ構成のWebサイト。"
-            detail="サービス内容・店舗情報・導線を丁寧に整理し、安心感のある構成に仕上げます。"
-            bestFor="情報をしっかり伝えたい方に。"
+            detail="サービス内容や導線を丁寧に整理し、読みやすさと信頼感を重視した構成に仕上げます。"
+            bestFor="店舗・サロン・教室などに最適。"
           />
 
           <PlanCard
@@ -94,24 +101,23 @@ export default function PriceDetail() {
             title="Brand Site（6ページ以上）"
             price="¥180,000〜"
             summary="世界観重視のブランドサイト。"
-            detail="写真・配色・余白・動きまで含め、ブランドの空気感をデザインします。"
-            bestFor="世界観そのものを伝えたい方に。"
+            detail="写真・色・余白・動きまで統一し、ブランドの“空気”をデザインに落とし込みます。"
+            bestFor="世界観そのものを届けたい方へ。"
           />
         </div>
 
-        {/* 写真・ビジュアルについて */}
+        {/* 写真について */}
         <SectionTitle>写真素材・ビジュアルについて</SectionTitle>
         <DetailBlock>
-          <li>仕上がりの印象は写真の質に大きく左右されます。</li>
+          <li>写真の質はサイト全体の印象に大きく影響します。</li>
           <li>
-            写真が不足している場合でも、
-            <strong> サイト全体の完成度を保つための高品質なビジュアル補完</strong>
-            を行うことがあります。
+            素材が不足している場合でも、  
+            <strong>世界観を壊さない高品質な補完ビジュアル</strong>を制作します。
           </li>
-          <li>世界観を損なわない範囲で、自然に馴染む表現を重視します。</li>
+          <li>統一感・明るさ・色味を揃え、自然に馴染む表現を重視します。</li>
         </DetailBlock>
 
-        {/* 追加オプション */}
+        {/* オプション */}
         <SectionTitle>追加オプション</SectionTitle>
         <DetailBlock>
           <li>microCMS（記事投稿機能）：¥30,000〜</li>
@@ -122,19 +128,18 @@ export default function PriceDetail() {
         <SectionTitle>SEO・初期設定について</SectionTitle>
         <DetailBlock>
           <li>
-            タイトル・メタタグ・OGP・構造化データなど、
-            <strong> 基本的なSEO初期設定は制作料金に含まれています。</strong>
+            タイトル・OGP・構造化データなど、  
+            <strong>基本的なSEO設定はすべて標準で含まれています。</strong>
           </li>
-          <li>検索エンジンに正しく評価される構造で設計します。</li>
+          <li>検索エンジンが理解しやすい構造で設計します。</li>
         </DetailBlock>
 
         {/* イメージ共有 */}
         <SectionTitle>イメージ共有について</SectionTitle>
         <DetailBlock>
           <li>
-            「この作品の雰囲気が近い」と
-            <strong> ポートフォリオ内の作品名をお伝えいただくだけ</strong>
-            でも問題ありません。
+            「この作品が近い」と  
+            <strong>ポートフォリオ内の作品を指定するだけ</strong>でも問題ありません。
           </li>
           <li>
             ポートフォリオ：
@@ -147,24 +152,24 @@ export default function PriceDetail() {
               GUSHIKEN BASE — Works Collection
             </a>
           </li>
-          <li>言語化が難しい場合はこちらで整理します。</li>
+          <li>言語化が苦手な方は、こちらで形にします。</li>
         </DetailBlock>
 
-        {/* 制作の流れ */}
+        {/* 流れ */}
         <SectionTitle>制作の流れ</SectionTitle>
         <DetailBlock>
           <li>① ヒアリング（目的・世界観・参考イメージ）</li>
           <li>② 世界観ボードの共有</li>
           <li>③ 着手金 50% → 制作開始</li>
           <li>④ デザイン初稿提出</li>
-          <li>⑤ 修正・実装・最終確認</li>
+          <li>⑤ 修正 → 実装 → 最終確認</li>
           <li>⑥ 残額お支払い → 公開</li>
         </DetailBlock>
 
         {/* 支払い */}
         <SectionTitle>お支払いについて</SectionTitle>
         <DetailBlock>
-          <li>ご依頼確定後、<strong>着手金 50%</strong> をお支払いいただきます。</li>
+          <li><strong>着手金：50%</strong></li>
           <li>残額は公開前にお支払いください。</li>
         </DetailBlock>
 
@@ -172,23 +177,21 @@ export default function PriceDetail() {
         <SectionTitle>キャンセルについて</SectionTitle>
         <DetailBlock>
           <li><strong>着手金の返金はできません。</strong></li>
-          <li>初稿提出後のキャンセルは全額ご請求となります。</li>
+          <li>初稿提出後のキャンセルは全額請求となります。</li>
         </DetailBlock>
 
-        {/* 注意 */}
+        {/* 注意事項 */}
         <SectionTitle>注意事項</SectionTitle>
         <DetailBlock>
-          <li>記載金額はすべて税込・目安です。</li>
+          <li>記載金額はすべて税込の目安です。</li>
           <li>制作前に必ず総額を確定します。</li>
           <li>納期目安：<strong>3〜6週間</strong></li>
         </DetailBlock>
 
-        {/* 対応できないこと */}
+        {/* 対応不可 */}
         <SectionTitle>対応できないこと</SectionTitle>
         <DetailBlock>
-          <li>
-            短納期・価格最優先・制作意図の共有が難しいご依頼には対応していません。
-          </li>
+          <li>短納期最優先・価格のみ重視のご依頼には対応していません。</li>
         </DetailBlock>
 
         {/* CTA */}
@@ -214,7 +217,7 @@ export default function PriceDetail() {
           </Link>
         </div>
 
-        {/* 事務所向けサブ導線 */}
+        {/* 事務所向け 導線 */}
         <div className="text-center mt-8 md:mt-10">
           <a
             href="https://office.gushikendesign.com/"
@@ -229,7 +232,7 @@ export default function PriceDetail() {
               hover:text-[#d9c8a6]
             "
           >
-            事務所・企業向けのシンプルWebプランをご検討の方はこちら →
+            事務所・企業向けのシンプルWebプランはこちら →
           </a>
         </div>
 

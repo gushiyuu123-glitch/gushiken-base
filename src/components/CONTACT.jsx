@@ -12,10 +12,7 @@ export default function Contact() {
       ([entry]) => {
         if (!entry.isIntersecting) return;
 
-        /** セクション本体 */
         el.classList.add("aq-show");
-
-        /** 内側の fade 要素 */
         el.querySelectorAll(".aq-fade").forEach((item) => {
           item.classList.add("aq-show");
         });
@@ -33,7 +30,7 @@ export default function Contact() {
     <section ref={sectionRef} id="contact" className="contact-section aq-fade">
       <div className="contact-container">
 
-        {/* 左ゴールドライン（固定装飾なので fade させない） */}
+        {/* 金ライン */}
         <div className="contact-gold-line"></div>
 
         {/* タイトル */}
@@ -43,20 +40,23 @@ export default function Contact() {
 
         {/* リード */}
         <p className="contact-lead aq-fade delay-2">
-          制作のご相談・お見積りは、お問い合わせページより受け付けております。<br />
-          小さな内容でも構いません。まずはアイデアをお聞かせください。
+          「まず相談だけ」でも大丈夫です。<br />
+          お店の雰囲気や、なんとなくのイメージだけでも構いません。<br />
+          世界観・目的・構成を一緒に整理しながら、最適な形をご提案します。
         </p>
 
         {/* CTA */}
         <div className="contact-cta aq-fade delay-3">
           <a href="/contact" className="contact-btn">
-            お問い合わせページへ
+            お問い合わせフォームへ
           </a>
         </div>
 
         {/* サブ導線 */}
         <div className="contact-sub-links aq-fade delay-4">
-          <p className="contact-sub-title">その他のご連絡方法</p>
+          <p className="contact-sub-title">
+            もっと気軽に相談したい方へ
+          </p>
 
           <a
             href="https://line.me/ti/p/gD5Aj8QPPJ"
@@ -64,13 +64,17 @@ export default function Contact() {
             target="_blank"
             rel="noopener noreferrer"
           >
-            LINEで相談する
+            LINEで気軽に相談する →
           </a>
+
+          <p className="contact-sub-note">
+            ※ 面倒な説明や資料は不要です。  
+          </p>
         </div>
 
         {/* 注意 */}
         <p className="contact-footer aq-fade delay-5">
-          ※ ご相談内容は秘密厳守にて取り扱います。
+          ※ ご相談内容は秘密厳守で扱いますのでご安心ください。
         </p>
       </div>
     </section>
