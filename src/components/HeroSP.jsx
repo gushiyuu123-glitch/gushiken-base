@@ -1,5 +1,5 @@
 import React from "react";
-import heroSP from "../assets/hero-sp1.png";
+import heroSP from "../assets/hero-sp3.png";
 
 export default function HeroSP() {
   return (
@@ -12,34 +12,45 @@ export default function HeroSP() {
           alt="GUSHIKEN DESIGN — hero"
           className="
             w-full h-full object-cover
-            brightness-[1.06]
+            brightness-[0.97]     /* ← 1% 暗くして文字をクリアに */
             scale-[1.02]
             animate-[heroFloatSP_22s_ease-in-out_infinite]
           "
         />
       </div>
 
-      {/* ===== Gold Ambient Light（柔らかい光） ===== */}
+      {/* ===== テキスト背面のクリアグラデ（濁りを消す） ===== */}
+      <div
+        className="
+          absolute inset-0
+          bg-gradient-to-b
+          from-[rgba(0,0,0,0.06)]   /* ← ほぼ見えないがコントラストUP */
+          via-transparent
+          to-transparent
+          pointer-events-none
+        "
+      />
+
+      {/* ===== Ambient Light（弱め） ===== */}
       <div className="absolute inset-0 pointer-events-none">
         <div
           className="
-            absolute left-[17%] top-[30%]
-            w-[320px] h-[320px]
-            bg-[rgba(220,190,140,0.10)]
-            blur-[130px]
+            absolute left-[17%] top-[33%]
+            w-[260px] h-[260px]
+            bg-[rgba(220,190,140,0.07)]
+            blur-[110px]
             rounded-full
           "
         ></div>
       </div>
 
-      {/* ===== Blue Ambient（沖縄の青） ===== */}
       <div className="absolute inset-0 pointer-events-none mix-blend-screen">
         <div
           className="
-            absolute right-[10%] top-[26%]
-            w-[260px] h-[260px]
-            bg-[rgba(90,160,255,0.13)]
-            blur-[140px]
+            absolute right-[12%] top-[28%]
+            w-[220px] h-[220px]
+            bg-[rgba(90,160,255,0.10)]
+            blur-[120px]
             rounded-full
           "
         ></div>
@@ -48,21 +59,21 @@ export default function HeroSP() {
       {/* ===== 下グラデ ===== */}
       <div
         className="
-          absolute left-0 bottom-0 w-full h-[260px]
-          bg-gradient-to-t from-[rgba(0,0,0,0.36)] to-transparent
+          absolute left-0 bottom-0 w-full h-[230px]
+          bg-gradient-to-t from-[rgba(0,0,0,0.40)] to-transparent
           pointer-events-none
         "
       />
 
-      {/* ===== PartiGlow（派手な演出・上品） ===== */}
+      {/* ===== High-end Particles（減らして上品に） ===== */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        <div className="absolute inset-0 animate-[particleRise_14s_linear_infinite] opacity-[0.6]">
-          {[...Array(14)].map((_, i) => (
+        <div className="absolute inset-0 animate-[particleRise_14s_linear_infinite] opacity-[0.45]">
+          {[...Array(8)].map((_, i) => (
             <div
               key={i}
               className="
                 absolute rounded-full bg-white
-                w-[2px] h-[2px]
+                w-[1.5px] h-[1.5px]
                 opacity-[0.25]
                 animate-[spark_7s_ease-in-out_infinite]
               "
@@ -76,25 +87,23 @@ export default function HeroSP() {
         </div>
       </div>
 
-      {/* ===== Text（最適配置） ===== */}
+      {/* ===== TEXT ===== */}
       <div
         className="
           absolute
-          left-6
-          top-[78px]
-          right-3
+          left-6 top-[100px] right-3
         "
       >
-        {/* ---- Main Title ---- */}
         <h1
           className="
             aq-fade delay-1
-            text-white/95 font-normal
-            leading-[1.07]
+            text-[rgba(255,255,255,0.92)]   /* 少し濃いオフホワイト */
+            font-normal
+            leading-[1.06]
             text-[2rem]
-            tracking-[0.23em]
+            tracking-[0.22em]
             mb-3
-            drop-shadow-[0_4px_16px_rgba(0,0,0,0.75)]
+            drop-shadow-[0_3px_12px_rgba(0,0,0,0.55)]   /* シャープな影 */
           "
         >
           GUSHIKEN<br/>DESIGN
@@ -104,12 +113,11 @@ export default function HeroSP() {
           className="
             aq-fade delay-2
             w-12 h-[1px]
-            bg-white/70
+            bg-white/75
             mb-4
           "
         />
 
-        {/* ---- Subtitle ---- */}
         <p
           className="
             aq-fade delay-3
@@ -117,8 +125,8 @@ export default function HeroSP() {
             text-[1.05rem]
             leading-[1.7]
             tracking-wide
-            drop-shadow-[0_2px_12px_rgba(0,0,0,0.7)]
-            max-w-[80%]
+            drop-shadow-[0_2px_9px_rgba(0,0,0,0.55)]
+            max-w-[82%]
           "
         >
           普通じゃ物足りない人のための、<br />
