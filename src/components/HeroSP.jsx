@@ -12,48 +12,49 @@ export default function HeroSP() {
           alt="GUSHIKEN DESIGN — hero"
           className="
             w-full h-full object-cover
-            brightness-[0.97]     /* ← 1% 暗くして文字をクリアに */
+            brightness-[0.99]
             scale-[1.02]
             animate-[heroFloatSP_22s_ease-in-out_infinite]
           "
         />
       </div>
 
-      {/* ===== テキスト背面のクリアグラデ（濁りを消す） ===== */}
+      {/* ===== テキスト背面クリアグラデ ===== */}
       <div
         className="
           absolute inset-0
           bg-gradient-to-b
-          from-[rgba(0,0,0,0.06)]   /* ← ほぼ見えないがコントラストUP */
+          from-[rgba(0,0,0,0.05)]
           via-transparent
           to-transparent
           pointer-events-none
         "
       />
 
-      {/* ===== Ambient Light（弱め） ===== */}
+      {/* ===== Gold Ambient ===== */}
       <div className="absolute inset-0 pointer-events-none">
         <div
           className="
             absolute left-[17%] top-[33%]
-            w-[260px] h-[260px]
+            w-[240px] h-[240px]
             bg-[rgba(220,190,140,0.07)]
             blur-[110px]
             rounded-full
           "
-        ></div>
+        />
       </div>
 
+      {/* ===== Blue Ambient ===== */}
       <div className="absolute inset-0 pointer-events-none mix-blend-screen">
         <div
           className="
             absolute right-[12%] top-[28%]
-            w-[220px] h-[220px]
+            w-[210px] h-[210px]
             bg-[rgba(90,160,255,0.10)]
             blur-[120px]
             rounded-full
           "
-        ></div>
+        />
       </div>
 
       {/* ===== 下グラデ ===== */}
@@ -65,7 +66,7 @@ export default function HeroSP() {
         "
       />
 
-      {/* ===== High-end Particles（減らして上品に） ===== */}
+      {/* ===== Particles（極小・控えめ） ===== */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
         <div className="absolute inset-0 animate-[particleRise_14s_linear_infinite] opacity-[0.45]">
           {[...Array(8)].map((_, i) => (
@@ -73,8 +74,8 @@ export default function HeroSP() {
               key={i}
               className="
                 absolute rounded-full bg-white
-                w-[1.5px] h-[1.5px]
-                opacity-[0.25]
+                w-[1.4px] h-[1.4px]
+                opacity-[0.24]
                 animate-[spark_7s_ease-in-out_infinite]
               "
               style={{
@@ -88,22 +89,18 @@ export default function HeroSP() {
       </div>
 
       {/* ===== TEXT ===== */}
-      <div
-        className="
-          absolute
-          left-6 top-[100px] right-3
-        "
-      >
+      <div className="absolute left-6 top-[100px] right-3">
+
+        {/* ---- Main Title ---- */}
         <h1
           className="
-            aq-fade delay-1
-            text-[rgba(255,255,255,0.92)]   /* 少し濃いオフホワイト */
+            elegant-title
+            text-[rgba(255,255,255,0.92)]
             font-normal
             leading-[1.06]
             text-[2rem]
             tracking-[0.22em]
             mb-3
-            drop-shadow-[0_3px_12px_rgba(0,0,0,0.55)]   /* シャープな影 */
           "
         >
           GUSHIKEN<br/>DESIGN
@@ -111,21 +108,21 @@ export default function HeroSP() {
 
         <div
           className="
-            aq-fade delay-2
+            elegant-sub delay-[0.15s]
             w-12 h-[1px]
             bg-white/75
             mb-4
           "
         />
 
+        {/* ---- Subtitle ---- */}
         <p
           className="
-            aq-fade delay-3
+            elegant-sub delay-[0.3s]
             text-white/90
             text-[1.05rem]
             leading-[1.7]
             tracking-wide
-            drop-shadow-[0_2px_9px_rgba(0,0,0,0.55)]
             max-w-[82%]
           "
         >
@@ -151,7 +148,60 @@ export default function HeroSP() {
           0% { opacity: 0.4; transform: translateY(0); }
           100% { opacity: 0.4; transform: translateY(-40px); }
         }
+
+        /* ==== Elegant Title Fade ==== */
+        .elegant-title {
+          opacity: 0;
+          transform: translateY(14px);
+          letter-spacing: 0.32em;
+          animation: titleFade 1.4s cubic-bezier(.25,.46,.25,1) forwards;
+        }
+
+        @keyframes titleFade {
+          0% {
+            opacity: 0;
+            transform: translateY(14px);
+            letter-spacing: 0.32em;
+            text-shadow: none;
+          }
+          60% {
+            opacity: 1;
+            transform: translateY(0);
+            text-shadow: 0 4px 14px rgba(0,0,0,0.42);
+          }
+          100% {
+            opacity: 1;
+            transform: translateY(0);
+            letter-spacing: 0.22em;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.28);
+          }
+        }
+
+        /* ==== Subtitle (行ズレしないフェード) ==== */
+        .elegant-sub {
+          opacity: 0;
+          transform: translateY(12px);
+          animation: subFade 1.05s cubic-bezier(.25,.46,.25,1) forwards;
+        }
+
+        .elegant-sub.delay-\\[0\\.15s\\] { animation-delay: 0.15s; }
+        .elegant-sub.delay-\\[0\\.3s\\]  { animation-delay: 0.3s; }
+
+        @keyframes subFade {
+          0% {
+            opacity: 0;
+            transform: translateY(12px);
+            text-shadow: none;
+          }
+          100% {
+            opacity: 1;
+            transform: translateY(0);
+            text-shadow: 0 2px 9px rgba(0,0,0,0.45);
+          }
+        }
+
       `}</style>
+
     </section>
   );
 }
