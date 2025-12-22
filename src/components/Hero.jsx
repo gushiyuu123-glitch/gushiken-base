@@ -19,7 +19,7 @@ export default function Hero() {
         />
       </div>
 
-      {/* ===== Gold Ambient Light ===== */}
+      {/* ===== Gold Ambient ===== */}
       <div className="absolute inset-0 pointer-events-none">
         <div
           className="
@@ -32,7 +32,7 @@ export default function Hero() {
         />
       </div>
 
-      {/* ===== Blue Ambient（右上だけ淡く） ===== */}
+      {/* ===== Blue Ambient ===== */}
       <div className="absolute inset-0 pointer-events-none mix-blend-screen">
         <div
           className="
@@ -54,27 +54,28 @@ export default function Hero() {
         "
       />
 
-      {/* ===== 微細パーティクル（静かで高級） ===== */}
-      <div className="absolute inset-0 pointer-events-none">
-        {[...Array(7)].map((_, i) => (
+      {/* ===== 映画的 Dust Particles ===== */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+        {[...Array(12)].map((_, i) => (
           <div
             key={i}
             className="
-              absolute bg-white
-              w-[2px] h-[2px] rounded-full
-              opacity-[0.22]
-              animate-[pcSpark_8s_ease-in-out_infinite]
+              absolute bg-white/25 rounded-full
+              w-[2px] h-[8px]
+              opacity-0
+              animate-[dustFloat_9s_ease-in-out_infinite]
             "
             style={{
               left: `${Math.random() * 100}%`,
               top: `${Math.random() * 100}%`,
-              animationDelay: `${Math.random() * 5}s`,
+              transform: `rotate(${Math.random() * 40 - 20}deg)`,
+              animationDelay: `${Math.random() * 8}s`,
             }}
           />
         ))}
       </div>
 
-      {/* ===== Text ===== */}
+      {/* ===== TEXT ===== */}
       <div
         className="
           absolute
@@ -84,32 +85,32 @@ export default function Hero() {
           max-w-xl
         "
       >
-        {/* タイトル：高級演出 */}
+        {/* ---- Title ---- */}
         <h1
           className="
-            elegant-title
+            stylish-title
             text-white font-light
             leading-[1.12]
             text-[2.1rem] md:text-[4.2rem]
             tracking-[0.30em]
-            mb-4
+            mb-5
           "
         >
           GUSHIKEN<br/>DESIGN
         </h1>
 
-        {/* ライン */}
+        {/* ---- Line ---- */}
         <div
           className="
-            elegant-sub delay-[0.15s]
+            stylish-sub delay-[0.15s]
             w-20 h-[1px] bg-white/60 mb-5
           "
         />
 
-        {/* コピー */}
+        {/* ---- Copy ---- */}
         <p
           className="
-            elegant-sub delay-[0.3s]
+            stylish-sub delay-[0.32s]
             text-white/90
             text-[0.9rem] md:text-[1.15rem]
             leading-relaxed
@@ -117,72 +118,91 @@ export default function Hero() {
             max-w-md
           "
         >
-          普通じゃ物足りない人のための、<br/>
+          普通じゃ物足りない人のための、<br />
           上品で“伝わるサイト制作”。
         </p>
       </div>
 
       {/* ===== Keyframes ===== */}
       <style>{`
+        /* 背景ゆらぎ */
         @keyframes heroFloat {
           0%   { transform: scale(1.015) translate(0,0); }
           50%  { transform: scale(1.020) translate(4px,8px); }
           100% { transform: scale(1.015) translate(0,0); }
         }
 
-        @keyframes pcSpark {
-          0%,100% { opacity: 0.0; transform: translateY(0) scale(0.5); }
-          50%     { opacity: 0.35; transform: translateY(-20px) scale(1); }
+        /* Dust floating */
+        @keyframes dustFloat {
+          0%   { opacity: 0; transform: translateY(0) scale(0.8); }
+          35%  { opacity: 0.6; transform: translateY(-18px) scale(1); }
+          70%  { opacity: 0.3; transform: translateY(-28px) scale(1); }
+          100% { opacity: 0; transform: translateY(-40px) scale(0.9); }
         }
 
-        /* ===== Title Fade（高級サイトの動き） ===== */
-        .elegant-title {
+        /* ======================================
+           タイトル：スタイリッシュフェード
+        ====================================== */
+/* ===== Stylish Title (PC) ===== */
+.stylish-title {
+  opacity: 0;
+  transform: translateY(22px);
+  filter: blur(6px);
+  letter-spacing: 0.42em; /* ← アニメ開始時は広く */
+  animation: titleReveal 1.4s cubic-bezier(.23, .7, .3, 1) forwards;
+}
+
+/* ディレイ */
+.stylish-title.delay-1 {
+  animation-delay: 0.2s;
+}
+
+/* ===== Keyframes ===== */
+@keyframes titleReveal {
+  0% {
+    opacity: 0;
+    transform: translateY(22px);
+    filter: blur(6px);
+    letter-spacing: 0.42em;
+    text-shadow: none;
+  }
+  40% {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0.6px);  /* ← 一瞬だけ軽く残すことで “にじませ” 抑制 */
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);       /* ← 完全にシャープになる */
+    letter-spacing: 0.30em; /* ← 最終値は tracking-[0.30em] と一致 */
+    text-shadow: 0 2px 8px rgba(0,0,0,0.22);
+  }
+}
+
+        /* ======================================
+           サブ：右下からの流線フェード
+        ====================================== */
+        .stylish-sub {
           opacity: 0;
-          transform: translateY(18px);
-          letter-spacing: 0.38em;
-          animation: titleFade 1.55s cubic-bezier(.25,.46,.25,1) forwards;
+          transform: translate(14px, 14px);
+          filter: blur(4px);
+          animation: subFlow 1.25s cubic-bezier(.25,.46,.25,1) forwards;
         }
 
-        @keyframes titleFade {
+        .stylish-sub.delay-\\[0\\.15s\\] { animation-delay: 0.15s; }
+        .stylish-sub.delay-\\[0\\.32s\\] { animation-delay: 0.32s; }
+
+        @keyframes subFlow {
           0% {
             opacity: 0;
-            transform: translateY(18px);
-            letter-spacing: 0.38em;
-            text-shadow: none;
-          }
-          55% {
-            opacity: 1;
-            transform: translateY(0);
-            text-shadow: 0 8px 22px rgba(0,0,0,0.38);
+            transform: translate(14px, 14px);
+            filter: blur(4px);
           }
           100% {
             opacity: 1;
-            transform: translateY(0);
-            letter-spacing: 0.30em;
-            text-shadow: 0 4px 12px rgba(0,0,0,0.30);
-          }
-        }
-
-        /* ===== Subtitle Fade（揺れなし・シャープ） ===== */
-        .elegant-sub {
-          opacity: 0;
-          transform: translateY(12px);
-          animation: subFade 1.1s cubic-bezier(.25,.46,.25,1) forwards;
-        }
-
-        .elegant-sub.delay-\\[0\\.15s\\] { animation-delay: 0.15s; }
-        .elegant-sub.delay-\\[0\\.3s\\]  { animation-delay: 0.3s; }
-
-        @keyframes subFade {
-          0% {
-            opacity: 0;
-            transform: translateY(12px);
-            text-shadow: none;
-          }
-          100% {
-            opacity: 1;
-            transform: translateY(0);
-            text-shadow: 0 2px 9px rgba(0,0,0,0.40);
+            transform: translate(0, 0);
+            filter: blur(0px);
           }
         }
       `}</style>
