@@ -1,5 +1,5 @@
 import React from "react";
-import heroSP from "../assets/hero-sp.png";
+import heroSP from "../assets/hero-sp1.png";
 
 export default function HeroSP() {
   return (
