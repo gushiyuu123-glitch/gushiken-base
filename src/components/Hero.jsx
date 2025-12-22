@@ -36,7 +36,7 @@ export default function Hero() {
       <div
         className="
           absolute left-0 bottom-0 w-full h-[260px]
-          bg-gradient-to-t from-[rgba(0,0,0,0.16)] to-transparent
+          bg-gradient-to-t from-[rgba(0,0,0,0.18)] to-transparent
           pointer-events-none
         "
       />
@@ -73,26 +73,28 @@ export default function Hero() {
           "
         ></div>
 
-        {/* サブテキスト */}
-        <p
-          className="
-            aq-fade delay-3
-            text-white/90
-            text-[0.9rem] md:text-[1.15rem]
-            leading-relaxed
-            tracking-wide
-            max-w-md
-          "
-        >
-          世界観と情報を、美しく整理するデザイン。
-        </p>
+        {/* ===== 新コピー（完成版） ===== */}
+<p
+  className="
+    aq-fade delay-3
+    text-white/90
+    text-[0.9rem] md:text-[1.15rem]
+    leading-relaxed
+    tracking-wide
+    max-w-md
+  "
+>
+  普通じゃ物足りない人のための、<br/>
+  上品で“伝わるサイト制作”。
+</p>
+
       </div>
 
       {/* ===== Keyframes ===== */}
       <style>{`
         @keyframes heroFloat {
           0%   { transform: scale(1.015) translate(0, 0); }
-          50%  { transform: scale(1.018) translate(4px, 8px); }
+          50%  { transform: scale(1.020) translate(4px, 8px); }
           100% { transform: scale(1.015) translate(0, 0); }
         }
       `}</style>
