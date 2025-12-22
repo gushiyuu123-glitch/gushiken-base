@@ -68,7 +68,7 @@ export default function Contact() {
           </a>
 
           <p className="contact-sub-note">
-            ※ 面倒な説明や資料は不要です。  
+            ※ まだ形になっていないアイデアでも大丈夫です。  
           </p>
         </div>
 
