@@ -129,46 +129,62 @@ export const worksData = [
   /* ----------------------------------------------------------
     EC / BRAND DESIGN
   ---------------------------------------------------------- */
-  {
-    category: "EC / BRAND DESIGN",
-    subtitle: "世界観 × 技術を統合したECデザイン",
-    items: [
-           {
-        title: "STILL — Minimal EC",
-        desc: "静寂 × 緊張感 × ファッション。\nストイックな構成美を追求したEC。",
-        link: "https://still-ec.vercel.app",
-        img: "/works/still-ec.webp",
-        tags: [
-          "黒", "静寂", "モード", "緊張感",
-          "EC", "Fashion",
-          "Motion", "GSAP"
-        ],
-      },
-       {
-        title: "Okinawa Select — Modern Okinawan Objects",
-        desc: "沖縄素材 × 上質ミニマル。\n右スライドCart・ContextAPI管理・PC/SP完全分離など最新EC技術を統合したプロトタイプ。",
-        link: "https://okinawa-select.vercel.app",
-        img: "/works/OkinawaSelect.webp",
-        tags: [
-          "沖縄", "自然光", "ミニマル", "白",
-          "EC", "Branding",
-          "ContextAPI", "Cart Animation", "PC/SP 分離"
-        ],
-      },
-      {
-        title: "Neutral Objects — Lifestyle Brand",
-        desc: "光 × 余白 × 静けさ。\nオブジェ写真を中心に据えた編集型EC。",
-        link: "https://neutral-objects.vercel.app",
-        img: "/works/neutral-objects.webp",
-        tags: [
-          "光", "静寂", "余白", "ミニマル",
-          "EC", "Branding", "Art",
-          "Motion"
-        ],
-      },
-     
-    ],
-  },
+{
+  category: "EC / BRAND DESIGN",
+  subtitle: "世界観 × 技術を統合したECデザイン",
+  items: [
+    {
+      title: "STILL — Minimal EC",
+      desc: "静寂 × 緊張感 × ファッション。\nストイックな構成美を追求したEC。",
+      link: "https://still-ec.vercel.app",
+      img: "/works/still-ec.webp",
+      tags: [
+        "黒", "静寂", "モード", "緊張感",
+        "EC", "Fashion",
+        "Motion", "GSAP"
+      ],
+    },
+
+    // ★★★★★ ここに Noir & Lux 追加（2番目） ★★★★★
+    {
+      title: "Noir & Lux — Shadow Edition",
+      desc: "影 × 造形 × 精密美。\nDior系の静かな高級感と、影のライン設計を取り入れたブランドEC。",
+      link: "https://noir-lux.vercel.app",
+      img: "/works/noir-lux.webp",
+      tags: [
+        "黒", "影", "ミニマル", "ハイブランド",
+        "EC", "Branding",
+        "GSAP", "PC/SP 分離"
+      ],
+    },
+    // ★★★★★ ここまで ★★★★★
+
+    {
+      title: "Okinawa Select — Modern Okinawan Objects",
+      desc: "沖縄素材 × 上質ミニマル。\n右スライドCart・ContextAPI管理・PC/SP完全分離など最新EC技術を統合したプロトタイプ。",
+      link: "https://okinawa-select.vercel.app",
+      img: "/works/OkinawaSelect.webp",
+      tags: [
+        "沖縄", "自然光", "ミニマル", "白",
+        "EC", "Branding",
+        "ContextAPI", "Cart Animation", "PC/SP 分離"
+      ],
+    },
+
+    {
+      title: "Neutral Objects — Lifestyle Brand",
+      desc: "光 × 余白 × 静けさ。\nオブジェ写真を中心に据えた編集型EC。",
+      link: "https://neutral-objects.vercel.app",
+      img: "/works/neutral-objects.webp",
+      tags: [
+        "光", "静寂", "余白", "ミニマル",
+        "EC", "Branding", "Art",
+        "Motion"
+      ],
+    },
+  ],
+}
+,
 
   /* ----------------------------------------------------------
      FOOD / FURNITURE / BRAND
