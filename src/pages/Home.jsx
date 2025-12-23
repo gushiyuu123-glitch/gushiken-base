@@ -7,54 +7,49 @@ import Price from "../components/Price";
 import ABOUT from "../components/ABOUT";
 import CONTACT from "../components/CONTACT";
 import NewsSection from "../components/NewsSection";
+import Title from "../components/Title";
 
 export default function Home() {
-// ============================
-//  Silent UI v4.2 — Global Fade System
-// ============================
-useEffect(() => {
-  const elements = Array.from(
-    document.querySelectorAll(".aq-fade:not(.aq-show)")
-  );
-
-  if (elements.length === 0) return;
-
-  const io = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (!entry.isIntersecting) return;
-
-        const el = entry.target;
-
-        // ---- ランダムディレイ（180〜260msの範囲で自然） ----
-        const delay = 180 + Math.random() * 80; // 180〜260
-        el.style.transitionDelay = `${delay}ms`;
-
-        el.classList.add("aq-show");
-
-        io.unobserve(el);
-      });
-    },
-    {
-      threshold: 0.16,
-      rootMargin: "0px 0px -8% 0px",
-    }
-  );
-
-  elements.forEach((el) => io.observe(el));
-
-  return () => io.disconnect();
-}, []);
 
   // ============================
-  // META（SEO）
+  //  Silent UI v4.2 — Global Fade System
   // ============================
   useEffect(() => {
-    document.title = "GUSHIKEN DESIGN | 沖縄のフリーランスWebデザイナー";
+    const elements = Array.from(
+      document.querySelectorAll(".aq-fade:not(.aq-show)")
+    );
 
-    // --------------------------
-    // Description
-    // --------------------------
+    if (elements.length === 0) return;
+
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+
+          const el = entry.target;
+
+          const delay = 180 + Math.random() * 80; // 180〜260ms
+          el.style.transitionDelay = `${delay}ms`;
+
+          el.classList.add("aq-show");
+          io.unobserve(el);
+        });
+      },
+      {
+        threshold: 0.16,
+        rootMargin: "0px 0px -8% 0px",
+      }
+    );
+
+    elements.forEach((el) => io.observe(el));
+
+    return () => io.disconnect();
+  }, []);
+
+  // ============================
+  // META（SEO） — Title以外はここでセット
+  // ============================
+  useEffect(() => {
     const description =
       "沖縄のフリーランスWebデザイナー GUSHIKEN DESIGN。高品質なWebサイト制作、ブランドサイト、事業サイト、UI/UX設計まで一貫対応。カフェ・美容・店舗・コーポレート向けテンプレートも販売中。";
 
@@ -68,9 +63,6 @@ useEffect(() => {
       document.head.appendChild(m);
     }
 
-    // --------------------------
-    // Canonical
-    // --------------------------
     const canonicalURL = "https://gushikendesign.com/";
     const canonical = document.querySelector('link[rel="canonical"]');
 
@@ -86,6 +78,8 @@ useEffect(() => {
 
   return (
     <div className="home-wrapper">
+
+      <Title text="GUSHIKEN DESIGN — Minimal Art Web Studio" />
 
       <section className="hidden md:block aq-fade">
         <Hero />
