@@ -84,7 +84,10 @@ export const worksData = [
       desc: "Sea × Light × Quiet Luxury。\n沖縄の“静けさ”を光と余白で再現したホテルLP。",
       link: "https://lux-hotel-lp.vercel.app",
       img: "/works/lux-hotel-lp.webp",
+      isNew: true,
+  createdAt: "2025-02-18",
       tags: [
+        "NEW",
         "沖縄", "海", "静寂", "光", "透明感",
         "Hotel", "Luxury", "Branding",
         "GSAP", "Cinematic Scroll", "PC/SP 分離"
@@ -151,7 +154,10 @@ export const worksData = [
       desc: "影 × 造形 × 精密美。\nDior系の静かな高級感と、影のライン設計を取り入れたブランドEC。",
       link: "https://noir-lux.vercel.app",
       img: "/works/noir-lux.webp",
+           isNew: true,
+  createdAt: "2025-02-16",
       tags: [
+        "NEW",
         "黒", "影", "ミニマル", "ハイブランド",
         "EC", "Branding",
         "GSAP", "PC/SP 分離"
@@ -198,7 +204,10 @@ export const worksData = [
         desc: "時間 × 熱 × 静寂。\nスクロールを通して“一夜の体験”を設計したシネマティック・レストランUI。",
         link: "https://resonance-restaurant.vercel.app/",
         img: "/works/resonance.webp",
+      isNew: true,
+  createdAt: "2025-02-10",
         tags: [
+          "NEW",
           "静寂", "陰影", "光", "黒",
           "Restaurant", "Branding",
           "Cinematic Scroll", "GSAP"
@@ -209,7 +218,10 @@ export const worksData = [
         desc: "海 × 光 × 静寂。\n体験の流れそのものを設計した、展示型カフェWeb。",
         link: "https://cape-okinawa.vercel.app/",
         img: "/works/cape-okinawa.webp",
+       isNew: true,
+  createdAt: "2025-02-10",
         tags: [
+          "NEW",
           "沖縄", "青", "海", "光", "静寂",
           "Cafe", "Branding",
           "Motion"

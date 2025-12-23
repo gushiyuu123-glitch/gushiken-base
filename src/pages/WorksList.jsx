@@ -11,7 +11,50 @@ export default function WorksList() {
   const [activeCategory, setActiveCategory] = useState("ALL");
 
   /* -------------------------------------------------------
-     aq-fade
+     New 自動判定（30日以内）
+  -------------------------------------------------------- */
+  const isNewItem = (item) => {
+    if (!item.createdAt) return false;
+    const now = Date.now();
+    const created = new Date(item.createdAt).getTime();
+    const diffDays = (now - created) / (1000 * 3600 * 24);
+    return diffDays <= 30;
+  };
+
+  // worksData に isNew を付加
+  const enrichedData = worksData.map((block) => ({
+    ...block,
+    items: block.items.map((item) => ({
+      ...item,
+      isNew: item.isNew || isNewItem(item),  
+    })),
+  }));
+
+  /* -------------------------------------------------------
+     カテゴリーリスト（NEW 追加）
+  -------------------------------------------------------- */
+  const categoryList = ["ALL", "NEW", ...enrichedData.map((b) => b.category)];
+
+  /* -------------------------------------------------------
+     表示データの生成
+  -------------------------------------------------------- */
+  const filteredData =
+    activeCategory === "ALL"
+      ? enrichedData
+      : activeCategory === "NEW"
+      ? [
+          {
+            category: "NEW",
+            subtitle: "最新作 — Newly Published Works",
+            items: enrichedData.flatMap((b) =>
+              b.items.filter((i) => i.isNew)
+            ),
+          },
+        ]
+      : enrichedData.filter((b) => b.category === activeCategory);
+
+  /* -------------------------------------------------------
+     アニメーション
   -------------------------------------------------------- */
   useEffect(() => {
     const root = rootRef.current;
@@ -31,9 +74,7 @@ export default function WorksList() {
     return () => observer.disconnect();
   }, []);
 
-  /* -------------------------------------------------------
-     SP slide-in
-  -------------------------------------------------------- */
+  /* SP animation */
   useEffect(() => {
     const items = document.querySelectorAll(".sp-slide-in");
 
@@ -51,22 +92,11 @@ export default function WorksList() {
   }, []);
 
   /* -------------------------------------------------------
-     カテゴリー絞り込み
-  -------------------------------------------------------- */
-  const filteredData =
-    activeCategory === "ALL"
-      ? worksData
-      : worksData.filter((b) => b.category === activeCategory);
-
-  const categoryList = ["ALL", ...worksData.map((b) => b.category)];
-
-  /* -------------------------------------------------------
-     タブ切替時：上に戻る + 横スライドアニメ
+     タブ切り替え（スクロールトップ）
   -------------------------------------------------------- */
   const handleChangeCategory = (cat) => {
     setActiveCategory(cat);
 
-    // スムーズスクロールで上まで戻す
     window.scrollTo({
       top: rootRef.current.offsetTop - 40,
       behavior: "smooth",
@@ -86,11 +116,9 @@ export default function WorksList() {
       <div className="ambient-glow"></div>
 
       <div ref={rootRef} className="max-w-6xl lg:max-w-7xl mx-auto">
-
-        {/* ------- TOP BLOCK ------- */}
+        {/* TOP */}
         <div className="aq-fade mb-24 md:mb-28">
           <div className="w-12 h-px bg-gradient-to-r from-white/20 to-white/5 mb-6" />
-
           <p className="text-[0.65rem] md:text-[0.75rem] tracking-[0.32em] text-white/30 mb-3">
             SELECTED WORKS
           </p>
@@ -101,21 +129,22 @@ export default function WorksList() {
           </h1>
 
           <p className="mt-7 text-[0.9rem] md:text-[1rem] text-white/45 leading-relaxed max-w-xl tracking-[0.04em] aq-fade delay-2">
-            沖縄 × 光 × 静寂 を軸にしたセレクション。<br />
+            沖縄 × 光 × 静寂 を軸にしたセレクション。
+            <br />
             用途ごとに世界観を切り替えながらも、統一された静かなトーンで構築。
           </p>
         </div>
 
         <div className="w-16 h-px bg-white/12 mb-16 aq-fade" />
 
-        {/* ------- CATEGORY TABS ------- */}
+        {/* CATEGORY TABS */}
         <CategoryTabs
           activeCategory={activeCategory}
           setActiveCategory={handleChangeCategory}
           categoryList={categoryList}
         />
 
-        {/* ------- WORKS LIST ------- */}
+        {/* LIST */}
         <div className="space-y-32">
           {filteredData.map((block) => (
             <div
@@ -125,18 +154,23 @@ export default function WorksList() {
                 animate-[slideIn_0.68s_cubic-bezier(.22,.61,.36,1)_forwards]
               "
             >
-              <Category
-                title={block.category}
-                subtitle={block.subtitle}
-              >
+            <Category
+  title={block.category}
+  subtitle={block.subtitle}
+  itemsRaw={block.items}   // ← これが絶対必要!!!
+>
+
                 {block.items.map((item) => (
-                  <WorkItem
-                    key={item.title}
-                    title={item.title}
-                    desc={item.desc}
-                    link={item.link}
-                    img={item.img}
-                  />
+              <WorkItem
+  key={item.title}
+  title={item.title}
+  desc={item.desc}
+  link={item.link}
+  img={item.img}
+  tags={item.tags}
+  isNew={item.isNew}   // ← これ!!
+  createdAt={item.createdAt}  // ← 自動30日消滅用に必要
+/>
                 ))}
               </Category>
             </div>
@@ -144,7 +178,7 @@ export default function WorksList() {
         </div>
       </div>
 
-      {/* スライドアニメ */}
+      {/* animation */}
       <style>{`
         @keyframes slideIn {
           0% { opacity: 0; transform: translateX(22px); }
