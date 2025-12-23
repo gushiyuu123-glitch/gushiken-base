@@ -1,0 +1,169 @@
+import React, { useMemo } from "react";
+import { useParams, Link } from "react-router-dom";
+import { worksData } from "../data/worksData";
+
+export default function WorkDetail() {
+  const { slug } = useParams();
+
+  const work = useMemo(() => {
+    const all = worksData.flatMap((b) => b.items);
+    return all.find((i) => i.slug === slug);
+  }, [slug]);
+
+  if (!work) {
+    return (
+      <main className="min-h-screen bg-[#070604] text-white px-6 py-24">
+        <div className="max-w-3xl mx-auto">
+          <p className="text-white/60 tracking-[0.18em] text-xs mb-4">NOT FOUND</p>
+          <h1 className="text-2xl tracking-[0.18em] font-light mb-10">
+            WORK NOT FOUND
+          </h1>
+          <Link
+            to="/works"
+            className="inline-block text-white/70 hover:text-white transition tracking-[0.22em] text-xs"
+          >
+            ← BACK TO WORKS
+          </Link>
+        </div>
+      </main>
+    );
+  }
+
+  const isNew =
+    work.tags?.includes("NEW") ||
+    (work.createdAt &&
+      (Date.now() - new Date(work.createdAt).getTime()) / (1000 * 60 * 60 * 24) <= 30);
+
+  return (
+    <main className="min-h-screen bg-[#070604] text-white overflow-x-hidden">
+      {/* HERO */}
+      <section className="relative pt-28 pb-16 px-6 md:px-10">
+        <div className="max-w-6xl mx-auto">
+          <div className="w-12 h-px bg-gradient-to-r from-white/20 to-white/5 mb-6" />
+
+          <div className="flex items-center gap-3 mb-5">
+            <p className="text-[0.65rem] tracking-[0.32em] text-white/35">
+              WORK DETAIL
+            </p>
+
+            {isNew && (
+              <span
+                className="
+                  px-2 py-[2px]
+                  text-[0.62rem] tracking-[0.22em]
+                  rounded-sm
+                  text-amber-200/90 bg-white/5
+                  border border-amber-200/35
+                  shadow-[0_0_14px_rgba(255,210,140,0.18)]
+                "
+              >
+                NEW
+              </span>
+            )}
+          </div>
+
+          <h1 className="text-[2.1rem] md:text-[3rem] tracking-[0.18em] font-light leading-[1.15]">
+            {work.title}
+          </h1>
+
+          <p className="mt-6 text-white/50 leading-relaxed whitespace-pre-line max-w-2xl">
+            {work.desc}
+          </p>
+
+          {/* CTA row */}
+          <div className="mt-10 flex flex-wrap items-center gap-4">
+            <a
+              href={work.link}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="
+                inline-flex items-center justify-center
+                px-6 h-[44px]
+                rounded-full
+                bg-white/10 hover:bg-white/14
+                border border-white/18
+                transition
+                tracking-[0.18em] text-[12px]
+              "
+            >
+              VISIT SITE 
+            </a>
+
+            <Link
+              to="/works"
+              className="
+                inline-flex items-center justify-center
+                px-6 h-[44px]
+                rounded-full
+                bg-transparent hover:bg-white/6
+                border border-white/14
+                transition
+                tracking-[0.18em] text-[12px] text-white/75 hover:text-white
+              "
+            >
+              BACK →
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* KEY VISUAL */}
+      <section className="px-6 md:px-10 pb-20">
+        <div className="max-w-6xl mx-auto">
+          <div className="relative rounded-[18px] overflow-hidden border border-white/12 bg-black">
+            <img
+              src={work.img}
+              alt={work.title}
+              className="w-full h-full object-cover brightness-[0.88]"
+              loading="lazy"
+            />
+            <div
+              className="absolute inset-0 pointer-events-none"
+              style={{
+                background:
+                  "radial-gradient(circle at top right, rgba(255,240,210,0.16), transparent 62%)",
+              }}
+            />
+          </div>
+        </div>
+      </section>
+
+      {/* TAGS */}
+      <section className="px-6 md:px-10 pb-24">
+        <div className="max-w-6xl mx-auto">
+          <h2 className="text-[0.9rem] tracking-[0.22em] font-light text-white/85 mb-6">
+            TAGS
+          </h2>
+          <div className="flex flex-wrap gap-2">
+            {(work.tags || []).map((t) => (
+              <span
+                key={t}
+                className="
+                  px-3 py-[6px]
+                  text-[11px] tracking-[0.14em]
+                  bg-white/5 border border-white/12
+                  rounded-full text-white/70
+                "
+              >
+                {t}
+              </span>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* FOOTER NAV */}
+      <section className="px-6 md:px-10 pb-28">
+        <div className="max-w-6xl mx-auto">
+          <div className="w-full h-px bg-white/10 mb-10" />
+          <Link
+            to="/works"
+            className="text-white/70 hover:text-white transition tracking-[0.22em] text-xs"
+          >
+            ← BACK TO WORKS LIST
+          </Link>
+        </div>
+      </section>
+    </main>
+  );
+}

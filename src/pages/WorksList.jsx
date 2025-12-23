@@ -165,7 +165,7 @@ export default function WorksList() {
   key={item.title}
   title={item.title}
   desc={item.desc}
-  link={item.link}
+ link={`/works/${item.slug}`}   // ★ここが肝
   img={item.img}
   tags={item.tags}
   isNew={item.isNew}   // ← これ!!

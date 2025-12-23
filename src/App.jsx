@@ -3,17 +3,28 @@ import React, { useEffect } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
 
 import Nav from "./components/Nav";
+
 import NavGlobal from "./components/NavGlobal";
+
 import Footer from "./components/FOOTER";
 
 import Home from "./pages/Home";
+
 import WorksList from "./pages/WorksList";
+import WorkDetail from "./pages/WorkDetail";
+import NoirLux from "./pages/works/NoirLux";
+
+
 import PriceDetail from "./pages/PriceDetail";
+
 import Contact from "./pages/Contact";
+
 import Terms from "./pages/Terms";
 import Refund from "./pages/Refund";
 import Legal from "./pages/Legal";
+
 import Privacy from "./pages/Privacy";
+
 import NewsList from "./pages/NewsList";
 import NewsDetail from "./pages/NewsDetail";
 
@@ -41,6 +52,9 @@ function Layout() {
 
           {/* 制作実績 */}
           <Route path="/works" element={<WorksList />} />
+<Route path="/works/:slug" element={<WorkDetail />} />
+<Route path="/works/noir-lux" element={<NoirLux />} />
+
 
           {/* 料金 */}
           <Route path="/price" element={<PriceDetail />} />
