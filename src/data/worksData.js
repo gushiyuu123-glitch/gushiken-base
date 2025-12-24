@@ -277,6 +277,7 @@ export const worksData = [
         createdAt: "2025-02-10",
 
         tags: [
+          "NEW",
           "EC",
           "Branding",
           "Shadow",
