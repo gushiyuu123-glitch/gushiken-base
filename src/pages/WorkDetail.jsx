@@ -5,6 +5,7 @@ import { worksData } from "../data/worksData";
 export default function WorkDetail() {
   const { slug } = useParams();
 
+  // 対象作品を照合
   const work = useMemo(() => {
     const all = worksData.flatMap((b) => b.items);
     return all.find((i) => i.slug === slug);
@@ -14,7 +15,9 @@ export default function WorkDetail() {
     return (
       <main className="min-h-screen bg-[#070604] text-white px-6 py-24">
         <div className="max-w-3xl mx-auto">
-          <p className="text-white/60 tracking-[0.18em] text-xs mb-4">NOT FOUND</p>
+          <p className="text-white/60 tracking-[0.18em] text-xs mb-4">
+            NOT FOUND
+          </p>
           <h1 className="text-2xl tracking-[0.18em] font-light mb-10">
             WORK NOT FOUND
           </h1>
@@ -29,18 +32,26 @@ export default function WorkDetail() {
     );
   }
 
+  // New 判定（30日ルール or タグ NEW）
   const isNew =
     work.tags?.includes("NEW") ||
     (work.createdAt &&
-      (Date.now() - new Date(work.createdAt).getTime()) / (1000 * 60 * 60 * 24) <= 30);
+      (Date.now() - new Date(work.createdAt).getTime()) /
+        (1000 * 60 * 60 * 24) <= 30);
 
   return (
     <main className="min-h-screen bg-[#070604] text-white overflow-x-hidden">
-      {/* HERO */}
+
+      {/* ======================================================
+          HERO
+      ====================================================== */}
       <section className="relative pt-28 pb-16 px-6 md:px-10">
         <div className="max-w-6xl mx-auto">
+
+          {/* 小さなライン */}
           <div className="w-12 h-px bg-gradient-to-r from-white/20 to-white/5 mb-6" />
 
+          {/* ラベル + NEW */}
           <div className="flex items-center gap-3 mb-5">
             <p className="text-[0.65rem] tracking-[0.32em] text-white/35">
               WORK DETAIL
@@ -54,7 +65,6 @@ export default function WorkDetail() {
                   rounded-sm
                   text-amber-200/90 bg-white/5
                   border border-amber-200/35
-                  shadow-[0_0_14px_rgba(255,210,140,0.18)]
                 "
               >
                 NEW
@@ -62,15 +72,17 @@ export default function WorkDetail() {
             )}
           </div>
 
+          {/* タイトル */}
           <h1 className="text-[2.1rem] md:text-[3rem] tracking-[0.18em] font-light leading-[1.15]">
             {work.title}
           </h1>
 
+          {/* サブ文章 */}
           <p className="mt-6 text-white/50 leading-relaxed whitespace-pre-line max-w-2xl">
             {work.desc}
           </p>
 
-          {/* CTA row */}
+          {/* CTA  */}
           <div className="mt-10 flex flex-wrap items-center gap-4">
             <a
               href={work.link}
@@ -86,7 +98,7 @@ export default function WorkDetail() {
                 tracking-[0.18em] text-[12px]
               "
             >
-              VISIT SITE 
+              VISIT SITE →
             </a>
 
             <Link
@@ -107,33 +119,46 @@ export default function WorkDetail() {
         </div>
       </section>
 
-      {/* KEY VISUAL */}
+      {/* ======================================================
+          MAIN VISUAL（複数対応）
+      ====================================================== */}
       <section className="px-6 md:px-10 pb-20">
-        <div className="max-w-6xl mx-auto">
-          <div className="relative rounded-[18px] overflow-hidden border border-white/12 bg-black">
-            <img
-              src={work.img}
-              alt={work.title}
-              className="w-full h-full object-cover brightness-[0.88]"
-              loading="lazy"
-            />
+        <div className="max-w-6xl mx-auto space-y-20">
+          {(work.detail.visuals || [work.img]).map((v, i) => (
             <div
-              className="absolute inset-0 pointer-events-none"
-              style={{
-                background:
-                  "radial-gradient(circle at top right, rgba(255,240,210,0.16), transparent 62%)",
-              }}
-            />
-          </div>
+              key={i}
+              className="
+                relative rounded-[18px] overflow-hidden
+                border border-white/12 bg-black
+              "
+            >
+              <img
+                src={v}
+                alt={`${work.title} visual ${i + 1}`}
+                className="w-full h-full object-cover brightness-[0.88]"
+                loading="lazy"
+              />
+              <div
+                className="absolute inset-0 pointer-events-none"
+                style={{
+                  background:
+                    "radial-gradient(circle at top right, rgba(255,240,210,0.16), transparent 62%)",
+                }}
+              />
+            </div>
+          ))}
         </div>
       </section>
 
-      {/* TAGS */}
+      {/* ======================================================
+          TAGS
+      ====================================================== */}
       <section className="px-6 md:px-10 pb-24">
         <div className="max-w-6xl mx-auto">
           <h2 className="text-[0.9rem] tracking-[0.22em] font-light text-white/85 mb-6">
             TAGS
           </h2>
+
           <div className="flex flex-wrap gap-2">
             {(work.tags || []).map((t) => (
               <span
@@ -152,7 +177,9 @@ export default function WorkDetail() {
         </div>
       </section>
 
-      {/* FOOTER NAV */}
+      {/* ======================================================
+          FOOTER NAV
+      ====================================================== */}
       <section className="px-6 md:px-10 pb-28">
         <div className="max-w-6xl mx-auto">
           <div className="w-full h-px bg-white/10 mb-10" />

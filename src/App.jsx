@@ -15,6 +15,7 @@ import WorkDetail from "./pages/WorkDetail";
 import NoirLux from "./pages/works/NoirLux";
 import Resonance from "./pages/works/Resonance";
 import Still from "./pages/works/Still";
+import BlueShoreHotel from "./pages/works/BlueShoreHotel";
 
 import PriceDetail from "./pages/PriceDetail";
 
@@ -54,11 +55,12 @@ function Layout() {
 
           {/* 制作実績 */}
           <Route path="/works" element={<WorksList />} />
-<Route path="/works/:slug" element={<WorkDetail />} />
-<Route path="/works/noir-lux" element={<NoirLux />} />
-<Route path="/works/resonance" element={<Resonance />} />
-<Route path="/works/Still" element={<Still />} />
 
+          <Route path="/works/:slug" element={<WorkDetail />} />
+          <Route path="/works/noir-lux" element={<NoirLux />} />
+          <Route path="/works/resonance" element={<Resonance />} />
+          <Route path="/works/Still" element={<Still />} />
+          <Route path="/works/BlueShoreHotel" element={<BlueShoreHotel />} />
 
           {/* 料金 */}
           <Route path="/price" element={<PriceDetail />} />

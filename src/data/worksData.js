@@ -143,7 +143,7 @@ export const worksData = [
     items: [
       {
         title: "Blue Shore Hotel — Luxury Okinawa",
-        slug: "blue-shore-hotel",
+        slug: "BlueShoreHotel",
 
         desc: "Sea × Light × Quiet Luxury。\n沖縄の“静けさ”を光と余白で再現したホテルLP。",
         link: "https://lux-hotel-lp.vercel.app",
