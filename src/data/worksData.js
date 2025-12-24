@@ -10,7 +10,7 @@ export const worksData = [
     items: [
       {
         title: "Okinawa White Spa",
-        slug: "okinawa-white-spa",
+        slug: "OkinawaWhiteSpa",
 
         desc: "白 × 静寂 × 上質な余白。\n非日常の白を設計したリラクゼーションUI。",
         link: "https://okinawa-white-spa.vercel.app",
