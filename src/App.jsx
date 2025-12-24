@@ -18,6 +18,7 @@ import Still from "./pages/works/Still";
 import BlueShoreHotel from "./pages/works/BlueShoreHotel";
 import CapeOkinawa from "./pages/works/CapeOkinawa";
 import OkinawaWhiteSpa from "./pages/works/OkinawaWhiteSpa";
+import LueurPink from "./pages/works/LueurPink";
 
 import PriceDetail from "./pages/PriceDetail";
 
@@ -65,6 +66,7 @@ function Layout() {
           <Route path="/works/BlueShoreHotel" element={<BlueShoreHotel />} />
           <Route path="/works/CapeOkinawa" element={<CapeOkinawa />} />
           <Route path="/works/OkinawaWhiteSpa" element={<OkinawaWhiteSpa />} />
+           <Route path="/works/LueurPink" element={<LueurPink />} />
 
           {/* 料金 */}
           <Route path="/price" element={<PriceDetail />} />

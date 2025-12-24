@@ -33,7 +33,7 @@ export const worksData = [
 
       {
         title: "LUEUR PINK",
-        slug: "lueur-pink",
+        slug: "LueurPink",
 
         desc: "透明感 × 上品ピンク。\n若年層向けに最適化した軽量モーションUI。",
         link: "https://lueur-pink.vercel.app",
