@@ -14,6 +14,7 @@ import WorksList from "./pages/WorksList";
 import WorkDetail from "./pages/WorkDetail";
 import NoirLux from "./pages/works/NoirLux";
 import Resonance from "./pages/works/Resonance";
+import Still from "./pages/works/Still";
 
 import PriceDetail from "./pages/PriceDetail";
 
@@ -56,6 +57,7 @@ function Layout() {
 <Route path="/works/:slug" element={<WorkDetail />} />
 <Route path="/works/noir-lux" element={<NoirLux />} />
 <Route path="/works/resonance" element={<Resonance />} />
+<Route path="/works/Still" element={<Still />} />
 
 
           {/* 料金 */}

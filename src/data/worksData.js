@@ -244,7 +244,7 @@ export const worksData = [
     items: [
       {
         title: "STILL — Minimal EC",
-        slug: "still-ec",
+        slug: "still",
 
         desc: "静寂 × 緊張感 × ファッション。\nストイックな構成美を追求したEC。",
         link: "https://still-ec.vercel.app",
