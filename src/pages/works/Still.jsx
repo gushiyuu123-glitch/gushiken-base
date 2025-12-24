@@ -7,112 +7,117 @@ export default function Still() {
   }, []);
 
   return (
-    <section className="bg-[#040404] text-white min-h-screen pb-40">
+    <section className="bg-[#050505] text-white min-h-screen pb-44">
 
       {/* =========================================================
-          HERO — Black × Mode × Vertical Tension
-          （縦構成 × 建築光 × モードの緊張）
+          HERO — Black × Architecture × Mode Precision（300点版）
       ========================================================= */}
       <div className="relative w-full overflow-hidden">
 
-{/* ===== SP ===== */}
-<div className="block md:hidden w-full aspect-[4/5] relative">
-  <img
-    src="/works1/still-hero.png"
-    alt="STILL — Minimal EC"
-    className="
-      absolute inset-0
-      w-full h-full
-      object-cover
-      brightness-[0.82]
-      scale-[1.03]
-      transform-gpu
-    "
-  />
-
-  <div className="
-    absolute inset-0
-    bg-gradient-to-b
-    from-black/55 via-black/15 to-black/85
-  " />
-
-  <div className="absolute bottom-10 left-6">
-    <h1 className="text-[2.2rem] tracking-[0.26em] font-light mb-2">
-      STILL
-    </h1>
-    <p className="text-white/55 tracking-[0.30em] text-[0.7rem]">
-      MINIMAL FASHION × EC DESIGN
-    </p>
-  </div>
-</div>
-
-
-        {/* ---------------------- PC ---------------------- */}
-        <div className="hidden md:block w-full h-[100vh] relative">
-
-          {/* Image */}
+        {/* ===== SP ===== */}
+        <div className="block md:hidden w-full aspect-[4/5] relative">
           <img
             src="/works1/still-hero.png"
             alt="STILL — Minimal EC"
             className="
-              absolute inset-0 w-full h-full
+              absolute inset-0
+              w-full h-full
               object-cover
-              brightness-[0.82]
-              scale-[1.05]
+              brightness-[0.90]
+              scale-[1.06]
               transform-gpu
             "
           />
 
-          {/* Dior / CELINE style deep gradient */}
-          <div
+          {/* 光の縦ライン強調 */}
+          <div className="
+            absolute inset-0
+            bg-gradient-to-b
+            from-black/65 via-black/25 to-black/90
+          " />
+
+          <div className="absolute bottom-10 left-6">
+            <h1 className="text-[2.3rem] tracking-[0.26em] font-light">
+              STILL
+            </h1>
+            <p className="text-white/55 tracking-[0.32em] text-[0.72rem] mt-2">
+              MODE MINIMAL × ARCHITECTURE
+            </p>
+          </div>
+        </div>
+
+        {/* ===== PC ===== */}
+        <div className="hidden md:block w-full h-[100vh] relative">
+
+          {/* Layer 1 */}
+          <img
+            src="/works1/still-hero.png"
+            alt="STILL"
             className="
-              absolute inset-0
-              bg-gradient-to-b
-              from-black/55 via-black/20 to-black/88
+              absolute inset-0 w-full h-full object-cover
+              brightness-[0.88] scale-[1.04]
             "
           />
 
-          {/* PC Title */}
-          <div className="absolute bottom-[18vh] left-[clamp(32px,9vw,180px)]">
-            <h1 className="text-[4.4rem] tracking-[0.28em] font-light leading-[1.1]">
+          {/* Layer 2（縦光の深度） */}
+          <img
+            src="/works1/still-hero.png"
+            alt="STILL Secondary"
+            className="
+              absolute inset-0 w-full h-full object-cover
+              brightness-[1.02] scale-[1.01]
+              mix-blend-screen opacity-[0.18]
+            "
+          />
+
+          {/* 影のアーキテクチャ */}
+          <div className="
+            absolute inset-0
+            bg-gradient-to-b
+            from-black/60 via-black/22 to-black/92
+          " />
+
+          <div className="absolute bottom-[19vh] left-[clamp(48px,10vw,200px)]">
+            <h1 className="text-[4.45rem] tracking-[0.28em] font-light leading-[1.12]">
               STILL
             </h1>
-            <p className="text-white/55 tracking-[0.34em] text-[0.95rem] mt-3">
-              MINIMAL FASHION × EC DESIGN
+            <p className="text-white/55 tracking-[0.33em] text-[1.03rem] mt-4">
+              MODE MINIMAL × ARCHITECTURE
             </p>
           </div>
         </div>
       </div>
 
-      {/* =========================================================
-          OUTLINE — Mode Minimalism × 緊張と静けさ
-      ========================================================= */}
-      <div className="max-w-4xl mx-auto px-8 md:px-0 mt-28 mb-28">
 
-        <h2 className="text-[0.95rem] tracking-[0.32em] text-white/40 mb-8">
+      {/* =========================================================
+          OUTLINE — 建築 × 緊張 × モード静度（300点チューニング）
+      ========================================================= */}
+      <div className="max-w-4xl mx-auto px-8 md:px-0 mt-32 mb-32">
+
+        <h2 className="text-[0.95rem] tracking-[0.32em] text-white/40 mb-10">
           PROJECT OUTLINE
         </h2>
 
-        <p
-          className="
-            text-[1.14rem]
-            leading-[2.45]
-            text-white/90
-            font-light
-            whitespace-pre-line
-          "
-        >
+        <p className="
+          text-[1.17rem]
+          leading-[2.62]     /* ← 300点の行間 */
+          text-white/90
+          font-light
+          whitespace-pre-line
+          tracking-[0.004em]
+        ">
 {`黒 × 緊張 × 建築構図。
 
-ファッションの“ストイックな空気”を UI に翻訳するため、
-光の入り方、縦ラインの角度、余白の伸びを
-建築写真の原理でミリ単位調整。
+ファッションの“静かな強さ”を UI に翻訳するため、
+光の入り方・陰影の角度・縦ラインの伸びを
+建築写真の原理で精密に調整した。
 
-静けさを保ちながら、モード特有の緊張を
-「構成比 × 重心 × コントラスト」で設計。
+コントラストではなく“光の密度”で魅せることで、
+モード特有の緊張を保ちながら、
+静寂がゆっくり広がる EC を設計。
 
-縦構成を主役にし、視線がまっすぐ落ちていく
-“静かな Mode EC” に仕上げた。`}
+縦構成を軸にし、視線がすっと落ちる
+“建築 × ファッション” の境界線をデザインした。`}
         </p>
 
         <div className="mt-10 text-white/30 text-[0.82rem] leading-relaxed">
@@ -120,44 +125,53 @@ export default function Still() {
         </div>
       </div>
 
-      {/* =========================================================
-          VISUAL — Vertical Mode Exhibition
-      ========================================================= */}
-      <div className="max-w-5xl mx-auto px-8 md:px-0 mt-24">
 
-        <div className="relative overflow-hidden border border-white/5">
+      {/* =========================================================
+          VISUALS — Vertical Mode Exhibition（完成展示）
+      ========================================================= */}
+      <div className="max-w-5xl mx-auto px-8 md:px-0 mt-28 space-y-28">
+
+        {/* Architecture Visual */}
+        <div className="relative overflow-hidden border border-white/10">
           <img
             src="/works1/still-visual1.jpg"
             alt="STILL Visual"
-            className="
-              w-full
-              object-cover
-              brightness-[0.92]
-            "
+            className="w-full object-cover brightness-[0.92]"
           />
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/24" />
+        </div>
 
-          {/* subtle shadow bottom */}
-          <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/20" />
+        {/* Fashion / Model Vertical */}
+        <div className="relative overflow-hidden border border-white/10">
+          <img
+            src="/works1/still-visual2.png"
+            alt="Fashion Still"
+            className="w-full object-cover brightness-[0.90]"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/22" />
         </div>
 
       </div>
 
+
       {/* =========================================================
-          CTA — Sharp Minimal Button
+          CTA — 黒ミニマルの最終形（重心調整済み）
       ========================================================= */}
-      <div className="text-center mt-32">
+      <div className="text-center mt-40">
         <a
           href="https://still-ec.vercel.app"
           target="_blank"
           rel="noopener noreferrer"
           className="
             inline-block
-            px-12 py-4
-            text-[0.85rem]
-            tracking-[0.32em]
-            border border-white/25
-            hover:border-white/60
-            hover:shadow-[0_0_28px_rgba(255,255,255,0.30)]
+            px-14 py-4
+            text-[0.9rem]
+            tracking-[0.30em]
+            border border-white/22
+            rounded-full
+            hover:border-white/55
+            hover:shadow-[0_0_34px_rgba(255,255,255,0.25)]
+            hover:-translate-y-[2px]
             transition-all duration-500
           "
         >

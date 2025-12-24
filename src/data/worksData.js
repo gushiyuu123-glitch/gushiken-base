@@ -56,7 +56,7 @@ export const worksData = [
 
       {
         title: "BLACK ORIETTA",
-        slug: "black-orietta",
+        slug: "GoldenVeil",
 
         desc: "黒 × 金 × 高級香水。\n重厚なラグジュアリートーンの演出設計。",
         link: "https://black-orietta.vercel.app",

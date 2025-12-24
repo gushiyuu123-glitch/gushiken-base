@@ -213,3 +213,34 @@ body.scrolled .ambient-glow::after {
   opacity: 1;
   transform: translateY(0);
 }
+@keyframes goldFloat {
+  0% {
+    transform: translateY(0px) translateX(0px) scale(1);
+    opacity: 0.18;
+  }
+  50% {
+    transform: translateY(-12px) translateX(6px) scale(1.02);
+    opacity: 0.26;
+  }
+  100% {
+    transform: translateY(-24px) translateX(-6px) scale(1.04);
+    opacity: 0.18;
+  }
+}
+
+@keyframes goldBeam {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.animate-goldFloat {
+  animation: goldFloat 6.8s ease-in-out infinite alternate;
+}
+
+.animate-goldBeam {
+  animation: goldBeam 14s linear infinite;
+}
