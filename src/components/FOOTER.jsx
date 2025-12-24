@@ -41,20 +41,22 @@ export default function Footer() {
       >
         {/* ブランド */}
         <div>
-          <h3 className="text-white text-xl tracking-[0.18em] font-light mb-2" translate="no">
+          <h3
+            className="text-white text-xl tracking-[0.18em] font-light mb-2"
+            translate="no"
+          >
             GUSHIKEN DESIGN
           </h3>
           <p className="text-white/40 text-sm tracking-wide">
             Okinawa, Japan
           </p>
-<a 
-  href="/layer0"
-  className="footer-lab opacity-25 hover:opacity-60 transition"
->
-  HIDDEN LABORATORY
-</a>
 
-
+          <a
+            href="/layer0"
+            className="footer-lab opacity-25 hover:opacity-60 transition block mt-3"
+          >
+            HIDDEN LABORATORY
+          </a>
         </div>
 
         {/* ナビ */}
@@ -69,7 +71,9 @@ export default function Footer() {
         {/* プロジェクト + SNS + 法務 */}
         <div className="flex flex-col gap-4 text-sm tracking-[0.12em]">
           <div className="flex flex-col gap-2">
-            <p className="footer-project-label">EXPERIMENTAL PROJECTS</p>
+            <p className="footer-project-label">
+              EXPERIMENTAL PROJECTS
+            </p>
 
             <a
               href="https://quiet-ai.gushikendesign.com/"
@@ -98,20 +102,35 @@ export default function Footer() {
           </div>
 
           <div className="flex flex-col gap-1 mt-3 text-xs tracking-[0.15em]">
-            <a href="/legal"  className="footer-legal">特商法表記</a>
-            <a href="/terms"  className="footer-legal">利用規約</a>
+            <a href="/legal" className="footer-legal">特商法表記</a>
+            <a href="/terms" className="footer-legal">利用規約</a>
             <a href="/refund" className="footer-legal">返金規約</a>
             <a href="/privacy" className="footer-legal">PRIVACY</a>
           </div>
         </div>
       </div>
 
+      {/* --- 追加：引用・紹介歓迎メッセージ（超控えめ） --- */}
+      <p
+        className="
+          text-center text-white/30
+          text-[0.7rem]
+          tracking-[0.12em]
+          mt-10 leading-[1.9]
+        "
+      >
+        本サイトのデザイン・文章は
+        <span className="text-white/50 font-light"> 引用・紹介は歓迎 </span>
+        しています。<br />
+        無断転載・複製・再配布・商用利用はご遠慮ください。
+      </p>
+
       <p
         className="
           text-center text-white/30
           text-[0.75rem]
           tracking-[0.15em]
-          mt-10
+          mt-6
         "
         translate="no"
       >
