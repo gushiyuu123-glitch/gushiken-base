@@ -127,7 +127,7 @@ export default function NoirLux() {
       <div className="max-w-6xl mx-auto px-8 md:px-0 space-y-28">
 
         {/* VISUAL 1 */}
-        <div className="relative overflow-hidden rounded-[14px] border border-white/5">
+        <div className="relative overflow-hidden border border-white/5">
           <img
             src="/works1/noir-lux1.webp"
             className="
@@ -141,7 +141,7 @@ export default function NoirLux() {
         </div>
 
         {/* VISUAL 2 */}
-        <div className="relative overflow-hidden rounded-[14px] border border-white/5">
+        <div className="relative overflow-hidden border border-white/5">
           <img
             src="/works1/noir-lux2.webp"
             className="

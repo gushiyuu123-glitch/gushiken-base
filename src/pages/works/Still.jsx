@@ -125,7 +125,7 @@ export default function Still() {
       ========================================================= */}
       <div className="max-w-5xl mx-auto px-8 md:px-0 mt-24">
 
-        <div className="relative overflow-hidden rounded-[14px] border border-white/5">
+        <div className="relative overflow-hidden border border-white/5">
           <img
             src="/works1/still-visual1.webp"
             alt="STILL Visual"
