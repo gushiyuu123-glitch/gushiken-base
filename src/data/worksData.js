@@ -378,7 +378,7 @@ export const worksData = [
 
       {
         title: "CAPE. OKINAWA — Cafe",
-        slug: "cape-okinawa",
+        slug: "CapeOkinawa",
 
         desc: "海 × 光 × 静寂。\n体験の流れそのものを設計した、展示型カフェWeb。",
         link: "https://cape-okinawa.vercel.app/",
