@@ -127,7 +127,7 @@ export default function Still() {
 
         <div className="relative overflow-hidden border border-white/5">
           <img
-            src="/works1/still-visual1.webp"
+            src="/works1/still-visual1.jpg"
             alt="STILL Visual"
             className="
               w-full
