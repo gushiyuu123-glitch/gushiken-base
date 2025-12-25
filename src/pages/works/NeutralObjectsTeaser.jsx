@@ -7,9 +7,9 @@ export default function NeutralObjectsTeaser() {
   const assets = useMemo(
     () => ({
       hero: "/works1/neutral-hero.png",
-      cut1: "/works1/neutral-cut1.png",
+      cut1: "/works1/neutral-cut11.png",
       cut2: "/works1/neutral-cut2.png",
-      cut3: "/works1/neutral-cut3.png",
+      cut3: "/works1/neutral-cut33.png",
     }),
     []
   );
