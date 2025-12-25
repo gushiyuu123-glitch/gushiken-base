@@ -12,6 +12,7 @@ export default function PriceDetail() {
   }, []);
 
   return (
+    
     <section
       ref={rootRef}
       className="
@@ -20,6 +21,24 @@ export default function PriceDetail() {
         py-24 md:py-32 px-6
       "
     >
+      <script
+  type="application/ld+json"
+  dangerouslySetInnerHTML={{
+    __html: JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "ProfessionalService",
+      "name": "GUSHIKEN DESIGN",
+      "url": "https://gushikendesign.com/price",
+      "description": "ブランドの世界観と空気感を重視したWebサイト制作サービス。",
+      "areaServed": {
+        "@type": "Country",
+        "name": "Japan"
+      },
+      "serviceType": "Web Design / Frontend Development"
+    })
+  }}
+/>
+
       <div className="max-w-5xl mx-auto relative">
 
         {/* gold line */}

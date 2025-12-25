@@ -113,6 +113,25 @@ export default function WorksList() {
         [overscroll-behavior-y:none]
       "
     >
+      <script
+  type="application/ld+json"
+  dangerouslySetInnerHTML={{
+    __html: JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "ItemList",
+      "name": "GUSHIKEN DESIGN — Works Portfolio",
+      "itemListElement": worksData.flatMap(block =>
+        block.items.map((item, index) => ({
+          "@type": "ListItem",
+          "position": index + 1,
+          "name": item.title,
+          "url": `https://gushikendesign.com/works/${item.slug}`
+        }))
+      )
+    })
+  }}
+/>
+
       <div className="ambient-glow"></div>
 
       <div ref={rootRef} className="max-w-6xl lg:max-w-7xl mx-auto">
