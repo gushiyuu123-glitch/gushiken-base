@@ -27,6 +27,7 @@ import NeutralObjectsTeaser from "./pages/works/NeutralObjectsTeaser";
 import AburiyaItto from "./pages/works/AburiyaItto";
 import Koti from "./pages/works/Koti";
 import ActiveDays from "./pages/works/ActiveDays";
+import FineOkinawa from "./pages/works/FineOkinawa";
 
 import PriceDetail from "./pages/PriceDetail";
 
@@ -83,6 +84,7 @@ function Layout() {
 <Route path="/works/AburiyaItto" element={<AburiyaItto />} />
 <Route path="/works/Koti" element={<Koti />} />
 <Route path="/works/ActiveDays" element={<ActiveDays />} />
+<Route path="/works/FineOkinawa" element={<FineOkinawa />} />
 
 {/* 最後に汎用テンプレ */}
 <Route path="/works/:slug" element={<WorkDetail />} />

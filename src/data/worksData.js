@@ -479,7 +479,7 @@ export const worksData = [
     items: [
       {
         title: "FINE — Okinawa Edition",
-        slug: "fine-okinawa",
+        slug: "FineOkinawa",
 
         desc: "40代からの穏やかな出会い。\n安心感を設計した大人向けUI。",
         link: "https://www.fine-okinawa.com/",
