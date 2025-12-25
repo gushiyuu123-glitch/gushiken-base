@@ -15,14 +15,43 @@ export default function RyukaIntro() {
     []
   );
 
-  return (
-    <section
-      className="
-        min-h-screen overflow-x-hidden
-        text-slate-900
-        bg-[linear-gradient(180deg,#f6fdff_0%,#ffffff_60%,#fff6fb_100%)]
-      "
-    >
+return (
+  <section
+    className="
+      min-h-screen overflow-x-hidden
+      text-slate-900
+      bg-[linear-gradient(180deg,#f6fdff_0%,#ffffff_60%,#fff6fb_100%)]
+    "
+  >
+    {/* =========================
+        JSON-LD : RYUKA
+    ========================== */}
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{
+        __html: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "CreativeWork",
+          "@id": "https://gushikendesign.com/works/ryuka#creativework",
+          "name": "琉香（RYUKA）｜体験型フレグランスブランドサイト",
+          "description":
+            "沖縄の光・香り・風・琉球ガラス工芸から着想した、体験型フレグランスブランドサイト。",
+          "creator": {
+            "@type": "Person",
+            "name": "裕人 具志堅"
+          },
+          "publisher": {
+            "@type": "Organization",
+            "name": "GUSHIKEN DESIGN",
+            "url": "https://gushikendesign.com/"
+          },
+          "url": "https://gushikendesign.com/works/ryuka"
+        })
+      }}
+    />
+
+    {/* ↓ ここから既存の中身（PC/SP 分岐など） */}
+
       {/* =========================
           PC
       ========================== */}
