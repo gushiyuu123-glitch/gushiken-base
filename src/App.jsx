@@ -21,6 +21,8 @@ import OkinawaWhiteSpa from "./pages/works/OkinawaWhiteSpa";
 import LueurPink from "./pages/works/LueurPink";
 import GoldenVeil from "./pages/works/GoldenVeil";
 import OkiLato from "./pages/works/OkiLato";
+import Lucent from "./pages/works/Lucent";
+import OkinawaSelectTeaser from "./pages/works/OkinawaSelectTeaser";
 
 import PriceDetail from "./pages/PriceDetail";
 
@@ -58,19 +60,25 @@ function Layout() {
         <Routes>
           <Route path="/" element={<Home />} />
 
-          {/* 制作実績 */}
-          <Route path="/works" element={<WorksList />} />
+     {/* 制作実績 */}
+<Route path="/works" element={<WorksList />} />
 
-          <Route path="/works/:slug" element={<WorkDetail />} />
-          <Route path="/works/noir-lux" element={<NoirLux />} />
-          <Route path="/works/resonance" element={<Resonance />} />
-          <Route path="/works/Still" element={<Still />} />
-          <Route path="/works/BlueShoreHotel" element={<BlueShoreHotel />} />
-          <Route path="/works/CapeOkinawa" element={<CapeOkinawa />} />
-          <Route path="/works/OkinawaWhiteSpa" element={<OkinawaWhiteSpa />} />
-           <Route path="/works/LueurPink" element={<LueurPink />} />
-           <Route path="/works/GoldenVeil" element={<GoldenVeil />} />
-            <Route path="/works/OkiLato" element={<OkiLato />} />
+{/* 専用・展示ページ（予告 / 完成） */}
+<Route path="/works/noir-lux" element={<NoirLux />} />
+<Route path="/works/resonance" element={<Resonance />} />
+<Route path="/works/Still" element={<Still />} />
+<Route path="/works/BlueShoreHotel" element={<BlueShoreHotel />} />
+<Route path="/works/CapeOkinawa" element={<CapeOkinawa />} />
+<Route path="/works/OkinawaWhiteSpa" element={<OkinawaWhiteSpa />} />
+<Route path="/works/LueurPink" element={<LueurPink />} />
+<Route path="/works/GoldenVeil" element={<GoldenVeil />} />
+<Route path="/works/OkiLato" element={<OkiLato />} />
+<Route path="/works/Lucent" element={<Lucent />} />
+<Route path="/works/OkinawaSelectTeaser" element={<OkinawaSelectTeaser />} />
+
+{/* 最後に汎用テンプレ */}
+<Route path="/works/:slug" element={<WorkDetail />} />
+
 
           {/* 料金 */}
           <Route path="/price" element={<PriceDetail />} />

@@ -88,7 +88,7 @@ export const worksData = [
     items: [
        {
         title: "Lucent Salon",
-        slug: "lucent-salon",
+        slug: "Lucent",
 
         desc: "透明な光 × ミニマル。\n美容 × 透明感をUIへ落とし込んだ設計。",
         link: "https://lucent-salon.vercel.app",
@@ -297,7 +297,7 @@ export const worksData = [
 
       {
         title: "Okinawa Select — Modern Okinawan Objects",
-        slug: "okinawa-select",
+        slug: "OkinawaSelectTeaser",
 
         desc: "沖縄素材 × 上質ミニマル。\n右スライドCart・ContextAPI管理・PC/SP完全分離など最新EC技術を統合したプロトタイプ。",
         link: "https://okinawa-select.vercel.app",
