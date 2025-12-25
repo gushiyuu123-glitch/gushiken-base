@@ -280,20 +280,3 @@ body.scrolled .ambient-glow::after {
 .works-card:hover {
   opacity: 1;
 }
-
-/* 1枚目だけ「入口」演出 */
-.works-card.is-first {
-  position: relative;
-}
-.works-card.is-first::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background: linear-gradient(
-    135deg,
-    rgba(255,240,200,0.18),
-    transparent 55%
-  );
-  border-radius: inherit;
-}
