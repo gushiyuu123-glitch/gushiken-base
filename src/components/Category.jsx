@@ -54,13 +54,19 @@ export default function Category({ title, subtitle, children, itemsRaw = [] }) {
 
       {/* SP 横スク */}
       <div className="sm:hidden w-full relative mb-16 pt-4">
-        <div
-          className="
-            flex overflow-x-auto no-scrollbar
-            snap-x snap-mandatory scroll-smooth
-            gap-5 px-5
-          "
-        >
+   <div
+  className="
+    flex
+    overflow-x-auto overflow-y-hidden
+    no-scrollbar
+    snap-x snap-mandatory
+    scroll-smooth
+    gap-5 px-5
+    [touch-action:pan-x]
+    overscroll-contain
+  "
+>
+
           {items.map((child, index) => (
             <div
               key={index}
