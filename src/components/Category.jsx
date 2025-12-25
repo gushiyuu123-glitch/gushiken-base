@@ -52,33 +52,40 @@ export default function Category({ title, subtitle, children, itemsRaw = [] }) {
         </p>
       </div>
 
-      {/* SP 横スク */}
-      <div className="sm:hidden w-full relative mb-16 pt-4">
-   <div
-  className="
-    flex
-    overflow-x-auto overflow-y-hidden
-    no-scrollbar
-    snap-x snap-mandatory
-    scroll-smooth
-    gap-5 px-5
-    [touch-action:pan-x]
-    overscroll-contain
-  "
->
-
-          {items.map((child, index) => (
-            <div
-              key={index}
-              className={`flex-shrink-0 ${getCardWidth(title)} ${
-                index === 0 ? "snap-start" : "snap-center"
-              }`}
-            >
-              {child}
-            </div>
-          ))}
+{/* SP 横スク（Apple Music 思想） */}
+<div className="sm:hidden w-full relative mb-16 pt-4">
+  {/* 縦スクロールの逃げ場を残す */}
+  <div className="relative px-1">
+    <div
+      className="
+        flex
+        overflow-x-auto overflow-y-hidden
+        no-scrollbar
+        snap-x snap-mandatory
+        gap-5 px-4 py-3
+        overscroll-x-contain
+        scroll-smooth
+      "
+      style={{
+        WebkitOverflowScrolling: "touch", // iOS慣性
+      }}
+    >
+      {items.map((child, index) => (
+        <div
+          key={index}
+          className={`
+            flex-shrink-0
+            ${getCardWidth(title)}
+            ${index === 0 ? "snap-start" : "snap-center"}
+          `}
+        >
+          {child}
         </div>
-      </div>
+      ))}
+    </div>
+  </div>
+</div>
+
 
       {/* PC GRID */}
       <div className="hidden sm:grid grid-cols-2 xl:grid-cols-3 gap-x-12 gap-y-16">
