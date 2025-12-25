@@ -447,7 +447,7 @@ export const worksData = [
 
       {
         title: "ACTIVE DAYS",
-        slug: "active-days",
+        slug: "ActiveDays",
 
         desc: "黒 × スポーティ × 都会的。\nフィットネス特有の動感をUIへ構築。",
         link: "https://active-days.vercel.app",
