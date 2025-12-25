@@ -280,3 +280,9 @@ body.scrolled .ambient-glow::after {
 .works-card:hover {
   opacity: 1;
 }
+/* 横スクロール内ではフェード演出を殺す */
+.works-rail .aq-fade,
+.works-rail [class*="aq-"] {
+  opacity: 1 !important;
+  transform: none !important;
+}
