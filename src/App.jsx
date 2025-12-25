@@ -28,6 +28,7 @@ import AburiyaItto from "./pages/works/AburiyaItto";
 import Koti from "./pages/works/Koti";
 import ActiveDays from "./pages/works/ActiveDays";
 import FineOkinawa from "./pages/works/FineOkinawa";
+import RyukaIntro from "./pages/works/RyukaIntro";
 
 import PriceDetail from "./pages/PriceDetail";
 
@@ -85,6 +86,7 @@ function Layout() {
 <Route path="/works/Koti" element={<Koti />} />
 <Route path="/works/ActiveDays" element={<ActiveDays />} />
 <Route path="/works/FineOkinawa" element={<FineOkinawa />} />
+<Route path="/works/RyukaIntro" element={<RyukaIntro />} />
 
 {/* 最後に汎用テンプレ */}
 <Route path="/works/:slug" element={<WorkDetail />} />

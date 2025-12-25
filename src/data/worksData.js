@@ -511,7 +511,7 @@ export const worksData = [
     items: [
       {
         title: "RYUKA — Fragrance",
-        slug: "ryuka",
+        slug: "RyukaIntro",
 
         desc: "自然光 × 琉球の香り。\n香りの余韻を“余白”で可視化した抽象的ブランド表現。",
         link: "https://ryuka-official.vercel.app",
