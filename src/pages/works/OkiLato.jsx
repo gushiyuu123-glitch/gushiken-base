@@ -24,6 +24,38 @@ export default function OkiLato() {
         text-[#69bbff]
       "
     >
+      <script
+  type="application/ld+json"
+  dangerouslySetInnerHTML={{
+    __html: JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "CreativeWork",
+      "@id": "https://gushikendesign.com/works/oki-lato#creativework",
+      "name": "OkiLato｜Island Freshness Gelato Brand Site",
+      "description":
+        "沖縄の光、海の透明感、果実の色と温度感をUIの余白と淡色グラデーションで翻訳した、ジェラートブランドのコンセプトサイト。味そのものではなく、冷たさの中に残る『余韻』を体験として設計した。",
+      "creator": {
+        "@type": "Person",
+        "name": "裕人 具志堅",
+        "alternateName": "Yuto Gushiken",
+        "url": "https://gushikendesign.com/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "GUSHIKEN DESIGN",
+        "url": "https://gushikendesign.com/"
+      },
+      "inLanguage": "ja",
+      "url": "https://gushikendesign.com/works/oki-lato",
+      "isBasedOn": {
+        "@type": "WebSite",
+        "name": "OkiLato Official Site",
+        "url": "https://oki-lato.vercel.app/"
+      }
+    })
+  }}
+/>
+
 {/* =========================
     HERO — White × Aqua × Fruit（No Black）
 ========================= */}

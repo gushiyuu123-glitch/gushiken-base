@@ -43,6 +43,38 @@ export default function Lucent() {
 
   return (
     <section className="min-h-screen pb-28 bg-[#f6f2eb] text-[#3a2f28]">
+      <script
+  type="application/ld+json"
+  dangerouslySetInnerHTML={{
+    __html: JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "CreativeWork",
+      "@id": "https://gushikendesign.com/works/lucent#creativework",
+      "name": "Hair Salon LUCENT｜Quiet Salon Concept Teaser",
+      "description":
+        "光・静寂・ラインを軸に設計したヘアサロンのコンセプトティーザーページ。説明ではなく、余白と光の体験によってブランド空気を先に届ける構成。",
+      "creator": {
+        "@type": "Person",
+        "name": "裕人 具志堅",
+        "alternateName": "Yuto Gushiken",
+        "url": "https://gushikendesign.com/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "GUSHIKEN DESIGN",
+        "url": "https://gushikendesign.com/"
+      },
+      "inLanguage": "ja",
+      "url": "https://gushikendesign.com/works/lucent",
+      "isBasedOn": {
+        "@type": "WebSite",
+        "name": "Hair Salon LUCENT Official Site",
+        "url": "https://lucent-salon.vercel.app/"
+      }
+    })
+  }}
+/>
+
       {/* =========================
           TEASER HERO
       ========================= */}

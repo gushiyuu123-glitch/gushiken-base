@@ -9,6 +9,37 @@ export default function NoirLux() {
 
   return (
     <section className="bg-[#050505] text-white min-h-screen pb-36">
+<script
+  type="application/ld+json"
+  dangerouslySetInnerHTML={{
+    __html: JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "CreativeWork",
+      "@id": "https://gushikendesign.com/works/noir-lux#creativework",
+      "name": "NOIR & LUX｜Shadow Edition Luxury Brand EC Design",
+      "description":
+        "影を主役に据え、黒の静寂と光の縁のみで構成したミニマル・ラグジュアリーECデザイン。彫刻的な陰影、緊張感のある余白、超低速のパララックスによって『時間が止まるEC体験』を設計したコンセプト作品。",
+      "creator": {
+        "@type": "Person",
+        "name": "裕人 具志堅",
+        "alternateName": "Yuto Gushiken",
+        "url": "https://gushikendesign.com/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "GUSHIKEN DESIGN",
+        "url": "https://gushikendesign.com/"
+      },
+      "inLanguage": "ja",
+      "url": "https://gushikendesign.com/works/noir-lux",
+      "isBasedOn": {
+        "@type": "WebSite",
+        "name": "NOIR & LUX Official Site",
+        "url": "https://noir-lux.vercel.app/"
+      }
+    })
+  }}
+/>
 
       {/* =========================================================
           HERO — Silent Shadow × Dior Glow Line

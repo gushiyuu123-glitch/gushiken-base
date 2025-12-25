@@ -9,6 +9,49 @@ export default function CapeOkinawa() {
 
   return (
     <section className="bg-[#f7fafc] text-[#0f0f0f] min-h-screen pb-48">
+<script
+  type="application/ld+json"
+  dangerouslySetInnerHTML={{
+    __html: JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "CreativeWork",
+      "@id": "https://gushikendesign.com/works/cape-okinawa#creativework",
+      "name": "CAPE OKINAWA｜Seaside Cafe Website Concept",
+      "description":
+        "沖縄の海光・透明感・静寂をテーマに、カフェ体験を展示のように見せるコンセプトWebサイト。写真主体の構成の中で、余白・光・色温度・粒度を統一し、視覚体験が途切れないUIを設計。",
+      "genre": [
+        "Cafe Website Design",
+        "Exhibition Style Web Design",
+        "Seaside Concept UI"
+      ],
+      "keywords": [
+        "沖縄 カフェ Webデザイン",
+        "海 カフェ サイト",
+        "ミニマル カフェ LP",
+        "展示型 Webデザイン",
+        "静寂 UI デザイン"
+      ],
+      "creator": {
+        "@type": "Person",
+        "name": "裕人 具志堅",
+        "alternateName": "Yuto Gushiken",
+        "url": "https://gushikendesign.com/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "GUSHIKEN DESIGN",
+        "url": "https://gushikendesign.com/"
+      },
+      "inLanguage": "ja",
+      "isBasedOn": {
+        "@type": "WebSite",
+        "name": "CAPE OKINAWA Concept Site",
+        "url": "https://cape-okinawa.vercel.app/"
+      },
+      "url": "https://gushikendesign.com/works/cape-okinawa"
+    })
+  }}
+/>
 
       {/* =========================================================
           HERO — 海光 × 透明感 × 静寂（完成版）

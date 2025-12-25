@@ -16,6 +16,42 @@ export default function NeutralObjectsTeaser() {
 
   return (
     <section className="bg-[#f7f5f1] text-[#2f2a25]">
+      <script
+  type="application/ld+json"
+  dangerouslySetInnerHTML={{
+    __html: JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "CreativeWork",
+      "@id": "https://gushikendesign.com/works/neutral-objects#teaser",
+      "name": "NEUTRAL OBJECTS｜Quiet Objects Concept (Teaser)",
+      "description":
+        "語らない物、主張しないかたち。暮らしの速度を少し落とすために設計された、静かなオブジェクト群を扱うコンセプト・コマースサイトのティーザーページ。全体像ではなく断片のみを提示する予告作品。",
+      "creator": {
+        "@type": "Person",
+        "name": "裕人 具志堅",
+        "alternateName": "Yuto Gushiken",
+        "url": "https://gushikendesign.com/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "GUSHIKEN DESIGN",
+        "url": "https://gushikendesign.com/"
+      },
+      "inLanguage": "ja",
+      "url": "https://gushikendesign.com/works/neutral-objects",
+      "isBasedOn": {
+        "@type": "WebSite",
+        "name": "NEUTRAL OBJECTS",
+        "url": "https://neutral-objects.vercel.app/"
+      },
+      "isPartOf": {
+        "@type": "CreativeWork",
+        "name": "NEUTRAL OBJECTS｜Quiet Objects Concept"
+      }
+    })
+  }}
+/>
+
       {/* =========================
           HERO
       ========================= */}

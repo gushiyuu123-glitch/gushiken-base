@@ -9,6 +9,38 @@ export default function OkinawaWhiteSpa() {
 
   return (
     <section className="bg-[#fbfcfd] text-[#0f141a] min-h-screen pb-40">
+      <script
+  type="application/ld+json"
+  dangerouslySetInnerHTML={{
+    __html: JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "CreativeWork",
+      "@id": "https://gushikendesign.com/works/okinawa-white-spa#creativework",
+      "name": "Okinawa White Spa｜Private Spa Experience Design",
+      "description":
+        "白を『明るさ』ではなく『静けさ』として扱い、UIの重心・余白・光の階調で『整う体験』を設計したプライベートスパLP。情報量を削ぎ落としながら、上質さが持続する画面温度を構築。",
+      "creator": {
+        "@type": "Person",
+        "name": "裕人 具志堅",
+        "alternateName": "Yuto Gushiken",
+        "url": "https://gushikendesign.com/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "GUSHIKEN DESIGN",
+        "url": "https://gushikendesign.com/"
+      },
+      "inLanguage": "ja",
+      "url": "https://gushikendesign.com/works/okinawa-white-spa",
+      "isBasedOn": {
+        "@type": "WebSite",
+        "name": "Okinawa White Spa Official Site",
+        "url": "https://okinawa-white-spa.vercel.app/"
+      }
+    })
+  }}
+/>
+
       {/* =========================================================
           HERO — White × Silence × Private Retreat（PC/SP 分離）
           ※ Header 固定でも文字が隠れないように “pt” を入れる

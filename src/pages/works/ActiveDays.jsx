@@ -17,6 +17,49 @@ export default function ActiveDays() {
 
   return (
     <section className="min-h-screen bg-[#f7f8f9] text-[#0f1418] pb-32">
+<script
+  type="application/ld+json"
+  dangerouslySetInnerHTML={{
+    __html: JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "CreativeWork",
+      "@id": "https://gushikendesign.com/works/active-days#creativework",
+      "name": "ACTIVE DAYS｜24H Fitness Gym Website Design",
+      "description":
+        "24時間フィットネスジムを想定したWebサイトデザイン作品。都会的でクリーンな空気感と、無理なく続けられる静かなトレーニング体験を、ガラス表現と余白設計を軸にUIとして構築。",
+      "genre": [
+        "Fitness Gym Website Design",
+        "Minimal Urban Web Design",
+        "Service Landing Page"
+      ],
+      "keywords": [
+        "24時間ジム Webデザイン",
+        "フィットネス サイト デザイン",
+        "ミニマル ジム UI",
+        "都会的 クリーン デザイン",
+        "サービス LP デザイン"
+      ],
+      "creator": {
+        "@type": "Person",
+        "name": "裕人 具志堅",
+        "alternateName": "Yuto Gushiken",
+        "url": "https://gushikendesign.com/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "GUSHIKEN DESIGN",
+        "url": "https://gushikendesign.com/"
+      },
+      "inLanguage": "ja",
+      "isBasedOn": {
+        "@type": "WebSite",
+        "name": "ACTIVE DAYS Concept Site",
+        "url": "https://active-days.vercel.app/"
+      },
+      "url": "https://gushikendesign.com/works/active-days"
+    })
+  }}
+/>
 
       {/* =========================
           HERO

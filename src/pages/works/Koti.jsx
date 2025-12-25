@@ -25,6 +25,50 @@ export default function Koti() {
         text-[#141312]
       "
     >
+      <script
+  type="application/ld+json"
+  dangerouslySetInnerHTML={{
+    __html: JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "CreativeWork",
+      "@id": "https://gushikendesign.com/works/koti#creativework",
+      "name": "KOTI｜Quiet Living Furniture Concept Site",
+      "description":
+        "北欧の暮らしに着想した、光・余白・木の温度を中心に設計された家具ブランドのコンセプトサイト。プロダクトを売るのではなく、空間と静けさを体験として提示するUI設計。",
+      "genre": [
+        "Furniture Brand Design",
+        "Interior Web Design",
+        "Concept Website"
+      ],
+      "keywords": [
+        "家具 ブランドサイト",
+        "北欧 インテリア デザイン",
+        "静かなWebデザイン",
+        "余白 UI",
+        "コンセプトサイト"
+      ],
+      "creator": {
+        "@type": "Person",
+        "name": "裕人 具志堅",
+        "alternateName": "Yuto Gushiken",
+        "url": "https://gushikendesign.com/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "GUSHIKEN DESIGN",
+        "url": "https://gushikendesign.com/"
+      },
+      "inLanguage": "ja",
+      "isBasedOn": {
+        "@type": "WebSite",
+        "name": "KOTI Official Concept Site",
+        "url": "https://koti-beta.vercel.app/"
+      },
+      "url": "https://gushikendesign.com/works/koti"
+    })
+  }}
+/>
+
       {/* =========================
           HERO — Beige × White × Black × Wood
       ========================= */}

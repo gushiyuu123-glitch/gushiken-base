@@ -7,6 +7,49 @@ export default function GoldenVeil() {
 
   return (
     <>
+    <script
+  type="application/ld+json"
+  dangerouslySetInnerHTML={{
+    __html: JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "CreativeWork",
+      "@id": "https://gushikendesign.com/works/golden-veil#creativework",
+      "name": "GOLDEN VEIL｜BLACK ORIETTA Fragrance Concept Page",
+      "description":
+        "闇の中に黄金の気配だけを残す、フレグランスブランド BLACK ORIETTA のコンセプト作品。香りそのものではなく、香りが残す余白と静けさをUIで表現した体験型ページ。",
+      "genre": [
+        "Fragrance Brand Concept",
+        "Luxury Experience Design",
+        "Minimal Concept Website"
+      ],
+      "keywords": [
+        "フレグランス ブランドサイト",
+        "ラグジュアリー Webデザイン",
+        "香水 コンセプトサイト",
+        "静かなデザイン",
+        "ミニマル UI"
+      ],
+      "creator": {
+        "@type": "Person",
+        "name": "裕人 具志堅",
+        "alternateName": "Yuto Gushiken",
+        "url": "https://gushikendesign.com/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "GUSHIKEN DESIGN",
+        "url": "https://gushikendesign.com/"
+      },
+      "inLanguage": "ja",
+      "isBasedOn": {
+        "@type": "WebSite",
+        "name": "BLACK ORIETTA Official Site",
+        "url": "https://black-orietta.vercel.app/"
+      },
+      "url": "https://gushikendesign.com/works/golden-veil"
+    })
+  }}
+/>
       {/* =========================================================
           GLOBAL GOLD EFFECT — Hero〜Outline 限定（時間減衰）
       ========================================================= */}

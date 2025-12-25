@@ -8,6 +8,37 @@ export default function Still() {
 
   return (
     <section className="bg-[#f7f7f8] text-[#0e0e0e] min-h-screen pb-44">
+<script
+  type="application/ld+json"
+  dangerouslySetInnerHTML={{
+    __html: JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "CreativeWork",
+      "@id": "https://gushikendesign.com/works/still#creativework",
+      "name": "STILL｜Minimal Fashion EC Design",
+      "description":
+        "黒・緊張・建築構図を軸に、ファッションの静かな強さをUIへ翻訳したミニマルECデザイン。光の入り方、陰影の角度、縦ラインのリズムを建築写真の原理で精密に設計したコンセプト作品。",
+      "creator": {
+        "@type": "Person",
+        "name": "裕人 具志堅",
+        "alternateName": "Yuto Gushiken",
+        "url": "https://gushikendesign.com/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "GUSHIKEN DESIGN",
+        "url": "https://gushikendesign.com/"
+      },
+      "inLanguage": "ja",
+      "url": "https://gushikendesign.com/works/still",
+      "isBasedOn": {
+        "@type": "WebSite",
+        "name": "STILL Fashion EC Site",
+        "url": "https://still-ec.vercel.app/"
+      }
+    })
+  }}
+/>
 
       {/* =========================================================
           HERO — Black × Architecture × Mode Precision

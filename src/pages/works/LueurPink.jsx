@@ -8,6 +8,38 @@ export default function LueurPink() {
 
   return (
     <section className="min-h-screen pb-36 text-[#1b1b1b] bg-[#fff7fb]">
+      <script
+  type="application/ld+json"
+  dangerouslySetInnerHTML={{
+    __html: JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "CreativeWork",
+      "@id": "https://gushikendesign.com/works/lueur-pink#creativework",
+      "name": "LUEUR PINK｜Soft Pink Salon Experience Website Design",
+      "description":
+        "柔らかなピンクの空気感で、サロンの『安心・やさしさ・期待』を体験として届けるコンセプトLP。余白、丸み、淡いグラデーションによって緊張をほどき、自然に予約へ向かう静かな導線を設計した。",
+      "creator": {
+        "@type": "Person",
+        "name": "裕人 具志堅",
+        "alternateName": "Yuto Gushiken",
+        "url": "https://gushikendesign.com/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "GUSHIKEN DESIGN",
+        "url": "https://gushikendesign.com/"
+      },
+      "inLanguage": "ja",
+      "url": "https://gushikendesign.com/works/lueur-pink",
+      "isBasedOn": {
+        "@type": "WebSite",
+        "name": "LUEUR PINK Official Site",
+        "url": "https://lueur-pink.vercel.app/"
+      }
+    })
+  }}
+/>
+
       {/* =========================================================
           HERO — Soft Pink × Experience
       ========================================================= */}

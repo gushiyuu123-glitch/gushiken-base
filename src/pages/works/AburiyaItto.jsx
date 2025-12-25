@@ -16,6 +16,51 @@ export default function AburiyaItto() {
 
   return (
     <section className="min-h-screen bg-[#0b0b0b] text-[#f2efe9] pb-32">
+      <script
+  type="application/ld+json"
+  dangerouslySetInnerHTML={{
+    __html: JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "CreativeWork",
+      "@id": "https://gushikendesign.com/works/aburiya-itto#creativework",
+      "name": "炭屋 一灯｜Izakaya Concept Website Design",
+      "alternateName": "ABURIYA ITTO",
+      "description":
+        "炭火居酒屋を想定したコンセプトサイトのWebデザイン作品。炭の熱と闇の静けさを軸に、光量を抑えたUI設計と余韻を重視した構成で、料理と人の距離が自然に近づく体験を表現。",
+      "genre": [
+        "Izakaya Website Design",
+        "Restaurant Concept Web Design",
+        "Japanese Minimal Web Design"
+      ],
+      "keywords": [
+        "居酒屋 Webデザイン",
+        "飲食店 サイト デザイン",
+        "和モダン UI",
+        "炭火 居酒屋 デザイン",
+        "レストラン LP デザイン"
+      ],
+      "creator": {
+        "@type": "Person",
+        "name": "裕人 具志堅",
+        "alternateName": "Yuto Gushiken",
+        "url": "https://gushikendesign.com/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "GUSHIKEN DESIGN",
+        "url": "https://gushikendesign.com/"
+      },
+      "inLanguage": "ja",
+      "isBasedOn": {
+        "@type": "WebSite",
+        "name": "Aburiya Itto Concept Site",
+        "url": "https://aburiya-itto.vercel.app/"
+      },
+      "url": "https://gushikendesign.com/works/aburiya-itto"
+    })
+  }}
+/>
+
       {/* =========================
           HERO
       ========================= */}

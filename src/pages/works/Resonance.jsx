@@ -8,6 +8,37 @@ export default function Resonance() {
 
   return (
     <section className="bg-[#f8fafc] text-[#0e0e0e] min-h-screen pb-32">
+<script
+  type="application/ld+json"
+  dangerouslySetInnerHTML={{
+    __html: JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "CreativeWork",
+      "@id": "https://gushikendesign.com/works/resonance#creativework",
+      "name": "RÉSONANCE｜Cinematic Restaurant Experience Design",
+      "description":
+        "料理の温度変化をUIに翻訳した、静かなシネマティック・レストランLP。光・温度・静寂を軸に、余白と明度の密度だけで夜の深度を設計した体験型Webデザイン。",
+      "creator": {
+        "@type": "Person",
+        "name": "裕人 具志堅",
+        "alternateName": "Yuto Gushiken",
+        "url": "https://gushikendesign.com/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "GUSHIKEN DESIGN",
+        "url": "https://gushikendesign.com/"
+      },
+      "inLanguage": "ja",
+      "url": "https://gushikendesign.com/works/resonance",
+      "isBasedOn": {
+        "@type": "WebSite",
+        "name": "RÉSONANCE Restaurant Site",
+        "url": "https://resonance-restaurant.vercel.app/"
+      }
+    })
+  }}
+/>
 
       {/* =========================================================
           HERO — White × Clean × Cinematic Silence（300点）

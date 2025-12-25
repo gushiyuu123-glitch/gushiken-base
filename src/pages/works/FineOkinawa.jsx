@@ -30,6 +30,50 @@ export default function FineOkinawa() {
         color: C.ink,
       }}
     >
+      <script
+  type="application/ld+json"
+  dangerouslySetInnerHTML={{
+    __html: JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "CreativeWork",
+      "@id": "https://gushikendesign.com/works/fine-okinawa#creativework",
+      "name": "FINE Okinawa｜Calm Marriage & Encounter Salon Website",
+      "description":
+        "40〜50代を中心とした沖縄の結婚相談・出会いサロン『FINE Okinawa』のWebサイト制作実績。落ち着き・信頼・再出発を軸に、静かな余白と読みやすさで安心感を設計したコンセプト詳細ページ。",
+      "genre": [
+        "Marriage Salon Website",
+        "Service Website Design",
+        "Calm UX Design"
+      ],
+      "keywords": [
+        "結婚相談所 Webサイト",
+        "婚活 サイトデザイン",
+        "40代 50代 婚活",
+        "安心感 UX",
+        "落ち着いた Webデザイン"
+      ],
+      "creator": {
+        "@type": "Person",
+        "name": "裕人 具志堅",
+        "alternateName": "Yuto Gushiken",
+        "url": "https://gushikendesign.com/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "GUSHIKEN DESIGN",
+        "url": "https://gushikendesign.com/"
+      },
+      "inLanguage": "ja",
+      "isBasedOn": {
+        "@type": "WebSite",
+        "name": "FINE Okinawa Official Site",
+        "url": "https://www.fine-okinawa.com/"
+      },
+      "url": "https://gushikendesign.com/works/fine-okinawa"
+    })
+  }}
+/>
+
       {/* =========================
           HERO — Calm / Trust / Restart
       ========================= */}

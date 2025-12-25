@@ -31,6 +31,42 @@ export default function OkinawaSelectTeaser() {
 
   return (
     <section className="min-h-screen bg-[#f6f3ee] text-[#231f1b] pb-28">
+      <script
+  type="application/ld+json"
+  dangerouslySetInnerHTML={{
+    __html: JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "CreativeWork",
+      "@id": "https://gushikendesign.com/works/okinawa-select#teaser",
+      "name": "OKINAWA SELECT｜Quiet Commerce Concept (Teaser)",
+      "description":
+        "沖縄の素材を『商品』ではなく『暮らしの空気』として再編集する、静かなコンセプト・コマースサイトのティーザーページ。本編に入る前の予告として、余白と構図のみで世界観を提示する。",
+      "creator": {
+        "@type": "Person",
+        "name": "裕人 具志堅",
+        "alternateName": "Yuto Gushiken",
+        "url": "https://gushikendesign.com/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "GUSHIKEN DESIGN",
+        "url": "https://gushikendesign.com/"
+      },
+      "inLanguage": "ja",
+      "url": "https://gushikendesign.com/works/okinawa-select",
+      "isBasedOn": {
+        "@type": "WebSite",
+        "name": "OKINAWA SELECT",
+        "url": "https://okinawa-select.vercel.app/"
+      },
+      "isPartOf": {
+        "@type": "CreativeWork",
+        "name": "OKINAWA SELECT｜Quiet Commerce Concept"
+      }
+    })
+  }}
+/>
+
       {/* =========================
           HERO (IMG_01)
       ========================= */}

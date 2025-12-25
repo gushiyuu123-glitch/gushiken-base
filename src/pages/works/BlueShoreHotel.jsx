@@ -17,6 +17,49 @@ export default function BlueShoreHotel() {
 
   return (
     <section className="bg-white text-[#0e0e0e]">
+<script
+  type="application/ld+json"
+  dangerouslySetInnerHTML={{
+    __html: JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "CreativeWork",
+      "@id": "https://gushikendesign.com/works/blue-shore-hotel#creativework",
+      "name": "BLUE SHORE HOTEL｜Luxury Hotel Landing Page Design",
+      "description":
+        "沖縄リゾートを想定したラグジュアリーホテルのランディングページデザイン。淡い水色の階調と余白を軸に、静かな滞在体験と上質なリゾート空気感をUIとして表現した作品。",
+      "genre": [
+        "Hotel Landing Page Design",
+        "Luxury Resort Web Design",
+        "Minimal Resort UI"
+      ],
+      "keywords": [
+        "ホテル LP デザイン",
+        "リゾート Webデザイン",
+        "ラグジュアリーホテル UI",
+        "沖縄 ホテル デザイン",
+        "静寂 ミニマル Web"
+      ],
+      "creator": {
+        "@type": "Person",
+        "name": "裕人 具志堅",
+        "alternateName": "Yuto Gushiken",
+        "url": "https://gushikendesign.com/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "GUSHIKEN DESIGN",
+        "url": "https://gushikendesign.com/"
+      },
+      "inLanguage": "ja",
+      "isBasedOn": {
+        "@type": "WebSite",
+        "name": "Blue Shore Hotel Concept LP",
+        "url": "https://lux-hotel-lp.vercel.app/"
+      },
+      "url": "https://gushikendesign.com/works/blue-shore-hotel"
+    })
+  }}
+/>
 
       {/* SEO HIDDEN HEADING */}
       <h2 className="sr-only">
