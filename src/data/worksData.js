@@ -320,7 +320,7 @@ export const worksData = [
 
       {
         title: "Neutral Objects — Lifestyle Brand",
-        slug: "neutral-objects",
+        slug: "NeutralObjectsTeaser",
 
         desc: "光 × 余白 × 静けさ。\nオブジェ写真を中心に据えた編集型EC。",
         link: "https://neutral-objects.vercel.app",
