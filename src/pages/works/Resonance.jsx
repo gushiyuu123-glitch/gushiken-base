@@ -7,10 +7,10 @@ export default function Resonance() {
   }, []);
 
   return (
-    <section className="bg-[#0b0b0c] text-white min-h-screen pb-32">
+    <section className="bg-[#f8fafc] text-[#0e0e0e] min-h-screen pb-32">
 
       {/* =========================================================
-          HERO — Bright Silent Cinematic（300点）
+          HERO — White × Clean × Cinematic Silence（300点）
       ========================================================= */}
       <div className="relative w-full overflow-hidden">
 
@@ -18,29 +18,30 @@ export default function Resonance() {
         <div className="block md:hidden w-full aspect-[4/5] relative">
           <img
             src="/works1/resonance-hero1.png"
-            alt="RÉSONANCE — Restaurant"
+            alt="RÉSONANCE — Restaurant Experience Design"
             className="
               absolute inset-0 w-full h-full
-              object-cover object-center
-              brightness-[0.88]
-              contrast-[0.92]
+              object-cover
+              brightness-[0.96]
+              contrast-[0.95]
               scale-[1.04]
             "
           />
 
+          {/* 清潔な白ベール */}
           <div
             className="
               absolute inset-0
               bg-gradient-to-b
-              from-[#0b0b0c]/80 via-[#0b0b0c]/40 to-[#0b0b0c]/90
+              from-white/85 via-white/40 to-white/10
             "
           />
 
-          <div className="absolute bottom-10 left-6">
-            <h1 className="text-[2.1rem] tracking-[0.25em] font-light mb-2">
+          <div className="absolute bottom-10 left-6 right-6">
+            <h1 className="text-[2.05rem] tracking-[0.22em] font-light leading-[1.15]">
               RÉSONANCE
             </h1>
-            <p className="text-white/55 tracking-[0.30em] text-[0.7rem]">
+            <p className="mt-2 text-black/55 tracking-[0.28em] text-[0.7rem] leading-relaxed">
               CINEMATIC EXPERIENCE DESIGN
             </p>
           </div>
@@ -48,105 +49,97 @@ export default function Resonance() {
 
         {/* ===== PC ===== */}
         <div className="hidden md:block w-full h-[92vh] relative">
-
-          {/* メインビジュアル */}
           <img
             src="/works1/resonance-hero1.png"
-            alt="RÉSONANCE — Restaurant"
+            alt="RÉSONANCE — Restaurant Experience Design"
             className="
               absolute inset-0 w-full h-full
               object-cover
-              brightness-[0.92]
-              contrast-[0.94]
+              brightness-[0.98]
+              contrast-[0.96]
               scale-[1.05]
               transform-gpu
             "
           />
 
-          {/* 透明×静寂のシネマグラデ */}
+          {/* 白→透明のシネマベール */}
           <div
             className="
               absolute inset-0
               bg-gradient-to-b
-              from-[#0b0b0c]/45 via-[#0b0b0c]/20 to-[#0b0b0c]/88
+              from-white/60 via-white/32 to-transparent
             "
           />
 
-          <div className="absolute bottom-24 left-[clamp(48px,10vw,170px)]">
-            <h1 className="text-[4rem] tracking-[0.26em] font-light mb-5">
+          <div className="absolute bottom-24 left-[clamp(48px,10vw,170px)] max-w-[720px]">
+            <h1 className="text-[4rem] tracking-[0.26em] font-light mb-4 leading-[1.1]">
               RÉSONANCE
             </h1>
-            <p className="text-white/55 tracking-[0.32em] text-[1rem]">
+            <p className="text-black/55 tracking-[0.32em] text-[1rem] leading-relaxed">
               CINEMATIC EXPERIENCE DESIGN
             </p>
           </div>
         </div>
       </div>
 
-
-
       {/* =========================================================
-          OUTLINE — “温度 × 静けさ × 余白” の翻訳
+          OUTLINE — 温度 × 静けさ × 余白
       ========================================================= */}
       <div className="max-w-4xl mx-auto px-8 md:px-0 mt-32 mb-28">
-        <h2 className="text-[0.95rem] tracking-[0.32em] text-white/40 mb-10">
+        <h2 className="text-[0.95rem] tracking-[0.32em] text-black/40 mb-10">
           PROJECT OUTLINE
         </h2>
 
         <p
           className="
-            text-[1.14rem]
+            text-[1.12rem]
             leading-[2.55]
-            text-white/90
+            text-black/85
             font-light
             whitespace-pre-line
           "
         >
 {`光 × 温度 × 静寂。
 
-“料理の温度変化”を UI へ翻訳した
-静かなシネマティックLP。
+料理の“温度変化”を UI に翻訳した、
+静かなシネマティック・レストランLP。
 
 影のコントラストを抑え、
-視線が“漂う”ように構成し、
+視線がゆっくり漂うように構成し、
 
-明るさと影の密度で
-夜の深度を設計した UI。
+明るさと影の“密度”だけで
+夜の深度を設計した。
 
-見せすぎない演出で、
-余白の美しさを残した時間デザイン。`}
+見せすぎず、語りすぎない。
+余白が記憶に残る時間デザイン。`}
         </p>
 
-        <div className="mt-10 text-white/35 text-[0.82rem] leading-relaxed">
-          <p>Tech — React / Vite / Tailwind / GSAP Silent Scroll / Soft Contrast UI</p>
+        <div className="mt-10 text-black/45 text-[0.82rem] leading-relaxed tracking-[0.12em]">
+          <p>TECH — React / Vite / Tailwind / GSAP Silent Scroll</p>
         </div>
       </div>
 
-
-
       {/* =========================================================
-          VISUAL — 1枚展示 “Empty Silence Layout”
+          VISUAL — Single Exhibition（清潔×余韻）
       ========================================================= */}
       <div className="max-w-5xl mx-auto px-8 md:px-0 mt-24">
-        <div className="relative overflow-hidden border border-white/10 rounded-sm">
+        <div className="relative overflow-hidden  border border-black/10 bg-white">
           <img
             src="/works1/resonance1.webp"
-            alt="Resonance Visual 1"
+            alt="Resonance Interior Visual"
             className="
               w-full
               object-cover
-              brightness-[0.95]
-              contrast-[0.92]
+              brightness-[0.96]
+              contrast-[0.94]
             "
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-transparent to-[#0b0b0c]/25" />
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/12" />
         </div>
       </div>
 
-
-
       {/* =========================================================
-          CTA — 静かに光が溶けるボタン
+          CTA — Clean Minimal Button
       ========================================================= */}
       <div className="text-center mt-32">
         <a
@@ -158,10 +151,10 @@ export default function Resonance() {
             px-14 py-4
             text-[0.88rem]
             tracking-[0.32em]
-            border border-white/20
-            hover:border-white/60
+            border border-black/20
             rounded-full
-            hover:shadow-[0_0_26px_rgba(255,255,255,0.25)]
+            hover:border-black/50
+            hover:shadow-[0_0_30px_rgba(0,0,0,0.12)]
             hover:-translate-y-[2px]
             transition-all duration-500
           "
