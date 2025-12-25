@@ -424,7 +424,7 @@ export const worksData = [
 
       {
         title: "Koti — Furniture",
-        slug: "koti",
+        slug: "Koti",
 
         desc: "北欧の光 × 木の温度。\n柔らかな北欧光をUIに落とし込んだ家具ブランド。",
         link: "https://koti-beta.vercel.app",
