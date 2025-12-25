@@ -2,6 +2,33 @@
 import React, { useEffect, useMemo } from "react";
 import { Link } from "react-router-dom";
 
+/* =========================
+   Primary CTA（全箇所共通）
+========================= */
+const PrimaryCTA = ({ className = "" }) => (
+  <a
+    href="https://lucent-salon.vercel.app/"
+    target="_blank"
+    rel="noopener noreferrer"
+    className={`
+      inline-flex items-center
+      px-7 py-[11px]
+      rounded-full
+      bg-[#3a2f28]/95
+      text-[#f6f2eb]
+      text-[0.74rem]
+      tracking-[0.34em]
+      shadow-[0_12px_40px_rgba(58,47,40,0.14)]
+      hover:bg-[#3a2f28]
+      hover:shadow-[0_18px_60px_rgba(58,47,40,0.18)]
+      transition-all duration-500
+      ${className}
+    `}
+  >
+    ENTER THE SITE →
+  </a>
+);
+
 export default function Lucent() {
   useEffect(() => window.scrollTo(0, 0), []);
 
@@ -17,73 +44,49 @@ export default function Lucent() {
   return (
     <section className="min-h-screen pb-28 bg-[#f6f2eb] text-[#3a2f28]">
       {/* =========================
-          TEASER HERO (Trailer)
+          TEASER HERO
       ========================= */}
-<div className="relative w-full overflow-hidden">
-  {/* ===== SP ===== */}
-  <div className="block md:hidden w-full aspect-[4/5] relative">
-    <img
-      src={assets.hero}
-      alt="Hair Salon LUCENT — Teaser"
-      className="
-        absolute inset-0 w-full h-full object-cover
-        object-[50%_48%]
-        brightness-[0.99] contrast-[0.97]
-        scale-[1.02] transform-gpu
-      "
-    />
+      <div className="relative w-full overflow-hidden">
+        {/* ===== SP ===== */}
+        <div className="block md:hidden w-full aspect-[4/5] relative">
+          <img
+            src={assets.hero}
+            alt="Hair Salon LUCENT — Teaser"
+            className="
+              absolute inset-0 w-full h-full object-cover
+              object-[50%_48%]
+              brightness-[0.99] contrast-[0.97]
+              scale-[1.02] transform-gpu
+            "
+          />
 
-    {/* Veil（少し軽く） */}
-    <div className="absolute inset-0 bg-gradient-to-b from-white/30 via-[#f6f2eb]/48 to-[#f6f2eb]/88" />
-    <div className="absolute inset-0 bg-[radial-gradient(circle_at_72%_22%,rgba(255,255,255,0.48),transparent_60%)]" />
+          {/* Veil */}
+          <div className="absolute inset-0 bg-gradient-to-b from-white/30 via-[#f6f2eb]/48 to-[#f6f2eb]/88" />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_72%_22%,rgba(255,255,255,0.48),transparent_60%)]" />
 
-    {/* Text block */}
-    <div className="absolute bottom-16 left-5 right-5">
-      <p className="text-[0.62rem] tracking-[0.36em] text-[#6a5b50]">
-        WORKS — HAIR SALON CONCEPT SITE
-      </p>
+          {/* Text */}
+          <div className="absolute bottom-16 left-5 right-5">
+            <p className="text-[0.62rem] tracking-[0.36em] text-[#6a5b50]">
+              WORKS — HAIR SALON CONCEPT SITE
+            </p>
 
-      <h1 className="mt-2.5 text-[1.9rem] tracking-[0.20em] font-light leading-[1.06]">
-        LUCENT
-      </h1>
+            <h1 className="mt-2.5 text-[1.9rem] tracking-[0.20em] font-light leading-[1.06]">
+              LUCENT
+            </h1>
 
-      <p className="mt-3 text-[#6a5b50] tracking-[0.30em] text-[0.68rem]">
-        LIGHT / SILENCE / LINE
-      </p>
+            <p className="mt-3 text-[#6a5b50] tracking-[0.30em] text-[0.68rem]">
+              LIGHT / SILENCE / LINE
+            </p>
 
-      <p className="mt-4 text-[#3a2f28]/78 text-[0.88rem] leading-[2.15] max-w-[30ch]">
-        光が、髪に触れる時間。
-        <br />
-        説明ではなく、体験として設計した。
-      </p>
+            <p className="mt-4 text-[#3a2f28]/78 text-[0.88rem] leading-[2.15] max-w-[30ch]">
+              光が、髪に触れる時間。
+              <br />
+              説明ではなく、体験として設計した。
+            </p>
 
- <div className="mt-20 flex justify-start">
-  <a
-    href="https://lucent-salon.vercel.app/"
-    target="_blank"
-    rel="noopener noreferrer"
-    className="
-      inline-flex items-center
-      px-6 py-[11px]
-      rounded-full
-
-       bg-[#3a2f28]
-      text-[#f6f2eb]
-
-      text-[0.74rem]
-      tracking-[0.36em]
-
-      shadow-[0_14px_48px_rgba(58,47,40,0.16)]
-
-      hover:bg-[#3a2f28]/94
-      hover:shadow-[0_18px_60px_rgba(58,47,40,0.18)]
-
-      transition-all duration-500
-    "
-  >
-    ENTER THE SITE →
-  </a>
-</div>
+            <div className="mt-16">
+              <PrimaryCTA />
+            </div>
           </div>
         </div>
 
@@ -126,26 +129,7 @@ export default function Lucent() {
             </p>
 
             <div className="mt-12 flex items-center gap-8">
-              <a
-                href="https://lucent-salon.vercel.app/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="
-                  inline-flex justify-center
-                  px-12 py-[14px]
-                  rounded-full
-                  bg-[#3a2f28]
-                  text-[#f6f2eb]
-                  text-[0.82rem]
-                  tracking-[0.30em]
-                  shadow-[0_26px_90px_rgba(58,47,40,0.22)]
-                  hover:-translate-y-[2px]
-                  transition
-                "
-              >
-                ENTER THE SITE →
-              </a>
-
+              <PrimaryCTA className="px-12 py-[14px] text-[0.82rem]" />
               <div className="h-px w-28 bg-gradient-to-r from-[#3a2f28]/55 to-transparent" />
               <span className="text-[0.72rem] tracking-[0.30em] text-[#6a5b50]">
                 A QUIET TRAILER PAGE
@@ -156,7 +140,7 @@ export default function Lucent() {
       </div>
 
       {/* =========================
-          TEASER STRIP
+          TRAILER CUTS
       ========================= */}
       <div className="max-w-5xl mx-auto px-7 md:px-10 pt-24">
         <div className="border-t border-[#3a2f28]/10 pt-16">
@@ -171,7 +155,7 @@ export default function Lucent() {
           </p>
 
           <div className="mt-14 grid md:grid-cols-12 gap-12 items-start">
-            {/* Keywords */}
+            {/* Words */}
             <div className="md:col-span-5">
               <div className="rounded-[22px] border border-[#3a2f28]/12 bg-white/45 p-8 shadow-[0_26px_90px_rgba(58,47,40,0.08)]">
                 <p className="text-[0.78rem] tracking-[0.34em] text-[#6a5b50]">
@@ -194,48 +178,21 @@ export default function Lucent() {
             <div className="md:col-span-7">
               <div className="grid gap-12">
                 <img
-                  src={assets.teaser1 || assets.hero}
+                  src={assets.teaser1}
                   alt="LUCENT trailer cut 1"
                   className="rounded-[22px] shadow-[0_40px_120px_rgba(58,47,40,0.10)]"
                 />
                 <img
-                  src={assets.teaser2 || assets.hero}
+                  src={assets.teaser2}
                   alt="LUCENT trailer cut 2"
                   className="rounded-[22px] shadow-[0_40px_120px_rgba(58,47,40,0.10)] md:translate-x-6"
                 />
               </div>
             </div>
           </div>
- <div className="mt-20 flex justify-center">
-  <a
-    href="https://lucent-salon.vercel.app/"
-    target="_blank"
-    rel="noopener noreferrer"
-    className="
-      inline-flex items-center
-      px-6 py-[11px]
-      rounded-full
 
-       bg-[#3a2f28]
-      text-[#f6f2eb]
-
-      text-[0.74rem]
-      tracking-[0.36em]
-
-      shadow-[0_14px_48px_rgba(58,47,40,0.16)]
-
-      hover:bg-[#3a2f28]/94
-      hover:shadow-[0_18px_60px_rgba(58,47,40,0.18)]
-
-      transition-all duration-500
-    "
-  >
-    ENTER THE SITE →
-  </a>
-</div>
-
-          <div className="text-center pt-20">
-            
+          {/* Back */}
+          <div className="text-center pt-24">
             <Link
               to="/works"
               className="text-[#6a5b50] hover:text-[#3a2f28] tracking-[0.28em] text-[0.78rem]"
