@@ -86,30 +86,7 @@ export const worksData = [
     category: "SMARTPHONE / MOBILE DESIGN",
     subtitle: "スマホでの体験を最優先したUI設計",
     items: [
-      {
-        title: "OkiLato — Island Freshness",
-        slug: "okilato",
-
-        desc: "南国 × ターコイズ。\nスマホ特化レイアウトで体験を最適化。",
-        link: "https://oki-lato.vercel.app",
-        img: "/works/okilato.webp",
-
-        isNew: false,
-        createdAt: null,
-
-        tags: [
-          "沖縄", "青", "海", "光", "ミニマル",
-          "Smartphone", "Branding",
-          "Motion"
-        ],
-
-        detail: {
-          concept: "ターコイズの清涼感と南国光をスマホ特化レイアウトに最適化し、軽快に閲覧できる感覚的UIを構築。",
-          tech: ["React", "Vite", "Tailwind", "GSAP", "Smartphone特化"]
-        }
-      },
-
-      {
+       {
         title: "Lucent Salon",
         slug: "lucent-salon",
 
@@ -130,7 +107,29 @@ export const worksData = [
           concept: "透明光のニュアンスをUIに抽象化し、美容系らしい“透け感 × 清潔感”をミニマルで表現した設計。",
           tech: ["React", "Vite", "Tailwind", "GSAP", "Light Animation", "Smartphone特化"]
         }
-      }
+      },
+      {
+        title: "OkiLato — Island Freshness",
+        slug: "OkiLato",
+
+        desc: "南国 × ターコイズ。\nスマホ特化レイアウトで体験を最適化。",
+        link: "https://oki-lato.vercel.app",
+        img: "/works/okilato.webp",
+
+        isNew: false,
+        createdAt: null,
+
+        tags: [
+          "沖縄", "青", "海", "光", "ミニマル",
+          "Smartphone", "Branding",
+          "Motion"
+        ],
+
+        detail: {
+          concept: "ターコイズの清涼感と南国光をスマホ特化レイアウトに最適化し、軽快に閲覧できる感覚的UIを構築。",
+          tech: ["React", "Vite", "Tailwind", "GSAP", "Smartphone特化"]
+        }
+      },
     ]
   },
 

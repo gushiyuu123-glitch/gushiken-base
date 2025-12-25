@@ -20,6 +20,7 @@ import CapeOkinawa from "./pages/works/CapeOkinawa";
 import OkinawaWhiteSpa from "./pages/works/OkinawaWhiteSpa";
 import LueurPink from "./pages/works/LueurPink";
 import GoldenVeil from "./pages/works/GoldenVeil";
+import OkiLato from "./pages/works/OkiLato";
 
 import PriceDetail from "./pages/PriceDetail";
 
@@ -69,6 +70,7 @@ function Layout() {
           <Route path="/works/OkinawaWhiteSpa" element={<OkinawaWhiteSpa />} />
            <Route path="/works/LueurPink" element={<LueurPink />} />
            <Route path="/works/GoldenVeil" element={<GoldenVeil />} />
+            <Route path="/works/OkiLato" element={<OkiLato />} />
 
           {/* 料金 */}
           <Route path="/price" element={<PriceDetail />} />
