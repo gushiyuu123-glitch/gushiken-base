@@ -110,7 +110,23 @@ export default function LueurPink() {
             </p>
 
             <div className="flex items-center gap-3">
+
+
               <a
+                href="#visuals"
+                className="
+                  inline-flex items-center justify-center
+                  px-10 py-4 rounded-full
+                  bg-white/70 text-[#1b1b1b]
+                  text-[0.82rem] tracking-[0.18em]
+                  border border-[#ff5a8b]/15
+                  hover:bg-white
+                  transition-all duration-500
+                "
+              >
+                SEE VISUALS
+              </a>
+                            <a
                 href="https://lueur-pink.vercel.app/"
                 target="_blank"
                 rel="noopener noreferrer"
@@ -126,21 +142,6 @@ export default function LueurPink() {
                 "
               >
                 VISIT SITE →
-              </a>
-
-              <a
-                href="#visuals"
-                className="
-                  inline-flex items-center justify-center
-                  px-10 py-4 rounded-full
-                  bg-white/70 text-[#1b1b1b]
-                  text-[0.82rem] tracking-[0.18em]
-                  border border-[#ff5a8b]/15
-                  hover:bg-white
-                  transition-all duration-500
-                "
-              >
-                SEE VISUALS
               </a>
             </div>
           </div>
