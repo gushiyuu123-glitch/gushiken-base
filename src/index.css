@@ -244,3 +244,56 @@ body.scrolled .ambient-glow::after {
 .animate-goldBeam {
   animation: goldBeam 14s linear infinite;
 }
+/* ===============================
+   Horizontal Rail – Apple Feel
+================================ */
+
+/* レール全体 */
+.works-rail {
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+}
+
+/* スナップの止まりを強く */
+.works-card {
+  scroll-snap-stop: always;
+  transition:
+    transform 0.35s cubic-bezier(.22,.61,.36,1),
+    box-shadow 0.35s cubic-bezier(.22,.61,.36,1),
+    opacity 0.3s ease;
+  opacity: 0.96;
+}
+
+/* 横スク中：カードが少し浮く */
+.works-rail:active .works-card {
+  transform: translateY(-2px) scale(0.985);
+  box-shadow: 0 12px 32px rgba(0,0,0,0.35);
+}
+
+/* 指を離した後 */
+.works-rail:not(:active) .works-card {
+  transform: translateY(0) scale(1);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.25);
+}
+
+/* フォーカスされてる感（中央付近） */
+.works-card:hover {
+  opacity: 1;
+}
+
+/* 1枚目だけ「入口」演出 */
+.works-card.is-first {
+  position: relative;
+}
+.works-card.is-first::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    135deg,
+    rgba(255,240,200,0.18),
+    transparent 55%
+  );
+  border-radius: inherit;
+}
