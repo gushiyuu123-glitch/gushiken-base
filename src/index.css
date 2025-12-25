@@ -286,7 +286,3 @@ body.scrolled .ambient-glow::after {
   opacity: 1 !important;
   transform: none !important;
 }
-.aq-fade {
-  opacity: 1;          /* ← 重要 */
-  transform: none;
-}
