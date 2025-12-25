@@ -157,19 +157,20 @@ export default function WorkItem({
               {desc}
             </p>
 
-            <span
-              className="
-                text-white/60 text-[0.72rem]
-                tracking-[0.26em]
-                inline-block mt-1
-                transition-all duration-[600ms]
-                group-hover:tracking-[0.34em]
-                group-hover:text-white/90
-                transform-gpu
-              "
-            >
-              VIEW SITE →
-            </span>
+           <span
+  className="
+    text-white/60 text-[0.72rem]
+    tracking-[0.26em]
+    inline-block mt-1
+    transition-all duration-[600ms]
+    group-hover:tracking-[0.34em]
+    group-hover:text-white/90
+    transform-gpu
+  "
+>
+  作品詳細へ →
+</span>
+
           </div>
         </div>
       </Tag>
