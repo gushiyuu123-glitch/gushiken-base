@@ -347,22 +347,7 @@ export default function LueurPink() {
             </p>
 
             <div className="flex flex-col md:flex-row items-center justify-center gap-3">
-        
-              <a
-                href="/works"
-                className="
-                  inline-flex items-center justify-center
-                  px-12 py-4 rounded-full
-                  bg-white/80 text-[#1b1b1b]
-                  text-[0.84rem] tracking-[0.22em]
-                  border border-[#ff5a8b]/15
-                  hover:bg-white
-                  transition-all duration-500
-                  w-full md:w-auto
-                "
-              >
-                ← BACK TO WORKS
-              </a>
+ 
                     <a
                 href="https://lueur-pink.vercel.app/"
                 target="_blank"
@@ -381,7 +366,22 @@ export default function LueurPink() {
               >
                 VISIT SITE →
               </a>
-
+       
+              <a
+                href="/works"
+                className="
+                  inline-flex items-center justify-center
+                  px-12 py-4 rounded-full
+                  bg-white/80 text-[#1b1b1b]
+                  text-[0.84rem] tracking-[0.22em]
+                  border border-[#ff5a8b]/15
+                  hover:bg-white
+                  transition-all duration-500
+                  w-full md:w-auto
+                "
+              >
+                ← BACK TO WORKS
+              </a>
             </div>
           </div>
 
