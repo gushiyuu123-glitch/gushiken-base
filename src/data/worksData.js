@@ -401,7 +401,7 @@ export const worksData = [
 
       {
         title: "Aburiya Itto",
-        slug: "aburiya-itto",
+        slug: "AburiyaItto",
 
         desc: "和 × 炙り × ラグジュアリー。\n和の陰影を活かした料理ブランディング。",
         link: "https://aburiya-itto.vercel.app",

@@ -24,6 +24,7 @@ import OkiLato from "./pages/works/OkiLato";
 import Lucent from "./pages/works/Lucent";
 import OkinawaSelectTeaser from "./pages/works/OkinawaSelectTeaser";
 import NeutralObjectsTeaser from "./pages/works/NeutralObjectsTeaser";
+import AburiyaItto from "./pages/works/AburiyaItto";
 
 import PriceDetail from "./pages/PriceDetail";
 
@@ -77,6 +78,7 @@ function Layout() {
 <Route path="/works/Lucent" element={<Lucent />} />
 <Route path="/works/OkinawaSelectTeaser" element={<OkinawaSelectTeaser />} />
 <Route path="/works/NeutralObjectsTeaser" element={<NeutralObjectsTeaser />} />
+<Route path="/works/AburiyaItto" element={<AburiyaItto />} />
 
 {/* 最後に汎用テンプレ */}
 <Route path="/works/:slug" element={<WorkDetail />} />
