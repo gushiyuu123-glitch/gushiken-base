@@ -114,23 +114,40 @@ export default function HeroSP() {
             mb-4
           "
         />
+{/* ---- Subtitle ---- */}
+<p
+  className="
+    elegant-sub delay-[0.3s]
+    text-white/90
+    text-[1.05rem] md:text-[1.1rem]
+    leading-[1.7]
+    tracking-wide
+    max-w-[82%]
+  "
+>
+  普通じゃ物足りない人のための、<br />
+  上品で“伝わるサイト制作”。
 
-        {/* ---- Subtitle ---- */}
-        <p
-          className="
-            elegant-sub delay-[0.3s]
-            text-white/90
-            text-[1.05rem]
-            leading-[1.7]
-            tracking-wide
-            max-w-[82%]
-          "
-        >
-          普通じゃ物足りない人のための、<br />
-          上品で“伝わるサイト制作”。
-        </p>
+  {/* SP用サブコピー */}
+  <span
+    className="
+      block md:hidden
+      mt-3
+      text-white/65
+      text-[0.85rem]
+      tracking-[0.12em]
+    "
+  >
+    ブランド・店舗・個人事業向け Webデザイン
+  </span>
+</p>
+
+
       </div>
-
+{/* ===== SP Scroll Hint ===== */}
+<div className="md:hidden absolute bottom-6 left-1/2 -translate-x-1/2 pointer-events-none">
+  <div className="scroll-hint" />
+</div>
       {/* ===== Animations ===== */}
       <style>{`
         @keyframes heroFloatSP {

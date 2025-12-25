@@ -96,7 +96,7 @@
 
 /* Dior hover zoom */
 .work-card:hover {
-  transform: translateY(-6px) scale(1.04);
+  transform: translateY(-5px) scale(1.035);
   box-shadow: 0 18px 40px rgba(0,0,0,0.18);
 }
 
@@ -121,12 +121,12 @@
   left: 0;
   width: 100%;
 
-  background: linear-gradient(
-    to top,
-    rgba(0,0,0,0.38),
-    rgba(0,0,0,0.20),
-    rgba(0,0,0,0)
-  );
+background: linear-gradient(
+  to top,
+  rgba(0,0,0,0.42),
+  rgba(0,0,0,0.18),
+  rgba(0,0,0,0)
+);
 
   padding: 24px 22px;
   color: white;
@@ -356,4 +356,7 @@
     z-index: 40;
     pointer-events: none;
   }
+}
+.works-viewall {
+  margin-bottom: 3rem;
 }

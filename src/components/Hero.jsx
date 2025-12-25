@@ -3,7 +3,8 @@ import hero from "../assets/hero3.png";
 
 export default function Hero() {
   return (
-    <section className="relative w-full h-[92vh] md:h-screen overflow-hidden">
+<section className="relative w-full h-[92vh] md:h-screen overflow-hidden pb-[8rem]">
+
 
       {/* ===== 背景 ===== */}
       <div className="absolute inset-0 overflow-hidden">
@@ -106,21 +107,34 @@ export default function Hero() {
             w-20 h-[1px] bg-white/60 mb-5
           "
         />
+{/* ---- Copy ---- */}
+<p
+  className="
+    stylish-sub delay-[0.32s]
+    text-white/90
+    text-[0.9rem] md:text-[1.15rem]
+    leading-relaxed
+    tracking-wide
+    max-w-md
+  "
+>
+  普通じゃ物足りない人のための、<br />
+  上品で“伝わるサイト制作”。
 
-        {/* ---- Copy ---- */}
-        <p
-          className="
-            stylish-sub delay-[0.32s]
-            text-white/90
-            text-[0.9rem] md:text-[1.15rem]
-            leading-relaxed
-            tracking-wide
-            max-w-md
-          "
-        >
-          普通じゃ物足りない人のための、<br />
-          上品で“伝わるサイト制作”。
-        </p>
+  {/* PC用：思想タグライン */}
+  <span
+    className="
+      hidden md:block
+      mt-4
+      text-white/60
+      text-[0.82em]
+      tracking-[0.14em]
+    "
+  >
+    世界観を設計し、構造で届けるWebデザイン
+  </span>
+</p>
+
       </div>
 
       {/* ===== Keyframes ===== */}
@@ -206,6 +220,7 @@ export default function Hero() {
           }
         }
       `}</style>
+      
     </section>
   );
 }
