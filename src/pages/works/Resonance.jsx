@@ -125,7 +125,7 @@ export default function Resonance() {
       <div className="max-w-5xl mx-auto px-8 md:px-0 mt-24">
         <div className="relative overflow-hidden  border border-black/10 bg-white">
           <img
-            src="/works1/resonance1.webp"
+            src="/works1/resonance1.png"
             alt="Resonance Interior Visual"
             className="
               w-full

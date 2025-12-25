@@ -106,7 +106,7 @@ export default function CapeOkinawa() {
         <div>
           <div className="relative overflow-hidden rounded-[22px] border border-black/10 shadow-[0_0_30px_rgba(0,0,0,0.05)]">
             <img
-              src="/works1/okinawa2.webp"
+              src="/works1/okinawa2.png"
               alt="Okinawa sea light minimal cafe atmosphere"
               className="w-full object-cover brightness-[1.07]"
             />
