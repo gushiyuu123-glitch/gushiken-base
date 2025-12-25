@@ -7,9 +7,25 @@
     <lastmod>2025-01-26</lastmod>
   </url>
 
-  <!-- WORKS -->
+  <!-- WORKS LIST -->
   <url>
     <loc>https://gushikendesign.com/works</loc>
+    <lastmod>2025-01-26</lastmod>
+  </url>
+
+  <!-- FEATURED WORKS -->
+  <url>
+    <loc>https://gushikendesign.com/works/ryuka</loc>
+    <lastmod>2025-01-26</lastmod>
+  </url>
+
+  <url>
+    <loc>https://gushikendesign.com/works/noirlux</loc>
+    <lastmod>2025-01-26</lastmod>
+  </url>
+
+  <url>
+    <loc>https://gushikendesign.com/works/okinawa-white-spa</loc>
     <lastmod>2025-01-26</lastmod>
   </url>
 
