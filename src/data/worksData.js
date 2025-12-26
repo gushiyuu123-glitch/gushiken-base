@@ -166,7 +166,7 @@ export const worksData = [
 
       {
         title: "Okinawa Resort Hotel",
-        slug: "okinawa-resort-hotel",
+        slug: "OkinawaLightResortHotel",
 
         desc: "光と青のホテルLP。\n沖縄の朝光を再現したビジュアル設計。",
         link: "https://okinawa-hotel.vercel.app",
@@ -189,7 +189,7 @@ export const worksData = [
 
       {
         title: "Horizon Blanc",
-        slug: "horizon-blanc",
+        slug: "HorizonBlanc",
 
         desc: "朝光 × 静寂。\n白の階調を活かした余白デザイン。",
         link: "https://okinawa-resort-hotel.vercel.app",
@@ -212,7 +212,7 @@ export const worksData = [
 
       {
         title: "The Calm Okinawa",
-        slug: "the-calm-okinawa",
+        slug: "TheCalmOkinawa",
 
         desc: "海 × 透明感 × 静寂。\n水面の光をUIへ抽象化した構成。",
         link: "https://the-calm-okinawa.vercel.app",
@@ -533,7 +533,7 @@ export const worksData = [
 
       {
         title: "The Flow of Tea",
-        slug: "flow-of-tea",
+        slug: "FlowOfTea",
 
         desc: "茶 × 余白 × 世界観。\n茶の所作を静かに伝える構成美。",
         link: "https://flow-of-tea.vercel.app",
@@ -555,7 +555,7 @@ export const worksData = [
 
       {
         title: "Ray of Silence",
-        slug: "ray-of-silence",
+        slug: "RayOfSilence",
 
         desc: "光 × 影 × 静寂。\nミニマル光学のアート表現。",
         link: "https://ray-of-silence.vercel.app",

@@ -29,6 +29,12 @@ import Koti from "./pages/works/Koti";
 import ActiveDays from "./pages/works/ActiveDays";
 import FineOkinawa from "./pages/works/FineOkinawa";
 import RyukaIntro from "./pages/works/RyukaIntro";
+import OkinawaLightResortHotel from "./pages/works/OkinawaLightResortHotel";
+import HorizonBlanc from "./pages/works/HorizonBlanc";
+import TheCalmOkinawa from "./pages/works/TheCalmOkinawa";
+import FlowOfTea from "./pages/works/FlowOfTea";
+import RayOfSilence from "./pages/works/RayOfSilence";
+
 
 import PriceDetail from "./pages/PriceDetail";
 
@@ -87,6 +93,11 @@ function Layout() {
 <Route path="/works/ActiveDays" element={<ActiveDays />} />
 <Route path="/works/FineOkinawa" element={<FineOkinawa />} />
 <Route path="/works/RyukaIntro" element={<RyukaIntro />} />
+<Route path="/works/OkinawaLightResortHotel" element={<OkinawaLightResortHotel />} />
+<Route path="/works/HorizonBlanc" element={<HorizonBlanc />} />
+<Route path="/works/TheCalmOkinawa" element={<TheCalmOkinawa />} />
+<Route path="/works/FlowOfTea" element={<FlowOfTea />} />
+<Route path="/works/RayOfSilence" element={<RayOfSilence />} />
 
 {/* 最後に汎用テンプレ */}
 <Route path="/works/:slug" element={<WorkDetail />} />
