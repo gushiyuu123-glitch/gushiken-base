@@ -88,7 +88,7 @@ export default function NoirLux() {
               absolute inset-0 w-full h-full
               object-cover
               brightness-[0.75]
-              scale-[1.06]
+              scale-[1.04]
               transform-gpu
             "
           />
@@ -202,7 +202,7 @@ export default function NoirLux() {
             tracking-[0.32em]
             border border-white/25
             hover:border-white/60
-            hover:shadow-[0_0_30px_rgba(255,255,255,0.25)]
+            hover:shadow-[0_0_30px_rgba(255,255,255,0.18)]
             transition-all duration-500
           "
         >

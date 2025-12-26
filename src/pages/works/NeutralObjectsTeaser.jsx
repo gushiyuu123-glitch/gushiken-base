@@ -67,7 +67,7 @@ export default function NeutralObjectsTeaser() {
         />
 
         {/* veil */}
-        <div className="absolute inset-0 bg-gradient-to-b from-white/35 via-white/45 to-[#f7f5f1]/90" />
+        <div className="absolute inset-0 bg-gradient-to-b from-white/30 via-white/40 to-[#f7f5f1]/90" />
 
         <div className="absolute bottom-[14vh] left-[clamp(24px,6vw,120px)] max-w-[720px]">
           <p className="text-[0.7rem] tracking-[0.38em] text-[#6b645d]">

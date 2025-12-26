@@ -85,51 +85,57 @@ return (
           </section>
 
           {/* ===== CONCEPT ===== */}
-          <TextBlock title="コンセプト">
-            <p>
-              琉香は、沖縄の海・光・風・琉球ガラス工芸から着想した
-              お土産用フレグランスブランドとして設計しています。
-            </p>
-            <p className="mt-6">
-              ターゲットは都会で暮らす20〜30代女性。
-              <br />
-              癒し・静けさ・透明感を軸に、
-              EC効率よりも<strong>世界観体験</strong>を優先しました。
-            </p>
-          </TextBlock>
+  <TextBlock title="コンセプト">
+  <p>
+    琉香は、沖縄の海・光・風・琉球ガラス工芸から着想した
+    フレグランスブランドのコンセプトサイトとして設計しました。
+  </p>
+  <p className="mt-6">
+    本作品では、購入率や回遊効率を優先するのではなく、
+    <strong>「香りに触れる前の記憶体験」</strong>を先に届けることを重視しています。
+  </p>
+  <p className="mt-6">
+    そのため、情報量はあえて抑え、
+    光・余白・写真の切り替わりによって
+    展示を見るような感覚をUI全体で設計しました。
+  </p>
+</TextBlock>
 
     {/* ===== HERO + GALLERY ===== */}
 <GalleryExhibition images={gallery} />
 
           {/* ===== SITE STRUCTURE ===== */}
-          <TextBlock title="サイト構造の特徴">
-            <ul className="list-disc list-inside space-y-3">
-              <li>Top（世界観の提示）</li>
-              <li>Store（取扱店舗）</li>
-              <li>Boutique（商品一覧）</li>
-              <li>商品詳細ページ</li>
-              <li>Story / Exhibit（香りの背景）</li>
-            </ul>
-            <p className="mt-6">
-              「世界観 → 商品 → 体験」という導線を重視した情報設計。
-              実案件にも転用可能な構造です。
-            </p>
-          </TextBlock>
+   <TextBlock title="サイト構造の特徴">
+  <ul className="list-disc list-inside space-y-3">
+    <li>Top：ブランド世界観の提示</li>
+    <li>Store：実在店舗・接点の明示</li>
+    <li>Boutique：香りを“選ぶ”導線</li>
+    <li>商品詳細：背景・物語を含めた展示設計</li>
+    <li>Story / Exhibit：香りの記憶を補完するコンテンツ</li>
+  </ul>
+  <p className="mt-6">
+    「世界観 → 香り → 体験」という順序を崩さないことで、
+    商材を扱いながらもブランディングを損なわない構造を意識しています。
+    実案件でも転用可能な情報設計です。
+  </p>
+</TextBlock>
+
 
           {/* ===== TECH ===== */}
-          <TextBlock title="技術的な見どころ">
-            <ul className="list-disc list-inside space-y-3">
-              <li>React によるコンポーネント設計</li>
-              <li>Day / Night 切り替え演出</li>
-              <li>ライトボックスによる展示体験</li>
-              <li>再利用性を意識した UI 構成</li>
-            </ul>
-            <p className="mt-6">
-              見た目だけでなく、
-              <strong>体験そのものをコードで設計</strong>
-              している点が本作品の強みです。
-            </p>
-          </TextBlock>
+ <TextBlock title="技術的な見どころ">
+  <ul className="list-disc list-inside space-y-3">
+    <li>React によるコンポーネント設計</li>
+    <li>Day / Night 切り替えによる時間演出</li>
+    <li>ライトボックスを用いた展示体験</li>
+    <li>再利用性を意識した UI 構成</li>
+  </ul>
+  <p className="mt-6">
+    見た目の演出ではなく、
+    <strong>「体験の流れ」をコードで制御</strong>することを意識しています。
+    演出と実装を切り離さずに設計している点が本作品の特徴です。
+  </p>
+</TextBlock>
+
 
           {/* ===== POSITION ===== */}
           <TextBlock title="作品の位置づけ">

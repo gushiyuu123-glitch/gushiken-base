@@ -108,22 +108,22 @@ export default function Still() {
           PROJECT OUTLINE
         </h2>
 
-        <p className="text-[1.15rem] leading-[2.45] text-black/85 font-light tracking-[0.004em]">
-          <span className="hidden md:block whitespace-pre-line">
+<p className="text-[1.15rem] leading-[2.45] text-black/85 font-light tracking-[0.004em] whitespace-pre-line">
 {`黒 × 緊張 × 建築構図。
 
 ファッションの“静かな強さ”を UI に翻訳するため、
-光の入り方・陰影の角度・縦ラインの伸びを
-建築写真の原理で精密に調整した。`}
-          </span>
+装飾的な演出は排し、
+構図・余白・光の入り方のみで画面を成立させることを意識した。
 
-          <span className="block md:hidden">
-            黒 × 緊張 × 建築構図。<br /><br />
-            ファッションの“静かな強さ”を UI に翻訳するため、
-            光の入り方や陰影の角度、縦ラインの伸びを
-            建築写真の原理で精密に調整した。
-          </span>
-        </p>
+黒は情報を隠すためではなく、
+視線を一点に集めるための「背景」として使用。
+縦ラインのリズム、影の角度、要素間の距離を
+建築写真の構図原理にならい精密に調整している。
+
+結果として、
+派手さはないが、スクロールするほど緊張感が持続する
+モードECの体験設計を目指した。`}
+</p>
 
         {/* SEO / Explanation */}
         <p className="mt-12 text-black/55 text-[0.95rem] leading-[2.4] font-light">

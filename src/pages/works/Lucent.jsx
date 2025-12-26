@@ -116,7 +116,7 @@ export default function Lucent() {
               説明ではなく、体験として設計した。
             </p>
 
-            <div className="mt-16">
+            <div className="mt-14">
               <PrimaryCTA />
             </div>
           </div>
@@ -145,7 +145,7 @@ export default function Lucent() {
             </p>
 
             <h1 className="mt-6 text-[4.2rem] tracking-[0.18em] font-light leading-[1.02]">
-              Hair Salon LUCENT
+              LUCENT
             </h1>
 
             <p className="mt-5 text-[#6a5b50] tracking-[0.30em] text-[0.92rem]">

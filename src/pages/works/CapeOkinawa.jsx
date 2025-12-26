@@ -173,7 +173,7 @@ export default function CapeOkinawa() {
                      hover:shadow-[0_0_30px_rgba(0,0,0,0.12)]
                      transition-all duration-700"
         >
-          VISIT SITE →
+          EXPERIENCE THE SITE →
         </a>
 
         <div className="mt-12">

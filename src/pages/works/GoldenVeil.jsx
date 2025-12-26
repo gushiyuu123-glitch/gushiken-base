@@ -146,7 +146,7 @@ export default function GoldenVeil() {
         {/* =========================================================
             OUTLINE — SP最適化済
         ========================================================= */}
-        <div className="max-w-4xl mx-auto px-8 md:px-0 mt-28 md:mt-32 mb-24 md:mb-28">
+        <div className="max-w-4xl mx-auto px-8 md:px-0 mt-28 md:mt-36 mb-24 md:mb-28">
           <h2 className="text-[0.92rem] tracking-[0.34em] text-white/40 mb-10">
             PROJECT OUTLINE
           </h2>

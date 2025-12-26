@@ -108,7 +108,7 @@ export default function LueurPink() {
               object-cover
               brightness-[1.02]
               saturate-[1.02]
-              scale-[1.06]
+              scale-[1.04]
               transform-gpu
             "
           />
@@ -167,7 +167,7 @@ export default function LueurPink() {
                   px-10 py-4 rounded-full
                   bg-[#ff5a8b] text-white
                   text-[0.82rem] tracking-[0.22em]
-                  shadow-[0_18px_50px_rgba(255,90,139,0.26)]
+                  shadow-[0_18px_50px_rgba(255,90,139,0.20)]
                   hover:shadow-[0_26px_80px_rgba(255,90,139,0.34)]
                   hover:translate-y-[-1px]
                   transition-all duration-500
