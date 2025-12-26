@@ -8,8 +8,8 @@ export default function RayOfSilence() {
   const assets = useMemo(
     () => ({
       hero: "/works1/ray-hero.png",
-      space: "/works1/ray_light.png", // 建築×光の象徴カット
-      after: "/works1/ray_room_b.png", // 余韻・静止
+      space: "/works1/ray_light.png",
+      after: "/works1/ray_room_b.png",
     }),
     []
   );
@@ -46,7 +46,7 @@ export default function RayOfSilence() {
       />
 
       {/* =========================
-         HERO — 光に入る
+         HERO
       ========================= */}
       <div className="relative h-[92vh] overflow-hidden">
         <img
@@ -67,7 +67,7 @@ export default function RayOfSilence() {
       </div>
 
       {/* =========================
-         CONCEPT — テキストのみ
+         CONCEPT
       ========================= */}
       <div className="max-w-4xl mx-auto px-8 pt-36">
         <p className="text-[0.7rem] tracking-[0.34em] text-[#8c8c8c]">
@@ -93,7 +93,7 @@ export default function RayOfSilence() {
       </div>
 
       {/* =========================
-         SPACE — 体験の断面
+         SPACE
       ========================= */}
       <div className="max-w-6xl mx-auto px-8 pt-40">
         <p className="text-[0.7rem] tracking-[0.34em] text-[#8c8c8c]">
@@ -108,7 +108,7 @@ export default function RayOfSilence() {
           <img
             src={assets.space}
             alt="Light and architecture"
-            className=" shadow-[0_40px_140px_rgba(0,0,0,0.16)]"
+            className="shadow-[0_40px_140px_rgba(0,0,0,0.16)]"
           />
 
           <p className="text-[#1e1e1e]/70 leading-[2.6]">
@@ -122,7 +122,7 @@ export default function RayOfSilence() {
       </div>
 
       {/* =========================
-         AFTERGLOW — 余韻
+         AFTERGLOW
       ========================= */}
       <div className="mt-44 relative h-[70vh]">
         <img
@@ -141,15 +141,36 @@ export default function RayOfSilence() {
       </div>
 
       {/* =========================
-         BACK
+         VISIT SITE
       ========================= */}
       <div className="py-28 text-center bg-[#0b0b0b]">
-        <Link
-          to="/works"
-          className="text-[#bfc7c9] hover:text-white tracking-[0.32em] text-[0.72rem]"
+        <a
+          href="https://ray-of-silence.vercel.app/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="
+            inline-flex items-center justify-center
+            px-14 py-[15px]
+            rounded-full
+            border border-white/25
+            text-white
+            text-[0.72rem]
+            tracking-[0.32em]
+            hover:bg-white hover:text-black
+            transition
+          "
         >
-          ← BACK TO WORKS
-        </Link>
+          VISIT SITE →
+        </a>
+
+        <div className="mt-14">
+          <Link
+            to="/works"
+            className="text-[#bfc7c9] hover:text-white tracking-[0.32em] text-[0.72rem]"
+          >
+            ← BACK TO WORKS
+          </Link>
+        </div>
       </div>
     </section>
   );
