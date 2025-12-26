@@ -277,7 +277,7 @@ export default function LueurPink() {
           "
         >
           <img
-            src="/works1/lueur-pink-1.webp"
+            src="/works1/lueur-pink-111.webp"
             className="w-full object-cover"
             alt="Lueur Pink Visual 1"
           />
@@ -296,7 +296,7 @@ export default function LueurPink() {
           "
         >
           <img
-            src="/works1/lueur-pink-2.jpg"
+            src="/works1/lueur-pink-222.webp"
             className="w-full object-cover"
             alt="Lueur Pink Visual 2"
           />
@@ -320,7 +320,7 @@ export default function LueurPink() {
             "
           >
             <img
-              src="/works1/lueur-pink-3.webp"
+              src="/works1/lueur-pink-333.webp"
               className="w-full object-cover"
               alt="Lueur Pink Visual 3"
             />
