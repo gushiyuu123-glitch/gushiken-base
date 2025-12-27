@@ -80,24 +80,28 @@ export default function Works() {
                 </p>
               </div>
             </a>
+{/* SMALL — RIN Eyelash Salon */}
+<a
+  href="https://rin-psi.vercel.app/"
+  target="_blank"
+  rel="noopener noreferrer"
+  className="work-card work-small aq-fade delay-4"
+>
+  <img
+    src="/assets/rin.webp"
+    alt="RIN Eyelash Salon"
+    loading="lazy"
+  />
+  <div className="work-text small">
+    <h3>RIN</h3>
+    <p>
+      Calm × Pause × Decision.
+      <br />
+      An eyelash salon website designed for people who hesitate.
+    </p>
+  </div>
+</a>
 
-            {/* SMALL — Okinawa White Spa */}
-            <a
-              href="https://okinawa-white-spa.vercel.app/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="work-card work-small aq-fade delay-4"
-            >
-              <img
-                src="/assets/spa.webp"
-                alt="Okinawa White Spa"
-                loading="lazy"
-              />
-              <div className="work-text small">
-                <h3>Okinawa White Spa</h3>
-                <p>White × Silence × Minimal Luxury.</p>
-              </div>
-            </a>
           </div>
         </div>
 

@@ -86,6 +86,46 @@ export const worksData = [
     category: "SMARTPHONE / MOBILE DESIGN",
     subtitle: "スマホでの体験を最優先したUI設計",
     items: [
+      {
+  title: "RIN — Eyelash Salon",
+  slug: "RINEyelashSalon",
+
+  desc: "迷い × 静けさ × 納得。\n“すぐ決めない人”のために設計した、思想主導のまつエクサイト。",
+  link: "https://rin-psi.vercel.app/",
+  img: "/works/rin.webp",
+
+  isNew: true,
+  createdAt: "2025-02-22",
+
+  tags: [
+    "NEW",
+    "静寂",
+    "余白",
+    "思想設計",
+    "Beauty",
+    "Salon",
+    "Smartphone",
+    "UX",
+    "Motion",
+    "GSAP",
+    "PC/SP 分離"
+  ],
+
+  detail: {
+    concept:
+      "『すぐに決めなくていい』という姿勢を起点に、迷いや不安を否定せず受け止める導線・言葉・余白で構成。美容サイトにありがちな圧を排除し、読む速度・感情の置き場・判断の余白までをUIとして設計した。",
+    tech: [
+      "React",
+      "Vite",
+      "Tailwind",
+      "GSAP",
+      "Scroll Animation",
+      "PC/SP 完全分離",
+      "microCMS（NEWS連携）"
+    ]
+  }
+},
+
        {
         title: "Lucent Salon",
         slug: "Lucent",
