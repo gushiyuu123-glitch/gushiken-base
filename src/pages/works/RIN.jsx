@@ -14,7 +14,7 @@ export default function RIN() {
       shot1: "/works1/rin-1.webp", // コンセプト（迷いのUX）
       shot2: "/works1/rin-2.webp", // 料金/情報の出し方
       shot3: "/works1/rin-3.webp", // Review/Contactあたり
-      shotSP: "/works1/rin-sp.webp", // SP版の見せ場（あれば）
+      shotSP: "/works1/rin-sp1.png", // SP版の見せ場（あれば）
     }),
     []
   );
