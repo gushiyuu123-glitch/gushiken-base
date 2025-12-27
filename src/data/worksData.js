@@ -88,7 +88,7 @@ export const worksData = [
     items: [
       {
   title: "RIN — Eyelash Salon",
-  slug: "RINEyelashSalon",
+  slug: "RIN",
 
   desc: "迷い × 静けさ × 納得。\n“すぐ決めない人”のために設計した、思想主導のまつエクサイト。",
   link: "https://rin-psi.vercel.app/",
