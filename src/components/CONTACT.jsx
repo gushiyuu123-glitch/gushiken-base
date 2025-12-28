@@ -27,11 +27,15 @@ export default function Contact() {
   }, []);
 
   return (
-    <section ref={sectionRef} id="contact" className="contact-section aq-fade">
+    <section
+      ref={sectionRef}
+      id="contact"
+      className="contact-section aq-fade"
+    >
       <div className="contact-container">
 
         {/* 金ライン */}
-        <div className="contact-gold-line"></div>
+        <div className="contact-gold-line" />
 
         {/* タイトル */}
         <h2 className="contact-title aq-fade delay-1" translate="no">
@@ -40,10 +44,16 @@ export default function Contact() {
 
         {/* リード */}
         <p className="contact-lead aq-fade delay-2">
-          「まず相談だけ」でも大丈夫です。<br />
-          お店の雰囲気や、なんとなくのイメージだけでも構いません。<br />
-          世界観・目的・構成を一緒に整理しながら、最適な形をご提案します。
+          このサイトの雰囲気や考え方に、<br />
+          少しでも共感いただけた方へ。
         </p>
+
+        {/* サブリード */}
+        <p className="contact-lead-sub aq-fade delay-3">
+          まだ整理しきれていなくても構いません。<br />
+          大まかなイメージや目的があれば十分です。
+        </p>
+
 
         {/* CTA */}
         <div className="contact-cta aq-fade delay-3">
@@ -52,30 +62,24 @@ export default function Contact() {
           </a>
         </div>
 
-        {/* サブ導線 */}
-        <div className="contact-sub-links aq-fade delay-4">
-          <p className="contact-sub-title">
-            もっと気軽に相談したい方へ
-          </p>
 
+        {/* サブ導線 */}
+        <div className="contact-sub-links aq-fade delay-5">
           <a
             href="https://line.me/ti/p/gD5Aj8QPPJ"
             className="contact-sub-link"
             target="_blank"
             rel="noopener noreferrer"
           >
-            LINEで気軽に相談する →
+            LINEで軽く相談する →
           </a>
-
-          <p className="contact-sub-note">
-            ※ まだ形になっていないアイデアでも大丈夫です。  
-          </p>
         </div>
 
-        {/* 注意 */}
-        <p className="contact-footer aq-fade delay-5">
-          ※ ご相談内容は秘密厳守で扱いますのでご安心ください。
+        {/* フッター注意 */}
+        <p className="contact-footer aq-fade delay-6">
+          ※ 内容によっては対応できない場合があります。
         </p>
+
       </div>
     </section>
   );

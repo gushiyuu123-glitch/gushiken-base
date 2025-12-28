@@ -142,3 +142,64 @@
     font-size: 1rem;
   }
 }
+/* =========================
+   CONTACT
+========================= */
+
+.contact-container {
+  max-width: 520px;
+  margin: 0 auto;
+  padding: 120px 24px 140px;
+  text-align: center;
+}
+
+/* タイトル */
+.contact-title {
+  letter-spacing: 0.32em;
+  font-weight: 300;
+  margin-bottom: 64px;
+}
+
+/* リード */
+.contact-lead {
+  font-size: 0.95rem;
+  line-height: 1.9;
+  margin-bottom: 32px;
+  opacity: 0.9;
+}
+
+/* サブリード */
+.contact-lead-sub {
+  font-size: 0.9rem;
+  line-height: 1.9;
+  margin-bottom: 72px;
+  opacity: 0.75;
+}
+
+/* CTA */
+.contact-cta {
+  margin-bottom: 56px;
+}
+
+/* サブ導線 */
+.contact-sub-links {
+  margin-bottom: 96px;
+}
+
+.contact-sub-link {
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
+  opacity: 0.65;
+  transition: opacity 0.3s ease;
+}
+
+.contact-sub-link:hover {
+  opacity: 1;
+}
+
+/* フッター注意 */
+.contact-footer {
+  font-size: 0.75rem;
+  opacity: 0.45;
+  letter-spacing: 0.04em;
+}
