@@ -2,44 +2,99 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8" />
-  <meta name="p:domain_verify" content="48dd0e90de53ad499404794fccf42239"/>
-   <!-- Google翻訳を完全無効化 -->
-    <meta name="google" content="notranslate" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+  <!-- Viewport -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+
+  <!-- Google翻訳を完全無効化 -->
+  <meta name="google" content="notranslate" />
+
+  <!-- Robots（表示品質含めて100%） -->
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+
+  <!-- Canonical -->
+  <link rel="canonical" href="https://gushikendesign.com/" />
+
+  <!-- ===============================
+       TITLE / DESCRIPTION（改行なしで安全）
+  =============================== -->
+  <title>沖縄のフリーランスWebデザイナー｜店舗/ホテル/サロンのホームページ制作｜GUSHIKEN DESIGN</title>
+
+  <meta
+    name="description"
+    content="沖縄のフリーランスWebデザイナー GUSHIKEN DESIGN。店舗・ホテル・サロン・個人事業のホームページ制作やLP制作を丁寧にデザイン。美しい世界観×見やすい構造で、伝わるWebサイトをReact/Viteで高速構築します。"
+  />
+
+  <!-- Keywords（補助：なくてもOKだが残すなら整形） -->
+  <meta
+    name="keywords"
+    content="沖縄 ホームページ制作,沖縄 Webデザイン,フリーランス デザイナー,LP制作,店舗サイト制作,サロンサイト制作,ホテルサイト制作,UIUXデザイン,React,Vite"
+  />
+
+  <meta name="author" content="GUSHIKEN DESIGN" />
+
+  <!-- Domain Verify -->
+  <meta name="p:domain_verify" content="48dd0e90de53ad499404794fccf42239" />
+
+  <!-- Google Search Console -->
+  <meta name="google-site-verification" content="iG_ZrJCqMsY5q1LbjYgdRdGnKp4rr3RKKLk7D8HNZ1w" />
+
+  <!-- ===============================
+       OGP（SNS崩れ防止：画像サイズ入れる）
+  =============================== -->
+  <meta property="og:title" content="沖縄のフリーランスWebデザイナー｜GUSHIKEN DESIGN" />
+  <meta property="og:description" content="店舗・サロン・ホテルなど、世界観を大切にしたホームページ制作。静かで上品なデザインを提供します。" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://gushikendesign.com/" />
+  <meta property="og:site_name" content="GUSHIKEN DESIGN" />
+  <meta property="og:locale" content="ja_JP" />
+
+  <!-- og:image（推奨: 1200x630） -->
+  <meta property="og:image" content="https://gushikendesign.com/ogp.png" />
+  <meta property="og:image:secure_url" content="https://gushikendesign.com/ogp.png" />
+  <meta property="og:image:type" content="image/png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="沖縄のフリーランスWebデザイナー｜GUSHIKEN DESIGN" />
+  <meta name="twitter:description" content="店舗・サロン・ホテルに強いWeb制作。世界観×見やすさを両立したデザイン。" />
+  <meta name="twitter:image" content="https://gushikendesign.com/ogp.png" />
+
+  <!-- ===============================
+       Favicon / App Icons（type/relも正しく）
+  =============================== -->
+  <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png" />
+  <link rel="icon" href="/favicon-16.png" sizes="16x16" type="image/png" />
+  <link rel="icon" href="/favicon-192.png" sizes="192x192" type="image/png" />
+  <link rel="icon" href="/favicon-512.png" sizes="512x512" type="image/png" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180" />
+  <meta name="theme-color" content="#ffffff" />
+
+  <!-- Manifest -->
+  <link rel="manifest" href="/manifest.json" />
 
   <!-- 初期フェード（FOUC防止） -->
   <style>
     #root { opacity: 0; transition: opacity .25s ease; }
     #root.show { opacity: 1; }
+    .visually-hidden {
+      position: absolute;
+      width: 1px; height: 1px;
+      margin: -1px; overflow: hidden;
+      clip: rect(0,0,0,0);
+      white-space: nowrap;
+      border: 0;
+      padding: 0;
+    }
   </style>
 
-  <!-- 基本設定 -->
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="robots" content="index, follow" />
-  <link rel="canonical" href="https://gushikendesign.com/" />
-
-  <!-- =============================== -->
-  <!-- 最適化 TITLE（検索クリック率UP） -->
-  <!-- =============================== -->
-  <title>
-    沖縄のフリーランスWebデザイナー｜店舗/ホテル/サロンのホームページ制作｜GUSHIKEN DESIGN
-  </title>
-
-  <!-- =============================== -->
-  <!-- Meta Description（自然で強いSEO） -->
-  <!-- =============================== -->
-  <meta name="description"
-    content="沖縄のフリーランスWebデザイナー GUSHIKEN DESIGN。店舗・ホテル・サロン・個人事業のホームページ制作やLP制作を丁寧にデザイン。美しい世界観×見やすい構造で、伝わるWebサイトをReact/Viteで高速構築します。" />
-
-  <!-- Keywords（補助） -->
-  <meta name="keywords"
-    content="沖縄 ホームページ制作, 沖縄 Webデザイン, フリーランス デザイナー, LP制作, 店舗サイト制作, サロンサイト制作, ホテルサイト制作, UIUXデザイン, React, Vite" />
-
-  <meta name="author" content="GUSHIKEN DESIGN" />
-
-  <!-- Google Search Console -->
-  <meta name="google-site-verification" content="iG_ZrJCqMsY5q1LbjYgdRdGnKp4rr3RKKLk7D8HNZ1w" />
-
-  <!-- Google Analytics -->
+  <!-- ===============================
+       Google Analytics（現状のまま：100%版）
+       ※ 将来Consent Modeを入れるならここを拡張
+  =============================== -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-NM83YPOV4Q"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -48,55 +103,59 @@
     gtag('config', 'G-NM83YPOV4Q');
   </script>
 
-  <!-- =============================== -->
-  <!-- OGP（SNS用） -->
-  <!-- =============================== -->
-  <meta property="og:title" content="沖縄のフリーランスWebデザイナー｜GUSHIKEN DESIGN" />
-  <meta property="og:description" content="店舗・サロン・ホテルなど、世界観を大切にしたホームページ制作。静かで上品なデザインを提供します。" />
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://gushikendesign.com/" />
-  <meta property="og:image" content="https://gushikendesign.com/ogp.png" />
-  <meta property="og:site_name" content="GUSHIKEN DESIGN" />
-  <meta property="og:locale" content="ja_JP" />
-
-  <!-- Twitter -->
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="沖縄のフリーランスWebデザイナー｜GUSHIKEN DESIGN" />
-  <meta name="twitter:description" content="店舗・サロン・ホテルに強いWeb制作。世界観×見やすさを両立したデザイン。" />
-  <meta name="twitter:image" content="https://gushikendesign.com/ogp.png" />
-
-  <!-- Favicon -->
-  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-  <link rel="icon" href="/favicon-512.png" sizes="512x512" />
-  <link rel="icon" href="/favicon-192.png" sizes="192x192" />
-  <link rel="icon" href="/favicon-32.png" sizes="32x32" />
-  <link rel="icon" href="/favicon-16.png" sizes="16x16" />
-
-  <!-- hidden h1（SEO強化） -->
-  <style>
-    .visually-hidden {
-      position: absolute;
-      width: 1px; height: 1px;
-      margin: -1px; overflow: hidden;
-      clip: rect(0,0,0,0);
-    }
-  </style>
-</head>
-
-<body>
-  <h1 class="visually-hidden">
-    沖縄のフリーランスWebデザイナー｜店舗/ホテル/サロンのホームページ制作｜GUSHIKEN DESIGN
-  </h1>
-
-  <div id="root"></div>
-
-  <!-- =============================== -->
-  <!-- JSON-LD（最適化済み） -->
-  <!-- =============================== -->
+  <!-- ===============================
+       JSON-LD（関係性まで100%）
+  =============================== -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@graph": [
+      {
+        "@type": "WebSite",
+        "@id": "https://gushikendesign.com/#website",
+        "url": "https://gushikendesign.com/",
+        "name": "GUSHIKEN DESIGN",
+        "inLanguage": "ja",
+        "publisher": { "@id": "https://gushikendesign.com/#org" },
+        "potentialAction": {
+          "@type": "SearchAction",
+          "target": "https://gushikendesign.com/?s={search_term_string}",
+          "query-input": "required name=search_term_string"
+        }
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://gushikendesign.com/#webpage",
+        "url": "https://gushikendesign.com/",
+        "name": "沖縄のフリーランスWebデザイナー｜GUSHIKEN DESIGN",
+        "description": "店舗・サロン・ホテルなど事業向けのホームページ制作に強いフリーランスWebデザイナー。",
+        "isPartOf": { "@id": "https://gushikendesign.com/#website" },
+        "about": { "@id": "https://gushikendesign.com/#org" },
+        "inLanguage": "ja",
+        "primaryImageOfPage": { "@id": "https://gushikendesign.com/#ogpimage" }
+      },
+      {
+        "@type": "ImageObject",
+        "@id": "https://gushikendesign.com/#ogpimage",
+        "url": "https://gushikendesign.com/ogp.png",
+        "contentUrl": "https://gushikendesign.com/ogp.png",
+        "width": 1200,
+        "height": 630
+      },
+      {
+        "@type": "Organization",
+        "@id": "https://gushikendesign.com/#org",
+        "name": "GUSHIKEN DESIGN",
+        "url": "https://gushikendesign.com/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://gushikendesign.com/ogp.png",
+          "width": 1200,
+          "height": 630
+        },
+        "description": "沖縄を拠点にホームページ制作・LP制作・UI/UXデザインを提供するWeb制作スタジオ。",
+        "founder": { "@id": "https://gushikendesign.com/#yuto" }
+      },
       {
         "@type": "Person",
         "@id": "https://gushikendesign.com/#yuto",
@@ -107,39 +166,21 @@
         "image": "https://gushikendesign.com/ogp.png",
         "description": "沖縄で店舗・ホテル・サロン・個人事業のホームページ制作を行うフリーランスWebデザイナー。静かな世界観×高い可読性を重視したデザイン。",
         "sameAs": []
-      },
-      {
-        "@type": "Organization",
-        "@id": "https://gushikendesign.com/#org",
-        "name": "GUSHIKEN DESIGN",
-        "url": "https://gushikendesign.com/",
-        "logo": "https://gushikendesign.com/ogp.png",
-        "description": "沖縄を拠点にホームページ制作・LP制作・UI/UXデザインを提供するWeb制作スタジオ。",
-        "founder": { "@id": "https://gushikendesign.com/#yuto" }
-      },
-      {
-        "@type": "WebPage",
-        "@id": "https://gushikendesign.com/#webpage",
-        "name": "沖縄のフリーランスWebデザイナー — GUSHIKEN DESIGN",
-        "url": "https://gushikendesign.com/",
-        "description": "店舗・サロン・ホテルなど事業向けのホームページ制作に強いフリーランスWebデザイナー。",
-        "isPartOf": { "@id": "https://gushikendesign.com/#website" },
-        "about": { "@id": "https://gushikendesign.com/#org" }
-      },
-      {
-        "@type": "WebSite",
-        "@id": "https://gushikendesign.com/#website",
-        "url": "https://gushikendesign.com/",
-        "name": "GUSHIKEN DESIGN",
-        "publisher": { "@id": "https://gushikendesign.com/#org" }
       }
     ]
   }
   </script>
+</head>
+
+<body>
+  <!-- hidden h1（SEO強化：1ページに1つ） -->
+  <h1 class="visually-hidden">沖縄のフリーランスWebデザイナー｜店舗/ホテル/サロンのホームページ制作｜GUSHIKEN DESIGN</h1>
+
+  <div id="root"></div>
 
   <script type="module" src="/src/main.jsx"></script>
 
-  <!-- PWA -->
+  <!-- PWA（本番のみ） -->
   <script type="module">
     if (import.meta.env.PROD && "serviceWorker" in navigator) {
       window.addEventListener("load", () => {
@@ -147,8 +188,5 @@
       });
     }
   </script>
-
-  <link rel="manifest" href="/manifest.json" />
-
 </body>
 </html>
