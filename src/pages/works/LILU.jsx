@@ -192,6 +192,140 @@ export default function LILU() {
           </div>
         </div>
       </div>
+      {/* =========================
+    SP
+========================= */}
+<div className="md:hidden">
+
+  {/* ===== SP HERO ===== */}
+  <div className="pt-24 pb-20 px-6">
+    <div className="lilu-fade">
+      <p className="text-[11px] tracking-[0.22em] text-pink-300 mb-4">
+        BEAUTY / NAIL SALON
+      </p>
+
+      <h1 className="text-[24px] leading-[1.6] tracking-[0.08em]">
+        LILU nail salon
+      </h1>
+
+      <p className="mt-6 text-[13px] leading-[2.1] tracking-[0.05em] text-neutral-600">
+        20代女性が、<br />
+        「可愛い」「安心」「ここ好きかも」と<br />
+        直感で感じられることを大切にした<br />
+        ネイルサロンサイト。
+      </p>
+    </div>
+
+    {/* Hero Image */}
+    <div className="mt-10 lilu-fade-soft border border-neutral-200 overflow-hidden">
+      <img
+        src={assets.shotSP}
+        alt="LILU nail salon SP hero"
+        className="w-full h-[360px] object-cover"
+      />
+    </div>
+  </div>
+
+  {/* ===== Concept ===== */}
+  <div className="bg-[#fff7f9] border-y border-pink-100">
+    <div className="px-6 py-20 space-y-14">
+
+      <div className="lilu-fade">
+        <h2 className="text-[15px] tracking-[0.16em] mb-5">
+          コンセプト
+        </h2>
+        <p className="text-[13px] leading-[2.3] text-neutral-600">
+          情報を詰め込まず、<br />
+          考えさせすぎず、<br />
+          スクロールするだけで
+          <span className="text-neutral-900">
+            「お店の雰囲気が伝わる」
+          </span>
+          ことを大切にしました。
+        </p>
+      </div>
+
+      <div className="lilu-fade">
+        <p className="text-[13px] leading-[2.3] text-neutral-600">
+          ネイルサロン選びは、<br />
+          理屈よりも「感覚」が先に来るもの。<br />
+          写真・余白・色・タイポだけで<br />
+          安心感をつくる設計です。
+        </p>
+      </div>
+
+    </div>
+  </div>
+
+  {/* ===== Visual ===== */}
+  <div className="px-6 py-24 space-y-10">
+    {[assets.shot1, assets.shot2, assets.shot3].map((src, i) => (
+      <div
+        key={i}
+        className="lilu-fade border border-neutral-200 overflow-hidden"
+      >
+        <img
+          src={src}
+          alt="LILU visual"
+          className="w-full h-[300px] object-cover"
+        />
+      </div>
+    ))}
+  </div>
+
+  {/* ===== UX ===== */}
+  <div className="bg-white border-t border-neutral-200">
+    <div className="px-6 py-24">
+      <h2 className="text-center text-[15px] tracking-[0.18em] mb-14 lilu-fade">
+        UXで意識したこと
+      </h2>
+
+      <div className="space-y-10">
+        {[
+          ["VISUAL", "第一印象で“可愛い”と感じる写真構成"],
+          ["PACE", "早く読ませない、ゆったりしたスクロール"],
+          ["RELIEF", "予約前に安心できる温度感"],
+        ].map(([t, d]) => (
+          <div
+            key={t}
+            className="lilu-fade border border-neutral-200 bg-[#fff7f9] p-8"
+          >
+            <p className="text-[11px] tracking-[0.22em] mb-3">
+              {t}
+            </p>
+            <p className="text-[13px] leading-[2.2] text-neutral-600">
+              {d}
+            </p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+
+  {/* ===== SP Footer ===== */}
+  <div className="px-6 py-20">
+    <a
+      href={liveUrl}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="block text-center text-[13px] tracking-[0.18em] border-b border-neutral-300 pb-2"
+    >
+      OPEN SITE →
+    </a>
+
+    <div className="mt-12 text-center">
+      <Link
+        to="/works"
+        className="text-[12px] tracking-[0.18em] text-neutral-600"
+      >
+        ← WORKSへ戻る
+      </Link>
+    </div>
+  </div>
+
+</div>
+
     </section>
+    
   );
 }
