@@ -35,6 +35,7 @@ import TheCalmOkinawa from "./pages/works/TheCalmOkinawa";
 import FlowOfTea from "./pages/works/FlowOfTea";
 import RayOfSilence from "./pages/works/RayOfSilence";
 import RIN from "./pages/works/RIN";
+import LILU from "./pages/works/LILU";
 
 
 import PriceDetail from "./pages/PriceDetail";
@@ -100,6 +101,7 @@ function Layout() {
 <Route path="/works/FlowOfTea" element={<FlowOfTea />} />
 <Route path="/works/RayOfSilence" element={<RayOfSilence />} />
 <Route path="/works/RIN" element={<RIN />} />
+<Route path="/works/LILU" element={<LILU />} />
 
 {/* 最後に汎用テンプレ */}
 <Route path="/works/:slug" element={<WorkDetail />} />
