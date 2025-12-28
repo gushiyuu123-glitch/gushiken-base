@@ -9,6 +9,44 @@ export const worksData = [
     subtitle: "美容・サロン向けの上質な余白デザイン",
     items: [
       {
+  title: "LILU nail salon",
+  slug: "LILU",
+
+  desc: "可愛い × 上品 × 直感設計。\n20代女性の感覚で“選ばれる”ために構築したネイルサロンUI。",
+  link: "https://lilu-drab.vercel.app/",
+  img: "/works/lilu.webp",
+
+  isNew: true,
+  createdAt: "2025-02-28",
+
+  tags: [
+    "NEW",
+    "ピンク",
+    "余白",
+    "上品",
+    "直感設計",
+    "Beauty",
+    "Salon",
+    "UI/UX",
+    "Visual First",
+    "PC/SP 分離"
+  ],
+
+  detail: {
+    concept:
+      "20代女性が“考えずに好きだと感じること”を起点に、写真・余白・色・タイポグラフィを最小限の情報設計で構成。SNS閲覧後の『最後の決め手』になることを目的に、違和感や選択ストレスを排除したビジュアル主導のサロンサイト。",
+    tech: [
+      "React",
+      "Vite",
+      "Tailwind",
+      "GSAP",
+      "PC/SP 完全分離",
+      "microCMS（NEWS連携）"
+    ]
+  }
+},
+
+      {
         title: "Okinawa White Spa",
         slug: "OkinawaWhiteSpa",
 
