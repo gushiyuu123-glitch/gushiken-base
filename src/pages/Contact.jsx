@@ -163,7 +163,7 @@ export default function Contact() {
             target="_blank"
             rel="noopener noreferrer"
           >
-            LINEで相談する（最も簡単です）
+            LINEで相談する
           </a>
         </div>
 
