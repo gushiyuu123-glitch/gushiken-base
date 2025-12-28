@@ -3,14 +3,15 @@ import hero from "../assets/hero3.png";
 
 export default function Hero() {
   return (
-<section className="relative w-full h-[92vh] md:h-screen overflow-hidden pb-[8rem]">
+    <section className="relative w-full h-[92vh] md:h-screen overflow-hidden pb-[8rem] bg-black">
 
-
-      {/* ===== 背景 ===== */}
+      {/* =====================
+          BACKGROUND
+      ===================== */}
       <div className="absolute inset-0 overflow-hidden">
         <img
           src={hero}
-          alt="GUSHIKEN DESIGN — hero"
+          alt="GUSHIKEN DESIGN｜店舗・サロン向けWeb制作"
           className="
             w-full h-full object-cover
             brightness-[1.05]
@@ -20,7 +21,10 @@ export default function Hero() {
         />
       </div>
 
-      {/* ===== Gold Ambient ===== */}
+      {/* =====================
+          AMBIENT LIGHTS
+      ===================== */}
+      {/* Gold */}
       <div className="absolute inset-0 pointer-events-none">
         <div
           className="
@@ -33,7 +37,7 @@ export default function Hero() {
         />
       </div>
 
-      {/* ===== Blue Ambient ===== */}
+      {/* Blue */}
       <div className="absolute inset-0 pointer-events-none mix-blend-screen">
         <div
           className="
@@ -46,16 +50,22 @@ export default function Hero() {
         />
       </div>
 
-      {/* ===== 下グラデ ===== */}
+      {/* =====================
+          BOTTOM GRADIENT
+      ===================== */}
       <div
         className="
           absolute left-0 bottom-0 w-full h-[260px]
-          bg-gradient-to-t from-[rgba(0,0,0,0.18)] to-transparent
+          bg-gradient-to-t
+          from-[rgba(0,0,0,0.20)]
+          to-transparent
           pointer-events-none
         "
       />
 
-      {/* ===== 映画的 Dust Particles ===== */}
+      {/* =====================
+          DUST PARTICLES
+      ===================== */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
         {[...Array(12)].map((_, i) => (
           <div
@@ -76,7 +86,9 @@ export default function Hero() {
         ))}
       </div>
 
-      {/* ===== TEXT ===== */}
+      {/* =====================
+          TEXT
+      ===================== */}
       <div
         className="
           absolute
@@ -86,7 +98,7 @@ export default function Hero() {
           max-w-xl
         "
       >
-        {/* ---- Title ---- */}
+        {/* TITLE */}
         <h1
           className="
             stylish-title
@@ -97,56 +109,67 @@ export default function Hero() {
             mb-5
           "
         >
-          GUSHIKEN<br/>DESIGN
+          GUSHIKEN<br />DESIGN
         </h1>
 
-        {/* ---- Line ---- */}
+        {/* LINE */}
         <div
           className="
             stylish-sub delay-[0.15s]
             w-20 h-[1px] bg-white/60 mb-5
           "
         />
-{/* ---- Copy ---- */}
-<p
-  className="
-    stylish-sub delay-[0.32s]
-    text-white/90
-    text-[0.9rem] md:text-[1.15rem]
-    leading-relaxed
-    tracking-wide
-    max-w-md
-  "
->
-  普通じゃ物足りない人のための、<br />
-  上品で“伝わるサイト制作”。
 
-  {/* PC用：思想タグライン */}
-  <span
-    className="
-      hidden md:block
-      mt-4
-      text-white/60
-      text-[0.82em]
-      tracking-[0.14em]
-    "
-  >
-    世界観を設計し、構造で届けるWebデザイン
-  </span>
-</p>
+        {/* COPY */}
+        <p
+          className="
+            stylish-sub delay-[0.32s]
+            text-white/90
+            text-[0.95rem] md:text-[1.15rem]
+            leading-relaxed
+            tracking-wide
+            max-w-md
+          "
+        >
+          {/* 翻訳レイヤー（即理解） */}
+          <span
+            className="
+              block mb-2
+              text-white/70
+              text-[0.75rem] md:text-[0.78rem]
+              tracking-[0.22em]
+            "
+          >
+            店舗・サロン・ブランド向け Web制作
+          </span>
 
+          普通じゃ物足りない人のための、<br />
+          上品で“伝わるサイト制作”。
+
+          {/* 思想レイヤー */}
+          <span
+            className="
+              block mt-4
+              text-white/60
+              text-[0.82em]
+              tracking-[0.14em]
+            "
+          >
+            世界観を設計し、構造で届けるWebデザイン
+          </span>
+        </p>
       </div>
 
-      {/* ===== Keyframes ===== */}
+      {/* =====================
+          STYLES
+      ===================== */}
       <style>{`
-        /* 背景ゆらぎ */
         @keyframes heroFloat {
           0%   { transform: scale(1.015) translate(0,0); }
           50%  { transform: scale(1.020) translate(4px,8px); }
           100% { transform: scale(1.015) translate(0,0); }
         }
 
-        /* Dust floating */
         @keyframes dustFloat {
           0%   { opacity: 0; transform: translateY(0) scale(0.8); }
           35%  { opacity: 0.6; transform: translateY(-18px) scale(1); }
@@ -154,52 +177,38 @@ export default function Hero() {
           100% { opacity: 0; transform: translateY(-40px) scale(0.9); }
         }
 
-        /* ======================================
-           タイトル：スタイリッシュフェード
-        ====================================== */
-/* ===== Stylish Title (PC) ===== */
-.stylish-title {
-  opacity: 0;
-  transform: translateY(22px);
-  filter: blur(6px);
-  letter-spacing: 0.42em; /* ← アニメ開始時は広く */
-  animation: titleReveal 1.4s cubic-bezier(.23, .7, .3, 1) forwards;
-}
+        .stylish-title {
+          opacity: 0;
+          transform: translateY(22px);
+          filter: blur(6px);
+          letter-spacing: 0.42em;
+          animation: titleReveal 1.4s cubic-bezier(.23,.7,.3,1) forwards;
+        }
 
-/* ディレイ */
-.stylish-title.delay-1 {
-  animation-delay: 0.2s;
-}
+        @keyframes titleReveal {
+          0% {
+            opacity: 0;
+            transform: translateY(22px);
+            filter: blur(6px);
+            letter-spacing: 0.42em;
+          }
+          40% {
+            opacity: 1;
+            transform: translateY(0);
+            filter: blur(0.6px);
+          }
+          100% {
+            opacity: 1;
+            transform: translateY(0);
+            filter: blur(0);
+            letter-spacing: 0.30em;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.22);
+          }
+        }
 
-/* ===== Keyframes ===== */
-@keyframes titleReveal {
-  0% {
-    opacity: 0;
-    transform: translateY(22px);
-    filter: blur(6px);
-    letter-spacing: 0.42em;
-    text-shadow: none;
-  }
-  40% {
-    opacity: 1;
-    transform: translateY(0);
-    filter: blur(0.6px);  /* ← 一瞬だけ軽く残すことで “にじませ” 抑制 */
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-    filter: blur(0);       /* ← 完全にシャープになる */
-    letter-spacing: 0.30em; /* ← 最終値は tracking-[0.30em] と一致 */
-    text-shadow: 0 2px 8px rgba(0,0,0,0.22);
-  }
-}
-
-        /* ======================================
-           サブ：右下からの流線フェード
-        ====================================== */
         .stylish-sub {
           opacity: 0;
-          transform: translate(14px, 14px);
+          transform: translate(14px,14px);
           filter: blur(4px);
           animation: subFlow 1.25s cubic-bezier(.25,.46,.25,1) forwards;
         }
@@ -208,19 +217,13 @@ export default function Hero() {
         .stylish-sub.delay-\\[0\\.32s\\] { animation-delay: 0.32s; }
 
         @keyframes subFlow {
-          0% {
-            opacity: 0;
-            transform: translate(14px, 14px);
-            filter: blur(4px);
-          }
-          100% {
+          to {
             opacity: 1;
-            transform: translate(0, 0);
-            filter: blur(0px);
+            transform: translate(0,0);
+            filter: blur(0);
           }
         }
       `}</style>
-      
     </section>
   );
 }

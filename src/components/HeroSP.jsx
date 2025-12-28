@@ -3,13 +3,15 @@ import heroSP from "../assets/hero-sp3.png";
 
 export default function HeroSP() {
   return (
-    <section className="relative w-full h-[90vh] overflow-hidden md:hidden">
+    <section className="relative w-full h-[90vh] overflow-hidden md:hidden bg-black">
 
-      {/* ===== 背景 ===== */}
+      {/* =====================
+          BACKGROUND IMAGE
+      ===================== */}
       <div className="absolute inset-0 overflow-hidden">
         <img
           src={heroSP}
-          alt="GUSHIKEN DESIGN — hero"
+          alt="GUSHIKEN DESIGN｜店舗・サロン向けWeb制作"
           className="
             w-full h-full object-cover
             brightness-[0.99]
@@ -19,63 +21,74 @@ export default function HeroSP() {
         />
       </div>
 
-      {/* ===== テキスト背面クリアグラデ ===== */}
+      {/* =====================
+          TEXT SAFETY GRADIENT
+      ===================== */}
       <div
         className="
           absolute inset-0
           bg-gradient-to-b
-          from-[rgba(0,0,0,0.05)]
+          from-[rgba(0,0,0,0.06)]
           via-transparent
           to-transparent
           pointer-events-none
         "
       />
 
-      {/* ===== Gold Ambient ===== */}
+      {/* =====================
+          AMBIENT LIGHTS
+      ===================== */}
+      {/* Gold */}
       <div className="absolute inset-0 pointer-events-none">
         <div
           className="
-            absolute left-[17%] top-[33%]
+            absolute left-[18%] top-[34%]
             w-[240px] h-[240px]
             bg-[rgba(220,190,140,0.07)]
-            blur-[110px]
-            rounded-full
-          "
-        />
-      </div>
-
-      {/* ===== Blue Ambient ===== */}
-      <div className="absolute inset-0 pointer-events-none mix-blend-screen">
-        <div
-          className="
-            absolute right-[12%] top-[28%]
-            w-[210px] h-[210px]
-            bg-[rgba(90,160,255,0.10)]
             blur-[120px]
             rounded-full
           "
         />
       </div>
 
-      {/* ===== 下グラデ ===== */}
+      {/* Blue */}
+      <div className="absolute inset-0 pointer-events-none mix-blend-screen">
+        <div
+          className="
+            absolute right-[14%] top-[28%]
+            w-[220px] h-[220px]
+            bg-[rgba(90,160,255,0.10)]
+            blur-[130px]
+            rounded-full
+          "
+        />
+      </div>
+
+      {/* =====================
+          BOTTOM GRADIENT
+      ===================== */}
       <div
         className="
           absolute left-0 bottom-0 w-full h-[230px]
-          bg-gradient-to-t from-[rgba(0,0,0,0.40)] to-transparent
+          bg-gradient-to-t
+          from-[rgba(0,0,0,0.42)]
+          to-transparent
           pointer-events-none
         "
       />
 
-      {/* ===== Particles（極小・控えめ） ===== */}
+      {/* =====================
+          PARTICLES (MINIMAL)
+      ===================== */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        <div className="absolute inset-0 animate-[particleRise_14s_linear_infinite] opacity-[0.45]">
+        <div className="absolute inset-0 animate-[particleRise_14s_linear_infinite] opacity-[0.4]">
           {[...Array(8)].map((_, i) => (
             <div
               key={i}
               className="
                 absolute rounded-full bg-white
                 w-[1.4px] h-[1.4px]
-                opacity-[0.24]
+                opacity-[0.25]
                 animate-[spark_7s_ease-in-out_infinite]
               "
               style={{
@@ -88,14 +101,16 @@ export default function HeroSP() {
         </div>
       </div>
 
-      {/* ===== TEXT ===== */}
-      <div className="absolute left-6 top-[100px] right-3">
+      {/* =====================
+          TEXT CONTENT
+      ===================== */}
+      <div className="absolute left-6 top-[96px] right-4">
 
-        {/* ---- Main Title ---- */}
+        {/* TITLE */}
         <h1
           className="
             elegant-title
-            text-[rgba(255,255,255,0.92)]
+            text-white/95
             font-normal
             leading-[1.06]
             text-[2rem]
@@ -103,9 +118,10 @@ export default function HeroSP() {
             mb-3
           "
         >
-          GUSHIKEN<br/>DESIGN
+          GUSHIKEN<br />DESIGN
         </h1>
 
+        {/* LINE */}
         <div
           className="
             elegant-sub delay-[0.15s]
@@ -114,41 +130,50 @@ export default function HeroSP() {
             mb-4
           "
         />
-{/* ---- Subtitle ---- */}
-<p
-  className="
-    elegant-sub delay-[0.3s]
-    text-white/90
-    text-[1.05rem] md:text-[1.1rem]
-    leading-[1.7]
-    tracking-wide
-    max-w-[82%]
-  "
->
-  普通じゃ物足りない人のための、<br />
-  上品で“伝わるサイト制作”。
 
-  {/* SP用サブコピー */}
-  <span
-    className="
-      block md:hidden
-      mt-5
-      text-white/65
-      text-[0.85rem]
-      tracking-[0.12em]
-    "
-  >
-    ブランド・店舗<br></br>個人事業向け Webデザイン
-  </span>
-</p>
+        {/* COPY */}
+        <p
+          className="
+            elegant-sub delay-[0.3s]
+            text-white/90
+            text-[1.05rem]
+            leading-[1.7]
+            tracking-wide
+            max-w-[82%]
+          "
+        >
+          {/* 翻訳レイヤー（0.3秒理解） */}
+          <span className="block text-[0.9rem] tracking-[0.18em] text-white/75 mb-2">
+            店舗・サロン向け Web制作
+          </span>
 
+          普通じゃ物足りない人のための、<br />
+          上品で“伝わるサイト制作”。
 
+          {/* 姿勢レイヤー */}
+          <span
+            className="
+              block mt-5
+              text-white/55
+              text-[0.78rem]
+              tracking-[0.14em]
+            "
+          >
+            世界観から、構造まで設計します
+          </span>
+        </p>
       </div>
-{/* ===== SP Scroll Hint ===== */}
-<div className="md:hidden absolute bottom-6 left-1/2 -translate-x-1/2 pointer-events-none">
-  <div className="scroll-hint" />
-</div>
-      {/* ===== Animations ===== */}
+
+      {/* =====================
+          SCROLL HINT
+      ===================== */}
+      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 pointer-events-none">
+        <div className="scroll-hint" />
+      </div>
+
+      {/* =====================
+          STYLES
+      ===================== */}
       <style>{`
         @keyframes heroFloatSP {
           0%   { transform: scale(1.02) translate(0,0); }
@@ -157,16 +182,15 @@ export default function HeroSP() {
         }
 
         @keyframes spark {
-          0%, 100% { opacity: 0.0; transform: translateY(0) scale(0.6); }
+          0%,100% { opacity: 0; transform: translateY(0) scale(0.6); }
           50% { opacity: 0.35; transform: translateY(-18px) scale(1); }
         }
 
         @keyframes particleRise {
-          0% { opacity: 0.4; transform: translateY(0); }
-          100% { opacity: 0.4; transform: translateY(-40px); }
+          0% { transform: translateY(0); }
+          100% { transform: translateY(-40px); }
         }
 
-        /* ==== Elegant Title Fade ==== */
         .elegant-title {
           opacity: 0;
           transform: translateY(14px);
@@ -179,12 +203,10 @@ export default function HeroSP() {
             opacity: 0;
             transform: translateY(14px);
             letter-spacing: 0.32em;
-            text-shadow: none;
           }
           60% {
             opacity: 1;
             transform: translateY(0);
-            text-shadow: 0 4px 14px rgba(0,0,0,0.42);
           }
           100% {
             opacity: 1;
@@ -194,7 +216,6 @@ export default function HeroSP() {
           }
         }
 
-        /* ==== Subtitle (行ズレしないフェード) ==== */
         .elegant-sub {
           opacity: 0;
           transform: translateY(12px);
@@ -202,23 +223,33 @@ export default function HeroSP() {
         }
 
         .elegant-sub.delay-\\[0\\.15s\\] { animation-delay: 0.15s; }
-        .elegant-sub.delay-\\[0\\.3s\\]  { animation-delay: 0.3s; }
+        .elegant-sub.delay-\\[0\\.3s\\] { animation-delay: 0.3s; }
 
         @keyframes subFade {
-          0% {
-            opacity: 0;
-            transform: translateY(12px);
-            text-shadow: none;
-          }
-          100% {
+          to {
             opacity: 1;
             transform: translateY(0);
-            text-shadow: 0 2px 9px rgba(0,0,0,0.45);
           }
         }
 
-      `}</style>
+        .scroll-hint {
+          width: 1px;
+          height: 42px;
+          background: linear-gradient(
+            to bottom,
+            rgba(255,255,255,0),
+            rgba(255,255,255,0.6),
+            rgba(255,255,255,0)
+          );
+          animation: scrollPulse 2.4s ease-in-out infinite;
+        }
 
+        @keyframes scrollPulse {
+          0% { opacity: 0.2; }
+          50% { opacity: 0.6; }
+          100% { opacity: 0.2; }
+        }
+      `}</style>
     </section>
   );
 }
