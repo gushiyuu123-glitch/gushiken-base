@@ -79,13 +79,10 @@ export default function Koti() {
               <h1 className="mt-5 text-[42px] tracking-[0.06em]">KOTI</h1>
 
               <p className="mt-4 max-w-[30ch] text-[13px] leading-[2.05] text-[#2b2621]">
-                光と余白を、暮らしの中心に。
-                <br />
-                北欧の住空間で大切にされてきた
-                <br />
-                「自然光の入り方」「家具の間隔」<br />「木の触感」を
-               
-                UI と構成に<br />落とし込んだコンセプトサイト。<br />
+               北欧の住空間を参考に、<br></br>
+自然光の入り方や家具同士の距離感、  
+素材の質感を意識して設計した <br></br> 
+家具ブランドのコンセプトサイト。
               </p>
 
     <div className="mt-12 md:mt-9">
@@ -123,19 +120,17 @@ export default function Koti() {
 
                 <h1 className="mt-6 text-[74px] tracking-[0.10em]">KOTI</h1>
 
-                <p className="mt-6 max-w-[48ch] text-[14px] leading-[2.1] text-[#2b2621]">
-                  光と余白を、暮らしの中心に。
-                  <br />
-                  北欧の住空間で大切にされてきた
-                  <br />
-                  「光の入り方」「家具同士の距離感」「素材の温度」。
-                  <br />
-                  それらを“売るため”ではなく、
-                  <br />
-                  “整えるため”に再構成した家具ブランドの
-                  <br />
-                  コンセプトサイトです。
-                </p>
+      <p className="mt-6 max-w-[48ch] text-[14px] leading-[2.1] text-[#2b2621]">
+  北欧の住空間を参考に、<br />
+  光の入り方や家具同士の距離感、<br />
+  素材の質感を意識して設計した<br />
+  家具ブランドのコンセプトサイトです。<br />
+  <br />
+  目的は「売るための演出」ではなく、<br />
+  落ち着いて見られる構成と情報整理を<br />
+  UIとレイアウトで表現すること。
+</p>
+
 
                 <div className="mt-10 flex gap-4">
                   <a
@@ -164,9 +159,10 @@ export default function Koti() {
           DETAIL
       ========================= */}
       <div id="detail" className="mx-auto max-w-[1180px] px-6 md:px-10 pt-28">
-        <h2 className="text-[32px] md:text-[40px] tracking-[0.06em]">
-          静けさを、家具というかたちに。
-        </h2>
+     <h2 className="text-[32px] md:text-[40px] tracking-[0.06em]">
+  家具ブランドのための<br />構成設計
+</h2>
+
 
         <p className="mt-6 max-w-[60ch] text-[14px] leading-[2.1] text-[#2b2621]/90">
           北欧の住空間では、家具は主役ではなく環境の一部として置かれます。
@@ -182,18 +178,19 @@ export default function Koti() {
 
         <div className="mt-16 grid grid-cols-1 md:grid-cols-12 gap-8">
           <div className="md:col-span-5 bg-white/70 border border-[#e7dece] rounded-3xl p-10">
-            <h3 className="text-[22px] tracking-[0.06em]">
-              光と余白を、先に体験させる。
-            </h3>
+           <h3 className="text-[22px] tracking-[0.06em]">
+  余白と配置を<br />先に体験させる設計
+</h3>
 
-            <p className="mt-5 text-[13px] leading-[2.05] text-[#2b2621]/90">
-              家具単体の魅力ではなく、
-              配置や余白によって生まれる居心地の差を伝えるため、
-              写真点数や情報量は意図的に抑えました。
-              <br />
-              スクロールの速度に合わせて視線が落ち着くよう、
-              明度差と影のコントラストも最小限に設計しています。
-            </p>
+
+      <p className="mt-5 text-[13px] leading-[2.05] text-[#2b2621]/90">
+  家具単体の魅力ではなく、<br />
+  配置や余白によって生まれる居心地の違いを<br />伝えるため、
+  写真点数や情報量は<br />意図的に抑えています。<br /><br />
+  スクロール時に視線が落ち着くよう、<br />
+  明度差や影のコントラストも<br />最小限に調整しました。
+</p>
+
           </div>
 
           <div className="md:col-span-7">
