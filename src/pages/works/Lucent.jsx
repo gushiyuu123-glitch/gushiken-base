@@ -3,7 +3,7 @@ import React, { useEffect, useMemo } from "react";
 import { Link } from "react-router-dom";
 
 /* =========================
-   Primary CTA（全箇所共通）
+   Primary CTA
 ========================= */
 const PrimaryCTA = ({ className = "" }) => (
   <a
@@ -42,196 +42,214 @@ export default function Lucent() {
   );
 
   return (
-    <section className="min-h-screen pb-28 bg-[#f6f2eb] text-[#3a2f28]">
-      <script
-  type="application/ld+json"
-  dangerouslySetInnerHTML={{
-    __html: JSON.stringify({
-      "@context": "https://schema.org",
-      "@type": "CreativeWork",
-      "@id": "https://gushikendesign.com/works/lucent#creativework",
-      "name": "Hair Salon LUCENT｜Quiet Salon Concept Teaser",
-      "description":
-        "光・静寂・ラインを軸に設計したヘアサロンのコンセプトティーザーページ。説明ではなく、余白と光の体験によってブランド空気を先に届ける構成。",
-      "creator": {
-        "@type": "Person",
-        "name": "裕人 具志堅",
-        "alternateName": "Yuto Gushiken",
-        "url": "https://gushikendesign.com/"
-      },
-      "publisher": {
-        "@type": "Organization",
-        "name": "GUSHIKEN DESIGN",
-        "url": "https://gushikendesign.com/"
-      },
-      "inLanguage": "ja",
-      "url": "https://gushikendesign.com/works/lucent",
-      "isBasedOn": {
-        "@type": "WebSite",
-        "name": "Hair Salon LUCENT Official Site",
-        "url": "https://lucent-salon.vercel.app/"
-      }
-    })
-  }}
-/>
+    <section className="min-h-screen bg-[#f6f2eb] text-[#3a2f28] pb-32">
 
       {/* =========================
-          TEASER HERO
+          TOP BAR（LILU準拠）
       ========================= */}
-      <div className="relative w-full overflow-hidden">
-        {/* ===== SP ===== */}
-        <div className="block md:hidden w-full aspect-[4/5] relative">
-          <img
-            src={assets.hero}
-            alt="Hair Salon LUCENT — Teaser"
-            className="
-              absolute inset-0 w-full h-full object-cover
-              object-[50%_48%]
-              brightness-[0.99] contrast-[0.97]
-              scale-[1.02] transform-gpu
-            "
-          />
+      <header className="sticky top-0 z-50 bg-[#f6f2eb]/85 backdrop-blur border-b border-[#3a2f28]/10">
+        <div className="max-w-[1120px] mx-auto px-8 h-[72px] flex items-center justify-between">
+          <Link
+            to="/works"
+            className="text-[12px] tracking-[0.18em] text-[#6a5b50]"
+          >
+            ← WORKS
+          </Link>
 
-          {/* Veil */}
-          <div className="absolute inset-0 bg-gradient-to-b from-white/30 via-[#f6f2eb]/48 to-[#f6f2eb]/88" />
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_72%_22%,rgba(255,255,255,0.48),transparent_60%)]" />
-
-          {/* Text */}
-          <div className="absolute bottom-16 left-5 right-5">
-            <p className="text-[0.62rem] tracking-[0.36em] text-[#6a5b50]">
-              WORKS — HAIR SALON CONCEPT SITE
-            </p>
-
-            <h1 className="mt-2.5 text-[1.9rem] tracking-[0.20em] font-light leading-[1.06]">
-              LUCENT
-            </h1>
-
-            <p className="mt-3 text-[#6a5b50] tracking-[0.30em] text-[0.68rem]">
-              LIGHT / SILENCE / LINE
-            </p>
-
-            <p className="mt-4 text-[#3a2f28]/78 text-[0.88rem] leading-[2.15] max-w-[30ch]">
-              光が、髪に触れる時間。
-              <br />
-              説明ではなく、体験として設計した。
-            </p>
-
-            <div className="mt-14">
-              <PrimaryCTA />
-            </div>
-          </div>
+          <PrimaryCTA className="px-8 py-[10px] text-[0.7rem]" />
         </div>
+      </header>
 
-        {/* ===== PC ===== */}
-        <div className="hidden md:block w-full h-[92vh] relative">
-          <img
-            src={assets.hero}
-            alt="Hair Salon LUCENT — Teaser"
-            className="
-              absolute inset-0 w-full h-full object-cover
-              object-[45%_50%]
-              brightness-[0.98] contrast-[0.98]
-              scale-[1.04] transform-gpu
-            "
-          />
+      {/* =========================
+          HERO（既存そのまま）
+      ========================= */}
+   <div className="relative w-full h-[88vh] md:h-[92vh] overflow-hidden">
 
-          {/* Veil */}
-          <div className="absolute inset-0 bg-gradient-to-b from-white/28 via-[#f6f2eb]/45 to-[#f6f2eb]/90" />
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_72%_22%,rgba(255,255,255,0.55),transparent_60%)]" />
+<img
+  src={assets.hero}
+  alt="Hair Salon LUCENT — Concept Hero"
+  className="
+    absolute inset-0 w-full h-full object-cover
+    object-[69%_50%]        /* ← SP：少し左 */
+    md:object-[45%_50%]    /* ← PC：今まで通り */
+    brightness-[0.94]
+    contrast-[0.96]
+    scale-[1.04]
+  "
+/>
+<div className="absolute inset-0 bg-gradient-to-b
+  from-[#f6f2eb]/22
+  via-[#f6f2eb]/48
+  to-[#f6f2eb]/96
+" />
+<div className="absolute inset-0 bg-[radial-gradient(circle_at_68%_26%,rgba(255,255,255,0.38),transparent_65%)]" />
 
-          <div className="absolute bottom-[13vh] left-[clamp(28px,7vw,120px)] max-w-[760px]">
-            <p className="text-[0.72rem] tracking-[0.38em] text-[#6a5b50]">
-              WORKS — HAIR SALON CONCEPT SITE
+        {/* Veil */}
+  {/* Veil */}
+<div className="absolute inset-0 bg-gradient-to-b from-white/10 via-[#f6f2eb]/20 to-[#f6f2eb]/92" />
+
+{/* ===== Text ===== */}
+<div
+  className="
+    absolute
+    bottom-[8vh] left-1/2 -translate-x-1/2
+    text-center
+
+    md:bottom-[14vh]
+    md:left-[clamp(28px,7vw,120px)]
+    md:translate-x-0
+    md:text-left
+  "
+>
+  <p
+    className="
+      text-[0.62rem] tracking-[0.36em] text-[#6a5b50]
+
+      md:text-[0.72rem]
+      md:tracking-[0.38em]
+    "
+  >
+    WORKS — HAIR SALON CONCEPT SITE
+  </p>
+
+  <h1
+    className="
+      mt-4
+      text-[2.6rem] tracking-[0.22em] font-light leading-[1.05]
+
+      md:mt-6
+      md:text-[4.2rem]
+      md:tracking-[0.18em]
+      md:leading-[1.02]
+    "
+  >
+    LUCENT
+  </h1>
+
+  <p
+    className="
+      mt-3
+      text-[#6a5b50]
+      tracking-[0.28em]
+      text-[0.72rem]
+
+      md:mt-5
+      md:text-[0.92rem]
+      md:tracking-[0.30em]
+    "
+  >
+    LIGHT / SILENCE / LINE
+  </p>
+</div>
+
+      </div>
+
+      {/* =========================
+          INTRO（LILU型）
+      ========================= */}
+      <div className="max-w-[1120px] mx-auto px-8 pt-24">
+        <p className="text-[0.72rem] tracking-[0.34em] text-[#6a5b50]">
+          PROJECT OVERVIEW
+        </p>
+
+        <p className="mt-6 text-[#3a2f28]/75 text-[1.04rem] leading-[2.3] max-w-[56ch] font-light">
+          ヘアサロン LUCENT のために制作した、
+          コンセプト重視のティーザーページ。
+          説明よりも先に「空気」が伝わることを目的とし、
+          情報量を整理し、落ち着いて閲覧できる構成にした。
+        </p>
+
+        {/* Meta */}
+        <div className="mt-14 flex gap-20">
+          <div>
+            <p className="text-[0.7rem] tracking-[0.22em] text-[#6a5b50] mb-2">
+              ROLE
             </p>
-
-            <h1 className="mt-6 text-[4.2rem] tracking-[0.18em] font-light leading-[1.02]">
-              LUCENT
-            </h1>
-
-            <p className="mt-5 text-[#6a5b50] tracking-[0.30em] text-[0.92rem]">
-              LIGHT / SILENCE / LINE
+            <p className="text-[0.85rem]">
+              UI / UX / Visual Design
             </p>
+          </div>
 
-            <p className="mt-7 text-[#3a2f28]/75 text-[1.06rem] leading-[2.25] max-w-[46ch]">
-              切るより先に、整える。
-              <br />
-              変えるより先に、引き出す。
-              <br />
-              その空気を、余白と光で翻訳した。
+          <div>
+            <p className="text-[0.7rem] tracking-[0.22em] text-[#6a5b50] mb-2">
+              TYPE
             </p>
-
-            <div className="mt-12 flex items-center gap-8">
-              <PrimaryCTA className="px-12 py-[14px] text-[0.82rem]" />
-              <div className="h-px w-28 bg-gradient-to-r from-[#3a2f28]/55 to-transparent" />
-              <span className="text-[0.72rem] tracking-[0.30em] text-[#6a5b50]">
-                A QUIET TRAILER PAGE
-              </span>
-            </div>
+            <p className="text-[0.85rem]">
+              Concept Teaser Page
+            </p>
           </div>
         </div>
       </div>
 
       {/* =========================
-          TRAILER CUTS
+          VISUAL（LILUのVisual枠）
       ========================= */}
-      <div className="max-w-5xl mx-auto px-7 md:px-10 pt-24">
-        <div className="border-t border-[#3a2f28]/10 pt-16">
-          <h2 className="text-[0.78rem] tracking-[0.34em] text-[#6a5b50]">
-            TRAILER CUTS
-          </h2>
+      <div className="max-w-[1120px] mx-auto px-8 pt-32">
+        <h2 className="text-[0.78rem] tracking-[0.34em] text-[#6a5b50]">
+          VISUAL EXCERPTS
+        </h2>
 
-          <p className="mt-6 text-[#3a2f28]/70 text-[1.06rem] leading-[2.55] max-w-[60ch] font-light">
-            This page shows only a fragment.
-            <br />
-            The rest is meant to be entered.
-          </p>
+        <div className="mt-14 grid md:grid-cols-2 gap-14">
+          <img
+            src={assets.teaser1}
+            alt="LUCENT visual cut 1"
+            className="rounded-[22px] shadow-[0_40px_120px_rgba(58,47,40,0.10)]"
+          />
+          <img
+            src={assets.teaser2}
+            alt="LUCENT visual cut 2"
+            className="rounded-[22px] shadow-[0_40px_120px_rgba(58,47,40,0.10)] md:translate-y-12"
+          />
+        </div>
+      </div>
 
-          <div className="mt-14 grid md:grid-cols-12 gap-12 items-start">
-            {/* Words */}
-            <div className="md:col-span-5">
-              <div className="rounded-[22px] border border-[#3a2f28]/12 bg-white/45 p-8 shadow-[0_26px_90px_rgba(58,47,40,0.08)]">
-                <p className="text-[0.78rem] tracking-[0.34em] text-[#6a5b50]">
-                  THREE WORDS
-                </p>
+      {/* =========================
+          DESIGN INTENT（UX枠）
+      ========================= */}
+      <div className="max-w-[1120px] mx-auto px-8 pt-36">
+        <h2 className="text-center text-[0.8rem] tracking-[0.34em] mb-16">
+          DESIGN INTENT
+        </h2>
 
-                <ul className="mt-6 space-y-3 text-[1.02rem] tracking-[0.18em]">
-                  <li>Light</li>
-                  <li>Silence</li>
-                  <li>Line</li>
-                </ul>
-
-                <p className="mt-7 text-[#6a5b50] text-[0.84rem] tracking-[0.18em]">
-                  Designed to be felt, not explained.
-                </p>
-              </div>
-            </div>
-
-            {/* Images */}
-            <div className="md:col-span-7">
-              <div className="grid gap-12">
-                <img
-                  src={assets.teaser1}
-                  alt="LUCENT trailer cut 1"
-                  className="rounded-[22px] shadow-[0_40px_120px_rgba(58,47,40,0.10)]"
-                />
-                <img
-                  src={assets.teaser2}
-                  alt="LUCENT trailer cut 2"
-                  className="rounded-[22px] shadow-[0_40px_120px_rgba(58,47,40,0.10)] md:translate-x-6"
-                />
-              </div>
-            </div>
-          </div>
-
-          {/* Back */}
-          <div className="text-center pt-24">
-            <Link
-              to="/works"
-              className="text-[#6a5b50] hover:text-[#3a2f28] tracking-[0.28em] text-[0.78rem]"
+        <div className="grid md:grid-cols-3 gap-12">
+          {[
+            ["LIGHT", "写真と背景の明暗を調整し、内容が読み取りやすい構成にした"],
+            ["SILENCE", "情報を抑え、思考を邪魔しない構成"],
+            ["LINE", "余白とラインで印象を整える視線誘導"],
+          ].map(([t, d]) => (
+            <div
+              key={t}
+              className="
+                bg-white/55
+                border border-[#3a2f28]/12
+                rounded-[22px]
+                p-10
+              "
             >
-              ← BACK TO WORKS
-            </Link>
-          </div>
+              <p className="text-[0.72rem] tracking-[0.28em] mb-4">
+                {t}
+              </p>
+              <p className="text-[0.95rem] leading-[2.2] text-[#3a2f28]/70">
+                {d}
+              </p>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* =========================
+          FOOTER（LILU統一）
+      ========================= */}
+      <div className="max-w-[1120px] mx-auto px-8 pt-36 text-center">
+        <PrimaryCTA />
+
+        <div className="mt-16">
+          <Link
+            to="/works"
+            className="text-[0.78rem] tracking-[0.28em] text-[#6a5b50]"
+          >
+            ← BACK TO WORKS
+          </Link>
         </div>
       </div>
     </section>
