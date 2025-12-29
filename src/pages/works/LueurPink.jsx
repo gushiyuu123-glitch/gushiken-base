@@ -64,7 +64,7 @@ export default function LueurPink() {
             className="
               absolute inset-0
               bg-gradient-to-b
-              from-white/55 via-[#ffd7e6]/20 to-[#ffb8cf]/35
+              from-white/10 via-[#ffd7e6]/20 to-[#ffb8cf]/30
             "
           />
 
@@ -73,7 +73,7 @@ export default function LueurPink() {
               LUEUR <span className="text-[#ff5a8b]">PINK</span>
             </h1>
             <p className="text-[#1b1b1b]/55 tracking-[0.22em] text-[0.74rem]">
-              SOFT PINK SALON EXPERIENCE — WEBSITE DESIGN
+              SOFT PINK SALON EXPERIENCE <br></br> WEBSITE DESIGN
             </p>
 
             <div className="mt-5">

@@ -71,7 +71,7 @@ export default function Koti() {
               loading="eager"
             />
             <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(250,248,244,0.94)_0%,rgba(250,248,244,0.78)_35%,rgba(250,248,244,0.25)_50%,rgba(250,248,244,0.05)_60%)]" />
-            <div className="relative z-10 mx-auto h-full max-w-[560px] px-6 pt-28">
+            <div className="relative z-10 mx-auto h-full max-w-[560px] px-6 pt-36">
               <p className="text-[11px] tracking-[0.38em] text-[#6a5a43]">
                 WORKS — QUIET LIVING FURNITURE
               </p>
@@ -83,28 +83,23 @@ export default function Koti() {
                 <br />
                 北欧の住空間で大切にされてきた
                 <br />
-                「自然光の入り方」「家具の間隔」「木の触感」を
-                <br />
-                UI と構成に落とし込んだコンセプトサイト。
+                「自然光の入り方」「家具の間隔」<br />「木の触感」を
+               
+                UI と構成に<br />落とし込んだコンセプトサイト。<br />
               </p>
 
-              <div className="mt-9 flex flex-col gap-3">
-                <a
-                  href={siteUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="rounded-full bg-[#141312] px-6 py-3 text-[12px] tracking-[0.24em] text-[#fbfaf7]"
-                >
-                  ENTER THE SITE →
-                </a>
+    <div className="mt-12 md:mt-9">
 
-                <a
-                  href="#detail"
-                  className="rounded-full border border-[#d9cfbe] bg-white/70 px-6 py-3 text-[12px] tracking-[0.24em]"
-                >
-                  WORK DETAIL
-                </a>
-              </div>
+  <a
+    href={siteUrl}
+    target="_blank"
+    rel="noopener noreferrer"
+    className="rounded-full bg-[#141312] px-6 py-3 text-[10px] tracking-[0.24em] text-[#fbfaf7]"
+  >
+    ENTER THE SITE →
+  </a>
+</div>
+
             </div>
           </div>
         </div>
@@ -219,7 +214,7 @@ export default function Koti() {
           href={siteUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-block rounded-full bg-[#141312] px-10 py-4 text-[12px] tracking-[0.26em] text-[#fbfaf7]"
+         className="rounded-full bg-[#141312] px-6 py-3 text-[12px] tracking-[0.24em] text-[#fbfaf7]"
         >
           ENTER THE KOTI SITE →
         </a>
@@ -227,7 +222,7 @@ export default function Koti() {
         <div className="mt-10">
           <Link
             to="/works"
-            className="text-[#6a5a43] tracking-[0.28em] text-[0.75rem]"
+             className="rounded-full border border-[#d9cfbe] bg-white/70 px-8 py-3.5 text-[12px] tracking-[0.26em]"
           >
             ← BACK TO WORKS
           </Link>
