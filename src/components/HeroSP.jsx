@@ -100,6 +100,20 @@ export default function HeroSP() {
           ))}
         </div>
       </div>
+<div
+  className="
+    absolute left-4 top-[80px] right-4
+    h-[180px]
+    bg-gradient-to-b
+    from-[rgba(0,0,0,0.35)]
+    via-[rgba(0,0,0,0.18)]
+    to-transparent
+    rounded-xl
+    blur-[1px]
+    pointer-events-none
+  "
+/>
+
 
       {/* =====================
           TEXT CONTENT
@@ -112,7 +126,7 @@ export default function HeroSP() {
             elegant-title
             text-white/95
             font-normal
-            leading-[1.06]
+            leading-[1.04]
             text-[2rem]
             tracking-[0.22em]
             mb-3
@@ -131,37 +145,35 @@ export default function HeroSP() {
           "
         />
 
-        {/* COPY */}
-        <p
-          className="
-            elegant-sub delay-[0.3s]
-            text-white/90
-            text-[1.05rem]
-            leading-[1.7]
-            tracking-wide
-            max-w-[82%]
-          "
-        >
-          {/* 翻訳レイヤー（0.3秒理解） */}
-          <span className="block text-[0.9rem] tracking-[0.18em] text-white/75 mb-2">
-            店舗・サロン向け Web制作
-          </span>
+   <p
+  className="
+    elegant-sub delay-[0.3s]
+    text-white/95
+    text-[1rem]
+    leading-[1.7]
+    tracking-wide
+    max-w-[88%]
+  "
+>
 
-          普通じゃ物足りない人のための、<br />
-          上品で“伝わるサイト制作”。
 
-          {/* 姿勢レイヤー */}
-          <span
-            className="
-              block mt-5
-              text-white/55
-              text-[0.78rem]
-              tracking-[0.14em]
-            "
-          >
-            世界観から、構造まで設計します
-          </span>
-        </p>
+  店舗・サロンの魅力を、<br />
+  上品に、分かりやすく伝えるWeb制作
+
+<span
+  className="
+    block mt-4
+    text-white/75
+    text-[0.75rem]
+    tracking-[0.14em]
+    drop-shadow-[0_1px_2px_rgba(0,0,0,0.35)]
+  "
+>
+  流行よりも「ちゃんと伝わること」を大切にしています
+</span>
+
+</p>
+
       </div>
 
       {/* =====================
