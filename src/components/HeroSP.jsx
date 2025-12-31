@@ -169,7 +169,7 @@ export default function HeroSP() {
     drop-shadow-[0_1px_2px_rgba(0,0,0,0.35)]
   "
 >
-  流行よりも「ちゃんと伝わること」を大切にしています
+  流行よりも「ちゃんと伝わること」を<br />大切にしています
 </span>
 
 </p>
