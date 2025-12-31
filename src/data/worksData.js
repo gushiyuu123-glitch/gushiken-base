@@ -452,6 +452,40 @@ export const worksData = [
           tech: ["React", "Vite", "Tailwind", "GSAP", "Cinematic Scroll"]
         }
       },
+{
+  title: "甘静 — Wagashi Brand",
+  slug: "Kansei",
+
+  desc: "余白 × 静寂 × 季節。\n“その日の菓子をつくる”姿勢を、空間として設計した和菓子ブランドサイト。",
+  link: "https://kansei-nine.vercel.app/",
+  img: "/works/kansei.webp",
+
+  isNew: true,
+  createdAt: "2025-03-XX",
+
+  tags: [
+    "NEW",
+    "和菓子",
+    "静寂",
+    "余白",
+    "季節",
+    "Food",
+    "Branding",
+    "Japanese Aesthetic",
+    "PC/SP 分離"
+  ],
+
+  detail: {
+    concept:
+      "商品説明や物語を語るのではなく、菓子と空間の“姿勢”だけを残す構成。余白・配置・視線の流れを通して、季節と距離感を体験させる和菓子ブランドサイト。",
+    tech: [
+      "React",
+      "Vite",
+      "Tailwind",
+      "PC/SP 完全分離"
+    ]
+  }
+},
 
       {
         title: "CAPE. OKINAWA — Cafe",
