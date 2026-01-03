@@ -241,6 +241,44 @@ export const worksData = [
           tech: ["React", "Vite", "Tailwind", "GSAP", "Cinematic Scroll", "PC/SP分離"]
         }
       },
+  {
+      title: "SHIGURE — Seasonal Ryokan",
+      slug: "Shigure",
+
+      desc: "滞在 × 季節 × 静寂。\n“何もしない時間”を主役に設計した、思想主導の旅館体験UI。",
+      link: "https://shigure.vercel.app/",
+      img: "/works/shigure.webp",
+
+      isNew: true,
+      createdAt: "2025-03-XX",
+
+      tags: [
+        "NEW",
+        "旅館",
+        "滞在設計",
+        "静寂",
+        "余白",
+        "季節",
+        "Hotel",
+        "Ryokan",
+        "UX",
+        "思想設計",
+        "PC/SP 完全分離"
+      ],
+
+      detail: {
+        concept:
+          "観光や非日常を押し付けるのではなく、“日常の延長にある静けさ”を宿泊体験として設計。滞在・料理・季節の移ろい・余韻までをUIとして再構築した、思想主導の旅館サイト。",
+        tech: [
+          "React",
+          "Vite",
+          "Tailwind",
+          "GSAP",
+          "IntersectionObserver",
+          "PC/SP 完全分離"
+        ]
+      }
+    },
 
       {
         title: "Okinawa Resort Hotel",
