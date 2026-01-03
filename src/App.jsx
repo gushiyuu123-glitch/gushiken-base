@@ -37,6 +37,7 @@ import RayOfSilence from "./pages/works/RayOfSilence";
 import RIN from "./pages/works/RIN";
 import LILU from "./pages/works/LILU";
 import Kansei from "./pages/works/Kansei";
+import Shigure from "./pages/works/Shigure";
 
 
 import PriceDetail from "./pages/PriceDetail";
@@ -104,6 +105,7 @@ function Layout() {
 <Route path="/works/RIN" element={<RIN />} />
 <Route path="/works/LILU" element={<LILU />} />
 <Route path="/works/kansei" element={<Kansei />} />
+<Route path="/works/shigure" element={<Shigure />} />
 
 {/* 最後に汎用テンプレ */}
 <Route path="/works/:slug" element={<WorkDetail />} />
