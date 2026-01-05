@@ -26,7 +26,9 @@ export default function Works() {
   return (
     <section id="works" ref={worksRef} className="aq-fade aq-root">
       <div className="works-container">
-        {/* HEADER */}
+        {/* =====================
+            HEADER
+        ===================== */}
         <div className="works-header aq-fade delay-1">
           <h2 className="works-title" translate="no">
             WORKS
@@ -34,7 +36,9 @@ export default function Works() {
           <p className="works-sub">SELECTED PROJECTS</p>
         </div>
 
-        {/* GRID */}
+        {/* =====================
+            GRID
+        ===================== */}
         <div className="works-grid-wrapper">
           {/* Swipe hint */}
           <div className="works-swipe-hint aq-fade delay-2">
@@ -43,30 +47,61 @@ export default function Works() {
           </div>
 
           <div className="works-grid">
-            {/* BIG CARD — RÉSONANCE */}
+            {/* ==================================
+                BIG CARD — AXIS（先頭）
+            ================================== */}
+            <a
+              href="/axis"
+              className="work-card work-big aq-fade delay-2"
+            >
+              <img
+                src="/assets/axis.webp"
+                alt="AXIS — Design Axis"
+                loading="lazy"
+              />
+              <div className="work-text">
+                <h3>AXIS</h3>
+                <p>
+                  A design axis for decision-making.
+                  <br />
+                  Built as a website.
+                </p>
+
+                {/* SP補助 */}
+                <span className="block md:hidden mt-2 opacity-30 text-[0.45rem]">
+                  Tap to read concept
+                </span>
+              </div>
+            </a>
+
+            {/* ==================================
+                SMALL — RÉSONANCE（2番目）
+            ================================== */}
             <a
               href="https://resonance-restaurant.vercel.app/"
               target="_blank"
               rel="noopener noreferrer"
-              className="work-card work-big aq-fade delay-2"
+              className="work-card work-small aq-fade delay-3"
             >
               <img
                 src="/assets/resonance.webp"
                 alt="RÉSONANCE Restaurant"
                 loading="lazy"
               />
-              <div className="work-text">
+              <div className="work-text small">
                 <h3>RÉSONANCE</h3>
-                <p>Time × Heat × Silence. A cinematic dining experience.</p>
+                <p>Time × Heat × Silence.</p>
               </div>
             </a>
 
-            {/* SMALL — BLUE SHORE HOTEL (Hotel LP) */}
+            {/* ==================================
+                SMALL — BLUE SHORE HOTEL（3番目）
+            ================================== */}
             <a
               href="https://lux-hotel-lp.vercel.app/"
               target="_blank"
               rel="noopener noreferrer"
-              className="work-card work-small aq-fade delay-3"
+              className="work-card work-small aq-fade delay-4"
             >
               <img
                 src="/assets/lux-hotel-lp.webp"
@@ -75,56 +110,33 @@ export default function Works() {
               />
               <div className="work-text small">
                 <h3>BLUE SHORE HOTEL</h3>
-                <p>
-                  Sea × Light × Quiet Luxury. A cinematic hotel landing page.
-                </p>
+                <p>Sea × Light × Quiet Luxury.</p>
               </div>
             </a>
-{/* SMALL — RIN Eyelash Salon */}
-<a
-  href="https://rin-psi.vercel.app/"
-  target="_blank"
-  rel="noopener noreferrer"
-  className="work-card work-small aq-fade delay-4"
->
-  <img
-    src="/assets/rin.webp"
-    alt="RIN Eyelash Salon"
-    loading="lazy"
-  />
-  <div className="work-text small">
-    <h3>RIN</h3>
-    <p>
-      Calm × Pause × Decision.
-      <br />
-      An eyelash salon website designed for people who hesitate.
-    </p>
-  </div>
-</a>
-
           </div>
         </div>
 
-        {/* VIEW ALL */}
-     <div className="works-viewall aq-fade delay-5">
-  <a href="/works" className="viewall-btn">
-    VIEW ALL WORKS
-  </a>
+        {/* =====================
+            VIEW ALL
+        ===================== */}
+        <div className="works-viewall aq-fade delay-5">
+          <a href="/works" className="viewall-btn">
+            VIEW ALL WORKS
+          </a>
 
-  {/* 補助コピー：AXIS文脈 */}
-  <p
-    className="
-      mt-3
-      text-[0.55rem]
-      tracking-[0.32em]
-      text-white/30
-      select-none
-    "
-  >
-    Curated under the AXIS philosophy
-  </p>
-</div>
-
+          {/* 補助コピー：AXIS文脈 */}
+          <p
+            className="
+              mt-3
+              text-[0.55rem]
+              tracking-[0.32em]
+              text-white/30
+              select-none
+            "
+          >
+            Curated under the AXIS philosophy
+          </p>
+        </div>
       </div>
     </section>
   );
