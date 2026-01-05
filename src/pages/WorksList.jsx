@@ -135,23 +135,77 @@ export default function WorksList() {
       <div className="ambient-glow"></div>
 
       <div ref={rootRef} className="max-w-6xl lg:max-w-7xl mx-auto">
-        {/* TOP */}
-        <div className="aq-fade mb-24 md:mb-28">
-          <div className="w-12 h-px bg-gradient-to-r from-white/20 to-white/5 mb-6" />
-          <p className="text-[0.65rem] md:text-[0.75rem] tracking-[0.32em] text-white/30 mb-3">
-            SELECTED WORKS
-          </p>
+    {/* TOP */}
+<div className="aq-fade mb-24 md:mb-28">
+  <div className="w-12 h-px bg-gradient-to-r from-white/20 to-white/5 mb-6" />
+      
+  <p className="text-[0.65rem] md:text-[0.75rem] tracking-[0.32em] text-white/30 mb-3">
+    SELECTED WORKS
+  </p>
 
-          <h1 className="text-white text-[2.6rem] md:text-[3.4rem] tracking-[0.28em] font-light leading-[1.2] aq-fade delay-1">
-            WORKS —<br className="md:hidden" />
-            Portfolio
-          </h1>
+  <h1 className="text-white text-[2.6rem] md:text-[3.4rem] tracking-[0.28em] font-light leading-[1.2] aq-fade delay-1">
+    WORKS —<br className="md:hidden" />
+    Portfolio
+  </h1>
+  {/* 説明文（AXIS基準・沖縄ワード排除） */}
+  <p className="mt-7 text-[0.9rem] md:text-[1rem] text-white/45 leading-relaxed max-w-xl tracking-[0.04em] aq-fade delay-2">
+    光と静寂を軸に構築した作品群。
+    <br />
+    すべては一つの思想〈AXIS〉から派生している。
+  </p>
+<a
+  href="https://axis-alpha-one.vercel.app/"
+  className="
+    inline-flex
+    items-center
+    gap-2
+    mt-6
+    text-[0.55rem]
+    tracking-[0.42em]
+    text-white/35
+    transition-all
+    duration-300
+    aq-fade
+    delay-3
 
-          <p className="mt-7 text-[0.9rem] md:text-[1rem] text-white/45 leading-relaxed max-w-xl tracking-[0.04em] aq-fade delay-2">
-            沖縄 × 光 × 静寂 を軸にしたセレクション。
-            <br />
-            用途ごとに世界観を切り替えながらも、統一された静かなトーンで構築。
-          </p>
+    hover:text-white/65
+    hover:tracking-[0.46em]
+  "
+>
+  <span className="relative">
+    ABOUT AXIS
+    <span
+      aria-hidden
+      className="
+        absolute
+        left-0
+        -bottom-1
+        h-px
+        w-full
+        bg-white/30
+        scale-x-0
+        origin-left
+        transition-transform
+        duration-300
+        group-hover:scale-x-100
+      "
+    />
+  </span>
+
+  <span
+    aria-hidden
+    className="
+      text-[0.55rem]
+      opacity-60
+      transition-transform
+      duration-300
+      group-hover:translate-x-1
+    "
+  >
+    →
+  </span>
+</a>
+
         </div>
 
         <div className="w-16 h-px bg-white/12 mb-16 aq-fade" />
