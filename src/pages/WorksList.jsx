@@ -204,6 +204,10 @@ export default function WorksList() {
   >
     →
   </span>
+  {/* <span className="block md:hidden mt-1 opacity-30 text-[0.45rem]">
+  Tap to read concept
+</span> */}
+
 </a>
 
         </div>

@@ -106,11 +106,25 @@ export default function Works() {
         </div>
 
         {/* VIEW ALL */}
-        <div className="works-viewall aq-fade delay-5">
-          <a href="/works" className="viewall-btn">
-            VIEW ALL WORKS
-          </a>
-        </div>
+     <div className="works-viewall aq-fade delay-5">
+  <a href="/works" className="viewall-btn">
+    VIEW ALL WORKS
+  </a>
+
+  {/* 補助コピー：AXIS文脈 */}
+  <p
+    className="
+      mt-3
+      text-[0.55rem]
+      tracking-[0.32em]
+      text-white/30
+      select-none
+    "
+  >
+    Curated under the AXIS philosophy
+  </p>
+</div>
+
       </div>
     </section>
   );
