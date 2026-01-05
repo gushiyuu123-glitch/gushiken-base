@@ -51,7 +51,7 @@ export default function Works() {
                 BIG CARD — AXIS（先頭）
             ================================== */}
             <a
-              href="/axis"
+              href="/https://axis-alpha-one.vercel.app/"
               className="work-card work-big aq-fade delay-2"
             >
               <img
