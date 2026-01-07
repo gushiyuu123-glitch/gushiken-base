@@ -301,7 +301,7 @@ export default function WorkItem({
                 transform-gpu
               "
             >
-              VIEW SITE →
+              作品詳細へ →
             </span>
           </div>
         </div>
