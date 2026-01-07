@@ -24,7 +24,20 @@ export default function Works() {
   }, []);
 
   return (
-    <section id="works" ref={worksRef} className="aq-fade aq-root">
+ <section
+  id="works"
+  ref={worksRef}
+  className="
+    aq-fade
+    aq-root
+
+   pt-[12vh]
+    pb-[12vh]   // ← ここを少しだけ厚く
+    md:pt-[16vh]
+    md:pb-[16vh]
+  "
+>
+
       <div className="works-container">
         {/* =====================
             HEADER
