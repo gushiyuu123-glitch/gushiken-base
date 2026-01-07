@@ -148,11 +148,12 @@ export default function WorksList() {
     Portfolio
   </h1>
   {/* 説明文（AXIS基準・沖縄ワード排除） */}
-  <p className="mt-7 text-[0.9rem] md:text-[1rem] text-white/45 leading-relaxed max-w-xl tracking-[0.04em] aq-fade delay-2">
-    光と静寂を軸に構築した作品群。
-    <br />
-    すべては一つの思想〈AXIS〉から派生している。
-  </p>
+<p className="mt-7 text-[0.9rem] md:text-[1rem] text-white/45 leading-relaxed max-w-xl tracking-[0.04em] aq-fade delay-2">
+  一貫した思想を軸に設計した作品群。
+  <br />
+  すべては一つの設計原理〈AXIS〉から生まれている。
+</p>
+
 {/* ===============================
    AXIS LINK（思想導線・完成形）
    =============================== */}
