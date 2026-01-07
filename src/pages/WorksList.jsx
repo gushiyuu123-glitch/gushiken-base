@@ -151,7 +151,9 @@ export default function WorksList() {
 <p className="mt-7 text-[0.9rem] md:text-[1rem] text-white/45 leading-relaxed max-w-xl tracking-[0.04em] aq-fade delay-2">
   一貫した思想を軸に設計した作品群。
   <br />
-  すべては一つの設計原理〈AXIS〉から生まれている。
+  すべては一つの設計原理〈AXIS〉から
+  <br />
+  生まれている。
 </p>
 
 {/* ===============================
