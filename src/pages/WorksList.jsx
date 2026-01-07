@@ -153,62 +153,106 @@ export default function WorksList() {
     <br />
     すべては一つの思想〈AXIS〉から派生している。
   </p>
+{/* ===============================
+   AXIS LINK（思想導線・完成形）
+   =============================== */}
 <a
   href="https://axis-alpha-one.vercel.app/"
+  target="_blank"
+  rel="noopener noreferrer"
   className="
+    group
     inline-flex
     items-center
-    gap-2
-    mt-6
-    text-[0.55rem]
-    tracking-[0.42em]
-    text-white/35
-    transition-all
+    gap-3
+    mt-7
+
+    text-[0.6rem]
+    tracking-[0.44em]
+    text-white/45
+
+    transition-colors
     duration-300
+
     aq-fade
     delay-3
 
-    hover:text-white/65
-    hover:tracking-[0.46em]
+    hover:text-white/75
+    active:opacity-70
   "
 >
+  {/* TEXT */}
   <span className="relative">
     ABOUT AXIS
+
+    {/* UNDERLINE */}
     <span
       aria-hidden
       className="
         absolute
         left-0
-        -bottom-1
+        -bottom-1.5
         h-px
         w-full
+
         bg-white/30
-        scale-x-0
-        origin-left
-        transition-transform
-        duration-300
-        group-hover:scale-x-100
+
+        /* 呼吸（下線のみ） */
+        animate-[pulse_4s_ease-in-out_infinite]
+
+        /* PC：hoverで出現 */
+        md:scale-x-0
+        md:origin-left
+        md:transition-transform
+        md:duration-500
+        md:group-hover:scale-x-100
+
+        /* SP：常時うっすら表示 */
+        scale-x-100
+        opacity-40
       "
     />
   </span>
 
+  {/* ARROW */}
   <span
     aria-hidden
     className="
-      text-[0.55rem]
-      opacity-60
-      transition-transform
-      duration-300
-      group-hover:translate-x-1
+      text-[0.6rem]
+      opacity-50
+
+      transition-all
+      duration-500
+
+      md:group-hover:opacity-80
+      md:group-hover:translate-x-1.5
     "
   >
     →
   </span>
-  {/* <span className="block md:hidden mt-1 opacity-30 text-[0.45rem]">
-  Tap to read concept
-</span> */}
-
 </a>
+
+{/* SP ONLY : 補助テキスト */}
+<span
+  className="
+    block
+    md:hidden
+    mt-2
+
+    text-[0.45rem]
+    tracking-[0.28em]
+    text-white/30
+
+    cursor-pointer
+    transition-all
+    duration-200
+
+    active:translate-y-[1px]
+    active:opacity-60
+  "
+>
+  Tap to read concept
+</span>
 
         </div>
 
