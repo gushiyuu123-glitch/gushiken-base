@@ -50,29 +50,38 @@ export default function Works() {
             {/* ==================================
                 BIG CARD — AXIS（先頭）
             ================================== */}
-            <a
-              href="https://axis-alpha-one.vercel.app/"
-              className="work-card work-big aq-fade delay-2"
-            >
-              <img
-                src="/assets/axis.webp"
-                alt="AXIS — Design Axis"
-                loading="lazy"
-              />
-              <div className="work-text">
-                <h3>AXIS</h3>
-                <p>
-                  A design axis for decision-making.
-                  <br />
-                  Built as a website.
-                </p>
+<a
+  href="https://axis-alpha-one.vercel.app/"
+  className="work-card work-big aq-fade delay-2"
+>
+  <img
+    src="/assets/axis.webp"
+    alt="AXIS — Design Axis"
+    loading="lazy"
+  />
 
-                {/* SP補助 */}
-                <span className="block md:hidden mt-2 opacity-30 text-[0.45rem]">
-                  Tap to read concept
-                </span>
-              </div>
-            </a>
+  {/* TEXT */}
+  <div className="work-text">
+    {/* PC ONLY：被せる */}
+    <h3 className="hidden md:block">AXIS</h3>
+
+    {/* SP ONLY：画像の下に出す */}
+    <h3 className="md:hidden mt-3 tracking-[0.18em] text-[0.7rem]">
+      AXIS
+    </h3>
+
+    <p className="hidden md:block">
+      A design axis for decision-making.
+      <br />
+      Built as a website.
+    </p>
+
+    {/* SP補助 */}
+    <span className="block md:hidden mt-2 opacity-30 text-[0.45rem]">
+      Tap to read concept
+    </span>
+  </div>
+</a>
 
             {/* ==================================
                 SMALL — RÉSONANCE（2番目）

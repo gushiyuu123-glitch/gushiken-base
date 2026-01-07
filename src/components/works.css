@@ -340,6 +340,10 @@ background: linear-gradient(
     font-size: 14px;
     transform: translateY(-1px);
   }
+  .work-card h3 {
+  pointer-events: none;
+}
+
 }
 
 /* Keyframes */
