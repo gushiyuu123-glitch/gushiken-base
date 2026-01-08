@@ -722,7 +722,7 @@ export const worksData = [
 
         desc: "茶 × 余白 × 世界観。\n茶の所作を静かに伝える構成美。",
         link: "https://flow-of-tea.vercel.app",
-        img: "/works/aziwau.webp",
+        img: "/works/aziwau1.webp",
 
         isNew: false,
         createdAt: null,
