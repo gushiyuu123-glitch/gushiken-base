@@ -659,6 +659,41 @@ export const worksData = [
     category: "ART / CREATIVE",
     subtitle: "光・影・静寂をテーマにしたアート表現",
     items: [
+       {
+      title: "VIVA — Between the sea and the city",
+      slug: "VIVA",
+
+      desc: "海と都市のあいだ。\n用途を定義しない“編集された空気”としてのファッション表現。",
+      link: "https://viva-fashion.vercel.app/",
+      img: "/works/viva.webp",
+
+      isNew: true,
+      createdAt: "2026-01-XX",
+
+      tags: [
+        "Editorial",
+        "Art",
+        "Fashion",
+        "余白",
+        "静寂",
+        "世界観",
+        "Cinematic",
+        "PC/SP 最適化"
+      ],
+
+      detail: {
+        concept:
+          "雑誌・ブランド・ECのいずれにも属さない、編集思想主導のファッション表現。スクロールをページめくりと捉え、余白・写真・リズムだけで“残る感覚”を設計したアート寄りプロジェクト。",
+        tech: [
+          "React",
+          "Vite",
+          "Tailwind",
+          "GSAP",
+          "IntersectionObserver",
+          "PC/SP 最適化"
+        ]
+      }
+    },
       {
         title: "RYUKA — Fragrance",
         slug: "RyukaIntro",
