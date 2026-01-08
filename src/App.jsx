@@ -38,6 +38,7 @@ import RIN from "./pages/works/RIN";
 import LILU from "./pages/works/LILU";
 import Kansei from "./pages/works/Kansei";
 import Shigure from "./pages/works/Shigure";
+import Viva from "./pages/works/Viva";
 
 
 import PriceDetail from "./pages/PriceDetail";
@@ -106,6 +107,7 @@ function Layout() {
 <Route path="/works/LILU" element={<LILU />} />
 <Route path="/works/kansei" element={<Kansei />} />
 <Route path="/works/shigure" element={<Shigure />} />
+<Route path="/works/viva" element={<Viva />} />
 
 {/* 最後に汎用テンプレ */}
 <Route path="/works/:slug" element={<WorkDetail />} />
