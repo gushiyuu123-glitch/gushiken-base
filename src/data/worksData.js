@@ -9,42 +9,42 @@ export const worksData = [
     subtitle: "美容・サロン向けの上質な余白デザイン",
     items: [
       {
-  title: "LILU nail salon",
-  slug: "LILU",
+        title: "LILU nail salon",
+        slug: "LILU",
 
-  desc: "可愛い × 上品 × 直感設計。\n20代女性の感覚で“選ばれる”ために構築したネイルサロンUI。",
-  link: "https://lilu-drab.vercel.app/",
-  img: "/works/lilu.webp",
+        desc: "可愛い × 上品 × 直感設計。\n20代女性の感覚で“選ばれる”ために構築したネイルサロンUI。",
+        link: "https://lilu-drab.vercel.app/",
+        img: "/works/lilu.webp",
 
-  isNew: true,
-  createdAt: "2025-02-28",
+        isNew: true,
+        createdAt: "2025-02-28",
 
-  tags: [
-    "NEW",
-    "ピンク",
-    "余白",
-    "上品",
-    "直感設計",
-    "Beauty",
-    "Salon",
-    "UI/UX",
-    "Visual First",
-    "PC/SP 分離"
-  ],
+        tags: [
+          "NEW",
+          "ピンク",
+          "余白",
+          "上品",
+          "直感設計",
+          "Beauty",
+          "Salon",
+          "UI/UX",
+          "Visual First",
+          "PC/SP 分離"
+        ],
 
-  detail: {
-    concept:
-      "20代女性が“考えずに好きだと感じること”を起点に、写真・余白・色・タイポグラフィを最小限の情報設計で構成。SNS閲覧後の『最後の決め手』になることを目的に、違和感や選択ストレスを排除したビジュアル主導のサロンサイト。",
-    tech: [
-      "React",
-      "Vite",
-      "Tailwind",
-      "GSAP",
-      "PC/SP 完全分離",
-      "microCMS（NEWS連携）"
-    ]
-  }
-},
+        detail: {
+          concept:
+            "20代女性が“考えずに好きだと感じること”を起点に、写真・余白・色・タイポグラフィを最小限の情報設計で構成。SNS閲覧後の『最後の決め手』になることを目的に、違和感や選択ストレスを排除したビジュアル主導のサロンサイト。",
+          tech: [
+            "React",
+            "Vite",
+            "Tailwind",
+            "GSAP",
+            "PC/SP 完全分離",
+            "microCMS（NEWS連携）"
+          ]
+        }
+      },
 
       {
         title: "Okinawa White Spa",
@@ -92,28 +92,6 @@ export const worksData = [
         }
       },
 
-      {
-        title: "BLACK ORIETTA",
-        slug: "GoldenVeil",
-
-        desc: "黒 × 金 × 高級香水。\n重厚なラグジュアリートーンの演出設計。",
-        link: "https://black-orietta.vercel.app",
-        img: "/works/orietta.webp",
-
-        isNew: false,
-        createdAt: null,
-
-        tags: [
-          "黒", "金", "Luxury", "陰影",
-          "Beauty", "Branding", "Fragrance",
-          "GSAP", "Motion"
-        ],
-
-        detail: {
-          concept: "黒の深度と金の輝度差で“高級香水の余韻”を再現し、陰影のコントラストで重厚な静けさを演出。",
-          tech: ["React", "Vite", "Tailwind", "GSAP"]
-        }
-      }
     ]
   },
 
@@ -125,46 +103,46 @@ export const worksData = [
     subtitle: "スマホでの体験を最優先したUI設計",
     items: [
       {
-  title: "RIN — Eyelash Salon",
-  slug: "RIN",
+        title: "RIN — Eyelash Salon",
+        slug: "RIN",
 
-  desc: "迷い × 静けさ × 納得。\n“すぐ決めない人”のために設計した、思想主導のまつエクサイト。",
-  link: "https://rin-psi.vercel.app/",
-  img: "/works/rin.webp",
+        desc: "迷い × 静けさ × 納得。\n“すぐ決めない人”のために設計した、思想主導のまつエクサイト。",
+        link: "https://rin-psi.vercel.app/",
+        img: "/works/rin.webp",
 
-  isNew: true,
-  createdAt: "2025-02-22",
+        isNew: true,
+        createdAt: "2025-02-22",
 
-  tags: [
-    "NEW",
-    "静寂",
-    "余白",
-    "思想設計",
-    "Beauty",
-    "Salon",
-    "Smartphone",
-    "UX",
-    "Motion",
-    "GSAP",
-    "PC/SP 分離"
-  ],
+        tags: [
+          "NEW",
+          "静寂",
+          "余白",
+          "思想設計",
+          "Beauty",
+          "Salon",
+          "Smartphone",
+          "UX",
+          "Motion",
+          "GSAP",
+          "PC/SP 分離"
+        ],
 
-  detail: {
-    concept:
-      "『すぐに決めなくていい』という姿勢を起点に、迷いや不安を否定せず受け止める導線・言葉・余白で構成。美容サイトにありがちな圧を排除し、読む速度・感情の置き場・判断の余白までをUIとして設計した。",
-    tech: [
-      "React",
-      "Vite",
-      "Tailwind",
-      "GSAP",
-      "Scroll Animation",
-      "PC/SP 完全分離",
-      "microCMS（NEWS連携）"
-    ]
-  }
-},
+        detail: {
+          concept:
+            "『すぐに決めなくていい』という姿勢を起点に、迷いや不安を否定せず受け止める導線・言葉・余白で構成。美容サイトにありがちな圧を排除し、読む速度・感情の置き場・判断の余白までをUIとして設計した。",
+          tech: [
+            "React",
+            "Vite",
+            "Tailwind",
+            "GSAP",
+            "Scroll Animation",
+            "PC/SP 完全分離",
+            "microCMS（NEWS連携）"
+          ]
+        }
+      },
 
-       {
+      {
         title: "Lucent Salon",
         slug: "Lucent",
 
@@ -241,44 +219,44 @@ export const worksData = [
           tech: ["React", "Vite", "Tailwind", "GSAP", "Cinematic Scroll", "PC/SP分離"]
         }
       },
-  {
-      title: "SHIGURE — Seasonal Ryokan",
-      slug: "Shigure",
+      {
+        title: "SHIGURE — Seasonal Ryokan",
+        slug: "Shigure",
 
-      desc: "滞在 × 季節 × 静寂。\n“何もしない時間”を主役に設計した、思想主導の旅館体験UI。",
-      link: "https://shigure.vercel.app/",
-      img: "/works/shigure.webp",
+        desc: "滞在 × 季節 × 静寂。\n“何もしない時間”を主役に設計した、思想主導の旅館体験UI。",
+        link: "https://shigure.vercel.app/",
+        img: "/works/shigure.webp",
 
-      isNew: true,
-      createdAt: "2025-03-XX",
+        isNew: true,
+        createdAt: "2025-03-XX",
 
-      tags: [
-        "NEW",
-        "旅館",
-        "滞在設計",
-        "静寂",
-        "余白",
-        "季節",
-        "Hotel",
-        "Ryokan",
-        "UX",
-        "思想設計",
-        "PC/SP 完全分離"
-      ],
-
-      detail: {
-        concept:
-          "観光や非日常を押し付けるのではなく、“日常の延長にある静けさ”を宿泊体験として設計。滞在・料理・季節の移ろい・余韻までをUIとして再構築した、思想主導の旅館サイト。",
-        tech: [
-          "React",
-          "Vite",
-          "Tailwind",
-          "GSAP",
-          "IntersectionObserver",
+        tags: [
+          "NEW",
+          "旅館",
+          "滞在設計",
+          "静寂",
+          "余白",
+          "季節",
+          "Hotel",
+          "Ryokan",
+          "UX",
+          "思想設計",
           "PC/SP 完全分離"
-        ]
-      }
-    },
+        ],
+
+        detail: {
+          concept:
+            "観光や非日常を押し付けるのではなく、“日常の延長にある静けさ”を宿泊体験として設計。滞在・料理・季節の移ろい・余韻までをUIとして再構築した、思想主導の旅館サイト。",
+          tech: [
+            "React",
+            "Vite",
+            "Tailwind",
+            "GSAP",
+            "IntersectionObserver",
+            "PC/SP 完全分離"
+          ]
+        }
+      },
 
       {
         title: "Okinawa Resort Hotel",
@@ -490,40 +468,40 @@ export const worksData = [
           tech: ["React", "Vite", "Tailwind", "GSAP", "Cinematic Scroll"]
         }
       },
-{
-  title: "甘静 — Wagashi Brand",
-  slug: "Kansei",
+      {
+        title: "甘静 — Wagashi Brand",
+        slug: "Kansei",
 
-  desc: "余白 × 静寂 × 季節。\n“その日の菓子をつくる”姿勢を、空間として設計した和菓子ブランドサイト。",
-  link: "https://kansei-nine.vercel.app/",
-  img: "/works/kansei.webp",
+        desc: "余白 × 静寂 × 季節。\n“その日の菓子をつくる”姿勢を、空間として設計した和菓子ブランドサイト。",
+        link: "https://kansei-nine.vercel.app/",
+        img: "/works/kansei.webp",
 
-  isNew: true,
-  createdAt: "2025-03-XX",
+        isNew: true,
+        createdAt: "2025-03-XX",
 
-  tags: [
-    "NEW",
-    "和菓子",
-    "静寂",
-    "余白",
-    "季節",
-    "Food",
-    "Branding",
-    "Japanese Aesthetic",
-    "PC/SP 分離"
-  ],
+        tags: [
+          "NEW",
+          "和菓子",
+          "静寂",
+          "余白",
+          "季節",
+          "Food",
+          "Branding",
+          "Japanese Aesthetic",
+          "PC/SP 分離"
+        ],
 
-  detail: {
-    concept:
-      "商品説明や物語を語るのではなく、菓子と空間の“姿勢”だけを残す構成。余白・配置・視線の流れを通して、季節と距離感を体験させる和菓子ブランドサイト。",
-    tech: [
-      "React",
-      "Vite",
-      "Tailwind",
-      "PC/SP 完全分離"
-    ]
-  }
-},
+        detail: {
+          concept:
+            "商品説明や物語を語るのではなく、菓子と空間の“姿勢”だけを残す構成。余白・配置・視線の流れを通して、季節と距離感を体験させる和菓子ブランドサイト。",
+          tech: [
+            "React",
+            "Vite",
+            "Tailwind",
+            "PC/SP 完全分離"
+          ]
+        }
+      },
 
       {
         title: "CAPE. OKINAWA — Cafe",
@@ -659,41 +637,76 @@ export const worksData = [
     category: "ART / CREATIVE",
     subtitle: "光・影・静寂をテーマにしたアート表現",
     items: [
-       {
-      title: "VIVA — Between the sea and the city",
-      slug: "VIVA",
+      {
+        title: "VIVA — Between the sea and the city",
+        slug: "VIVA",
 
-      desc: "海と都市のあいだ。\n用途を定義しない“編集された空気”としてのファッション表現。",
-      link: "https://viva-fashion.vercel.app/",
-      img: "/works/viva.webp",
+        desc: "海と都市のあいだ。\n用途を定義しない“編集された空気”としてのファッション表現。",
+        link: "https://viva-fashion.vercel.app/",
+        img: "/works/viva.webp",
 
-      isNew: true,
-      createdAt: "2026-01-XX",
+        isNew: true,
+        createdAt: "2026-01-XX",
 
-      tags: [
-        "Editorial",
-        "Art",
-        "Fashion",
-        "余白",
-        "静寂",
-        "世界観",
-        "Cinematic",
-        "PC/SP 最適化"
-      ],
-
-      detail: {
-        concept:
-          "雑誌・ブランド・ECのいずれにも属さない、編集思想主導のファッション表現。スクロールをページめくりと捉え、余白・写真・リズムだけで“残る感覚”を設計したアート寄りプロジェクト。",
-        tech: [
-          "React",
-          "Vite",
-          "Tailwind",
-          "GSAP",
-          "IntersectionObserver",
+        tags: [
+          "Editorial",
+          "Art",
+          "Fashion",
+          "余白",
+          "静寂",
+          "世界観",
+          "Cinematic",
           "PC/SP 最適化"
-        ]
-      }
-    },
+        ],
+
+        detail: {
+          concept:
+            "雑誌・ブランド・ECのいずれにも属さない、編集思想主導のファッション表現。スクロールをページめくりと捉え、余白・写真・リズムだけで“残る感覚”を設計したアート寄りプロジェクト。",
+          tech: [
+            "React",
+            "Vite",
+            "Tailwind",
+            "GSAP",
+            "IntersectionObserver",
+            "PC/SP 最適化"
+          ]
+        }
+      },
+      {
+        title: "BLACK ORIETTA",
+        slug: "GoldenVeil",
+
+        desc: "黒 × 金 × 香りの余韻。\nプロダクトではなく“空気”を編集したフレグランス表現。",
+        link: "https://black-orietta.vercel.app",
+        img: "/works/orietta.webp",
+
+        isNew: false,
+        createdAt: null,
+
+        tags: [
+          "Art",
+          "Fragrance",
+          "Editorial",
+          "Luxury",
+          "黒",
+          "金",
+          "陰影",
+          "静寂",
+          "GSAP",
+          "Motion"
+        ],
+
+        detail: {
+          concept:
+            "香水そのものではなく、“残り香の時間”を主題に、黒の深度と金の輝度差で静かなラグジュアリーを構築。プロダクト説明を排し、光と陰影のみで世界観を編集したアート寄り表現。",
+          tech: [
+            "React",
+            "Vite",
+            "Tailwind",
+            "GSAP"
+          ]
+        }
+      },
       {
         title: "RYUKA — Fragrance",
         slug: "RyukaIntro",
