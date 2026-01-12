@@ -116,25 +116,26 @@ export default function Works() {
               </div>
             </a>
 
-            {/* ==================================
-                SMALL — BLUE SHORE HOTEL（3番目）
-            ================================== */}
-            <a
-              href="https://lux-hotel-lp.vercel.app/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="work-card work-small aq-fade delay-4"
-            >
-              <img
-                src="/assets/lux-hotel-lp.webp"
-                alt="Blue Shore Hotel Landing Page"
-                loading="lazy"
-              />
-              <div className="work-text small">
-                <h3>BLUE SHORE HOTEL</h3>
-                <p>Sea × Light × Quiet Luxury.</p>
-              </div>
-            </a>
+{/* ==================================
+    SMALL — TAKUMI（3番目）
+================================== */}
+<a
+  href="https://takumi-ochre.vercel.app/"
+  target="_blank"
+  rel="noopener noreferrer"
+  className="work-card work-small aq-fade delay-4"
+>
+  <img
+    src="/assets/takumi.webp"
+    alt="匠 – Takumi – Architectural Studio"
+    loading="lazy"
+  />
+  <div className="work-text small">
+    <h3>TAKUMI</h3>
+    <p>Architecture × Time × Living.</p>
+  </div>
+</a>
+
           </div>
         </div>
 
