@@ -149,12 +149,11 @@ export default function WorksList() {
   </h1>
   {/* 説明文（AXIS基準・沖縄ワード排除） */}
 <p className="mt-7 text-[0.9rem] md:text-[1rem] text-white/45 leading-relaxed max-w-xl tracking-[0.04em] aq-fade delay-2">
-  一貫した思想を軸に設計した作品群。
+  案件ごとに条件は異なりますが、
   <br />
-  すべては一つの設計原理〈AXIS〉から
-  <br />
-  生まれている。
+  判断の軸がぶれないよう〈AXIS〉を設けています。
 </p>
+
 
 {/* ===============================
    AXIS LINK（思想導線・完成形）
@@ -309,6 +308,75 @@ export default function WorksList() {
           100% { opacity: 1; transform: translateX(0); }
         }
       `}</style>
+      {/* ===============================
+   EPILOGUE / TAKUMI
+================================ */}
+<section className="mt-40 aq-fade">
+  <div className="max-w-6xl lg:max-w-7xl mx-auto">
+    <div className="w-12 h-px bg-white/20 mb-8" />
+
+    <p className="text-white/40 tracking-[0.32em] text-[0.6rem] mb-4">
+      TAKUMI
+    </p>
+
+    {/* 匠リンク */}
+    <a
+      href="https://takumi-ochre.vercel.app/"
+      target="_blank"
+      rel="noopener noreferrer"
+      className="
+        group
+        inline-block
+
+        text-white
+        text-[1.6rem]
+        tracking-[0.18em]
+        font-light
+
+        transition-opacity
+        duration-300
+        hover:opacity-80
+        active:opacity-60
+      "
+    >
+      <span className="relative">
+        匠
+
+        {/* 呼吸する下線 */}
+        <span
+          aria-hidden
+          className="
+            absolute
+            left-0
+            -bottom-1.5
+            h-px
+            w-full
+            bg-white/30
+
+            animate-[pulse_4s_ease-in-out_infinite]
+
+            md:scale-x-0
+            md:origin-left
+            md:transition-transform
+            md:duration-500
+            md:group-hover:scale-x-100
+
+            scale-x-100
+            opacity-40
+          "
+        />
+      </span>
+    </a>
+
+<p className="mt-6 text-white/45 text-[0.9rem] leading-relaxed max-w-md">
+  構造・動線・余白の順で整理し、<br />
+  無理のない形にまとめています。
+</p>
+
+  </div>
+</section>
+
     </section>
+    
   );
 }

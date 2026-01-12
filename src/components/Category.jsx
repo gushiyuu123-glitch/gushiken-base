@@ -7,14 +7,14 @@ export default function Category({ title, subtitle, children, itemsRaw = [] }) {
   const hasNew = itemsRaw.some((i) => i.isNew === true);
 
   const getCardWidth = (category) => {
-    const map = {
-      "BEAUTY / SALON": "w-[92%]",
-      "EC / BRAND DESIGN": "w-[84%]",
-      "FOOD / FURNITURE / BRAND": "w-[88%]",
-      HOTEL: "w-[90%]",
-      "SMARTPHONE / MOBILE DESIGN": "w-[80%]",
-      "ART / CREATIVE": "w-[94%]",
-    };
+const map = {
+  "BEAUTY / SALON": "w-[92%]",
+  "HOTEL / STAY": "w-[90%]",
+  "FOOD / FURNITURE / BRAND": "w-[88%]",
+  "EC / BRAND DESIGN": "w-[84%]",
+  "ART / CREATIVE": "w-[94%]",
+};
+
     return map[category] || "w-[88%]";
   };
 

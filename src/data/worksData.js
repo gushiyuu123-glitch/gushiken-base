@@ -45,6 +45,44 @@ export const worksData = [
           ]
         }
       },
+// LILU の直後に追加
+{
+  title: "RIN — Eyelash Salon",
+  slug: "RIN",
+
+  desc: "迷い × 静けさ × 納得。\n“すぐ決めない人”のために設計した、思想主導のまつエクサイト。",
+  link: "https://rin-psi.vercel.app/",
+  img: "/works/rin.webp",
+
+  isNew: true,
+  createdAt: "2025-02-22",
+
+  tags: [
+    "NEW",
+    "静寂",
+    "余白",
+    "思想設計",
+    "Beauty",
+    "Salon",
+    "UX",
+    "GSAP",
+    "PC/SP 完全分離"
+  ],
+
+  detail: {
+    concept:
+      "『すぐに決めなくていい』という姿勢を起点に、迷いや不安を否定せず受け止める導線・言葉・余白で構成。美容サイトにありがちな圧を排除し、読む速度・感情の置き場・判断の余白までをUIとして設計した。",
+    tech: [
+      "React",
+      "Vite",
+      "Tailwind",
+      "GSAP",
+      "Scroll Animation",
+      "PC/SP 完全分離",
+      "microCMS（NEWS連携）"
+    ]
+  }
+},
 
       {
         title: "Okinawa White Spa",
@@ -68,7 +106,40 @@ export const worksData = [
           tech: ["React", "Vite", "Tailwind", "GSAP", "Light Animation"]
         }
       },
+{
+  title: "Lucent Salon",
+  slug: "Lucent",
 
+  desc: "透明な光 × ミニマル。\n美容 × 透明感をUIへ落とし込んだ設計。",
+  link: "https://lucent-salon.vercel.app",
+  img: "/works/lucent.webp",
+
+  isNew: false,
+  createdAt: null,
+
+  tags: [
+    "透明感",
+    "光",
+    "白",
+    "ミニマル",
+    "Beauty",
+    "Salon",
+    "Motion",
+    "Light Animation"
+  ],
+
+  detail: {
+    concept:
+      "透明光のニュアンスをUIに抽象化し、美容系らしい“透け感 × 清潔感”をミニマルな構成で表現した設計。",
+    tech: [
+      "React",
+      "Vite",
+      "Tailwind",
+      "GSAP",
+      "Light Animation"
+    ]
+  }
+},
       {
         title: "LUEUR PINK",
         slug: "LueurPink",
@@ -94,101 +165,6 @@ export const worksData = [
 
     ]
   },
-
-  /* ----------------------------------------------------------
-    SMARTPHONE / MOBILE DESIGN
-  ---------------------------------------------------------- */
-  {
-    category: "SMARTPHONE / MOBILE DESIGN",
-    subtitle: "スマホでの体験を最優先したUI設計",
-    items: [
-      {
-        title: "RIN — Eyelash Salon",
-        slug: "RIN",
-
-        desc: "迷い × 静けさ × 納得。\n“すぐ決めない人”のために設計した、思想主導のまつエクサイト。",
-        link: "https://rin-psi.vercel.app/",
-        img: "/works/rin.webp",
-
-        isNew: true,
-        createdAt: "2025-02-22",
-
-        tags: [
-          "NEW",
-          "静寂",
-          "余白",
-          "思想設計",
-          "Beauty",
-          "Salon",
-          "Smartphone",
-          "UX",
-          "Motion",
-          "GSAP",
-          "PC/SP 分離"
-        ],
-
-        detail: {
-          concept:
-            "『すぐに決めなくていい』という姿勢を起点に、迷いや不安を否定せず受け止める導線・言葉・余白で構成。美容サイトにありがちな圧を排除し、読む速度・感情の置き場・判断の余白までをUIとして設計した。",
-          tech: [
-            "React",
-            "Vite",
-            "Tailwind",
-            "GSAP",
-            "Scroll Animation",
-            "PC/SP 完全分離",
-            "microCMS（NEWS連携）"
-          ]
-        }
-      },
-
-      {
-        title: "Lucent Salon",
-        slug: "Lucent",
-
-        desc: "透明な光 × ミニマル。\n美容 × 透明感をUIへ落とし込んだ設計。",
-        link: "https://lucent-salon.vercel.app",
-        img: "/works/lucent.webp",
-
-        isNew: false,
-        createdAt: null,
-
-        tags: [
-          "透明感", "光", "白", "ミニマル",
-          "Beauty", "Smartphone",
-          "Motion", "Light Animation"
-        ],
-
-        detail: {
-          concept: "透明光のニュアンスをUIに抽象化し、美容系らしい“透け感 × 清潔感”をミニマルで表現した設計。",
-          tech: ["React", "Vite", "Tailwind", "GSAP", "Light Animation", "Smartphone特化"]
-        }
-      },
-      {
-        title: "OkiLato — Island Freshness",
-        slug: "OkiLato",
-
-        desc: "南国 × ターコイズ。\nスマホ特化レイアウトで体験を最適化。",
-        link: "https://oki-lato.vercel.app",
-        img: "/works/okilato.webp",
-
-        isNew: false,
-        createdAt: null,
-
-        tags: [
-          "沖縄", "青", "海", "光", "ミニマル",
-          "Smartphone", "Branding",
-          "Motion"
-        ],
-
-        detail: {
-          concept: "ターコイズの清涼感と南国光をスマホ特化レイアウトに最適化し、軽快に閲覧できる感覚的UIを構築。",
-          tech: ["React", "Vite", "Tailwind", "GSAP", "Smartphone特化"]
-        }
-      },
-    ]
-  },
-
   /* ----------------------------------------------------------
     HOTEL
   ---------------------------------------------------------- */
@@ -526,6 +502,39 @@ export const worksData = [
           tech: ["React", "Vite", "Tailwind", "GSAP"]
         }
       },
+{
+  title: "OkiLato — Island Freshness",
+  slug: "OkiLato",
+
+  desc: "南国 × ターコイズ。\n沖縄の光と温度を、そのままUIに落とし込んだブランド体験。",
+  link: "https://oki-lato.vercel.app",
+  img: "/works/okilato.webp",
+
+  isNew: false,
+  createdAt: null,
+
+  tags: [
+    "沖縄",
+    "ターコイズ",
+    "海",
+    "光",
+    "ミニマル",
+    "Branding",
+    "Food",
+    "Motion"
+  ],
+
+  detail: {
+    concept:
+      "沖縄の光と湿度を色・余白・写真配置に抽象化し、南国らしい軽さと心地よさをUI体験として構築したブランドデザイン。",
+    tech: [
+      "React",
+      "Vite",
+      "Tailwind",
+      "GSAP"
+    ]
+  }
+},
 
       {
         title: "Aburiya Itto",
