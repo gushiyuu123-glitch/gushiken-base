@@ -49,7 +49,8 @@ export default function Philosophy() {
             “見やすさ” と “美しさ” が自然に両立したデザイン。
           </span>
           <br />
-          派手さよりも、読み手に素直に伝わる構造を重視しています。
+         派手さよりも、
+伝えるべき情報が迷わず理解できる構造を重視しています。
           <br /><br />
           <span className="text-white/80 text-[0.95em]">
             それは結果として、

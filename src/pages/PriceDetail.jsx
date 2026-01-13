@@ -59,8 +59,8 @@ export default function PriceDetail() {
         {/* ===== INTRO ===== */}
         <p className="text-white/75 leading-[1.9] mb-20 max-w-3xl pl-4">
           Webサイトは、お店やブランドの「空気」を最初に伝える場所です。<br />
-          初回のヒアリングでは目的・世界観・参考イメージを丁寧に伺い、
-          <span className="text-white/90">方向性を共有するための世界観ボード</span>を作成します。<br /><br />
+       初回のヒアリングでは目的・方向性・参考イメージを丁寧に伺い、
+          <span className="text-white/90">制作の判断基準を言葉とイメージで<br />共有しながら</span>進めていきます。<br /><br />
           制作前に必ず総額を確定し、途中で費用が変わることはありません。
         </p>
 
@@ -79,16 +79,15 @@ export default function PriceDetail() {
             badge="PLAN 02"
             title="Small Website"
             price="¥120,000〜"
-            detail="構成と導線を整理し、信頼感のあるサイトに仕上げます。"
-            bestFor="店舗・サロン・教室など。"
-          />
-          <PlanCard
-            badge="PLAN 03"
-            title="Brand Site"
-            price="¥180,000〜"
-            detail="写真・色・余白まで統一し、世界観そのものを届けます。"
-            bestFor="ブランド価値を重視したい方へ。"
-          />
+            detail="構成と導線を整理し、トップページ＋2〜4ページ程度を想定した信頼感のあるサイトに仕上げます。"
+            bestFor="店舗・サロン・教室など。"/>
+     <PlanCard
+  badge="PLAN 03"
+  title="Brand Site"
+  price="¥200,000〜"
+  detail="写真・色・余白まで統一し、トップページ＋4〜6ページ程度を想定したブランド全体の世界観を丁寧に設計します。"
+  bestFor="ブランド価値を重視したい方へ。"/>
+
         </div>
 
         <SectionTitle main>制作の流れ</SectionTitle>
