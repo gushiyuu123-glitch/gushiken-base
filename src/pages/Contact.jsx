@@ -153,19 +153,6 @@ export default function Contact() {
 
         </form>
 
-        {/* その他の連絡方法（改善） */}
-        <div className={`${styles.altContacts} aq-fade delay-6`}>
-          <p className={styles.altTitle}>もっと気軽に連絡したい方へ</p>
-
-          <a
-            href="https://line.me/ti/p/gD5Aj8QPPJ"
-            className={styles.altLink}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            LINEで相談する
-          </a>
-        </div>
 
       </div>
     </section>

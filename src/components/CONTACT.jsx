@@ -32,11 +32,10 @@ export default function Contact() {
       id="contact"
       className="contact-section aq-fade"
     >
-      <div className="contact-container">
+<div className="contact-container">
+  <div className="contact-gold-line" />
 
-        {/* 金ライン */}
-        <div className="contact-gold-line" />
-
+  <div className="contact-content">
         {/* タイトル */}
         <h2 className="contact-title aq-fade delay-1" translate="no">
           CONTACT
@@ -56,30 +55,17 @@ export default function Contact() {
 
 
         {/* CTA */}
-        <div className="contact-cta aq-fade delay-3">
-          <a href="/contact" className="contact-btn">
-            お問い合わせフォームへ
-          </a>
-        </div>
+  <div className="contact-actions aq-fade delay-3">
+  <a href="/contact" className="contact-btn">
+    お問い合わせフォームへ
+  </a>
 
+</div>
 
-        {/* サブ導線 */}
-        <div className="contact-sub-links aq-fade delay-5">
-          <a
-            href="https://line.me/ti/p/gD5Aj8QPPJ"
-            className="contact-sub-link"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            LINEで軽く相談する →
-          </a>
-        </div>
-
-        {/* フッター注意 */}
-        <p className="contact-footer aq-fade delay-6">
-          ※ 内容によっては対応できない場合があります。
-        </p>
-
+<p className="contact-footer aq-fade delay-5">
+  ※ 内容によっては対応できない場合があります。
+</p>
+</div>
       </div>
     </section>
   );

@@ -121,16 +121,13 @@ export default function Price() {
               className="
                 inline-block text-sm tracking-wider
                 text-[#d9c8a6]/70 transition-colors duration-300
-                hover:text-[#d9c8a6]
+                hover:text-[#d9c8a6]  price-btn
               "
             >
               料金の詳細を見る →
             </Link>
           </div>
 
-          <Link to="/contact" className="price-btn">
-            制作の相談をする
-          </Link>
         </div>
 
       </div>
