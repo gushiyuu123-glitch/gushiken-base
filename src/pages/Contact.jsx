@@ -92,8 +92,8 @@ export default function Contact() {
             <select id="plan" name="plan" className={styles.select} defaultValue="">
               <option value="" disabled>未選択</option>
               <option value="lp">ランディングページ</option>
-              <option value="small">小規模サイト（3〜5P）</option>
-              <option value="brand">ブランドサイト</option>
+              <option value="small">小規模サイト（2〜4P）</option>
+              <option value="brand">ブランドサイト（4〜6P）</option>
             </select>
           </FormField>
 
@@ -109,9 +109,9 @@ export default function Contact() {
           <FormField label="予算感（任意）" htmlFor="budget">
             <select id="budget" name="budget" className={styles.select} defaultValue="">
               <option value="" disabled>未選択</option>
-              <option value="80">8万円</option>
-              <option value="150">15万円</option>
-              <option value="300">30万円</option>
+              <option value="80">6万円</option>
+              <option value="150">12万円</option>
+              <option value="300">20万円</option>
               <option value="unknown">未定</option>
             </select>
           </FormField>

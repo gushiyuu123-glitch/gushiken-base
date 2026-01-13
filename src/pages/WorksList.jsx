@@ -148,7 +148,7 @@ export default function WorksList() {
     Portfolio
   </h1>
   {/* 説明文（AXIS基準・沖縄ワード排除） */}
-<p className="mt-7 text-[0.9rem] md:text-[1rem] text-white/45 leading-relaxed max-w-xl tracking-[0.04em] aq-fade delay-2">
+<p className="mt-7 text-[0.85rem] md:text-[1rem] text-white/45 leading-relaxed max-w-xl tracking-[0.04em] aq-fade delay-2">
   案件ごとに条件は異なりますが、
   <br />
   判断の軸がぶれないよう〈AXIS〉を設けています。
