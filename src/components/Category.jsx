@@ -8,11 +8,12 @@ export default function Category({ title, subtitle, children, itemsRaw = [] }) {
 
   const getCardWidth = (category) => {
 const map = {
-  "BEAUTY / SALON": "w-[92%]",
+  "BEAUTY / SALON": "w-[94%]",
   "HOTEL / STAY": "w-[90%]",
+  "OUTDOOR / PRODUCT DESIGN": "w-[92%]", // 中庸・実在感
   "FOOD / FURNITURE / BRAND": "w-[88%]",
-  "EC / BRAND DESIGN": "w-[84%]",
-  "ART / CREATIVE": "w-[94%]",
+  "EC / BRAND DESIGN": "w-[82%]",
+  "ART / CREATIVE": "w-[96%]"
 };
 
     return map[category] || "w-[88%]";

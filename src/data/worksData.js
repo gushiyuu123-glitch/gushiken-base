@@ -412,6 +412,51 @@ export const worksData = [
       }
     ]
   },
+/* ----------------------------------------------------------
+  OUTDOOR / PRODUCT DESIGN
+---------------------------------------------------------- */
+{
+  category: "OUTDOOR / PRODUCT DESIGN",
+  subtitle: "道具・屋外プロダクトの“使用感”をUIへ翻訳したデザイン",
+  items: [
+    {
+      title: "Re:Camp — Outdoor Gear Studio",
+      slug: "ReCamp",
+
+      desc: "屋外 × 道具 × 実在感。\n使用環境から逆算したプロダクト設計。",
+      link: "https://recamp-site.vercel.app/",
+      img: "/works/recamp.webp",
+
+      isNew: true,
+      createdAt: "2026-01-XX",
+
+      tags: [
+        "Outdoor",
+        "Gear",
+        "プロダクト",
+        "実在感",
+        "Minimal",
+        "Branding",
+        "GSAP",
+        "PC/SP 分離"
+      ],
+
+      detail: {
+        concept:
+          "屋外という“不安定な環境”を前提に、道具の配置・光・使用距離までをUIへ翻訳。機能説明ではなく、触れたときの質感や“使える実感”を中心に置いたプロダクトデザイン。",
+        tech: [
+          "React",
+          "Vite",
+          "GSAP",
+          "IntersectionObserver",
+          "Tailwind",
+          "PC/SP 完全分離"
+        ]
+      }
+    }
+  ]
+}
+,
 
   /* ----------------------------------------------------------
      FOOD / FURNITURE / BRAND
@@ -603,41 +648,34 @@ export const worksData = [
           concept: "黒の無機質さと都会のスピード感を混ぜ合わせ、フィットネスの“動き”をUIで直感的に表現した設計。",
           tech: ["React", "Vite", "Tailwind", "GSAP"]
         }
-      }
-    ]
-  },
-
-  /* ----------------------------------------------------------
-    MATCHING / REAL BUSINESS PROJECT
-  ---------------------------------------------------------- */
-  {
-    category: "MATCHING / REAL BUSINESS PROJECT",
-    subtitle: "実際の事業で使用されているUI/UXデザイン",
-    items: [
+      },
       {
-        title: "FINE — Okinawa Edition",
-        slug: "FineOkinawa",
+  title: "FINE — Okinawa Edition",
+  slug: "FineOkinawa",
 
-        desc: "40代からの穏やかな出会い。\n安心感を設計した大人向けUI。",
-        link: "https://www.fine-okinawa.com/",
-        img: "/works/fine.webp",
+  desc: "40代からの穏やかな出会い。\n安心感を設計した大人向けUI。",
+  link: "https://www.fine-okinawa.com/",
+  img: "/works/fine.webp",
 
-        isNew: false,
-        createdAt: null,
+  isNew: false,
+  createdAt: null,
 
-        tags: [
-          "安心感", "穏やか", "白", "柔らかい光",
-          "Real Project", "Matching",
-          "Smartphone"
-        ],
+  tags: [
+    "安心感", "穏やか", "白", "柔らかい光",
+    "Real Project", "Matching",
+    "Smartphone"
+  ],
 
-        detail: {
-          concept: "“安心感 × 柔らかさ”を優先した大人向けUIで、余白と静かな光を中心に設計したリアル事業サイト。",
-          tech: ["Next.js（元サイト仕様）", "Responsive"]
-        }
-      }
+  detail: {
+    concept:
+      "“安心感 × 柔らかさ”を優先した大人向けUIで、余白と静かな光を中心に設計したリアル事業サイト。",
+    tech: ["Next.js（元サイト仕様）", "Responsive"]
+  }
+}
     ]
   },
+
+
 
   /* ----------------------------------------------------------
     ART / CREATIVE
