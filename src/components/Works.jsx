@@ -59,84 +59,84 @@ export default function Works() {
             <span className="arrow">→</span>
           </div>
 
-          <div className="works-grid">
-            {/* ==================================
-                BIG CARD — AXIS（先頭）
-            ================================== */}
-<a
-  href="https://axis-alpha-one.vercel.app/"
-  className="work-card work-big aq-fade delay-2"
->
-  <img
-    src="/assets/axis.webp"
-    alt="AXIS — Design Axis"
-    loading="lazy"
-  />
+<div className="works-grid">
+  {/* ==================================
+      BIG CARD — WHITE × DARK CACAO（先頭）
+  ================================== */}
+  <a
+    href="https://white-dark-cacao.vercel.app/"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="work-card work-big aq-fade delay-2"
+  >
+    <img
+      src="/assets/white-dark-cacao.webp"
+      alt="WHITE × DARK CACAO — Chocolate Brand Website"
+      loading="lazy"
+    />
 
-  {/* TEXT */}
-  <div className="work-text">
-    {/* PC ONLY：被せる */}
-    <h3 className="hidden md:block">AXIS</h3>
+    <div className="work-text">
+      {/* PC */}
+      <h3 className="hidden md:block">WHITE × DARK CACAO</h3>
 
-    {/* SP ONLY：画像の下に出す */}
-    <h3 className="md:hidden mt-3 tracking-[0.18em] text-[0.7rem]">
-      AXIS
-    </h3>
+      {/* SP */}
+      <h3 className="md:hidden mt-3 tracking-[0.18em] text-[0.7rem]">
+        WHITE × DARK CACAO
+      </h3>
 
-    <p className="hidden md:block">
-      A design axis for decision-making.
-      <br />
-      Built as a website.
-    </p>
+      <p className="hidden md:block">
+        Silence, margin, and restraint.
+        <br />
+        A chocolate brand shaped as a website.
+      </p>
 
-    {/* SP補助 */}
-    <span className="block md:hidden mt-2 opacity-30 text-[0.45rem]">
-      Tap to read concept
-    </span>
-  </div>
-</a>
+      <span className="block md:hidden mt-2 opacity-30 text-[0.45rem]">
+        Tap to view project
+      </span>
+    </div>
+  </a>
 
-            {/* ==================================
-                SMALL — RÉSONANCE（2番目）
-            ================================== */}
-            <a
-              href="https://resonance-restaurant.vercel.app/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="work-card work-small aq-fade delay-3"
-            >
-              <img
-                src="/assets/resonance.webp"
-                alt="RÉSONANCE Restaurant"
-                loading="lazy"
-              />
-              <div className="work-text small">
-                <h3>RÉSONANCE</h3>
-                <p>Time × Heat × Silence.</p>
-              </div>
-            </a>
+  {/* ==================================
+      SMALL — AXIS（2番目）
+  ================================== */}
+  <a
+    href="https://axis-alpha-one.vercel.app/"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="work-card work-small aq-fade delay-3"
+  >
+    <img
+      src="/assets/axis.webp"
+      alt="AXIS — Design Axis"
+      loading="lazy"
+    />
+    <div className="work-text small">
+      <h3>AXIS</h3>
+      <p>A design axis for decision-making.</p>
+    </div>
+  </a>
 
-{/* ==================================
-    SMALL — TAKUMI（3番目）
-================================== */}
-<a
-  href="https://takumi-ochre.vercel.app/"
-  target="_blank"
-  rel="noopener noreferrer"
-  className="work-card work-small aq-fade delay-4"
->
-  <img
-    src="/assets/takumi.webp"
-    alt="匠 – Takumi – Architectural Studio"
-    loading="lazy"
-  />
-  <div className="work-text small">
-    <h3>TAKUMI</h3>
-    <p>Architecture × Time × Living.</p>
-  </div>
-</a>
+  {/* ==================================
+      SMALL — RÉSONANCE（3番目）
+  ================================== */}
+  <a
+    href="https://resonance-restaurant.vercel.app/"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="work-card work-small aq-fade delay-4"
+  >
+    <img
+      src="/assets/resonance.webp"
+      alt="RÉSONANCE Restaurant"
+      loading="lazy"
+    />
+    <div className="work-text small">
+      <h3>RÉSONANCE</h3>
+      <p>Time × Heat × Silence.</p>
+    </div>
+  </a>
+</div>
 
-          </div>
         </div>
 
         {/* =====================
