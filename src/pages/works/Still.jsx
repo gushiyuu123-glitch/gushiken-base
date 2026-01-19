@@ -134,7 +134,9 @@ export default function Still() {
         </p>
 
         <div className="mt-10 text-black/45 text-[0.82rem] leading-relaxed tracking-[0.12em]">
-          <p>Tech — React / Vite / Tailwind / GSAP Minimal Drift / PC-SP Separation</p>
+          <p className="mt-10 text-black/45 text-[0.82rem] leading-relaxed tracking-[0.12em]">
+  Tech — React / Modern Frontend
+</p>
         </div>
       </div>
 

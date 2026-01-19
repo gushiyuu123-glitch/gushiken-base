@@ -152,12 +152,13 @@ export default function Lucent() {
           PROJECT OVERVIEW
         </p>
 
-        <p className="mt-6 text-[#3a2f28]/75 text-[1.04rem] leading-[2.3] max-w-[56ch] font-light">
-          ヘアサロン LUCENT のために制作した、
-          コンセプト重視のティーザーページ。
-          説明よりも先に「空気」が伝わることを目的とし、
-          情報量を整理し、落ち着いて閲覧できる構成にした。
-        </p>
+<p className="mt-6 text-[#3a2f28]/75 text-[1.04rem] leading-[2.3] max-w-[56ch] font-light">
+  ヘアサロン LUCENT のために制作した、<br />
+  静かな印象を大切にしたティーザーページです。<br />
+  説明を加えすぎず、<br />
+  画面から自然に雰囲気が伝わる構成に整えました。
+</p>
+
 
         {/* Meta */}
         <div className="mt-14 flex gap-20">

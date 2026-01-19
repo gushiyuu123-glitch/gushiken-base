@@ -85,18 +85,19 @@ export default function TheCalmOkinawa() {
           いちばん深く残る。
         </h2>
 
-        <p className="mt-10 text-[1.02rem] leading-[2.5] text-[#1b1b1b]/75 max-w-[56ch]">
-          THE CALM OKINAWA は、  
-          情報や装飾を足すことで魅せるのではなく、  
-          削ることで心が整う体験を設計しました。
-          <br /><br />
-          スクロールの速度、  
-          余白の呼吸、  
-          言葉の密度。
-          <br /><br />
-          すべてが、  
-          静けさのために存在しています。
-        </p>
+    <p className="mt-10 text-[1.02rem] leading-[2.5] text-[#1b1b1b]/75 max-w-[56ch]">
+  THE CALM OKINAWA は、  
+  情報を重ねて魅せるのではなく、  
+  必要なものだけを残すことで、心地よい体験をつくりました。
+  <br /><br />
+  光の入り方、  
+  スクロールの緩急、  
+  言葉の置き場所。
+  <br /><br />
+  それぞれが、  
+  ホテルで感じる静かな時間を思い出させるための要素です。
+</p>
+
       </div>
 
       {/* =========================

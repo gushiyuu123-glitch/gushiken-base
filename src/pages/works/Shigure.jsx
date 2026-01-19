@@ -266,9 +266,7 @@ export default function Shigure() {
         </p>
 
         <p className="aq-fade mt-[1.2rem] text-[0.65rem] tracking-[0.28em] text-[#7a7a76]">
-          React / Vite / Tailwind CSS / GSAP
-          <br />
-          PC / SP Completely Separated
+      Tech — React / Modern Frontend
         </p>
 
        {/* 実サイトリンク（先に置く） */}
@@ -297,7 +295,7 @@ export default function Shigure() {
     rel="noopener noreferrer"
     className="opacity-60 hover:opacity-100 transition"
   >
-    ← Back to GUSHIKEN DESIGN
+← Back to Works
   </a>
 </p>
 

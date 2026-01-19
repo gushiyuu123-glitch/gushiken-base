@@ -175,9 +175,10 @@ GOLDEN VEIL は、香りそのものではなく
             黒の沈黙に、金の緊張をひとすじ。
           </p>
 
-          <div className="mt-10 text-white/35 text-[0.82rem]">
-            Tech — React / Vite / Tailwind / GSAP optional
-          </div>
+      <div className="mt-10 text-white/35 text-[0.82rem]">
+  Tech — 軽量で安定した構成 / デバイス最適化
+</div>
+
         </div>
 
         {/* =========================================================

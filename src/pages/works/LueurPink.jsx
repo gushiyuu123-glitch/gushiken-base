@@ -200,14 +200,16 @@ export default function LueurPink() {
               aq-fade
             "
           >
-            “髪が変わると、人生が動き出す。”
-            {"\n\n"}
-            LUEUR PINK は、柔らかいピンクの空気感で、
-            サロンの「安心」「やさしさ」「期待」を体験として届けるためのLP。
-            {"\n\n"}
-            余白・丸み・淡いグラデーションで緊張をほどき、
-            予約導線は“押したくなる自然さ”で設計。
-            情報量を増やさず、信頼が残る構図にまとめた。
+          “髪が変わると、人生が動き出す。”
+
+LUEUR PINK は、やわらかなピンクの雰囲気で、
+サロンの「安心感」や「やさしさ」が
+自然に伝わるようにまとめたLPです。
+
+画面全体を落ち着いた印象に整え、
+見ているうちに前向きな気持ちになれる流れを意識しました。
+説明を増やさず、信頼が静かに残る構成にしています。
+
           </p>
 
           <div
@@ -224,26 +226,26 @@ export default function LueurPink() {
               EXPERIENCE DESIGN POINTS
             </h3>
 
-            <ol className="space-y-4 text-[0.98rem] text-[#1b1b1b]/80 leading-[2.0]">
-              <li className="flex gap-4">
-                <span className="text-[#ff5a8b] font-medium">01</span>
-                <span>ヒーローで「安心感」を固定：淡ピンク＋透明感＋やさしいCTA。</span>
-              </li>
-              <li className="flex gap-4">
-                <span className="text-[#ff5a8b] font-medium">02</span>
-                <span>カードUIは丸みと影で“サロンの清潔感”を視覚化。</span>
-              </li>
-              <li className="flex gap-4">
-                <span className="text-[#ff5a8b] font-medium">03</span>
-                <span>導線は最短に、だけど余韻は残す：静かな体験設計。</span>
-              </li>
-            </ol>
+           <ol className="space-y-4 text-[0.98rem] text-[#1b1b1b]/80 leading-[2.0]">
+  <li className="flex gap-4">
+    <span className="text-[#ff5a8b] font-medium">01</span>
+    <span>最初に「安心して見られる」印象をつくり、自然に世界観へ入れる構成。</span>
+  </li>
+  <li className="flex gap-4">
+    <span className="text-[#ff5a8b] font-medium">02</span>
+    <span>全体をやわらかい雰囲気でまとめ、清潔感が伝わる見せ方に整理。</span>
+  </li>
+  <li className="flex gap-4">
+    <span className="text-[#ff5a8b] font-medium">03</span>
+    <span>迷わず進める流れを意識しつつ、余韻が残る体験にまとめています。</span>
+  </li>
+</ol>
+
           </div>
 
           <div className="text-[#1b1b1b]/55 text-[0.82rem] leading-relaxed aq-fade">
-            <p>
-              Tech — Vite / React / Tailwind / (Silent UI Fade) / PC-SP Separation
-            </p>
+       <p>Tech — 安定性と軽さを優先したシンプルな構成 / 端末ごとの最適化</p>
+
           </div>
         </div>
       </div>
@@ -373,10 +375,9 @@ export default function LueurPink() {
               EXPERIENCE THE SOFT PINK
             </h3>
             <p className="text-[#1b1b1b]/65 leading-[2.0] text-[0.98rem] mb-8">
-              柔らかい空気の中で、安心して一歩踏み出せる。
-              {"\n"}
-              サロンの魅力を、静かな体験として届けるデザイン。
-            </p>
+  柔らかい空気の中で、安心して一歩踏み出せる。{"\n"}
+  サロンの魅力を、静かな体験としてそっと届けます。
+</p>
 
             <div className="flex flex-col md:flex-row items-center justify-center gap-3">
                     <a

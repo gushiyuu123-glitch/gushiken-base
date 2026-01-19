@@ -116,26 +116,20 @@ export default function LILU() {
                 コンセプト
               </h2>
               <p className="text-[14px] leading-[2.4] text-neutral-600">
-                情報を詰め込まず、<br />
-                考えさせすぎず、<br />
-                スクロールするだけで
-                <span className="text-neutral-900">
-                  「お店の雰囲気が伝わる」
-                </span>
-                ことを大切にしました。
+         情報を詰め込みすぎず、<br />
+難しく考えなくても雰囲気が伝わるように構成しています。<br />
+スクロールするだけで、<span className="text-neutral-900">お店の空気が自然に届く</span>ことを大切にしました。
+
               </p>
             </div>
 
             <div className="lilu-fade">
               <p className="text-[14px] leading-[2.4] text-neutral-600">
-                ネイルサロン選びは、<br />
-                理屈よりも「感覚」が先に来るもの。
-                <br />
-                LILUでは
-                <span className="text-neutral-900">
-                  写真・余白・色・タイポ
-                </span>
-                だけで安心感をつくる設計を採用しています。
+    ネイルサロン選びは、<br />
+まず「感覚」で決まるものだと考えています。<br />
+LILUでは、<span className="text-neutral-900">写真と余白、落ち着いた色味</span>だけで<br />
+安心して見られるデザインを採用しました。
+
               </p>
             </div>
           </div>

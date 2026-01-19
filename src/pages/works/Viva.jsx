@@ -133,16 +133,17 @@ export default function Viva() {
         </div>
 
         {/* Tech */}
-        <div>
-          <p className="text-[0.6rem] tracking-[0.28em] text-[#6b5f52]/45 uppercase mb-4">
-            Technology
-          </p>
-          <p className="text-[0.8rem] leading-[2.2] text-[#6b5f52]/60">
-            React / Vite / Tailwind CSS / GSAP
-            <br />
-            IntersectionObserver による段階的表示制御
-          </p>
-        </div>
+     <div>
+  <p className="text-[0.6rem] tracking-[0.28em] text-[#6b5f52]/45 uppercase mb-4">
+    Technology
+  </p>
+  <p className="text-[0.8rem] leading-[2.2] text-[#6b5f52]/60">
+    React / Vite / Tailwind
+    <br />
+    GSAP・Observer 
+  </p>
+</div>
+
 
       </div>
 

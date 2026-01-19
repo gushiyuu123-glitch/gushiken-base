@@ -97,9 +97,10 @@ export default function OkinawaLightResortHotel() {
           「信頼の導線設計」を重視しています。
         </p>
 
-        <div className="mt-10 text-black/50 text-[0.85rem] tracking-[0.14em]">
-          Role — UI Design / UX Structure / Frontend (React)
-        </div>
+       <div className="mt-10 text-black/50 text-[0.85rem] tracking-[0.14em]">
+  Role — UI Design / UX Structure / Frontend Implementation
+</div>
+
       </div>
 
       {/* =========================

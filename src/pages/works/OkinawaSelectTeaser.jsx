@@ -381,7 +381,8 @@ function Section({ kicker, title, body, img, imgAlt, align = "left" }) {
           <div className="mt-10 h-px w-28 bg-gradient-to-r from-[#231f1b]/40 to-transparent" />
 
           <p className="mt-7 text-[#6b625a] text-[0.74rem] tracking-[0.26em] leading-[2.0]">
-            A fragment only. The rest is meant to be entered.
+         Only a fragment.  
+The rest unfolds inside.
           </p>
         </div>
 

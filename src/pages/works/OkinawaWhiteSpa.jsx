@@ -151,9 +151,9 @@ export default function OkinawaWhiteSpa() {
 UIの重心・行間・光の階調だけで成立させることを目標にした
 プライベートスパのコンセプトLP。
 
-白を“明るさ”としてではなく、
+白を“明るさ”ではなく、
 視線を落ち着かせるための「静けさ」として扱い、
-情報量を減らしても品位が落ちない密度を探りました。
+情報を絞っても上質さが崩れない設計を目指しました。
 
 余白を広く取りながらも、
 線・配置・視線誘導にはわずかな緊張感を残し、
@@ -161,7 +161,8 @@ UIの重心・行間・光の階調だけで成立させることを目標にし
         </p>
 
         <div className="mt-12 text-black/45 text-[0.85rem] tracking-[0.18em] leading-relaxed">
-          <p>Tech — React / Vite / Tailwind / Minimal Motion</p>
+         <p>Tech — 静かで負荷の少ない構成 / 端末ごとの最適化</p>
+
         </div>
       </div>
 

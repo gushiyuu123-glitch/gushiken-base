@@ -105,7 +105,8 @@ return (
 <GalleryExhibition images={gallery} />
 
           {/* ===== SITE STRUCTURE ===== */}
-   <TextBlock title="サイト構造の特徴">
+  <TextBlock title="構造（Structure）">
+
   <ul className="list-disc list-inside space-y-3">
     <li>Top：ブランド世界観の提示</li>
     <li>Store：実在店舗・接点の明示</li>
@@ -122,36 +123,34 @@ return (
 
 
           {/* ===== TECH ===== */}
- <TextBlock title="技術的な見どころ">
+<TextBlock title="IMPLEMENTATION">
   <ul className="list-disc list-inside space-y-3">
-    <li>React によるコンポーネント設計</li>
-    <li>Day / Night 切り替えによる時間演出</li>
-    <li>ライトボックスを用いた展示体験</li>
-    <li>再利用性を意識した UI 構成</li>
+    <li>React ベースの最小構造</li>
+    <li>静かな光の変化（Day / Night）</li>
+    <li>香り展示のためのライトボックス</li>
+    <li>ブランド体験を妨げない UI 設計</li>
   </ul>
+
   <p className="mt-6">
-    見た目の演出ではなく、
-    <strong>「体験の流れ」をコードで制御</strong>することを意識しています。
-    演出と実装を切り離さずに設計している点が本作品の特徴です。
+    “見せる”よりも“感じる”ための実装を優先し、
+    演出を控えめに統合しています。
   </p>
 </TextBlock>
 
 
+
           {/* ===== POSITION ===== */}
-          <TextBlock title="作品の位置づけ">
-            <p>
-              職業訓練校のグループワーク課題として制作。
-              <br />
-              担当：
-              <strong>
-                ブランドデザイン設計・フロントエンド実装（React）
-              </strong>
-            </p>
-            <p className="mt-6">
-              デザイン設計から UI 実装までを一貫して担当し、
-              学習課題の枠を超えたブランドサイト構築を目指しました。
-            </p>
-          </TextBlock>
+   <TextBlock title="作品の位置づけ">
+  <p>
+    ブランド設計から UI / フロントエンドまでを一貫して担当し、
+    実在ブランドを想定した“体験型サイト”として制作しました。
+  </p>
+  <p className="mt-6">
+    世界観と情報設計の両立をテーマに、
+    商材の価値を損なわない構成を目指しています。
+  </p>
+</TextBlock>
+
 {/* ===== CTA ZONE ===== */}
 <section className="
   mt-40

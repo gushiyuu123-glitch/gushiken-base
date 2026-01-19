@@ -302,7 +302,7 @@ OkiLato は “味”ではなく、
         </div>
 
         <div className="mt-10 text-[#6faecb] text-[0.82rem] leading-relaxed">
-          <p>Tech — React / Vite / Tailwind / Exhibition Layout</p>
+        <p>Tech — 軽量で安定した構成 / 空気感を損なわないレイアウト</p>
         </div>
         {/* =========================
     VISUAL — FLAVOR PAIR

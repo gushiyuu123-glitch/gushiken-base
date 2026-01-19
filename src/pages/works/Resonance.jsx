@@ -98,7 +98,7 @@ export default function Resonance() {
 静かなシネマティック・レストランLP。
 
 影のコントラストを抑え、
-視線がゆっくり漂うように構成し、
+視線がゆっくり漂うように整え、
 
 明るさと影の“密度”だけで
 夜の深度を設計した。
@@ -108,7 +108,7 @@ export default function Resonance() {
         </p>
 
         <div className="mt-10 text-black/45 text-[0.82rem] tracking-[0.14em]">
-          TECH — React / Vite / Tailwind / GSAP Silent Scroll
+         TECH — React / Vite / Tailwind / Silent Scroll Structure
         </div>
       </div>
 

@@ -333,17 +333,18 @@ export default function RIN() {
         <div className="max-w-[1120px] mx-auto px-12 py-32">
           <div className="grid grid-cols-2 gap-20 items-start">
             <div className="rin-fade">
-              <h2 className="text-[18px] tracking-[0.16em] text-neutral-900 mb-10">
-                技術メモ（必要最小）
-              </h2>
+         <h2 className="text-[18px] tracking-[0.16em] text-neutral-900 mb-10">
+  STRUCTURE & STACK
+</h2>
 
-              <ul className="text-[14px] leading-[2.4] tracking-[0.06em] text-neutral-600 space-y-4">
-                <li>・React / Vite</li>
-                <li>・Tailwind CSS（v3）</li>
-                <li>・GSAP（ふわっと出る程度の軽いアニメーション）</li>
-                <li>・PC/SP DOM 分離（体験の干渉を防ぐ）</li>
-                <li>・情報は段階的に提示（読み手の負荷を下げる）</li>
-              </ul>
+
+ <ul className="text-[14px] leading-[2.4] tracking-[0.06em] text-neutral-600 space-y-4">
+  <li>・React / Vite</li>
+  <li>・Tailwind CSS（v3）</li>
+  <li>・体験優先の構造とモーション</li>
+</ul>
+
+
 
               <p className="mt-12 text-[12px] leading-[2.3] tracking-[0.10em] text-neutral-500">
                 この作品は「見た目」ではなく、「気持ち」を設計したケースです。

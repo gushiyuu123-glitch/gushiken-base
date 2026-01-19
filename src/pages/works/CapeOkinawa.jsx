@@ -123,9 +123,10 @@ export default function CapeOkinawa() {
           視覚体験が途切れない UI を設計した。
         </p>
 
-        <div className="mt-12 text-black/45 text-[0.86rem] tracking-[0.12em]">
-          TECH — React / Vite / Tailwind / GSAP Motion / Exhibition Layout
-        </div>
+      <div className="mt-12 text-black/45 text-[0.86rem] tracking-[0.12em]">
+  TECH — 軽量で安定した構成 / 空間に馴染むレイアウト
+</div>
+
       </div>
 
       {/* =========================================================
