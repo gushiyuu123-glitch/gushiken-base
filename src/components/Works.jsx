@@ -70,7 +70,7 @@ export default function Works() {
     className="work-card work-big aq-fade delay-2"
   >
     <img
-      src="/assets/white-dark-cacao.webp"
+      src="/assets/1111.png"
       alt="WHITE × DARK CACAO — Chocolate Brand Website"
       loading="lazy"
     />
