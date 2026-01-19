@@ -311,6 +311,47 @@ export const worksData = [
     category: "EC / BRAND DESIGN",
     subtitle: "世界観 × 技術を統合したECデザイン",
     items: [
+          /* ==========================================
+        NEW — WHITE × DARK CACAO（先頭）
+    ========================================== */
+    {
+      title: "WHITE × DARK CACAO",
+      slug: "WhiteDarkCacao",
+
+      desc: "白 × カカオ × 静寂。\n食品ECを“上質な世界観”として再構築したデザイン。",
+      link: "https://white-dark-cacao.vercel.app", // ← URL差し替えてね
+      img: "/works/white-dark-cacao.webp",
+
+      isNew: true,
+      createdAt: "2026-01-19",
+
+      tags: [
+        "NEW",
+        "白",
+        "カカオ",
+        "ミニマル",
+        "EC",
+        "Branding",
+        "Food",
+        "Motion",
+        "Tailwind",
+        "GSAP"
+      ],
+
+      detail: {
+        concept:
+          "国産ミルクと濃厚カカオの『静かな甘さ』を基調に、食品EC特有のゴチャつきを排除し、上質な世界観に統合して設計。余白・光・写真の比率を丁寧に調整し、食品ブランドとして信頼を得られる “高級食品UI” を目指した構成。",
+        tech: [
+          "React",
+          "Vite",
+          "Tailwind",
+          "GSAP",
+          "IntersectionObserver",
+          "PC/SP 完全分離"
+        ]
+      }
+    },
+
       {
         title: "STILL — Minimal EC",
         slug: "still",
