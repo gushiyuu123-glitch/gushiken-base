@@ -45,6 +45,42 @@ export const worksData = [
           ]
         }
       },
+      {
+  title: "SAKURAI CLINIC",
+  slug: "SakuraiClinic",
+  desc: "桜 × 静寂 × 美容医療。\n淡い光と余白で信頼と優しさを設計した美容皮膚科サイト。",
+  link: "https://sakurai-clinic.vercel.app/",
+  img: "/works/sakurai.webp",
+  isNew: true,
+  createdAt: "2026-01-21",
+  tags: [
+    "NEW",
+    "美容医療",
+    "桜",
+    "静寂",
+    "余白",
+    "上品",
+    "Beauty",
+    "Clinic",
+    "Branding",
+    "PC/SP 分離"
+  ],
+
+  detail: {
+    concept:
+      "“美容医療は怖くない”という心理設計をベースに、桜の静けさ・光の粒度・優しい余白で安心感を設計。圧の無い導線で、はじめての来院でも迷わないUIを追求した。",
+    tech: [
+      "React",
+      "Vite",
+      "Tailwind",
+      "GSAP",
+      "IntersectionObserver",
+      "PC/SP 完全分離",
+      "microCMS（NEWS連携）"
+    ]
+  }
+},
+
 // LILU の直後に追加
 {
   title: "RIN — Eyelash Salon",
