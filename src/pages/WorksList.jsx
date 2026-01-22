@@ -7,12 +7,11 @@ import { worksData } from "../data/worksData";
 
 export default function WorksList() {
   const rootRef = useRef(null);
-
   const [activeCategory, setActiveCategory] = useState("ALL");
 
-  /* -------------------------------------------------------
-     New 自動判定（30日以内）
-  -------------------------------------------------------- */
+  /* ---------------------------------------------
+     NEW 自動判定（30日以内）
+  --------------------------------------------- */
   const isNewItem = (item) => {
     if (!item.createdAt) return false;
     const now = Date.now();
@@ -21,23 +20,23 @@ export default function WorksList() {
     return diffDays <= 30;
   };
 
-  // worksData に isNew を付加
+  // worksData に isNew を付与
   const enrichedData = worksData.map((block) => ({
     ...block,
     items: block.items.map((item) => ({
       ...item,
-      isNew: item.isNew || isNewItem(item),  
+      isNew: item.isNew || isNewItem(item),
     })),
   }));
 
-  /* -------------------------------------------------------
+  /* ---------------------------------------------
      カテゴリーリスト（NEW 追加）
-  -------------------------------------------------------- */
+  --------------------------------------------- */
   const categoryList = ["ALL", "NEW", ...enrichedData.map((b) => b.category)];
 
-  /* -------------------------------------------------------
-     表示データの生成
-  -------------------------------------------------------- */
+  /* ---------------------------------------------
+     表示データ生成
+  --------------------------------------------- */
   const filteredData =
     activeCategory === "ALL"
       ? enrichedData
@@ -53,9 +52,9 @@ export default function WorksList() {
         ]
       : enrichedData.filter((b) => b.category === activeCategory);
 
-  /* -------------------------------------------------------
-     アニメーション
-  -------------------------------------------------------- */
+  /* ---------------------------------------------
+     PC ふわっと fade
+  --------------------------------------------- */
   useEffect(() => {
     const root = rootRef.current;
     if (!root) return;
@@ -74,7 +73,9 @@ export default function WorksList() {
     return () => observer.disconnect();
   }, []);
 
-  /* SP animation */
+  /* ---------------------------------------------
+     SP slide-in
+  --------------------------------------------- */
   useEffect(() => {
     const items = document.querySelectorAll(".sp-slide-in");
 
@@ -91,9 +92,9 @@ export default function WorksList() {
     return () => observer.disconnect();
   }, []);
 
-  /* -------------------------------------------------------
+  /* ---------------------------------------------
      タブ切り替え（スクロールトップ）
-  -------------------------------------------------------- */
+  --------------------------------------------- */
   const handleChangeCategory = (cat) => {
     setActiveCategory(cat);
 
@@ -110,152 +111,116 @@ export default function WorksList() {
         min-h-screen
         py-24 px-6 md:px-10 lg:px-16
         overflow-x-hidden
-        [overscroll-behavior-y:none]
       "
     >
+      {/* ======================================================
+          SEO STRUCTURED DATA
+      ====================================================== */}
       <script
-  type="application/ld+json"
-  dangerouslySetInnerHTML={{
-    __html: JSON.stringify({
-      "@context": "https://schema.org",
-      "@type": "ItemList",
-      "name": "GUSHIKEN DESIGN — Works Portfolio",
-      "itemListElement": worksData.flatMap(block =>
-        block.items.map((item, index) => ({
-          "@type": "ListItem",
-          "position": index + 1,
-          "name": item.title,
-          "url": `https://gushikendesign.com/works/${item.slug}`
-        }))
-      )
-    })
-  }}
-/>
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "ItemList",
+            "name": "GUSHIKEN DESIGN — Works Portfolio",
+            "itemListElement": worksData.flatMap((block) =>
+              block.items.map((item, index) => ({
+                "@type": "ListItem",
+                "position": index + 1,
+                "name": item.title,
+                "url": `https://gushikendesign.com/works/${item.slug}`,
+              }))
+            ),
+          }),
+        }}
+      />
 
-      <div className="ambient-glow"></div>
+      {/* ---------------------------------------------
+          ★ ambient-glow（安全版）
+      --------------------------------------------- */}
+      <div
+        className="ambient-glow"
+        style={{
+          height: "1px",          // Safariバグ防止（絶対必要）
+          pointerEvents: "none",  // スクロール遮断防止
+          position: "relative",
+        }}
+      ></div>
 
       <div ref={rootRef} className="max-w-6xl lg:max-w-7xl mx-auto">
-    {/* TOP */}
-<div className="aq-fade mb-24 md:mb-28">
-  <div className="w-12 h-px bg-gradient-to-r from-white/20 to-white/5 mb-6" />
-      
-  <p className="text-[0.65rem] md:text-[0.75rem] tracking-[0.32em] text-white/30 mb-3">
-    SELECTED WORKS
-  </p>
 
-  <h1 className="text-white text-[2.6rem] md:text-[3.4rem] tracking-[0.28em] font-light leading-[1.2] aq-fade delay-1">
-    WORKS —<br className="md:hidden" />
-    Portfolio
-  </h1>
-  {/* 説明文（AXIS基準・沖縄ワード排除） */}
-<p className="mt-7 text-[0.85rem] md:text-[1rem] text-white/45 leading-relaxed max-w-xl tracking-[0.04em] aq-fade delay-2">
-  案件ごとに条件は異なりますが、
-  <br />
-  判断の軸がぶれないよう〈AXIS〉を設けています。
-</p>
+        {/* TOP */}
+        <div className="aq-fade mb-24 md:mb-28">
+          <div className="w-12 h-px bg-gradient-to-r from-white/20 to-white/5 mb-6" />
 
+          <p className="text-[0.65rem] md:text-[0.75rem] tracking-[0.32em] text-white/30 mb-3">
+            SELECTED WORKS
+          </p>
 
-{/* ===============================
-   AXIS LINK（思想導線・完成形）
-   =============================== */}
-<a
-  href="https://axis-alpha-one.vercel.app/"
-  target="_blank"
-  rel="noopener noreferrer"
-  className="
-    group
-    inline-flex
-    items-center
-    gap-3
-    mt-7
+          <h1 className="text-white text-[2.6rem] md:text-[3.4rem] tracking-[0.28em] font-light leading-[1.2] aq-fade delay-1">
+            WORKS —<br className="md:hidden" />
+            Portfolio
+          </h1>
 
-    text-[0.6rem]
-    tracking-[0.44em]
-    text-white/45
+          <p className="mt-7 text-[0.85rem] md:text-[1rem] text-white/45 leading-relaxed max-w-xl tracking-[0.04em] aq-fade delay-2">
+            案件ごとに条件は異なりますが、
+            <br />
+            判断の軸がぶれないよう〈AXIS〉を設けています。
+          </p>
 
-    transition-colors
-    duration-300
+          {/* AXIS LINK */}
+          <a
+            href="https://axis-alpha-one.vercel.app/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="
+              group
+              inline-flex items-center gap-3 mt-7
+              text-[0.6rem] tracking-[0.44em] text-white/45
+              transition-colors duration-300
+              aq-fade delay-3
+              hover:text-white/75
+              active:opacity-70
+            "
+          >
+            <span className="relative">
+              ABOUT AXIS
+              <span
+                aria-hidden
+                className="
+                  absolute left-0 -bottom-1.5 h-px w-full
+                  bg-white/30
+                  animate-[pulse_4s_ease-in-out_infinite]
+                  md:scale-x-0 md:origin-left md:transition-transform
+                  md:duration-500 md:group-hover:scale-x-100
+                  scale-x-100 opacity-40
+                "
+              />
+            </span>
 
-    aq-fade
-    delay-3
+            <span
+              aria-hidden
+              className="
+                text-[0.6rem] opacity-50
+                transition-all duration-500
+                md:group-hover:opacity-80
+                md:group-hover:translate-x-1.5
+              "
+            >
+              →
+            </span>
+          </a>
 
-    hover:text-white/75
-    active:opacity-70
-  "
->
-  {/* TEXT */}
-  <span className="relative">
-    ABOUT AXIS
-
-    {/* UNDERLINE */}
-    <span
-      aria-hidden
-      className="
-        absolute
-        left-0
-        -bottom-1.5
-        h-px
-        w-full
-
-        bg-white/30
-
-        /* 呼吸（下線のみ） */
-        animate-[pulse_4s_ease-in-out_infinite]
-
-        /* PC：hoverで出現 */
-        md:scale-x-0
-        md:origin-left
-        md:transition-transform
-        md:duration-500
-        md:group-hover:scale-x-100
-
-        /* SP：常時うっすら表示 */
-        scale-x-100
-        opacity-40
-      "
-    />
-  </span>
-
-  {/* ARROW */}
-  <span
-    aria-hidden
-    className="
-      text-[0.6rem]
-      opacity-50
-
-      transition-all
-      duration-500
-
-      md:group-hover:opacity-80
-      md:group-hover:translate-x-1.5
-    "
-  >
-    →
-  </span>
-</a>
-
-{/* SP ONLY : 補助テキスト */}
-<span
-  className="
-    block
-    md:hidden
-    mt-2
-
-    text-[0.45rem]
-    tracking-[0.28em]
-    text-white/30
-
-    cursor-pointer
-    transition-all
-    duration-200
-
-    active:translate-y-[1px]
-    active:opacity-60
-  "
->
-  Tap to read concept
-</span>
-
+          <span
+            className="
+              block md:hidden mt-2
+              text-[0.45rem] tracking-[0.28em] text-white/30
+              cursor-pointer transition-all duration-200
+              active:translate-y-[1px] active:opacity-60
+            "
+          >
+            Tap to read concept
+          </span>
         </div>
 
         <div className="w-16 h-px bg-white/12 mb-16 aq-fade" />
@@ -277,23 +242,22 @@ export default function WorksList() {
                 animate-[slideIn_0.68s_cubic-bezier(.22,.61,.36,1)_forwards]
               "
             >
-            <Category
-  title={block.category}
-  subtitle={block.subtitle}
-  itemsRaw={block.items}   // ← これが絶対必要!!!
->
-
+              <Category
+                title={block.category}
+                subtitle={block.subtitle}
+                itemsRaw={block.items}
+              >
                 {block.items.map((item) => (
-              <WorkItem
-  key={item.title}
-  title={item.title}
-  desc={item.desc}
- link={`/works/${item.slug}`}   // ★ここが肝
-  img={item.img}
-  tags={item.tags}
-  isNew={item.isNew}   // ← これ!!
-  createdAt={item.createdAt}  // ← 自動30日消滅用に必要
-/>
+                  <WorkItem
+                    key={item.title}
+                    title={item.title}
+                    desc={item.desc}
+                    link={`/works/${item.slug}`}
+                    img={item.img}
+                    tags={item.tags}
+                    isNew={item.isNew}
+                    createdAt={item.createdAt}
+                  />
                 ))}
               </Category>
             </div>
@@ -301,82 +265,54 @@ export default function WorksList() {
         </div>
       </div>
 
-      {/* animation */}
+      {/* slideIn keyframes */}
       <style>{`
         @keyframes slideIn {
           0% { opacity: 0; transform: translateX(22px); }
           100% { opacity: 1; transform: translateX(0); }
         }
       `}</style>
-      {/* ===============================
-   EPILOGUE / TAKUMI
-================================ */}
-<section className="mt-40 aq-fade">
-  <div className="max-w-6xl lg:max-w-7xl mx-auto">
-    <div className="w-12 h-px bg-white/20 mb-8" />
 
-    <p className="text-white/40 tracking-[0.32em] text-[0.6rem] mb-4">
-      TAKUMI
-    </p>
+      {/* EPILOGUE / TAKUMI */}
+      <section className="mt-40 aq-fade">
+        <div className="max-w-6xl lg:max-w-7xl mx-auto">
+          <div className="w-12 h-px bg-white/20 mb-8" />
+          <p className="text-white/40 tracking-[0.32em] text-[0.6rem] mb-4">
+            TAKUMI
+          </p>
 
-    {/* 匠リンク */}
-    <a
-      href="https://takumi-ochre.vercel.app/"
-      target="_blank"
-      rel="noopener noreferrer"
-      className="
-        group
-        inline-block
+          <a
+            href="https://takumi-ochre.vercel.app/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="
+              group inline-block
+              text-white text-[1.6rem] tracking-[0.18em] font-light
+              transition-opacity duration-300
+              hover:opacity-80 active:opacity-60
+            "
+          >
+            <span className="relative">
+              匠
+              <span
+                aria-hidden
+                className="
+                  absolute left-0 -bottom-1.5 h-px w-full bg-white/30
+                  animate-[pulse_4s_ease-in-out_infinite]
+                  md:scale-x-0 md:origin-left md:transition-transform
+                  md:duration-500 md:group-hover:scale-x-100
+                  scale-x-100 opacity-40
+                "
+              />
+            </span>
+          </a>
 
-        text-white
-        text-[1.6rem]
-        tracking-[0.18em]
-        font-light
-
-        transition-opacity
-        duration-300
-        hover:opacity-80
-        active:opacity-60
-      "
-    >
-      <span className="relative">
-        匠
-
-        {/* 呼吸する下線 */}
-        <span
-          aria-hidden
-          className="
-            absolute
-            left-0
-            -bottom-1.5
-            h-px
-            w-full
-            bg-white/30
-
-            animate-[pulse_4s_ease-in-out_infinite]
-
-            md:scale-x-0
-            md:origin-left
-            md:transition-transform
-            md:duration-500
-            md:group-hover:scale-x-100
-
-            scale-x-100
-            opacity-40
-          "
-        />
-      </span>
-    </a>
-
-<p className="mt-6 text-white/45 text-[0.9rem] leading-relaxed max-w-md">
-  構造・動線・余白の順で整理し、<br />
-  無理のない形にまとめています。
-</p>
-
-  </div>
-</section>
-
+          <p className="mt-6 text-white/45 text-[0.9rem] leading-relaxed max-w-md">
+            構造・動線・余白の順で整理し、<br />
+            無理のない形にまとめています。
+          </p>
+        </div>
+      </section>
     </section>
-    
   );
 }
