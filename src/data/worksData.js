@@ -47,7 +47,7 @@ export const worksData = [
       },
       {
   title: "SAKURAI CLINIC",
-  slug: "SakuraiClinic",
+  slug: "SakuraiDerm",
   desc: "桜 × 静寂 × 美容医療。\n淡い光と余白で信頼と優しさを設計した美容皮膚科サイト。",
   link: "https://sakurai-clinic.vercel.app/",
   img: "/works/sakurai.webp",

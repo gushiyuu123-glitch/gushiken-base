@@ -40,7 +40,9 @@ import Kansei from "./pages/works/Kansei";
 import Shigure from "./pages/works/Shigure";
 import Viva from "./pages/works/Viva";
 import ReCamp from "./pages/works/ReCamp";
-
+import MiyahiraDental from "./pages/works/MiyahiraDental";
+import SakuraiDerm from "./pages/works/SakuraiDerm";
+import WhiteDarkCacao from "./pages/works/WhiteDarkCacao";
 
 import PriceDetail from "./pages/PriceDetail";
 
@@ -110,7 +112,9 @@ function Layout() {
 <Route path="/works/shigure" element={<Shigure />} />
 <Route path="/works/viva" element={<Viva />} />
 <Route path="/works/ReCamp" element={<ReCamp />} />
-
+<Route path="/works/MiyahiraDental" element={<MiyahiraDental />} />
+<Route path="/works/SakuraiDerm" element={<SakuraiDerm />} />
+<Route path="/works/WhiteDarkCacao" element={<WhiteDarkCacao />} />
 
 {/* 最後に汎用テンプレ */}
 <Route path="/works/:slug" element={<WorkDetail />} />
