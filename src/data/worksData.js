@@ -119,6 +119,43 @@ export const worksData = [
     ]
   }
 },
+{
+  title: "Miyahira Dental Clinic",
+  slug: "MiyahiraDental",
+
+  desc: "誠実 × 丁寧 × 安心。\n“落ち着いて任せられる歯科体験”を丁寧に設計した地域クリニックサイト。",
+  link: "https://miyahira-dental.vercel.app/",
+  img: "/works/miyahira.webp",
+
+  isNew: true,
+  createdAt: "2026-01-23",
+
+  tags: [
+    "NEW",
+    "歯科",
+    "クリニック",
+    "清潔感",
+    "安心設計",
+    "余白",
+    "日本的ミニマル",
+    "PC/SP 分離",
+    "Branding"
+  ],
+
+  detail: {
+    concept:
+      "“誠実で丁寧な歯科”という印象を、余白・写真・色・光のコントラストで設計。派手さを排除し、初めての来院でも迷わず安心できる導線を最優先に構成した。治療の怖さ・緊張をやわらげる“落ち着いた空気感”が核となるデザイン。",
+    tech: [
+      "React",
+      "Vite",
+      "Tailwind",
+      "GSAP",
+      "IntersectionObserver",
+      "PC/SP 完全分離",
+      "microCMS（NEWS連携）"
+    ]
+  }
+},
 
       {
         title: "Okinawa White Spa",
