@@ -43,6 +43,46 @@ export default function SakuraiDerm() {
 
   return (
     <section className="min-h-screen bg-white text-[#1e1e1e]">
+{/* ============================
+    JSON-LD（SEO）
+================================ */}
+<script
+  type="application/ld+json"
+  dangerouslySetInnerHTML={{
+    __html: JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "MedicalBusiness",
+      "name": "Sakurai Aesthetic Dermatology",
+      "description":
+        "美容皮膚科の緊張感をやわらげ、静けさと透明感を軸に設計したWebサイト。React / Vite / Tailwind / GSAP による“呼吸する”UIと、淡い桜の世界観を重ねたデザイン。",
+      "url": "https://sakurai-clinic.vercel.app/",
+      "image": [
+        "/works1/sakurai-hero.png",
+        "/works1/sakurai-11.png",
+        "/works1/sakurai-2.png",
+        "/works1/sakurai-3.png"
+      ],
+      "creator": {
+        "@type": "Person",
+        "name": "GUSHIKEN DESIGN",
+        "url": "https://gushikendesign.com/"
+      },
+      "inLanguage": "ja",
+      "keywords": [
+        "美容皮膚科",
+        "Aesthetic Dermatology",
+        "静けさのデザイン",
+        "桜ニュアンス",
+        "余白設計",
+        "React",
+        "Vite",
+        "Tailwind CSS v3",
+        "GSAP Motion",
+        "PC/SP 分離構造"
+      ]
+    }),
+  }}
+/>
 
       {/* =========================
           PC Layout

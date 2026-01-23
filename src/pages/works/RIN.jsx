@@ -49,6 +49,44 @@ export default function RIN() {
 
   return (
     <section className="min-h-screen bg-white text-slate-900">
+      {/* ============================
+    JSON-LD（SEO）
+================================ */}
+<script
+  type="application/ld+json"
+  dangerouslySetInnerHTML={{
+    __html: JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "CreativeWork",
+      "name": "RIN — Eyelash Salon Website",
+      "description":
+        "迷っている人のために設計した、押さない・急がせない・呼吸の整うまつエクサイト。React / Vite / Tailwind / GSAP による静かなUX。",
+      "url": "https://rin-psi.vercel.app/",
+      "image": [
+        "/works1/rin.png",
+        "/works1/rin-1.webp",
+        "/works1/rin-2.webp",
+        "/works1/rin-3.webp"
+      ],
+      "creator": {
+        "@type": "Person",
+        "name": "GUSHIKEN DESIGN",
+        "url": "https://gushikendesign.com/"
+      },
+      "inLanguage": "ja",
+      "about": [
+        "まつエク サイト",
+        "Eyelash Salon",
+        "静かなUX",
+        "React Web Design",
+        "Tailwind v3",
+        "GSAP Motion",
+        "PC/SP 分離設計"
+      ]
+    }),
+  }}
+/>
+
       {/* =========================
           PC（md以上）
       ========================== */}

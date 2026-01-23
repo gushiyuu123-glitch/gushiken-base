@@ -1,315 +1,332 @@
-// src/pages/works/WhiteDarkCacao.jsx
 import React, { useEffect, useMemo } from "react";
 import { Link } from "react-router-dom";
-
-/**
- * WHITE × DARK CACAO — Case Study Page
- * ✅ RIN/Clinic系と「まったく別物」にするために：
- * - “編集誌 / ルックブック” っぽい組み立て（大きい余白＋強いタイポ）
- * - 斜めやガラスではなく、紙面の「段落」「見出し」「余白」で勝つ
- * - 黒は使うが“重さ”より「インク」寄り。白は“紙”寄り。
- *
- * 画像は 4枚だけで構成（SP用の別画像は使わない）
- */
+import usePageFade from "../../hooks/usePageFade";
 
 export default function WhiteDarkCacao() {
   useEffect(() => window.scrollTo(0, 0), []);
 
-  // ===== 画像（4つだけ）=====
-  // ※あなたの実ファイルに合わせてパスを揃えてね
+  // ===== Assets =====
   const assets = useMemo(
     () => ({
-      hero: "/works1/white-dark-hero.png",
-      shot1: "/works1/white-dark-cacao.webp",
-      shot2: "/works1/white-dark-22.png",
-      shot3: "/works1/white-dark-3.png",
+      heroWhite:  "/works1/white-dark-hero1.png",
+      heroDark:  "/works1/white-dark-cacao1.png",
+      shotWhite:  "/works1/white-dark-22.png",
+      shotDark:  "/works1/white-dark-3.png",
+      detail1: "/works1/white-03333.png",
+      detail2: "/works1/cacao-033.png",
     }),
     []
   );
 
   const liveUrl = "https://white-dark-cacao.vercel.app/";
 
+  /* =========================
+     FADE IN
+  ========================= */
+  usePageFade(".lux-fade", {
+    y: 18,
+    duration: 1.1,
+    ease: "power2.out",
+    start: "top 85%",
+  });
+
+  usePageFade(".lux-fade-soft", {
+    y: 10,
+    duration: 0.9,
+    ease: "power2.out",
+    start: "top 88%",
+  });
+
   return (
-    <section className="min-h-screen bg-[#fbfaf8] text-[#1b1b1b]">
-      {/* ======================================
-          TOP BAR（PC/SP 共通）
-      ====================================== */}
-      <header className="sticky top-0 z-50 bg-[#fbfaf8]/82 backdrop-blur border-b border-black/10">
-        <div className="mx-auto max-w-[1240px] px-6 md:px-12 h-[68px] flex items-center justify-between">
-          <div className="flex items-center gap-6">
-            <Link
-              to="/works"
-              className="text-[11px] md:text-[12px] tracking-[0.18em] text-black/55 hover:text-black/75 transition-colors"
+    <section className="min-h-screen bg-white text-[#1a1a1a]">
+          {/* ============ JSON-LD（SEO） ============ */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "CreativeWork",
+            "@id": liveUrl,
+            name: "WHITE × DARK CACAO — Chocolate EC Website",
+            url: liveUrl,
+            inLanguage: "ja",
+            description:
+              "ホテルの静けさとショコラの深度を重ねた高級ECデザイン。世界観と体験を最優先して設計した作品。",
+            image: assets.heroWhite,
+            creator: {
+              "@type": "Organization",
+              name: "GUSHIKEN DESIGN",
+            },
+            about: {
+              "@type": "WebSite",
+              name: "WHITE × DARK CACAO",
+            },
+            isBasedOn: [
+              "React",
+              "Vite",
+              "Tailwind CSS",
+              "GSAP",
+            ],
+          }),
+        }}
+      />
+      {/* =========================
+          PC
+      ========================= */}
+      <div className="hidden md:block">
+        {/* ===== Top bar ===== */}
+        <header className="sticky top-0 z-50 bg-white/70 backdrop-blur border-b border-neutral-300">
+          <div className="max-w-[1120px] mx-auto px-12 h-[72px] flex items-center justify-between">
+            <div className="flex items-center gap-10">
+              <Link
+                to="/works"
+                className="text-[12px] tracking-[0.16em] text-neutral-500 hover:text-neutral-700 transition-colors"
+              >
+                ← WORKS
+              </Link>
+
+              <p className="text-[12px] tracking-[0.22em] text-neutral-600">
+                CASE STUDY
+              </p>
+            </div>
+
+            <a
+              href={liveUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="
+                text-[12px]
+                tracking-[0.2em]
+                text-neutral-800
+                border-b border-neutral-400
+                pb-1
+                hover:opacity-70
+                transition-opacity
+              "
             >
-              ← WORKS
-            </Link>
-
-            <p className="hidden md:block text-[11px] tracking-[0.22em] text-black/45">
-              CASE STUDY / EC BRAND
-            </p>
+              OPEN SITE →
+            </a>
           </div>
+        </header>
 
-          <a
-            href={liveUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="
-              text-[11px] md:text-[12px]
-              tracking-[0.22em]
-              text-black/70
-              border-b border-black/25
-              pb-1
-              hover:opacity-70
-              transition-opacity
-            "
-          >
-            OPEN SITE →
-          </a>
-        </div>
-      </header>
-
-      {/* ======================================
-          HERO（紙面＋二元性）
-      ====================================== */}
-      <div className="mx-auto max-w-[1240px] px-6 md:px-12 pt-14 md:pt-20 pb-14 md:pb-20">
-        <div className="grid md:grid-cols-12 gap-10 md:gap-14 items-start">
-          {/* Left: Title / Statement */}
-          <div className="md:col-span-5">
-            <p className="text-[11px] tracking-[0.28em] text-black/45 mb-5">
-              WHITE × DARK CACAO
-            </p>
-
-            <h1 className="text-[26px] md:text-[34px] leading-[1.45] tracking-[0.08em] text-black/90">
-              静けさで選べる
-              <br />
-              ショコラECの設計
-            </h1>
-
-            <p className="mt-8 text-[13px] md:text-[15px] leading-[2.2] tracking-[0.05em] text-black/65">
-              “買わせる” ではなく、
-              <br />
-              <span className="text-black/90">落ち着いて選べる時間</span>を設計する。
-              <br />
-              余白・写真・文字の距離だけで、
-              <br />
-              上質さが自然に伝わる構成へ。
-            </p>
-
-            {/* Meta */}
-            <div className="mt-10 md:mt-12 flex flex-wrap gap-8">
-              <Meta label="ROLE" value="Brand / UI / Motion" />
-              <Meta label="STACK" value="React / Vite / Tailwind(v3) / GSAP" />
-            </div>
-
-            {/* Small rule */}
-            <div className="mt-12 h-px w-[140px] bg-black/15" />
-          </div>
-
-          {/* Right: Hero Image + “binary” caption */}
-          <div className="md:col-span-7">
-            <div className="relative overflow-hidden border border-black/10 bg-white">
-              {/* “二元性”を写真の上に載せず、外枠と余白で表現 */}
-              <img
-                src={assets.hero}
-                alt="WHITE × DARK CACAO hero"
-                className="w-full h-[260px] md:h-[520px] object-cover"
-              />
-            </div>
-
-            <div className="mt-5 grid grid-cols-2 gap-4">
-              <div className="border border-black/10 bg-white px-4 py-3">
-                <p className="text-[10px] tracking-[0.28em] text-black/45 mb-1">
-                  WHITE
-                </p>
-                <p className="text-[12px] leading-[1.9] text-black/70 tracking-[0.04em]">
-                  軽い甘さ / 空気感 / 浮く余白
-                </p>
-              </div>
-              <div className="border border-black/10 bg-white px-4 py-3">
-                <p className="text-[10px] tracking-[0.28em] text-black/45 mb-1">
-                  DARK
-                </p>
-                <p className="text-[12px] leading-[1.9] text-black/70 tracking-[0.04em]">
-                  深い苦味 / 密度 / 沈む静けさ
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* ======================================
-          SECTION: Concept（雑誌の見開き風）
-      ====================================== */}
-      <div className="border-y border-black/10 bg-[#f6f3ee]">
-        <div className="mx-auto max-w-[1240px] px-6 md:px-12 py-16 md:py-24">
-          <div className="grid md:grid-cols-12 gap-10 md:gap-14 items-start">
-            <div className="md:col-span-4">
-              <p className="text-[11px] tracking-[0.28em] text-black/45 mb-4">
-                CONCEPT
+        {/* ===== HERO ===== */}
+        <div className="max-w-[1240px] mx-auto px-12 pt-20 pb-32">
+          <div className="grid grid-cols-2 gap-12 items-end">
+            {/* LEFT copy */}
+            <div className="lux-fade">
+              <p className="text-[12px] tracking-[0.22em] text-neutral-500 mb-6">
+                CHOCOLATE / EC BRAND
               </p>
-              <h2 className="text-[18px] md:text-[22px] tracking-[0.10em] text-black/90 leading-[1.7]">
-                説明しない設計
+
+              <h1 className="text-[38px] leading-[1.4] tracking-[0.08em] text-neutral-900">
+                WHITE × DARK CACAO
+              </h1>
+
+              <p className="mt-10 text-[15px] leading-[2.2] tracking-[0.06em] text-neutral-600 max-w-[560px]">
+                ホテルの“静けさ”とショコラの“深さ”を重ねた世界観設計。
                 <br />
-                伝わる設計
-              </h2>
-
-              <div className="mt-10 h-px w-[120px] bg-black/15" />
-            </div>
-
-            <div className="md:col-span-8">
-              <div className="space-y-6 text-[13px] md:text-[14px] leading-[2.35] tracking-[0.06em] text-black/65">
-                <p>
-                  ショコラを選ぶ時間は、本来もっと静かで、余裕があるものだと考えています。
-                  だからUIは、派手な訴求より先に、目と呼吸が落ち着くリズムを優先しました。
-                </p>
-                <p>
-                  情報は“全部見せる”のではなく、必要な場所でだけ自然に立ち上がる。
-                  余白は空きではなく、味の余韻を置く場所として扱っています。
-                </p>
-                <p className="text-black/90">
-                  「急がせないこと」そのものが、信頼のデザインになる。
-                </p>
-              </div>
-            </div>
-          </div>
-
-          {/* image 1 */}
-          <div className="mt-12 md:mt-16 border border-black/10 bg-white overflow-hidden">
-            <img
-              src={assets.shot1}
-              alt="Concept / layout screen"
-              className="w-full h-[240px] md:h-[520px] object-cover"
-            />
-          </div>
-        </div>
-      </div>
-
-      {/* ======================================
-          SECTION: UX Decisions（カードじゃなく“段落”で魅せる）
-      ====================================== */}
-      <div className="mx-auto max-w-[1240px] px-6 md:px-12 py-16 md:py-24">
-        <div className="grid md:grid-cols-12 gap-10 md:gap-14 items-start">
-          <div className="md:col-span-4">
-            <p className="text-[11px] tracking-[0.28em] text-black/45 mb-4">
-              UX DECISIONS
-            </p>
-            <h2 className="text-[18px] md:text-[22px] tracking-[0.10em] text-black/90 leading-[1.7]">
-              触れ方の設計
-              <br />
-              選び方の設計
-            </h2>
-          </div>
-
-          <div className="md:col-span-8">
-            <div className="border border-black/10 bg-white">
-              <div className="grid md:grid-cols-3">
-                <Decision
-                  no="01"
-                  title="圧を消す"
-                  body="CTAを前に出しすぎない。選択を急がせるUIを排除して、“見ていられる”状態を保つ。"
-                />
-                <Decision
-                  no="02"
-                  title="情報を段階化"
-                  body="最初に結論を押しつけない。必要な人が、必要な深さまで降りられる構造。"
-                />
-                <Decision
-                  no="03"
-                  title="動きを最小化"
-                  body="モーションは“演出”ではなく、視線の呼吸。動く量より、遅さと間で整える。"
-                  isLast
-                />
-              </div>
-            </div>
-
-            <div className="mt-10 md:mt-12 grid md:grid-cols-2 gap-8">
-              <div className="border border-black/10 bg-white overflow-hidden">
-                <img
-                  src={assets.shot2}
-                  alt="Product / information"
-                  className="w-full h-[220px] md:h-[380px] object-cover"
-                />
-              </div>
-              <div className="border border-black/10 bg-white overflow-hidden">
-                <img
-                  src={assets.shot3}
-                  alt="Checkout / flow"
-                  className="w-full h-[220px] md:h-[380px] object-cover"
-                />
-              </div>
-            </div>
-
-            <p className="mt-10 text-[12px] leading-[2.2] tracking-[0.10em] text-black/45">
-              NOTE: “高級感”は派手さではなく、余白・距離・速度で成立する。
-            </p>
-          </div>
-        </div>
-      </div>
-
-      {/* ======================================
-          SECTION: Structure（“設計図”っぽく）
-      ====================================== */}
-      <div className="border-y border-black/10 bg-[#fbfaf8]">
-        <div className="mx-auto max-w-[1240px] px-6 md:px-12 py-16 md:py-22">
-          <div className="grid md:grid-cols-12 gap-10 md:gap-14 items-start">
-            <div className="md:col-span-4">
-              <p className="text-[11px] tracking-[0.28em] text-black/45 mb-4">
-                STRUCTURE
+                理解するより先に、空気で「質」を伝える構造にした。
               </p>
-              <h2 className="text-[18px] md:text-[22px] tracking-[0.10em] text-black/90 leading-[1.7]">
-                感情の順番を
-                <br />
-                先に整える
-              </h2>
+
+              <div className="mt-14 flex gap-14">
+                <div>
+                  <p className="text-[11px] tracking-[0.18em] text-neutral-500 mb-2">
+                    ROLE
+                  </p>
+                  <p className="text-[12px] tracking-[0.08em] text-neutral-700">
+                    UX / UI / EC Design
+                  </p>
+                </div>
+
+                <div>
+                  <p className="text-[11px] tracking-[0.18em] text-neutral-500 mb-2">
+                    STACK
+                  </p>
+                  <p className="text-[12px] tracking-[0.08em] text-neutral-700">
+                    React / Vite / Tailwind / GSAP
+                  </p>
+                </div>
+              </div>
             </div>
 
-            <div className="md:col-span-8">
-              <div className="border border-black/10 bg-white">
-                <div className="grid md:grid-cols-4">
-                  <FlowStep t="静けさ" d="目が疲れない入口" />
-                  <FlowStep t="理解" d="必要な情報だけ届く" />
-                  <FlowStep t="選択" d="決めさせない設計" />
-                  <FlowStep t="購入" d="手続きも静かに終える" last />
+            {/* RIGHT visuals */}
+            <div className="lux-fade-soft">
+              <div className="relative flex gap-6">
+                {/* White */}
+                <div className="relative border border-neutral-200 overflow-hidden">
+                  <img
+                    src={assets.heroWhite}
+                    className="w-full h-[420px] object-cover"
+                  />
+                  <div className="absolute inset-0 bg-white/10" />
+                </div>
+
+                {/* Dark */}
+                <div className="relative border border-neutral-200 overflow-hidden translate-y-10">
+                  <img
+                    src={assets.heroDark}
+                    className="w-full h-[420px] object-cover"
+                  />
+                  <div className="absolute inset-0 bg-black/10" />
                 </div>
               </div>
 
-              <div className="mt-10 border border-black/10 bg-[#f6f3ee] px-8 md:px-12 py-10 md:py-12">
-                <p className="text-[12px] tracking-[0.28em] text-black/45 mb-5">
-                  DESIGN STATEMENT
-                </p>
-                <p className="text-[13px] md:text-[14px] leading-[2.35] tracking-[0.08em] text-black/70">
-                  “買う” は行動だけど、
-                  <br />
-                  “選ぶ” は気持ち。
-                  <br />
-                  このサイトは、選ぶ時間そのものを価値として扱うために、
-                  <span className="text-black/90">余白・距離・速度</span>を最小単位で調整している。
+              <p className="mt-6 text-[11px] tracking-[0.14em] text-neutral-500">
+                “Duality of Taste.”
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* ===== SECTION: Brand Concept ===== */}
+        <div className="bg-[#f8f8f6] border-y border-neutral-300">
+          <div className="max-w-[1120px] mx-auto px-12 py-28">
+            <div className="grid grid-cols-2 gap-20">
+              <div className="lux-fade">
+                <h2 className="text-[20px] tracking-[0.14em] text-neutral-900 mb-10">
+                  ブランドの考え方
+                </h2>
+                <p className="text-[14px] leading-[2.4] tracking-[0.06em] text-neutral-600 space-y-6 whitespace-pre-line">
+                  WHITE × DARK CACAO は、
+                  「急いで決める」よりも
+                  「落ち着いて選ぶ」ことをブランド価値と考えている。
+
+                  ホテルのロビーのように、
+                  空気で“質”が伝わる構造を目指し、
+                  情報よりも空気、説明よりも余白に比重を置いた。
                 </p>
               </div>
 
-              <div className="mt-12 flex items-center justify-between gap-6">
-                <a
-                  href={liveUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="
-                    inline-flex items-center
-                    text-[12px]
-                    tracking-[0.22em]
-                    text-black/75
-                    border-b border-black/25
-                    pb-1
-                    hover:opacity-70
-                    transition-opacity
-                  "
-                >
-                  {liveUrl}
-                </a>
+              <div className="lux-fade">
+                <h2 className="text-[20px] tracking-[0.14em] text-neutral-900 mb-10">
+                  デザイン意図
+                </h2>
+                <p className="text-[14px] leading-[2.4] tracking-[0.06em] text-neutral-600 space-y-6 whitespace-pre-line">
+                  商品ではなく、
+                  “選ぶ時間”の高級感を演出する。
 
+                  そのために
+                  ・白＝静  
+                  ・黒＝深度  
+                  ・金＝温かみ  
+                  の三相でリズムを作り、
+
+                  「読む → 感じる → そっと選ぶ」
+                  という高価格帯らしい心理ラインを敷いた。
+                </p>
+              </div>
+            </div>
+
+            {/* Supporting visuals */}
+            <div className="mt-20 grid grid-cols-12 gap-8 items-center lux-fade-soft">
+              <div className="col-span-7 border border-neutral-200 bg-white overflow-hidden">
+                <img
+                  src={assets.shotWhite}
+                  className="w-full h-[420px] object-cover"
+                />
+              </div>
+              <div className="col-span-5 text-[14px] tracking-[0.06em] text-neutral-600 leading-[2.4]">
+                “白の静けさは、ブランドの入口。”
+                <br />
+                初動で「清潔 × 落ち着き × 信頼」を伝える役割を担う。
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* ===== SECTION: Duality ===== */}
+        <div className="max-w-[1120px] mx-auto px-12 py-32">
+          <h2 className="lux-fade text-center text-[22px] tracking-[0.18em] text-neutral-900 mb-16">
+            WHITE と DARK、二つの世界観
+          </h2>
+
+          <div className="grid grid-cols-2 gap-16">
+            {/* WHITE */}
+            <div className="lux-fade border border-neutral-200 bg-white p-12">
+              <p className="text-[12px] tracking-[0.18em] text-neutral-500 mb-6">
+                WHITE — QUIET SWEETNESS
+              </p>
+              <p className="text-[14px] leading-[2.3] tracking-[0.06em] text-neutral-600 mb-10">
+                明るさより“静けさ”を優先した甘さ。  
+                ホテルの朝食のような丁寧さを意識した世界観。
+              </p>
+
+              <img
+                src={assets.detail1}
+                className="w-full h-[360px] object-cover border border-neutral-200"
+              />
+            </div>
+
+            {/* DARK */}
+            <div className="lux-fade border border-neutral-200 bg-white p-12">
+              <p className="text-[12px] tracking-[0.18em] text-neutral-500 mb-6">
+                DARK — QUIET BITTERNESS
+              </p>
+              <p className="text-[14px] leading-[2.3] tracking-[0.06em] text-neutral-600 mb-10">
+                情報を削り、静かに沈むような深度を優先。
+                高級ホテルのバーの “暗さの質” を翻訳したレイアウト。
+              </p>
+
+              <img
+                src={assets.detail2}
+                className="w-full h-[360px] object-cover border border-neutral-200"
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* ===== TECH / LIVE ===== */}
+        <div className="max-w-[1120px] mx-auto px-12 py-28">
+          <div className="grid grid-cols-2 gap-20 items-start">
+            <div className="lux-fade">
+              <h2 className="text-[18px] tracking-[0.16em] text-neutral-900 mb-10">
+                STRUCTURE & STACK
+              </h2>
+              <ul className="text-[14px] leading-[2.4] tracking-[0.06em] text-neutral-600 space-y-3">
+                <li>・React / Vite</li>
+                <li>・Tailwind CSS (v3)</li>
+                <li>・WHITE/DARK の二元構造を心理軸で翻訳</li>
+                <li>・動きは “演出” ではなく “呼吸” レベルまで抑制</li>
+              </ul>
+            </div>
+
+            <div className="lux-fade border border-neutral-200 bg-[#fafafa] p-12">
+              <p className="text-[12px] tracking-[0.22em] text-neutral-500 mb-6">
+                LIVE
+              </p>
+              <p className="text-[15px] leading-[2.3] tracking-[0.06em] text-neutral-700 mb-10">
+                White × Dark Cacao（公開ページ）
+              </p>
+
+              <a
+                href={liveUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="
+                  inline-block
+                  text-[12px]
+                  tracking-[0.20em]
+                  text-neutral-800
+                  border-b border-neutral-400
+                  pb-1
+                  hover:opacity-70
+                  transition-opacity
+                "
+              >
+                {liveUrl}
+              </a>
+
+              <div className="mt-14 pt-10 border-t border-neutral-200">
                 <Link
                   to="/works"
-                  className="text-[12px] tracking-[0.18em] text-black/55 hover:text-black/75 transition-colors"
+                  className="
+                    inline-block
+                    text-[12px]
+                    tracking-[0.18em]
+                    text-neutral-600
+                    hover:text-neutral-800
+                    transition-colors
+                  "
                 >
                   ← WORKSへ戻る
                 </Link>
@@ -319,54 +336,142 @@ export default function WhiteDarkCacao() {
         </div>
       </div>
 
-      {/* bottom spacing */}
-      <div className="h-16 md:h-24" />
+      {/* =========================
+          SP（md未満）
+      ========================= */}
+      <div className="md:hidden">
+        <header className="sticky top-0 z-50 bg-white/80 backdrop-blur border-b border-neutral-200">
+          <div className="px-5 h-[64px] flex items-center justify-between">
+            <Link
+              to="/works"
+              className="text-[11px] tracking-[0.18em] text-neutral-600"
+            >
+              ← WORKS
+            </Link>
+
+            <a
+              href={liveUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-[11px] tracking-[0.18em] text-neutral-700 border-b border-neutral-300 pb-1"
+            >
+              OPEN →
+            </a>
+          </div>
+        </header>
+
+        {/* SP hero */}
+        <div className="px-6 pt-14 pb-20">
+          <p className="text-[11px] tracking-[0.22em] text-neutral-500 mb-4 lux-fade-soft">
+            CHOCOLATE / EC BRAND
+          </p>
+
+          <h1 className="text-[22px] leading-[1.7] tracking-[0.10em] text-neutral-900 lux-fade-soft">
+            WHITE × DARK CACAO
+          </h1>
+
+          <p className="mt-8 text-[13px] leading-[2.2] tracking-[0.06em] text-neutral-600 lux-fade-soft">
+            ホテルの静けさをまとうショコラブランド。
+            <br />
+            “説明より空気” を優先したデザイン。
+          </p>
+
+          <div className="mt-12 grid grid-cols-2 gap-4 lux-fade-soft">
+            <img
+              src={assets.heroWhite}
+              className="w-full h-[180px] object-cover border border-neutral-200"
+            />
+            <img
+              src={assets.heroDark}
+              className="w-full h-[180px] object-cover border border-neutral-200"
+            />
+          </div>
+        </div>
+
+        {/* SP Concept */}
+        <div className="bg-[#f8f8f6] border-y border-neutral-200">
+          <div className="px-6 py-20 space-y-12">
+            <div className="lux-fade-sp">
+              <h2 className="text-[16px] tracking-[0.14em] text-neutral-900 mb-5">
+                ブランドの考え方
+              </h2>
+              <p className="text-[13px] leading-[2.4] tracking-[0.06em] text-neutral-600 whitespace-pre-line">
+                情報よりも世界観。
+                <br />
+                説明よりも空気。
+                <br />
+                ブランドの“静けさ”が価値になる構造。
+              </p>
+            </div>
+
+            <div className="lux-fade-sp">
+              <h2 className="text-[16px] tracking-[0.14em] text-neutral-900 mb-5">
+                デザイン意図
+              </h2>
+              <p className="text-[13px] leading-[2.4] tracking-[0.06em] text-neutral-600 whitespace-pre-line">
+                WHITE と DARK の二つの軸で、  
+                「読む → 感じる → 選ぶ」のリズムを設計。
+              </p>
+            </div>
+
+            <img
+              src={assets.shotWhite}
+              className="w-full h-[200px] object-cover border border-neutral-200 lux-fade-soft"
+            />
+          </div>
+        </div>
+
+        {/* SP dual */}
+        <div className="px-6 py-20 space-y-10">
+          {[ 
+            { title: "WHITE — QUIET SWEETNESS", img: assets.detail1 },
+            { title: "DARK — QUIET BITTERNESS", img: assets.detail2 },
+          ].map((x) => (
+            <div
+              key={x.title}
+              className="border border-neutral-200 bg-white p-8 lux-fade-sp"
+            >
+              <p className="text-[11px] tracking-[0.20em] text-neutral-500 mb-4">
+                {x.title}
+              </p>
+              <img
+                src={x.img}
+                className="w-full h-[200px] object-cover border border-neutral-200 mb-5"
+              />
+              <p className="text-[12px] leading-[2.2] tracking-[0.06em] text-neutral-700">
+                静けさと深度を世界観として翻訳したセクション。
+              </p>
+            </div>
+          ))}
+        </div>
+
+        {/* SP live */}
+        <div className="px-6 py-20">
+          <div className="border border-neutral-200 bg-[#fafafa] p-10 lux-fade-sp">
+            <p className="text-[11px] tracking-[0.22em] text-neutral-500 mb-6">
+              LIVE
+            </p>
+
+            <a
+              href={liveUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-block text-[11px] tracking-[0.18em] text-neutral-700 border-b border-neutral-300 pb-1 mb-6"
+            >
+              {liveUrl}
+            </a>
+
+            <div>
+              <Link
+                to="/works"
+                className="text-[11px] tracking-[0.18em] text-neutral-600"
+              >
+                ← WORKSへ戻る
+              </Link>
+            </div>
+          </div>
+        </div>
+      </div>
     </section>
-  );
-}
-
-/* =========================
-   Parts
-========================= */
-function Meta({ label, value }) {
-  return (
-    <div>
-      <p className="text-[10px] tracking-[0.28em] text-black/45 mb-2">
-        {label}
-      </p>
-      <p className="text-[12px] tracking-[0.06em] text-black/70">{value}</p>
-    </div>
-  );
-}
-
-function Decision({ no, title, body, isLast }) {
-  return (
-    <div
-      className={`
-        px-7 py-8 md:px-8 md:py-10
-        ${isLast ? "" : "border-b md:border-b-0 md:border-r border-black/10"}
-      `}
-    >
-      <p className="text-[10px] tracking-[0.30em] text-black/45 mb-4">
-        {no}
-      </p>
-      <p className="text-[14px] tracking-[0.10em] text-black/90 mb-4">
-        {title}
-      </p>
-      <p className="text-[12px] leading-[2.25] tracking-[0.06em] text-black/65">
-        {body}
-      </p>
-    </div>
-  );
-}
-
-function FlowStep({ t, d, last }) {
-  return (
-    <div className={`px-7 py-8 md:px-8 md:py-10 ${last ? "" : "border-r border-black/10"}`}>
-      <p className="text-[11px] tracking-[0.28em] text-black/45 mb-3">{t}</p>
-      <p className="text-[12px] leading-[2.1] tracking-[0.06em] text-black/70">
-        {d}
-      </p>
-    </div>
   );
 }

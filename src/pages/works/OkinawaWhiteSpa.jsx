@@ -3,14 +3,33 @@ import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 
 export default function OkinawaWhiteSpa() {
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
+  useEffect(() => window.scrollTo(0, 0), []);
 
   const siteUrl = "https://okinawa-white-spa.vercel.app/";
 
+  const assets = {
+    hero: "/works1/spa.png",
+    v1: "/works1/spa1.jpg",
+    v2: "/works1/spa.jpg",
+  };
+
+  const titleJP = "Okinawa White Spa";
+  const titleEN = "Private Spa Experience Design";
+  const tagline = "WHITE × SILENCE × PRIVATE RETREAT";
+
+  const outline = `白を「明るさ」ではなく、視線を落ち着かせるための“静けさ”として扱った、
+プライベートスパのコンセプトLPです。
+
+装飾で高級感を作るのではなく、
+余白・文字の距離・UIの重心・光の階調だけで
+「整う」という感覚が成立する温度を狙いました。
+
+情報量を抑えても実在感が薄れないよう、
+線の緊張感はわずかに残し、
+ホテルの公式サイトのように“説明しない安心”を優先しています。`;
+
   return (
-    <section className="bg-[#fbfcfd] text-[#0f141a] min-h-screen pb-40">
+    <section className="min-h-screen bg-[#fbfcfd] text-[#0f141a] pb-40">
       {/* ================= JSON-LD ================= */}
       <script
         type="application/ld+json"
@@ -20,9 +39,9 @@ export default function OkinawaWhiteSpa() {
             "@type": "CreativeWork",
             "@id":
               "https://gushikendesign.com/works/okinawa-white-spa#creativework",
-            name: "Okinawa White Spa｜Private Spa Experience Design",
+            name: `${titleJP}｜${titleEN}`,
             description:
-              "白を『明るさ』ではなく『静けさ』として扱い、UIの重心・余白・光の階調で『整う体験』を設計したプライベートスパLP。情報量を抑えながら、実在感と上質さが持続する画面温度を構築。",
+              "白を『明るさ』ではなく『静けさ』として扱い、余白・行間・光の階調だけで『整う体験』を設計したプライベートスパLP。情報量を抑えながら、実在感と上質さが持続する画面温度を構築。",
             creator: {
               "@type": "Person",
               name: "裕人 具志堅",
@@ -46,193 +65,305 @@ export default function OkinawaWhiteSpa() {
       />
 
       {/* =========================================================
-          HERO — White × Silence × Private Retreat
-          ※ 白ベール弱化版
+          HERO — Luxury Hotel Tone (quiet, precise, airy)
       ========================================================= */}
       <div className="relative w-full overflow-hidden">
-        {/* ===== SP ===== */}
-        <div className="block md:hidden relative w-full pt-16">
-          <div className="relative w-full aspect-[4/5] overflow-hidden">
-            <img
-              src="/works1/spa.png"
-              alt="Okinawa White Spa"
-              className="absolute inset-0 w-full h-full object-cover brightness-[0.99]"
-              loading="eager"
-            />
-
-            {/* White film（SP：弱化） */}
-            <div className="absolute inset-0 bg-gradient-to-b from-white/38 via-white/12 to-white/72" />
-
-            {/* 光の芯（控えめ） */}
-            <div
-              className="absolute inset-0 pointer-events-none"
-              style={{
-                background:
-                  "radial-gradient(circle at 18% 22%, rgba(255,255,255,0.75), transparent 58%)",
-              }}
-            />
-
-            {/* Titles SP */}
-            <div className="absolute bottom-10 left-6 right-6">
-              <p className="text-[0.62rem] tracking-[0.34em] text-black/35 mb-3">
-                SELECTED WORKS
-              </p>
-
-              <h1 className="text-[1.55rem] tracking-[0.16em] font-extralight leading-[1.28] text-black/85">
-                Okinawa White Spa
-              </h1>
-
-              <p className="mt-3 text-[0.78rem] tracking-[0.26em] text-black/45">
-                WHITE × SILENCE × PRIVATE RETREAT
-              </p>
+        {/* ====== SP ====== */}
+        <div className="block md:hidden">
+          <header className="sticky top-0 z-50 bg-white/78 backdrop-blur border-b border-black/10">
+            <div className="px-5 h-[64px] flex items-center justify-between">
+              <Link
+                to="/works"
+                className="text-[11px] tracking-[0.18em] text-black/55 hover:text-black/75"
+              >
+                ← WORKS
+              </Link>
+              <a
+                href={siteUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[11px] tracking-[0.18em] text-black/60 border-b border-black/20 pb-1 hover:opacity-75"
+              >
+                VISIT →
+              </a>
             </div>
+          </header>
+
+          <div className="relative w-full pt-10">
+            <div className="relative w-full aspect-[4/5] overflow-hidden">
+              <img
+                src={assets.hero}
+                alt={titleJP}
+                className="absolute inset-0 w-full h-full object-cover brightness-[1.0]"
+                loading="eager"
+              />
+
+              {/* film（弱め） */}
+              <div className="absolute inset-0 bg-gradient-to-b from-white/22 via-white/8 to-white/66" />
+
+              {/* highlight core */}
+              <div
+                className="absolute inset-0 pointer-events-none"
+                style={{
+                  background:
+                    "radial-gradient(circle at 18% 18%, rgba(255,255,255,0.85), transparent 60%)",
+                }}
+              />
+
+              {/* Titles */}
+              <div className="absolute bottom-10 left-6 right-6">
+                <p className="text-[10px] tracking-[0.34em] text-black/35 mb-3">
+                  SELECTED WORKS
+                </p>
+
+                <h1 className="text-[1.6rem] tracking-[0.12em] font-extralight leading-[1.25] text-black/85">
+                  {titleJP}
+                </h1>
+
+                <p className="mt-3 text-[0.78rem] tracking-[0.26em] text-black/45">
+                  {tagline}
+                </p>
+
+                <div className="mt-6 flex items-center gap-3">
+                  <span className="h-px w-10 bg-black/18" />
+                  <p className="text-[10px] tracking-[0.28em] text-black/38">
+                    {titleEN}
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* micro note */}
+            <p className="px-6 mt-10 text-[12px] leading-[2.2] tracking-[0.06em] text-black/55">
+              “静けさが、贅沢になる。”
+              <br />
+              説明で納得させるのではなく、空気で伝える設計へ。
+            </p>
           </div>
         </div>
 
-        {/* ===== PC ===== */}
-        <div className="hidden md:block relative w-full">
-          <div className="relative w-full h-[92vh] pt-20 overflow-hidden">
-            <img
-              src="/works1/spa.png"
-              alt="Okinawa White Spa"
-              className="absolute inset-0 w-full h-full object-cover brightness-[1.01] scale-[1.02]"
-              loading="eager"
-            />
+        {/* ====== PC ====== */}
+        <div className="hidden md:block">
+          {/* top bar */}
+          <header className="sticky top-0 z-50 bg-white/72 backdrop-blur border-b border-black/10">
+            <div className="max-w-[1180px] mx-auto px-12 h-[72px] flex items-center justify-between">
+              <div className="flex items-center gap-10">
+                <Link
+                  to="/works"
+                  className="text-[12px] tracking-[0.18em] text-black/55 hover:text-black/75 transition-colors"
+                >
+                  ← WORKS
+                </Link>
+                <p className="text-[12px] tracking-[0.22em] text-black/45">
+                  CASE STUDY
+                </p>
+              </div>
 
-            {/* White film（PC：弱化） */}
-            <div className="absolute inset-0 bg-gradient-to-r from-white/42 via-white/12 to-transparent" />
-            <div className="absolute inset-0 bg-gradient-to-b from-white/14 via-transparent to-white/78" />
+              <a
+                href={siteUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="
+                  text-[12px]
+                  tracking-[0.20em]
+                  text-black/65
+                  border-b border-black/20
+                  pb-1
+                  hover:opacity-70
+                  transition-opacity
+                "
+              >
+                VISIT SITE →
+              </a>
+            </div>
+          </header>
 
-            {/* 光の芯 */}
-            <div
-              className="absolute inset-0 pointer-events-none"
-              style={{
-                background:
-                  "radial-gradient(circle at 22% 18%, rgba(255,255,255,0.8), transparent 60%)",
-              }}
-            />
+          {/* hero layout */}
+          <div className="max-w-[1240px] mx-auto px-12 pt-16 pb-24">
+            <div className="grid grid-cols-[0.95fr_1.05fr] gap-16 items-end">
+              {/* left text */}
+              <div>
+                <p className="text-[12px] tracking-[0.34em] text-black/35 mb-6">
+                  PRIVATE SPA / CONCEPT LP
+                </p>
 
-            {/* Titles PC */}
-            <div className="absolute left-[6%] bottom-[14%] max-w-[720px]">
-              <p className="text-[0.7rem] tracking-[0.38em] text-black/35 mb-4">
-                SELECTED WORKS
-              </p>
+                <h1 className="text-[3.05rem] leading-[1.18] tracking-[0.08em] font-extralight text-black/82">
+                  {titleJP}
+                </h1>
 
-              <h1 className="text-[3.1rem] tracking-[0.10em] font-extralight leading-[1.18] text-black/80">
-                Okinawa White Spa
-              </h1>
+                <p className="mt-6 text-[0.95rem] tracking-[0.28em] text-black/45">
+                  {tagline}
+                </p>
 
-              <p className="mt-5 text-[0.95rem] tracking-[0.28em] text-black/45">
-                WHITE × SILENCE × PRIVATE RETREAT
-              </p>
+                <div className="mt-10 w-16 h-px bg-gradient-to-r from-black/18 to-transparent" />
 
-              <div className="mt-7 w-16 h-px bg-gradient-to-r from-black/20 to-transparent" />
+                <p className="mt-10 text-[15px] leading-[2.35] tracking-[0.06em] text-black/58 max-w-[560px]">
+                  “静けさが、贅沢になる。”
+                  <br />
+                  余白と光の階調だけで、気持ちが整う温度を設計した。
+                  <br />
+                  ホテルの公式サイトのように、説明を削り、信頼だけを残す。
+                </p>
+
+                {/* meta */}
+                <div className="mt-14 flex gap-14">
+                  <div>
+                    <p className="text-[11px] tracking-[0.22em] text-black/35 mb-2">
+                      ROLE
+                    </p>
+                    <p className="text-[12px] tracking-[0.08em] text-black/60">
+                      UX / UI / Visual Tone
+                    </p>
+                  </div>
+                  <div>
+                    <p className="text-[11px] tracking-[0.22em] text-black/35 mb-2">
+                      INTENT
+                    </p>
+                    <p className="text-[12px] tracking-[0.08em] text-black/60">
+                      Calm / Premium / Low-Pressure
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* right image */}
+              <div>
+                <div className="relative overflow-hidden rounded-[18px] border border-black/10 bg-white">
+                  <img
+                    src={assets.hero}
+                    alt={`${titleJP} hero`}
+                    className="w-full h-[520px] object-cover brightness-[1.01] scale-[1.02]"
+                    loading="eager"
+                  />
+
+                  {/* ultra thin glass */}
+                  <div className="absolute inset-0 pointer-events-none bg-gradient-to-b from-white/10 via-transparent to-white/20" />
+
+                  {/* quiet highlight */}
+                  <div
+                    className="absolute inset-0 pointer-events-none"
+                    style={{
+                      background:
+                        "radial-gradient(circle at 22% 18%, rgba(255,255,255,0.55), transparent 62%)",
+                    }}
+                  />
+                </div>
+
+                <p className="mt-5 text-[11px] tracking-[0.18em] text-black/35">
+                  “Luxury without explanation.”
+                </p>
+              </div>
             </div>
           </div>
         </div>
       </div>
 
       {/* =========================================================
-          OUTLINE — リアル寄り設計意図
+          OUTLINE — Hotel-like editorial block
       ========================================================= */}
-      <div className="max-w-4xl mx-auto px-6 md:px-0 mt-24 md:mt-28">
+      <div className="max-w-[860px] mx-auto px-6 md:px-0 mt-20 md:mt-24">
         <div className="flex items-center gap-3 mb-8">
-          <p className="text-[0.72rem] tracking-[0.34em] text-black/35">
+          <p className="text-[11px] tracking-[0.34em] text-black/35">
             PROJECT OUTLINE
           </p>
           <span className="h-px flex-1 bg-gradient-to-r from-black/12 to-transparent" />
         </div>
 
-        <p className="text-[1.06rem] md:text-[1.12rem] leading-[2.35] text-black/80 font-light whitespace-pre-line tracking-[0.01em]">
-{`白 × 静寂 × 上質な余白。
-
-「整う」という感覚を、
-装飾や演出ではなく、
-UIの重心・行間・光の階調だけで成立させることを目標にした
-プライベートスパのコンセプトLP。
-
-白を“明るさ”ではなく、
-視線を落ち着かせるための「静けさ」として扱い、
-情報を絞っても上質さが崩れない設計を目指しました。
-
-余白を広く取りながらも、
-線・配置・視線誘導にはわずかな緊張感を残し、
-高級感が時間とともに薄れない画面温度を意識しています。`}
+        <p className="text-[1.02rem] md:text-[1.08rem] leading-[2.45] text-black/72 font-light whitespace-pre-line tracking-[0.02em]">
+          {outline}
         </p>
 
-        <div className="mt-12 text-black/45 text-[0.85rem] tracking-[0.18em] leading-relaxed">
-         <p>Tech — 静かで負荷の少ない構成 / 端末ごとの最適化</p>
-
+        <div className="mt-12 flex flex-wrap gap-8 text-[12px] tracking-[0.20em] text-black/40">
+          <span className="border border-black/10 rounded-full px-4 py-2 bg-white/55 backdrop-blur-[6px]">
+            WHITE AS SILENCE
+          </span>
+          <span className="border border-black/10 rounded-full px-4 py-2 bg-white/55 backdrop-blur-[6px]">
+            LOW-PRESSURE UX
+          </span>
+          <span className="border border-black/10 rounded-full px-4 py-2 bg-white/55 backdrop-blur-[6px]">
+            HOTEL-LIKE RHYTHM
+          </span>
         </div>
       </div>
 
       {/* =========================================================
-          VISUALS — 展示としての余白
+          GALLERY — Exhibition tone (2 visuals only)
       ========================================================= */}
-      <p className="max-w-4xl mx-auto px-6 md:px-0 mt-20 text-[0.9rem] leading-[2.1] text-black/55 font-light">
-        写真点数はあえて増やさず、  
-        空間の“白さ”と“間”が伝わる構図のみを選定しています。
-      </p>
+      <div className="max-w-[980px] mx-auto px-6 md:px-0 mt-20 md:mt-24">
+        <div className="flex items-center gap-3 mb-8">
+          <p className="text-[11px] tracking-[0.34em] text-black/35">
+            GALLERY
+          </p>
+          <span className="h-px flex-1 bg-gradient-to-r from-black/12 to-transparent" />
+        </div>
 
-      <div className="max-w-6xl mx-auto px-6 md:px-0 mt-16 space-y-16 md:space-y-24">
-        <figure className="relative overflow-hidden rounded-[18px] border border-black/10 bg-white">
-          <img
-            src="/works1/spa1.jpg"
-            alt="Okinawa White Spa visual 1"
-            className="w-full object-cover brightness-[1.02]"
-            loading="lazy"
-          />
-          <div className="absolute inset-0 pointer-events-none bg-gradient-to-b from-white/8 via-transparent to-white/22" />
-        </figure>
+        <p className="text-[13px] leading-[2.25] tracking-[0.06em] text-black/52 font-light">
+          点数は増やさない。空間の“白さ”と“間”が伝わる構図だけを残す。
+        </p>
 
-        <figure className="relative overflow-hidden rounded-[18px] border border-black/10 bg-white">
-          <img
-            src="/works1/spa.jpg"
-            alt="Okinawa White Spa visual 2"
-            className="w-full object-cover brightness-[1.04]"
-            loading="lazy"
-          />
-          <div className="absolute inset-0 pointer-events-none bg-gradient-to-r from-white/18 via-transparent to-white/10" />
-        </figure>
+        <div className="mt-12 space-y-14 md:space-y-18">
+          {/* visual 1 */}
+          <figure className="relative overflow-hidden rounded-[18px] border border-black/10 bg-white">
+            <img
+              src={assets.v1}
+              alt="Okinawa White Spa visual 1"
+              className="w-full object-cover brightness-[1.02]"
+              loading="lazy"
+            />
+            <div className="absolute inset-0 pointer-events-none bg-gradient-to-b from-white/10 via-transparent to-white/18" />
+          </figure>
+
+          {/* visual 2 */}
+          <figure className="relative overflow-hidden rounded-[18px] border border-black/10 bg-white">
+            <img
+              src={assets.v2}
+              alt="Okinawa White Spa visual 2"
+              className="w-full object-cover brightness-[1.03]"
+              loading="lazy"
+            />
+            <div className="absolute inset-0 pointer-events-none bg-gradient-to-r from-white/14 via-transparent to-white/10" />
+          </figure>
+        </div>
       </div>
 
       {/* =========================================================
-          CTA — 静かな締め
+          CTA — Hotel-ish quiet finish
       ========================================================= */}
-      <p className="max-w-3xl mx-auto mt-24 mb-10 text-[0.9rem] leading-[2.2] text-black/55 font-light px-6 text-center">
-        沖縄という土地性を前面に出すのではなく、  
-        「誰にとっても静かに整う場所」であることを優先し、  
-        色・言葉・動きはすべて最小限に抑えています。
-      </p>
+      <div className="max-w-[860px] mx-auto px-6 md:px-0 mt-24 md:mt-28 text-center">
+        <p className="text-[13px] leading-[2.35] tracking-[0.08em] text-black/50 font-light">
+          “予約を促す”のではなく、
+          <br />
+          “安心して置いておける場所”を作る。
+          <br />
+          高級感は、説明ではなく、体験のリズムで成立する。
+        </p>
 
-      <div className="text-center px-6">
-        <a
-          href={siteUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="
-            inline-flex items-center justify-center
-            h-[48px] px-10
-            text-[0.82rem]
-            tracking-[0.34em]
-            border border-black/18
-            text-black/70
-            hover:text-black/90
-            hover:border-black/35
-            hover:shadow-[0_0_26px_rgba(0,0,0,0.10)]
-            transition-all duration-500
-            bg-white/40
-            backdrop-blur-[6px]
-            rounded-full
-          "
-        >
-          VISIT SITE →
-        </a>
+        <div className="mt-12 flex flex-col items-center gap-10">
+          <a
+            href={siteUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="
+              inline-flex items-center justify-center
+              h-[50px] px-12
+              text-[11px]
+              tracking-[0.34em]
+              border border-black/18
+              text-black/70
+              hover:text-black/90
+              hover:border-black/35
+              transition-all duration-500
+              bg-white/55
+              backdrop-blur-[8px]
+              rounded-[12px]
+            "
+          >
+            VISIT OFFICIAL SITE →
+          </a>
 
-        <div className="mt-10">
           <Link
             to="/works"
-            className="inline-block text-black/45 hover:text-black tracking-[0.26em] text-[0.75rem]"
+            className="inline-block text-black/45 hover:text-black tracking-[0.28em] text-[11px]"
           >
             ← BACK TO WORKS LIST
           </Link>

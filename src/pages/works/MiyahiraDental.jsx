@@ -49,6 +49,47 @@ export default function MiyahiraDental() {
 
   return (
     <section className="min-h-screen bg-white text-slate-900">
+      {/* =========================
+          JSON-LD（SEO）
+      ========================= */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "MedicalClinic",
+            "@id":
+              "https://gushikendesign.com/works/miyahira-dental#creativework",
+            name: "みやひら歯科｜Webサイト・デザイン設計",
+            description:
+              "不安や痛みに敏感な患者様のために、“静かに読めるUI”と落ち着いた色調・余白設計で構築した歯科クリニックの公式サイト。派手な訴求を避け、安心感と誠実さを最優先したWebデザイン。",
+            url: "https://gushikendesign.com/works/miyahira-dental",
+            image: [
+              "/works1/miyahira.png",
+              "/works1/miyahira-1.png",
+              "/works1/miyahira-2.png",
+              "/works1/miyahira-3.png"
+            ],
+            creator: {
+              "@type": "Person",
+              name: "裕人 具志堅",
+              alternateName: "Yuto Gushiken",
+              url: "https://gushikendesign.com/"
+            },
+            publisher: {
+              "@type": "Organization",
+              name: "GUSHIKEN DESIGN",
+              url: "https://gushikendesign.com/"
+            },
+            inLanguage: "ja",
+            isBasedOn: {
+              "@type": "WebSite",
+              name: "Miyahira Dental Clinic Official",
+              url: "https://miyahira-dental.vercel.app/"
+            }
+          })
+        }}
+      />
 
       {/* =========================
           PC Layout（md以上）
