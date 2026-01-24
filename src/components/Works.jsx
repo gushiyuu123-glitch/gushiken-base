@@ -8,7 +8,6 @@ export default function Works() {
     const root = worksRef.current;
     if (!root) return;
 
-    // 画像ロード後の仕上げクラス付与
     const cards = root.querySelectorAll(".work-card");
 
     cards.forEach((card) => {
@@ -24,20 +23,18 @@ export default function Works() {
   }, []);
 
   return (
- <section
-  id="works"
-  ref={worksRef}
-  className="
-    aq-fade
-    aq-root
-
-   pt-[12vh]
-    pb-[12vh]   // ← ここを少しだけ厚く
-    md:pt-[16vh]
-    md:pb-[16vh]
-  "
->
-
+    <section
+      id="works"
+      ref={worksRef}
+      className="
+        aq-fade
+        aq-root
+        pt-[12vh]
+        pb-[12vh]
+        md:pt-[16vh]
+        md:pb-[16vh]
+      "
+    >
       <div className="works-container">
         {/* =====================
             HEADER
@@ -53,90 +50,90 @@ export default function Works() {
             GRID
         ===================== */}
         <div className="works-grid-wrapper">
-          {/* Swipe hint */}
           <div className="works-swipe-hint aq-fade delay-2">
             <span>SWIPE</span>
             <span className="arrow">→</span>
           </div>
 
-<div className="works-grid">
-  {/* ==================================
-      BIG CARD — WHITE × DARK CACAO（先頭）
-  ================================== */}
-  <a
-    href="https://white-dark-cacao.vercel.app/"
-    target="_blank"
-    rel="noopener noreferrer"
-    className="work-card work-big aq-fade delay-2"
-  >
-    <img
-      src="/assets/1111.png"
-      alt="WHITE × DARK CACAO — Chocolate Brand Website"
-      loading="lazy"
-    />
+          <div className="works-grid">
 
-    <div className="work-text">
-      {/* PC */}
-      <h3 className="hidden md:block">WHITE × DARK CACAO</h3>
+            {/* ==================================
+                ① AXIS（最初に）
+            ================================== */}
+            <a
+              href="https://axis-alpha-one.vercel.app/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="work-card work-small aq-fade delay-2"
+            >
+              <img
+                src="/assets/axis.webp"
+                alt="AXIS — Design Axis"
+                loading="lazy"
+              />
+              <div className="work-text small">
+                <h3>AXIS</h3>
+                <p>A design axis for decision-making.</p>
+              </div>
+            </a>
 
-      {/* SP */}
-      <h3 className="md:hidden mt-3 tracking-[0.18em] text-[0.7rem]">
-        WHITE × DARK CACAO
-      </h3>
+            {/* ==================================
+                ② RÉSONANCE（レストラン）
+            ================================== */}
+            <a
+              href="https://resonance-restaurant.vercel.app/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="work-card work-small aq-fade delay-3"
+            >
+              <img
+                src="/assets/resonance.webp"
+                alt="RÉSONANCE Restaurant"
+                loading="lazy"
+              />
+              <div className="work-text small">
+                <h3>RÉSONANCE</h3>
+                <p>Time × Heat × Silence.</p>
+              </div>
+            </a>
 
-      <p className="hidden md:block">
-        Silence, margin, and restraint.
-        <br />
-        A chocolate brand shaped as a website.
-      </p>
+            {/* ==================================
+                ③ BIG — WHITE × DARK CACAO
+            ================================== */}
+            <a
+              href="https://white-dark-cacao.vercel.app/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="work-card work-big aq-fade delay-4"
+            >
+              <img
+                src="/assets/1111.png"
+                alt="WHITE × DARK CACAO — Chocolate Brand Website"
+                loading="lazy"
+              />
 
-      <span className="block md:hidden mt-2 opacity-30 text-[0.45rem]">
-        Tap to view project
-      </span>
-    </div>
-  </a>
+              <div className="work-text">
+                {/* PC */}
+                <h3 className="hidden md:block">WHITE × DARK CACAO</h3>
 
-  {/* ==================================
-      SMALL — AXIS（2番目）
-  ================================== */}
-  <a
-    href="https://axis-alpha-one.vercel.app/"
-    target="_blank"
-    rel="noopener noreferrer"
-    className="work-card work-small aq-fade delay-3"
-  >
-    <img
-      src="/assets/axis.webp"
-      alt="AXIS — Design Axis"
-      loading="lazy"
-    />
-    <div className="work-text small">
-      <h3>AXIS</h3>
-      <p>A design axis for decision-making.</p>
-    </div>
-  </a>
+                {/* SP */}
+                <h3 className="md:hidden mt-3 tracking-[0.18em] text-[0.7rem]">
+                  WHITE × DARK CACAO
+                </h3>
 
-  {/* ==================================
-      SMALL — RÉSONANCE（3番目）
-  ================================== */}
-  <a
-    href="https://resonance-restaurant.vercel.app/"
-    target="_blank"
-    rel="noopener noreferrer"
-    className="work-card work-small aq-fade delay-4"
-  >
-    <img
-      src="/assets/resonance.webp"
-      alt="RÉSONANCE Restaurant"
-      loading="lazy"
-    />
-    <div className="work-text small">
-      <h3>RÉSONANCE</h3>
-      <p>Time × Heat × Silence.</p>
-    </div>
-  </a>
-</div>
+                <p className="hidden md:block">
+                  Silence, margin, and restraint.
+                  <br />
+                  A chocolate brand shaped as a website.
+                </p>
 
+                <span className="block md:hidden mt-2 opacity-30 text-[0.45rem]">
+                  Tap to view project
+                </span>
+              </div>
+            </a>
+
+          </div>
         </div>
 
         {/* =====================
@@ -147,7 +144,6 @@ export default function Works() {
             VIEW ALL WORKS
           </a>
 
-          {/* 補助コピー：AXIS文脈 */}
           <p
             className="
               mt-3
