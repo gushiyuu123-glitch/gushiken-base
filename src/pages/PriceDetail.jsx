@@ -84,8 +84,8 @@ export default function PriceDetail() {
      <PlanCard
   badge="PLAN 03"
   title="Brand Site"
-  price="¥200,000〜"
-  detail="写真・色・余白まで統一し、トップページ＋4〜6ページ程度を想定したブランド全体の世界観を丁寧に設計します。"
+  price="¥240,000〜"
+  detail="写真・色・余白まで統一し、トップページ＋4〜10ページ程度を想定したブランド全体の世界観を丁寧に設計します。"
   bestFor="ブランド価値を重視したい方へ。"/>
 
         </div>
