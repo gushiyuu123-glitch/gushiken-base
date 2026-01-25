@@ -120,11 +120,32 @@ export default function PriceDetail() {
 
 </DetailBlock>
 
-        {/* ===== SUB SECTION ===== */}
-        <SectionTitle>写真・ビジュアルについて</SectionTitle>
-        <DetailBlock dense>
-          <li>素材が不足している場合も、世界観を壊さない補完ビジュアルを制作します。</li>
-        </DetailBlock>
+<SectionTitle>写真・ビジュアルについて</SectionTitle>
+<DetailBlock dense>
+  <li>素材が不足している場合も、世界観を壊さない補完ビジュアルを制作します。</li>
+
+  <li>
+    できれば、イメージに近い写真や参考URLをご共有いただけると、制作がさらにスムーズです。  
+    自社・他社問わず、雰囲気の近いWebサイトをお送りいただいて大丈夫です。
+  </li>
+<br></br>
+  <li>
+    参考として、私のこれまでの制作一覧もご覧いただけます：<br />
+    <a
+      href="https://gushikendesign.com/works"
+      className="underline text-white/70 hover:text-white"
+      target="_blank" rel="noopener noreferrer"
+    >
+      https://gushikendesign.com/works
+    </a>
+  </li>
+
+  <li className="text-white/80 text-[0.85rem] mt-2">
+    ※ いただいた参考サイトは「雰囲気の方向性」を共有するためのもので、  
+    デザインをそのまま再現することは行っていません。
+  </li>
+</DetailBlock>
+
 
         <SectionTitle>SEO・初期設定</SectionTitle>
         <DetailBlock dense>
