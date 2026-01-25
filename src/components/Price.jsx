@@ -57,26 +57,28 @@ export default function Price() {
           ― 料金について（制作費の目安） ―
         </p>
 
-        {/* ===== Lead（思想は1回だけ） ===== */}
+        {/* ===== Lead（思想） ===== */}
         <p className="price-philosophy aq-fade delay-2">
           Webサイトは、<br />
           <span className="text-white/95">
-            ただ作って終わりの「看板」ではありません。
-          </span><br /><br />
-          お店やブランドの空気と価値を、  
-          静かに伝え続けるための大切な窓口です。
+            ただ作って終わりの“置物”ではありません。
+          </span>
+          <br /><br />
+          お店やサービスの良さを、  
+          <strong>誠実に、分かりやすく、長く伝え続ける窓口</strong>です。
+          そのために、構造と見た目の両方を丁寧に整えて制作しています。
         </p>
 
-        {/* ===== 安心文（短く・強く） ===== */}
+        {/* ===== 安心・透明性の提示 ===== */}
         <p className="price-lead aq-fade delay-3">
-          下記は制作料金の目安です。<br />
+          下記はあくまで目安の料金です。<br />
           <strong>
             制作前のヒアリングで内容を整理し、  
-            必ず事前に総額をお伝えします。
+            必ず「総額」「納品物」「進め方」を明確にお伝えします。
           </strong>
           <span className="price-lead-note">
             ※ 現在はポートフォリオ強化期間のため、  
-            初回の方は抑えた価格で対応しています。
+            初回の方は控えめな価格で制作しています。
           </span>
         </p>
 
@@ -85,35 +87,37 @@ export default function Price() {
 
           <PriceCard
             label="PLAN 01"
-            title="Landing Page"
+            title="Landing Page（1ページ）"
             price="¥60,000〜"
-            desc="キャンペーンやブランド紹介など、1ページで魅力を伝えたい方向け。必要な情報を上品に整理します。"
+            desc="キャンペーン・サービス紹介・ブランド紹介など、1ページで魅力を伝える構成。必要な情報を上品にまとめます。"
           />
 
           <PriceCard
             label="PLAN 02"
-            title="Small Website"
+            title="Small Website（小規模サイト）"
             price="¥120,000〜"
-            desc="カフェ・サロン・個人事業向け。トップページ＋2〜4ページ程度を想定し、必要な情報を上品に整理します。"
+            desc="カフェ・サロン・美容・個人事業向け。トップ＋2〜4ページを想定した、分かりやすく整ったサイト構成です。"
           />
 
           <PriceCard
             label="PLAN 03"
-            title="Brand Site"
+            title="Brand Site（世界観重視）"
             price="¥200,000〜"
-            desc="写真・色・文字・余白を統一し、ブランド全体の世界観を丁寧に設計します。トップページ＋4〜6ページ程度を想定し、情報と印象が矛盾しない構成に仕上げます。"
+            desc="写真・色・余白・文字の表情を揃え、ブランド全体の雰囲気を丁寧に設計。トップ＋4〜6ページほどを想定しています。"
           />
 
         </div>
 
-        {/* ===== 最終安心文 ===== */}
+        {/* ===== 追加ページ・柔軟性の案内 ===== */}
         <p className="price-note aq-fade delay-5">
-          ご相談内容に応じて、  
-          目的やご予算に合った最適な形をご提案します。<br />
-          <strong>制作途中で金額が変わることはありません。</strong>
+          追加ページや機能追加も、<br />
+          <strong>制作途中でも柔軟にご相談いただけます。</strong><br />
+          ご希望に合わせて最適な形をご提案しますので、遠慮なくお伝えください。
+          <br />
+          <strong>※ 制作途中で理由なく金額が変わることはありません。</strong>
         </p>
 
-  {/* CTA */}
+        {/* CTA */}
         <div className="price-cta aq-fade delay-6">
           <div className="mb-4 text-center">
             <Link
@@ -127,7 +131,6 @@ export default function Price() {
               料金の詳細を見る →
             </Link>
           </div>
-
         </div>
 
       </div>

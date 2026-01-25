@@ -39,38 +39,41 @@ export default function Philosophy() {
             mb-10 pl-1
           "
         >
-          ― 制作の考え方（デザインの方針） ―
+          ― 制作の考え方 ―
         </p>
 
         {/* 導入文 */}
         <p className="philo-lead aq-fade delay-2">
           私が大切にしているのは、<br />
           <span className="text-white/95">
-            “見やすさ” と “美しさ” が自然に両立したデザイン。
+            「見やすさ」と「伝わりやすさ」を軸にしたデザインです。
           </span>
           <br />
-         派手さよりも、
-伝えるべき情報が迷わず理解できる構造を重視しています。
+          どれだけデザインが綺麗でも、<br />
+          <strong className="text-white/90">
+            必要な情報が迷わず理解できなければ意味がありません。
+          </strong>
           <br /><br />
+          店舗・サロン・ハイエンドECなど、<br />
           <span className="text-white/80 text-[0.95em]">
-            それは結果として、
-            <strong> お店やサービスの魅力が正しく伝わり、<br className="hidden sm:block" />
-            判断しやすいサイト</strong>
-            につながります。
+            初めて来る人にも “安心して選んでもらえる” ことを最優先に考えています。
           </span>
         </p>
 
         {/* 本文 */}
         <p className="philo-body aq-fade delay-3">
-          情報をただ並べるだけでは、魅力は届きません。<br />
-          文字の強弱、余白、視線の流れ。<br />
-          それらを丁寧に整えることで、
-          サイト全体に“落ち着いた空気”が生まれます。<br /><br />
+          情報をただ並べるだけでは、良さは伝わりません。<br />
+          タイトルの強弱、行間、余白、視線の動き。<br />
+          それらを丁寧に整えることで、<br />
+          <span className="text-white/90">
+            店舗やサービスの魅力がまっすぐ届く設計
+          </span>
+          ができます。
+          <br /><br />
 
-          特別な装飾ではなく、
-          <span className="text-white/90"> 基本の積み重ね</span>
-          を大切にすること。<br />
-          それが、時間が経っても価値の下がらないデザインにつながると考えています。
+          派手な演出に頼らず、<br />
+          <span className="text-white/90">基本を徹底して積み重ねること。</span><br />
+          それが、時間が経っても価値の下がらないサイトをつくる一番の近道だと考えています。
         </p>
 
         {/* 三原則 */}
@@ -80,23 +83,23 @@ export default function Philosophy() {
             <h3 className="philo-subtitle">1. Order（秩序）</h3>
             <p className="philo-subtext">
               情報の優先順位を整理し、<br />
-              初めて訪れた人でも迷わず理解できる導線をつくる。
+              はじめて訪れた人でも迷わず理解できる導線をつくります。
             </p>
           </div>
 
           <div className="aq-fade delay-5">
             <h3 className="philo-subtitle">2. Tension（緊張）</h3>
             <p className="philo-subtext">
-              わずかな“間”やコントラストが、<br />
-              画面に心地よいリズムと集中を生む。
+              文字や余白のバランスを調整し、<br />
+              画面に自然なリズムと集中しやすい流れを作ります。
             </p>
           </div>
 
           <div className="aq-fade delay-6">
-            <h3 className="philo-subtitle">3. Silence（静寂）</h3>
+            <h3 className="philo-subtitle">3. Silence（静けさ）</h3>
             <p className="philo-subtext">
-              余白は空白ではなく、<br />
-              印象を整え、伝えたい部分を際立たせるための要素。
+              余白はただの空白ではなく、<br />
+              見やすさと品のある印象を生むための重要な要素です。
             </p>
           </div>
 
@@ -105,12 +108,12 @@ export default function Philosophy() {
         {/* 締め */}
         <p className="philo-last aq-fade delay-7">
           <span className="text-white/95">
-            見やすく、静かで、長く愛されるデザインを。
+            見やすく、わかりやすく、安心して読めるデザインを。
           </span>
           <br />
           <span className="text-white/80">
-            初めて訪れた人が「ここなら大丈夫そう」と感じられる空気を、<br className="hidden sm:block" />
-            設計から丁寧につくっています。
+            初めて訪れた人が「ここなら信頼できそう」と感じられるサイトを、<br className="hidden sm:block" />
+            設計から丁寧にお作りしています。
           </span>
         </p>
 

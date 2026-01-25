@@ -48,9 +48,9 @@ export default function About() {
             leading-[2.1] sm:leading-[2.2]
           "
         >
-          「テンプレっぽいのは嫌。でも、ハイブランドほど固くしたくない。」
+          「テンプレの雰囲気は嫌だけど、ハイブランドほど固くしたくない」  
           <br className="hidden sm:block" />
-          そんな<span className="text-white/95">“ちょうどいい上品さ”</span>を求める方へ向けて制作しています。
+          そんな<span className="text-white/95">“上品で落ち着いたデザイン”</span>を求める方へ向けて制作しています。
         </p>
 
         {/* 本文 */}
@@ -61,13 +61,14 @@ export default function About() {
             leading-[2.2] sm:leading-[2.3]
           "
         >
-          大切にしているのは、  
-          <span className="text-white/95">“見やすさ” と “印象の良さ” が自然に両立すること。</span><br />
-          サービス内容や強みが迷わず伝わるよう、構造や余白を丁寧に整えています。
+          私が一番大切にしているのは、  
+          <span className="text-white/95">「見やすさ」と「安心感」が自然に感じられること。</span><br />
+          どれだけデザインが綺麗でも、情報が読みにくければ意味がありません。
           <br /><br />
 
-          そのうえで、写真・色・文字の雰囲気を揃え、  
-          <span className="text-white/90">「なんかいい」</span>と感じてもらえる静かな世界観をつくっています。
+          そのうえで、写真・色・余白・文字の表情を揃えて、  
+          <span className="text-white/90">“静かで雰囲気のある世界観”</span>を作ります。  
+          ガチャガチャしない、落ち着いた心地よさのあるデザインを心がけています。
         </p>
 
         {/* 制作者紹介 */}
@@ -90,12 +91,15 @@ export default function About() {
             "
           >
             Designer / Front-end Creator<br />
-            沖縄を拠点に、ブランドサイト・カフェ・サロン・個人ビジネスなど、  
+            沖縄を拠点に、ブランドサイト・サロン・カフェ・個人ビジネスなど、  
             上品で“伝わる”Webサイトを制作しています。
             <br /><br />
 
-            デザインとコーディングを一体で考えることで、  
-            見た目だけで終わらず、使いやすさまで含めた設計を心がけています。
+            デザインと実装を一体で考えることで、  
+            <span className="text-white/90">
+              見た目だけで終わらず「使いやすさ」まで含めて完成させる
+            </span>
+            ことを大切にしています。
           </p>
         </div>
 
@@ -107,7 +111,7 @@ export default function About() {
               ・整列と余白を丁寧に扱う
             </h4>
             <p className="about-style-text">
-              距離感・配置・視線の流れを細かく整え、迷わず読める画面に仕上げます。
+              情報の“置き方”を整えることで、自然に読みやすく、落ち着いた画面になります。
             </p>
           </div>
 
@@ -116,7 +120,7 @@ export default function About() {
               ・写真と色の一貫性を大切にする
             </h4>
             <p className="about-style-text">
-              明るさ・色味・質感を揃え、ブランドの印象を自然に統一します。
+              世界観を崩さないために、明るさ・色味・質感を揃えて統一感を作ります。
             </p>
           </div>
 
@@ -125,7 +129,8 @@ export default function About() {
               ・動きは最小限で静かに美しく
             </h4>
             <p className="about-style-text">
-              過剰に動かさず、空気感を整えるためのアニメーションのみを使います。
+              過度なアニメーションは使わず、  
+              「呼吸するような自然な動き」だけを加えています。
             </p>
           </div>
 
@@ -134,7 +139,8 @@ export default function About() {
               ・デザインと技術をつなげる
             </h4>
             <p className="about-style-text">
-              コードで再現できる構造を前提に設計し、長く使えるサイトを作ります。
+              コードで再現できる設計を前提に、  
+              長く運用しやすい形で仕上げます。
             </p>
           </div>
 
@@ -150,9 +156,9 @@ export default function About() {
         >
           あなたのブランドやお店の“らしさ”を、  
           <span className="text-white/95">
-            上品で、伝わりやすい形
+            静かで上品なデザイン
           </span>
-          に整えます。
+          へと丁寧に翻訳します。
         </p>
 
       </div>

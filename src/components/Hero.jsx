@@ -11,7 +11,7 @@ export default function Hero() {
       <div className="absolute inset-0 overflow-hidden">
         <img
           src={hero}
-          alt="GUSHIKEN DESIGN｜店舗・サロン向けWeb制作"
+          alt="GUSHIKEN DESIGN｜美容・EC・店舗向けWeb制作"
           className="
             w-full h-full object-cover
             brightness-[1.05]
@@ -28,8 +28,8 @@ export default function Hero() {
       <div className="absolute inset-0 pointer-events-none">
         <div
           className="
-            absolute left-[12%] top-[28%]
-            w-[420px] h-[420px]
+            absolute left-[12%] top-[30%]
+            w-[430px] h-[430px]
             bg-[rgba(220,190,140,0.085)]
             blur-[150px]
             rounded-full
@@ -41,8 +41,8 @@ export default function Hero() {
       <div className="absolute inset-0 pointer-events-none mix-blend-screen">
         <div
           className="
-            absolute right-[14%] top-[20%]
-            w-[320px] h-[320px]
+            absolute right-[14%] top-[22%]
+            w-[330px] h-[330px]
             bg-[rgba(120,170,255,0.10)]
             blur-[160px]
             rounded-full
@@ -55,9 +55,9 @@ export default function Hero() {
       ===================== */}
       <div
         className="
-          absolute left-0 bottom-0 w-full h-[260px]
+          absolute left-0 bottom-0 w-full h-[240px]
           bg-gradient-to-t
-          from-[rgba(0,0,0,0.20)]
+          from-[rgba(0,0,0,0.24)]
           to-transparent
           pointer-events-none
         "
@@ -67,7 +67,7 @@ export default function Hero() {
           DUST PARTICLES
       ===================== */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        {[...Array(12)].map((_, i) => (
+        {[...Array(10)].map((_, i) => (
           <div
             key={i}
             className="
@@ -80,14 +80,14 @@ export default function Hero() {
               left: `${Math.random() * 100}%`,
               top: `${Math.random() * 100}%`,
               transform: `rotate(${Math.random() * 40 - 20}deg)`,
-              animationDelay: `${Math.random() * 8}s`,
+              animationDelay: `${Math.random() * 7.5}s`,
             }}
           />
         ))}
       </div>
 
       {/* =====================
-          TEXT
+          TEXT BLOCK
       ===================== */}
       <div
         className="
@@ -104,84 +104,93 @@ export default function Hero() {
             stylish-title
             text-white font-light
             leading-[1.12]
-            text-[2.1rem] md:text-[4.2rem]
-            tracking-[0.30em]
+            text-[2.15rem] md:text-[4.25rem]
+            tracking-[0.28em]
             mb-5
           "
         >
           GUSHIKEN<br />DESIGN
         </h1>
 
-        {/* LINE */}
+        {/* UNDERLINE */}
         <div
           className="
-            stylish-sub delay-[0.15s]
-            w-20 h-[1px] bg-white/60 mb-5
+            stylish-sub delay-[0.12s]
+            w-24 h-[1px] bg-white/60 mb-6
           "
         />
 
-        {/* COPY */}
-        <p
-          className="
-            stylish-sub delay-[0.32s]
-            text-white/90
-            text-[0.95rem] md:text-[1.15rem]
-            leading-relaxed
-            tracking-wide
-            max-w-md
-          "
-        >
-          {/* 翻訳レイヤー（即理解） */}
-          <span
-            className="
-              block mb-2
-              text-white/70
-              text-[0.75rem] md:text-[0.78rem]
-              tracking-[0.22em]
-            "
-          >
-            店舗・サロン・ブランド向け Web制作
-          </span>
+        {/* =====================
+            COPY BLOCK
+        ===================== */}
+{/* ▼ レイヤー2：感情（WHY：選ぶ理由） */}
+<p
+  className="
+    stylish-sub delay-[0.28s]
+    text-white/90
+    text-[0.95rem] md:text-[1.15rem]
+    leading-relaxed
+    tracking-wide
+    max-w-md
+    nowarp
+  "
+>
+  <span className="block">
+    他と同じデザインでは物足りない人へ。上品さと<br></br> </span><span className="block mt-1">
+  “伝わる構造”を両立させたWebサイトを制作します。
+  </span>
 
-          普通じゃ物足りない人のための、<br />
-          上品で“伝わるサイト制作”。
+  {/* ▼ レイヤー3：思想レイヤー */}
+  <span
+    className="
+      block mt-4
+      text-white/55
+      text-[0.82em]
+      tracking-[0.14em]
+    "
+  >
+    静けさを設計し、構造で届ける。  <br></br>
+    ―― 高品質ブランドのためのWebデザイン。
+  </span>
+</p>
 
-          {/* 思想レイヤー */}
-          <span
-            className="
-              block mt-4
-              text-white/60
-              text-[0.82em]
-              tracking-[0.14em]
-            "
-          >
-            世界観を設計し、構造で届けるWebデザイン
-          </span>
-        </p>
+<style>{`
+  /* ============================
+        nowarp（瞬間ワープ防止核）
+     ============================ */
+  .nowarp {
+    will-change: transform, opacity;
+    backface-visibility: hidden;
+    transform: translateZ(0);
+  }
+`}</style>
+
       </div>
 
       {/* =====================
           STYLES
       ===================== */}
       <style>{`
+        /* Background Float */
         @keyframes heroFloat {
           0%   { transform: scale(1.015) translate(0,0); }
           50%  { transform: scale(1.020) translate(4px,8px); }
           100% { transform: scale(1.015) translate(0,0); }
         }
 
+        /* Dust */
         @keyframes dustFloat {
           0%   { opacity: 0; transform: translateY(0) scale(0.8); }
-          35%  { opacity: 0.6; transform: translateY(-18px) scale(1); }
-          70%  { opacity: 0.3; transform: translateY(-28px) scale(1); }
-          100% { opacity: 0; transform: translateY(-40px) scale(0.9); }
+          35%  { opacity: 0.6; transform: translateY(-14px) scale(1); }
+          70%  { opacity: 0.3; transform: translateY(-24px) scale(1); }
+          100% { opacity: 0; transform: translateY(-36px) scale(0.9); }
         }
 
+        /* Title Reveal */
         .stylish-title {
           opacity: 0;
           transform: translateY(22px);
           filter: blur(6px);
-          letter-spacing: 0.42em;
           animation: titleReveal 1.4s cubic-bezier(.23,.7,.3,1) forwards;
         }
 
@@ -190,7 +199,7 @@ export default function Hero() {
             opacity: 0;
             transform: translateY(22px);
             filter: blur(6px);
-            letter-spacing: 0.42em;
+            letter-spacing: 0.40em;
           }
           40% {
             opacity: 1;
@@ -201,20 +210,20 @@ export default function Hero() {
             opacity: 1;
             transform: translateY(0);
             filter: blur(0);
-            letter-spacing: 0.30em;
+            letter-spacing: 0.28em;
             text-shadow: 0 2px 8px rgba(0,0,0,0.22);
           }
         }
 
+        /* Sub Reveal */
         .stylish-sub {
           opacity: 0;
-          transform: translate(14px,14px);
+          transform: translate(12px,14px);
           filter: blur(4px);
           animation: subFlow 1.25s cubic-bezier(.25,.46,.25,1) forwards;
         }
-
-        .stylish-sub.delay-\\[0\\.15s\\] { animation-delay: 0.15s; }
-        .stylish-sub.delay-\\[0\\.32s\\] { animation-delay: 0.32s; }
+        .stylish-sub.delay-\\[0\\.12s\\] { animation-delay: 0.12s; }
+        .stylish-sub.delay-\\[0\\.28s\\] { animation-delay: 0.28s; }
 
         @keyframes subFlow {
           to {

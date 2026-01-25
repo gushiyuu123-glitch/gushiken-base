@@ -106,12 +106,19 @@ export default function PriceDetail() {
           <li>残額は公開前にお支払いください。</li>
         </DetailBlock>
 
-        <SectionTitle main>注意事項</SectionTitle>
-        <DetailBlock>
-          <li>制作前に必ず総額を確定します。</li>
-          <li>納期目安：3〜6週間</li>
-          <li>短納期・価格最優先のご依頼には対応していません。</li>
-        </DetailBlock>
+{/* ===== 注意事項 ===== */}
+<SectionTitle main>注意事項</SectionTitle>
+<DetailBlock>
+  <li>制作前に必ず総額を確定します。</li>
+  <li>納期目安：3〜6週間</li>
+  <li>短納期・価格最優先のご依頼には対応していません。</li>
+<li>
+  完成後に「ページを追加したくなった」「サービスを増やしたい」場合も  
+  <span className="text-white/90">柔軟に対応できます。</span>
+  その際は、事前に必ず内容と費用を確認いただいてから進めます。
+</li>
+
+</DetailBlock>
 
         {/* ===== SUB SECTION ===== */}
         <SectionTitle>写真・ビジュアルについて</SectionTitle>
