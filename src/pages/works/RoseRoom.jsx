@@ -104,42 +104,50 @@ export default function RoseRoom() {
       {/* ===========================
           CTA
       =========================== */}
-      <div
-        className="
-          relative z-20 px-8 lg:px-32 py-24
-          flex flex-col md:flex-row
-          items-center justify-center
-          gap-8 md:gap-16
-        "
-      >
-          <a
-          href="https://rose-veil.vercel.app/"
-          target="_blank"
-          className="
-            text-[rgba(90,90,90,0.65)]
-            text-[0.9rem] md:text-[0.8rem]
-            tracking-[0.26em] md:tracking-[0.30em]
-            hover:text-[rgba(40,40,40,0.9)]
-            transition
-          "
-        >
-          香りの世界は、こちらから 
-        </a>
-        <Link
-          to="/works"
-          className="
-            text-[rgba(90,90,90,0.55)] 
-            text-[0.85rem] md:text-[0.75rem]
-            tracking-[0.26em] md:tracking-[0.30em]
-            hover:text-[rgba(60,60,60,0.9)]
-            transition
-          "
-        >
-           作品一覧へ戻る
-        </Link>
+<div
+  className="
+    relative z-20 px-8 lg:px-32 py-24
+    flex flex-col md:flex-row
+    items-center justify-center
+    gap-8 md:gap-16
+  "
+>
+  {/* 香りの世界リンク（薄ボタン感付与） */}
+  <a
+    href="https://rose-veil.vercel.app/"
+    target="_blank"
+    className="
+      text-[rgba(90,90,90,0.70)]
+      text-[0.9rem] md:text-[0.8rem]
+      tracking-[0.26em] md:tracking-[0.30em]
+      px-[6px] pb-[4px]          /* ← ボタンの気配（枠なし） */
+      border-b border-[rgba(90,90,90,0.18)]  /* ← 0.5px相当の薄膜ライン */
+      hover:text-[rgba(40,40,40,0.9)]
+      hover:border-[rgba(40,40,40,0.28)]
+      transition-all duration-300
+    "
+  >
+    香りの世界は、こちらから
+  </a>
 
-      
-      </div>
+  {/* 作品一覧へ戻る（弱めのボタン感） */}
+  <Link
+    to="/works"
+    className="
+      text-[rgba(90,90,90,0.60)]
+      text-[0.85rem] md:text-[0.75rem]
+      tracking-[0.26em] md:tracking-[0.30em]
+      px-[6px] pb-[4px]
+      border-b border-[rgba(90,90,90,0.14)]
+      hover:text-[rgba(60,60,60,0.9)]
+      hover:border-[rgba(60,60,60,0.26)]
+      transition-all duration-300
+    "
+  >
+    作品一覧へ戻る
+  </Link>
+</div>
+
     </main>
   );
 }
