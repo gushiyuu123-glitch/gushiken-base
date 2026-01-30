@@ -33,8 +33,7 @@ export default function RoseRoom() {
       ref={containerRef}
       className="relative min-h-screen overflow-hidden font-sans"
     >
-
-      {/* ===== ① Dior乳白ベースグラデ ===== */}
+      {/* ===== 背景：乳白 × ピンク気配 × 薄影 ===== */}
       <div
         aria-hidden
         className="
@@ -46,7 +45,6 @@ export default function RoseRoom() {
         "
       />
 
-      {/* ===== ② Rose Veil ピンクの気配（極薄） ===== */}
       <div
         aria-hidden
         className="
@@ -56,7 +54,6 @@ export default function RoseRoom() {
         "
       />
 
-      {/* ===== ③ Dior的薄い影（下部をわずかに締める） ===== */}
       <div
         aria-hidden
         className="
@@ -67,7 +64,6 @@ export default function RoseRoom() {
         "
       />
 
-      {/* ===== ④ 最薄ノイズ ===== */}
       <div
         aria-hidden
         className="
@@ -79,34 +75,55 @@ export default function RoseRoom() {
       {/* ===== HERO ===== */}
       <section className="rv-hero-section relative h-[200vh] flex items-center justify-center">
 
-        {/* ★ タイトルを最前面に移動（z-index:20） */}
+        {/* タイトル（最前面） */}
         <div
           className="
-            absolute z-20 bottom-[20vh] left-1/2 -translate-x-1/2
+            absolute z-20 left-1/2 -translate-x-1/2
+            bottom-[22vh] md:bottom-[20vh]
             text-center font-serif
+            px-6 md:px-0
           "
         >
-          <h1 className="text-[2.8rem] md:text-[3.6rem] tracking-[0.22em] font-light text-[rgba(55,55,55,0.88)] mb-6">
+          <h1
+            className="
+              text-[1.9rem] md:text-[3.6rem]
+              tracking-[0.16em] md:tracking-[0.22em]
+              font-light
+              text-[rgba(55,55,55,0.88)]
+              mb-4 md:mb-6
+            "
+          >
             ROSE VEIL — ROOM
           </h1>
 
-          <p className="text-[rgba(75,75,75,0.70)] text-[1rem] leading-relaxed max-w-xl mx-auto font-sans">
+          <p
+            className="
+              text-[0.9rem] md:text-[1rem]
+              leading-relaxed md:leading-[1.85]
+              text-[rgba(75,75,75,0.70)]
+              max-w-[85%] md:max-w-xl
+              mx-auto font-sans
+            "
+          >
             あえて飾らず、  
             ただそこに咲く花のように。  
             光と空気が、最初の気配だけを描く部屋。
           </p>
         </div>
 
-        {/* 自然光写真（タイトルより後ろ：z-10） */}
+        {/* 画像：PC/SP別サイズ */}
         <div className="sticky top-0 h-screen flex items-center justify-center z-10">
           <img
             src="/works1/rose-vein.png"
             alt="Rose Veil Room Visual"
             className="
               rv-hero-img
-              w-[40vw] max-w-[1050px] h-[82vh]
-              object-cover rounded-xl
+              object-cover
+              rounded-lg md:rounded-xl
               opacity-[0.98]
+
+              w-[88vw] h-[64vh]    /* SP */
+              md:w-[40vw] md:h-[82vh] md:max-w-[1050px] /* PC */
             "
           />
         </div>
@@ -114,10 +131,23 @@ export default function RoseRoom() {
       </section>
 
       {/* ===== CTA ===== */}
-      <div className="relative z-20 px-8 lg:px-32 py-32 flex justify-center gap-14 items-center">
+      <div
+        className="
+          relative z-20 px-8 lg:px-32 py-28
+          flex flex-col md:flex-row
+          items-center justify-center
+          gap-8 md:gap-14
+        "
+      >
         <Link
           to="/works"
-          className="text-[rgba(90,90,90,0.55)] text-[0.75rem] tracking-[0.30em] hover:text-[rgba(60,60,60,0.9)] transition"
+          className="
+            text-[rgba(90,90,90,0.55)] 
+            text-[0.85rem] md:text-[0.75rem]
+            tracking-[0.26em] md:tracking-[0.30em]
+            hover:text-[rgba(60,60,60,0.9)]
+            transition
+          "
         >
           ◀ 作品一覧へ戻る
         </Link>
@@ -125,7 +155,13 @@ export default function RoseRoom() {
         <a
           href="https://rose-veil.vercel.app/"
           target="_blank"
-          className="text-[rgba(90,90,90,0.65)] text-[0.8rem] tracking-[0.30em] hover:text-[rgba(40,40,40,0.9)] transition"
+          className="
+            text-[rgba(90,90,90,0.65)]
+            text-[0.9rem] md:text-[0.8rem]
+            tracking-[0.26em] md:tracking-[0.30em]
+            hover:text-[rgba(40,40,40,0.9)]
+            transition
+          "
         >
           香りの世界は、こちらから ▶
         </a>
