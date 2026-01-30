@@ -7,21 +7,24 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 gsap.registerPlugin(ScrollTrigger);
 
 export default function RoseRoom() {
-  const containerRef = useRef(null);
+  const imgRef = useRef(null);
 
+  /* -------------------------------
+     GSAP：画像の静かなスケール
+  --------------------------------*/
   useEffect(() => {
-    const img = document.querySelector(".rv-hero-img");
+    if (!imgRef.current) return;
 
     gsap.fromTo(
-      img,
+      imgRef.current,
       { scale: 1 },
       {
-        scale: 1.08,
+        scale: 1.05,
         ease: "none",
         scrollTrigger: {
-          trigger: ".rv-hero-section",
-          start: "top top",
-          end: "bottom+=1000 top",
+          trigger: imgRef.current,
+          start: "top center",
+          end: "bottom top",
           scrub: true,
         },
       }
@@ -29,38 +32,17 @@ export default function RoseRoom() {
   }, []);
 
   return (
-    <main
-      ref={containerRef}
-      className="relative min-h-screen overflow-hidden font-sans"
-    >
-      {/* ===== 背景：乳白 × ピンク気配 × 薄影 ===== */}
+    <main className="relative min-h-screen overflow-hidden font-sans">
+
+      {/* ===== 背景レイヤー ===== */}
       <div
         aria-hidden
         className="
           absolute inset-0 z-0 pointer-events-none
           bg-gradient-to-b
-          from-[rgba(255,255,255,1)]
-          via-[rgba(255,253,253,0.97)]
-          to-[rgba(245,240,242,0.92)]
-        "
-      />
-
-      <div
-        aria-hidden
-        className="
-          absolute inset-0 z-0 pointer-events-none
-          bg-[radial-gradient(circle_at_50%_15%,rgba(255,205,215,0.18),transparent_70%)]
-          mix-blend-lighten
-        "
-      />
-
-      <div
-        aria-hidden
-        className="
-          absolute inset-0 z-0 pointer-events-none
-          bg-gradient-to-b
-          from-transparent
-          to-[rgba(200,200,200,0.22)]
+          from-white
+          via-[rgba(255,248,250,0.95)]
+          to-[rgba(245,240,242,0.90)]
         "
       />
 
@@ -72,25 +54,33 @@ export default function RoseRoom() {
         "
       />
 
-      {/* ===== HERO ===== */}
-      <section className="rv-hero-section relative h-[200vh] flex items-center justify-center">
+      {/* ===========================
+          HERO 新構図（SP最適）
+      =========================== */}
+      <section className="relative pt-[10vh] pb-[6vh] flex flex-col items-center">
 
-        {/* タイトル（最前面） */}
-        <div
+        {/* 上部の縦長イメージ（中心） */}
+        <img
+          ref={imgRef}
+          src="/works1/rose-vein.png"
+          alt="Rose Veil Room Visual"
           className="
-            absolute z-20 left-1/2 -translate-x-1/2
-            bottom-[22vh] md:bottom-[20vh]
-            text-center font-serif
-            px-6 md:px-0
+            w-[100vw] h-auto
+            md:w-[38vw]
+            rounded-xl
+            opacity-[0.98]
           "
-        >
+        />
+
+        {/* タイトル（画像直下へ変更） */}
+        <div className="mt-10 text-center px-6 md:px-0">
           <h1
             className="
-              text-[1.9rem] md:text-[3.6rem]
+              font-serif
+              text-[2rem] md:text-[3.2rem]
               tracking-[0.16em] md:tracking-[0.22em]
-              font-light
-              text-[rgba(55,55,55,0.88)]
-              mb-4 md:mb-6
+              text-[rgba(55,55,55,0.9)]
+              mb-4
             "
           >
             ROSE VEIL — ROOM
@@ -98,61 +88,31 @@ export default function RoseRoom() {
 
           <p
             className="
-              text-[0.9rem] md:text-[1rem]
+              text-[0.95rem] md:text-[1.05rem]
               leading-relaxed md:leading-[1.85]
-              text-[rgba(75,75,75,0.70)]
-              max-w-[85%] md:max-w-xl
-              mx-auto font-sans
+              text-[rgba(75,75,75,0.72)]
+              max-w-[430px]
+              mx-auto
             "
           >
-            あえて飾らず、  
-            ただそこに咲く花のように。  
+            あえて飾らず、ただそこに咲く花のように。  
             光と空気が、最初の気配だけを描く部屋。
           </p>
         </div>
-
-        {/* 画像：PC/SP別サイズ */}
-        <div className="sticky top-0 h-screen flex items-center justify-center z-10">
-          <img
-            src="/works1/rose-vein.png"
-            alt="Rose Veil Room Visual"
-            className="
-              rv-hero-img
-              object-cover
-              rounded-lg md:rounded-xl
-              opacity-[0.98]
-
-              w-[88vw] h-[64vh]    /* SP */
-              md:w-[40vw] md:h-[82vh] md:max-w-[1050px] /* PC */
-            "
-          />
-        </div>
-
       </section>
 
-      {/* ===== CTA ===== */}
+      {/* ===========================
+          CTA
+      =========================== */}
       <div
         className="
-          relative z-20 px-8 lg:px-32 py-28
+          relative z-20 px-8 lg:px-32 py-24
           flex flex-col md:flex-row
           items-center justify-center
-          gap-8 md:gap-14
+          gap-8 md:gap-16
         "
       >
-        <Link
-          to="/works"
-          className="
-            text-[rgba(90,90,90,0.55)] 
-            text-[0.85rem] md:text-[0.75rem]
-            tracking-[0.26em] md:tracking-[0.30em]
-            hover:text-[rgba(60,60,60,0.9)]
-            transition
-          "
-        >
-          ◀ 作品一覧へ戻る
-        </Link>
-
-        <a
+          <a
           href="https://rose-veil.vercel.app/"
           target="_blank"
           className="
@@ -163,10 +123,23 @@ export default function RoseRoom() {
             transition
           "
         >
-          香りの世界は、こちらから ▶
+          香りの世界は、こちらから 
         </a>
-      </div>
+        <Link
+          to="/works"
+          className="
+            text-[rgba(90,90,90,0.55)] 
+            text-[0.85rem] md:text-[0.75rem]
+            tracking-[0.26em] md:tracking-[0.30em]
+            hover:text-[rgba(60,60,60,0.9)]
+            transition
+          "
+        >
+           作品一覧へ戻る
+        </Link>
 
+      
+      </div>
     </main>
   );
 }
