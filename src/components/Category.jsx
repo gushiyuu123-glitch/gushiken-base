@@ -1,33 +1,56 @@
 import React from "react";
 
-export default function Category({ title, subtitle, children, itemsRaw = [] }) {
+export default function Category({ title, subtitle, accent = false, children, itemsRaw = [] }) {
   const items = React.Children.toArray(children);
 
-  // ← これが最強に正確な NEW 判定
+  // NEW 判定（itemsRaw が最も正確）
   const hasNew = itemsRaw.some((i) => i.isNew === true);
 
+  /* ======================================================
+     PICK UP は完全に別扱い（黄金レイアウトのため）
+  ====================================================== */
   const getCardWidth = (category) => {
-const map = {
-  "BEAUTY / SALON": "w-[94%]",
-  "HOTEL / STAY": "w-[90%]",
-  "OUTDOOR / PRODUCT DESIGN": "w-[92%]", // 中庸・実在感
-  "FOOD / FURNITURE / BRAND": "w-[88%]",
-  "EC / BRAND DESIGN": "w-[82%]",
-  "ART / CREATIVE": "w-[96%]"
-};
+    const map = {
+      "PICK UP": "w-[88%]",                 // ← ここが特別。大きすぎず、最も上質に見える。
+      "BEAUTY / SALON": "w-[94%]",
+      "HOTEL / STAY": "w-[90%]",
+      "OUTDOOR / PRODUCT DESIGN": "w-[92%]",
+      "FOOD / FURNITURE / BRAND": "w-[88%]",
+      "EC / BRAND DESIGN": "w-[82%]",
+      "ART / CREATIVE": "w-[96%]"
+    };
 
     return map[category] || "w-[88%]";
   };
 
   return (
-    <section className="aq-fade w-full relative">
+    <section
+      className={`
+        aq-fade w-full relative
+        ${accent ? "pt-4 pb-10 bg-white/[0.02] rounded-xl" : ""}
+      `}
+    >
 
       {/* TITLE */}
       <div className="mb-12 relative">
-        <div className="w-12 h-px bg-gradient-to-r from-white/30 to-white/5 mb-6" />
+        {/* PICK UP は強調ライン強め */}
+        <div
+          className={`
+            h-px mb-6
+            ${accent
+              ? "w-20 bg-gradient-to-r from-amber-300/60 to-amber-200/10"
+              : "w-12 bg-gradient-to-r from-white/30 to-white/5"
+            }
+          `}
+        />
 
         <div className="flex items-center">
-          <h2 className="text-white text-[1.02rem] md:text-[1.15rem] font-light tracking-[0.22em]">
+          <h2
+            className={`
+              text-white font-light tracking-[0.22em]
+              ${accent ? "text-[1.18rem]" : "text-[1.02rem] md:text-[1.15rem]"}
+            `}
+          >
             {title}
           </h2>
 
@@ -48,49 +71,63 @@ const map = {
           )}
         </div>
 
-        <p className="text-white/38 text-[0.78rem] tracking-[0.14em] leading-relaxed mt-2">
+        <p
+          className={`
+            mt-2 leading-relaxed
+            tracking-[0.14em]
+            ${accent
+              ? "text-white/55 text-[0.86rem]"
+              : "text-white/38 text-[0.78rem]"
+            }
+          `}
+        >
           {subtitle}
         </p>
       </div>
 
-{/* SP 横スク（Noah Ultimate） */}
-<div className="sm:hidden w-full relative mb-20 pt-4">
-  {/* 縦スクロールの逃げ場 */}
-  <div className="relative px-1">
-    <div
-      className="
-        works-rail
-        flex
-        overflow-x-auto overflow-y-hidden
-        no-scrollbar
-        snap-x snap-mandatory
-        gap-5 px-4 py-4
-        overscroll-x-contain
-      "
-      style={{ WebkitOverflowScrolling: "touch" }}
-    >
-      {items.map((child, index) => (
-        <div
-          key={index}
-          className={`
-            works-card
-            flex-shrink-0
-            ${getCardWidth(title)}
-            ${index === 0 ? "snap-start is-first" : "snap-center"}
-          `}
-        >
-          {child}
+      {/* ======================================================
+          SP：横スクロール（PICK UP 対応）
+      ====================================================== */}
+      <div className="sm:hidden w-full relative mb-20 pt-4">
+        <div className="relative px-1">
+          <div
+            className="
+              works-rail
+              flex overflow-x-auto overflow-y-hidden
+              no-scrollbar snap-x snap-mandatory
+              gap-5 px-4 py-4
+              overscroll-x-contain
+            "
+            style={{ WebkitOverflowScrolling: "touch" }}
+          >
+            {items.map((child, index) => (
+              <div
+                key={index}
+                className={`
+                  works-card flex-shrink-0
+                  ${getCardWidth(title)}
+                  ${index === 0 ? "snap-start is-first" : "snap-center"}
+                `}
+              >
+                {child}
+              </div>
+            ))}
+          </div>
         </div>
-      ))}
-    </div>
-  </div>
-</div>
-
-
-      {/* PC GRID */}
-      <div className="hidden sm:grid grid-cols-2 xl:grid-cols-3 gap-x-12 gap-y-16">
-        {items}
       </div>
+
+      {/* ======================================================
+          PC GRID（PICK UP は 2列 → 余白多め）
+      ====================================================== */}
+      {accent ? (
+        <div className="hidden sm:grid grid-cols-2 gap-x-12 gap-y-16">
+          {items}
+        </div>
+      ) : (
+        <div className="hidden sm:grid grid-cols-2 xl:grid-cols-3 gap-x-12 gap-y-16">
+          {items}
+        </div>
+      )}
     </section>
   );
 }

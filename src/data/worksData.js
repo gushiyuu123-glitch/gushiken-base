@@ -1,6 +1,89 @@
 // src/data/worksData.js
 
 export const worksData = [
+  /* =========================================================
+   PICK UP  —  GUSHIKEN DESIGN（厳選作品）
+========================================================= */
+
+{
+  category: "PICK UP",
+  subtitle: "世界観の“核”を示す代表作",
+  accent: true, // ← 見た目で特別扱い可能（任意）
+  items: [
+    {
+      title: "ROSE VEIL — Fragrance Shampoo",
+      slug: "RoseRoom",
+      desc: "香り × 余白 × 世界観。ブランドECの完成形。",
+      link: "https://rose-veil.vercel.app/",
+      img: "/works/roseveil2.webp",
+      isNew: true,
+      createdAt: "2026-01-30",
+      tags: ["PICKUP", "EC", "Luxury", "Fragrance"]
+    },
+
+    {
+      title: "WHITE × DARK CACAO",
+      slug: "WhiteDarkCacao",
+      desc: "白 × カカオ × 静寂。高級食品ECの決定版。",
+      link: "https://white-dark-cacao.vercel.app",
+      img: "/works/white-dark-cacao.webp",
+      isNew: true,
+      createdAt: "2026-01-19",
+      tags: ["PICKUP", "Food", "EC", "White"]
+    },
+
+    {
+      title: "RÉSONANCE — Restaurant",
+      slug: "resonance",
+      desc: "時間 × 熱 × 静寂。“一夜の体験”をUIに落とした代表作。",
+      link: "https://resonance-restaurant.vercel.app/",
+      img: "/works/resonance.webp",
+      isNew: true,
+      createdAt: "2025-02-10",
+      tags: ["PICKUP", "Restaurant", "Black", "Cinematic"]
+    },
+
+    {
+      title: "SAKURAI CLINIC",
+      slug: "SakuraiDerm",
+      desc: "桜 × 静寂 × 美容医療。信頼と余白の最適化。",
+      link: "https://sakurai-clinic.vercel.app/",
+      img: "/works/sakurai.webp",
+      isNew: true,
+      createdAt: "2026-01-21",
+      tags: ["PICKUP", "Clinic", "Beauty"]
+    },
+
+    /* ------------------------------------------------------
+       ★ 追加：TAKUMI（建築 × 物質 × 構造デザイン）
+    ------------------------------------------------------ */
+    {
+      title: "TAKUMI — Architecture Studio",
+      slug: "TakumiRoom",
+      desc: "建築 × 物質 × 静けさ。陰影と構造の代表作。",
+      link: "https://takumi-ochre.vercel.app/",
+      img: "/assets/takumi.webp",
+      isNew: false,
+      createdAt: "2025-11-XX",
+      tags: ["PICKUP", "Architecture", "Concrete", "Shadow"]
+    },
+
+    /* ------------------------------------------------------
+       ★ 追加：AXIS（物体 × 造形 × 精密光）
+    ------------------------------------------------------ */
+    {
+      title: "AXIS — Object & Jewelry",
+      slug: "AxisRoom",
+      desc: "物質 × 光 × 造形美。静かな“精密世界観”を追求した作品。",
+      link: "https://axis-alpha-one.vercel.app/",
+      img: "/assets/axis.webp",
+      isNew: false,
+      createdAt: "2025-11-XX",
+      tags: ["PICKUP", "Object", "Luxury", "Shadow", "Minimal"]
+    }
+  ]
+},
+
   /* ----------------------------------------------------------
     BEAUTY / SALON
   ---------------------------------------------------------- */
@@ -387,6 +470,47 @@ export const worksData = [
           /* ==========================================
         NEW — WHITE × DARK CACAO（先頭）
     ========================================== */
+    {
+  title: "ROSE VEIL — Fragrance Shampoo",
+  slug: "RoseVeil",
+
+  desc: "香り × 余白 × 世界観。\n“香りの贅沢”を視覚で体験できるフレグランスシャンプーEC。",
+  link: "https://rose-veil.vercel.app/",
+  img: "/works/roseveil2.webp",
+
+  isNew: true,
+  createdAt: "2026-01-30",
+
+  tags: [
+    "NEW",
+    "香り",
+    "高見え",
+    "Fragrance",
+    "Luxury",
+    "EC",
+    "Branding",
+    "余白",
+    "光",
+    "GSAP",
+    "PC/SP 分離"
+  ],
+
+  detail: {
+    concept:
+      "“香りの贅沢”を視覚で届けるため、白・青・深紅の香りの輪郭を光と余白で再構築したECデザイン。香りの立ちのぼり、艶膜、静かな余韻を複数レイヤーで抽象化し、動き・質感・空気まで統合して設計。ECでありながらブランドサイトのような“体験の静けさ”を実現した。",
+    tech: [
+      "React",
+      "Vite",
+      "Tailwind",
+      "GSAP",
+      "IntersectionObserver",
+      "ContextAPI（Cart機能）",
+      "PC/SP 完全分離",
+      "microCMS（NEWS連携）"
+    ]
+  }
+},
+
     {
       title: "WHITE × DARK CACAO",
       slug: "WhiteDarkCacao",

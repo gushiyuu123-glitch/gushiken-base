@@ -24,20 +24,18 @@ export default function Works() {
   }, []);
 
   return (
- <section
-  id="works"
-  ref={worksRef}
-  className="
-    aq-fade
-    aq-root
-
-   pt-[12vh]
-    pb-[12vh]   // ← ここを少しだけ厚く
-    md:pt-[16vh]
-    md:pb-[16vh]
-  "
->
-
+    <section
+      id="works"
+      ref={worksRef}
+      className="
+        aq-fade
+        aq-root
+        pt-[12vh]
+        pb-[12vh]
+        md:pt-[16vh]
+        md:pb-[16vh]
+      "
+    >
       <div className="works-container">
         {/* =====================
             HEADER
@@ -58,56 +56,64 @@ export default function Works() {
             <span>SWIPE</span>
             <span className="arrow">→</span>
           </div>
-<div className="works-grid">
 
-  {/* 1番目 → 自動で BIG */}
-  <a
-    href="https://axis-alpha-one.vercel.app/"
-    target="_blank"
-    rel="noopener noreferrer"
-    className="work-card aq-fade delay-3"
-  >
-    <img src="/assets/axis.webp" alt="AXIS — Design Axis" loading="lazy" />
-    <div className="work-text">
-      <h3>AXIS</h3>
-      <p>A design axis for decision-making.</p>
-    </div>
-  </a>
+          <div className="works-grid">
 
-  {/* 2番目 → SMALL */}
-  <a
-    href="https://resonance-restaurant.vercel.app/"
-    target="_blank"
-    rel="noopener noreferrer"
-    className="work-card aq-fade delay-4"
-  >
-    <img src="/assets/resonance.webp" alt="RÉSONANCE Restaurant" loading="lazy" />
-    <div className="work-text">
-      <h3>RÉSONANCE</h3>
-      <p>Time × Heat × Silence.</p>
-    </div>
-  </a>
+            {/* 1番目 → ROSE VEIL（BIG） */}
+            <a
+              href="https://rose-veil.vercel.app/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="work-card aq-fade delay-3"
+            >
+              <img
+                src="/assets/roseveil2.webp"
+                alt="ROSE VEIL — Fragrance Shampoo EC"
+                loading="lazy"
+              />
+              <div className="work-text">
+                <h3>ROSE VEIL</h3>
+                <p>Fragrance × Luxury × Visual Air.</p>
+              </div>
+            </a>
 
-  {/* 3番目 → SMALL */}
-  <a
-    href="https://white-dark-cacao.vercel.app/"
-    target="_blank"
-    rel="noopener noreferrer"
-    className="work-card aq-fade delay-2"
-  >
-    <img src="/assets/1111.png" alt="WHITE × DARK CACAO" loading="lazy" />
-    <div className="work-text">
-      <h3>WHITE × DARK CACAO</h3>
-      <p>
-        Silence, margin, and restraint.
-        <br />
-        A chocolate brand shaped as a website.
-      </p>
-    </div>
-  </a>
+            {/* 2番目 → AXIS（SMALL） */}
+            <a
+              href="https://axis-alpha-one.vercel.app/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="work-card aq-fade delay-4"
+            >
+              <img
+                src="/assets/axis.webp"
+                alt="AXIS — A Design Axis for Structure & Logic"
+                loading="lazy"
+              />
+              <div className="work-text">
+                <h3>AXIS</h3>
+                <p>A design axis for decision-making.</p>
+              </div>
+            </a>
 
-</div>
+            {/* 3番目 → RÉSONANCE（SMALL） */}
+            <a
+              href="https://resonance-restaurant.vercel.app/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="work-card aq-fade delay-2"
+            >
+              <img
+                src="/assets/resonance.webp"
+                alt="RÉSONANCE — Restaurant Website Concept"
+                loading="lazy"
+              />
+              <div className="work-text">
+                <h3>RÉSONANCE</h3>
+                <p>Time × Heat × Silence.</p>
+              </div>
+            </a>
 
+          </div>
         </div>
 
         {/* =====================
@@ -118,7 +124,6 @@ export default function Works() {
             VIEW ALL WORKS
           </a>
 
-          {/* 補助コピー：AXIS文脈 */}
           <p
             className="
               mt-3
