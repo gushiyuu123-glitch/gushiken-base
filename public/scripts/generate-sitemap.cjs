@@ -8,7 +8,7 @@ const BASE_URL = "https://gushikendesign.com";
 
 // === worksData.js の読み込み ===
 // ESModuleを CJS から読み込むためのトリック
-const { worksData } = require("../src/data/worksData.js");
+const { worksData } = require("../../src/data/worksData.js");
 
 async function generateSitemap() {
   const sitemap = new SitemapStream({ hostname: BASE_URL });
