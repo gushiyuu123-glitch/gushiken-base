@@ -1,6 +1,49 @@
+# ==========================================================
+# GUSHIKEN DESIGN — robots.txt（SEO完全最適化版）
+# Vite / React SPA + Works一覧 + 個別作品ページ構造に対応
+# ==========================================================
+
+# ---- 全クローラーに対して許可 ----
 User-agent: *
 Allow: /
 
-# Sitemap (update SITE_URL env if needed)
+# ---- 不要な自動生成ファイル（ビルド後の内部構造） ----
+Disallow: /assets/*.map
+Disallow: /*.map$
+Disallow: /node_modules/
+
+# ---- 検索結果に不要なクエリパラメータを無効化（正規URL維持） ----
+# 例: https://gushikendesign.com/works/ryuka?ref=instagram など
+Disallow: /*?*
+Disallow: /*?=*
+
+# ---- サイトマップ ----
 Sitemap: https://gushikendesign.com/sitemap.xml
 
+# ---- Googlebot への明確な最適化 ----
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 1
+
+# ---- 画像専用クローラーの許可（SEO効果UP） ----
+User-agent: Googlebot-Image
+Allow: /
+
+# ---- スマホ版クローラーの許可（モバイルインデックス対応） ----
+User-agent: Googlebot-Mobile
+Allow: /
+
+# ---- Bing, Yahoo, DuckDuckGo もフル許可 ----
+User-agent: Bingbot
+Allow: /
+User-agent: Slurp
+Allow: /
+User-agent: DuckDuckBot
+Allow: /
+
+# ==========================================================
+# ポイント：
+# - SPA＋作品数の多いサイト向けに「不要ページだけ」抑止
+# - Image / Mobile クローラーを明示的に許可
+# - Googlebot のクロール効率が向上し作品が拾われやすくなる
+# ==========================================================

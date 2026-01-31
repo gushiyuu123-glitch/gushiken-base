@@ -20,7 +20,6 @@ export default function WorksList() {
     return diffDays <= 30;
   };
 
-  // worksData に isNew を付与
   const enrichedData = worksData.map((block) => ({
     ...block,
     items: block.items.map((item) => ({
@@ -29,14 +28,8 @@ export default function WorksList() {
     })),
   }));
 
-  /* ---------------------------------------------
-     カテゴリーリスト（NEW 追加）
-  --------------------------------------------- */
   const categoryList = ["ALL", "NEW", ...enrichedData.map((b) => b.category)];
 
-  /* ---------------------------------------------
-     表示データ生成
-  --------------------------------------------- */
   const filteredData =
     activeCategory === "ALL"
       ? enrichedData
@@ -53,7 +46,7 @@ export default function WorksList() {
       : enrichedData.filter((b) => b.category === activeCategory);
 
   /* ---------------------------------------------
-     PC ふわっと fade
+     PC fade
   --------------------------------------------- */
   useEffect(() => {
     const root = rootRef.current;
@@ -92,9 +85,6 @@ export default function WorksList() {
     return () => observer.disconnect();
   }, []);
 
-  /* ---------------------------------------------
-     タブ切り替え（スクロールトップ）
-  --------------------------------------------- */
   const handleChangeCategory = (cat) => {
     setActiveCategory(cat);
 
@@ -114,41 +104,102 @@ export default function WorksList() {
       "
     >
       {/* ======================================================
-          SEO STRUCTURED DATA
+          SEO STRUCTURED DATA（完全版）
       ====================================================== */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "ItemList",
-            "name": "GUSHIKEN DESIGN — Works Portfolio",
-            "itemListElement": worksData.flatMap((block) =>
-              block.items.map((item, index) => ({
-                "@type": "ListItem",
-                "position": index + 1,
-                "name": item.title,
-                "url": `https://gushikendesign.com/works/${item.slug}`,
-              }))
-            ),
-          }),
+          __html: JSON.stringify(
+            {
+              "@context": "https://schema.org",
+              "@graph": [
+                /* -----------------------------------------
+                   ① WebPage（/works ページの本体）
+                ----------------------------------------- */
+                {
+                  "@type": "WebPage",
+                  "@id": "https://gushikendesign.com/works#webpage",
+                  "url": "https://gushikendesign.com/works",
+                  "name": "Works — GUSHIKEN DESIGN",
+                  "description":
+                    "EC・美容・建築・ホテル・アート作品をまとめたポートフォリオ一覧。世界観 × 余白 × 静寂で設計された作品群。",
+                  "isPartOf": {
+                    "@id": "https://gushikendesign.com/#website"
+                  }
+                },
+
+                /* -----------------------------------------
+                   ② WebSite（ブランドの公式枠）
+                ----------------------------------------- */
+                {
+                  "@type": "WebSite",
+                  "@id": "https://gushikendesign.com/#website",
+                  "url": "https://gushikendesign.com/",
+                  "name": "GUSHIKEN DESIGN",
+                  "description":
+                    "世界観 × 余白 × 静寂を核に、EC・美容・建築・ホテル・アート領域を制作するデザインスタジオ。",
+                  "publisher": {
+                    "@id": "https://gushikendesign.com/#organization"
+                  }
+                },
+
+                /* -----------------------------------------
+                   ③ Organization（ブランド本体）
+                ----------------------------------------- */
+                {
+                  "@type": "Organization",
+                  "@id": "https://gushikendesign.com/#organization",
+                  "name": "GUSHIKEN DESIGN",
+                  "url": "https://gushikendesign.com/",
+                  "logo": {
+                    "@type": "ImageObject",
+                    "url": "https://gushikendesign.com/ogp/logo.png"
+                  }
+                },
+
+                /* -----------------------------------------
+                   ④ ItemList（作品一覧としてのSEO）
+                ----------------------------------------- */
+                {
+                  "@type": "ItemList",
+                  "name": "GUSHIKEN DESIGN — Works Portfolio",
+                  "itemListOrder": "Descending",
+                  "numberOfItems": worksData.reduce(
+                    (sum, block) => sum + block.items.length,
+                    0
+                  ),
+                  "itemListElement": worksData.flatMap((block) =>
+                    block.items.map((item, index) => ({
+                      "@type": "ListItem",
+                      "position": index + 1,
+                      "url": `https://gushikendesign.com/works/${item.slug}`,
+                      "name": item.title,
+                      "image": `https://gushikendesign.com${item.img.replace(
+                        "/works",
+                        "/ogp"
+                      )}`
+                    }))
+                  )
+                }
+              ]
+            }
+          )
         }}
       />
 
       {/* ---------------------------------------------
-          ★ ambient-glow（安全版）
+          ambient glow
       --------------------------------------------- */}
       <div
         className="ambient-glow"
         style={{
-          height: "1px",          // Safariバグ防止（絶対必要）
-          pointerEvents: "none",  // スクロール遮断防止
+          height: "1px",
+          pointerEvents: "none",
           position: "relative",
         }}
       ></div>
 
       <div ref={rootRef} className="max-w-6xl lg:max-w-7xl mx-auto">
-
         {/* TOP */}
         <div className="aq-fade mb-24 md:mb-28">
           <div className="w-12 h-px bg-gradient-to-r from-white/20 to-white/5 mb-6" />
@@ -161,24 +212,23 @@ export default function WorksList() {
             WORKS —<br className="md:hidden" />
             Portfolio
           </h1>
-<p className="mt-10 text-[0.85rem] md:text-[1rem] text-white/45 leading-relaxed max-w-xl tracking-[0.04em] aq-fade delay-2">
-  ブランドや店舗の魅力が、まっすぐ伝わるように作った作品をまとめています。<br></br><br></br>
-  世界観だけでなく、使いやすさや<br></br>“伝わり方”まで丁寧にデザインしました。
-</p>
 
- 
+          <p className="mt-10 text-[0.85rem] md:text-[1rem] text-white/45 leading-relaxed max-w-xl tracking-[0.04em] aq-fade delay-2">
+            ブランドや店舗の魅力が、まっすぐ伝わるように作った作品をまとめています。
+            <br /><br />
+            世界観だけでなく、使いやすさや
+            <br />“伝わり方”まで丁寧にデザインしました。
+          </p>
         </div>
 
         <div className="w-16 h-px bg-white/12 mb-16 aq-fade" />
 
-        {/* CATEGORY TABS */}
         <CategoryTabs
           activeCategory={activeCategory}
           setActiveCategory={handleChangeCategory}
           categoryList={categoryList}
         />
 
-        {/* LIST */}
         <div className="space-y-32">
           {filteredData.map((block) => (
             <div
@@ -211,15 +261,12 @@ export default function WorksList() {
         </div>
       </div>
 
-      {/* slideIn keyframes */}
       <style>{`
         @keyframes slideIn {
           0% { opacity: 0; transform: translateX(22px); }
           100% { opacity: 1; transform: translateX(0); }
         }
       `}</style>
-
-      
     </section>
   );
 }
