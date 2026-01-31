@@ -9,38 +9,83 @@ export default function Resonance() {
   return (
     <section className="bg-[#f8fafc] text-[#0e0e0e] min-h-screen pb-40">
 
-      {/* ================= JSON-LD ================= */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "CreativeWork",
-            "@id": "https://gushikendesign.com/works/resonance#creativework",
-            name: "RÉSONANCE｜Cinematic Restaurant Experience Design",
-            description:
-              "料理の温度変化をUIに翻訳した、静かなシネマティック・レストランLP。光・温度・静寂を軸に、余白と明度の密度だけで夜の深度を設計した体験型Webデザイン。",
-            creator: {
-              "@type": "Person",
-              name: "裕人 具志堅",
-              alternateName: "Yuto Gushiken",
-              url: "https://gushikendesign.com/",
-            },
-            publisher: {
-              "@type": "Organization",
-              name: "GUSHIKEN DESIGN",
-              url: "https://gushikendesign.com/",
-            },
-            inLanguage: "ja",
-            url: "https://gushikendesign.com/works/resonance",
-            isBasedOn: {
-              "@type": "WebSite",
-              name: "RÉSONANCE Restaurant Site",
-              url: "https://resonance-restaurant.vercel.app/",
-            },
-          }),
-        }}
-      />
+{/* =========================================
+    SEO / JSON-LD（RÉSONANCE）
+========================================= */}
+<script
+  type="application/ld+json"
+  dangerouslySetInnerHTML={{
+    __html: JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "CreativeWork",
+      "@id": "https://gushikendesign.com/works/resonance#creativework",
+      "name": "RÉSONANCE｜Cinematic Restaurant Experience Design",
+      "alternateName": "レゾナンス — 温度 × 静寂 × 夜の深度デザイン",
+      "description":
+        "料理の“温度変化”をUIに翻訳した、静かなシネマティック・レストランLP。光・温度・余白・夜の深度を軸に、視線がゆっくり漂うUXを React / Vite / Tailwind / GSAP で設計した作品。",
+      "inLanguage": "ja",
+      "url": "https://gushikendesign.com/works/resonance",
+      "image": [
+        "https://gushikendesign.com/works/resonance/ogp.png",
+        "/works1/resonance-hero1.png",
+        "/works1/resonance1.png",
+        "/works1/resonance2.png",
+        "/works1/resonance3.png"
+      ],
+      "creator": {
+        "@type": "Person",
+        "name": "裕人 具志堅",
+        "alternateName": "Yuto Gushiken",
+        "url": "https://gushikendesign.com/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "GUSHIKEN DESIGN",
+        "url": "https://gushikendesign.com/"
+      },
+      "about": [
+        "シネマティック LP",
+        "レストラン Webデザイン",
+        "料理の温度変化 UI",
+        "光 × 影の深度設計",
+        "静寂 UX",
+        "高級飲食店サイト",
+        "React Design",
+        "Vite / Tailwind CSS",
+        "GSAP Motion",
+        "PC/SP DOM 分離"
+      ],
+      "isBasedOn": {
+        "@type": "WebSite",
+        "name": "RÉSONANCE Restaurant Site",
+        "url": "https://resonance-restaurant.vercel.app/"
+      }
+    })
+  }}
+/>
+
+{/* =========================================
+    OGP（SNS）
+========================================= */}
+<meta property="og:title" content="RÉSONANCE — Cinematic Restaurant LP" />
+<meta
+  property="og:description"
+  content="料理の“温度変化”をUIに翻訳した、静かなシネマティック・レストランLP。"
+/>
+<meta
+  property="og:image"
+  content="https://gushikendesign.com/works/resonance/ogp.png"
+/>
+<meta property="og:type" content="website" />
+
+{/* =========================================
+    META（Google）
+========================================= */}
+<meta
+  name="description"
+  content="RÉSONANCE は、料理の温度変化・光の密度・夜の深度を UI に翻訳した静かなシネマティックレストランLP。視線の速度と余白を軸に、世界観を崩さない体験型Webデザイン。"
+/>
+<meta name="twitter:card" content="summary_large_image" />
 
       {/* =========================================================
           HERO — White × Cinematic Silence

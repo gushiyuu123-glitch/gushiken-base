@@ -17,44 +17,63 @@ export default function Shigure() {
         overflow-hidden
       "
     >
-      {/* =========================
-          JSON-LD（SEO / 作品説明）
-      ========================= */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "CreativeWork",
-            name: "時雨｜Conceptual Ryokan Website",
-            alternateName: "SHIGURE — Conceptual Ryokan",
-            description:
-              "旅館という題材を用い、時間・余白・静寂をUI/UXとして再構築したコンセプトWebサイト。情報訴求ではなく、体験の進行そのものを設計対象とした実験的作品。",
-            url: "https://shigure.vercel.app/",
-            image: "https://shigure.vercel.app/ogp.png",
-            inLanguage: "ja",
-            genre: ["Web Design", "UI/UX", "Conceptual Website"],
-            keywords: [
-              "旅館 Webデザイン",
-              "コンセプトサイト",
-              "静寂 UI",
-              "余白 設計",
-              "PC SP 完全分離"
-            ],
-            creator: {
-              "@type": "Person",
-              name: "裕人 具志堅",
-              alternateName: "Yuto Gushiken",
-              url: "https://gushikendesign.com/"
-            },
-            publisher: {
-              "@type": "Organization",
-              name: "GUSHIKEN DESIGN",
-              url: "https://gushikendesign.com/"
-            }
-          })
-        }}
-      />
+{/* =========================================
+      SEO / JSON-LD（SHIGURE）
+========================================= */}
+<script
+  type="application/ld+json"
+  dangerouslySetInnerHTML={{
+    __html: JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "CreativeWork",
+      "@id": "https://shigure.vercel.app/",
+      name: "SHIGURE｜Conceptual Ryokan Website",
+      alternateName: "時雨 — 旅館コンセプトサイト",
+      url: "https://shigure.vercel.app/",
+      inLanguage: "ja",
+      description:
+        "“時間・余白・静寂” を主題とした旅館コンセプトサイト。世界観の体験進行そのものを設計し、情報ではなく感情の流れで読ませるSXデザイン。",
+      image: "https://shigure.vercel.app/ogp.png",
+      genre: ["Web Design", "UI/UX", "Conceptual Website"],
+      keywords: [
+        "旅館 Webデザイン",
+        "静寂 UI",
+        "余白 設計",
+        "世界観デザイン",
+        "PC SP 完全分離"
+      ],
+      creator: {
+        "@type": "Organization",
+        name: "GUSHIKEN DESIGN"
+      },
+      publisher: {
+        "@type": "Organization",
+        name: "GUSHIKEN DESIGN"
+      }
+    })
+  }}
+/>
+
+{/* =========================================
+      OGP（SNS / 外部サービス向け）
+========================================= */}
+<meta property="og:title" content="SHIGURE｜Conceptual Ryokan Website" />
+<meta
+  property="og:description"
+  content="旅館 × 時間 × 余白 × 静寂。Web上で“滞在の静けさ”を再構築したコンセプト作品。"
+/>
+<meta property="og:image" content="https://shigure.vercel.app/ogp.png" />
+<meta property="og:type" content="website" />
+
+{/* =========================================
+      META（Google向け）
+========================================= */}
+<meta
+  name="description"
+  content="時間・余白・静寂を軸に、旅館の価値をUI/UXとして翻訳したコンセプトサイト。スクロールの緩急・視線誘導・世界観の密度を精密に設計した作品。"
+/>
+<meta name="twitter:card" content="summary_large_image" />
+
 {/* ==================================================
     HERO
 ================================================== */}

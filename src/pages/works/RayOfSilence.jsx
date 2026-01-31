@@ -16,34 +16,46 @@ export default function RayOfSilence() {
 
   return (
     <section className="bg-[#f5f6f6] text-[#1e1e1e]">
+<script
+  type="application/ld+json"
+  dangerouslySetInnerHTML={{
+    __html: JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "CreativeWork",
+      "@id": "https://gushikendesign.com/works/ray-of-silence#creativework",
+      name: "Ray of Silence｜Concept Website",
+      description:
+        "光と静寂をテーマにした建築コンセプトWebサイト。余白・光の入り方・明度の密度で“時間の深度”を設計した SX（Silence Experience）デザイン。",
+      inLanguage: "ja",
+      url: "https://gushikendesign.com/works/ray-of-silence",
+      image: [
+        "https://gushikendesign.com/works1/ray-hero.png",
+        "https://gushikendesign.com/works1/ray_light.png",
+        "https://gushikendesign.com/works1/ray_room_b.png"
+      ],
+      creator: {
+        "@type": "Person",
+        name: "具志堅裕人",
+        alternateName: "Yuto Gushiken",
+        url: "https://gushikendesign.com/"
+      },
+      publisher: {
+        "@type": "Organization",
+        name: "GUSHIKEN DESIGN",
+        url: "https://gushikendesign.com/"
+      },
+      genre: [
+        "Web Design",
+        "Architectural Concept",
+        "Silent UX",
+        "React",
+        "Vite",
+        "Tailwind"
+      ]
+    }),
+  }}
+/>
 
-      {/* =========================
-         JSON-LD
-      ========================= */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "CreativeWork",
-            name: "Ray of Silence｜Concept Website",
-            description:
-              "光と静寂をテーマにした建築コンセプトWebサイト。最小限の構成で、時間の流れと余白を体験させるSX設計。",
-            creator: {
-              "@type": "Person",
-              name: "裕人 具志堅",
-              alternateName: "Yuto Gushiken",
-              url: "https://gushikendesign.com/",
-            },
-            publisher: {
-              "@type": "Organization",
-              name: "GUSHIKEN DESIGN",
-            },
-            inLanguage: "ja",
-            url: "https://ray-of-silence.vercel.app/",
-          }),
-        }}
-      />
 
       {/* =========================
          HERO

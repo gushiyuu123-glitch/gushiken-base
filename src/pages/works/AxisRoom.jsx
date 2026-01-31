@@ -6,19 +6,10 @@ export default function AxisRoom() {
   return (
     <main className="relative min-h-screen bg-black text-white overflow-hidden">
 
-      {/* =====================================
-          背景（冷黒 × 無光金属のグラデ）
-      ===================================== */}
-      {/* 層1：空気の黒 */}
-      <div
-        aria-hidden
-        className="
-          absolute inset-0 z-0
-          bg-[rgba(7,7,7,0.96)]
-        "
-      />
-
-      {/* 層2：金属の“冷たさ”を持つ黒膜 */}
+      {/* ============================
+          背景（冷黒 × 金属膜 × ノイズ）
+      ============================ */}
+      <div aria-hidden className="absolute inset-0 z-0 bg-[rgba(7,7,7,0.96)]" />
       <div
         aria-hidden
         className="
@@ -29,8 +20,6 @@ export default function AxisRoom() {
           to-[rgba(5,5,5,1)]
         "
       />
-
-      {/* 層3：工業ノイズ（粒度をさらに精密化） */}
       <div
         aria-hidden
         className="
@@ -41,29 +30,20 @@ export default function AxisRoom() {
         "
       />
 
-      {/* =====================================
-          Main Container
-      ===================================== */}
-      <section className="relative z-10 px-6 lg:px-24 py-24">
+      {/* ============================
+          Main — 中央寄せレイアウト
+      ============================ */}
+      <section
+        className="
+          relative z-10
+          px-6 lg:px-24 py-24
+          flex flex-col
+          items-center
+          text-center
+        "
+      >
 
-        {/* Back */}
-        <div className="mb-14">
-          <Link
-            to="/works"
-            className="
-              text-white/45 text-[0.78rem]
-              tracking-[0.28em]
-              hover:text-white/80
-              transition-all duration-300
-            "
-          >
-            ← BACK TO WORKS
-          </Link>
-        </div>
-
-        {/* =====================================
-            Title — 金属“線”の張りを typographic に翻訳
-        ===================================== */}
+        {/* Title */}
         <h1
           className="
             font-serif
@@ -77,15 +57,14 @@ export default function AxisRoom() {
           AXIS — ROOM
         </h1>
 
-        {/* =====================================
-            Lead Copy — 線 × 物質 × 無音 の精密表現
-        ===================================== */}
+        {/* Lead Copy */}
         <p
           className="
             text-white/50
             text-[1.02rem] md:text-[1.10rem]
             leading-[1.86] md:leading-[1.96]
             max-w-[560px]
+            mx-auto
           "
         >
           物質が持つ“線の緊張”を静かに整える部屋。  
@@ -93,9 +72,32 @@ export default function AxisRoom() {
           工業的な精密さを、音のない空気の中で観察するための空間です。
         </p>
 
-        {/* =====================================
-            External Link — 金属線のUI（精度を最大化）
-        ===================================== */}
+        {/* ============================
+            ★ Image Slot（縦スリット1枚）
+        ============================ */}
+        <div
+          className="
+            mt-20
+            w-full
+            max-w-[880px]
+            select-none
+          "
+        >
+          <img
+            src="/works1/axis-hero.png"
+            alt="AXIS industrial minimal visual"
+            className="
+              w-full h-auto
+              object-cover
+              opacity-[0.92]
+              rounded-[4px]
+             
+             
+            "
+          />
+        </div>
+
+        {/* External Link */}
         <a
           href="https://axis-alpha-one.vercel.app/"
           target="_blank"
@@ -111,8 +113,23 @@ export default function AxisRoom() {
             transition-all duration-300
           "
         >
-          ▶ AXIS（デモサイトを見る）
+           AXIS（デモサイトを見る）
         </a>
+                {/* Back */}
+        <div className="mb-14 mt-10 w-full">
+          <Link
+            to="/works"
+            className="
+              text-white/45 text-[0.78rem]
+              tracking-[0.28em]
+              hover:text-white/80
+              transition-all duration-300
+            "
+          >
+             BACK TO WORKS
+          </Link>
+        </div>
+
       </section>
     </main>
   );

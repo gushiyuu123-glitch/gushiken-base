@@ -1,84 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-
-  <!-- ============================
-       TOP / STATIC PAGES
-  ============================ -->
   <url>
-    <loc>https://gushikendesign.com/</loc>
-    <lastmod>2025-01-26</lastmod>
+    <loc>https://gushikendesign.com/
+    </loc>
   </url>
-
   <url>
-    <loc>https://gushikendesign.com/works</loc>
-    <lastmod>2025-01-26</lastmod>
+    <loc>https://gushikendesign.com/works
+    </loc>
   </url>
-
   <url>
-    <loc>https://gushikendesign.com/price</loc>
-    <lastmod>2025-01-26</lastmod>
+    <loc>https://gushikendesign.com/price
+    </loc>
   </url>
-
   <url>
-    <loc>https://gushikendesign.com/contact</loc>
-    <lastmod>2025-01-26</lastmod>
+    <loc>https://gushikendesign.com/contact
+    </loc>
   </url>
-
-  <!-- ============================
-       FEATURED WORKS
-  ============================ -->
-  <url><loc>https://gushikendesign.com/works/ryuka</loc><lastmod>2025-01-26</lastmod></url>
-  <url><loc>https://gushikendesign.com/works/noirlux</loc><lastmod>2025-01-26</lastmod></url>
-  <url><loc>https://gushikendesign.com/works/okinawa-white-spa</loc><lastmod>2025-01-26</lastmod></url>
-
-  <!-- ============================
-       EC / BRAND DESIGN
-  ============================ -->
-  <url><loc>https://gushikendesign.com/works/roseveil</loc></url>
-  <url><loc>https://gushikendesign.com/works/rosewhite</loc></url>
-  <url><loc>https://gushikendesign.com/works/roseblue</loc></url>
-  <url><loc>https://gushikendesign.com/works/inkspring</loc></url>
-  <url><loc>https://gushikendesign.com/works/noir-room</loc></url>
-
-  <!-- ============================
-       HOTEL
-  ============================ -->
-  <url><loc>https://gushikendesign.com/works/BlueShoreHotel</loc></url>
-  <url><loc>https://gushikendesign.com/works/Shigure</loc></url>
-  <url><loc>https://gushikendesign.com/works/OkinawaLightResortHotel</loc></url>
-  <url><loc>https://gushikendesign.com/works/HorizonBlanc</loc></url>
-  <url><loc>https://gushikendesign.com/works/TheCalmOkinawa</loc></url>
-
-  <!-- ============================
-       FOOD / FURNITURE / BRAND
-  ============================ -->
-  <url><loc>https://gushikendesign.com/works/resonance</loc></url>
-  <url><loc>https://gushikendesign.com/works/Kansei</loc></url>
-  <url><loc>https://gushikendesign.com/works/CapeOkinawa</loc></url>
-  <url><loc>https://gushikendesign.com/works/OkiLato</loc></url>
-  <url><loc>https://gushikendesign.com/works/AburiyaItto</loc></url>
-  <url><loc>https://gushikendesign.com/works/Koti</loc></url>
-  <url><loc>https://gushikendesign.com/works/ActiveDays</loc></url>
-  <url><loc>https://gushikendesign.com/works/FineOkinawa</loc></url>
-
-  <!-- ============================
-       OUTDOOR / PRODUCT DESIGN
-  ============================ -->
-  <url><loc>https://gushikendesign.com/works/ReCamp</loc></url>
-
-  <!-- ============================
-       ART / CREATIVE
-  ============================ -->
-  <url><loc>https://gushikendesign.com/works/VIVA</loc></url>
-  <url><loc>https://gushikendesign.com/works/GoldenVeil</loc></url>
-  <url><loc>https://gushikendesign.com/works/RyukaIntro</loc></url>
-  <url><loc>https://gushikendesign.com/works/FlowOfTea</loc></url>
-  <url><loc>https://gushikendesign.com/works/RayOfSilence</loc></url>
-
-  <!-- ============================
-       ARCHITECTURE / MATERIAL
-  ============================ -->
-  <url><loc>https://gushikendesign.com/works/TakumiRoom</loc></url>
-  <url><loc>https://gushikendesign.com/works/AxisRoom</loc></url>
-
 </urlset>

@@ -16,41 +16,50 @@ export default function ReCamp() {
         background: "linear-gradient(180deg,#22221f 0%,#1a1a18 100%)",
       }}
     >
-      {/* ============================
-          JSON-LD（SEO）
-      ============================ */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "CreativeWork",
-            "@id": "https://gushikendesign.com/works/recamp#creativework",
-            name: "Re:Camp — Outdoor Gear Studio | Brand Concept Web Design",
-            inLanguage: "ja",
-            url: "https://gushikendesign.com/works/recamp",
-            description:
-              "Re:Camp は、“焚き火のあとの静けさ”を起点に、道具の距離感・空気・余韻を視覚体験として再構成したアウトドア系ブランドのコンセプトワーク。情報訴求ではなく、触れた後に残る感覚を中心に設計された前座ページ。",
-            creator: {
-              "@type": "Person",
-              name: "具志堅 裕人",
-              alternateName: "Yuto Gushiken",
-              url: "https://gushikendesign.com/",
-            },
-            publisher: {
-              "@type": "Organization",
-              name: "GUSHIKEN DESIGN",
-              url: "https://gushikendesign.com/",
-            },
-            isBasedOn: {
-              "@type": "WebSite",
-              name: "Re:Camp Official Site",
-              url: "https://recamp-site.vercel.app/",
-            },
-            genre: ["Web Design", "Brand Experience", "Outdoor Concept"],
-          }),
-        }}
-      />
+<script
+  type="application/ld+json"
+  dangerouslySetInnerHTML={{
+    __html: JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "CreativeWork",
+      "@id": "https://gushikendesign.com/works/recamp#creativework",
+      name: "Re:Camp — Outdoor Gear Studio | Brand Concept Web Design",
+      inLanguage: "ja",
+      url: "https://gushikendesign.com/works/recamp",
+      description:
+        "Re:Camp は、“焚き火のあとの静けさ”を起点に、アウトドアギアの距離感・温度・余韻を体験に翻訳したブランドコンセプトWebデザイン。情報訴求ではなく、触れたあとの感覚を中心に構成した前座ページ。",
+      image: [
+        "https://gushikendesign.com/works1/Camp.png",
+        "https://gushikendesign.com/works1/mori.png"
+      ],
+      creator: {
+        "@type": "Person",
+        name: "具志堅 裕人",
+        alternateName: "Yuto Gushiken",
+        url: "https://gushikendesign.com/"
+      },
+      publisher: {
+        "@type": "Organization",
+        name: "GUSHIKEN DESIGN",
+        url: "https://gushikendesign.com/"
+      },
+      isBasedOn: {
+        "@type": "WebSite",
+        name: "Re:Camp Official Site",
+        url: "https://recamp-site.vercel.app/"
+      },
+      genre: [
+        "Web Design",
+        "Outdoor Concept",
+        "Brand Experience",
+        "React",
+        "Vite",
+        "Tailwind"
+      ]
+    })
+  }}
+/>
+
 
       {/* ===============================
           FIXED 背景（森の奥 / 記憶として残る層）

@@ -1,74 +1,80 @@
 // src/pages/works/TakumiRoom.jsx
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 
 export default function TakumiRoom() {
-  return (
-    <main className="relative min-h-screen bg-[#050504] text-white overflow-hidden">
+  useEffect(() => window.scrollTo(0, 0), []);
 
-      {/* =====================================
-          背景（建築の“深度”を作る3層黒膜）
-      ===================================== */}
-      {/* 1層目：空気の黒 */}
+  return (
+    <main
+      className="
+        relative min-h-screen text-white overflow-hidden
+        bg-cover bg-center lg:bg-left
+      "
+      style={{
+        backgroundImage: "url('/works1/philosophy-bg.png')",
+      }}
+    >
+
+      {/* ======== 黒膜（明るめに変更） ======== */}
       <div
         aria-hidden
         className="
           absolute inset-0 z-0
-          bg-[rgba(8,7,6,0.96)]
+          bg-[rgba(0,0,0,0.28)]     /* ← 0.52 → 0.28 に改善 */
+          backdrop-blur-[1px]
         "
       />
 
-      {/* 2層目：素材の黒（マット感） */}
+      {/* ======== 光膜（明るさ補正の新設レイヤー） ======== */}
       <div
         aria-hidden
         className="
           absolute inset-0 z-0
           bg-gradient-to-b
-          from-[rgba(10,9,8,0.92)]
-          via-[rgba(14,13,12,0.94)]
-          to-[rgba(6,5,4,0.94)]
+          from-[rgba(255,255,255,0.06)]
+          via-[rgba(255,255,255,0.04)]
+          to-transparent
+          pointer-events-none
         "
       />
 
-      {/* 3層目：粒子（建築素材の“微振動”） */}
+      {/* ======== 横の光スリット（建築の光の再現） ======== */}
       <div
         aria-hidden
         className="
           absolute inset-0 z-0
-          opacity-[0.028]
-          bg-[url('/grain/noise-soft.png')] bg-cover bg-center
+          bg-gradient-to-r
+          from-transparent
+          via-[rgba(255,255,255,0.07)]
+          to-transparent
+          mix-blend-screen
         "
       />
 
-      {/* =====================================
-          Main Container
-      ===================================== */}
-      <section className="relative z-10 px-6 lg:px-24 py-24">
+      {/* ======== CONTENT（中央寄せ） ======== */}
+      <section
+        className="
+          relative z-20 
+          px-6 py-20
+          lg:px-0
+          lg:py-28
+          mx-auto
+          w-full
+          lg:max-w-[880px]
+          text-center
+        "
+      >
 
-        {/* Back */}
-        <div className="mb-14">
-          <Link
-            to="/works"
-            className="
-              text-white/45 text-[0.78rem]
-              tracking-[0.28em]
-              hover:text-white/80
-              transition-all duration-300
-            "
-          >
-            ← BACK TO WORKS
-          </Link>
-        </div>
-
-        {/* =====================================
-            Title — 建築雑誌の“見出し構造”
-        ===================================== */}
+        {/* =====================
+            TITLE
+        ====================== */}
         <h1
           className="
             font-serif
-            text-[2.45rem] md:text-[3.15rem]
-            tracking-[0.22em] md:tracking-[0.25em]
-            text-white/95
+            text-[2.6rem] md:text-[3.4rem]
+            tracking-[0.22em]
+            text-white/98     /* ← ↑明るく */
             mb-10
             select-none
           "
@@ -76,42 +82,109 @@ export default function TakumiRoom() {
           TAKUMI — ROOM
         </h1>
 
-        {/* =====================================
-            Lead — 建築 × 空気 × 下地の翻訳
-        ===================================== */}
+        {/* =====================
+            LEAD
+        ====================== */}
         <p
           className="
-            text-white/50
-            text-[1.02rem] md:text-[1.12rem]
-            leading-[1.88] md:leading-[1.98]
-            max-w-[560px]
+            text-white/70          /* ← 55 → 70 にアップ */
+            text-[1.05rem] md:text-[1.18rem]
+            leading-[1.95] md:leading-[2.05]
+            mx-auto
+            max-w-[650px]
+            mb-20
           "
         >
-          建築物のように、光と影の“骨格”を丁寧に整える部屋。  
-          形そのものではなく、構造・動線・余白が生む  
-          “下地の美しさ”を静かに確認するための空間です。
+          建築物を構成するのは“形”ではなく、
+          光の入り方、影の落ち方、下地が持つ“骨格の美しさ”。  
+          TAKUMI — ROOM は、その「構造の静寂」を  
+          Webの中で丁寧に確かめるための部屋。
         </p>
 
-        {/* =====================================
-            External Link — 建築の細い線（緊張のUI）
-        ===================================== */}
-        <a
-          href="https://takumi-ochre.vercel.app/"
-          target="_blank"
-          rel="noopener noreferrer"
+        {/* =====================
+            VISUAL BLOCK（中央）
+        ====================== */}
+        <div className="relative mb-20 flex justify-center">
+          <img
+            src="/works1/philosophy-bg2.png"
+            alt="TAKUMI architectural texture"
+            className="
+              w-full max-w-[900px]
+              rounded-[18px]
+              opacity-[0.96]
+            "
+          />
+
+          {/* 中央白スリット（そのまま） */}
+          <div
+            aria-hidden
+            className="
+              absolute inset-0
+              bg-gradient-to-r
+              from-transparent
+              via-white/4
+              to-transparent
+              mix-blend-screen
+            "
+          />
+        </div>
+
+        {/* =====================
+            SUBTEXT
+        ====================== */}
+        <p
           className="
-            inline-block mt-16
-            text-white/75 text-[0.78rem]
-            tracking-[0.34em]
-            border-b border-white/25
-            pb-[5px]
-            hover:text-white
-            hover:border-white/45
-            transition-all duration-300
+            text-white/60         /* ← 45 → 60 にアップ */
+            text-[0.92rem]
+            tracking-[0.18em]
+            leading-[2.1]
+            mx-auto
+            max-w-[650px]
+            mb-16
           "
         >
-          ▶ TAKUMI（デモサイトを見る）
-        </a>
+          面の緊張がほどける場所。  
+          光が落ち着き、影が呼吸をはじめる瞬間。  
+          その“変化”だけを静かに並べた空間。
+        </p>
+
+        {/* =====================
+            CTA
+        ====================== */}
+        <div className="text-center">
+          <a
+            href="https://takumi-ochre.vercel.app/"
+            target="_blank"
+            className="
+              inline-block
+              text-white/85     /* ← 80 → 85 */
+              text-[0.78rem]
+              tracking-[0.32em]
+              border-b border-white/25
+              pb-[6px]
+              hover:text-white hover:border-white/45
+              transition-all duration-400
+            "
+          >
+            TAKUMI（デモサイトを見る）
+          </a>
+        </div>
+
+        {/* Back */}
+        <div className="mb-14 mt-10 text-center">
+          <Link
+            to="/works"
+            className="
+              text-white/55 text-[0.75rem]    /* ← 45 → 55 */
+              tracking-[0.28em]
+              hover:text-white/80
+              transition
+            "
+          >
+            BACK TO WORKS
+          </Link>
+        </div>
+
       </section>
     </main>
   );

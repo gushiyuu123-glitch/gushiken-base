@@ -8,37 +8,51 @@ export default function Still() {
 
   return (
     <section className="bg-[#f7f7f8] text-[#0e0e0e] min-h-screen pb-44">
+{/* =========================================
+      SEO / JSON-LD（STILL）
+========================================= */}
 <script
   type="application/ld+json"
   dangerouslySetInnerHTML={{
     __html: JSON.stringify({
       "@context": "https://schema.org",
       "@type": "CreativeWork",
-      "@id": "https://gushikendesign.com/works/still#creativework",
-      "name": "STILL｜Minimal Fashion EC Design",
-      "description":
-        "黒・緊張・建築構図を軸に、ファッションの静かな強さをUIへ翻訳したミニマルECデザイン。光の入り方、陰影の角度、縦ラインのリズムを建築写真の原理で精密に設計したコンセプト作品。",
-      "creator": {
-        "@type": "Person",
-        "name": "裕人 具志堅",
-        "alternateName": "Yuto Gushiken",
-        "url": "https://gushikendesign.com/"
-      },
-      "publisher": {
+      "@id": "https://still-ec.vercel.app/",
+      name: "STILL｜Minimal Fashion EC Design",
+      url: "https://still-ec.vercel.app/",
+      inLanguage: "ja",
+      description:
+        "黒と建築構図で“静かな緊張”を作ったミニマルFashion EC。余白よりも骨格で魅せる、GUSHIKEN DESIGN の世界観設計プロジェクト。",
+      image: "https://still-ec.vercel.app/ogp-still.jpg",
+      creator: {
         "@type": "Organization",
-        "name": "GUSHIKEN DESIGN",
-        "url": "https://gushikendesign.com/"
+        name: "GUSHIKEN DESIGN",
       },
-      "inLanguage": "ja",
-      "url": "https://gushikendesign.com/works/still",
-      "isBasedOn": {
+      about: {
         "@type": "WebSite",
-        "name": "STILL Fashion EC Site",
-        "url": "https://still-ec.vercel.app/"
-      }
-    })
+        name: "STILL Fashion EC Site",
+      },
+      isBasedOn: ["React", "Vite", "Tailwind CSS", "GSAP", "IntersectionObserver"],
+    }),
   }}
 />
+
+{/* =========================================
+      OGP（SNS向け）
+========================================= */}
+<meta property="og:title" content="STILL｜Minimal Fashion EC Design" />
+<meta property="og:description" content="黒 × 建築 × ミニマル構図で“静かな緊張”をデザインした EC コンセプト。" />
+<meta property="og:image" content="https://still-ec.vercel.app/ogp-still.jpg" />
+<meta property="og:type" content="website" />
+
+{/* =========================================
+      META（Google向け）
+========================================= */}
+<meta
+  name="description"
+  content="建築構図・陰影・縦リズムを用い、商品を静かに引き立てるミニマルEC。空気感で質を伝える high-end UI 設計。"
+/>
+<meta name="twitter:card" content="summary_large_image" />
 
       {/* =========================================================
           HERO — Black × Architecture × Mode Precision

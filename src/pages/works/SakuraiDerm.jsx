@@ -43,46 +43,74 @@ export default function SakuraiDerm() {
 
   return (
     <section className="min-h-screen bg-white text-[#1e1e1e]">
-{/* ============================
-    JSON-LD（SEO）
-================================ */}
+{/* =========================================
+    SEO / JSON-LD（Sakurai Aesthetic Dermatology）
+========================================= */}
 <script
   type="application/ld+json"
   dangerouslySetInnerHTML={{
     __html: JSON.stringify({
       "@context": "https://schema.org",
       "@type": "MedicalBusiness",
+      "@id": "https://sakurai-clinic.vercel.app/",
       "name": "Sakurai Aesthetic Dermatology",
-      "description":
-        "美容皮膚科の緊張感をやわらげ、静けさと透明感を軸に設計したWebサイト。React / Vite / Tailwind / GSAP による“呼吸する”UIと、淡い桜の世界観を重ねたデザイン。",
+      "alternateName": "桜井美容皮膚科 — Webサイト制作",
       "url": "https://sakurai-clinic.vercel.app/",
       "image": [
+        "https://sakurai-clinic.vercel.app/ogp.png",
         "/works1/sakurai-hero.png",
         "/works1/sakurai-11.png",
         "/works1/sakurai-2.png",
         "/works1/sakurai-3.png"
       ],
-      "creator": {
-        "@type": "Person",
-        "name": "GUSHIKEN DESIGN",
-        "url": "https://gushikendesign.com/"
-      },
+      "description":
+        "美容皮膚科の“緊張しやすさ”を軽減し、静けさと透明感を軸に設計したWebサイト。React / Vite / Tailwind / GSAP による呼吸するUIと、淡い桜の世界観を統合したデザイン作品。",
       "inLanguage": "ja",
       "keywords": [
-        "美容皮膚科",
-        "Aesthetic Dermatology",
+        "美容皮膚科 Webデザイン",
+        "医療UI",
         "静けさのデザイン",
-        "桜ニュアンス",
+        "桜の世界観",
         "余白設計",
         "React",
         "Vite",
-        "Tailwind CSS v3",
+        "Tailwind CSS",
         "GSAP Motion",
-        "PC/SP 分離構造"
-      ]
-    }),
+        "PC SP 分離構造"
+      ],
+      "creator": {
+        "@type": "Organization",
+        "name": "GUSHIKEN DESIGN",
+        "url": "https://gushikendesign.com/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "GUSHIKEN DESIGN"
+      }
+    })
   }}
 />
+
+{/* =========================================
+    OGP（SNS共有）
+========================================= */}
+<meta property="og:title" content="Sakurai Aesthetic Dermatology — Web Design" />
+<meta
+  property="og:description"
+  content="美容皮膚科の“緊張しやすい空気”をやわらげ、桜と光の層で静かに整えたWeb作品。"
+/>
+<meta property="og:image" content="https://sakurai-clinic.vercel.app/ogp.png" />
+<meta property="og:type" content="website" />
+
+{/* =========================================
+    META（Google用）
+========================================= */}
+<meta
+  name="description"
+  content="美容皮膚科の不安を軽減するため、光・桜・余白のレイヤーを精密に設計したWebサイト。初めての方でも安心できる“静けさの体験設計”。"
+/>
+<meta name="twitter:card" content="summary_large_image" />
+
 
       {/* =========================
           PC Layout

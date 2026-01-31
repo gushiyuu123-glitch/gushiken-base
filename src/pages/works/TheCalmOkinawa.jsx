@@ -3,6 +3,7 @@ import { useEffect, useMemo } from "react";
 import { Link } from "react-router-dom";
 
 export default function TheCalmOkinawa() {
+  
   useEffect(() => window.scrollTo(0, 0), []);
 
   const assets = useMemo(
@@ -15,35 +16,54 @@ export default function TheCalmOkinawa() {
   );
 
   return (
+    
     <section className="min-h-screen bg-[#f6f4ef] text-[#1b1b1b]">
+{/* =========================================
+      SEO / JSON-LD（THE CALM OKINAWA）
+========================================= */}
+<script
+  type="application/ld+json"
+  dangerouslySetInnerHTML={{
+    __html: JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "CreativeWork",
+      "@id": "https://the-calm-okinawa.vercel.app/",
+      name: "THE CALM OKINAWA — Resort Hotel Concept Website",
+      url: "https://the-calm-okinawa.vercel.app/",
+      inLanguage: "ja",
+      description:
+        "沖縄の光と風の“静寂”を翻訳し、ホテル滞在の余韻を感じさせるコンセプトWebサイト。余白・光・呼吸を中心に構成したGUSHIKEN DESIGNのSX作品。",
+      image: "https://the-calm-okinawa.vercel.app/ogp-calm.jpg",
+      creator: {
+        "@type": "Organization",
+        name: "GUSHIKEN DESIGN",
+      },
+      about: {
+        "@type": "WebSite",
+        name: "THE CALM OKINAWA",
+      },
+      isBasedOn: ["React", "Vite", "Tailwind CSS", "GSAP", "IntersectionObserver"],
+    }),
+  }}
+/>
 
-      {/* =========================
-         JSON-LD（信頼）
-      ========================= */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "CreativeWork",
-            name: "THE CALM OKINAWA｜Resort Hotel Concept Website",
-            description:
-              "沖縄の光と風、静寂をテーマにしたリゾートホテルのコンセプトWebサイト。世界観と体験価値を最小限の構成で提示するSX設計。",
-            creator: {
-              "@type": "Person",
-              name: "裕人 具志堅",
-              alternateName: "Yuto Gushiken",
-              url: "https://gushikendesign.com/",
-            },
-            publisher: {
-              "@type": "Organization",
-              name: "GUSHIKEN DESIGN",
-              url: "https://gushikendesign.com/",
-            },
-            inLanguage: "ja",
-          }),
-        }}
-      />
+{/* =========================================
+      OGP（SNS共通イメージ）
+========================================= */}
+<meta property="og:title" content="THE CALM OKINAWA — Resort Hotel Concept Website" />
+<meta property="og:description" content="光と風でつくる静寂のリゾート体験。沖縄の空気を翻訳した世界観デザイン。" />
+<meta property="og:image" content="https://the-calm-okinawa.vercel.app/ogp-calm.jpg" />
+<meta property="og:type" content="website" />
+
+{/* =========================================
+      META（検索エンジン）
+========================================= */}
+<meta 
+  name="description" 
+  content="沖縄の“静けさ”をテーマに設計した、世界観 × 余白 × 呼吸が中心のコンセプトWebサイト。GUSHIKEN DESIGN によるリゾート系ハイエンドUI。" 
+/>
+<meta name="twitter:card" content="summary_large_image" />
+
 
       {/* =========================
          HERO — 感情を開く

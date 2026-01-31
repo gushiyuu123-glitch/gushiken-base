@@ -8,10 +8,10 @@ export default function WhiteDarkCacao() {
   // ===== Assets =====
   const assets = useMemo(
     () => ({
-      heroWhite:  "/works1/white-dark-hero1.png",
-      heroDark:  "/works1/white-dark-cacao1.png",
-      shotWhite:  "/works1/white-dark-22.png",
-      shotDark:  "/works1/white-dark-3.png",
+      heroWhite: "/works1/white-dark-hero1.png",
+      heroDark: "/works1/white-dark-cacao1.png",
+      shotWhite: "/works1/white-dark-22.png",
+      shotDark: "/works1/white-dark-3.png",
       detail1: "/works1/white-03333.png",
       detail2: "/works1/cacao-033.png",
     }),
@@ -19,6 +19,7 @@ export default function WhiteDarkCacao() {
   );
 
   const liveUrl = "https://white-dark-cacao.vercel.app/";
+  const canonicalUrl = "https://gushikendesign.com/works/white-dark-cacao";
 
   /* =========================
      FADE IN
@@ -39,16 +40,50 @@ export default function WhiteDarkCacao() {
 
   return (
     <section className="min-h-screen bg-white text-[#1a1a1a]">
-          {/* ============ JSON-LD（SEO） ============ */}
+
+      {/* ======================================================
+          ★ SEO HEAD（title / meta / OG / Twitter / canonical）
+      ====================================================== */}
+      <head>
+        <title>WHITE × DARK CACAO — 高級ショコラEC | GUSHIKEN DESIGN</title>
+        <meta
+          name="description"
+          content="WHITE × DARK CACAO — ホテルの静けさとショコラの深度を重ねた高級ECデザイン。世界観と体験を最優先して設計した作品。"
+        />
+        <link rel="canonical" href={canonicalUrl} />
+
+        {/* OpenGraph */}
+        <meta property="og:title" content="WHITE × DARK CACAO — 高級ショコラEC" />
+        <meta
+          property="og:description"
+          content="ホテルの静けさとショコラの深度を重ねたECデザイン。GUSHIKEN DESIGN による作品。"
+        />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content={canonicalUrl} />
+        <meta property="og:image" content={assets.heroWhite} />
+
+        {/* Twitter Card */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="WHITE × DARK CACAO — 高級ショコラEC" />
+        <meta
+          name="twitter:description"
+          content="ホテルの静けさとショコラの深度を重ねた高級ECデザイン。"
+        />
+        <meta name="twitter:image" content={assets.heroWhite} />
+      </head>
+
+      {/* ======================================================
+          ★ JSON-LD（CreativeWork + Breadcrumb）
+      ====================================================== */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
           __html: JSON.stringify({
             "@context": "https://schema.org",
             "@type": "CreativeWork",
-            "@id": liveUrl,
+            "@id": canonicalUrl,
             name: "WHITE × DARK CACAO — Chocolate EC Website",
-            url: liveUrl,
+            url: canonicalUrl,
             inLanguage: "ja",
             description:
               "ホテルの静けさとショコラの深度を重ねた高級ECデザイン。世界観と体験を最優先して設計した作品。",
@@ -57,19 +92,37 @@ export default function WhiteDarkCacao() {
               "@type": "Organization",
               name: "GUSHIKEN DESIGN",
             },
-            about: {
-              "@type": "WebSite",
-              name: "WHITE × DARK CACAO",
-            },
-            isBasedOn: [
-              "React",
-              "Vite",
-              "Tailwind CSS",
-              "GSAP",
+            isBasedOn: ["React", "Vite", "Tailwind CSS", "GSAP"],
+            mainEntityOfPage: canonicalUrl,
+          }),
+        }}
+      />
+
+      {/* ==== BreadcrumbList ==== */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            itemListElement: [
+              {
+                "@type": "ListItem",
+                position: 1,
+                name: "WORKS",
+                item: "https://gushikendesign.com/works",
+              },
+              {
+                "@type": "ListItem",
+                position: 2,
+                name: "WHITE × DARK CACAO",
+                item: canonicalUrl,
+              },
             ],
           }),
         }}
       />
+
       {/* =========================
           PC
       ========================= */}
@@ -186,11 +239,10 @@ export default function WhiteDarkCacao() {
                 <h2 className="text-[20px] tracking-[0.14em] text-neutral-900 mb-10">
                   ブランドの考え方
                 </h2>
-                <p className="text-[14px] leading-[2.4] tracking-[0.06em] text-neutral-600 space-y-6 whitespace-pre-line">
+                <p className="text-[14px] leading-[2.4] tracking-[0.06em] text-neutral-600 whitespace-pre-line">
                   WHITE × DARK CACAO は、
                   「急いで決める」よりも
                   「落ち着いて選ぶ」ことをブランド価値と考えている。
-
                   ホテルのロビーのように、
                   空気で“質”が伝わる構造を目指し、
                   情報よりも空気、説明よりも余白に比重を置いた。
@@ -201,23 +253,20 @@ export default function WhiteDarkCacao() {
                 <h2 className="text-[20px] tracking-[0.14em] text-neutral-900 mb-10">
                   デザイン意図
                 </h2>
-                <p className="text-[14px] leading-[2.4] tracking-[0.06em] text-neutral-600 space-y-6 whitespace-pre-line">
+                <p className="text-[14px] leading-[2.4] tracking-[0.06em] text-neutral-600 whitespace-pre-line">
                   商品ではなく、
                   “選ぶ時間”の高級感を演出する。
-
                   そのために
                   ・白＝静  
                   ・黒＝深度  
                   ・金＝温かみ  
                   の三相でリズムを作り、
-
                   「読む → 感じる → そっと選ぶ」
                   という高価格帯らしい心理ラインを敷いた。
                 </p>
               </div>
             </div>
 
-            {/* Supporting visuals */}
             <div className="mt-20 grid grid-cols-12 gap-8 items-center lux-fade-soft">
               <div className="col-span-7 border border-neutral-200 bg-white overflow-hidden">
                 <img
@@ -227,7 +276,6 @@ export default function WhiteDarkCacao() {
               </div>
               <div className="col-span-5 text-[14px] tracking-[0.06em] text-neutral-600 leading-[2.4]">
                 “白の静けさは、ブランドの入口。”
-                <br />
                 初動で「清潔 × 落ち着き × 信頼」を伝える役割を担う。
               </div>
             </div>
@@ -336,9 +384,7 @@ export default function WhiteDarkCacao() {
         </div>
       </div>
 
-      {/* =========================
-          SP（md未満）
-      ========================= */}
+      {/* ===== SP ===== */}
       <div className="md:hidden">
         <header className="sticky top-0 z-50 bg-white/80 backdrop-blur border-b border-neutral-200">
           <div className="px-5 h-[64px] flex items-center justify-between">
@@ -360,7 +406,6 @@ export default function WhiteDarkCacao() {
           </div>
         </header>
 
-        {/* SP hero */}
         <div className="px-6 pt-14 pb-20">
           <p className="text-[11px] tracking-[0.22em] text-neutral-500 mb-4 lux-fade-soft">
             CHOCOLATE / EC BRAND
@@ -388,7 +433,6 @@ export default function WhiteDarkCacao() {
           </div>
         </div>
 
-        {/* SP Concept */}
         <div className="bg-[#f8f8f6] border-y border-neutral-200">
           <div className="px-6 py-20 space-y-12">
             <div className="lux-fade-sp">
@@ -421,7 +465,6 @@ export default function WhiteDarkCacao() {
           </div>
         </div>
 
-        {/* SP dual */}
         <div className="px-6 py-20 space-y-10">
           {[ 
             { title: "WHITE — QUIET SWEETNESS", img: assets.detail1 },
@@ -445,7 +488,6 @@ export default function WhiteDarkCacao() {
           ))}
         </div>
 
-        {/* SP live */}
         <div className="px-6 py-20">
           <div className="border border-neutral-200 bg-[#fafafa] p-10 lux-fade-sp">
             <p className="text-[11px] tracking-[0.22em] text-neutral-500 mb-6">

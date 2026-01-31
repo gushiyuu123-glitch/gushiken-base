@@ -33,6 +33,71 @@ export default function RoseRoom() {
 
   return (
     <main className="relative min-h-screen overflow-hidden font-sans">
+{/* =========================================
+    SEO / JSON-LD（Rose Room）
+========================================= */}
+<script
+  type="application/ld+json"
+  dangerouslySetInnerHTML={{
+    __html: JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "CreativeWork",
+      "@id": "https://gushikendesign.com/works/rose-room#creativework",
+      "name": "Rose Room — ROSE VEIL Visual Study",
+      "alternateName": "ROSE VEIL — Room Study",
+      "description":
+        "ROSE VEIL の世界観を“香りが生まれる前の空気”として再構築した実験的ビジュアル作品。光・白膜・余白・微粒ノイズのレイヤーで、香りの気配だけを静かに描いたコンセプトピース。",
+      "inLanguage": "ja",
+      "genre": ["Web Design", "Conceptual Visual", "Fragrance Design"],
+      "image": [
+        "https://gushikendesign.com/works/rose-room/ogp.png",
+        "/works1/rose-vein.png"
+      ],
+      "url": "https://gushikendesign.com/works/rose-room",
+      "creator": {
+        "@type": "Person",
+        "name": "裕人 具志堅",
+        "url": "https://gushikendesign.com/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "GUSHIKEN DESIGN",
+        "url": "https://gushikendesign.com/"
+      },
+      "keywords": [
+        "ROSE VEIL",
+        "フレグランスデザイン",
+        "コンセプトビジュアル",
+        "高級EC",
+        "静けさのデザイン",
+        "光のレイヤー",
+        "余白設計",
+        "React",
+        "Vite",
+        "Tailwind CSS",
+        "GSAP Motion"
+      ]
+    })
+  }}
+/>
+
+{/* =========================================
+    OGP（SNS用）
+========================================= */}
+<meta property="og:title" content="Rose Room — ROSE VEIL Visual Study" />
+<meta
+  property="og:description"
+  content="ROSE VEIL の“香りが生まれる瞬間”をテーマにした静かなビジュアル作品。"
+/>
+<meta
+  property="og:image"
+  content="https://gushikendesign.com/works/rose-room/ogp.png"
+/>
+<meta property="og:type" content="website" />
+
+{/* =========================================
+    META（Google）
+========
 
       {/* ===============================
           背景（白膜 × 微粒ノイズ）

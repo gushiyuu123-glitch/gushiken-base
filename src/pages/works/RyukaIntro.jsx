@@ -23,32 +23,81 @@ return (
       bg-[linear-gradient(180deg,#f6fdff_0%,#ffffff_60%,#fff6fb_100%)]
     "
   >
-    {/* =========================
-        JSON-LD : RYUKA
-    ========================== */}
-    <script
-      type="application/ld+json"
-      dangerouslySetInnerHTML={{
-        __html: JSON.stringify({
-          "@context": "https://schema.org",
-          "@type": "CreativeWork",
-          "@id": "https://gushikendesign.com/works/ryuka#creativework",
-          "name": "琉香（RYUKA）｜体験型フレグランスブランドサイト",
-          "description":
-            "沖縄の光・香り・風・琉球ガラス工芸から着想した、体験型フレグランスブランドサイト。",
-          "creator": {
-            "@type": "Person",
-            "name": "裕人 具志堅"
-          },
-          "publisher": {
-            "@type": "Organization",
-            "name": "GUSHIKEN DESIGN",
-            "url": "https://gushikendesign.com/"
-          },
-          "url": "https://gushikendesign.com/works/ryuka"
-        })
-      }}
-    />
+{/* =========================================
+    SEO / JSON-LD（RYUKA）
+========================================= */}
+<script
+  type="application/ld+json"
+  dangerouslySetInnerHTML={{
+    __html: JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "CreativeWork",
+      "@id": "https://gushikendesign.com/works/ryuka#creativework",
+      "name": "琉香 RYUKA — 体験型フレグランスブランドサイト",
+      "headline": "香りは、記憶のかたちをしている",
+      "description":
+        "沖縄の光・風・海・琉球ガラス工芸をモチーフにした、体験型フレグランスブランドサイト。世界観・写真・余白・光を中心に“静けさの体験”を設計した作品。",
+      "inLanguage": "ja",
+      "image": [
+        "https://gushikendesign.com/works/ryuka/ogp.png",
+        "/works1/ryuka.png",
+        "/works1/ryuka_product.png",
+        "/works1/ryuka_scene.png",
+        "/works1/ryuka_glass.png",
+        "/works1/ryuka_after.png"
+      ],
+      "url": "https://gushikendesign.com/works/ryuka",
+      "creator": {
+        "@type": "Person",
+        "name": "裕人 具志堅"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "GUSHIKEN DESIGN",
+        "url": "https://gushikendesign.com/"
+      },
+      "keywords": [
+        "フレグランス",
+        "沖縄デザイン",
+        "琉球ガラス",
+        "世界観構築",
+        "体験型Webサイト",
+        "React",
+        "Vite",
+        "Tailwind CSS",
+        "GSAP Motion",
+        "高級ECデザイン",
+        "PC/SP 分離構造"
+      ]
+    })
+  }}
+/>
+
+{/* =========================================
+    OGP（SNS用）
+========================================= */}
+<meta
+  property="og:title"
+  content="RYUKA — 体験型フレグランスブランドサイト"
+/>
+<meta
+  property="og:description"
+  content="沖縄の光・風・静けさを閉じ込めた、体験型フレグランスWeb作品。"
+/>
+<meta
+  property="og:image"
+  content="https://gushikendesign.com/works/ryuka/ogp.png"
+/>
+<meta property="og:type" content="website" />
+
+{/* =========================================
+    META（Google）
+========================================= */}
+<meta
+  name="description"
+  content="沖縄の感覚（光・風・海・琉球ガラス）から着想し、“香り＝記憶体験”としてデザインしたフレグランスブランドサイト。静けさ・余白・光のレイヤーを重ねたUI設計。"
+/>
+<meta name="twitter:card" content="summary_large_image" />
 
     {/* ↓ ここから既存の中身（PC/SP 分岐など） */}
 

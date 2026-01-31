@@ -2,8 +2,48 @@
 import { Link } from "react-router-dom";
 
 export default function Viva() {
+  
   return (
+    
     <section className="bg-[#f7f5f0] px-[8vw] py-[18vh]">
+{/* =============================
+      SEO / JSON-LD（VIVA専用）
+============================= */}
+<script
+  type="application/ld+json"
+  dangerouslySetInnerHTML={{
+    __html: JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "CreativeWork",
+      "@id": "https://viva-fashion.vercel.app/",
+      name: "VIVA — Between the sea and the city",
+      url: "https://viva-fashion.vercel.app/",
+      inLanguage: "ja",
+      description:
+        "海と街の狭間の“静けさ”をテーマにしたエディトリアル型Web作品。余白・空気・写真の質感で構成した、GUSHIKEN DESIGN の美意識を体現するプロジェクト。",
+      image: "https://viva-fashion.vercel.app/ogp-viva.jpg",
+      creator: {
+        "@type": "Organization",
+        name: "GUSHIKEN DESIGN"
+      },
+      about: {
+        "@type": "WebSite",
+        name: "VIVA — Editorial Web Project"
+      },
+      isBasedOn: ["React", "Vite", "Tailwind CSS", "GSAP", "IntersectionObserver"],
+    }),
+  }}
+/>
+
+{/* =============================
+      OGP & META（検索/SNS用）
+============================= */}
+<meta property="og:title" content="VIVA — Between the sea and the city" />
+<meta property="og:description" content="海と街の狭間の“静けさ”を翻訳するエディトリアルWeb作品。" />
+<meta property="og:image" content="https://viva-fashion.vercel.app/ogp-viva.jpg" />
+<meta property="og:type" content="website" />
+<meta name="description" content="海と街の狭間の“静けさ”をテーマにした、GUSHIKEN DESIGN によるWebエディトリアル作品。" />
+<meta name="twitter:card" content="summary_large_image" />
 
       {/* =====================
           QUICK LINK

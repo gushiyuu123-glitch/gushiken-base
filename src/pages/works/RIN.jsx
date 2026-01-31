@@ -49,20 +49,24 @@ export default function RIN() {
 
   return (
     <section className="min-h-screen bg-white text-slate-900">
-      {/* ============================
-    JSON-LD（SEO）
-================================ */}
+{/* =========================================
+    SEO / JSON-LD（RIN）
+========================================= */}
 <script
   type="application/ld+json"
   dangerouslySetInnerHTML={{
     __html: JSON.stringify({
       "@context": "https://schema.org",
       "@type": "CreativeWork",
+      "@id": "https://gushikendesign.com/works/rin#creativework",
       "name": "RIN — Eyelash Salon Website",
+      "alternateName": "RIN（まつエク） — 静かなUXデザイン",
       "description":
-        "迷っている人のために設計した、押さない・急がせない・呼吸の整うまつエクサイト。React / Vite / Tailwind / GSAP による静かなUX。",
+        "“迷う人”のために作られた、押さない・急がせない・静けさを軸にしたまつエクWebサイト。視線移動・余白・情報密度を心理基準で設計し、React / Vite / Tailwind / GSAP による優しいUXを実現した作品。",
+      "inLanguage": "ja",
       "url": "https://rin-psi.vercel.app/",
       "image": [
+        "https://gushikendesign.com/works/rin/ogp.png",
         "/works1/rin.png",
         "/works1/rin-1.webp",
         "/works1/rin-2.webp",
@@ -70,22 +74,51 @@ export default function RIN() {
       ],
       "creator": {
         "@type": "Person",
+        "name": "裕人 具志堅",
+        "url": "https://gushikendesign.com/"
+      },
+      "publisher": {
+        "@type": "Organization",
         "name": "GUSHIKEN DESIGN",
         "url": "https://gushikendesign.com/"
       },
-      "inLanguage": "ja",
       "about": [
-        "まつエク サイト",
+        "まつエク Webサイト",
         "Eyelash Salon",
-        "静かなUX",
-        "React Web Design",
+        "押さないUX",
+        "判断を急がせない導線",
+        "React Design",
         "Tailwind v3",
         "GSAP Motion",
-        "PC/SP 分離設計"
+        "PC/SP DOM 分離",
+        "静けさのデザイン"
       ]
-    }),
+    })
   }}
 />
+
+{/* =========================================
+    OGP（SNS用）
+========================================= */}
+<meta property="og:title" content="RIN — Eyelash Salon Website" />
+<meta
+  property="og:description"
+  content="“迷いの受け皿”として設計した、押さない・急がせない・静かなまつエクサイト。"
+/>
+<meta
+  property="og:image"
+  content="https://gushikendesign.com/works/rin/ogp.png"
+/>
+<meta property="og:type" content="website" />
+
+{/* =========================================
+    META（Google）
+========================================= */}
+<meta
+  name="description"
+  content="RINは「迷っている人」のために作られた、押さない・急がせない・静けさのUXを軸にしたまつエク専門サイト。React / Vite / Tailwind / GSAP による心理基準のWebデザイン。"
+/>
+<meta name="twitter:card" content="summary_large_image" />
 
       {/* =========================
           PC（md以上）
