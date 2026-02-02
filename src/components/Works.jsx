@@ -62,7 +62,7 @@ export default function Works() {
               className="work-card aq-fade delay-3  "
             >
               <img
-                src="/assets/lumin-main1.webp"
+                src="/assets/lumin.webp"
                 alt="LÜMIN — Audio Design EC"
                 loading="lazy"
               />
