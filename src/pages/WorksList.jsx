@@ -103,6 +103,7 @@ export default function WorksList() {
         overflow-x-hidden
       "
     >
+      
       {/* ======================================================
           SEO STRUCTURED DATA（完全版）
       ====================================================== */}
@@ -260,6 +261,24 @@ export default function WorksList() {
           ))}
         </div>
       </div>
+{/* ===== NOTE LINK (下部導線) ===== */}
+<div className="mt-32 text-center">
+  <a
+    href="https://note.com/noahgushi123"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="
+      inline-block
+      text-white/40 hover:text-white/75
+      underline underline-offset-[4px]
+      tracking-[0.14em]
+      text-[0.85rem]
+      transition
+    "
+  >
+    note（制作の裏側や解説はこちら）
+  </a>
+</div>
 
       <style>{`
         @keyframes slideIn {

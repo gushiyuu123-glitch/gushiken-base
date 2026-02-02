@@ -101,6 +101,22 @@ export default function About() {
             </span>
             ことを大切にしています。
           </p>
+
+          {/* ⭐ noteリンク追加（控えめ・上品） */}
+          <a
+            href="https://note.com/noahgushi123"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="
+              inline-block mt-6
+              text-white/50 hover:text-white/80
+              underline underline-offset-[4px]
+              text-[0.85rem] tracking-[0.14em]
+              transition
+            "
+          >
+            note（制作の裏側はこちら）
+          </a>
         </div>
 
         {/* 制作スタイル */}

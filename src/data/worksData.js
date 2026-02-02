@@ -11,6 +11,26 @@ export const worksData = [
   accent: true,
   items: [
     {
+  title: "LÜMIN — Minimal Audio EC",
+  slug: "LuminMain",
+  desc: "白銀 × 精度 × 透明音。スタイリッシュなミニマルAVブランドEC。",
+  link: "https://lumin-audio.vercel.app/",
+  img: "/works/lumin-main.webp",
+  isNew: true,
+  createdAt: "2026-02-02",
+  tags: ["PICKUP", "Audio", "Minimal", "WhiteSilver", "EC", "Precision"],
+
+  seo: {
+    title: "LÜMIN — Minimal Audio EC｜白銀×精度×透明音のミニマルECデザイン",
+    description:
+      "LÜMINは白銀の“透明空間”を基調に、精度の高いサウンド世界観をミニマルECとして再構築した作品。光・空気・距離感を0.5px単位で整えた、スタイリッシュで静かな高級デザイン。",
+    keywords:
+      "オーディオEC, イヤホンEC, ヘッドホンEC, 白銀デザイン, ミニマルプロダクト, 高級感EC, Precision Design",
+    ogImage: "https://gushikendesign.com/ogp/lumin-main.png"
+  }
+},
+
+    {
       title: "ROSE VEIL — Fragrance Shampoo",
       slug: "RoseRoom",
       desc: "香り × 余白 × 世界観。ブランドECの完成形。",
@@ -630,6 +650,25 @@ export const worksData = [
     /* ==========================================
         ROSE VEIL — Fragrance Shampoo（最新）
     ========================================== */
+      {
+  title: "LÜMIN — Minimal Audio EC",
+  slug: "LuminMain",
+  desc: "白銀 × 精度 × 透明音。スタイリッシュなミニマルAVブランドEC。",
+  link: "https://lumin-audio.vercel.app/",
+  img: "/works/lumin-main.webp",
+  isNew: true,
+  createdAt: "2026-02-02",
+  tags: ["PICKUP", "Audio", "Minimal", "WhiteSilver", "EC", "Precision"],
+
+  seo: {
+    title: "LÜMIN — Minimal Audio EC｜白銀×精度×透明音のミニマルECデザイン",
+    description:
+      "LÜMINは白銀の“透明空間”を基調に、精度の高いサウンド世界観をミニマルECとして再構築した作品。光・空気・距離感を0.5px単位で整えた、スタイリッシュで静かな高級デザイン。",
+    keywords:
+      "オーディオEC, イヤホンEC, ヘッドホンEC, 白銀デザイン, ミニマルプロダクト, 高級感EC, Precision Design",
+    ogImage: "https://gushikendesign.com/ogp/lumin-main.png"
+  }
+},
     {
       title: "ROSE VEIL — Fragrance Shampoo",
       slug: "RoseVeil",
@@ -880,53 +919,7 @@ export const worksData = [
     }
   ]
 },
-/* ----------------------------------------------------------
-  OUTDOOR / PRODUCT DESIGN
----------------------------------------------------------- */
-{
-  category: "OUTDOOR / PRODUCT DESIGN",
-  subtitle: "道具・屋外プロダクトの“使用感”をUIへ翻訳したデザイン",
-  items: [
-    {
-      title: "Re:Camp — Outdoor Gear Studio",
-      slug: "ReCamp",
 
-      desc: "屋外 × 道具 × 実在感。\n使用環境から逆算したプロダクト設計UI。",
-      link: "https://recamp-site.vercel.app/",
-      img: "/works/recamp.webp",
-
-      isNew: true,
-      createdAt: "2026-01-XX",
-
-      tags: [
-        "NEW",
-        "Outdoor", "Gear", "Camp", "実在感",
-        "プロダクト", "Branding",
-        "Minimal", "Shadow Design",
-        "GSAP", "IntersectionObserver",
-        "PC/SP 分離"
-      ],
-
-      detail: {
-        concept:
-          "“屋外という不安定な環境で、どう使われるか”を起点に設計。光の当たり方・距離感・手触りを UI に翻訳し、実在するプロダクトとしての信頼を高める構成。機能説明ではなく、触れたときの質感や「使える実感」を主役に置いたプロダクトデザイン。",
-        tech: [
-          "React",
-          "Vite",
-          "Tailwind",
-          "GSAP",
-          "IntersectionObserver",
-          "PC/SP 完全分離"
-        ]
-      }
-    }
-  ]
-}
-
-,
-/* ----------------------------------------------------------
-     FOOD / FURNITURE / BRAND
----------------------------------------------------------- */
 {
   category: "FOOD / FURNITURE / BRAND",
   subtitle: "飲食・家具・ブランドUIに最適化した世界観設計",
@@ -966,6 +959,25 @@ export const worksData = [
         keywords:
           "レストランLP, シネマティックUI, 陰影デザイン, 高級飲食LP, GUSHIKEN DESIGN",
         ogImage: "https://gushikendesign.com/ogp/resonance.png"
+      }
+    },
+    {
+      title: "TAKUMI — Architecture Studio",
+      slug: "TakumiRoom",
+      desc: "建築 × 物質 × 静けさ。陰影と構造の代表作。",
+      link: "https://takumi-ochre.vercel.app/",
+      img: "/assets/takumi.webp",
+      isNew: false,
+      createdAt: "2025-11-XX",
+      tags: ["PICKUP", "Architecture", "Concrete", "Shadow"],
+
+      seo: {
+        title: "TAKUMI — Architecture Studio｜建築×陰影×構造美のデザイン",
+        description:
+          "TAKUMI は建築の“骨格”に着目し、光と影の構造を丁寧に整えた世界観デザイン。物質の密度・動線・余白を UI に翻訳し、静かな建築美を表現した代表作。",
+        keywords:
+          "建築, 建築デザイン, 陰影, 静寂UI, 世界観デザイン, 高級感サイト, 沖縄 Webデザイン",
+        ogImage: "https://gushikendesign.com/ogp/takumi.png"
       }
     },
 
@@ -1246,6 +1258,39 @@ export const worksData = [
   category: "ART / CREATIVE",
   subtitle: "光・影・静寂をテーマにしたアート表現",
   items: [
+      {
+      title: "Re:Camp — Outdoor Gear Studio",
+      slug: "ReCamp",
+
+      desc: "屋外 × 道具 × 実在感。\n使用環境から逆算したプロダクト設計UI。",
+      link: "https://recamp-site.vercel.app/",
+      img: "/works/recamp.webp",
+
+      isNew: true,
+      createdAt: "2026-01-XX",
+
+      tags: [
+        "NEW",
+        "Outdoor", "Gear", "Camp", "実在感",
+        "プロダクト", "Branding",
+        "Minimal", "Shadow Design",
+        "GSAP", "IntersectionObserver",
+        "PC/SP 分離"
+      ],
+
+      detail: {
+        concept:
+          "“屋外という不安定な環境で、どう使われるか”を起点に設計。光の当たり方・距離感・手触りを UI に翻訳し、実在するプロダクトとしての信頼を高める構成。機能説明ではなく、触れたときの質感や『使える実感』を主役に置いたプロダクトデザイン。",
+        tech: [
+          "React",
+          "Vite",
+          "Tailwind",
+          "GSAP",
+          "IntersectionObserver",
+          "PC/SP 完全分離"
+        ]
+      }
+    },
     {
       title: "VIVA — Between the sea and the city",
       slug: "VIVA",

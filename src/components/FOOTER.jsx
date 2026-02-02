@@ -1,3 +1,4 @@
+// src/components/Footer.jsx
 import React, { useEffect, useRef } from "react";
 import "./footer.css";
 
@@ -47,9 +48,7 @@ export default function Footer() {
           >
             GUSHIKEN DESIGN
           </h3>
-          <p className="text-white/40 text-sm tracking-wide">
-            Okinawa, Japan
-          </p>
+          <p className="text-white/40 text-sm tracking-wide">Okinawa, Japan</p>
 
           <a
             href="/layer0"
@@ -71,9 +70,7 @@ export default function Footer() {
         {/* プロジェクト + SNS + 法務 */}
         <div className="flex flex-col gap-4 text-sm tracking-[0.12em]">
           <div className="flex flex-col gap-2">
-            <p className="footer-project-label">
-              EXPERIMENTAL PROJECTS
-            </p>
+            <p className="footer-project-label">EXPERIMENTAL PROJECTS</p>
 
             <a
               href="https://quiet-ai.gushikendesign.com/"
@@ -96,9 +93,25 @@ export default function Footer() {
             </a>
           </div>
 
+          {/* 🔥 ←ここを “note” に変更（元は X） */}
           <div className="flex items-center gap-6 mt-3">
-            <a href="#" className="footer-sns" translate="no">Instagram</a>
-            <a href="#" className="footer-sns" translate="no">X (Twitter)</a>
+            <a
+              href="#"
+              className="footer-sns"
+              translate="no"
+            >
+              Instagram
+            </a>
+
+            <a
+              href="https://note.com/noahgushi123"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="footer-sns"
+              translate="no"
+            >
+              note
+            </a>
           </div>
 
           <div className="flex flex-col gap-1 mt-3 text-xs tracking-[0.15em]">
@@ -110,7 +123,7 @@ export default function Footer() {
         </div>
       </div>
 
-      {/* --- 追加：引用・紹介歓迎メッセージ（超控えめ） --- */}
+      {/* 引用歓迎メッセージ */}
       <p
         className="
           text-center text-white/30
@@ -125,6 +138,7 @@ export default function Footer() {
         無断転載・複製・再配布・商用利用はご遠慮ください。
       </p>
 
+      {/* COPYRIGHT */}
       <p
         className="
           text-center text-white/30

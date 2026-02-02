@@ -14,7 +14,6 @@ export default function Category({ title, subtitle, accent = false, children, it
       "PICK UP": "w-[88%]",                 // ← ここが特別。大きすぎず、最も上質に見える。
       "BEAUTY / SALON": "w-[94%]",
       "HOTEL / STAY": "w-[90%]",
-      "OUTDOOR / PRODUCT DESIGN": "w-[92%]",
       "FOOD / FURNITURE / BRAND": "w-[88%]",
       "EC / BRAND DESIGN": "w-[82%]",
       "ART / CREATIVE": "w-[96%]"
