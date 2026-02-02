@@ -12,7 +12,7 @@ export const worksData = [
   items: [
     {
   title: "LÜMIN — Minimal Audio EC",
-  slug: "LuminMain",
+  slug: "LuminRoom",
   desc: "白銀 × 精度 × 透明音。スタイリッシュなミニマルAVブランドEC。",
   link: "https://lumin-audio.vercel.app/",
   img: "/works/lumin-main.webp",
@@ -652,7 +652,7 @@ export const worksData = [
     ========================================== */
       {
   title: "LÜMIN — Minimal Audio EC",
-  slug: "LuminMain",
+  slug: "LuminRoom",
   desc: "白銀 × 精度 × 透明音。スタイリッシュなミニマルAVブランドEC。",
   link: "https://lumin-audio.vercel.app/",
   img: "/works/lumin-main.webp",

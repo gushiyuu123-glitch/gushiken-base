@@ -46,6 +46,7 @@ import WhiteDarkCacao from "./pages/works/WhiteDarkCacao";
 import AxisRoom from "./pages/works/AxisRoom";
 import TakumiRoom from "./pages/works/TakumiRoom";
 import RoseRoom from "./pages/works/RoseRoom";
+import LuminRoom from "./pages/works/LuminRoom";
 
 
 import PriceDetail from "./pages/PriceDetail";
@@ -122,7 +123,7 @@ function Layout() {
 <Route path="/works/AxisRoom" element={<AxisRoom />} />
 <Route path="/works/TakumiRoom" element={<TakumiRoom />} />
 <Route path="/works/RoseRoom" element={<RoseRoom />} />
-
+<Route path="/works/LuminRoom" element={<LuminRoom />} />
 
 {/* 最後に汎用テンプレ */}
 <Route path="/works/:slug" element={<WorkDetail />} />
