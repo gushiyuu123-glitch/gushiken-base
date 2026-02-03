@@ -1,6 +1,6 @@
 /* =====================================================
-   CONTACT — Silent UI v4.3
-   (Dior Exhibition / One Screen Compact)
+   CONTACT — Silent UI v4.4
+   Dior Exhibition × Calm Luxury × Noah Final Edition
 ===================================================== */
 
 /* ----------------------------------------------
@@ -10,117 +10,125 @@
   background: #0b0b0b;
   min-height: 100svh;
   padding: clamp(80px, 12vh, 140px) 0;
+
   display: flex;
   align-items: center;
+  justify-content: center;
+
+  position: relative;
+  overflow: hidden;
 }
 
 /* ----------------------------------------------
-   Container
+   Container（中心線を美しく合わせる）
 ---------------------------------------------- */
 .contact-container {
-  max-width: 640px;
+  max-width: 620px;
   margin: 0 auto;
-  padding-left: clamp(56px, 8vw, 96px);
+  padding: 0 clamp(40px, 6vw, 80px);
   position: relative;
 }
 
+/* コンテンツ中央寄せ（左右の“芯”を合わせる） */
 .contact-content {
   text-align: center;
-  margin-left: calc(clamp(56px, 8vw, 96px) * -0.5);
+  padding-left: clamp(10px, 1.6vw, 24px);
 }
 
-
 /* ----------------------------------------------
-   Gold Line
+   Architectural Gold Line（建築的ライン）
 ---------------------------------------------- */
 .contact-gold-line {
   position: absolute;
-  left: -12px; /* ← 少し左へ */
-  top: 12%;
-  height: 76%;
-  opacity: 0.45;
+  left: clamp(-6px, -1vw, -16px);
+  top: 10%;
+  height: 78%;
   width: 1px;
+
   background: linear-gradient(
     to bottom,
     rgba(215,195,154,0.55),
     rgba(215,195,154,0.12)
   );
+  opacity: 0.52;
   pointer-events: none;
 }
-
 
 /* ----------------------------------------------
    Title
 ---------------------------------------------- */
 .contact-title {
   color: #fff;
-  font-size: clamp(1.9rem, 3vw, 2.4rem);
+  font-size: clamp(2rem, 3.1vw, 2.6rem);
   font-weight: 300;
   letter-spacing: 0.24em;
-  margin-bottom: clamp(28px, 4vh, 40px);
+
+  margin-bottom: clamp(28px, 4vh, 42px);
 }
 
 /* ----------------------------------------------
-   Lead
+   Lead / Sub Lead
 ---------------------------------------------- */
 .contact-lead {
-  color: rgba(255,255,255,0.9);
-  font-size: 0.95rem;
-  line-height: 1.9;
+  color: rgba(255,255,255,0.92);
+  font-size: 1rem;
+  line-height: 1.85;
   letter-spacing: 0.04em;
-  margin-bottom: 1.8rem;
+  margin-bottom: 1.6rem;
 }
 
-/* ----------------------------------------------
-   Sub Lead
----------------------------------------------- */
 .contact-lead-sub {
-  color: rgba(255,255,255,0.75);
-  font-size: 0.88rem;
-  line-height: 1.9;
-  margin-bottom: 2.6rem;
+  color: rgba(255,255,255,0.72);
+  font-size: 0.9rem;
+  line-height: 1.85;
+  margin-bottom: 2.4rem;
 }
 
 /* ----------------------------------------------
-   Actions（CTA + LINE）
+   Actions
 ---------------------------------------------- */
 .contact-actions {
   display: flex;
   flex-direction: column;
   gap: 1.4rem;
-  margin-bottom: 2.6rem;
+  margin-bottom: 2.4rem;
 }
 
-/* CTA Button */
+/* CTA Button（薄金×透明膜） */
 .contact-btn {
   display: inline-block;
-  padding: 0.85rem 2.6rem;
-  font-size: 0.85rem;
+  padding: 0.9rem 2.8rem;
+
+  font-size: 0.9rem;
   letter-spacing: 0.18em;
-  color: rgba(217,185,138,0.92);
+
+  color: rgba(217,185,138,0.88);
   border: 1.5px solid rgba(217,185,138,0.85);
   border-radius: 4px;
   text-decoration: none;
-  backdrop-filter: blur(3px);
-  box-shadow: 0 0 18px rgba(217,185,138,0.05);
-  transition: all 0.35s ease;
+
+  backdrop-filter: blur(4px);
+  background: rgba(217,185,138,0.05);
+
+  box-shadow: 0 0 18px rgba(217,185,138,0.06);
+  transition: all 0.35s cubic-bezier(.19,1,.22,1);
 }
 
 .contact-btn:hover {
-  background: rgba(217,185,138,0.9);
+  background: rgba(217,185,138,0.92);
   color: #000;
   transform: translateY(-2px);
-  box-shadow: 0 8px 18px rgba(217,185,138,0.25);
+  box-shadow: 0 10px 24px rgba(217,185,138,0.25);
 }
 
 /* LINE Link */
 .contact-sub-link {
   font-size: 0.85rem;
   letter-spacing: 0.06em;
-  color: #e5e1da;
+  color: rgba(230,225,218,0.9);
   text-decoration: none;
   opacity: 0.65;
-  transition: opacity 0.25s ease;
+  transition: opacity .28s ease;
 }
 
 .contact-sub-link:hover {
@@ -128,12 +136,12 @@
 }
 
 /* ----------------------------------------------
-   Footer Note
+   Footer Text
 ---------------------------------------------- */
 .contact-footer {
-  font-size: 0.7rem;
-  letter-spacing: 0.04em;
-  color: rgba(255,255,255,0.35);
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  color: rgba(255,255,255,0.34);
 }
 
 /* ----------------------------------------------
@@ -141,12 +149,17 @@
 ---------------------------------------------- */
 @media (max-width: 768px) {
   .contact-section {
-    padding: clamp(64px, 10vh, 96px) 0;
+    padding: clamp(68px, 11vh, 100px) 0;
   }
 
   .contact-btn {
     width: 100%;
-    padding: 1rem 0;
-    font-size: 0.9rem;
+    padding: 1.05rem 0;
+    font-size: 1rem;
+    letter-spacing: 0.22em;
+  }
+
+  .contact-gold-line {
+    opacity: 0.58;
   }
 }

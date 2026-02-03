@@ -32,20 +32,35 @@ export default function Works() {
       "
     >
       <div className="works-container">
+
         {/* =====================
-            HEADER
+            HEADER（SEO補強1行追加）
         ===================== */}
         <div className="works-header aq-fade delay-1">
-          <h2 className="works-title" translate="no">
-            WORKS
-          </h2>
+          <h2 className="works-title" translate="no">WORKS</h2>
           <p className="works-sub">SELECTED PROJECTS</p>
+
+          {/* ▼ SEO：検索ワードを自然に追加（視覚崩さない） */}
+          <p
+            className="
+              mt-3
+              text-[0.75rem]
+              text-white/60
+              tracking-[0.14em]
+              leading-relaxed
+              max-w-[480px]
+            "
+          >
+            美容・EC・店舗向けの高品質Webデザイン。  
+            上品さと“伝わる構造”を大切にした世界観サイトを制作しています。
+          </p>
         </div>
 
         {/* =====================
             GRID
         ===================== */}
         <div className="works-grid-wrapper">
+
           {/* Swipe hint */}
           <div className="works-swipe-hint aq-fade delay-2">
             <span>SWIPE</span>
@@ -59,16 +74,16 @@ export default function Works() {
               href="https://lumin-audio.vercel.app/"
               target="_blank"
               rel="noopener noreferrer"
-              className="work-card aq-fade delay-3  "
+              className="work-card aq-fade delay-3"
             >
               <img
                 src="/assets/lomin.webp"
-                alt="LÜMIN — Audio Design EC"
+                alt="LÜMIN｜イヤホン・オーディオ製品のECサイト制作（ミニマル×高品質）"
                 loading="lazy"
               />
               <div className="work-text">
                 <h3>LÜMIN</h3>
-                <p>Silver × Air × Precision.</p>
+                <p>Audio EC / Minimal × Precision</p>
               </div>
             </a>
 
@@ -81,12 +96,12 @@ export default function Works() {
             >
               <img
                 src="/assets/roseveil2.webp"
-                alt="ROSE VEIL — Fragrance Shampoo EC"
+                alt="ROSE VEIL｜香り系ブランドのECサイト制作（上品×空気感）"
                 loading="lazy"
               />
               <div className="work-text">
                 <h3>ROSE VEIL</h3>
-                <p>Fragrance × Luxury × Visual Air.</p>
+                <p>Fragrance EC / Luxury × Visual Air</p>
               </div>
             </a>
 
@@ -99,12 +114,12 @@ export default function Works() {
             >
               <img
                 src="/assets/axis.webp"
-                alt="AXIS — A Design Axis for Structure & Logic"
+                alt="AXIS｜構造と判断軸を可視化するデザインプロジェクト（ミニマル×構造）"
                 loading="lazy"
               />
               <div className="work-text">
                 <h3>AXIS</h3>
-                <p>A design axis for decision-making.</p>
+                <p>Design System / Structure × Logic</p>
               </div>
             </a>
 

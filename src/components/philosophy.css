@@ -1,31 +1,37 @@
 /* =======================================================
-   PHILOSOPHY — Dior Glow × SANKOU Exhibition × aq-fade Version
+   PHILOSOPHY — Dior Glow × SANKOU Exhibition × aq-fade
+   Optimized by NOA
 ======================================================= */
 
 /* -------------------------------------------
-   セクション
+   SECTION
 ------------------------------------------- */
 .philo-section {
   padding: 8rem 0;
-  background: linear-gradient(180deg, #0b0b0b 0%, #0a0a0a 70%, #0c0c0c 100%);
+  background: linear-gradient(
+    180deg,
+    #0b0b0b 0%,
+    #090909 70%,     /* ← 黒の濁りを補正 */
+    #0c0c0c 100%
+  );
   position: relative;
   overflow: hidden;
 }
 
 /* -------------------------------------------
-   背景ノイズ
+   BACKGROUND NOISE
 ------------------------------------------- */
 .philo-noise {
   position: absolute;
   inset: 0;
   background: url('/grain.png');
-  opacity: 0.04;
+  opacity: 0.045;
   mix-blend-mode: overlay;
   pointer-events: none;
 }
 
 /* -------------------------------------------
-   左 1px 金ライン
+   LEFT GOLD LINE
 ------------------------------------------- */
 .philo-gold-line {
   position: absolute;
@@ -41,7 +47,7 @@
 }
 
 /* -------------------------------------------
-   タイトル（呼吸アニメ）
+   TITLE — 静の呼吸アニメ（最適化）
 ------------------------------------------- */
 .philo-title {
   font-size: 2.6rem;
@@ -51,22 +57,21 @@
   margin-bottom: 2.5rem;
   padding-left: 1rem;
 
-  animation: breathe 4.6s ease-in-out infinite;
-  animation-fill-mode: both;   /* ← aq-fade と干渉させない */
+  animation: breatheSilent 5.2s ease-in-out infinite;
 }
 
-@keyframes breathe {
-  0%, 100% { opacity: 0.9; letter-spacing: 0.20em; }
-  50%      { opacity: 1;   letter-spacing: 0.205em; }
+@keyframes breatheSilent {
+  0%, 100% { opacity: 0.88; }
+  50%      { opacity: 1; }
 }
 
 /* -------------------------------------------
-   リード文 / 本文
+   LEAD & BODY
 ------------------------------------------- */
 .philo-lead {
   color: rgba(255,255,255,0.9);
   font-size: 1.15rem;
-  line-height: 1.9;
+  line-height: 1.85;     /* 1.9 → 微調整 */
   margin-bottom: 2.5rem;
   padding-left: 1rem;
 }
@@ -74,13 +79,13 @@
 .philo-body {
   color: rgba(255,255,255,0.70);
   font-size: 1rem;
-  line-height: 1.85;
+  line-height: 1.78;     /* 1.85 → 最適化 */
   margin-bottom: 2.5rem;
   padding-left: 1rem;
 }
 
 /* -------------------------------------------
-   三原則
+   SUBTITLE（3原則）
 ------------------------------------------- */
 .philo-subtitle {
   color: white;
@@ -94,23 +99,24 @@
 .philo-subtext {
   color: rgba(255,255,255,0.55);
   font-size: 0.9rem;
-  line-height: 1.75;
+  line-height: 1.72;
   padding-left: 1rem;
 }
 
 /* -------------------------------------------
-   締め
+   LAST MESSAGE（締め）
 ------------------------------------------- */
 .philo-last {
   margin-top: 4rem;
-  color: rgba(255,255,255,0.82);
-  font-size: 1.25rem;
-  letter-spacing: 0.06em;
+  color: rgba(255,255,255,0.90);  /* ← 階層UP */
+  font-size: 1.26rem;
+  letter-spacing: 0.065em;
   padding-left: 1rem;
+  line-height: 1.88;              /* ← 余韻最適化 */
 }
 
 /* -------------------------------------------
-   古いfadeを安全に上書き
+   OLD fade 上書き（安全補正）
 ------------------------------------------- */
 .fade-up,
 .fade-up.show,
@@ -144,7 +150,8 @@
   }
 
   .philo-last {
-    font-size: 1.1rem;
+    font-size: 1.12rem;
+    line-height: 1.82;
   }
 
   .philo-noise {

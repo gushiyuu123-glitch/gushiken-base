@@ -11,7 +11,7 @@ export default function HeroSP() {
       <div className="absolute inset-0 overflow-hidden">
         <img
           src={heroSP}
-          alt="GUSHIKEN DESIGN｜店舗・サロン向けWeb制作"
+          alt="沖縄のフリーランスWebデザイナー｜美容・EC・店舗向けの高品質Web制作"
           className="
             w-full h-full object-cover
             brightness-[0.99]
@@ -110,6 +110,18 @@ export default function HeroSP() {
       ===================== */}
       <div className="absolute left-6 top-[96px] right-4">
 
+        {/* Small SEO assist line（自然に1行だけ追加） */}
+        <p
+          className="
+            text-white/60
+            text-[0.78rem]
+            tracking-[0.12em]
+            mb-3
+          "
+        >
+          沖縄発・美容/EC/店舗向けの高品質Webデザイン
+        </p>
+
         {/* TITLE */}
         <h1
           className="
@@ -196,7 +208,6 @@ export default function HeroSP() {
           100% { transform: translateY(-40px); }
         }
 
-        /* NOWARP CORE */
         .nowarp {
           will-change: transform, opacity;
           backface-visibility: hidden;

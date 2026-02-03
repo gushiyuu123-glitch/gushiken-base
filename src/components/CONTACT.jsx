@@ -40,31 +40,27 @@ export default function Contact() {
         <h2 className="contact-title aq-fade delay-1" translate="no">
           CONTACT
         </h2>
+<p className="contact-lead aq-fade delay-2">
+  このサイトの世界観や考え方に、少しでも合いそうだと感じていただけた方へ。
+</p>
 
-        {/* リード */}
-        <p className="contact-lead aq-fade delay-2">
-          このサイトの雰囲気や考え方に、<br />
-          少しでも共感いただけた方へ。
-        </p>
+<p className="contact-lead-sub aq-fade delay-3">
+  まだ内容が固まっていなくても問題ありません。<br />
+  「こんな雰囲気にしたい」「こう見せたい」など、  
+  大まかな方向性だけでもお送りください。
+</p>
 
-        {/* サブリード */}
-        <p className="contact-lead-sub aq-fade delay-3">
-          まだ整理しきれていなくても構いません。<br />
-          大まかなイメージや目的があれば十分です。
-        </p>
-
-
-        {/* CTA */}
-  <div className="contact-actions aq-fade delay-3">
+<div className="contact-actions aq-fade delay-3">
   <a href="/contact" className="contact-btn">
     お問い合わせフォームへ
   </a>
-
 </div>
 
 <p className="contact-footer aq-fade delay-5">
-  ※ 内容によっては対応できない場合があります。
+  ※ 内容やスケジュールによっては、対応が難しい場合があります。<br />
+  その際も、必ず理由を添えて丁寧にお返事いたします。
 </p>
+
 </div>
       </div>
     </section>

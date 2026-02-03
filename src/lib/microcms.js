@@ -1,17 +1,17 @@
 // ===============================
-// microCMS API Client（完全版）
+// microCMS API Client — Noah Pro Edition
 // ===============================
 import axios from "axios";
 
-// --- 環境変数 ---
+// --- ENV ---
 const API_KEY = import.meta.env.VITE_MICROCMS_API_KEY;
 const SERVICE_DOMAIN = import.meta.env.VITE_MICROCMS_SERVICE_DOMAIN;
 
 if (!API_KEY || !SERVICE_DOMAIN) {
-  console.warn("❗ microCMS の環境変数が設定されていません");
+  console.warn("❗ microCMS の環境変数が不足しています");
 }
 
-// --- Axios クライアント ---
+// --- Axios Client ---
 export const client = axios.create({
   baseURL: `https://${SERVICE_DOMAIN}.microcms.io/api/v1`,
   headers: {
@@ -20,40 +20,77 @@ export const client = axios.create({
   timeout: 8000,
 });
 
-// ===================================
-// ★ NEWS：一覧取得（limit / offset）
-// ===================================
-export async function getNewsList({ limit = 10, offset = 0 } = {}) {
+// ===============================
+// Utility: retry wrapper（最大2回）
+// ===============================
+async function fetchWithRetry(fn, retries = 2) {
   try {
-    const res = await client.get("/news", {
-      params: {
-        limit,
-        offset,
-        orders: "-publishedAt", // 新しい順
-      },
-    });
-
-    return res.data;
+    return await fn();
   } catch (err) {
-    console.error("❌ NEWS一覧取得エラー:", err);
-    return { contents: [] };
+    if (retries <= 0) throw err;
+    await new Promise((r) => setTimeout(r, 300)); // 少し待つ
+    return fetchWithRetry(fn, retries - 1);
   }
 }
 
-// ===================================
+// ===============================
+// ★ NEWS：一覧取得（limit / offset）
+// ===============================
+export async function getNewsList({ limit = 10, offset = 0 } = {}) {
+  try {
+    const res = await fetchWithRetry(() =>
+      client.get("/news", {
+        params: {
+          limit,
+          offset,
+          orders: "-publishedAt", // 新着順
+        },
+      })
+    );
+
+    // API返却が空でも構造を揃える
+    return {
+      contents: res.data.contents || [],
+      totalCount: res.data.totalCount || 0,
+      limit,
+      offset,
+      error: null,
+    };
+  } catch (err) {
+    console.error("❌ NEWS一覧取得エラー:", err);
+
+    return {
+      contents: [],
+      totalCount: 0,
+      limit,
+      offset,
+      error: true,
+    };
+  }
+}
+
+// ===============================
 // ★ NEWS：詳細取得
-// ===================================
+// ===============================
 export async function getNewsDetail(id) {
   if (!id) {
-    console.error("❌ getNewsDetail に ID がありません");
-    return null;
+    console.error("❌ getNewsDetail：ID が未指定");
+    return { data: null, error: true };
   }
 
   try {
-    const res = await client.get(`/news/${id}`);
-    return res.data;
+    const res = await fetchWithRetry(() => client.get(`/news/${id}`));
+
+    return {
+      data: res.data,
+      error: null,
+    };
   } catch (err) {
     console.error(`❌ NEWS詳細取得エラー（id: ${id}）`, err);
-    return null;
+
+    return {
+      data: null,
+      error: true,
+    };
   }
 }

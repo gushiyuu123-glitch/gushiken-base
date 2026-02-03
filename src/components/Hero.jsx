@@ -11,7 +11,7 @@ export default function Hero() {
       <div className="absolute inset-0 overflow-hidden">
         <img
           src={hero}
-          alt="GUSHIKEN DESIGN｜美容・EC・店舗向けWeb制作"
+          alt="美容・EC・店舗向けの高品質Webデザイン｜沖縄フリーランス GUSHIKEN DESIGN"
           className="
             w-full h-full object-cover
             brightness-[1.05]
@@ -121,64 +121,65 @@ export default function Hero() {
         />
 
         {/* =====================
-            COPY BLOCK
+            COPY BLOCK（←SEO強化ポイント）
         ===================== */}
-{/* ▼ レイヤー2：感情（WHY：選ぶ理由） */}
-<p
-  className="
-    stylish-sub delay-[0.28s]
-    text-white/90
-    text-[0.95rem] md:text-[1.15rem]
-    leading-relaxed
-    tracking-wide
-    max-w-md
-    nowarp
-  "
->
-  <span className="block">
-    他と同じデザインでは物足りない人へ。上品さと<br></br> </span><span className="block mt-1">
-  “伝わる構造”を両立させたWebサイトを制作します。
-  </span>
+        <p
+          className="
+            stylish-sub delay-[0.28s]
+            text-white/90
+            text-[0.95rem] md:text-[1.15rem]
+            leading-relaxed
+            tracking-wide
+            max-w-md
+            nowarp
+          "
+        >
+          {/* ▼ レイヤー1：SEOワード（自然） */}
+          <span className="block text-white/60 text-[0.82rem] tracking-[0.12em] mb-3">
+            美容・EC・店舗向けの高品質Webデザインを沖縄から制作。
+          </span>
 
-  {/* ▼ レイヤー3：思想レイヤー */}
-  <span
-    className="
-      block mt-4
-      text-white/55
-      text-[0.82em]
-      tracking-[0.14em]
-    "
-  >
-    静けさを設計し、構造で届ける。  <br></br>
-    ―― 高品質ブランドのためのWebデザイン。
-  </span>
-</p>
+          {/* ▼ レイヤー2：感情（WHY） */}
+          <span className="block">
+            他と同じデザインでは物足りない人へ。上品さと<br />
+          </span>
+          <span className="block mt-1">
+            “伝わる構造”を両立させたWebサイトを制作します。
+          </span>
 
-<style>{`
-  /* ============================
-        nowarp（瞬間ワープ防止核）
-     ============================ */
-  .nowarp {
-    will-change: transform, opacity;
-    backface-visibility: hidden;
-    transform: translateZ(0);
-  }
-`}</style>
+          {/* ▼ レイヤー3：思想レイヤー */}
+          <span
+            className="
+              block mt-4
+              text-white/55
+              text-[0.82em]
+              tracking-[0.14em]
+            "
+          >
+            静けさを設計し、構造で届ける。<br />
+            ―― 高品質ブランドのためのWebデザイン。
+          </span>
+        </p>
 
+        <style>{`
+          .nowarp {
+            will-change: transform, opacity;
+            backface-visibility: hidden;
+            transform: translateZ(0);
+          }
+        `}</style>
       </div>
 
       {/* =====================
           STYLES
       ===================== */}
       <style>{`
-        /* Background Float */
         @keyframes heroFloat {
           0%   { transform: scale(1.015) translate(0,0); }
           50%  { transform: scale(1.020) translate(4px,8px); }
           100% { transform: scale(1.015) translate(0,0); }
         }
 
-        /* Dust */
         @keyframes dustFloat {
           0%   { opacity: 0; transform: translateY(0) scale(0.8); }
           35%  { opacity: 0.6; transform: translateY(-14px) scale(1); }
@@ -186,7 +187,6 @@ export default function Hero() {
           100% { opacity: 0; transform: translateY(-36px) scale(0.9); }
         }
 
-        /* Title Reveal */
         .stylish-title {
           opacity: 0;
           transform: translateY(22px);
@@ -215,15 +215,14 @@ export default function Hero() {
           }
         }
 
-        /* Sub Reveal */
         .stylish-sub {
           opacity: 0;
           transform: translate(12px,14px);
           filter: blur(4px);
           animation: subFlow 1.25s cubic-bezier(.25,.46,.25,1) forwards;
         }
-        .stylish-sub.delay-\\[0\\.12s\\] { animation-delay: 0.12s; }
-        .stylish-sub.delay-\\[0\\.28s\\] { animation-delay: 0.28s; }
+        .stylish-sub.delay-\[0\.12s\] { animation-delay: 0.12s; }
+        .stylish-sub.delay-\[0\.28s\] { animation-delay: 0.28s; }
 
         @keyframes subFlow {
           to {

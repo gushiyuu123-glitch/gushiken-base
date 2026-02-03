@@ -11,10 +11,13 @@ export default function WorkDetail() {
     return all.find((i) => i.slug === slug);
   }, [slug]);
 
+  /* ============================================================
+       NOT FOUND
+  ============================================================ */
   if (!work) {
     return (
-      <main className="min-h-screen bg-[#070604] text-white px-6 py-24">
-        <div className="max-w-3xl mx-auto">
+      <main className="min-h-screen bg-[#0b0b0b] text-white px-6 py-24">
+        <div className="max-w-3xl mx-auto aq-fade aq-show">
           <p className="text-white/60 tracking-[0.18em] text-xs mb-4">
             NOT FOUND
           </p>
@@ -32,7 +35,7 @@ export default function WorkDetail() {
     );
   }
 
-  // New 判定（30日ルール or タグ NEW）
+  // New 判定（30日ルール or NEW タグ）
   const isNew =
     work.tags?.includes("NEW") ||
     (work.createdAt &&
@@ -40,15 +43,15 @@ export default function WorkDetail() {
         (1000 * 60 * 60 * 24) <= 30);
 
   return (
-    <main className="min-h-screen bg-[#070604] text-white overflow-x-hidden">
+    <main className="min-h-screen bg-[#0b0b0b] text-white overflow-x-hidden">
 
-      {/* ======================================================
-          HERO
-      ====================================================== */}
-      <section className="relative pt-28 pb-16 px-6 md:px-10">
+      {/* ============================================================
+          HERO（展示室：静かな主張）
+      ============================================================ */}
+      <section className="relative pt-28 pb-16 px-6 md:px-10 aq-fade">
         <div className="max-w-6xl mx-auto">
 
-          {/* 小さなライン */}
+          {/* 小ライン（薄膜） */}
           <div className="w-12 h-px bg-gradient-to-r from-white/20 to-white/5 mb-6" />
 
           {/* ラベル + NEW */}
@@ -63,8 +66,9 @@ export default function WorkDetail() {
                   px-2 py-[2px]
                   text-[0.62rem] tracking-[0.22em]
                   rounded-sm
-                  text-amber-200/90 bg-white/5
-                  border border-amber-200/35
+                  text-amber-200/90 bg-white/3
+                  border border-amber-200/20
+                  backdrop-blur-[2px]
                 "
               >
                 NEW
@@ -73,7 +77,11 @@ export default function WorkDetail() {
           </div>
 
           {/* タイトル */}
-          <h1 className="text-[2.1rem] md:text-[3rem] tracking-[0.18em] font-light leading-[1.15]">
+          <h1 className="
+            text-[2.3rem] md:text-[3.14rem]
+            tracking-[0.18em] font-light
+            leading-[1.13]
+          ">
             {work.title}
           </h1>
 
@@ -82,7 +90,7 @@ export default function WorkDetail() {
             {work.desc}
           </p>
 
-          {/* CTA  */}
+          {/* CTA */}
           <div className="mt-10 flex flex-wrap items-center gap-4">
             <a
               href={work.link}
@@ -90,12 +98,13 @@ export default function WorkDetail() {
               rel="noopener noreferrer"
               className="
                 inline-flex items-center justify-center
-                px-6 h-[44px]
+                px-7 h-[46px]
                 rounded-full
-                bg-white/10 hover:bg-white/14
-                border border-white/18
+                bg-white/5 hover:bg-white/9
+                border border-white/15 hover:border-white/25
                 transition
                 tracking-[0.18em] text-[12px]
+                backdrop-blur-[3px]
               "
             >
               VISIT SITE →
@@ -105,12 +114,13 @@ export default function WorkDetail() {
               to="/works"
               className="
                 inline-flex items-center justify-center
-                px-6 h-[44px]
+                px-7 h-[46px]
                 rounded-full
                 bg-transparent hover:bg-white/6
-                border border-white/14
+                border border-white/10
                 transition
-                tracking-[0.18em] text-[12px] text-white/75 hover:text-white
+                tracking-[0.18em] text-[12px]
+                text-white/75 hover:text-white
               "
             >
               BACK →
@@ -119,10 +129,10 @@ export default function WorkDetail() {
         </div>
       </section>
 
-      {/* ======================================================
-          MAIN VISUAL（複数対応）
-      ====================================================== */}
-      <section className="px-6 md:px-10 pb-20">
+      {/* ============================================================
+          MAIN VISUAL（複数対応・展示室仕様）
+      ============================================================ */}
+      <section className="px-6 md:px-10 pb-20 aq-fade">
         <div className="max-w-6xl mx-auto space-y-20">
           {(work.detail.visuals || [work.img]).map((v, i) => (
             <div
@@ -138,11 +148,12 @@ export default function WorkDetail() {
                 className="w-full h-full object-cover brightness-[0.88]"
                 loading="lazy"
               />
+              {/* Dior 薄膜 */}
               <div
                 className="absolute inset-0 pointer-events-none"
                 style={{
                   background:
-                    "radial-gradient(circle at top right, rgba(255,240,210,0.16), transparent 62%)",
+                    "radial-gradient(circle at 68% 8%, rgba(255,245,220,0.08), transparent 62%)",
                 }}
               />
             </div>
@@ -150,10 +161,10 @@ export default function WorkDetail() {
         </div>
       </section>
 
-      {/* ======================================================
-          TAGS
-      ====================================================== */}
-      <section className="px-6 md:px-10 pb-24">
+      {/* ============================================================
+          TAGS（展示風タグ）
+      ============================================================ */}
+      <section className="px-6 md:px-10 pb-24 aq-fade">
         <div className="max-w-6xl mx-auto">
           <h2 className="text-[0.9rem] tracking-[0.22em] font-light text-white/85 mb-6">
             TAGS
@@ -166,8 +177,11 @@ export default function WorkDetail() {
                 className="
                   px-3 py-[6px]
                   text-[11px] tracking-[0.14em]
-                  bg-white/5 border border-white/12
-                  rounded-full text-white/70
+                  bg-white/3
+                  border border-white/8
+                  rounded-full
+                  text-white/60
+                  backdrop-blur-[2px]
                 "
               >
                 {t}
@@ -177,12 +191,12 @@ export default function WorkDetail() {
         </div>
       </section>
 
-      {/* ======================================================
-          FOOTER NAV
-      ====================================================== */}
-      <section className="px-6 md:px-10 pb-28">
+      {/* ============================================================
+          FOOTER NAV（帰り道のライン）
+      ============================================================ */}
+      <section className="px-6 md:px-10 pb-28 aq-fade">
         <div className="max-w-6xl mx-auto">
-          <div className="w-full h-px bg-white/10 mb-10" />
+          <div className="h-px w-full bg-gradient-to-r from-white/12 to-transparent mb-10" />
           <Link
             to="/works"
             className="text-white/70 hover:text-white transition tracking-[0.22em] text-xs"

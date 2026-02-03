@@ -1,24 +1,31 @@
 import React from "react";
 
-export default function Category({ title, subtitle, accent = false, children, itemsRaw = [] }) {
+export default function Category({
+  title,
+  subtitle,
+  accent = false,
+  children,
+  itemsRaw = [],
+}) {
   const items = React.Children.toArray(children);
 
-  // NEW 判定（itemsRaw が最も正確）
+  // ------------------------------------------------------
+  // NEW 判定（最も信頼できる itemsRaw を優先）
+  // ------------------------------------------------------
   const hasNew = itemsRaw.some((i) => i.isNew === true);
 
-  /* ======================================================
-     PICK UP は完全に別扱い（黄金レイアウトのため）
-  ====================================================== */
+  // ------------------------------------------------------
+  // PICK UP：幅の黄金比（視認性・存在感の最適解）
+  // ------------------------------------------------------
   const getCardWidth = (category) => {
     const map = {
-      "PICK UP": "w-[88%]",                 // ← ここが特別。大きすぎず、最も上質に見える。
+      "PICK UP": "w-[88%]",
       "BEAUTY / SALON": "w-[94%]",
       "HOTEL / STAY": "w-[90%]",
       "FOOD / FURNITURE / BRAND": "w-[88%]",
       "EC / BRAND DESIGN": "w-[82%]",
-      "ART / CREATIVE": "w-[96%]"
+      "ART / CREATIVE": "w-[96%]",
     };
-
     return map[category] || "w-[88%]";
   };
 
@@ -26,19 +33,20 @@ export default function Category({ title, subtitle, accent = false, children, it
     <section
       className={`
         aq-fade w-full relative
-        ${accent ? "pt-4 pb-10 bg-white/[0.02] rounded-xl" : ""}
+        ${accent ? "pt-5 pb-12 bg-white/[0.02] rounded-xl" : ""}
       `}
     >
-
-      {/* TITLE */}
+      {/* =======================================================
+          TITLE BLOCK（ライン × タイトル × サブテキスト）
+      ======================================================= */}
       <div className="mb-12 relative">
-        {/* PICK UP は強調ライン強め */}
         <div
           className={`
             h-px mb-6
-            ${accent
-              ? "w-20 bg-gradient-to-r from-amber-300/60 to-amber-200/10"
-              : "w-12 bg-gradient-to-r from-white/30 to-white/5"
+            ${
+              accent
+                ? "w-20 bg-gradient-to-r from-amber-300/60 to-amber-200/10"
+                : "w-12 bg-gradient-to-r from-white/28 to-white/5"
             }
           `}
         />
@@ -47,7 +55,11 @@ export default function Category({ title, subtitle, accent = false, children, it
           <h2
             className={`
               text-white font-light tracking-[0.22em]
-              ${accent ? "text-[1.18rem]" : "text-[1.02rem] md:text-[1.15rem]"}
+              ${
+                accent
+                  ? "text-[1.18rem]"
+                  : "text-[1.02rem] md:text-[1.14rem]"
+              }
             `}
           >
             {title}
@@ -72,11 +84,11 @@ export default function Category({ title, subtitle, accent = false, children, it
 
         <p
           className={`
-            mt-2 leading-relaxed
-            tracking-[0.14em]
-            ${accent
-              ? "text-white/55 text-[0.86rem]"
-              : "text-white/38 text-[0.78rem]"
+            mt-2 leading-relaxed tracking-[0.14em]
+            ${
+              accent
+                ? "text-white/60 text-[0.86rem]"
+                : "text-white/38 text-[0.78rem]"
             }
           `}
         >
@@ -84,18 +96,18 @@ export default function Category({ title, subtitle, accent = false, children, it
         </p>
       </div>
 
-      {/* ======================================================
-          SP：横スクロール（PICK UP 対応）
-      ====================================================== */}
+      {/* =======================================================
+           SP：横スクロール（黄金比 × 呼吸 × 薄膜）
+      ======================================================= */}
       <div className="sm:hidden w-full relative mb-20 pt-4">
         <div className="relative px-1">
           <div
             className="
-              works-rail
-              flex overflow-x-auto overflow-y-hidden
-              no-scrollbar snap-x snap-mandatory
-              gap-5 px-4 py-4
+              works-rail flex gap-5 px-4 py-4
+              overflow-x-auto overflow-y-hidden no-scrollbar
+              snap-x snap-mandatory
               overscroll-x-contain
+              [scroll-behavior:smooth]
             "
             style={{ WebkitOverflowScrolling: "touch" }}
           >
@@ -115,9 +127,9 @@ export default function Category({ title, subtitle, accent = false, children, it
         </div>
       </div>
 
-      {/* ======================================================
-          PC GRID（PICK UP は 2列 → 余白多め）
-      ====================================================== */}
+      {/* =======================================================
+           PC GRID：PICK UP だけ 2列の上質レイアウト
+      ======================================================= */}
       {accent ? (
         <div className="hidden sm:grid grid-cols-2 gap-x-12 gap-y-16">
           {items}

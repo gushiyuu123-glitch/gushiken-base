@@ -10,20 +10,45 @@ export default function Contact() {
   const [status, setStatus] = useState("idle");
   const [message, setMessage] = useState("");
 
-  /* ---------------------------------------------
-     Page Fade-in（Silent UI v4.2）
-  --------------------------------------------- */
+  /* ----------------------------------------------------
+      Page Fade-in（Silent UI v4.2）
+      ※ aq-fade の制御は App.jsx で一元管理
+  ---------------------------------------------------- */
   useEffect(() => {
     const root = rootRef.current;
     if (!root) return;
 
+    // Contact page 専用のフェードのみ
     root.classList.add(styles.show);
-    root.querySelectorAll(".aq-fade").forEach((el) => el.classList.add("aq-show"));
   }, []);
 
-  /* ---------------------------------------------
-     Form Submit
-  --------------------------------------------- */
+  /* ----------------------------------------------------
+      SEO（Contact 専用）
+  ---------------------------------------------------- */
+  useEffect(() => {
+    const description =
+      "GUSHIKEN DESIGN へのお問い合わせページ。サイト制作やブランド設計の相談を、目的の整理から丁寧にサポートします。";
+
+    let meta = document.querySelector('meta[name="description"]');
+    if (!meta) {
+      meta = document.createElement("meta");
+      meta.name = "description";
+      document.head.appendChild(meta);
+    }
+    meta.content = description;
+
+    let canonical = document.querySelector('link[rel="canonical"]');
+    if (!canonical) {
+      canonical = document.createElement("link");
+      canonical.rel = "canonical";
+      document.head.appendChild(canonical);
+    }
+    canonical.href = "https://gushikendesign.com/contact";
+  }, []);
+
+  /* ----------------------------------------------------
+      Form Submit
+  ---------------------------------------------------- */
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (status === "loading") return;
@@ -66,7 +91,7 @@ export default function Contact() {
           CONTACT
         </h1>
 
-        {/* LEAD（修正版） */}
+        {/* LEAD */}
         <p className={`${styles.lead} aq-fade delay-2`}>
           「まず相談だけしたい」という段階でも大丈夫です。<br />
           お店の雰囲気・伝えたいこと・なんとなくのイメージだけでも構いません。<br />
@@ -120,7 +145,7 @@ export default function Contact() {
             <textarea id="detail" name="detail" rows={6} required className={styles.textarea} />
           </FormField>
 
-          {/* 注意（改善） */}
+          {/* 注意 */}
           <p className={`${styles.note} aq-fade delay-4`}>
             ※ 写真がなくても問題ありません。イメージに合わせて最適な形を一緒に考えます。<br />
             ※ 通常 24 時間以内にご返信いたします。
@@ -152,7 +177,6 @@ export default function Contact() {
           </div>
 
         </form>
-
 
       </div>
     </section>

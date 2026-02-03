@@ -1,3 +1,8 @@
+/* ============================================================================
+   GUSHIKEN DESIGN Core Init v3
+   (FOUC防止 / Glow発火 / SW最適化)
+=========================================================================== */
+
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
@@ -5,9 +10,9 @@ import "./index.css";
 import App from "./App.jsx";
 import { Analytics } from "@vercel/analytics/react";
 
-// ============================================
-// Render
-// ============================================
+/* ============================================================================
+   Render
+=========================================================================== */
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <BrowserRouter>
@@ -17,85 +22,81 @@ createRoot(document.getElementById("root")).render(
   </StrictMode>
 );
 
-// ============================================
-// ① 初期フェード（FOUC 完全防止版）
-// ============================================
-window.addEventListener("load", () => {
-  const r = document.getElementById("root");
-  if (!r) return;
+/* ============================================================================
+   ① 初期フェード（FOUC 完全防止・最速）
+=========================================================================== */
+document.addEventListener("DOMContentLoaded", () => {
+  const root = document.getElementById("root");
+  if (!root) return;
 
-  // CSS 読み込み後の次のフレームで確実に付ける
   requestAnimationFrame(() => {
-    r.classList.add("show");
+    root.classList.add("show");
   });
 
-  // 保険：もし何かで遅延した場合 500ms で必ず付く
-  setTimeout(() => r.classList.add("show"), 500);
+  // 保険（300ms）
+  setTimeout(() => root.classList.add("show"), 300);
 });
 
-// ============================================
-// ② Ambient Glow（1度だけ発火）
-// ============================================
-let glowActivated = false;
+/* ============================================================================
+   ② Ambient Glow（IntersectionObserverで1回だけ発火）
+=========================================================================== */
+(() => {
+  const sentinel = document.createElement("div");
+  sentinel.style.position = "absolute";
+  sentinel.style.top = "120vh"; 
+  sentinel.style.height = "1px";
+  sentinel.style.width = "1px";
+  sentinel.style.pointerEvents = "none";
+  document.body.appendChild(sentinel);
 
-const activateGlow = () => {
-  if (glowActivated) return;
-  glowActivated = true;
-  document.body.classList.add("scrolled");
-};
+  const io = new IntersectionObserver(
+    ([entry]) => {
+      if (!entry.isIntersecting) return;
+      document.body.classList.add("scrolled");
+      io.disconnect(); // ← ここで監視終了
+    },
+    { threshold: 0.01 }
+  );
 
-window.addEventListener(
-  "scroll",
-  () => {
-    if (window.scrollY > 10) activateGlow();
-  },
-  { passive: true }
-);
+  io.observe(sentinel);
+})();
 
-// ============================================
-// ③ SW：更新即反映
-// ============================================
-if (
-  "serviceWorker" in navigator &&
-  location.hostname !== "localhost" &&
-  location.hostname !== "127.0.0.1"
-) {
-  navigator.serviceWorker.addEventListener(
-    "message",
-    (evt) => {
-      try {
+/* ============================================================================
+   ③ SW：更新即反映（本番のみ）
+=========================================================================== */
+if ("serviceWorker" in navigator) {
+  const isLocal =
+    location.hostname === "localhost" || location.hostname === "127.0.0.1";
+
+  if (!import.meta.env.DEV && !isLocal) {
+    navigator.serviceWorker.addEventListener(
+      "message",
+      (evt) => {
         if (evt?.data?.type === "SW_UPDATED") {
           console.info("SW updated - refreshing...");
           window.location.reload(true);
         }
-      } catch (e) {}
-    },
-    { once: true } // ← 重複防止（重要）
-  );
-}
+      },
+      { once: true }
+    );
 
-// ============================================
-// ④ 正式リリース環境：SW waiting → 即更新
-// ============================================
-if (!import.meta.env.DEV && "serviceWorker" in navigator) {
-  navigator.serviceWorker.getRegistration().then((reg) => {
-    if (reg?.waiting) reg.waiting.postMessage({ type: "SKIP_WAITING" });
-  });
-}
-
-// ============================================
-// ⑤ 開発環境：SW完全クリア（事故防止）
-// ============================================
-if (import.meta.env.DEV && "serviceWorker" in navigator) {
-  navigator.serviceWorker.getRegistrations().then((regs) => {
-    regs.forEach((reg) => reg.unregister().catch(() => {}));
-  });
-
-  if (window.caches?.keys) {
-    caches.keys().then((keys) => {
-      keys.forEach((k) => caches.delete(k));
+    navigator.serviceWorker.getRegistration().then((reg) => {
+      if (reg?.waiting) reg.waiting.postMessage({ type: "SKIP_WAITING" });
     });
   }
 
-  console.info("Dev: cleared SW + caches to avoid stale builds");
+  /* ============================================================================
+     ④ 開発環境のみ：SWとキャッシュを完全クリア（安全対策）
+  =========================================================================== */
+  if (import.meta.env.DEV) {
+    navigator.serviceWorker.getRegistrations().then((regs) => {
+      regs.forEach((reg) => reg.unregister().catch(() => {}));
+    });
+
+    if (window.caches) {
+      caches.keys().then((keys) => keys.forEach((k) => caches.delete(k)));
+    }
+
+    console.info("Dev: cleared SW + caches (avoid stale builds)");
+  }
 }

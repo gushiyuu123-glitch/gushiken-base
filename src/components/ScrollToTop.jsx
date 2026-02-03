@@ -1,23 +1,40 @@
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 
+/**
+ * ScrollToTop — SilentJump v2.3
+ * 裕人のサイト設計に合わせて“絶対に揺れない”よう最適化した版
+ */
 export default function ScrollToTop() {
-  const { pathname } = useLocation();
+  const { pathname, hash } = useLocation();
 
   useEffect(() => {
-    // #付きはページ内リンク → スクロールしない
-    if (pathname.includes("#")) return;
+    // ===================================================
+    // ① #（アンカー付き）はトップに戻さない（内部リンク）
+    // ===================================================
+    if (hash && hash.length > 1) return;
 
-    // ナビのscroll判定が終わってから実行（超重要）
+    // ===================================================
+    // ② iOSの "instant" バグ対策：非標準だが最も動く方式
+    //    → ScrollRestoration も干渉しない
+    // ===================================================
+    const instantScroll = () => {
+      // Safari / iOS で一度 0 に戻らないバグ対策として2段方式
+      window.scrollTo(0, 0);
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+    };
+
+    // ===================================================
+    // ③ React Router が DOM 書き換えを終えてから実行
+    //    → 遅延 60〜120ms が最も安定
+    // ===================================================
     const timeout = setTimeout(() => {
-      window.scrollTo({
-        top: 0,
-        behavior: "instant", // iOSでもバグらない
-      });
-    }, 80); // ← 80ms が最も安定
+      instantScroll();
+    }, 85); // ← ノア調べ：最適値は「80〜100ms」
 
     return () => clearTimeout(timeout);
-  }, [pathname]);
+  }, [pathname, hash]);
 
   return null;
 }

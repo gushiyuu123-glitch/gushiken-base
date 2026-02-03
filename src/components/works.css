@@ -1,13 +1,13 @@
 /* ============================================================
-   WORKS SECTION — Dior Glow × SANKOU Exhibition × aq-fade
-   （BIG/SMALL を JSX に書かず、CSS だけで順番制御）
-=========================================================== */
+   WORKS SECTION — 完全版
+   Dior Glow × Layered Quiet Black × Exhibition Layout
+============================================================ */
 
 /* SECTION 背景 */
 .works-section {
   width: 100%;
   padding: 7rem 0;
-  background: linear-gradient(180deg, #0b0b0b 0%, #0a0a0a 40%, #0c0c0c 100%);
+  background: linear-gradient(180deg, #0b0b0b 0%, #0a0a0a 38%, #0c0c0c 100%);
   display: flex;
   justify-content: center;
 }
@@ -19,9 +19,9 @@
   margin: 0 auto;
 }
 
-/* -------------------------------------------
+/* ============================================================
    HEADER（タイトル）
-------------------------------------------- */
+============================================================ */
 .works-header {
   margin-bottom: 3rem;
 }
@@ -30,7 +30,7 @@
   color: white;
   font-size: 3rem;
   font-weight: 300;
-  letter-spacing: 0.22em;
+  letter-spacing: 0.20em;
   margin-bottom: 0.6rem;
   padding-top: 2.5rem;
   position: relative;
@@ -169,10 +169,9 @@
 .work-card:hover img {
   transform: scale(1.08);
 }
-
-/* -------------------------------------------
-   TEXT OVERLAY（高級感 × 可読性）
-------------------------------------------- */
+/* ============================================================
+   TEXT OVERLAY（高級 × 可読性 × Diorベール）
+============================================================ */
 .work-text {
   position: absolute;
   bottom: 0;
@@ -181,87 +180,7 @@
 
   background: linear-gradient(
     to top,
-    rgba(0,0,0,0.42),
-    rgba(0,0,0,0.18),
-    rgba(0,0,0,0)
-  );
-
-  padding: 24px 22px;
-  color: white;
-}
-
-.work-text h3 {
-  font-size: 1.55rem;
-  font-weight: 300;
-  letter-spacing: 0.07em;
-  margin-bottom: 0.6rem;
-}
-
-.work-text p {
-  font-size: 0.9rem;
-  opacity: 0.86;
-}
-
-/* small 用 */
-.work-text.small {
-  padding: 18px 20px;
-}
-
-/* -------------------------------------------
-   SP レイアウト（横スクロール）
-------------------------------------------- */
-@media (max-width: 768px) {
-
-  .works-grid {
-    display: flex;
-    gap: 1.6rem;
-    overflow-x: auto;
-    padding: 0 1rem;
-
-    scroll-snap-type: x mandatory;
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-  }
-  .works-grid::-webkit-scrollbar { display: none; }
-
-  /* カード均一化 */
-  .work-card {
-    flex: 0 0 82%;
-    min-width: 82%;
-    height: auto;
-    scroll-snap-align: center;
-  }
-
-  /* 統一比率 */
-  .work-card img {
-    aspect-ratio: 1 / 1.25;
-  }
-
-  /* SP タップエフェクト */
-  .work-card::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: rgba(0,0,0,0);
-    transition: background 0.25s ease;
-  }
-  .work-card:active::after {
-    background: rgba(0,0,0,0.28);
-  }
-}
-
-/* -------------------------------------------
-   TEXT VEIL
-------------------------------------------- */
-.work-text {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-
-  background: linear-gradient(
-    to top,
-    rgba(0,0,0,0.42),
+    rgba(0,0,0,0.44),
     rgba(0,0,0,0.18),
     rgba(0,0,0,0)
   );
@@ -279,25 +198,26 @@
 
 .work-text p {
   font-size: 0.92rem;
-  opacity: 0.87;
+  opacity: 0.90; /* ← 視認性最適化ライン */
 }
 
-/* small 用 padding 微調整 */
+/* small 用 padding */
 .work-card:nth-child(2) .work-text,
 .work-card:nth-child(3) .work-text {
   padding: 18px 20px;
 }
 
-/* -------------------------------------------
-   金フレーム（右側2枚）
-------------------------------------------- */
+/* ============================================================
+   金フレーム（右の2枚）
+============================================================ */
 .works-grid .work-card:nth-child(2)::before,
 .works-grid .work-card:nth-child(3)::before {
   content: "";
   position: absolute;
   inset: 0;
-  border: 1px solid rgba(215,195,154,0);
-  transition: border-color 1.2s ease 0.35s;
+
+  border: 1px solid rgba(215,195,154,0); /* 初期は透明 */
+  transition: border-color 1.25s ease 0.55s; /* 滲むように遅延 */
 }
 
 .work-card.img-loaded:nth-child(2)::before,
@@ -305,14 +225,17 @@
   border-color: rgba(215,195,154,0.35);
 }
 
-/* -------------------------------------------
-   SP — 横スクロールギャラリー
-------------------------------------------- */
+/* ============================================================
+   SP — 横スクロール展示（完全版）
+============================================================ */
 @media (max-width: 768px) {
+
+  /* Grid → 横スクロールへ切り替え */
   .works-grid {
     display: flex !important;
-    overflow-x: auto;
     flex-direction: row;
+    overflow-x: auto;
+
     gap: 1.6rem;
     padding: 0 1rem;
 
@@ -320,21 +243,25 @@
     -ms-overflow-style: none;
     scrollbar-width: none;
   }
-
   .works-grid::-webkit-scrollbar { display: none; }
 
+  /* カード均一化（展示室仕様） */
   .work-card {
-    flex: 0 0 84%;
-    min-width: 84%;
-    scroll-snap-align: center;
+    flex: 0 0 88%;
+    min-width: 88%;
     height: auto;
+    scroll-snap-align: center;
   }
 
+  /* 統一比率 */
   .work-card img {
     aspect-ratio: 1 / 1.25;
   }
 
-  .works-title { font-size: 1.9rem; padding-top: 1.8rem; }
+  .works-title {
+    font-size: 1.9rem;
+    padding-top: 1.8rem;
+  }
   .works-title::before { width: 42px; }
   .works-sub { font-size: 0.7rem; }
 
@@ -350,15 +277,14 @@
   }
 }
 
-/* -------------------------------------------
-   VIEW ALL WORKS
-------------------------------------------- */
+/* ============================================================
+   VIEW ALL WORKS（Dior Bloom）
+============================================================ */
 .works-viewall {
   width: 100%;
   text-align: center;
   margin-top: 3.5rem !important;
   margin-bottom: 3rem;
-  position: relative;
 
   opacity: 1;
   transform: none;
@@ -396,12 +322,11 @@
   position: absolute;
   inset: 0;
   border-radius: inherit;
-  background:
-    radial-gradient(
-      circle at 85% 20%,
-      rgba(255,226,170,0.23),
-      transparent 65%
-    );
+  background: radial-gradient(
+    circle at 85% 20%,
+    rgba(255,226,170,0.23),
+    transparent 65%
+  );
   opacity: 0;
   transition: opacity 0.9s ease;
 }
@@ -427,13 +352,12 @@
     0 18px 40px rgba(0,0,0,0.28),
     0 0 25px rgba(217,185,138,0.35);
 }
-
 .viewall-btn:hover::before { opacity: 0.18; }
-.viewall-btn:hover::after { opacity: 0.35; }
+.viewall-btn:hover::after  { opacity: 0.35; }
 
-/* -------------------------------------------
+/* ============================================================
    Swipe Hint（SP）
-------------------------------------------- */
+============================================================ */
 .works-grid-wrapper { position: relative; }
 
 .works-swipe-hint {
@@ -468,7 +392,6 @@
   }
 }
 
-/* Keyframes */
 @keyframes swipePulse {
   0% { opacity: 0.25; transform: translate(0, -50%); }
   50% { opacity: 0.85; transform: translate(-6px, -50%); }

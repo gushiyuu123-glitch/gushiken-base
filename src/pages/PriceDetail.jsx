@@ -55,113 +55,97 @@ export default function PriceDetail() {
         <p className="text-white/60 tracking-[0.14em] text-[0.9rem] pl-4 mb-14">
           ― 料金の詳細と制作の進め方 ―
         </p>
+<p className="text-white/75 leading-[1.9] mb-20 max-w-3xl pl-4">
+  Webサイトは、お店やブランドの「第一印象」を決める場所です。<br />
+  だからこそ、最初のヒアリングでは目的・強み・世界観を丁寧に伺い、<br />
+  <span className="text-white/90">
+    デザインと構造の“判断基準”を言葉とイメージで共有してから制作を進めます。
+  </span>
+  <br /><br />
+  ご依頼前に必ず総額を確定し、途中で料金が変わることはありません。
+</p>
 
-        {/* ===== INTRO ===== */}
-        <p className="text-white/75 leading-[1.9] mb-20 max-w-3xl pl-4">
-          Webサイトは、お店やブランドの「空気」を最初に伝える場所です。<br />
-       初回のヒアリングでは目的・方向性・参考イメージを丁寧に伺い、
-          <span className="text-white/90">制作の判断基準を言葉とイメージで<br />共有しながら</span>進めていきます。<br /><br />
-          制作前に必ず総額を確定し、途中で費用が変わることはありません。
-        </p>
+<SectionTitle main>プランと料金</SectionTitle>
 
-        {/* ===== MAIN SECTION ===== */}
-        <SectionTitle main>プランと料金</SectionTitle>
+<div className="grid gap-10 md:grid-cols-3 mb-28">
+  <PlanCard
+    badge="PLAN 01"
+    title="Landing Page"
+    price="¥60,000〜"
+    detail="1ページでサービス・商品・ブランドを魅せる構成。必要な情報を“上品に整理し直す”ところから始めます。"
+    bestFor="まずはしっかり見せたい方向け。"
+  />
 
-        <div className="grid gap-10 md:grid-cols-3 mb-28">
-          <PlanCard
-            badge="PLAN 01"
-            title="Landing Page"
-            price="¥60,000〜"
-            detail="キャンペーンやブランド紹介など、1ページで魅力を伝えたい方向け。"
-            bestFor="まずはWebサイトを持ちたい方へ。"
-          />
-          <PlanCard
-            badge="PLAN 02"
-            title="Small Website"
-            price="¥120,000〜"
-            detail="構成と導線を整理し、トップページ＋2〜4ページ程度を想定した信頼感のあるサイトに仕上げます。"
-            bestFor="店舗・サロン・教室など。"/>
-     <PlanCard
-  badge="PLAN 03"
-  title="Brand Site"
-  price="¥240,000〜"
-  detail="写真・色・余白まで統一し、トップページ＋4〜10ページ程度を想定したブランド全体の世界観を丁寧に設計します。"
-  bestFor="ブランド価値を重視したい方へ。"/>
+  <PlanCard
+    badge="PLAN 02"
+    title="Small Website"
+    price="¥120,000〜"
+    detail="トップページ＋数ページを想定した小規模サイト。導線設計を丁寧に整え、初めて訪れる人にも理解しやすい構造に仕上げます。"
+    bestFor="店舗・サロン・小規模事業に最適。"
+  />
 
-        </div>
+  <PlanCard
+    badge="PLAN 03"
+    title="Brand Site"
+    price="¥240,000〜"
+    detail="写真・色・余白・テキストの表情まで統一し、ブランド全体の世界観を設計。トップ＋複数ページを含む“価値が伝わるサイト”を作ります。"
+    bestFor="世界観を大切にしたいブランドへ。"
+  />
+</div>
 
-        <SectionTitle main>制作の流れ</SectionTitle>
-        <DetailBlock>
-          <li>① ヒアリング（目的・世界観）</li>
-          <li>② 世界観ボード共有</li>
-          <li>③ 着手金 50% → 制作開始</li>
-          <li>④ 初稿提出・調整</li>
-          <li>⑤ 実装・最終確認</li>
-          <li>⑥ 残額お支払い → 公開</li>
-        </DetailBlock>
+<SectionTitle main>制作の流れ</SectionTitle>
+<DetailBlock>
+  <li>① ヒアリング（目的・世界観・強みを共有）</li>
+  <li>② 世界観ボードの作成・方向性の確定</li>
+  <li>③ 着手金 50% → デザイン開始</li>
+  <li>④ 初稿提出 → 調整</li>
+  <li>⑤ 実装 → 最終確認</li>
+  <li>⑥ 残額お支払い → 公開</li>
+</DetailBlock>
 
-        <SectionTitle main>お支払いについて</SectionTitle>
-        <DetailBlock>
-          <li>着手金：50%</li>
-          <li>残額は公開前にお支払いください。</li>
-        </DetailBlock>
+<SectionTitle main>お支払いについて</SectionTitle>
+<DetailBlock>
+  <li>着手金：50%（制作開始前）</li>
+  <li>残額：公開前にお支払いください。</li>
+</DetailBlock>
 
-{/* ===== 注意事項 ===== */}
 <SectionTitle main>注意事項</SectionTitle>
 <DetailBlock>
-  <li>制作前に必ず総額を確定します。</li>
+  <li>制作前に必ず総額を確定します（途中で変わりません）。</li>
   <li>納期目安：3〜6週間</li>
-  <li>短納期・価格最優先のご依頼には対応していません。</li>
-<li>
-  完成後に「ページを追加したくなった」「サービスを増やしたい」場合も  
-  <span className="text-white/90">柔軟に対応できます。</span>
-  その際は、事前に必ず内容と費用を確認いただいてから進めます。
-</li>
-
+  <li>短納期・最低価格優先のご依頼には対応しておりません。</li>
+  <li>
+    完成後に「ページ追加」「サービス追加」が必要になった場合も  
+    <span className="text-white/90">柔軟に対応します。</span>
+    その際は必ず事前に内容と金額をご確認いただいてから進めます。
+  </li>
 </DetailBlock>
 
 <SectionTitle>写真・ビジュアルについて</SectionTitle>
 <DetailBlock dense>
-  <li>素材が不足している場合も、世界観を壊さない補完ビジュアルを制作します。</li>
-
+  <li>素材が不足している場合は、世界観を崩さない補完ビジュアルを作成します。</li>
   <li>
-    できれば、イメージに近い写真や参考URLをご共有いただけると、制作がさらにスムーズです。  
-    自社・他社問わず、雰囲気の近いWebサイトをお送りいただいて大丈夫です。
+    参考URL・近い雰囲気のサイトをご共有いただけると、方向性を正確に掴めます。
   </li>
-<br></br>
-  <li>
-    参考として、私のこれまでの制作一覧もご覧いただけます：<br />
-    <a
-      href="https://gushikendesign.com/works"
-      className="underline text-white/70 hover:text-white"
-      target="_blank" rel="noopener noreferrer"
-    >
-      https://gushikendesign.com/works
-    </a>
-  </li>
-
   <li className="text-white/80 text-[0.85rem] mt-2">
-    ※ いただいた参考サイトは「雰囲気の方向性」を共有するためのもので、  
-    デザインをそのまま再現することは行っていません。
+    ※ いただいた参考サイトは“方向性の理解”のために使用し、デザインの模倣は行いません。
   </li>
 </DetailBlock>
 
+<SectionTitle>SEO・初期設定</SectionTitle>
+<DetailBlock dense>
+  <li>タイトル・説明文・OGP・構造化データの基本設定は標準で対応しています。</li>
+</DetailBlock>
 
-        <SectionTitle>SEO・初期設定</SectionTitle>
-        <DetailBlock dense>
-          <li>タイトル・OGP・構造化データは標準対応です。</li>
-        </DetailBlock>
+<SectionTitle>追加オプション</SectionTitle>
+<DetailBlock dense>
+  <li>microCMS：¥30,000〜</li>
+  <li>ドメイン・サーバー設定代行：¥20,000〜</li>
+</DetailBlock>
 
-        <SectionTitle>追加オプション</SectionTitle>
-        <DetailBlock dense>
-          <li>microCMS：¥30,000〜</li>
-          <li>ドメイン・サーバー設定：¥20,000〜</li>
-        </DetailBlock>
-
-        {/* ===== CTA ===== */}
-        <p className="text-white/70 text-center mt-20 mb-8 text-[0.95rem]">
-          ここまで読んでいただき、ありがとうございます。
-        </p>
+<p className="text-white/70 text-center mt-20 mb-8 text-[0.95rem]">
+  ここまでお読みいただき、ありがとうございます。
+</p>
 
         <div className="text-center">
           <Link

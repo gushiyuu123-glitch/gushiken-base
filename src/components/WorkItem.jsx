@@ -8,7 +8,7 @@ export default function WorkItem({
   link = "/",
   img = "",
   tags = [],
-  createdAt = null,   // ← ★追加
+  createdAt = null,
 }) {
   const isExternal =
     /^https?:\/\//.test(link) ||
@@ -17,67 +17,63 @@ export default function WorkItem({
 
   const Tag = isExternal ? "a" : Link;
 
-  /* ----------------------------------------------------------
-     ★ NEW 判定ロジック（30日以内なら NEW）
-  ---------------------------------------------------------- */
+  /** NEW 判定（30日以内 or tagsにNEW） */
   let isNew = false;
-
   if (createdAt) {
     const now = new Date();
-    const created = new Date(createdAt);
-    const diffDays = (now - created) / (1000 * 60 * 60 * 24);
-    if (diffDays <= 30) isNew = true;
+    const diff = (now - new Date(createdAt)) / 86400000;
+    if (diff <= 30) isNew = true;
   }
-
-  // fallback: tags に NEW が含まれてても NEW 扱い
   if (tags.includes("NEW")) isNew = true;
 
   return (
     <>
-      {/* ========================================================= */}
-      {/* PC VERSION — Silent Gold Glow + NEW TAG                  */}
-      {/* ========================================================= */}
+      {/* =====================================================
+          PC 版 — Dior Exhibition（静けさ × 光膜 × ギャラリー感）
+      ====================================================== */}
       <Tag
         {...(isExternal
           ? { href: link, target: "_blank", rel: "noopener noreferrer" }
           : { to: link })}
         className="
-          aq-fade
-          hidden sm:block group relative rounded-[16px] overflow-hidden
+          hidden sm:block group relative
+          overflow-hidden rounded-[18px]
           bg-[#0a0a0a]
-          border border-white/[0.10]
-          shadow-[0_0_14px_rgba(0,0,0,0.45)]
-          transition-all duration-[900ms] ease-[cubic-bezier(.22,.61,.36,1)]
+          border border-white/10
+          shadow-[0_0_20px_rgba(0,0,0,0.52)]
+          transition-all duration-[900ms]
           hover:scale-[1.018]
-          hover:shadow-[0_22px_34px_rgba(0,0,0,0.55)]
+          hover:shadow-[0_24px_42px_rgba(0,0,0,0.58)]
           transform-gpu
         "
       >
-        {/* Glow Frame */}
+        {/* --- PC：GOLD IRIS GLOW --- */}
         <div
           className="
-            absolute inset-0 rounded-[16px] pointer-events-none
-            opacity-0 group-hover:opacity-[0.28]
+            absolute inset-0 pointer-events-none rounded-[18px]
+            opacity-0 group-hover:opacity-30
+            blur-[26px]
             transition-all duration-[1200ms]
-            group-hover:blur-[22px]
           "
-          style={{ boxShadow: "0 0 44px rgba(221,198,150,0.42)" }}
+          style={{
+            boxShadow: "0 0 48px rgba(222,200,156,0.42)",
+          }}
         />
 
-        {/* Gold Noise */}
+        {/* Noise */}
         <div
           className="
             absolute inset-0 pointer-events-none
-            opacity-[0.07]
+            opacity-[0.06]
             bg-[url('/grain-gold.png')]
             mix-blend-overlay
           "
         />
 
-        {/* IMAGE */}
+        {/* --- IMAGE --- */}
         <div className="relative w-full aspect-[16/10] overflow-hidden">
 
-          {/* ★ NEW TAG — PC */}
+          {/* NEW（PC） */}
           {isNew && (
             <span
               className="
@@ -85,12 +81,9 @@ export default function WorkItem({
                 px-3 py-[3px]
                 text-[11px] tracking-[0.32em] uppercase
                 text-white font-light
-                bg-white/10
-                border border-white/40
-                rounded-sm
-                backdrop-blur-[4px]
-                shadow-[0_0_12px_rgba(255,245,220,0.35)]
-                animate-newGlow
+                bg-white/10 border border-white/40
+                rounded-sm backdrop-blur-[4px]
+                animate-new-breathe
               "
             >
               NEW
@@ -102,115 +95,96 @@ export default function WorkItem({
             alt={title}
             loading="lazy"
             className="
-              w-full h-full object-cover
-              brightness-[0.85]
+              w-full h-full object-cover brightness-[0.87]
               transition-all duration-[1400ms]
-              ease-[cubic-bezier(.23,.54,.32,1)]
               group-hover:brightness-[1.05]
               group-hover:scale-[1.055]
-              transform-gpu
             "
           />
 
+          {/* Light rim */}
           <div
             className="
-              absolute top-0 right-0 w-[62%] h-[62%]
-              pointer-events-none
-              opacity-0 group-hover:opacity-[0.48]
-              transition-all duration-[1300ms]
+              absolute top-0 right-0 w-[60%] h-[60%]
+              pointer-events-none opacity-0
+              group-hover:opacity-[0.48]
               blur-[22px]
+              transition-all duration-[1300ms]
             "
             style={{
               background:
-                "radial-gradient(circle at top right, rgba(255,244,214,0.33), transparent 70%)",
+                "radial-gradient(circle at top right, rgba(255,240,210,0.35), transparent 70%)",
             }}
           />
         </div>
 
-        {/* TEXT */}
+        {/* --- TEXT --- */}
         <div className="p-7 pb-9 text-white relative">
-          <div className="min-h-[150px]">
-            <h3
-              className="
-                text-[1.05rem]
-                tracking-[0.18em]
-                font-light
-                mb-3
-                text-white/90
-                leading-[1.45]
-                transform-gpu
-              "
-            >
-              {title}
-            </h3>
+          <h3
+            className="
+              text-[1.05rem] font-light tracking-[0.18em]
+              leading-[1.45] text-white/90 mb-3
+            "
+          >
+            {title}
+          </h3>
 
-            <p
-              className="
-                text-white/55 text-[0.85rem]
-                leading-[1.9]
-                whitespace-pre-line
-                mb-5
-                transform-gpu
-              "
-              style={{ maxWidth: "360px" }}
-            >
-              {desc}
-            </p>
+          <p
+            className="
+              text-white/55 text-[0.85rem] leading-[1.9]
+              whitespace-pre-line mb-6
+            "
+            style={{ maxWidth: "360px" }}
+          >
+            {desc}
+          </p>
 
-           <span
-  className="
-    text-white/60 text-[0.72rem]
-    tracking-[0.26em]
-    inline-block mt-1
-    transition-all duration-[600ms]
-    group-hover:tracking-[0.34em]
-    group-hover:text-white/90
-    transform-gpu
-  "
->
-  作品詳細へ →
-</span>
-
-          </div>
+          <span
+            className="
+              text-white/60 text-[0.74rem]
+              tracking-[0.26em]
+              transition-all duration-[600ms]
+              group-hover:text-white/90
+              group-hover:tracking-[0.34em]
+            "
+          >
+            作品詳細へ →
+          </span>
         </div>
       </Tag>
 
-      {/* ========================================================= */}
-      {/* SP VERSION — Silent Touch Optimized + NEW TAG             */}
-      {/* ========================================================= */}
+      {/* =====================================================
+          SP 版 — 呼吸と触感に最適化（Apple × Dior Hybrid）
+      ====================================================== */}
       <Tag
         {...(isExternal
           ? { href: link, target: "_blank", rel: "noopener noreferrer" }
           : { to: link })}
         className="
-          aq-fade
-          sm:hidden block 
-          rounded-[22px] relative overflow-clip
-          bg-[#0b0b0b]
-          border border-white/[0.16]
+          sm:hidden block relative rounded-[22px]
+          overflow-hidden bg-[#0b0b0b]
+          border border-white/14
           shadow-[0_14px_42px_rgba(0,0,0,0.78)]
-          transition-all duration-[900ms]
+          transition-all duration-[780ms]
           active:scale-[0.985]
           sp-slide-in
-          [touch-action:pan-x_pan-y]
-          transform-gpu
         "
       >
         {/* Glow */}
         <div
           className="
             absolute inset-0 pointer-events-none rounded-[22px]
-            opacity-0
+            opacity-0 blur-[16px]
             transition-all duration-[1200ms]
-            blur-[14px]
           "
-          style={{ boxShadow: "0 0 34px rgba(215,190,150,0.32)" }}
+          style={{
+            boxShadow: "0 0 38px rgba(220,196,150,0.38)",
+          }}
         />
 
-        {/* IMAGE — 5:4 */}
         <div className="relative w-full aspect-[5/4] overflow-hidden">
 
-          {/* ★ NEW TAG — SP */}
+          {/* NEW（SP） */}
           {isNew && (
             <span
               className="
@@ -218,12 +192,9 @@ export default function WorkItem({
                 px-3 py-[4px]
                 text-[12px] tracking-[0.34em] uppercase
                 text-white font-light
-                bg-white/12
-                border border-white/40
-                rounded-sm
-                backdrop-blur-[4px]
-                shadow-[0_0_16px_rgba(255,245,220,0.42)]
-                animate-newGlow
+                bg-white/12 border border-white/40
+                rounded-sm backdrop-blur-[4px]
+                animate-new-breathe
               "
             >
               NEW
@@ -236,82 +207,66 @@ export default function WorkItem({
             loading="lazy"
             className="
               w-full h-full object-cover
-              brightness-[0.85]
-              scale-[1.02]
+              brightness-[0.86] scale-[1.02]
               transition-all duration-[1400ms]
-              transform-gpu
             "
           />
 
           <div
             className="
-              absolute top-0 right-0
-              w-[68%] h-[68%]
-              pointer-events-none
-              opacity-[0.42]
+              absolute top-0 right-0 w-[65%] h-[65%]
+              pointer-events-none opacity-[0.42]
               blur-[20px]
             "
             style={{
               background:
-                "radial-gradient(circle at top right, rgba(255,240,215,0.44), transparent 70%)",
+                "radial-gradient(circle at top right, rgba(255,238,212,0.42), transparent 70%)",
             }}
           />
         </div>
 
-        {/* TEXT */}
+        {/* --- TEXT --- */}
         <div className="px-5 pt-5 pb-7 text-white">
-          <div className="min-h-[110px] mx-auto">
-            <h3
-              className="
-                text-[0.98rem]
-                font-light
-                text-white/90
-                leading-[1.32]
-                tracking-[0.12em]
-                break-words
-                mb-[0.45rem]
-                transform-gpu
-              "
-              style={{ maxWidth: "240px" }}
-            >
-              {title}
-            </h3>
+          <h3
+            className="
+              text-[0.98rem] font-light text-white/90
+              leading-[1.32] tracking-[0.12em]
+              mb-[0.45rem]
+              break-words
+            "
+            style={{ maxWidth: "240px" }}
+          >
+            {title}
+          </h3>
 
-            <p
-              className="
-                text-white/55
-                text-[0.82rem]
-                leading-[1.75]
-                whitespace-pre-line
-                line-clamp-3
-                mb-5
-                transform-gpu
-              "
-              style={{ maxWidth: "240px" }}
-            >
-              {desc}
-            </p>
+          <p
+            className="
+              text-white/55 text-[0.82rem]
+              leading-[1.75]
+              whitespace-pre-line line-clamp-3
+              mb-5
+            "
+            style={{ maxWidth: "240px" }}
+          >
+            {desc}
+          </p>
 
-            <span
-              className="
-                block
-                text-white/75
-                text-[0.70rem]
-                tracking-[0.28em]
-                transform-gpu
-              "
-            >
-              作品詳細へ →
-            </span>
-          </div>
+          <span
+            className="
+              block text-white/75 text-[0.70rem]
+              tracking-[0.28em]
+            "
+          >
+            作品詳細へ →
+          </span>
         </div>
       </Tag>
 
-      {/* ========================================================= */}
-      {/* NEW GLOW ANIMATION                                        */}
-      {/* ========================================================= */}
+      {/* =====================================================
+          NEW BADGE 呼吸アニメ
+      ====================================================== */}
       <style>{`
-        @keyframes newGlow {
+        @keyframes new-breathe {
           0% {
             opacity: 0.55;
             box-shadow: 0 0 6px rgba(255,245,220,0.20);
@@ -325,9 +280,8 @@ export default function WorkItem({
             box-shadow: 0 0 6px rgba(255,245,220,0.20);
           }
         }
-
-        .animate-newGlow {
-          animation: newGlow 2.6s ease-in-out infinite;
+        .animate-new-breathe {
+          animation: new-breathe 2.4s ease-in-out infinite;
         }
       `}</style>
     </>

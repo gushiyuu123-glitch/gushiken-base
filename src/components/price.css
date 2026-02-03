@@ -1,20 +1,25 @@
 /* =======================================================
-   PRICE — Silent UI v4.2（完全統一版）
+   PRICE — Silent UI v4.2（完成統一版）
    by GUSHIKEN DESIGN × NOA
 ======================================================= */
 
 /* -------------------------------------------
-   セクション（Fadeは aq-fade に任せる）
+   セクション背景
 ------------------------------------------- */
 .price-section {
   padding: 8rem 0;
-  background: linear-gradient(180deg, #0b0b0b 0%, #0a0a0a 70%, #0c0c0c 100%);
+  background: linear-gradient(
+    180deg,
+    #0b0b0b 0%,
+    #090909 70%,
+    #0c0c0c 100%
+  ); /* ← 黒の濁りを微調整 */
   position: relative;
   overflow: hidden;
 }
 
 /* -------------------------------------------
-   左ゴールドライン（常時表示）
+   左ゴールドライン
 ------------------------------------------- */
 .price-gold-line {
   position: absolute;
@@ -90,7 +95,7 @@
 }
 
 .price-card:hover {
-  transform: translateY(-3px);
+  transform: translateY(-3px) scale(1.012); /* ← 微弱に */
   border-color: rgba(217,185,138,0.45);
 }
 
@@ -110,7 +115,7 @@
   margin-bottom: 0.6rem;
 }
 
-/* 価格（前面固定） */
+/* 価格 */
 .price-card-price {
   color: #d9b98a;
   font-size: 1.35rem;
@@ -123,7 +128,7 @@
 /* 説明 */
 .price-card-desc {
   color: rgba(255,255,255,0.65);
-  line-height: 1.8;
+  line-height: 1.74; /* ← 静けさ最適 */
   font-size: 0.9rem;
   position: relative;
   z-index: 10;
@@ -137,7 +142,7 @@
   position: absolute;
   top: 0;
   bottom: 0;
-  right: -30%;
+  right: -24%; /* ← 距離最適化 */
   width: 30%;
   background: linear-gradient(
     to left,
@@ -146,7 +151,7 @@
   );
   opacity: 0;
   transition: right 0.8s ease, opacity 1s ease;
-  z-index: 0;               /* ← 重要 */
+  z-index: 0;
   pointer-events: none;
 }
 

@@ -1,17 +1,22 @@
-// src/App.jsx
+// ============================================================================
+// App.jsx — Silent UI v4.3（最適化済み）
+// GUSHIKEN DESIGN × NOA
+// ============================================================================
+
 import React, { useEffect } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
 
 import Nav from "./components/Nav";
-
 import NavGlobal from "./components/NavGlobal";
-
 import Footer from "./components/FOOTER";
+import ScrollToTop from "./components/ScrollToTop";
 
+// Pages
 import Home from "./pages/Home";
-
 import WorksList from "./pages/WorksList";
 import WorkDetail from "./pages/WorkDetail";
+
+// ---- 作品ページ群（読み込み） ----
 import NoirLux from "./pages/works/NoirLux";
 import Resonance from "./pages/works/Resonance";
 import Still from "./pages/works/Still";
@@ -48,102 +53,95 @@ import TakumiRoom from "./pages/works/TakumiRoom";
 import RoseRoom from "./pages/works/RoseRoom";
 import LuminRoom from "./pages/works/LuminRoom";
 
-
+// Business pages
 import PriceDetail from "./pages/PriceDetail";
-
 import Contact from "./pages/Contact";
-
 import Terms from "./pages/Terms";
 import Refund from "./pages/Refund";
 import Legal from "./pages/Legal";
-
 import Privacy from "./pages/Privacy";
 
+// News
 import NewsList from "./pages/NewsList";
 import NewsDetail from "./pages/NewsDetail";
 
-import ScrollToTop from "./components/ScrollToTop";
-
-
+// Experiments
 import Layer0 from "./pages/Layer0";
-// ================================
-// Layout（全ページ共通レイアウト）
-// ================================
+
+
+// ============================================================================
+// Layout（全ページ共通）
+// ============================================================================
 function Layout() {
   const { pathname } = useLocation();
   const isHome = pathname === "/";
 
   return (
     <>
-      {/* ページ遷移ごとに位置リセット */}
       <ScrollToTop />
 
-      {/* ホームだけ特別ナビ、それ以外はグローバル */}
       {isHome ? <Nav /> : <NavGlobal />}
 
       <main id="page-root">
         <Routes>
           <Route path="/" element={<Home />} />
 
-     {/* 制作実績 */}
-<Route path="/works" element={<WorksList />} />
+          {/* ---------------- Works ---------------- */}
+          <Route path="/works" element={<WorksList />} />
 
-{/* 専用・展示ページ（予告 / 完成） */}
-<Route path="/works/noir-lux" element={<NoirLux />} />
-<Route path="/works/resonance" element={<Resonance />} />
-<Route path="/works/Still" element={<Still />} />
-<Route path="/works/BlueShoreHotel" element={<BlueShoreHotel />} />
-<Route path="/works/CapeOkinawa" element={<CapeOkinawa />} />
-<Route path="/works/OkinawaWhiteSpa" element={<OkinawaWhiteSpa />} />
-<Route path="/works/LueurPink" element={<LueurPink />} />
-<Route path="/works/GoldenVeil" element={<GoldenVeil />} />
-<Route path="/works/OkiLato" element={<OkiLato />} />
-<Route path="/works/Lucent" element={<Lucent />} />
-<Route path="/works/OkinawaSelectTeaser" element={<OkinawaSelectTeaser />} />
-<Route path="/works/NeutralObjectsTeaser" element={<NeutralObjectsTeaser />} />
-<Route path="/works/AburiyaItto" element={<AburiyaItto />} />
-<Route path="/works/Koti" element={<Koti />} />
-<Route path="/works/ActiveDays" element={<ActiveDays />} />
-<Route path="/works/FineOkinawa" element={<FineOkinawa />} />
-<Route path="/works/RyukaIntro" element={<RyukaIntro />} />
-<Route path="/works/OkinawaLightResortHotel" element={<OkinawaLightResortHotel />} />
-<Route path="/works/HorizonBlanc" element={<HorizonBlanc />} />
-<Route path="/works/TheCalmOkinawa" element={<TheCalmOkinawa />} />
-<Route path="/works/FlowOfTea" element={<FlowOfTea />} />
-<Route path="/works/RayOfSilence" element={<RayOfSilence />} />
-<Route path="/works/RIN" element={<RIN />} />
-<Route path="/works/LILU" element={<LILU />} />
-<Route path="/works/kansei" element={<Kansei />} />
-<Route path="/works/shigure" element={<Shigure />} />
-<Route path="/works/viva" element={<Viva />} />
-<Route path="/works/ReCamp" element={<ReCamp />} />
-<Route path="/works/MiyahiraDental" element={<MiyahiraDental />} />
-<Route path="/works/SakuraiDerm" element={<SakuraiDerm />} />
-<Route path="/works/WhiteDarkCacao" element={<WhiteDarkCacao />} />
-<Route path="/works/AxisRoom" element={<AxisRoom />} />
-<Route path="/works/TakumiRoom" element={<TakumiRoom />} />
-<Route path="/works/RoseRoom" element={<RoseRoom />} />
-<Route path="/works/LuminRoom" element={<LuminRoom />} />
+          {/* 個別作品ページ */}
+          <Route path="/works/noir-lux" element={<NoirLux />} />
+          <Route path="/works/resonance" element={<Resonance />} />
+          <Route path="/works/still" element={<Still />} />
+          <Route path="/works/BlueShoreHotel" element={<BlueShoreHotel />} />
+          <Route path="/works/CapeOkinawa" element={<CapeOkinawa />} />
+          <Route path="/works/OkinawaWhiteSpa" element={<OkinawaWhiteSpa />} />
+          <Route path="/works/LueurPink" element={<LueurPink />} />
+          <Route path="/works/GoldenVeil" element={<GoldenVeil />} />
+          <Route path="/works/OkiLato" element={<OkiLato />} />
+          <Route path="/works/Lucent" element={<Lucent />} />
+          <Route path="/works/OkinawaSelectTeaser" element={<OkinawaSelectTeaser />} />
+          <Route path="/works/NeutralObjectsTeaser" element={<NeutralObjectsTeaser />} />
+          <Route path="/works/AburiyaItto" element={<AburiyaItto />} />
+          <Route path="/works/Koti" element={<Koti />} />
+          <Route path="/works/ActiveDays" element={<ActiveDays />} />
+          <Route path="/works/FineOkinawa" element={<FineOkinawa />} />
+          <Route path="/works/RyukaIntro" element={<RyukaIntro />} />
+          <Route path="/works/OkinawaLightResortHotel" element={<OkinawaLightResortHotel />} />
+          <Route path="/works/HorizonBlanc" element={<HorizonBlanc />} />
+          <Route path="/works/TheCalmOkinawa" element={<TheCalmOkinawa />} />
+          <Route path="/works/FlowOfTea" element={<FlowOfTea />} />
+          <Route path="/works/RayOfSilence" element={<RayOfSilence />} />
+          <Route path="/works/RIN" element={<RIN />} />
+          <Route path="/works/LILU" element={<LILU />} />
+          <Route path="/works/kansei" element={<Kansei />} />
+          <Route path="/works/shigure" element={<Shigure />} />
+          <Route path="/works/viva" element={<Viva />} />
+          <Route path="/works/ReCamp" element={<ReCamp />} />
+          <Route path="/works/MiyahiraDental" element={<MiyahiraDental />} />
+          <Route path="/works/SakuraiDerm" element={<SakuraiDerm />} />
+          <Route path="/works/WhiteDarkCacao" element={<WhiteDarkCacao />} />
+          <Route path="/works/AxisRoom" element={<AxisRoom />} />
+          <Route path="/works/TakumiRoom" element={<TakumiRoom />} />
+          <Route path="/works/RoseRoom" element={<RoseRoom />} />
+          <Route path="/works/LuminRoom" element={<LuminRoom />} />
 
-{/* 最後に汎用テンプレ */}
-<Route path="/works/:slug" element={<WorkDetail />} />
+          {/* ワイルドカード（今後の追加分対応） */}
+          <Route path="/works/:slug" element={<WorkDetail />} />
 
-
-          {/* 料金 */}
+          {/* Business */}
           <Route path="/price" element={<PriceDetail />} />
-
-          {/* お問い合わせ */}
           <Route path="/contact" element={<Contact />} />
-
-          {/* 法務 */}
           <Route path="/terms" element={<Terms />} />
           <Route path="/refund" element={<Refund />} />
           <Route path="/legal" element={<Legal />} />
           <Route path="/privacy" element={<Privacy />} />
 
-          {/* ニュース */}
+          {/* News */}
           <Route path="/news" element={<NewsList />} />
           <Route path="/news/:id" element={<NewsDetail />} />
+
+          {/* Hidden Lab */}
           <Route path="/layer0" element={<Layer0 />} />
         </Routes>
       </main>
@@ -154,12 +152,10 @@ function Layout() {
 }
 
 
-// ================================
-// Silent UI v4.2 — グローバルフェード管理
-// ================================
+// ============================================================================
+// App：Silent UI Fade Engine v4.3
+// ============================================================================
 export default function App() {
-
-  // aq-fade → aq-show を全ページ共通で管理
   useEffect(() => {
     const runFade = () => {
       const els = document.querySelectorAll(".aq-fade");
@@ -168,37 +164,34 @@ export default function App() {
       const io = new IntersectionObserver(
         (entries) => {
           entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              const el = entry.target;
+            if (!entry.isIntersecting) return;
 
-              // ランダムディレイ（Silent UI）
-              const d = Math.random() * 120;
-              el.style.animationDelay = `${d}ms`;
-
-              el.classList.add("aq-show");
-              io.unobserve(el);
-            }
+            const el = entry.target;
+            el.style.animationDelay = `${Math.random() * 120}ms`;
+            el.classList.add("aq-show");
+            io.unobserve(el);
           });
         },
         {
           threshold: 0.15,
-          rootMargin: "0px 0px -10% 0px",
+          rootMargin: "0px 0px -12% 0px", // ← 精度UP
         }
       );
 
       els.forEach((el) => io.observe(el));
+
       return () => io.disconnect();
     };
 
-    // 初回&ルーティング変更ごとに実行
+    // 初回実行
     runFade();
 
-    // MutationObserver → 画面切り替え後にDOM変化があっても拾う
-    const mo = new MutationObserver(runFade);
-    mo.observe(document.getElementById("page-root"), {
-      childList: true,
-      subtree: true,
+    // ページ遷移のタイミングだけ拾う
+    const pageRoot = document.getElementById("page-root");
+    const mo = new MutationObserver(() => {
+      requestAnimationFrame(runFade);
     });
+    mo.observe(pageRoot, { childList: true });
 
     return () => mo.disconnect();
   }, []);

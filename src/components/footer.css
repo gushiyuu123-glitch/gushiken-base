@@ -1,14 +1,18 @@
-/* =====================================================
-   FOOTER — Silent UI v4.2 × Noah Final Edition
-===================================================== */
+/* =========================================================
+   FOOTER — Silent UI v4.3
+   Dior Exhibition Glow × Minimal Gold Line
+   Noah Final Edition
+========================================================= */
 
-/* ▼ Section Fade（全セクション共通ルール） */
+/* ---------------------------------------------
+   Section Fade（IntersectionObserver 用）
+--------------------------------------------- */
 .footer-section {
   opacity: 0;
-  transform: translateY(20px);
+  transform: translateY(22px);
   transition:
-    opacity 1.2s cubic-bezier(.25,.46,.45,.94),
-    transform 1.2s cubic-bezier(.25,.46,.45,.94);
+    opacity 1.15s cubic-bezier(.25,.46,.45,.94),
+    transform 1.15s cubic-bezier(.25,.46,.45,.94);
 }
 
 .footer-section.aq-show {
@@ -16,14 +20,24 @@
   transform: translateY(0) !important;
 }
 
-/* =====================================================
-   ▼ Navigation Links（WORKS / ABOUT 等）
-===================================================== */
+/* ---------------------------------------------
+   Base Link Tap Area（全リンク共通）
+--------------------------------------------- */
+.hiddenLink {
+  position: relative;
+  display: inline-block;
+  padding: 6px 10px;
+  margin: -6px -10px;
+}
+
+/* =========================================================
+   NAV LINKS（WORKS / ABOUT / PRICE …）
+========================================================= */
 .footer-link {
   position: relative;
-  color: rgba(255, 255, 255, 0.62);
+  color: rgba(255,255,255,0.62);
   letter-spacing: 0.08em;
-  transition: color 0.3s ease;
+  transition: color .35s ease;
 }
 
 .footer-link::after {
@@ -38,72 +52,72 @@
     rgba(215,195,154,0.15),
     rgba(215,195,154,0.75)
   );
-  transition: width 0.35s cubic-bezier(.19,1,.22,1);
+  transition: width .45s cubic-bezier(.19,1,.22,1);
 }
 
 .footer-link:hover {
-  color: rgba(255, 255, 255, 0.95);
+  color: rgba(255,255,255,0.95);
 }
 
 .footer-link:hover::after {
   width: 100%;
 }
 
-/* =====================================================
-   ▼ SNS Links（静かな光）
-===================================================== */
+/* =========================================================
+   SNS LINKS（Instagram / X）
+========================================================= */
 .footer-sns {
+  position: relative;
   color: rgba(255,255,255,0.6);
   font-size: 0.9rem;
   letter-spacing: 0.05em;
-  position: relative;
-  transition: color 0.3s ease;
-}
-
-.footer-sns:hover {
-  color: rgba(255,255,255,0.98);
+  transition: color .35s ease;
 }
 
 .footer-sns::after {
   content: "";
   position: absolute;
   left: 0;
-  bottom: -0.28rem;
+  bottom: -0.30rem;
   width: 0;
   height: 1px;
   background: rgba(255,255,255,0.18);
-  transition: width 0.28s ease;
+  transition: width .35s ease;
+}
+
+.footer-sns:hover {
+  color: rgba(255,255,255,0.98);
 }
 
 .footer-sns:hover::after {
   width: 100%;
 }
 
-/* =====================================================
-   ▼ Experimental Project Links
-===================================================== */
+/* =========================================================
+   PROJECT LINKS（Experimental）
+========================================================= */
 .footer-project-link {
-  font-size: 0.75rem;
-  letter-spacing: 0.18em;
-  color: rgba(255, 255, 255, 0.45);
-  text-decoration: none;
   position: relative;
-  transition: color 0.6s cubic-bezier(.25,.46,.45,.94);
+  font-size: 0.78rem;
+  letter-spacing: 0.17em;
+  color: rgba(255,255,255,0.46);
+  text-decoration: none;
+  transition: color .45s cubic-bezier(.25,.46,.45,.94);
 }
 
 .footer-project-link::after {
   content: "";
   position: absolute;
   left: 0;
-  bottom: -0.35rem;
+  bottom: -0.32rem;
   width: 0;
   height: 1px;
-  background: rgba(255,255,255,0.25);
-  transition: width 0.6s cubic-bezier(.25,.46,.45,.94);
+  background: rgba(255,255,255,0.22);
+  transition: width .45s cubic-bezier(.25,.46,.45,.94);
 }
 
 .footer-project-link:hover {
-  color: rgba(255, 255, 255, 0.9);
+  color: rgba(255,255,255,0.92);
 }
 
 .footer-project-link:hover::after {
@@ -111,28 +125,27 @@
 }
 
 .footer-project-label {
-  font-size: 0.65rem;
+  font-size: 0.63rem;
   letter-spacing: 0.18em;
-  color: rgba(255,255,255,0.3);
+  color: rgba(255,255,255,0.30);
 }
 
-/* =====================================================
-   ▼ Legal Links（法務）
-===================================================== */
+/* =========================================================
+   LEGAL LINKS（利用規約 / プライバシー）
+========================================================= */
 .footer-legal {
   color: rgba(255,255,255,0.38);
-  transition: opacity 0.35s ease;
   letter-spacing: 0.12em;
-  text-decoration: none;
+  transition: opacity .35s ease;
 }
 
 .footer-legal:hover {
   opacity: 0.75;
 }
 
-/* =====================================================
-   ▼ Mobile
-===================================================== */
+/* =========================================================
+   Mobile
+========================================================= */
 @media (max-width: 768px) {
   .footer-section {
     padding-top: 3.5rem !important;
@@ -141,26 +154,23 @@
 
   .footer-link,
   .footer-sns {
-    font-size: 0.85rem;
+    font-size: 0.86rem;
   }
 }
+
+/* =========================================================
+   LAB / SUBTEXT
+========================================================= */
 .footer-lab {
-  display:block;
+  display: block;
   margin-top: 0.45rem;
   font-size: 0.74rem;
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: rgba(255,255,255,0.28);
-  transition: all 0.45s ease;
+  transition: color .45s ease;
 }
 
 .footer-lab:hover {
-  color: rgba(255,255,255,0.6);
-}
-/* footer.module.css へ追加 */
-.hiddenLink {
-  position: relative;
-  display: inline-block;
-  padding: 6px 12px; /* 見た目は変わらない */
-  margin: -6px -12px; /* でもタップ範囲は広がる */
+  color: rgba(255,255,255,0.60);
 }
