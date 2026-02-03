@@ -56,31 +56,35 @@ export default {
         lg: "10px",
       },
 
-      /* ============================
-         KEYFRAMES（呼吸 × フェード）
-      ============================ */
-      keyframes: {
-        fadeUp: {
-          "0%": { opacity: 0, transform: "translateY(14px)", filter: "blur(6px)" },
-          "100%": { opacity: 1, transform: "translateY(0)", filter: "blur(0px)" },
-        },
-        breathe: {
-          "0%": { transform: "scale(1)" },
-          "50%": { transform: "scale(1.012)" },
-          "100%": { transform: "scale(1)" },
-        },
-        floatSoft: {
-          "0%": { transform: "translateY(0)" },
-          "50%": { transform: "translateY(6px)" },
-          "100%": { transform: "translateY(0)" },
-        },
-      },
+     keyframes: {
+  fadeUp: {
+    "0%": {
+      opacity: 0,
+      transform: "translateY(14px) scale(0.995)",
+    },
+    "100%": {
+      opacity: 1,
+      transform: "translateY(0) scale(1)",
+    },
+  },
+  breathe: {
+    "0%": { transform: "scale(1)" },
+    "50%": { transform: "scale(1.012)" },
+    "100%": { transform: "scale(1)" },
+  },
+  floatSoft: {
+    "0%": { transform: "translateY(0)" },
+    "50%": { transform: "translateY(6px)" },
+    "100%": { transform: "translateY(0)" },
+  },
+},
 
-      animation: {
-        fadeUp: "fadeUp 0.85s cubic-bezier(.22,.61,.36,1) forwards",
-        breathe: "breathe 5.6s ease-in-out infinite",
-        floatSoft: "floatSoft 4.5s ease-in-out infinite",
-      },
+animation: {
+  fadeUp: "fadeUp 0.85s cubic-bezier(.22,.61,.36,1) forwards",
+  breathe: "breathe 5.6s ease-in-out infinite",
+  floatSoft: "floatSoft 4.5s ease-in-out infinite",
+},
+
     },
   },
   plugins: [],

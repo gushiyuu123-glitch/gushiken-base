@@ -49,74 +49,79 @@ body {
 }
 
 .no-scrollbar::-webkit-scrollbar { display: none; }
-
 /* ============================================================
-   1) Silent Fade System
+   Silent Fade-In v2（blur完全排除 × 上質 × 呼吸フェード）
 ============================================================ */
+
+/* 初期状態（静かに沈める） */
 .aq-fade {
   opacity: 0;
-  transform: translate3d(0, 24px, 0);
+  transform: translateY(18px) scale(0.995);
   transition:
-    opacity var(--fade-time) var(--ease-silent),
-    transform var(--fade-time) var(--ease-silent);
+    opacity 1.05s cubic-bezier(.22,.56,.18,1),
+    transform 1.05s cubic-bezier(.22,.56,.18,1);
   will-change: opacity, transform;
 }
 
+/* 表示状態（呼吸で立ち上がる） */
 .aq-show {
   opacity: 1 !important;
-  transform: translate3d(0,0,0) !important;
+  transform: translateY(0) scale(1) !important;
 }
 
+/* 遅延トークン（美しい連続性） */
 .delay-1 { transition-delay: 0.12s; }
-.delay-2 { transition-delay: 0.24s; }
-.delay-3 { transition-delay: 0.36s; }
-.delay-4 { transition-delay: 0.48s; }
-.delay-5 { transition-delay: 0.60s; }
+.delay-2 { transition-delay: 0.22s; }
+.delay-3 { transition-delay: 0.32s; }
+.delay-4 { transition-delay: 0.42s; }
+.delay-5 { transition-delay: 0.52s; }
 
 /* ============================================================
-   2) Ambient Glow（Dior の極薄光）
+2) Ambient Glow（Dior の極薄光）
 ============================================================ */
 .ambient-glow {
-  position: relative;
-  opacity: 0;
-  transition: opacity 2.4s ease;
+position: relative;
+opacity: 0;
+transition: opacity 2.4s ease;
 }
+
 
 .ambient-glow::before,
 .ambient-glow::after {
-  content: "";
-  position: absolute;
-  border-radius: 50%;
-  filter: blur(120px);
-  opacity: 0.05;
-  pointer-events: none;
+content: "";
+position: absolute;
+border-radius: 50%;
+filter: blur(120px);
+opacity: 0.05;
+pointer-events: none;
 }
+
 
 .ambient-glow::before {
-  top: 20%;
-  left: -12%;
-  width: 260px;
-  height: 260px;
-  background: var(--glow-white);
+top: 20%;
+left: -12%;
+width: 260px;
+height: 260px;
+background: var(--glow-white);
 }
+
 
 .ambient-glow::after {
-  bottom: 18%;
-  right: -10%;
-  width: 330px;
-  height: 330px;
-  background: var(--glow-silver);
+bottom: 18%;
+right: -10%;
+width: 330px;
+height: 330px;
+background: var(--glow-silver);
 }
 
-/* Scroll 発火後 */
+
 body.scrolled .ambient-glow {
-  opacity: 1;
+opacity: 1;
 }
-
 body.scrolled .ambient-glow::before,
 body.scrolled .ambient-glow::after {
-  opacity: 0.12;
-  filter: blur(150px);
+opacity: 0.12;
+filter: blur(150px);
 }
 
 /* ============================================================
@@ -234,4 +239,17 @@ body.scrolled .ambient-glow::after {
   opacity: 1 !important;
   transform: translateY(0) !important;
   filter: blur(0px) !important;
+}
+/* ============================================================
+   ★ 緊急対応：すべてのフェードインから blur を完全禁止 ★
+   （どのCSSやTailwind定義よりも後に書くこと）
+============================================================ */
+
+.aq-fade,
+.aq-show,
+[class*="fade"],
+[class*="Fade"],
+.animate-fadeUp {
+  filter: none !important;
+  backdrop-filter: none !important;
 }

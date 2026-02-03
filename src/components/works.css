@@ -409,3 +409,16 @@
   transform: translateY(0) !important;
   filter: blur(0px) !important;
 }
+/* ============================================================
+   ★ 緊急対応：すべてのフェードインから blur を完全禁止 ★
+   （どのCSSやTailwind定義よりも後に書くこと）
+============================================================ */
+
+.aq-fade,
+.aq-show,
+[class*="fade"],
+[class*="Fade"],
+.animate-fadeUp {
+  filter: none !important;
+  backdrop-filter: none !important;
+}
