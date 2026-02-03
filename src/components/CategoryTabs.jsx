@@ -6,11 +6,23 @@ export default function CategoryTabs({
   setActiveCategory,
   categoryList,
 }) {
+  /* ============================================================
+        normalize（揺れ完全吸収版）
+        → Category.jsx と100%同一にして整合性を取る
+  ============================================================ */
+  const normalize = (str = "") =>
+    str
+      .replace(/\s+/g, "")       // 全スペース除去
+      .replace(/[／・]/g, "/")   // 全角スラッシュ・中点を半角に統一
+      .replace(/-{1,}/g, "")     // ハイフン吸収
+      .replace(/_/g, "")         // アンダーバー吸収
+      .toLowerCase();
+
   return (
     <div className="aq-fade mb-16">
 
       {/* ================================ */}
-      {/* 📱 SP（横スクローラー：薄膜×静 × 高級） */}
+      {/* 📱 SP（横スクローラー） */}
       {/* ================================ */}
       <div
         className="
@@ -24,7 +36,8 @@ export default function CategoryTabs({
         style={{ WebkitOverflowScrolling: 'touch' }}
       >
         {categoryList.map((cat) => {
-          const active = activeCategory === cat;
+          const active = normalize(activeCategory) === normalize(cat);
+
           return (
             <button
               key={cat}
@@ -39,7 +52,6 @@ export default function CategoryTabs({
                 border
                 transition-all duration-350
                 backdrop-blur-[3px]
-
                 ${
                   active
                     ? "bg-white text-black border-white shadow-[0_0_14px_rgba(255,255,255,0.16)]"
@@ -54,7 +66,7 @@ export default function CategoryTabs({
       </div>
 
       {/* ================================ */}
-      {/* 💻 PC（高級ブティックの並び × 線階層統一） */}
+      {/* 💻 PC（Boutique Tabs） */}
       {/* ================================ */}
       <div
         className="
@@ -65,7 +77,8 @@ export default function CategoryTabs({
         "
       >
         {categoryList.map((cat) => {
-          const active = activeCategory === cat;
+          const active = normalize(activeCategory) === normalize(cat);
+
           return (
             <button
               key={cat}
@@ -79,7 +92,6 @@ export default function CategoryTabs({
                 border
                 transition-all duration-400
                 backdrop-blur-[3px]
-
                 ${
                   active
                     ? "bg-white text-black border-white shadow-[0_0_20px_rgba(255,255,255,0.22)]"

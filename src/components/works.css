@@ -397,3 +397,15 @@
   50% { opacity: 0.85; transform: translate(-6px, -50%); }
   100% { opacity: 0.25; transform: translate(0, -50%); }
 }
+.aq-fade {
+  opacity: 0;
+  transform: translateY(22px);
+  filter: blur(6px);
+  transition: all 1.05s cubic-bezier(.25,.46,.45,.94);
+}
+
+.aq-show {
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+  filter: blur(0px) !important;
+}

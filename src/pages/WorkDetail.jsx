@@ -1,3 +1,4 @@
+// src/pages/WorkDetail.jsx
 import React, { useMemo } from "react";
 import { useParams, Link } from "react-router-dom";
 import { worksData } from "../data/worksData";
@@ -5,14 +6,29 @@ import { worksData } from "../data/worksData";
 export default function WorkDetail() {
   const { slug } = useParams();
 
-  // 対象作品を照合
+  /* ============================================================
+      slug 正規化（重要）
+     - 大文字/小文字差異
+     - Room / Veil / room などのズレ
+     - 全カテゴリの slug を揃える
+  ============================================================ */
+  const normalizeSlug = (s = "") =>
+    s.replace(/\s+/g, "").replace(/[^\w\-]/g, "").toLowerCase();
+
+  const normalizedSlug = normalizeSlug(slug);
+
+  // すべての作品
+  const allWorks = useMemo(() => worksData.flatMap((b) => b.items), []);
+
+  // すべての slug を正規化したマップを作る
   const work = useMemo(() => {
-    const all = worksData.flatMap((b) => b.items);
-    return all.find((i) => i.slug === slug);
-  }, [slug]);
+    return allWorks.find(
+      (i) => normalizeSlug(i.slug) === normalizedSlug
+    );
+  }, [normalizedSlug, allWorks]);
 
   /* ============================================================
-       NOT FOUND
+      NOT FOUND
   ============================================================ */
   if (!work) {
     return (
@@ -35,31 +51,29 @@ export default function WorkDetail() {
     );
   }
 
-  // New 判定（30日ルール or NEW タグ）
+  /* ============================================================
+      NEW 判定
+  ============================================================ */
   const isNew =
     work.tags?.includes("NEW") ||
     (work.createdAt &&
       (Date.now() - new Date(work.createdAt).getTime()) /
         (1000 * 60 * 60 * 24) <= 30);
 
+  /* ============================================================
+      RENDER
+  ============================================================ */
   return (
     <main className="min-h-screen bg-[#0b0b0b] text-white overflow-x-hidden">
-
-      {/* ============================================================
-          HERO（展示室：静かな主張）
-      ============================================================ */}
+      {/* HERO */}
       <section className="relative pt-28 pb-16 px-6 md:px-10 aq-fade">
         <div className="max-w-6xl mx-auto">
-
-          {/* 小ライン（薄膜） */}
           <div className="w-12 h-px bg-gradient-to-r from-white/20 to-white/5 mb-6" />
 
-          {/* ラベル + NEW */}
           <div className="flex items-center gap-3 mb-5">
             <p className="text-[0.65rem] tracking-[0.32em] text-white/35">
               WORK DETAIL
             </p>
-
             {isNew && (
               <span
                 className="
@@ -76,21 +90,20 @@ export default function WorkDetail() {
             )}
           </div>
 
-          {/* タイトル */}
-          <h1 className="
+          <h1
+            className="
             text-[2.3rem] md:text-[3.14rem]
             tracking-[0.18em] font-light
             leading-[1.13]
-          ">
+          "
+          >
             {work.title}
           </h1>
 
-          {/* サブ文章 */}
           <p className="mt-6 text-white/50 leading-relaxed whitespace-pre-line max-w-2xl">
             {work.desc}
           </p>
 
-          {/* CTA */}
           <div className="mt-10 flex flex-wrap items-center gap-4">
             <a
               href={work.link}
@@ -129,12 +142,10 @@ export default function WorkDetail() {
         </div>
       </section>
 
-      {/* ============================================================
-          MAIN VISUAL（複数対応・展示室仕様）
-      ============================================================ */}
+      {/* MAIN VISUAL */}
       <section className="px-6 md:px-10 pb-20 aq-fade">
         <div className="max-w-6xl mx-auto space-y-20">
-          {(work.detail.visuals || [work.img]).map((v, i) => (
+          {(work.detail?.visuals || [work.img]).map((v, i) => (
             <div
               key={i}
               className="
@@ -148,7 +159,6 @@ export default function WorkDetail() {
                 className="w-full h-full object-cover brightness-[0.88]"
                 loading="lazy"
               />
-              {/* Dior 薄膜 */}
               <div
                 className="absolute inset-0 pointer-events-none"
                 style={{
@@ -161,9 +171,7 @@ export default function WorkDetail() {
         </div>
       </section>
 
-      {/* ============================================================
-          TAGS（展示風タグ）
-      ============================================================ */}
+      {/* TAGS */}
       <section className="px-6 md:px-10 pb-24 aq-fade">
         <div className="max-w-6xl mx-auto">
           <h2 className="text-[0.9rem] tracking-[0.22em] font-light text-white/85 mb-6">
@@ -191,9 +199,7 @@ export default function WorkDetail() {
         </div>
       </section>
 
-      {/* ============================================================
-          FOOTER NAV（帰り道のライン）
-      ============================================================ */}
+      {/* FOOTER */}
       <section className="px-6 md:px-10 pb-28 aq-fade">
         <div className="max-w-6xl mx-auto">
           <div className="h-px w-full bg-gradient-to-r from-white/12 to-transparent mb-10" />

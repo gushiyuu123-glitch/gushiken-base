@@ -1,3 +1,4 @@
+// src/components/Category.jsx
 import React from "react";
 
 export default function Category({
@@ -9,25 +10,32 @@ export default function Category({
 }) {
   const items = React.Children.toArray(children);
 
-  // ------------------------------------------------------
-  // NEW 判定（最も信頼できる itemsRaw を優先）
-  // ------------------------------------------------------
+  /* ============================================================
+        normalize（揺れ完全吸収版）
+  ============================================================ */
+  const normalize = (str = "") =>
+    str
+      .replace(/\s+/g, "")       // 全スペース除去
+      .replace(/[／・]/g, "/")   // 全角スラッシュ・中点 → 半角 /
+      .replace(/-{1,}/g, "")     // "-" のゆれ消去
+      .replace(/_/g, "")         // "_" のゆれ消去
+      .toLowerCase();
+
+  const key = normalize(title);
+
   const hasNew = itemsRaw.some((i) => i.isNew === true);
 
-  // ------------------------------------------------------
-  // PICK UP：幅の黄金比（視認性・存在感の最適解）
-  // ------------------------------------------------------
-  const getCardWidth = (category) => {
-    const map = {
-      "PICK UP": "w-[88%]",
-      "BEAUTY / SALON": "w-[94%]",
-      "HOTEL / STAY": "w-[90%]",
-      "FOOD / FURNITURE / BRAND": "w-[88%]",
-      "EC / BRAND DESIGN": "w-[82%]",
-      "ART / CREATIVE": "w-[96%]",
-    };
-    return map[category] || "w-[88%]";
+  /* 幅マッピング（normalize後で一致させる） */
+  const widthMap = {
+    [normalize("PICK UP")]: "w-[88%]",
+    [normalize("BEAUTY / SALON")]: "w-[94%]",
+    [normalize("HOTEL")]: "w-[90%]",
+    [normalize("FOOD / FURNITURE / BRAND")]: "w-[88%]",
+    [normalize("EC / BRAND DESIGN")]: "w-[82%]",
+    [normalize("ART / CREATIVE")]: "w-[96%]",
   };
+
+  const cardWidth = widthMap[key] || "w-[88%]";
 
   return (
     <section
@@ -36,9 +44,7 @@ export default function Category({
         ${accent ? "pt-5 pb-12 bg-white/[0.02] rounded-xl" : ""}
       `}
     >
-      {/* =======================================================
-          TITLE BLOCK（ライン × タイトル × サブテキスト）
-      ======================================================= */}
+      {/* HEADER */}
       <div className="mb-12 relative">
         <div
           className={`
@@ -55,11 +61,7 @@ export default function Category({
           <h2
             className={`
               text-white font-light tracking-[0.22em]
-              ${
-                accent
-                  ? "text-[1.18rem]"
-                  : "text-[1.02rem] md:text-[1.14rem]"
-              }
+              ${accent ? "text-[1.18rem]" : "text-[1.02rem] md:text-[1.14rem]"}
             `}
           >
             {title}
@@ -96,9 +98,7 @@ export default function Category({
         </p>
       </div>
 
-      {/* =======================================================
-           SP：横スクロール（黄金比 × 呼吸 × 薄膜）
-      ======================================================= */}
+      {/* SP（横スクロール） */}
       <div className="sm:hidden w-full relative mb-20 pt-4">
         <div className="relative px-1">
           <div
@@ -109,14 +109,13 @@ export default function Category({
               overscroll-x-contain
               [scroll-behavior:smooth]
             "
-            style={{ WebkitOverflowScrolling: "touch" }}
           >
             {items.map((child, index) => (
               <div
                 key={index}
                 className={`
                   works-card flex-shrink-0
-                  ${getCardWidth(title)}
+                  ${cardWidth}
                   ${index === 0 ? "snap-start is-first" : "snap-center"}
                 `}
               >
@@ -127,9 +126,7 @@ export default function Category({
         </div>
       </div>
 
-      {/* =======================================================
-           PC GRID：PICK UP だけ 2列の上質レイアウト
-      ======================================================= */}
+      {/* PC GRID */}
       {accent ? (
         <div className="hidden sm:grid grid-cols-2 gap-x-12 gap-y-16">
           {items}
