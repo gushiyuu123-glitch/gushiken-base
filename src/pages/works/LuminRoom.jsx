@@ -68,7 +68,7 @@ export default function LuminRoom() {
         "
       >
         <img
-          src="/lumin/lumin-main.webp"
+          src="/works1/lumin-main.png"
           alt="LÜMIN — Entry Visual"
           className="
             lumin-entry-img
