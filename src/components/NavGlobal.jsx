@@ -42,9 +42,11 @@ export default function NavGlobal() {
           fixed top-0 left-0 w-full z-[9998]
           border-b transition-all duration-500
 
-          ${isSolid
-            ? "bg-black/65 backdrop-blur-[18px] border-white/10 shadow-[0_8px_22px_rgba(0,0,0,0.32)]"
-            : "bg-black/35 backdrop-blur-[14px] border-white/5"}
+          ${
+            isSolid
+              ? "bg-black/65 backdrop-blur-[18px] border-white/10 shadow-[0_8px_22px_rgba(0,0,0,0.32)]"
+              : "bg-black/35 backdrop-blur-[14px] border-white/5"
+          }
         `}
       >
         <div
@@ -76,6 +78,11 @@ export default function NavGlobal() {
 
             <Link to="/price" className={isActive("/price")}>
               PRICE
+            </Link>
+
+            {/* ← 追加 */}
+            <Link to="/news" className={isActive("/news")}>
+              NEWS
             </Link>
 
             <Link to="/contact" className={isActive("/contact")}>
@@ -146,6 +153,19 @@ export default function NavGlobal() {
             `}
           >
             PRICE
+          </Link>
+
+          {/* ← 追加 */}
+          <Link
+            to="/news"
+            onClick={() => setIsOpen(false)}
+            className={`
+              px-8 py-5 border-b border-white/10 text-white
+              tracking-[0.20em] text-[1.05rem]
+              ${pathname === "/news" ? "text-[#d7c39a]" : "text-white/85"}
+            `}
+          >
+            NEWS
           </Link>
 
           <Link
