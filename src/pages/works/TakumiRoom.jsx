@@ -15,44 +15,51 @@ export default function TakumiRoom() {
         backgroundImage: "url('/works1/philosophy-bg.png')",
       }}
     >
-
-      {/* ======== 黒膜（明るめに変更） ======== */}
+      {/* ==================================================
+          黒膜（構造の“静けさ”を残す明度）
+      ================================================== */}
       <div
         aria-hidden
         className="
           absolute inset-0 z-0
-          bg-[rgba(0,0,0,0.28)]     /* ← 0.52 → 0.28 に改善 */
+          bg-[rgba(0,0,0,0.26)]
           backdrop-blur-[1px]
         "
       />
 
-      {/* ======== 光膜（明るさ補正の新設レイヤー） ======== */}
+      {/* ==================================================
+          光膜（建築写真の白膜を再現）
+      ================================================== */}
       <div
         aria-hidden
         className="
           absolute inset-0 z-0
           bg-gradient-to-b
-          from-[rgba(255,255,255,0.06)]
-          via-[rgba(255,255,255,0.04)]
+          from-[rgba(255,255,255,0.07)]
+          via-[rgba(255,255,255,0.045)]
           to-transparent
           pointer-events-none
         "
       />
 
-      {/* ======== 横の光スリット（建築の光の再現） ======== */}
+      {/* ==================================================
+          横の光スリット（建築の“差し込み光”）
+      ================================================== */}
       <div
         aria-hidden
         className="
           absolute inset-0 z-0
           bg-gradient-to-r
           from-transparent
-          via-[rgba(255,255,255,0.07)]
+          via-[rgba(255,255,255,0.075)]
           to-transparent
           mix-blend-screen
         "
       />
 
-      {/* ======== CONTENT（中央寄せ） ======== */}
+      {/* ==================================================
+          CONTENT（中央寄せ・建築的レイアウト）
+      ================================================== */}
       <section
         className="
           relative z-20 
@@ -65,16 +72,15 @@ export default function TakumiRoom() {
           text-center
         "
       >
-
-        {/* =====================
+        {/* =============================
             TITLE
-        ====================== */}
+        ============================== */}
         <h1
           className="
             font-serif
-            text-[2.6rem] md:text-[3.4rem]
+            text-[2.55rem] md:text-[3.35rem]
             tracking-[0.22em]
-            text-white/98     /* ← ↑明るく */
+            text-white/95
             mb-10
             select-none
           "
@@ -82,12 +88,12 @@ export default function TakumiRoom() {
           TAKUMI — ROOM
         </h1>
 
-        {/* =====================
-            LEAD
-        ====================== */}
+        {/* =============================
+            LEAD（“建築 × 静寂”の翻訳強化）
+        ============================== */}
         <p
           className="
-            text-white/70          /* ← 55 → 70 にアップ */
+            text-white/72
             text-[1.05rem] md:text-[1.18rem]
             leading-[1.95] md:leading-[2.05]
             mx-auto
@@ -95,15 +101,15 @@ export default function TakumiRoom() {
             mb-20
           "
         >
-          建築物を構成するのは“形”ではなく、
-          光の入り方、影の落ち方、下地が持つ“骨格の美しさ”。  
-          TAKUMI — ROOM は、その「構造の静寂」を  
-          Webの中で丁寧に確かめるための部屋。
+          建築を形づくるのは、壁でも柱でもなく──  <br></br>
+          光の入り方、影の落ち方、素材が秘めた“骨格の美しさ”。  <br></br>
+          TAKUMI — ROOM は、その構造が静かに息づく瞬間だけを  <br></br>
+          Web空間に丁寧に落とし込んだ前室です。
         </p>
 
-        {/* =====================
-            VISUAL BLOCK（中央）
-        ====================== */}
+        {/* =============================
+            VISUAL（建築の骨格 × 光の通り道）
+        ============================== */}
         <div className="relative mb-20 flex justify-center">
           <img
             src="/works1/philosophy-bg2.png"
@@ -112,10 +118,11 @@ export default function TakumiRoom() {
               w-full max-w-[900px]
               rounded-[18px]
               opacity-[0.96]
+              shadow-[0_12px_40px_rgba(0,0,0,0.32)]
             "
           />
 
-          {/* 中央白スリット（そのまま） */}
+          {/* 中央スリット（建築光を再現） */}
           <div
             aria-hidden
             className="
@@ -129,35 +136,35 @@ export default function TakumiRoom() {
           />
         </div>
 
-        {/* =====================
-            SUBTEXT
-        ====================== */}
+        {/* =============================
+            SUBTEXT（静けさの翻訳度を上げた文章）
+        ============================== */}
         <p
           className="
-            text-white/60         /* ← 45 → 60 にアップ */
+            text-white/62
             text-[0.92rem]
-            tracking-[0.18em]
-            leading-[2.1]
+            tracking-[0.20em]
+            leading-[2.15]
             mx-auto
             max-w-[650px]
             mb-16
           "
         >
-          面の緊張がほどける場所。  
-          光が落ち着き、影が呼吸をはじめる瞬間。  
-          その“変化”だけを静かに並べた空間。
+          緊張の中にある、ほどける瞬間。  
+          光が落ち着き、影が呼吸をはじめるとき。  <br></br>
+          建築が本来持つ“静かな構造美”だけを抽出した空間です。
         </p>
 
-        {/* =====================
-            CTA
-        ====================== */}
+        {/* =============================
+            CTA（建築 × 製作技法の文脈強化）
+        ============================== */}
         <div className="text-center">
           <a
             href="https://takumi-ochre.vercel.app/"
             target="_blank"
             className="
               inline-block
-              text-white/85     /* ← 80 → 85 */
+              text-white/85
               text-[0.78rem]
               tracking-[0.32em]
               border-b border-white/25
@@ -175,7 +182,7 @@ export default function TakumiRoom() {
           <Link
             to="/works"
             className="
-              text-white/55 text-[0.75rem]    /* ← 45 → 55 */
+              text-white/55 text-[0.75rem]
               tracking-[0.28em]
               hover:text-white/80
               transition
@@ -184,7 +191,6 @@ export default function TakumiRoom() {
             BACK TO WORKS
           </Link>
         </div>
-
       </section>
     </main>
   );
