@@ -217,6 +217,22 @@ export default function WorksList() {
           note（制作の裏側）
         </a>
       </div>
+           <div className="mt-32 text-center">
+           <a
+          href="https://yorisoi-nine.vercel.app/"
+          target="_blank"
+          className="
+            inline-block
+            text-white/40 hover:text-white/75
+            underline underline-offset-[4px]
+            tracking-[0.14em]
+            text-[0.85rem]
+            transition
+          "
+        >
+        NEW
+        </a>
+        </div>
     </section>
   );
 }
