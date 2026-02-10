@@ -8,13 +8,17 @@ gsap.registerPlugin(ScrollTrigger);
 
 export default function RoseRoom() {
   const imgRef = useRef(null);
+  const glowRef = useRef(null);
+  const slitLeft = useRef(null);
+  const slitRight = useRef(null);
 
-  /* ============================================
-        GSAP — 画像の“静かな呼吸”（極薄スケール）
-  ============================================ */
+  /* =====================================================
+        GSAP：バラ画像の “呼吸 × 光のゆらぎ”
+  ===================================================== */
   useEffect(() => {
     if (!imgRef.current) return;
 
+    // スクロールによる極薄スケール
     gsap.fromTo(
       imgRef.current,
       { scale: 1 },
@@ -29,72 +33,40 @@ export default function RoseRoom() {
         },
       }
     );
+
+    // 呼吸アニメーション（ゆらぎ）
+    gsap.to(imgRef.current, {
+      scale: 1.03,
+      duration: 6,
+      ease: "sine.inOut",
+      repeat: -1,
+      yoyo: true,
+    });
+
+    // 光膜のゆらぎ
+    gsap.to(glowRef.current, {
+      opacity: 0.08,
+      duration: 5.5,
+      repeat: -1,
+      yoyo: true,
+      ease: "sine.inOut",
+    });
+
+    // 左右スリットの揺れ
+    gsap.to([slitLeft.current, slitRight.current], {
+      opacity: 0.06,
+      duration: 7,
+      repeat: -1,
+      yoyo: true,
+      ease: "sine.inOut",
+    });
   }, []);
 
   return (
     <main className="relative min-h-screen overflow-hidden font-sans">
-      {/* =========================================
-          SEO / JSON-LD（Rose Room）
-      ========================================= */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "CreativeWork",
-            "@id": "https://gushikendesign.com/works/rose-room#creativework",
-            name: "Rose Room — ROSE VEIL Visual Study",
-            alternateName: "ROSE VEIL — Room Study",
-            description:
-              "ROSE VEIL の世界観を「香りが生まれる前の静寂」として再構築したビジュアル作品。白膜・光・余白・微粒ノイズのレイヤーで、“香りの気配”だけをそっと描いた前室コンセプト。",
-            inLanguage: "ja",
-            genre: ["Web Design", "Conceptual Visual", "Fragrance Visual"],
-            image: [
-              "https://gushikendesign.com/works/rose-room/ogp.png",
-              "/works1/rose-vein.png",
-            ],
-            url: "https://gushikendesign.com/works/rose-room",
-            creator: {
-              "@type": "Person",
-              name: "裕人 具志堅",
-              url: "https://gushikendesign.com/",
-            },
-            publisher: {
-              "@type": "Organization",
-              name: "GUSHIKEN DESIGN",
-              url: "https://gushikendesign.com/",
-            },
-            keywords: [
-              "ROSE VEIL",
-              "フレグランスデザイン",
-              "静寂のデザイン",
-              "高級EC",
-              "光のレイヤー",
-              "余白設計",
-              "React",
-              "Tailwind CSS",
-              "GSAP Motion",
-            ],
-          }),
-        }}
-      />
-
-      {/* =========================================
-          OGP
-      ========================================= */}
-      <meta property="og:title" content="Rose Room — ROSE VEIL Visual Study" />
-      <meta
-        property="og:description"
-        content="ROSE VEIL の“香りが生まれる瞬間”を静かに描いたビジュアル作品。"
-      />
-      <meta
-        property="og:image"
-        content="https://gushikendesign.com/works/rose-room/ogp.png"
-      />
-      <meta property="og:type" content="website" />
 
       {/* ===============================
-          背景（白膜 × 微粒ノイズ）
+          背景：白膜 × 微粒ノイズ
       =============================== */}
       <div
         aria-hidden
@@ -116,22 +88,74 @@ export default function RoseRoom() {
       />
 
       {/* ===============================
-          HERO：香りの“前室”としての視覚
+          HERO：香りの“前室”
       =============================== */}
       <section className="relative pt-[18vh] pb-[7vh] flex flex-col items-center">
+
+        {/* --- 光膜（白い薄膜） --- */}
+        <div
+          ref={glowRef}
+          aria-hidden
+          className="
+            absolute
+            w-[94vw] md:w-[40vw]
+            h-[100%]
+            rounded-[18px]
+            bg-white/5
+            blur-[18px]
+            z-[1]
+          "
+        />
+
+        {/* --- 左スリット --- */}
+        <div
+          ref={slitLeft}
+          aria-hidden
+          className="
+            absolute left-0 top-0 bottom-0
+            w-[22%]
+            bg-gradient-to-r
+            from-transparent
+            via-white/7
+            to-transparent
+            mix-blend-screen
+            z-[2]
+          "
+        />
+
+        {/* --- 右スリット --- */}
+        <div
+          ref={slitRight}
+          aria-hidden
+          className="
+            absolute right-0 top-0 bottom-0
+            w-[22%]
+            bg-gradient-to-l
+            from-transparent
+            via-white/7
+            to-transparent
+            mix-blend-screen
+            z-[2]
+          "
+        />
+
+        {/* --- バラ画像（主役） --- */}
         <img
           ref={imgRef}
           src="/works1/rose-vein.png"
           alt="Rose Veil Room — Visual Study"
           className="
+            relative z-[3]
             w-[92vw] md:w-[38vw]
             h-auto
             rounded-[14px]
             opacity-[0.98]
+            shadow-[0_0_22px_rgba(255,255,255,0.08)]
             select-none
           "
         />
 
+        {/* --- タイトル & コピー --- */}
         <div className="mt-10 text-center px-6 md:px-0">
           <h1
             className="
@@ -154,14 +178,14 @@ export default function RoseRoom() {
             "
           >
             咲く前の花のように、  
-            ただ静かに“気配だけ”が満ちていく部屋。  <br></br>
+            ただ静かに“気配だけ”が満ちていく部屋。  
             光と空気が香りの輪郭をそっと描きはじめる前室です。
           </p>
         </div>
       </section>
 
       {/* ===============================
-          CTA（薄膜ライン × 高級構造）
+          CTA（高級見えの薄膜ライン）
       =============================== */}
       <div
         className="
