@@ -183,6 +183,57 @@ export default function PriceDetail() {
             CONTACT
           </Link>
         </div>
+        <script
+  type="application/ld+json"
+  dangerouslySetInnerHTML={{
+    __html: JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      name: "Price Detail",
+      url: "https://gushikendesign.com/price",
+      description:
+        "LP制作・小規模サイト・ブランドサイト・運用プランの詳細。目的や雰囲気を丁寧に伺い、一緒に最適な見せ方を整理して制作します。",
+      breadcrumb: {
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          { "@type": "ListItem", position: 1, name: "Home", item: "https://gushikendesign.com/" },
+          { "@type": "ListItem", position: 2, name: "Price", item: "https://gushikendesign.com/price" }
+        ]
+      },
+      mainEntity: [
+        {
+          "@type": "Service",
+          name: "Landing Page",
+          price: "60000 JPY",
+          description:
+            "1ページで魅力をまとめるLPプラン。写真・余白・流れを整え、高品質で落ち着いたデザインに仕上げます。"
+        },
+        {
+          "@type": "Service",
+          name: "Small Website",
+          price: "120000 JPY",
+          description:
+            "トップ＋数ページの小規模サイト。読みやすく安心感のある構成を丁寧に設計します。"
+        },
+        {
+          "@type": "Service",
+          name: "Brand Site",
+          price: "240000 JPY",
+          description:
+            "写真・色・文字の表情まで統一し、世界観を“ひとつの物語”として仕上げるブランドプラン。"
+        },
+        {
+          "@type": "Service",
+          name: "Maintenance / Subscription",
+          price: "9800 JPY (Monthly)",
+          description:
+            "文言・写真の差し替え、NEW情報更新などをまとめて行う運用プラン。世界観を崩さずやさしく整え続けます。"
+        }
+      ]
+    })
+  }}
+></script>
+
       </div>
     </section>
   );
