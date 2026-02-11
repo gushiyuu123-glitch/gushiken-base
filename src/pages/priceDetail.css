@@ -1,0 +1,192 @@
+/* ============================================================
+   Silent UI v6.2 — GUSHIKEN DESIGN × NOA
+   黒膜 × 静けさ × 微光（Exhibition）
+   光の方向を統一・深度の膜を再調整・可読性向上
+============================================================ */
+
+/* ===============================================
+   Title
+=============================================== */
+.pd-title {
+  font-size: clamp(2.35rem, 3vw, 2.75rem);
+  letter-spacing: 0.20em;
+  font-weight: 300;
+  margin-bottom: 0.55rem;
+  padding-left: 0.25rem;
+  color: rgba(255,255,255,0.96);
+}
+
+.pd-sub {
+  color: rgba(255,255,255,0.70);
+  letter-spacing: 0.13em;
+  font-size: 0.94rem;
+  margin-bottom: 3.3rem;
+  padding-left: 0.25rem;
+}
+
+.pd-lead {
+  color: rgba(255,255,255,0.88);
+  line-height: 1.95;
+  margin-bottom: 4.9rem;
+  max-width: 760px;
+  padding-left: 0.25rem;
+  font-size: 1rem;
+}
+
+/* ===============================================
+   Section Title
+=============================================== */
+.pd-section-title {
+  margin-top: 4.3rem;
+  margin-bottom: 1.15rem;
+  padding-left: 0.25rem;
+  color: rgba(255,255,255,0.70);
+  letter-spacing: 0.18em;
+  font-size: 1rem;
+  font-weight: 400;
+}
+
+.pd-section-title.is-main {
+  color: rgba(217,185,138,0.95);
+  font-size: 1.14rem;
+  letter-spacing: 0.22em;
+  margin-top: 4.6rem;
+}
+
+/* ===============================================
+   Plan Card（膜：深度レベル 2）
+=============================================== */
+.pd-plan {
+  background: rgba(255,255,255,0.03); /* ← v6.2 膜を統一 */
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 0.85rem;
+  padding: 2rem;
+  backdrop-filter: blur(4px);
+  transition: all 0.35s cubic-bezier(.25,.46,.45,.94);
+}
+
+.pd-plan:hover {
+  transform: translateY(-3px);
+  border-color: rgba(217,185,138,0.45);
+}
+
+.pd-plan-badge {
+  font-size: 0.72rem;
+  letter-spacing: 0.22em;
+  color: rgba(217,185,138,0.92);
+}
+
+.pd-plan-title {
+  font-size: 1.23rem;
+  margin-top: 0.38rem;
+  color: rgba(255,255,255,0.96);
+}
+
+.pd-plan-price {
+  font-size: 1.33rem;
+  margin-top: 0.22rem;
+  color: rgba(217,185,138,0.97);
+  font-weight: 400;
+}
+
+.pd-plan-detail {
+  font-size: 0.95rem;
+  color: rgba(255,255,255,0.82);
+  margin-top: 1rem;
+  line-height: 1.82;
+}
+
+.pd-plan-best {
+  font-size: 0.84rem;
+  margin-top: 0.55rem;
+  color: rgba(255,255,255,0.58);
+}
+
+/* ===============================================
+   Detail Block（膜：深度レベル 1）
+=============================================== */
+.pd-detail-block {
+  margin-top: 2.7rem;
+  margin-bottom: 1.7rem;
+  padding: 2rem 1.55rem;
+  background: rgba(255,255,255,0.018); /* ← v6.2 で膜を薄く再定義 */
+  border: 1px solid rgba(217,185,138,0.14);
+  border-radius: 0.65rem;
+  backdrop-filter: blur(2.5px);
+}
+
+.pd-detail-title {
+  color: rgba(217,185,138,0.94);
+  letter-spacing: 0.15em;
+  font-size: 0.96rem;
+  margin-bottom: 1rem;
+}
+
+.pd-detail-list {
+  color: rgba(255,255,255,0.88);
+  font-size: 0.93rem;
+  line-height: 1.9;
+  padding-left: 0.6rem;
+}
+
+/* ===============================================
+   Text Block（線：呼吸・区切り）
+=============================================== */
+.pd-textblock {
+  border-left: 1px solid rgba(217,185,138,0.28);
+  padding-left: 1.3rem;
+  margin: 1.5rem 0 2.6rem;
+  font-size: 0.94rem;
+  line-height: 1.92;
+  color: rgba(255,255,255,0.88);
+}
+
+/* ===============================================
+   Thanks / CTA
+=============================================== */
+.pd-thanks {
+  color: rgba(255,255,255,0.82);
+  text-align: center;
+  margin-top: 4.6rem;
+  margin-bottom: 1.6rem;
+  font-size: 0.97rem;
+}
+
+.pd-cta {
+  display: inline-block;
+  padding: 0.95rem 3.9rem;
+  border-radius: 9999px;
+  border: 1px solid rgba(217,185,138,0.94);
+  color: rgba(217,185,138,0.97);
+  letter-spacing: 0.20em;
+  font-size: 0.92rem;
+  transition: all 0.35s cubic-bezier(.25,.46,.45,.94);
+}
+
+.pd-cta:hover {
+  background: rgba(217,185,138,0.94);
+  color: #000;
+}
+
+/* ===============================================
+   Utility
+=============================================== */
+.bg-gold\/25 {
+  background-color: rgba(217,185,138,0.25);
+}
+/* ============================================================
+   Detail 2 Columns — Exhibition Layout (左右展示)
+============================================================ */
+.pd-detail-columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2.4rem 3rem; /* 行間 × 列間 */
+  margin-top: 1.6rem;
+}
+
+@media (max-width: 768px) {
+  .pd-detail-columns {
+    grid-template-columns: 1fr; /* SPは1カラム */
+    gap: 2rem;
+  }
+}
