@@ -1258,6 +1258,38 @@ export const worksData = [
   category: "ART / CREATIVE",
   subtitle: "光・影・静寂をテーマにしたアート表現",
   items: [
+          // ✅ ORIGIN（別格・時間軸の外）
+      {
+        title: "ORIGIN — The Source",
+        slug: "Origin",
+        desc: "世界観の原点。\nGUSHIKEN DESIGN の思想と美意識が生まれる場所。",
+        link: "https://origin-gray.vercel.app/", // ←URL差し替え
+        img: "/works/origin.webp", // ←画像差し替え
+
+        // ✅ 別格フラグ（UIで特別扱いする）
+        isOrigin: true,
+        isFeatured: true, // 任意：カードを大きく/強調
+        createdAt: null,  // 時間軸の外
+        isNew: false,
+
+        tags: ["ORIGIN", "Manifesto", "Worldview", "Art", "Silence"],
+
+        detail: {
+          concept:
+            "作品ではなく“核”。世界観・構造・美意識の発生源として、GUSHIKEN DESIGN のOSを可視化した原点ページ。",
+          tech: ["React", "Vite", "Tailwind", "GSAP"]
+        },
+
+        seo: {
+          title: "ORIGIN｜世界観の原点｜GUSHIKEN DESIGN",
+          description:
+            "ORIGIN はGUSHIKEN DESIGNの世界観が生まれる発生源。静けさ・余白・光・構造の思想を“作品ではなく核”として提示する。",
+          keywords:
+            "ORIGIN, 世界観, 思想, 余白, 静寂, アートサイト, GUSHIKEN DESIGN",
+          ogImage: "https://gushikendesign.com/ogp/origin.png"
+        }
+      },
+
       {
       title: "Re:Camp — Outdoor Gear Studio",
       slug: "ReCamp",

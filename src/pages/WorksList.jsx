@@ -62,7 +62,7 @@ export default function WorksList() {
         );
 
   /* ================================
-        PC fade-in（カテゴリ切替にも対応）
+        PC fade-in
   ================================ */
   useEffect(() => {
     const root = rootRef.current;
@@ -70,7 +70,6 @@ export default function WorksList() {
 
     const items = root.querySelectorAll(".aq-fade");
 
-    // ---- 初期化（カテゴリ切替時に真っ黒バグ防止）----
     items.forEach((el) => {
       el.classList.remove("aq-show");
       el.style.opacity = 0;
@@ -87,7 +86,6 @@ export default function WorksList() {
     );
 
     items.forEach((el) => io.observe(el));
-
     return () => io.disconnect();
   }, [activeCategory]);
 
@@ -95,21 +93,20 @@ export default function WorksList() {
         SP slide-in
   ================================ */
   useEffect(() => {
-     const items = document.querySelectorAll(".sp-slide-in");
+    const items = document.querySelectorAll(".sp-slide-in");
 
-     const io = new IntersectionObserver(
-       (entries) => {
-         entries.forEach((e) => {
-           if (e.isIntersecting) e.target.classList.add("show");
-         });
-       },
-       { threshold: 0.18 }
-     );
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) e.target.classList.add("show");
+        });
+      },
+      { threshold: 0.18 }
+    );
 
-     items.forEach((el) => io.observe(el));
-     return () => io.disconnect();
+    items.forEach((el) => io.observe(el));
+    return () => io.disconnect();
   }, [activeCategory]);
-
 
   /* ================================
         Category click
@@ -127,56 +124,55 @@ export default function WorksList() {
         RENDER
   ================================ */
   return (
-    <section
-      className="
-        bg-[#070604]
-        min-h-screen
-        py-24 px-6 md:px-10 lg:px-16
-        overflow-x-hidden
-      "
-    >
-      <div
-        className="ambient-glow"
-        style={{
-          height: "1px",
-          pointerEvents: "none",
-          position: "relative",
-          zIndex: -1,
-        }}
-      />
+    <section className="bg-[#070604] min-h-screen py-24 px-6 md:px-10 lg:px-16 overflow-x-hidden">
+      <div className="ambient-glow" style={{ height: "1px" }} />
 
       <div ref={rootRef} className="max-w-6xl lg:max-w-7xl mx-auto">
-        {/* TOP */}
+
+        {/* ================= TOP ================= */}
         <div className="aq-fade mb-24 md:mb-28">
           <div className="w-12 h-px bg-gradient-to-r from-white/20 to-white/5 mb-6" />
-          <p className="text-[0.65rem] md:text-[0.75rem] tracking-[0.32em] text-white/30 mb-3">
+          <p className="text-[0.75rem] tracking-[0.32em] text-white/30 mb-3">
             SELECTED WORKS
           </p>
 
-          <h1 className="text-white text-[2.6rem] md:text-[3.4rem] tracking-[0.28em] font-light leading-[1.2] aq-fade delay-1">
-            WORKS —<br className="md:hidden" />
-            Portfolio
+          <h1 className="text-white text-[2.8rem] md:text-[3.6rem] tracking-[0.28em] font-light leading-[1.2]">
+            WORKS —
           </h1>
 
-          <p className="mt-10 text-[0.85rem] md:text-[1rem] text-white/45 leading-relaxed max-w-xl tracking-[0.04em] aq-fade delay-2">
-            美容・EC・店舗・ブランドなどを中心に制作した
-            世界観 × 高品質 × 伝わりやすさを両立した作品です。
+          <p className="mt-10 text-[0.95rem] text-white/45 leading-relaxed max-w-xl tracking-[0.04em]">
+            世界観 × 構造 × 技術。  
+            それぞれの分野で“核”を持つ作品のみを掲載。
           </p>
         </div>
 
         <div className="w-16 h-px bg-white/12 mb-16 aq-fade" />
 
-        {/* TABS */}
+        {/* ================= TABS ================= */}
         <CategoryTabs
           activeCategory={activeCategory}
           setActiveCategory={handleChangeCategory}
           categoryList={categoryList}
         />
 
-        {/* CATEGORY BLOCKS */}
-        <div className="space-y-32">
+        {/* ================= BLOCKS ================= */}
+        <div className="space-y-40">
           {filteredData.map((block, blockIndex) => (
             <div key={`${block.category}-${blockIndex}`} className="aq-fade">
+
+              {/* ORIGIN 特別表示（ART のみ） */}
+              {block.items.some((i) => i.isOrigin) && (
+                <div className="mb-24 text-center">
+                  <p className="text-[0.7rem] tracking-[0.5em] text-white/40 mb-6">
+                    — ORIGIN —
+                  </p>
+                  <p className="text-white/50 text-[0.9rem] max-w-xl mx-auto leading-relaxed">
+                    これは“作品”ではない。  
+                    すべての世界観が生まれる発生源。
+                  </p>
+                </div>
+              )}
+
               <Category
                 title={block.category}
                 subtitle={block.subtitle}
@@ -191,7 +187,8 @@ export default function WorksList() {
                     img={item.img}
                     tags={item.tags}
                     isNew={item.isNew}
-                    createdAt={item.createdAt}
+                    createdAt={!item.isOrigin ? item.createdAt : null}
+                    isOrigin={item.isOrigin} // ←渡す
                   />
                 ))}
               </Category>
@@ -200,39 +197,24 @@ export default function WorksList() {
         </div>
       </div>
 
-      {/* NOTE LINK */}
-      <div className="mt-32 text-center">
+      {/* ================= FOOT LINKS ================= */}
+      <div className="mt-32 text-center space-y-8">
         <a
           href="https://note.com/noahgushi123"
           target="_blank"
-          className="
-            inline-block
-            text-white/40 hover:text-white/75
-            underline underline-offset-[4px]
-            tracking-[0.14em]
-            text-[0.85rem]
-            transition
-          "
+          className="inline-block text-white/40 hover:text-white/75 underline underline-offset-[4px] tracking-[0.14em] text-[0.85rem] transition"
         >
           note（制作の裏側）
         </a>
-      </div>
-           <div className="mt-32 text-center">
-           <a
+
+        <a
           href="https://yorisoi-nine.vercel.app/"
           target="_blank"
-          className="
-            inline-block
-            text-white/40 hover:text-white/75
-            underline underline-offset-[4px]
-            tracking-[0.14em]
-            text-[0.85rem]
-            transition
-          "
+          className="inline-block text-white/40 hover:text-white/75 underline underline-offset-[4px] tracking-[0.14em] text-[0.85rem] transition"
         >
-        NEW
+          NEW
         </a>
-        </div>
+      </div>
     </section>
   );
 }
