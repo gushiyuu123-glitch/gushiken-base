@@ -1407,58 +1407,9 @@ export const worksData = [
       }
     },
 
-    {
-      title: "The Flow of Tea",
-      slug: "FlowOfTea",
 
-      desc: "茶 × 所作 × 静寂。\n“動きのない動き”を捉える構成美。",
-      link: "https://flow-of-tea.vercel.app",
-      img: "/works/aziwau1.webp",
 
-      isNew: false,
-      createdAt: null,
 
-      tags: [
-        "茶", "静寂", "余白", "日本的",
-        "Art", "Branding"
-      ],
-
-      detail: {
-        concept:
-          "茶の所作にある“静けさの動き”を UI へ翻訳。余白・行間・影の温度差だけで語る構成で、日本的美意識を現代的に再構築したアートデザイン。",
-        tech: ["React", "Vite", "Tailwind"]
-      }
-    },
-
-    {
-      title: "Ray of Silence",
-      slug: "RayOfSilence",
-
-      desc: "光 × 影 × 境界。\nミニマル光学のアートデザイン。",
-      link: "https://ray-of-silence.vercel.app",
-      img: "/works/ray.webp",
-
-      isNew: false,
-      createdAt: null,
-
-      tags: [
-        "光", "影", "境界", "静寂",
-        "Art",
-        "GSAP", "Light Animation"
-      ],
-
-      detail: {
-        concept:
-          "光と影の“境界線”の揺れだけを主題にしたミニマル作品。説明を排した構成で、光学的な静けさをアニメーションで抽象化したアートUI。",
-        tech: [
-          "React",
-          "Vite",
-          "Tailwind",
-          "GSAP",
-          "Light Animation"
-        ]
-      }
-    }
   ]
 }
 

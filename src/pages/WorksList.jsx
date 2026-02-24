@@ -128,7 +128,6 @@ export default function WorksList() {
       <div className="ambient-glow" style={{ height: "1px" }} />
 
       <div ref={rootRef} className="max-w-6xl lg:max-w-7xl mx-auto">
-
         {/* ================= TOP ================= */}
         <div className="aq-fade mb-24 md:mb-28">
           <div className="w-12 h-px bg-gradient-to-r from-white/20 to-white/5 mb-6" />
@@ -159,17 +158,16 @@ export default function WorksList() {
         <div className="space-y-40">
           {filteredData.map((block, blockIndex) => (
             <div key={`${block.category}-${blockIndex}`} className="aq-fade">
-
               {/* ORIGIN 特別表示（ART のみ） */}
               {block.items.some((i) => i.isOrigin) && (
                 <div className="mb-24 text-center">
                   <p className="text-[0.7rem] tracking-[0.5em] text-white/40 mb-6">
                     — ORIGIN —
                   </p>
-                  <p className="text-white/50 text-[0.9rem] max-w-xl mx-auto leading-relaxed">
-                    これは“作品”ではない。  
-                    すべての世界観が生まれる発生源。
-                  </p>
+         <p className="text-white/50 text-[0.9rem] max-w-xl mx-auto leading-relaxed">
+  偉人たちの視点や本質を、Webでアートとして再構築したシリーズです。  <br></br>
+  ORIGINは、彼らの思考を“デザインの起点”としてまとめた場所です。
+</p>
                 </div>
               )}
 
@@ -188,7 +186,7 @@ export default function WorksList() {
                     tags={item.tags}
                     isNew={item.isNew}
                     createdAt={!item.isOrigin ? item.createdAt : null}
-                    isOrigin={item.isOrigin} // ←渡す
+                    isOrigin={item.isOrigin}
                   />
                 ))}
               </Category>
