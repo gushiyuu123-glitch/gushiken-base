@@ -48,9 +48,13 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
 /* ============================================================
-   Silent Fade-In v2（blur完全排除 × 上質 × 呼吸フェード）
+   1) Silent Fade-In v4.3
+   （blur 完全排除 × 上質 × 呼吸フェード）
 ============================================================ */
 
 /* 初期状態（静かに沈める） */
@@ -58,8 +62,8 @@ body {
   opacity: 0;
   transform: translateY(18px) scale(0.995);
   transition:
-    opacity 1.05s cubic-bezier(.22,.56,.18,1),
-    transform 1.05s cubic-bezier(.22,.56,.18,1);
+    opacity var(--fade-time) var(--ease-silent),
+    transform var(--fade-time) var(--ease-silent);
   will-change: opacity, transform;
 }
 
@@ -77,51 +81,48 @@ body {
 .delay-5 { transition-delay: 0.52s; }
 
 /* ============================================================
-2) Ambient Glow（Dior の極薄光）
+   2) Ambient Glow（Dior の極薄光）
 ============================================================ */
 .ambient-glow {
-position: relative;
-opacity: 0;
-transition: opacity 2.4s ease;
+  position: relative;
+  opacity: 0;
+  transition: opacity 2.4s ease;
 }
-
 
 .ambient-glow::before,
 .ambient-glow::after {
-content: "";
-position: absolute;
-border-radius: 50%;
-filter: blur(120px);
-opacity: 0.05;
-pointer-events: none;
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(120px);
+  opacity: 0.05;
+  pointer-events: none;
 }
-
 
 .ambient-glow::before {
-top: 20%;
-left: -12%;
-width: 260px;
-height: 260px;
-background: var(--glow-white);
+  top: 20%;
+  left: -12%;
+  width: 260px;
+  height: 260px;
+  background: var(--glow-white);
 }
-
 
 .ambient-glow::after {
-bottom: 18%;
-right: -10%;
-width: 330px;
-height: 330px;
-background: var(--glow-silver);
+  bottom: 18%;
+  right: -10%;
+  width: 330px;
+  height: 330px;
+  background: var(--glow-silver);
 }
-
 
 body.scrolled .ambient-glow {
-opacity: 1;
+  opacity: 1;
 }
+
 body.scrolled .ambient-glow::before,
 body.scrolled .ambient-glow::after {
-opacity: 0.12;
-filter: blur(150px);
+  opacity: 0.12;
+  filter: blur(150px);
 }
 
 /* ============================================================
@@ -154,7 +155,9 @@ filter: blur(150px);
 }
 
 .dior-img {
-  transition: transform 1.1s var(--ease-silent), filter 1s ease;
+  transition:
+    transform 1.1s var(--ease-silent),
+    filter 1s ease;
   filter: brightness(0.86) contrast(1.06);
 }
 
@@ -166,7 +169,7 @@ filter: blur(150px);
 .dior-grain {
   position: absolute;
   inset: 0;
-  background: url('/grain.png');
+  background: url("/grain.png");
   opacity: 0.07;
   mix-blend-mode: overlay;
   pointer-events: none;
@@ -225,31 +228,4 @@ filter: blur(150px);
   0%   { opacity: 0; transform: translateY(-6px); }
   40%  { opacity: 0.6; transform: translateY(0); }
   100% { opacity: 0; transform: translateY(8px); }
-}
-/* 初期状態（非表示・下に沈めておく） */
-.aq-fade {
-  opacity: 0;
-  transform: translateY(22px);
-  filter: blur(6px);
-  transition: all 1.05s cubic-bezier(.25, .46, .45, .94);
-}
-
-/* 表示状態（呼吸フェード） */
-.aq-show {
-  opacity: 1 !important;
-  transform: translateY(0) !important;
-  filter: blur(0px) !important;
-}
-/* ============================================================
-   ★ 緊急対応：すべてのフェードインから blur を完全禁止 ★
-   （どのCSSやTailwind定義よりも後に書くこと）
-============================================================ */
-
-.aq-fade,
-.aq-show,
-[class*="fade"],
-[class*="Fade"],
-.animate-fadeUp {
-  filter: none !important;
-  backdrop-filter: none !important;
 }
