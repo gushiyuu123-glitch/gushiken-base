@@ -10,6 +10,44 @@ export const worksData = [
   subtitle: "世界観の“核”を示す代表作",
   accent: true,
   items: [
+        {
+  title: "KISUI — Skin Care Water Essence",
+  slug: "KisuiRoom",
+  desc: "透明 × 静けさ × 素肌。水と光の粒度で“肌のやさしさ”を構築したスキンケアブランド。",
+  link: "https://kisui-water.vercel.app/",
+  img: "/works/kisui1.webp",
+  isNew: true,
+  createdAt: "2026-02-28",
+  tags: [
+    "NEW",
+    "透明感", "水", "静寂", "余白",
+    "Beauty", "Skincare",
+    "Luxury", "Minimal",
+    "GSAP", "PC/SP 完全分離"
+  ],
+
+  detail: {
+    concept:
+      "“肌に触れた瞬間の静けさ”を軸に、光膜・水膜・余白の階調で構成したスキンケアデザイン。広告的な圧を排除し、素肌に寄り添うような透明感を中心に設計されたブランドUI。",
+    tech: [
+      "React",
+      "Vite",
+      "Tailwind",
+      "GSAP",
+      "IntersectionObserver",
+      "PC/SP 完全分離"
+    ]
+  },
+
+  seo: {
+    title: "KISUI — 透明×静寂のスキンケアブランドUI｜GUSHIKEN DESIGN",
+    description:
+      "KISUI は水と光の粒度を0.3px単位で整え、“肌に優しい透明感”を再構築したスキンケアブランド。余白・光膜・水膜の三層レイヤーで静けさと上質感を両立したUIデザイン。",
+    keywords:
+      "スキンケアEC, 化粧水LP, 透明感デザイン, 静寂UI, 美容Webデザイン, 沖縄 Web制作, KISUI",
+    ogImage: "https://gushikendesign.com/ogp/kisui.png"
+  }
+},
     {
   title: "LÜMIN — Minimal Audio EC",
   slug: "LuminRoom",
@@ -158,6 +196,44 @@ export const worksData = [
   category: "BEAUTY / SALON",
   subtitle: "美容・サロン向けの上質な余白デザイン",
   items: [
+    {
+  title: "KISUI — Skin Care Water Essence",
+  slug: "KisuiRoom",
+  desc: "透明 × 静けさ × 素肌。水と光の粒度で“肌のやさしさ”を構築したスキンケアブランド。",
+  link: "https://kisui-water.vercel.app/",
+  img: "/works/kisui.webp",
+  isNew: true,
+  createdAt: "2026-02-28",
+  tags: [
+    "NEW",
+    "透明感", "水", "静寂", "余白",
+    "Beauty", "Skincare",
+    "Luxury", "Minimal",
+    "GSAP", "PC/SP 完全分離"
+  ],
+
+  detail: {
+    concept:
+      "“肌に触れた瞬間の静けさ”を軸に、光膜・水膜・余白の階調で構成したスキンケアデザイン。広告的な圧を排除し、素肌に寄り添うような透明感を中心に設計されたブランドUI。",
+    tech: [
+      "React",
+      "Vite",
+      "Tailwind",
+      "GSAP",
+      "IntersectionObserver",
+      "PC/SP 完全分離"
+    ]
+  },
+
+  seo: {
+    title: "KISUI — 透明×静寂のスキンケアブランドUI｜GUSHIKEN DESIGN",
+    description:
+      "KISUI は水と光の粒度を0.3px単位で整え、“肌に優しい透明感”を再構築したスキンケアブランド。余白・光膜・水膜の三層レイヤーで静けさと上質感を両立したUIデザイン。",
+    keywords:
+      "スキンケアEC, 化粧水LP, 透明感デザイン, 静寂UI, 美容Webデザイン, 沖縄 Web制作, KISUI",
+    ogImage: "https://gushikendesign.com/ogp/kisui.png"
+  }
+},
     {
       title: "LILU nail salon",
       slug: "LILU",
