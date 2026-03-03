@@ -1337,7 +1337,7 @@ export const worksData = [
           // ✅ ORIGIN（別格・時間軸の外）
       {
         title: "ORIGIN — The Source",
-        slug: "Origin",
+        slug: "OriginRoom",
         desc: "世界観の原点。\nGUSHIKEN DESIGN の思想と美意識が生まれる場所。",
         link: "https://origin-gray.vercel.app/", // ←URL差し替え
         img: "/works/origin.webp", // ←画像差し替え
