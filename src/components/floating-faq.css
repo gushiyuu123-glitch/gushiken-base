@@ -49,6 +49,13 @@
   border-bottom: 1px solid rgba(255, 255, 255, 0.06);
 }
 
+.floating-faq-head-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
 .floating-faq-label {
   margin: 0 0 4px;
   font-size: 0.68rem;
@@ -61,6 +68,27 @@
   font-size: 0.96rem;
   letter-spacing: 0.08em;
   color: rgba(255, 255, 255, 0.92);
+}
+
+.floating-faq-close {
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.56);
+  font-size: 1rem;
+  line-height: 1;
+  cursor: pointer;
+  transition:
+    color 0.28s ease,
+    background 0.28s ease;
+}
+
+.floating-faq-close:hover {
+  color: rgba(255, 255, 255, 0.88);
+  background: rgba(255, 255, 255, 0.05);
 }
 
 .floating-faq-list {
@@ -96,7 +124,9 @@
   line-height: 1.7;
   letter-spacing: 0.02em;
   cursor: pointer;
-  transition: background 0.28s ease, color 0.28s ease;
+  transition:
+    background 0.28s ease,
+    color 0.28s ease;
 }
 
 .floating-faq-question:hover {
@@ -179,9 +209,12 @@
 
 .floating-faq-toggle {
   pointer-events: auto;
-  min-width: 58px;
+  min-width: 74px;
   height: 58px;
-  padding: 0 18px;
+  padding: 0 18px 0 16px;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 999px;
   background:
@@ -199,7 +232,8 @@
     transform 0.3s ease,
     box-shadow 0.3s ease,
     border-color 0.3s ease,
-    background 0.3s ease;
+    background 0.3s ease,
+    color 0.3s ease;
 }
 
 .floating-faq-toggle:hover {
@@ -208,10 +242,37 @@
   box-shadow:
     0 16px 34px rgba(0, 0, 0, 0.32),
     0 0 0 1px rgba(220, 190, 140, 0.07) inset;
+  color: rgba(255, 255, 255, 0.96);
 }
 
 .floating-faq-toggle.is-open {
   border-color: rgba(220, 190, 140, 0.24);
+  background:
+    linear-gradient(
+      180deg,
+      rgba(22, 22, 22, 0.96) 0%,
+      rgba(12, 12, 12, 0.96) 100%
+    );
+}
+
+.floating-faq-toggle-icon {
+  width: 20px;
+  height: 20px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(220, 190, 140, 0.82);
+  flex-shrink: 0;
+}
+
+.floating-faq-toggle-svg {
+  width: 20px;
+  height: 20px;
+  stroke: currentColor;
+  stroke-width: 1.15;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  overflow: visible;
 }
 
 .floating-faq-toggle-text {
@@ -219,6 +280,14 @@
   font-size: 0.76rem;
   letter-spacing: 0.2em;
   transform: translateX(1px);
+}
+
+.floating-faq-question:focus-visible,
+.floating-faq-toggle:focus-visible,
+.floating-faq-link:focus-visible,
+.floating-faq-close:focus-visible {
+  outline: 1px solid rgba(220, 190, 140, 0.42);
+  outline-offset: 2px;
 }
 
 @media (max-width: 767px) {
@@ -271,48 +340,20 @@
   }
 
   .floating-faq-toggle {
-    min-width: 54px;
+    min-width: 68px;
     height: 54px;
-    padding: 0 16px;
+    padding: 0 15px 0 14px;
+    gap: 8px;
+  }
+
+  .floating-faq-toggle-icon,
+  .floating-faq-toggle-svg {
+    width: 18px;
+    height: 18px;
   }
 
   .floating-faq-toggle-text {
     font-size: 0.72rem;
     letter-spacing: 0.18em;
   }
-}
-.floating-faq-head-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-}
-
-.floating-faq-close {
-  flex-shrink: 0;
-  width: 28px;
-  height: 28px;
-  border: 0;
-  border-radius: 999px;
-  background: transparent;
-  color: rgba(255, 255, 255, 0.56);
-  font-size: 1rem;
-  line-height: 1;
-  cursor: pointer;
-  transition:
-    color 0.28s ease,
-    background 0.28s ease;
-}
-
-.floating-faq-close:hover {
-  color: rgba(255, 255, 255, 0.88);
-  background: rgba(255, 255, 255, 0.05);
-}
-
-.floating-faq-question:focus-visible,
-.floating-faq-toggle:focus-visible,
-.floating-faq-link:focus-visible,
-.floating-faq-close:focus-visible {
-  outline: 1px solid rgba(220, 190, 140, 0.42);
-  outline-offset: 2px;
 }
