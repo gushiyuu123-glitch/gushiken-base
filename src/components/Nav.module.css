@@ -1,5 +1,5 @@
 /* ======================================================
-   GUSHIKEN DESIGN — Premium Navigation Final
+   GUSHIKEN DESIGN — Premium Navigation Final Optimized
 ====================================================== */
 
 /* ------------------------------------------------------
@@ -26,16 +26,16 @@
   background: rgba(0, 0, 0, 0.28);
   backdrop-filter: blur(14px) saturate(130%);
   -webkit-backdrop-filter: blur(14px) saturate(130%);
-  border-bottom: 1px solid rgba(215,195,154,0.12);
-  box-shadow: 0 12px 30px rgba(0,0,0,0.20);
+  border-bottom: 1px solid rgba(215, 195, 154, 0.12);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
 }
 
 :local(.navActive) {
   background: rgba(0, 0, 0, 0.54);
   backdrop-filter: blur(22px) saturate(150%);
   -webkit-backdrop-filter: blur(22px) saturate(150%);
-  border-bottom: 1px solid rgba(215,195,154,0.22);
-  box-shadow: 0 18px 46px rgba(0,0,0,0.30);
+  border-bottom: 1px solid rgba(215, 195, 154, 0.22);
+  box-shadow: 0 18px 46px rgba(0, 0, 0, 0.3);
 }
 
 /* ------------------------------------------------------
@@ -56,7 +56,7 @@
    LOGO
 ------------------------------------------------------ */
 :local(.navLogo) {
-  color: rgba(255,255,255,0.95);
+  color: rgba(255, 255, 255, 0.95);
   font-size: 1.08rem;
   font-weight: 300;
   letter-spacing: 0.26em;
@@ -83,7 +83,7 @@
   font-size: 0.88rem;
   font-weight: 300;
   letter-spacing: 0.18em;
-  color: rgba(255,255,255,0.78);
+  color: rgba(255, 255, 255, 0.78);
   text-decoration: none;
   transition:
     color 0.35s ease,
@@ -99,14 +99,14 @@
   height: 1px;
   background: linear-gradient(
     to right,
-    rgba(215,195,154,0.14),
-    rgba(215,195,154,0.88)
+    rgba(215, 195, 154, 0.14),
+    rgba(215, 195, 154, 0.88)
   );
   transition: width 0.55s cubic-bezier(.19,1,.22,1);
 }
 
 :local(.navItem:hover) {
-  color: rgba(255,255,255,0.98);
+  color: rgba(255, 255, 255, 0.98);
 }
 
 :local(.navItem:hover)::after {
@@ -121,7 +121,9 @@
   border: 0;
   background: transparent;
 }
-
+/* ------------------------------------------------------
+   MOBILE
+------------------------------------------------------ */
 @media (max-width: 767px) {
   :local(.navPc) {
     display: none;
@@ -150,7 +152,7 @@
   :local(.hamburger) span {
     width: 100%;
     height: 1.5px;
-    background: rgba(255,255,255,0.92);
+    background: rgba(255, 255, 255, 0.92);
     border-radius: 999px;
     transform-origin: center;
     transition:
@@ -170,158 +172,220 @@
   :local(.hamburgerOpen) span:nth-child(3) {
     transform: translateY(-9px) rotate(-45deg);
   }
+
+  /* ------------------------------------------------------
+     MOBILE OVERLAY
+  ------------------------------------------------------ */
+  :local(.mobileOverlay) {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.34);
+    backdrop-filter: blur(7px);
+    -webkit-backdrop-filter: blur(7px);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.32s ease;
+    z-index: 999997;
+  }
+
+  :local(.mobileOverlayOpen) {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  /* ------------------------------------------------------
+     MOBILE NAV PANEL
+     位置はここだけで管理
+  ------------------------------------------------------ */
+  :local(.mobileNav) {
+    --mobile-nav-top: 88px;
+    --mobile-nav-side: 12px;
+    --mobile-nav-radius: 22px;
+    --mobile-nav-max-height: calc(100svh - 108px);
+
+    position: fixed;
+    top: var(--mobile-nav-top);
+    left: var(--mobile-nav-side);
+    right: var(--mobile-nav-side);
+    width: auto;
+    max-width: 420px;
+    margin-left: auto;
+    margin-right: auto;
+
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: var(--mobile-nav-radius);
+    background:
+      linear-gradient(
+        180deg,
+        rgba(18, 18, 18, 0.96) 0%,
+        rgba(10, 10, 10, 0.96) 100%
+      );
+    box-shadow:
+      0 18px 44px rgba(0, 0, 0, 0.34),
+      0 0 0 1px rgba(220, 190, 140, 0.05) inset;
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+
+    max-height: var(--mobile-nav-max-height);
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+
+    transform: translateY(-10px) scale(0.985);
+    opacity: 0;
+    pointer-events: none;
+
+    transition:
+      transform 0.32s cubic-bezier(.22,1,.36,1),
+      opacity 0.32s ease;
+
+    z-index: 999998;
+  }
+
+  :local(.mobileOpen) {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  :local(.mobileNavInner) {
+    padding: 16px 18px 18px;
+  }
+
+  :local(.mobileNavTop) {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+
+  :local(.mobileNavLabel) {
+    margin: 0;
+    font-size: 0.68rem;
+    letter-spacing: 0.2em;
+    color: rgba(220, 190, 140, 0.72);
+  }
+
+  :local(.mobileClose) {
+    position: relative;
+    width: 34px;
+    height: 34px;
+    border: 0;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.02);
+    cursor: pointer;
+    transition:
+      background 0.3s ease,
+      opacity 0.3s ease;
+  }
+
+  :local(.mobileClose:hover) {
+    background: rgba(255, 255, 255, 0.05);
+  }
+
+  :local(.mobileClose) span {
+    position: absolute;
+    left: 9px;
+    top: 16px;
+    width: 16px;
+    height: 1px;
+    background: rgba(255, 255, 255, 0.72);
+    border-radius: 999px;
+  }
+
+  :local(.mobileClose) span:first-child {
+    transform: rotate(45deg);
+  }
+
+  :local(.mobileClose) span:last-child {
+    transform: rotate(-45deg);
+  }
+
+  :local(.mobileNavLinks) {
+    display: flex;
+    flex-direction: column;
+  }
+
+  :local(.mobileNavItem) {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 58px;
+    padding: 0;
+    text-decoration: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    color: rgba(255, 255, 255, 0.9);
+    transition:
+      color 0.3s ease,
+      transform 0.3s ease,
+      border-color 0.3s ease;
+  }
+
+  :local(.mobileNavItem:hover) {
+    color: rgba(255, 255, 255, 0.98);
+    transform: translateX(2px);
+    border-bottom-color: rgba(220, 190, 140, 0.12);
+  }
+
+  :local(.mobileNavText) {
+    font-size: 0.98rem;
+    font-weight: 300;
+    letter-spacing: 0.12em;
+  }
+
+  :local(.mobileNavArrow) {
+    color: rgba(220, 190, 140, 0.72);
+    font-size: 0.84rem;
+    transform: translateX(0);
+    transition: transform 0.3s ease, opacity 0.3s ease;
+  }
+
+  :local(.mobileNavItem:hover) :local(.mobileNavArrow) {
+    transform: translateX(2px);
+  }
+
+  :local(.mobileNavFooter) {
+    margin-top: 14px;
+    padding-top: 2px;
+  }
+
+  :local(.mobileNavNote) {
+    margin: 0;
+    font-size: 0.7rem;
+    line-height: 1.75;
+    letter-spacing: 0.08em;
+    color: rgba(255, 255, 255, 0.3);
+  }
 }
 
 /* ------------------------------------------------------
-   MOBILE OVERLAY
+   VERY SMALL DEVICES
+   top を上書きしない
 ------------------------------------------------------ */
-:local(.mobileOverlay) {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.32);
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.35s ease;
-  z-index: 999997;
+@media (max-width: 390px) {
+  :local(.mobileNav) {
+    --mobile-nav-side: 10px;
+    --mobile-nav-radius: 20px;
+    --mobile-nav-max-height: calc(100svh - 108px);
+  }
+
+  :local(.mobileNavInner) {
+    padding: 14px 16px 16px;
+  }
+
+  :local(.mobileNavItem) {
+    min-height: 54px;
+  }
+
+  :local(.mobileNavText) {
+    font-size: 0.94rem;
+    letter-spacing: 0.1em;
+  }
+
+  :local(.mobileNavNote) {
+    font-size: 0.66rem;
+    line-height: 1.7;
+  }
 }
-
-:local(.mobileOverlayOpen) {
-  opacity: 1;
-  pointer-events: auto;
-}
-
-/* ------------------------------------------------------
-   MOBILE NAV PANEL
------------------------------------------------------- */
-:local(.mobileNav) {
-  position: fixed;
-  inset: auto 12px 12px 12px;
-  border: 1px solid rgba(255,255,255,0.08);
-  border-radius: 22px;
-  background:
-    linear-gradient(
-      180deg,
-      rgba(18,18,18,0.96) 0%,
-      rgba(10,10,10,0.96) 100%
-    );
-  box-shadow:
-    0 18px 44px rgba(0,0,0,0.34),
-    0 0 0 1px rgba(220,190,140,0.05) inset;
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-
-  transform: translateY(14px) scale(0.985);
-  opacity: 0;
-  pointer-events: none;
-
-  transition:
-    transform 0.36s ease,
-    opacity 0.36s ease;
-
-  z-index: 999998;
-}
-
-:local(.mobileOpen) {
-  transform: translateY(0) scale(1);
-  opacity: 1;
-  pointer-events: auto;
-}
-
-:local(.mobileNavInner) {
-  padding: 18px 18px 20px;
-}
-
-:local(.mobileNavTop) {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 18px;
-}
-
-:local(.mobileNavLabel) {
-  margin: 0;
-  font-size: 0.72rem;
-  letter-spacing: 0.18em;
-  color: rgba(220,190,140,0.72);
-}
-
-:local(.mobileClose) {
-  position: relative;
-  width: 32px;
-  height: 32px;
-  border: 0;
-  border-radius: 999px;
-  background: transparent;
-  cursor: pointer;
-}
-
-:local(.mobileClose) span {
-  position: absolute;
-  left: 8px;
-  top: 15px;
-  width: 16px;
-  height: 1px;
-  background: rgba(255,255,255,0.72);
-  border-radius: 999px;
-}
-
-:local(.mobileClose) span:first-child {
-  transform: rotate(45deg);
-}
-
-:local(.mobileClose) span:last-child {
-  transform: rotate(-45deg);
-}
-
-:local(.mobileNavLinks) {
-  display: flex;
-  flex-direction: column;
-}
-
-:local(.mobileNavItem) {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 15px 0;
-  text-decoration: none;
-  border-bottom: 1px solid rgba(255,255,255,0.06);
-  color: rgba(255,255,255,0.9);
-  transition:
-    color 0.35s ease,
-    background 0.35s ease,
-    transform 0.35s ease;
-}
-
-:local(.mobileNavItem:hover) {
-  color: rgba(255,255,255,0.98);
-  transform: translateX(2px);
-}
-
-:local(.mobileNavText) {
-  font-size: 1rem;
-  font-weight: 300;
-  letter-spacing: 0.12em;
-}
-
-:local(.mobileNavArrow) {
-  color: rgba(220,190,140,0.72);
-  font-size: 0.88rem;
-}
-
-:local(.mobileNavFooter) {
-  margin-top: 16px;
-}
-
-:local(.mobileNavNote) {
-  margin: 0;
-  font-size: 0.72rem;
-  line-height: 1.8;
-  letter-spacing: 0.08em;
-  color: rgba(255,255,255,0.32);
-}
-
 /* ------------------------------------------------------
    DESKTOP SAFETY
 ------------------------------------------------------ */
@@ -340,6 +404,6 @@
 :local(.mobileNavItem):focus-visible,
 :local(.navItem):focus-visible,
 :local(.navLogo):focus-visible {
-  outline: 1px solid rgba(220,190,140,0.42);
+  outline: 1px solid rgba(220, 190, 140, 0.42);
   outline-offset: 3px;
 }

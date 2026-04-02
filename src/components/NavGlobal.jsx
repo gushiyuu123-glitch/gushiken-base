@@ -14,14 +14,13 @@ export default function NavGlobal() {
   const [isSolid, setIsSolid] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
 
-  const menuRef = useRef(null);
   const buttonRef = useRef(null);
   const firstLinkRef = useRef(null);
 
   const isActive = (path) =>
     pathname === path
       ? "text-[#d7c39a] opacity-100"
-      : "text-white/68 hover:text-white hover:opacity-100 opacity-100";
+      : "text-white/68 hover:text-white opacity-100";
 
   /* ----------------------------------------------------
      Scroll：透明 → 濃く
@@ -63,7 +62,9 @@ export default function NavGlobal() {
     const onKeyDown = (e) => {
       if (e.key === "Escape") {
         setIsOpen(false);
-        buttonRef.current?.focus();
+        window.setTimeout(() => {
+          buttonRef.current?.focus();
+        }, 0);
       }
     };
 
@@ -73,6 +74,7 @@ export default function NavGlobal() {
 
   /* ----------------------------------------------------
      開いたら最初のリンクへ
+     ※ デフォルト青枠を避けるため、Link 側で focus-visible を明示
   ---------------------------------------------------- */
   useEffect(() => {
     if (!isOpen) return;
@@ -95,8 +97,8 @@ export default function NavGlobal() {
           border-b transition-all duration-500
           ${
             isSolid
-              ? "bg-black/65 backdrop-blur-[18px] border-white/10 shadow-[0_8px_22px_rgba(0,0,0,0.32)]"
-              : "bg-black/35 backdrop-blur-[14px] border-white/5"
+              ? "border-white/10 bg-black/65 backdrop-blur-[18px] shadow-[0_8px_22px_rgba(0,0,0,0.32)]"
+              : "border-white/5 bg-black/35 backdrop-blur-[14px]"
           }
         `}
       >
@@ -113,6 +115,9 @@ export default function NavGlobal() {
             className="
               text-[0.95rem] font-light tracking-[0.28em] text-white
               transition hover:opacity-80
+              focus-visible:outline-none
+              focus-visible:ring-1 focus-visible:ring-[#d7c39a]/40
+              focus-visible:ring-offset-2 focus-visible:ring-offset-black
             "
           >
             GUSHIKEN DESIGN
@@ -126,6 +131,9 @@ export default function NavGlobal() {
                 to={item.to}
                 className={`
                   relative pb-2 transition
+                  focus-visible:outline-none
+                  focus-visible:ring-1 focus-visible:ring-[#d7c39a]/40
+                  focus-visible:ring-offset-2 focus-visible:ring-offset-black
                   ${isActive(item.to)}
                   after:absolute after:bottom-0 after:left-0 after:h-px after:w-0
                   after:bg-gradient-to-r after:from-[#d7c39a]/20 after:to-[#d7c39a]
@@ -149,6 +157,9 @@ export default function NavGlobal() {
             className="
               relative z-[10000] flex h-[20px] w-[26px] flex-col
               justify-between md:hidden
+              focus-visible:outline-none
+              focus-visible:ring-1 focus-visible:ring-[#d7c39a]/40
+              focus-visible:ring-offset-4 focus-visible:ring-offset-black
             "
           >
             <span
@@ -187,11 +198,10 @@ export default function NavGlobal() {
       {/* ================= SP Panel ================= */}
       <div
         id="global-mobile-navigation"
-        ref={menuRef}
         className={`
-          fixed bottom-3 left-3 right-3 top-[82px]
-          z-[9997] rounded-[22px]
-          border border-white/10
+          fixed left-3 right-3 top-[88px]
+          z-[9997] max-h-[calc(100svh-108px)] overflow-y-auto
+          rounded-[22px] border border-white/10
           bg-[linear-gradient(180deg,rgba(18,18,18,0.96)_0%,rgba(10,10,10,0.96)_100%)]
           shadow-[0_18px_44px_rgba(0,0,0,0.34),0_0_0_1px_rgba(220,190,140,0.05)_inset]
           backdrop-blur-[16px]
@@ -199,14 +209,14 @@ export default function NavGlobal() {
           ${
             isOpen
               ? "translate-y-0 opacity-100"
-              : "pointer-events-none translate-y-4 opacity-0"
+              : "pointer-events-none -translate-y-2 opacity-0"
           }
         `}
         role="dialog"
         aria-modal="true"
         aria-hidden={!isOpen}
       >
-        <div className="flex h-full flex-col px-5 pb-5 pt-4">
+        <div className="flex flex-col px-5 pb-5 pt-4">
           <div className="mb-4 flex items-center justify-between">
             <p className="text-[0.72rem] tracking-[0.18em] text-[#d7c39a]/75">
               MENU
@@ -219,6 +229,9 @@ export default function NavGlobal() {
               className="
                 relative h-8 w-8 rounded-full transition
                 hover:bg-white/5
+                focus-visible:outline-none
+                focus-visible:ring-1 focus-visible:ring-[#d7c39a]/40
+                focus-visible:ring-offset-2 focus-visible:ring-offset-black
               "
             >
               <span className="absolute left-2 top-[15px] h-px w-4 rotate-45 bg-white/72" />
@@ -239,6 +252,9 @@ export default function NavGlobal() {
                   py-[15px]
                   text-[1rem] tracking-[0.16em]
                   transition
+                  focus-visible:outline-none
+                  focus-visible:ring-1 focus-visible:ring-[#d7c39a]/40
+                  focus-visible:ring-offset-2 focus-visible:ring-offset-black
                   ${
                     pathname === item.to
                       ? "text-[#d7c39a]"
@@ -252,7 +268,7 @@ export default function NavGlobal() {
             ))}
           </div>
 
-          <div className="mt-auto pt-5">
+          <div className="pt-5">
             <p className="text-[0.72rem] leading-[1.8] tracking-[0.08em] text-white/30">
               NOT INDEXED. NOT ANNOUNCED.
               <br />
