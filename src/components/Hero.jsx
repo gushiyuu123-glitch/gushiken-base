@@ -1,10 +1,21 @@
-import React from "react";
+import React, { useMemo } from "react";
 import hero from "../assets/hero3.png";
 
 export default function Hero() {
-  return (
-    <section className="relative w-full h-[92vh] md:h-screen overflow-hidden pb-[8rem] bg-black">
+  const dustParticles = useMemo(
+    () =>
+      [...Array(10)].map((_, i) => ({
+        id: i,
+        left: `${Math.random() * 100}%`,
+        top: `${Math.random() * 100}%`,
+        rotate: `${Math.random() * 40 - 20}deg`,
+        delay: `${Math.random() * 7.5}s`,
+      })),
+    []
+  );
 
+  return (
+    <section className="relative w-full h-[92vh] overflow-hidden bg-black pb-[8rem] md:h-screen">
       {/* =====================
           BACKGROUND
       ===================== */}
@@ -13,10 +24,11 @@ export default function Hero() {
           src={hero}
           alt="美容・EC・店舗向けの高品質Webデザイン｜沖縄フリーランス GUSHIKEN DESIGN"
           className="
-            w-full h-full object-cover
+            h-full w-full object-cover
             brightness-[1.05]
             scale-[1.015]
             animate-[heroFloat_22s_ease-in-out_infinite]
+            will-change-transform
           "
         />
       </div>
@@ -24,28 +36,26 @@ export default function Hero() {
       {/* =====================
           AMBIENT LIGHTS
       ===================== */}
-      {/* Gold */}
-      <div className="absolute inset-0 pointer-events-none">
+      <div className="pointer-events-none absolute inset-0">
         <div
           className="
             absolute left-[12%] top-[30%]
-            w-[430px] h-[430px]
+            h-[430px] w-[430px]
+            rounded-full
             bg-[rgba(220,190,140,0.085)]
             blur-[150px]
-            rounded-full
           "
         />
       </div>
 
-      {/* Blue */}
-      <div className="absolute inset-0 pointer-events-none mix-blend-screen">
+      <div className="pointer-events-none absolute inset-0 mix-blend-screen">
         <div
           className="
             absolute right-[14%] top-[22%]
-            w-[330px] h-[330px]
+            h-[330px] w-[330px]
+            rounded-full
             bg-[rgba(120,170,255,0.10)]
             blur-[160px]
-            rounded-full
           "
         />
       </div>
@@ -55,32 +65,33 @@ export default function Hero() {
       ===================== */}
       <div
         className="
-          absolute left-0 bottom-0 w-full h-[240px]
+          pointer-events-none absolute bottom-0 left-0
+          h-[240px] w-full
           bg-gradient-to-t
           from-[rgba(0,0,0,0.24)]
           to-transparent
-          pointer-events-none
         "
       />
 
       {/* =====================
           DUST PARTICLES
       ===================== */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        {[...Array(10)].map((_, i) => (
+      <div className="pointer-events-none absolute inset-0 overflow-hidden">
+        {dustParticles.map((particle) => (
           <div
-            key={i}
+            key={particle.id}
             className="
-              absolute bg-white/25 rounded-full
-              w-[2px] h-[8px]
+              absolute h-[8px] w-[2px]
+              rounded-full bg-white/25
               opacity-0
               animate-[dustFloat_9s_ease-in-out_infinite]
+              will-change-[transform,opacity]
             "
             style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              transform: `rotate(${Math.random() * 40 - 20}deg)`,
-              animationDelay: `${Math.random() * 7.5}s`,
+              left: particle.left,
+              top: particle.top,
+              transform: `rotate(${particle.rotate})`,
+              animationDelay: particle.delay,
             }}
           />
         ))}
@@ -92,82 +103,70 @@ export default function Hero() {
       <div
         className="
           absolute
-          left-8 md:left-20
-          bottom-20 md:bottom-32
-          right-6
+          left-8 right-6 bottom-20
           max-w-xl
+          md:left-20 md:bottom-32
         "
       >
         {/* TITLE */}
         <h1
           className="
-            stylish-title
-            text-white font-light
-            leading-[1.12]
-            text-[2.15rem] md:text-[4.25rem]
-            tracking-[0.28em]
+            stylish-title gpu-fix
             mb-5
+            text-[2.15rem] font-light leading-[1.12]
+            tracking-[0.28em] text-white
+            md:text-[4.25rem]
           "
         >
-          GUSHIKEN<br />DESIGN
+          GUSHIKEN
+          <br />
+          DESIGN
         </h1>
 
         {/* UNDERLINE */}
         <div
           className="
-            stylish-sub delay-[0.12s]
-            w-24 h-[1px] bg-white/60 mb-6
+            stylish-sub delay-[0.12s] gpu-fix
+            mb-6 h-[1px] w-24 bg-white/60
           "
         />
 
-        {/* =====================
-            COPY BLOCK（←SEO強化ポイント）
-        ===================== */}
+        {/* COPY BLOCK */}
         <p
           className="
-            stylish-sub delay-[0.28s]
-            text-white/90
-            text-[0.95rem] md:text-[1.15rem]
-            leading-relaxed
-            tracking-wide
+            stylish-sub delay-[0.28s] gpu-fix
             max-w-md
-            nowarp
+            text-[0.95rem] leading-relaxed tracking-wide text-white/90
+            md:text-[1.12rem]
           "
         >
-          {/* ▼ レイヤー1：SEOワード（自然） */}
-          <span className="block text-white/60 text-[0.82rem] tracking-[0.12em] mb-3">
-            美容・EC・店舗向けの高品質Webデザインを沖縄から制作。
+          {/* レイヤー1：カテゴリ補助 */}
+          <span className="mb-3 block text-[0.82rem] tracking-[0.12em] text-white/60">
+            沖縄のWebデザイン / ホームページ制作
           </span>
 
-          {/* ▼ レイヤー2：感情（WHY） */}
+          {/* レイヤー2：主コピー */}
           <span className="block">
-            他と同じデザインでは物足りない人へ。上品さと<br />
+            店舗・サロン・ブランドの価値を、
           </span>
-          <span className="block mt-1">
-            “伝わる構造”を両立させたWebサイトを制作します。
+          <span className="mt-1 block">
+            上品に、伝わりやすく整えるWeb制作
           </span>
 
-          {/* ▼ レイヤー3：思想レイヤー */}
+          {/* レイヤー3：補助メリット */}
           <span
             className="
-              block mt-4
-              text-white/55
+              mt-4 block
               text-[0.82em]
               tracking-[0.14em]
+              text-white/58
             "
           >
-            静けさを設計し、構造で届ける。<br />
-            ―― 高品質ブランドのためのWebデザイン。
+            見やすさと高級感を両立し、
+            <br />
+            信頼感のある印象へ整えます。
           </span>
         </p>
-
-        <style>{`
-          .nowarp {
-            will-change: transform, opacity;
-            backface-visibility: hidden;
-            transform: translateZ(0);
-          }
-        `}</style>
       </div>
 
       {/* =====================
@@ -175,41 +174,61 @@ export default function Hero() {
       ===================== */}
       <style>{`
         @keyframes heroFloat {
-          0%   { transform: scale(1.015) translate(0,0); }
-          50%  { transform: scale(1.020) translate(4px,8px); }
-          100% { transform: scale(1.015) translate(0,0); }
+          0% {
+            transform: scale(1.015) translate(0, 0);
+          }
+          50% {
+            transform: scale(1.02) translate(4px, 8px);
+          }
+          100% {
+            transform: scale(1.015) translate(0, 0);
+          }
         }
 
         @keyframes dustFloat {
-          0%   { opacity: 0; transform: translateY(0) scale(0.8); }
-          35%  { opacity: 0.6; transform: translateY(-14px) scale(1); }
-          70%  { opacity: 0.3; transform: translateY(-24px) scale(1); }
-          100% { opacity: 0; transform: translateY(-36px) scale(0.9); }
+          0% {
+            opacity: 0;
+            transform: translateY(0) scale(0.8);
+          }
+          35% {
+            opacity: 0.5;
+            transform: translateY(-14px) scale(1);
+          }
+          70% {
+            opacity: 0.25;
+            transform: translateY(-24px) scale(1);
+          }
+          100% {
+            opacity: 0;
+            transform: translateY(-36px) scale(0.9);
+          }
+        }
+
+        .gpu-fix {
+          will-change: transform, opacity;
+          backface-visibility: hidden;
+          transform: translateZ(0);
         }
 
         .stylish-title {
           opacity: 0;
           transform: translateY(22px);
-          filter: blur(6px);
-          animation: titleReveal 1.4s cubic-bezier(.23,.7,.3,1) forwards;
+          animation: titleReveal 1.35s cubic-bezier(.23,.7,.3,1) forwards;
         }
 
         @keyframes titleReveal {
           0% {
             opacity: 0;
             transform: translateY(22px);
-            filter: blur(6px);
-            letter-spacing: 0.40em;
+            letter-spacing: 0.4em;
           }
-          40% {
+          45% {
             opacity: 1;
             transform: translateY(0);
-            filter: blur(0.6px);
           }
           100% {
             opacity: 1;
             transform: translateY(0);
-            filter: blur(0);
             letter-spacing: 0.28em;
             text-shadow: 0 2px 8px rgba(0,0,0,0.22);
           }
@@ -217,18 +236,22 @@ export default function Hero() {
 
         .stylish-sub {
           opacity: 0;
-          transform: translate(12px,14px);
-          filter: blur(4px);
-          animation: subFlow 1.25s cubic-bezier(.25,.46,.25,1) forwards;
+          transform: translate(12px, 14px);
+          animation: subFlow 1.15s cubic-bezier(.25,.46,.25,1) forwards;
         }
-        .stylish-sub.delay-\[0\.12s\] { animation-delay: 0.12s; }
-        .stylish-sub.delay-\[0\.28s\] { animation-delay: 0.28s; }
+
+        .stylish-sub.delay-\\[0\\.12s\\] {
+          animation-delay: 0.12s;
+        }
+
+        .stylish-sub.delay-\\[0\\.28s\\] {
+          animation-delay: 0.28s;
+        }
 
         @keyframes subFlow {
           to {
             opacity: 1;
-            transform: translate(0,0);
-            filter: blur(0);
+            transform: translate(0, 0);
           }
         }
       `}</style>

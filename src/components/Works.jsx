@@ -10,15 +10,25 @@ export default function Works() {
     if (!root) return;
 
     const cards = root.querySelectorAll(".work-card");
+    const cleanups = [];
+
     cards.forEach((card) => {
       const img = card.querySelector("img");
       if (!img) return;
+
+      const markLoaded = () => card.classList.add("img-loaded");
+
       if (img.complete) {
-        card.classList.add("img-loaded");
+        markLoaded();
       } else {
-        img.onload = () => card.classList.add("img-loaded");
+        img.addEventListener("load", markLoaded, { once: true });
+        cleanups.push(() => img.removeEventListener("load", markLoaded));
       }
     });
+
+    return () => {
+      cleanups.forEach((cleanup) => cleanup());
+    };
   }, []);
 
   return (
@@ -32,27 +42,28 @@ export default function Works() {
       "
     >
       <div className="works-container">
-
         {/* =====================
-            HEADER（SEO補強1行追加）
+            HEADER
         ===================== */}
         <div className="works-header aq-fade delay-1">
-          <h2 className="works-title" translate="no">WORKS</h2>
+          <h2 className="works-title" translate="no">
+            WORKS
+          </h2>
           <p className="works-sub">SELECTED PROJECTS</p>
 
-          {/* ▼ SEO：検索ワードを自然に追加（視覚崩さない） */}
           <p
             className="
               mt-3
+              max-w-[500px]
               text-[0.75rem]
-              text-white/60
-              tracking-[0.14em]
               leading-relaxed
-              max-w-[480px]
+              tracking-[0.14em]
+              text-white/60
             "
           >
-            美容・EC・店舗向けの高品質Webデザイン。  
-            上品さと“伝わる構造”を大切にした世界観サイトを制作しています。
+            美容・EC・店舗向けを中心に、
+            <br className="hidden md:block" />
+            上品さと伝わりやすさを両立したWebサイトを制作しています。
           </p>
         </div>
 
@@ -60,26 +71,26 @@ export default function Works() {
             GRID
         ===================== */}
         <div className="works-grid-wrapper">
-
           {/* Swipe hint */}
-          <div className="works-swipe-hint aq-fade delay-2">
+          <div className="works-swipe-hint aq-fade delay-2 md:hidden">
             <span>SWIPE</span>
             <span className="arrow">→</span>
           </div>
 
           <div className="works-grid">
-
             {/* 1 → LÜMIN（BIG） */}
             <a
               href="https://lumin-audio.vercel.app/"
               target="_blank"
               rel="noopener noreferrer"
               className="work-card aq-fade delay-3"
+              aria-label="LÜMIN のサイトを見る"
             >
               <img
                 src="/assets/lomin.webp"
                 alt="LÜMIN｜イヤホン・オーディオ製品のECサイト制作（ミニマル×高品質）"
                 loading="lazy"
+                decoding="async"
               />
               <div className="work-text">
                 <h3>LÜMIN</h3>
@@ -93,11 +104,13 @@ export default function Works() {
               target="_blank"
               rel="noopener noreferrer"
               className="work-card aq-fade delay-4"
+              aria-label="ROSE VEIL のサイトを見る"
             >
               <img
                 src="/assets/roseveil2.webp"
                 alt="ROSE VEIL｜香り系ブランドのECサイト制作（上品×空気感）"
                 loading="lazy"
+                decoding="async"
               />
               <div className="work-text">
                 <h3>ROSE VEIL</h3>
@@ -111,18 +124,19 @@ export default function Works() {
               target="_blank"
               rel="noopener noreferrer"
               className="work-card aq-fade delay-5"
+              aria-label="AXIS のサイトを見る"
             >
               <img
                 src="/assets/axis.webp"
                 alt="AXIS｜構造と判断軸を可視化するデザインプロジェクト（ミニマル×構造）"
                 loading="lazy"
+                decoding="async"
               />
               <div className="work-text">
                 <h3>AXIS</h3>
                 <p>Design System / Structure × Logic</p>
               </div>
             </a>
-
           </div>
         </div>
 
@@ -136,10 +150,11 @@ export default function Works() {
 
           <p
             className="
-              mt-3 text-[0.55rem]
+              mt-3
+              select-none
+              text-[0.55rem]
               tracking-[0.32em]
               text-white/30
-              select-none
             "
           >
             Curated under the AXIS philosophy

@@ -52,9 +52,7 @@ export default function WorksList() {
           {
             category: "NEW",
             subtitle: "最新作 — Newly Published Works",
-            items: enrichedData.flatMap((b) =>
-              b.items.filter((i) => i.isNew)
-            ),
+            items: enrichedData.flatMap((b) => b.items.filter((i) => i.isNew)),
           },
         ]
       : enrichedData.filter(
@@ -73,8 +71,8 @@ export default function WorksList() {
     items.forEach((el) => {
       el.classList.remove("aq-show");
       el.style.opacity = 0;
-      el.style.transform = "translateY(22px)";
-      el.style.filter = "blur(6px)";
+      el.style.transform = "translateY(18px)";
+      el.style.filter = "blur(4px)";
     });
 
     const io = new IntersectionObserver(
@@ -124,28 +122,30 @@ export default function WorksList() {
         RENDER
   ================================ */
   return (
-    <section className="bg-[#070604] min-h-screen py-24 px-6 md:px-10 lg:px-16 overflow-x-hidden">
+    <section className="min-h-screen overflow-x-hidden bg-[#070604] px-6 py-24 md:px-10 lg:px-16">
       <div className="ambient-glow" style={{ height: "1px" }} />
 
-      <div ref={rootRef} className="max-w-6xl lg:max-w-7xl mx-auto">
+      <div ref={rootRef} className="mx-auto max-w-6xl lg:max-w-7xl">
         {/* ================= TOP ================= */}
         <div className="aq-fade mb-24 md:mb-28">
-          <div className="w-12 h-px bg-gradient-to-r from-white/20 to-white/5 mb-6" />
-          <p className="text-[0.75rem] tracking-[0.32em] text-white/30 mb-3">
+          <div className="mb-6 h-px w-12 bg-gradient-to-r from-white/20 to-white/5" />
+
+          <p className="mb-3 text-[0.74rem] tracking-[0.30em] text-white/30">
             SELECTED WORKS
           </p>
 
-          <h1 className="text-white text-[2.8rem] md:text-[3.6rem] tracking-[0.28em] font-light leading-[1.2]">
-            WORKS —
+          <h1 className="text-[2.65rem] font-light leading-[1.14] tracking-[0.22em] text-white md:text-[3.3rem]">
+            WORKS
           </h1>
 
-          <p className="mt-10 text-[0.95rem] text-white/45 leading-relaxed max-w-xl tracking-[0.04em]">
-            世界観 × 構造 × 技術。  
-            それぞれの分野で“核”を持つ作品のみを掲載。
+          <p className="mt-8 max-w-[580px] text-[0.95rem] leading-[1.95] tracking-[0.03em] text-white/48">
+            世界観・構造・技術の三つを軸に、
+            <br className="hidden sm:block" />
+            それぞれに核のある作品だけを掲載しています。
           </p>
         </div>
 
-        <div className="w-16 h-px bg-white/12 mb-16 aq-fade" />
+        <div className="aq-fade mb-16 h-px w-16 bg-white/12" />
 
         {/* ================= TABS ================= */}
         <CategoryTabs
@@ -155,19 +155,23 @@ export default function WorksList() {
         />
 
         {/* ================= BLOCKS ================= */}
-        <div className="space-y-40">
+        <div className="space-y-36 md:space-y-40">
           {filteredData.map((block, blockIndex) => (
             <div key={`${block.category}-${blockIndex}`} className="aq-fade">
               {/* ORIGIN 特別表示（ART のみ） */}
               {block.items.some((i) => i.isOrigin) && (
-                <div className="mb-24 text-center">
-                  <p className="text-[0.7rem] tracking-[0.5em] text-white/40 mb-6">
+                <div className="mb-20 text-center md:mb-24">
+                  <p className="mb-5 text-[0.7rem] tracking-[0.42em] text-white/40">
                     — ORIGIN —
                   </p>
-         <p className="text-white/50 text-[0.9rem] max-w-xl mx-auto leading-relaxed">
-  偉人たちの視点や本質を、Webでアートとして再構築したシリーズです。  <br></br>
-  ORIGINは、彼らの思考を“デザインの起点”としてまとめた場所です。
-</p>
+
+                  <p className="mx-auto max-w-[620px] text-[0.92rem] leading-[1.95] text-white/52">
+                    偉人たちの視点や本質を、
+                    Webという形で静かに再構築したシリーズです。
+                    <br />
+                    ORIGIN は、その思考を
+                    “デザインの起点” として整理した場所でもあります。
+                  </p>
                 </div>
               )}
 
@@ -196,21 +200,14 @@ export default function WorksList() {
       </div>
 
       {/* ================= FOOT LINKS ================= */}
-      <div className="mt-32 text-center space-y-8">
+      <div className="mt-28 text-center md:mt-32">
         <a
           href="https://note.com/noahgushi123"
           target="_blank"
-          className="inline-block text-white/40 hover:text-white/75 underline underline-offset-[4px] tracking-[0.14em] text-[0.85rem] transition"
+          rel="noopener noreferrer"
+          className="inline-block border-b border-white/14 pb-[4px] text-[0.84rem] tracking-[0.12em] text-white/42 transition hover:text-white/76"
         >
-          note（制作の裏側）
-        </a>
-
-        <a
-          href="https://yorisoi-nine.vercel.app/"
-          target="_blank"
-          className="inline-block text-white/40 hover:text-white/75 underline underline-offset-[4px] tracking-[0.14em] text-[0.85rem] transition"
-        >
-          NEW
+          note — 制作の裏側
         </a>
       </div>
     </section>

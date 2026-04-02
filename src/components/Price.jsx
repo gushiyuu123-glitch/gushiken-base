@@ -27,8 +27,7 @@ export default function Price() {
 
   return (
     <section id="price" ref={sectionRef} className="price-section aq-fade">
-      <div className="max-w-5xl mx-auto px-6 relative">
-
+      <div className="relative mx-auto max-w-5xl px-6">
         {/* 中央軸ゴールドライン */}
         <div className="price-gold-line" />
 
@@ -45,14 +44,14 @@ export default function Price() {
           PRICE
         </h2>
 
-        {/* ===== SECTION TITLE（追加） ===== */}
+        {/* ===== SECTION TITLE ===== */}
         <h3
           className="
             price-section-title aq-fade delay-1
-            text-white/80
-            tracking-[0.18em]
-            text-[1.05rem]
             mb-10
+            text-[1.05rem]
+            tracking-[0.18em]
+            text-white/80
           "
         >
           料金プラン / PRICING PLANS
@@ -62,38 +61,88 @@ export default function Price() {
         <p
           className="
             aq-fade delay-1
-            text-white/60
-            tracking-[0.12em]
-            text-[0.85rem] sm:text-[0.9rem]
             mb-10
+            text-[0.85rem] sm:text-[0.9rem]
+            tracking-[0.12em]
+            text-white/60
           "
         >
           ― 料金について（制作費の目安） ―
         </p>
 
-        {/* ===== Lead ===== */}
-        <p className="price-philosophy aq-fade delay-2">
-          Webサイトは、<br />
-          <span className="text-white/95">
-            ただ作って終わりの“置物”ではありません。
-          </span>
-          <br /><br />
-          お店やサービスの良さを、  
-          <strong>誠実に・分かりやすく・長く伝え続ける窓口</strong>です。<br />
-          そのために、見た目と構造の両方を丁寧に設計しています。
-        </p>
+        {/* =====================
+            LEAD / PC
+        ===================== */}
+        <div className="hidden sm:block">
+          <p className="price-philosophy aq-fade delay-2">
+            Webサイトは、サービスやお店の魅力を
+            <span className="text-white/95">分かりやすく伝えるための窓口</span>
+            です。
+            <br />
+            見た目だけでなく、伝わりやすさや使いやすさも含めて丁寧に設計しています。
+          </p>
 
-        <p className="price-lead aq-fade delay-3">
-          下記はあくまで「目安の料金」です。<br /><br />
-          <strong>
-            制作前にヒアリングで内容を整理し、
-            必ず「総額」「納品物」「進め方」を事前にお伝えします。<br /><br />
-          </strong>
-          <span className="price-lead-note">
-            ※ 現在はポートフォリオ強化期間のため、
-            初回の方には控えめな価格で制作しています。<br /><br />
-          </span>
-        </p>
+          <p className="price-lead aq-fade delay-3">
+            下記はあくまで目安の料金です。
+            <br />
+            制作前にヒアリングを行い、
+            <strong>「総額」「納品物」「進め方」</strong>
+            を事前にお伝えします。
+            <br />
+            <span className="price-lead-note">
+              ※ 現在はポートフォリオ強化期間のため、
+              初回の方には控えめな価格で制作しています。
+            </span>
+          </p>
+        </div>
+
+        {/* =====================
+            LEAD / SP
+        ===================== */}
+        <div className="block sm:hidden">
+          <p className="price-philosophy aq-fade delay-2">
+            Webサイトは、
+            <br />
+            サービスやお店の魅力を
+            <br />
+            <span className="text-white/95">
+              分かりやすく伝えるための窓口
+            </span>
+            です。
+            <br />
+            <br />
+            見た目だけでなく、
+            <br />
+            伝わりやすさや使いやすさも含めて
+            <br />
+            丁寧に設計しています。
+          </p>
+
+          <p className="price-lead aq-fade delay-3">
+            下記はあくまで
+            <br />
+            目安の料金です。
+            <br />
+            <br />
+            制作前にヒアリングを行い、
+            <br />
+            <strong>
+              「総額」「納品物」
+              <br />
+              「進め方」
+            </strong>
+            を事前にお伝えします。
+            <br />
+            <br />
+            <span className="price-lead-note">
+              ※ 現在はポートフォリオ強化期間のため、
+              <br />
+              初回の方には控えめな価格で
+              <br />
+              制作しています。
+            </span>
+          </p>
+        </div>
 
         {/* PLAN 01〜03 */}
         <div className="price-grid top-plans aq-fade delay-4">
@@ -108,7 +157,7 @@ export default function Price() {
             label="PLAN 02"
             title="Small Website（小規模サイト）"
             price="¥120,000〜"
-            desc="カフェ・サロン・美容・個人事業向け。トップ＋2〜4ページを想定した、小さくても“伝わりやすい”サイト設計です。"
+            desc="カフェ・サロン・美容・個人事業向け。トップ＋2〜4ページを想定した、小さくても伝わりやすいサイト設計です。"
           />
 
           <PriceCard
@@ -128,28 +177,45 @@ export default function Price() {
             </h3>
             <p className="price-card-price">¥9,800 / 月</p>
             <p className="price-card-desc">
-              文言・写真・料金の差し替え、バナーの軽微な修正、
+              文言・写真・料金の差し替え、
+              バナーの軽微な修正、
               イベント情報の追加など、
-              <strong>“世界観を崩さない更新”</strong>をすべて代行します。
+              <strong>世界観を崩さない更新</strong>
+              を代行します。
             </p>
           </div>
         </div>
 
         {/* NOTE */}
-        <p className="price-note aq-fade delay-6">
-          追加ページ・機能追加も、<br />
-          <strong>制作途中でも遠慮なくご相談ください。</strong><br />
-          ご希望に合わせて最適な構成をご提案します。<br />
-          <strong>※ 理由なく金額が変わることは絶対にありません。</strong>
-        </p>
+        <div className="hidden sm:block">
+          <p className="price-note aq-fade delay-6">
+            追加ページや機能追加もご相談可能です。
+            <br />
+            <strong>内容に応じて、事前に分かりやすくご案内します。</strong>
+          </p>
+        </div>
 
- {/* CTA */}
-<div className="price-cta aq-fade delay-7 mt-16">
-  <Link to="/price" className="price-btn">
-    料金の詳細を見る →
-  </Link>
-</div>
+        <div className="block sm:hidden">
+          <p className="price-note aq-fade delay-6">
+            追加ページや機能追加も
+            <br />
+            ご相談可能です。
+            <br />
+            <br />
+            <strong>
+              内容に応じて、
+              <br />
+              事前に分かりやすくご案内します。
+            </strong>
+          </p>
+        </div>
 
+        {/* CTA */}
+        <div className="price-cta aq-fade delay-7 mt-16">
+          <Link to="/price" className="price-btn">
+            料金の詳細を見る →
+          </Link>
+        </div>
       </div>
     </section>
   );
