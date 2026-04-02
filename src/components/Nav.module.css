@@ -1,10 +1,9 @@
 /* ======================================================
-   🌕 GUSHIKEN DESIGN — Premium Navigation v6
-   Noah Final Edition（CSS Modules 最終形）
+   GUSHIKEN DESIGN — Premium Navigation Final
 ====================================================== */
 
 /* ------------------------------------------------------
-   ROOT NAV — 黒膜 × ガラス × ゴールド膜 × 静かな影
+   ROOT NAV
 ------------------------------------------------------ */
 :local(.navRoot) {
   position: fixed;
@@ -14,36 +13,29 @@
   height: 70px;
   z-index: 999999;
 
-  background: rgba(0, 0, 0, 0.40);
-  backdrop-filter: blur(20px) saturate(140%);
-  border-bottom: 1px solid rgba(215,195,154,0.18);
-
-  /* 影は深く、でも強すぎない — Dior の展示照明感 */
-  box-shadow: 0 18px 46px rgba(0,0,0,0.32);
-
   transition:
-    opacity .55s cubic-bezier(.19,1,.22,1),
-    transform .55s cubic-bezier(.19,1,.22,1),
-    background .55s ease,
-    border-bottom-color .55s ease;
+    opacity 0.55s cubic-bezier(.19,1,.22,1),
+    transform 0.55s cubic-bezier(.19,1,.22,1),
+    background 0.55s ease,
+    border-bottom-color 0.55s ease,
+    box-shadow 0.55s ease,
+    backdrop-filter 0.55s ease;
 }
 
-/* ------------------------------------------------------
-   Scrolled (透明 → 濃いガラス膜)
------------------------------------------------------- */
-:local(.navSolid) {
-  background: rgba(0, 0, 0, 0.62);
-  backdrop-filter: blur(26px) saturate(160%);
-  border-bottom-color: rgba(215,195,154,0.28);
+:local(.navIdle) {
+  background: rgba(0, 0, 0, 0.28);
+  backdrop-filter: blur(14px) saturate(130%);
+  -webkit-backdrop-filter: blur(14px) saturate(130%);
+  border-bottom: 1px solid rgba(215,195,154,0.12);
+  box-shadow: 0 12px 30px rgba(0,0,0,0.20);
 }
 
-/* ------------------------------------------------------
-   Nav Hidden（必要なら使う）
------------------------------------------------------- */
-:local(.navHidden) {
-  opacity: 0;
-  transform: translateY(-20px);
-  pointer-events: none;
+:local(.navActive) {
+  background: rgba(0, 0, 0, 0.54);
+  backdrop-filter: blur(22px) saturate(150%);
+  -webkit-backdrop-filter: blur(22px) saturate(150%);
+  border-bottom: 1px solid rgba(215,195,154,0.22);
+  box-shadow: 0 18px 46px rgba(0,0,0,0.30);
 }
 
 /* ------------------------------------------------------
@@ -52,7 +44,6 @@
 :local(.navInner) {
   max-width: 1350px;
   margin: 0 auto;
-
   height: 70px;
   padding: 0 32px;
 
@@ -62,20 +53,19 @@
 }
 
 /* ------------------------------------------------------
-   LOGO (GUSHIKEN DESIGN)
+   LOGO
 ------------------------------------------------------ */
 :local(.navLogo) {
-  color: #fff;
-  font-size: 1.12rem;
+  color: rgba(255,255,255,0.95);
+  font-size: 1.08rem;
   font-weight: 300;
-  letter-spacing: 0.28em;
-
-  cursor: pointer;
-  transition: opacity .35s ease;
+  letter-spacing: 0.26em;
+  text-decoration: none;
+  transition: opacity 0.35s ease;
 }
 
 :local(.navLogo:hover) {
-  opacity: 0.72;
+  opacity: 0.74;
 }
 
 /* ------------------------------------------------------
@@ -83,59 +73,40 @@
 ------------------------------------------------------ */
 :local(.navPc) {
   display: flex;
-  gap: 55px;
+  gap: 48px;
   align-items: center;
 }
 
-@media (max-width: 767px) {
-  :local(.navPc) { display: none; }
-}
-
-/* nav item */
 :local(.navItem) {
   position: relative;
-  padding: 6px 4px 12px;
-
-  font-size: 0.9rem;
+  padding: 6px 2px 12px;
+  font-size: 0.88rem;
   font-weight: 300;
-  letter-spacing: 0.19em;
-
-  color: rgba(255,255,255,0.80);
-  cursor: pointer;
-
+  letter-spacing: 0.18em;
+  color: rgba(255,255,255,0.78);
+  text-decoration: none;
   transition:
-    color .35s ease,
-    opacity .35s ease;
+    color 0.35s ease,
+    opacity 0.35s ease;
 }
 
-/* Active */
-:local(.navItemActive) {
-  color: #D7C39A;
-  opacity: 1;
-}
-
-/* 下の薄金ライン（hover時に伸びる） */
 :local(.navItem)::after {
   content: "";
   position: absolute;
   left: 0;
   bottom: 0;
-
   width: 0%;
   height: 1px;
-
   background: linear-gradient(
     to right,
-    rgba(215,195,154,0.15),
+    rgba(215,195,154,0.14),
     rgba(215,195,154,0.88)
   );
-
-  transition: width .55s cubic-bezier(.19,1,.22,1);
+  transition: width 0.55s cubic-bezier(.19,1,.22,1);
 }
 
 :local(.navItem:hover) {
-  color: #ffffff;
-  opacity: 1;
+  color: rgba(255,255,255,0.98);
 }
 
 :local(.navItem:hover)::after {
@@ -143,96 +114,232 @@
 }
 
 /* ------------------------------------------------------
-   HAMBURGER（SP）
+   HAMBURGER
 ------------------------------------------------------ */
 :local(.hamburger) {
   display: none;
+  border: 0;
+  background: transparent;
 }
 
 @media (max-width: 767px) {
+  :local(.navPc) {
+    display: none;
+  }
+
+  :local(.navInner) {
+    padding: 0 18px;
+  }
+
+  :local(.navLogo) {
+    font-size: 0.92rem;
+    letter-spacing: 0.18em;
+  }
+
   :local(.hamburger) {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-
-    width: 28px;
+    width: 30px;
     height: 20px;
-
-    z-index: 9999999;
     cursor: pointer;
+    z-index: 1000001;
+    padding: 0;
   }
 
   :local(.hamburger) span {
     width: 100%;
-    height: 2px;
-    background: white;
-    border-radius: 3px;
-    transition: .45s cubic-bezier(.19,1,.22,1);
+    height: 1.5px;
+    background: rgba(255,255,255,0.92);
+    border-radius: 999px;
+    transform-origin: center;
+    transition:
+      transform 0.45s cubic-bezier(.19,1,.22,1),
+      opacity 0.45s cubic-bezier(.19,1,.22,1),
+      background 0.35s ease;
   }
 
-  /* X 状態 */
   :local(.hamburgerOpen) span:nth-child(1) {
     transform: translateY(9px) rotate(45deg);
   }
+
   :local(.hamburgerOpen) span:nth-child(2) {
     opacity: 0;
   }
+
   :local(.hamburgerOpen) span:nth-child(3) {
     transform: translateY(-9px) rotate(-45deg);
   }
 }
 
 /* ------------------------------------------------------
-   MOBILE NAV（黒幕 × 上質 × Diorの静けさ）
+   MOBILE OVERLAY
 ------------------------------------------------------ */
-:local(.mobileNav) {
+:local(.mobileOverlay) {
   position: fixed;
-  top: 70px;
-  left: 0;
-  width: 100%;
-  height: calc(100vh - 70px);
-
-  background: rgba(0,0,0,0.92);
-  backdrop-filter: blur(28px) saturate(150%);
-
-  transform: translateY(-100%);
+  inset: 0;
+  background: rgba(0,0,0,0.32);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
   opacity: 0;
   pointer-events: none;
-
-  transition:
-    transform .55s cubic-bezier(.19,1,.22,1),
-    opacity .55s cubic-bezier(.19,1,.22,1);
-
-  display: flex;
-  flex-direction: column;
-  padding-top: 20px;
-
-  z-index: 999998;
+  transition: opacity 0.35s ease;
+  z-index: 999997;
 }
 
-/* SP OPEN */
-:local(.mobileOpen) {
-  transform: translateY(0);
+:local(.mobileOverlayOpen) {
   opacity: 1;
   pointer-events: auto;
 }
 
-/* メニュー項目 */
-:local(.mobileNav) a {
-  padding: 24px 32px;
+/* ------------------------------------------------------
+   MOBILE NAV PANEL
+------------------------------------------------------ */
+:local(.mobileNav) {
+  position: fixed;
+  inset: auto 12px 12px 12px;
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 22px;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(18,18,18,0.96) 0%,
+      rgba(10,10,10,0.96) 100%
+    );
+  box-shadow:
+    0 18px 44px rgba(0,0,0,0.34),
+    0 0 0 1px rgba(220,190,140,0.05) inset;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
 
-  font-size: 1.06rem;
-  letter-spacing: 0.20em;
-
-  color: rgba(255,255,255,0.88);
-  border-bottom: 1px solid rgba(255,255,255,0.07);
+  transform: translateY(14px) scale(0.985);
+  opacity: 0;
+  pointer-events: none;
 
   transition:
-    color .35s ease,
-    background .35s ease;
+    transform 0.36s ease,
+    opacity 0.36s ease;
+
+  z-index: 999998;
 }
 
-:local(.mobileNav) a:hover {
-  background: rgba(255,255,255,0.06);
-  color: #fff;
+:local(.mobileOpen) {
+  transform: translateY(0) scale(1);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+:local(.mobileNavInner) {
+  padding: 18px 18px 20px;
+}
+
+:local(.mobileNavTop) {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 18px;
+}
+
+:local(.mobileNavLabel) {
+  margin: 0;
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  color: rgba(220,190,140,0.72);
+}
+
+:local(.mobileClose) {
+  position: relative;
+  width: 32px;
+  height: 32px;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  cursor: pointer;
+}
+
+:local(.mobileClose) span {
+  position: absolute;
+  left: 8px;
+  top: 15px;
+  width: 16px;
+  height: 1px;
+  background: rgba(255,255,255,0.72);
+  border-radius: 999px;
+}
+
+:local(.mobileClose) span:first-child {
+  transform: rotate(45deg);
+}
+
+:local(.mobileClose) span:last-child {
+  transform: rotate(-45deg);
+}
+
+:local(.mobileNavLinks) {
+  display: flex;
+  flex-direction: column;
+}
+
+:local(.mobileNavItem) {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px 0;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  color: rgba(255,255,255,0.9);
+  transition:
+    color 0.35s ease,
+    background 0.35s ease,
+    transform 0.35s ease;
+}
+
+:local(.mobileNavItem:hover) {
+  color: rgba(255,255,255,0.98);
+  transform: translateX(2px);
+}
+
+:local(.mobileNavText) {
+  font-size: 1rem;
+  font-weight: 300;
+  letter-spacing: 0.12em;
+}
+
+:local(.mobileNavArrow) {
+  color: rgba(220,190,140,0.72);
+  font-size: 0.88rem;
+}
+
+:local(.mobileNavFooter) {
+  margin-top: 16px;
+}
+
+:local(.mobileNavNote) {
+  margin: 0;
+  font-size: 0.72rem;
+  line-height: 1.8;
+  letter-spacing: 0.08em;
+  color: rgba(255,255,255,0.32);
+}
+
+/* ------------------------------------------------------
+   DESKTOP SAFETY
+------------------------------------------------------ */
+@media (min-width: 768px) {
+  :local(.mobileOverlay),
+  :local(.mobileNav) {
+    display: none;
+  }
+}
+
+/* ------------------------------------------------------
+   FOCUS
+------------------------------------------------------ */
+:local(.hamburger):focus-visible,
+:local(.mobileClose):focus-visible,
+:local(.mobileNavItem):focus-visible,
+:local(.navItem):focus-visible,
+:local(.navLogo):focus-visible {
+  outline: 1px solid rgba(220,190,140,0.42);
+  outline-offset: 3px;
 }

@@ -1,23 +1,32 @@
-import { useState, useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 import styles from "./Nav.module.css";
+
+const navItems = [
+  { href: "#works", label: "WORKS" },
+  { href: "#philosophy", label: "PHILOSOPHY" },
+  { href: "#about", label: "ABOUT" },
+  { href: "#price", label: "PRICE" },
+  { href: "#contact", label: "CONTACT" },
+];
 
 export default function Nav() {
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState(false);
+  const firstLinkRef = useRef(null);
 
   /* ============================
      Scroll active（透明 → 黒膜）
   ============================ */
   useEffect(() => {
     const handleScroll = () => {
-      const scrolled = window.scrollY > 12;
-      if (scrolled !== active) setActive(scrolled);
+      setActive(window.scrollY > 12);
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
     handleScroll();
+
     return () => window.removeEventListener("scroll", handleScroll);
-  }, [active]);
+  }, []);
 
   /* ============================
      SP メニュー時 body 固定
@@ -29,52 +38,124 @@ export default function Nav() {
     };
   }, [open]);
 
+  /* ============================
+     Esc で閉じる
+  ============================ */
+  useEffect(() => {
+    if (!open) return;
+
+    const onKeyDown = (e) => {
+      if (e.key === "Escape") setOpen(false);
+    };
+
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [open]);
+
+  /* ============================
+     開いたら最初のリンクへ
+  ============================ */
+  useEffect(() => {
+    if (!open) return;
+
+    const timer = window.setTimeout(() => {
+      firstLinkRef.current?.focus();
+    }, 80);
+
+    return () => window.clearTimeout(timer);
+  }, [open]);
+
+  const closeMenu = () => setOpen(false);
+
   return (
-    <nav
-      className={`${styles.navRoot} ${
-        active ? styles.navActive : styles.navHidden
-      }`}
-    >
-      <div className={styles.navInner}>
+    <>
+      <nav
+        className={`${styles.navRoot} ${
+          active ? styles.navActive : styles.navIdle
+        }`}
+      >
+        <div className={styles.navInner}>
+          <a href="/" className={styles.navLogo} translate="no">
+            GUSHIKEN DESIGN
+          </a>
 
-        {/* Logo */}
-        <h1 className={styles.navLogo} translate="no">
-          GUSHIKEN DESIGN
-        </h1>
+          <div className={styles.navPc}>
+            {navItems.map((item) => (
+              <a key={item.href} href={item.href} className={styles.navItem}>
+                {item.label}
+              </a>
+            ))}
+          </div>
 
-        {/* PC Navigation */}
-        <div className={styles.navPc}>
-          <a href="#works" className={styles.navItem}>WORKS</a>
-          <a href="#philosophy" className={styles.navItem}>PHILOSOPHY</a>
-          <a href="#about" className={styles.navItem}>ABOUT</a>
-          <a href="#price" className={styles.navItem}>PRICE</a>
-          <a href="#contact" className={styles.navItem}>CONTACT</a>
+          <button
+            type="button"
+            className={`${styles.hamburger} ${
+              open ? styles.hamburgerOpen : ""
+            }`}
+            onClick={() => setOpen((v) => !v)}
+            aria-label={open ? "Close navigation" : "Open navigation"}
+            aria-expanded={open}
+            aria-controls="mobile-navigation"
+          >
+            <span />
+            <span />
+            <span />
+          </button>
         </div>
+      </nav>
 
-        {/* Hamburger (SP) */}
-        <button
-          className={`${styles.hamburger} ${
-            open ? styles.hamburgerOpen : ""
-          }`}
-          onClick={() => setOpen((v) => !v)}
-          aria-label="Toggle navigation"
-        >
-          <span></span><span></span><span></span>
-        </button>
-      </div>
-
-      {/* MOBILE NAV */}
       <div
+        className={`${styles.mobileOverlay} ${
+          open ? styles.mobileOverlayOpen : ""
+        }`}
+        onClick={closeMenu}
+        aria-hidden={!open}
+      />
+
+      <div
+        id="mobile-navigation"
         className={`${styles.mobileNav} ${open ? styles.mobileOpen : ""}`}
         role="dialog"
         aria-modal="true"
+        aria-hidden={!open}
       >
-        <a href="#works"      onClick={() => setOpen(false)}>WORKS</a>
-        <a href="#philosophy" onClick={() => setOpen(false)}>PHILOSOPHY</a>
-        <a href="#about"      onClick={() => setOpen(false)}>ABOUT</a>
-        <a href="#price"      onClick={() => setOpen(false)}>PRICE</a>
-        <a href="#contact"    onClick={() => setOpen(false)}>CONTACT</a>
+        <div className={styles.mobileNavInner}>
+          <div className={styles.mobileNavTop}>
+            <p className={styles.mobileNavLabel}>MENU</p>
+
+            <button
+              type="button"
+              className={styles.mobileClose}
+              onClick={closeMenu}
+              aria-label="Close navigation"
+            >
+              <span />
+              <span />
+            </button>
+          </div>
+
+          <div className={styles.mobileNavLinks}>
+            {navItems.map((item, index) => (
+              <a
+                key={item.href}
+                href={item.href}
+                ref={index === 0 ? firstLinkRef : null}
+                onClick={closeMenu}
+                className={styles.mobileNavItem}
+              >
+                <span className={styles.mobileNavText}>{item.label}</span>
+                <span className={styles.mobileNavArrow}>→</span>
+              </a>
+            ))}
+          </div>
+
+          <div className={styles.mobileNavFooter}>
+            <p className={styles.mobileNavNote}>
+              Quiet structure, clear direction.
+            </p>
+          </div>
+        </div>
       </div>
-    </nav>
+    </>
   );
 }
