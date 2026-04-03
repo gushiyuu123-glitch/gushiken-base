@@ -56,7 +56,7 @@ export const worksData = [
   img: "/works/lumin-main.webp",
   isNew: true,
   createdAt: "2026-02-02",
-  tags: ["PICKUP", "Audio", "Minimal", "WhiteSilver", "EC", "Precision"],
+  tags: ["PICKUP","NEW", "Audio", "Minimal", "WhiteSilver", "EC", "Precision"],
 
   seo: {
     title: "LÜMIN — Minimal Audio EC｜白銀×精度×透明音のミニマルECデザイン",
@@ -76,7 +76,7 @@ export const worksData = [
       img: "/works/roseveil2.webp",
       isNew: true,
       createdAt: "2026-01-30",
-      tags: ["PICKUP", "EC", "Luxury", "Fragrance"],
+      tags: ["PICKUP", "NEW", "EC", "Luxury", "Fragrance"],
 
       seo: {
         title: "ROSE VEIL — Fragrance Shampoo｜香り×余白×世界観ECデザイン",
@@ -140,7 +140,7 @@ export const worksData = [
       img: "/works/white-dark-cacao.webp",
       isNew: true,
       createdAt: "2026-01-19",
-      tags: ["PICKUP", "Food", "EC", "White"],
+      tags: ["PICKUP", "NEW","Food", "EC", "White"],
 
       seo: {
         title: "WHITE × DARK CACAO｜白×カカオ×静寂の高級食品EC",
@@ -287,7 +287,6 @@ export const worksData = [
       isNew: true,
       createdAt: "2025-02-28",
       tags: [
-        "NEW",
         "ピンク",
         "余白",
         "上品",
@@ -330,7 +329,6 @@ export const worksData = [
       isNew: true,
       createdAt: "2026-01-21",
       tags: [
-        "NEW",
         "美容医療",
         "桜",
         "静寂",
@@ -374,7 +372,6 @@ export const worksData = [
       isNew: true,
       createdAt: "2025-02-22",
       tags: [
-        "NEW",
         "静寂",
         "余白",
         "思想設計",
@@ -417,7 +414,6 @@ export const worksData = [
       isNew: true,
       createdAt: "2026-01-23",
       tags: [
-        "NEW",
         "歯科",
         "クリニック",
         "清潔感",
@@ -566,7 +562,6 @@ export const worksData = [
       createdAt: "2025-02-18",
 
       tags: [
-        "NEW",
         "沖縄", "海", "静寂", "光", "透明感",
         "Hotel", "Luxury", "Branding",
         "GSAP", "Cinematic Scroll", "PC/SP 分離"
@@ -612,7 +607,6 @@ export const worksData = [
       createdAt: "2025-03-XX",
 
       tags: [
-        "NEW",
         "旅館", "滞在設計", "静寂", "余白", "季節",
         "Hotel", "Ryokan",
         "UX", "思想設計",
@@ -778,7 +772,7 @@ export const worksData = [
   img: "/works/lumin-main.webp",
   isNew: true,
   createdAt: "2026-02-02",
-  tags: ["PICKUP", "Audio", "Minimal", "WhiteSilver", "EC", "Precision"],
+  tags: ["PICKUP", "NEW", "Audio", "Minimal", "WhiteSilver", "EC", "Precision"],
 
   seo: {
     title: "LÜMIN — Minimal Audio EC｜白銀×精度×透明音のミニマルECデザイン",
@@ -979,7 +973,6 @@ export const worksData = [
       createdAt: "2025-02-10",
 
       tags: [
-        "NEW",
         "EC", "Branding",
         "Shadow", "Luxury",
         "Black", "Gold",
@@ -1160,7 +1153,6 @@ export const worksData = [
       createdAt: "2025-03-XX",
 
       tags: [
-        "NEW",
         "和菓子",
         "静寂", "余白", "季節",
         "Food", "Branding",
@@ -1200,7 +1192,6 @@ export const worksData = [
       createdAt: "2025-02-10",
 
       tags: [
-        "NEW",
         "沖縄", "青", "海", "光", "静寂",
         "Cafe", "Branding",
         "Motion"
@@ -1436,7 +1427,7 @@ export const worksData = [
         createdAt: null,  // 時間軸の外
         isNew: false,
 
-        tags: ["ORIGIN", "Manifesto", "Worldview", "Art", "Silence"],
+        tags: ["ORIGIN", "NEW", "Manifesto", "Worldview", "Art", "Silence"],
 
         detail: {
           concept:
@@ -1466,7 +1457,6 @@ export const worksData = [
       createdAt: "2026-01-XX",
 
       tags: [
-        "NEW",
         "Outdoor", "Gear", "Camp", "実在感",
         "プロダクト", "Branding",
         "Minimal", "Shadow Design",
@@ -1499,7 +1489,6 @@ export const worksData = [
       createdAt: "2026-01-XX",
 
       tags: [
-        "NEW",
         "Editorial", "Art", "Fashion",
         "余白", "静寂", "世界観",
         "Cinematic", "PC/SP 最適化"

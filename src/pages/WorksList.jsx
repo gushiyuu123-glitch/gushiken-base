@@ -1,4 +1,3 @@
-// src/pages/WorksList.jsx
 import React, { useEffect, useRef, useState } from "react";
 import Category from "../components/Category";
 import WorkItem from "../components/WorkItem";
@@ -48,16 +47,16 @@ export default function WorksList() {
     activeCategory === "ALL"
       ? enrichedData
       : activeCategory === "NEW"
-      ? [
-          {
-            category: "NEW",
-            subtitle: "最新作 — Newly Published Works",
-            items: enrichedData.flatMap((b) => b.items.filter((i) => i.isNew)),
-          },
-        ]
-      : enrichedData.filter(
-          (b) => normalize(b.category) === normalize(activeCategory)
-        );
+        ? [
+            {
+              category: "NEW",
+              subtitle: "最新作 — Newly Published Works",
+              items: enrichedData.flatMap((b) => b.items.filter((i) => i.isNew)),
+            },
+          ]
+        : enrichedData.filter(
+            (b) => normalize(b.category) === normalize(activeCategory)
+          );
 
   /* ================================
         PC fade-in
@@ -156,46 +155,57 @@ export default function WorksList() {
 
         {/* ================= BLOCKS ================= */}
         <div className="space-y-36 md:space-y-40">
-          {filteredData.map((block, blockIndex) => (
-            <div key={`${block.category}-${blockIndex}`} className="aq-fade">
-              {/* ORIGIN 特別表示（ART のみ） */}
-              {block.items.some((i) => i.isOrigin) && (
-                <div className="mb-20 text-center md:mb-24">
-                  <p className="mb-5 text-[0.7rem] tracking-[0.42em] text-white/40">
-                    — ORIGIN —
-                  </p>
+          {filteredData.map((block, blockIndex) => {
+            const hideNewBadgeForItems =
+              block.category === "HOTEL" ||
+              block.category === "FOOD / FURNITURE / BRAND";
 
-                  <p className="mx-auto max-w-[620px] text-[0.92rem] leading-[1.95] text-white/52">
-                    偉人たちの視点や本質を、
-                    Webという形で静かに再構築したシリーズです。
-                    <br />
-                    ORIGIN は、その思考を
-                    “デザインの起点” として整理した場所でもあります。
-                  </p>
-                </div>
-              )}
+            const showCategoryNewBadge =
+              block.category !== "HOTEL" &&
+              block.category !== "FOOD / FURNITURE / BRAND";
 
-              <Category
-                title={block.category}
-                subtitle={block.subtitle}
-                itemsRaw={block.items}
-              >
-                {block.items.map((item, itemIndex) => (
-                  <WorkItem
-                    key={`${block.category}-${blockIndex}-${itemIndex}`}
-                    title={item.title}
-                    desc={item.desc}
-                    link={`/works/${item.slug}`}
-                    img={item.img}
-                    tags={item.tags}
-                    isNew={item.isNew}
-                    createdAt={!item.isOrigin ? item.createdAt : null}
-                    isOrigin={item.isOrigin}
-                  />
-                ))}
-              </Category>
-            </div>
-          ))}
+            return (
+              <div key={`${block.category}-${blockIndex}`} className="aq-fade">
+                {/* ORIGIN 特別表示（ART のみ） */}
+                {block.items.some((i) => i.isOrigin) && (
+                  <div className="mb-20 text-center md:mb-24">
+                    <p className="mb-5 text-[0.7rem] tracking-[0.42em] text-white/40">
+                      — ORIGIN —
+                    </p>
+
+                    <p className="mx-auto max-w-[620px] text-[0.92rem] leading-[1.95] text-white/52">
+                      偉人たちの視点や本質を、
+                      Webという形で静かに再構築したシリーズです。
+                      <br />
+                      ORIGIN は、その思考を
+                      “デザインの起点” として整理した場所でもあります。
+                    </p>
+                  </div>
+                )}
+
+                <Category
+                  title={block.category}
+                  subtitle={block.subtitle}
+                  itemsRaw={block.items}
+                  showNewBadge={showCategoryNewBadge}
+                >
+                  {block.items.map((item, itemIndex) => (
+                    <WorkItem
+                      key={`${block.category}-${blockIndex}-${itemIndex}`}
+                      title={item.title}
+                      desc={item.desc}
+                      link={`/works/${item.slug}`}
+                      img={item.img}
+                      tags={item.tags}
+                      isNew={!hideNewBadgeForItems && item.isNew}
+                      createdAt={!item.isOrigin ? item.createdAt : null}
+                      isOrigin={item.isOrigin}
+                    />
+                  ))}
+                </Category>
+              </div>
+            );
+          })}
         </div>
       </div>
 

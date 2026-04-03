@@ -1,4 +1,3 @@
-// src/components/Category.jsx
 import React from "react";
 
 export default function Category({
@@ -7,6 +6,7 @@ export default function Category({
   accent = false,
   children,
   itemsRaw = [],
+  showNewBadge = true,
 }) {
   const items = React.Children.toArray(children);
 
@@ -67,7 +67,7 @@ export default function Category({
             {title}
           </h2>
 
-          {hasNew && (
+          {showNewBadge && hasNew && (
             <span
               className="
                 ml-3 px-2 py-[2px]
