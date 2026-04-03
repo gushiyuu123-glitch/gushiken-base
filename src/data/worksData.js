@@ -87,7 +87,51 @@ export const worksData = [
         ogImage: "https://gushikendesign.com/ogp/roseveil.png"
       }
     },
+{
+  title: "ELNO — Monotone Fashion",
+  slug: "ElnoRoom",
 
+  desc: "黒 × グレー × 白。\n空気感で印象を残す、モード系ファッションサイト。",
+  link: "https://elno.vercel.app/",
+  img: "/works/elno.webp",
+
+  isNew: true,
+  createdAt: "2026-04-03",
+
+  tags: [
+    "NEW",
+    "Fashion",
+    "Monotone",
+    "Mode",
+    "Branding",
+    "Minimal",
+    "EC",
+    "静寂",
+    "余白",
+    "PC/SP 分離"
+  ],
+
+  detail: {
+    concept:
+      "黒・グレー・白を軸に、派手な演出ではなく“空気感で印象を残すこと”を目指して設計したモード系ファッションサイト。トップはあえて一枚絵のように見せ、ブランドの温度感を先に伝える構成にした。商品の見やすさと世界観の両立を重視し、余白・文字位置・画像の見せ方・SP時の印象まで一貫して調整している。",
+    tech: [
+      "React",
+      "Vite",
+      "Tailwind",
+      "React Router",
+      "PC/SP 完全分離"
+    ]
+  },
+
+  seo: {
+    title: "ELNO｜黒・グレー・白で空気感を残すモード系ファッションサイト｜GUSHIKEN DESIGN",
+    description:
+      "ELNOは黒・グレー・白を軸に、派手さではなく空気感で印象を残すモード系ファッションサイト。トップを一枚絵のように見せ、ブランドの雰囲気と商品の見やすさを両立するよう設計した作品。",
+    keywords:
+      "ファッションサイト, モード系, モノトーン, ブランドサイト, ECデザイン, ミニマルデザイン, 世界観デザイン, GUSHIKEN DESIGN",
+    ogImage: "https://gushikendesign.com/ogp/elno.png"
+  }
+},
     {
       title: "WHITE × DARK CACAO",
       slug: "WhiteDarkCacao",
@@ -788,7 +832,51 @@ export const worksData = [
           "https://gushikendesign.com/ogp/rose-veil-main.png"
       }
     },
+{
+  title: "ELNO — Monotone Fashion",
+  slug: "ElnoRoom",
 
+  desc: "黒 × グレー × 白。\n空気感で印象を残す、モード系ファッションサイト。",
+  link: "https://elno.vercel.app/",
+  img: "/works/elno.webp",
+
+  isNew: true,
+  createdAt: "2026-04-03",
+
+  tags: [
+    "NEW",
+    "Fashion",
+    "Monotone",
+    "Mode",
+    "Branding",
+    "Minimal",
+    "EC",
+    "静寂",
+    "余白",
+    "PC/SP 分離"
+  ],
+
+  detail: {
+    concept:
+      "黒・グレー・白を軸に、派手な演出ではなく“空気感で印象を残すこと”を目指して設計したモード系ファッションサイト。トップはあえて一枚絵のように見せ、ブランドの温度感を先に伝える構成にした。商品の見やすさと世界観の両立を重視し、余白・文字位置・画像の見せ方・SP時の印象まで一貫して調整している。",
+    tech: [
+      "React",
+      "Vite",
+      "Tailwind",
+      "React Router",
+      "PC/SP 完全分離"
+    ]
+  },
+
+  seo: {
+    title: "ELNO｜黒・グレー・白で空気感を残すモード系ファッションサイト｜GUSHIKEN DESIGN",
+    description:
+      "ELNOは黒・グレー・白を軸に、派手さではなく空気感で印象を残すモード系ファッションサイト。トップを一枚絵のように見せ、ブランドの雰囲気と商品の見やすさを両立するよう設計した作品。",
+    keywords:
+      "ファッションサイト, モード系, モノトーン, ブランドサイト, ECデザイン, ミニマルデザイン, 世界観デザイン, GUSHIKEN DESIGN",
+    ogImage: "https://gushikendesign.com/ogp/elno.png"
+  }
+},
     /* ==========================================
         WHITE × DARK CACAO（高級食品EC）
     ========================================== */
