@@ -10,6 +10,50 @@ export const worksData = [
   subtitle: "世界観の“核”を示す代表作",
   accent: true,
   items: [
+ {
+  title: "CRESTED GECKO — Specialty Gecko Site",
+  slug: "CrestedGeckoRoom",
+  desc: "美しさ × 異物感 × 信頼設計。クレステッドゲッコー販売サイトを、世界観と商業導線の両立で再構築した代表作。",
+  link: "https://crested-gecko-site.vercel.app/",
+  img: "/works/crested-gecko1.webp",
+  isNew: true,
+  createdAt: "2026-04-05",
+  tags: [
+    "NEW",
+    "PICKUP",
+    "Specialty",
+    "Store",
+    "Animal",
+    "Branding",
+    "Instinct",
+    "Dark",
+    "Luxury",
+    "GSAP",
+    "PC/SP 完全分離"
+  ],
+
+  detail: {
+    concept:
+      "クレステッドゲッコーというニッチな題材を、怖さやマニア感ではなく“異質な美しさ”として翻訳した専門販売サイト。Heroの熱量を全体で維持することを重視し、個体紹介・初心者導線・FAQ・CTA・営業情報までを世界観の中に統合した。異物感と信頼感を両立させた、現時点での総合完成度上位作品。",
+    tech: [
+      "React",
+      "Vite",
+      "Tailwind",
+      "GSAP",
+      "IntersectionObserver",
+      "PC/SP 完全分離"
+    ]
+  },
+
+  seo: {
+    title: "CRESTED GECKO｜異物感と信頼設計を両立した専門販売サイト｜GUSHIKEN DESIGN",
+    description:
+      "CRESTED GECKOは、クレステッドゲッコー販売サイトを“異質な美しさ”として再構築した専門サイト。Heroの熱量を全体で維持しながら、個体紹介・初心者導線・FAQ・CTAまで統合した代表作。",
+    keywords:
+      "クレステッドゲッコー, 爬虫類販売サイト, 専門店サイト, 世界観デザイン, 高級感サイト, React, GSAP, GUSHIKEN DESIGN",
+    ogImage: "https://gushikendesign.com/ogp/crested-gecko.png"
+  }
+},
         {
   title: "KISUI — Skin Care Water Essence",
   slug: "KisuiRoom",

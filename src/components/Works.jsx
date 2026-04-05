@@ -78,12 +78,32 @@ export default function Works() {
           </div>
 
           <div className="works-grid">
-            {/* 1 → LÜMIN（BIG） */}
+            {/* 1 → CRESTED GECKO（BIG） */}
+            <a
+              href="https://crested-gecko-site.vercel.app/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="work-card aq-fade delay-3"
+              aria-label="CRESTED GECKO のサイトを見る"
+            >
+              <img
+                src="/assets/crested-gecko.webp"
+                alt="CRESTED GECKO｜クレステッドゲッコー専門サイト制作（静けさ×異物感×商業導線）"
+                loading="lazy"
+                decoding="async"
+              />
+              <div className="work-text">
+                <h3>CRESTED GECKO</h3>
+                <p>Specialty Site / Stillness × Instinct</p>
+              </div>
+            </a>
+
+            {/* 2 → LÜMIN（BIG） */}
             <a
               href="https://lumin-audio.vercel.app/"
               target="_blank"
               rel="noopener noreferrer"
-              className="work-card aq-fade delay-3"
+              className="work-card aq-fade delay-4"
               aria-label="LÜMIN のサイトを見る"
             >
               <img
@@ -98,12 +118,12 @@ export default function Works() {
               </div>
             </a>
 
-            {/* 2 → ROSE VEIL（BIG） */}
+            {/* 3 → ROSE VEIL（SMALL） */}
             <a
               href="https://rose-veil.vercel.app/"
               target="_blank"
               rel="noopener noreferrer"
-              className="work-card aq-fade delay-4"
+              className="work-card aq-fade delay-5"
               aria-label="ROSE VEIL のサイトを見る"
             >
               <img
@@ -115,26 +135,6 @@ export default function Works() {
               <div className="work-text">
                 <h3>ROSE VEIL</h3>
                 <p>Fragrance EC / Luxury × Visual Air</p>
-              </div>
-            </a>
-
-            {/* 3 → AXIS（SMALL） */}
-            <a
-              href="https://axis-alpha-one.vercel.app/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="work-card aq-fade delay-5"
-              aria-label="AXIS のサイトを見る"
-            >
-              <img
-                src="/assets/axis.webp"
-                alt="AXIS｜構造と判断軸を可視化するデザインプロジェクト（ミニマル×構造）"
-                loading="lazy"
-                decoding="async"
-              />
-              <div className="work-text">
-                <h3>AXIS</h3>
-                <p>Design System / Structure × Logic</p>
               </div>
             </a>
           </div>
