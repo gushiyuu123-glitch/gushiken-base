@@ -177,6 +177,25 @@ export const worksData = [
   }
 },
     {
+      title: "AXIS — Object & Jewelry",
+      slug: "AxisRoom",
+      desc: "物質 × 光 × 造形美。静かな“精密世界観”を追求した作品。",
+      link: "https://axis-alpha-one.vercel.app/",
+      img: "/assets/axis.webp",
+      isNew: false,
+      createdAt: "2025-11-XX",
+      tags: ["PICKUP", "Object", "Luxury", "Shadow", "Minimal"],
+
+      seo: {
+        title: "AXIS — Object & Jewelry｜物質×光×造形×静寂の世界観デザイン",
+        description:
+          "AXIS は物体の“線・影・反射”を精密に扱い、工業・ジュエリーの静寂美を表現。黒×光のコントラストで構造の緊張を際立たせた高級系ブランド作品。",
+        keywords:
+          "ジュエリーEC, オブジェ, ミニマル, 物質デザイン, 陰影美, 世界観EC, 高級ブランドサイト",
+        ogImage: "https://gushikendesign.com/ogp/axis.png"
+      }
+    },
+    {
       title: "WHITE × DARK CACAO",
       slug: "WhiteDarkCacao",
       desc: "白 × カカオ × 静寂。高級食品ECの決定版。",
@@ -256,25 +275,7 @@ export const worksData = [
       }
     },
 
-    {
-      title: "AXIS — Object & Jewelry",
-      slug: "AxisRoom",
-      desc: "物質 × 光 × 造形美。静かな“精密世界観”を追求した作品。",
-      link: "https://axis-alpha-one.vercel.app/",
-      img: "/assets/axis.webp",
-      isNew: false,
-      createdAt: "2025-11-XX",
-      tags: ["PICKUP", "Object", "Luxury", "Shadow", "Minimal"],
 
-      seo: {
-        title: "AXIS — Object & Jewelry｜物質×光×造形×静寂の世界観デザイン",
-        description:
-          "AXIS は物体の“線・影・反射”を精密に扱い、工業・ジュエリーの静寂美を表現。黒×光のコントラストで構造の緊張を際立たせた高級系ブランド作品。",
-        keywords:
-          "ジュエリーEC, オブジェ, ミニマル, 物質デザイン, 陰影美, 世界観EC, 高級ブランドサイト",
-        ogImage: "https://gushikendesign.com/ogp/axis.png"
-      }
-    }
   ]
 },
 /* ----------------------------------------------------------

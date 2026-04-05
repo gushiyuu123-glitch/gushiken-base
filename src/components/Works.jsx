@@ -78,23 +78,23 @@ export default function Works() {
           </div>
 
           <div className="works-grid">
-            {/* 1 → CRESTED GECKO（BIG） */}
+            {/* 1 → KISUI（BIG） */}
             <a
-              href="https://crested-gecko-site.vercel.app/"
+              href="https://kisui.vercel.app/"
               target="_blank"
               rel="noopener noreferrer"
               className="work-card aq-fade delay-3"
-              aria-label="CRESTED GECKO のサイトを見る"
+              aria-label="KISUI のサイトを見る"
             >
               <img
-                src="/assets/crested-gecko.webp"
-                alt="CRESTED GECKO｜クレステッドゲッコー専門サイト制作（静けさ×異物感×商業導線）"
+                src="/assets/kisui.webp"
+                alt="KISUI｜スキンケアブランドサイト制作（透明感×信頼感×上質設計）"
                 loading="lazy"
                 decoding="async"
               />
               <div className="work-text">
-                <h3>CRESTED GECKO</h3>
-                <p>Specialty Site / Stillness × Instinct</p>
+                <h3>KISUI</h3>
+                <p>Skin Care / Transparency × Grace</p>
               </div>
             </a>
 
