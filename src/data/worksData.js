@@ -93,7 +93,7 @@ export const worksData = [
 
   desc: "黒 × グレー × 白。\n空気感で印象を残す、モード系ファッションサイト。",
   link: "https://elno.vercel.app/",
-  img: "/works/elno.webp",
+  img: "/works/elno1.webp",
 
   isNew: true,
   createdAt: "2026-04-03",
