@@ -1489,7 +1489,51 @@ export const worksData = [
           ogImage: "https://gushikendesign.com/ogp/origin.png"
         }
       },
+{
+  title: "SINGULARITY LAB — AI Research Experience",
+  slug: "SingularityLab",
 
+  desc: "境界 × 研究室 × 未来感。\nAI研究室に入り込むようなWeb体験を構築した作品。",
+  link: "https://singularity-lab-chi.vercel.app/",
+  img: "/works/singularity-lab.webp",
+
+  isNew: true,
+  createdAt: "2026-04-06",
+
+  tags: [
+    "NEW",
+    "AI",
+    "Lab",
+    "Future",
+    "Art",
+    "Immersive",
+    "Experimental",
+    "GSAP",
+    "PC/SP 分離"
+  ],
+
+  detail: {
+    concept:
+      "AIを説明するのではなく、“AI研究室に入り込んだような感覚そのもの”をWebで構築した実験的作品。未来感だけで終わらせず、研究室の静けさ・観測感・境界性を画面全体の空気として設計した。",
+    tech: [
+      "React",
+      "Vite",
+      "Tailwind",
+      "GSAP",
+      "IntersectionObserver",
+      "PC/SP 完全分離"
+    ]
+  },
+
+  seo: {
+    title: "SINGULARITY LAB｜境界×研究室×未来感のAI実験サイト｜GUSHIKEN DESIGN",
+    description:
+      "SINGULARITY LABは、AI研究室に入り込むような没入感をWebで構築した実験的作品。未来感・観測感・静けさを統合し、研究室の空気ごと体験させるUIを設計。",
+    keywords:
+      "AIサイト, 研究室デザイン, 未来感UI, 実験的Webデザイン, 没入型サイト, GUSHIKEN DESIGN",
+    ogImage: "https://gushikendesign.com/ogp/singularity-lab.png"
+  }
+},
       {
       title: "Re:Camp — Outdoor Gear Studio",
       slug: "ReCamp",
