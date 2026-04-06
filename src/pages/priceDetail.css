@@ -1,11 +1,11 @@
 /* ============================================================
-   Silent UI v6.2 — GUSHIKEN DESIGN × NOA
+   Silent UI v6.4 — GUSHIKEN DESIGN × NOA
    黒膜 × 静けさ × 微光（Exhibition）
-   光の方向を統一・深度の膜を再調整・可読性向上
+   Price Detail 完全版
 ============================================================ */
 
 /* ===============================================
-   Title
+   Base
 =============================================== */
 .pd-title {
   font-size: clamp(2.35rem, 3vw, 2.75rem);
@@ -13,11 +13,11 @@
   font-weight: 300;
   margin-bottom: 0.55rem;
   padding-left: 0.25rem;
-  color: rgba(255,255,255,0.96);
+  color: rgba(255, 255, 255, 0.96);
 }
 
 .pd-sub {
-  color: rgba(255,255,255,0.70);
+  color: rgba(255, 255, 255, 0.70);
   letter-spacing: 0.13em;
   font-size: 0.94rem;
   margin-bottom: 3.3rem;
@@ -25,7 +25,7 @@
 }
 
 .pd-lead {
-  color: rgba(255,255,255,0.88);
+  color: rgba(255, 255, 255, 0.88);
   line-height: 1.95;
   margin-bottom: 4.9rem;
   max-width: 760px;
@@ -40,153 +40,405 @@
   margin-top: 4.3rem;
   margin-bottom: 1.15rem;
   padding-left: 0.25rem;
-  color: rgba(255,255,255,0.70);
+  color: rgba(255, 255, 255, 0.70);
   letter-spacing: 0.18em;
   font-size: 1rem;
   font-weight: 400;
 }
 
 .pd-section-title.is-main {
-  color: rgba(217,185,138,0.95);
+  color: rgba(217, 185, 138, 0.95);
   font-size: 1.14rem;
   letter-spacing: 0.22em;
   margin-top: 4.6rem;
 }
 
 /* ===============================================
-   Plan Card（膜：深度レベル 2）
+   Plan Grid
 =============================================== */
 .pd-plan {
-  background: rgba(255,255,255,0.03); /* ← v6.2 膜を統一 */
-  border: 1px solid rgba(255,255,255,0.12);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 100%;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 0.85rem;
   padding: 2rem;
   backdrop-filter: blur(4px);
-  transition: all 0.35s cubic-bezier(.25,.46,.45,.94);
+  -webkit-backdrop-filter: blur(4px);
+  transition:
+    transform 0.35s cubic-bezier(.25, .46, .45, .94),
+    border-color 0.35s cubic-bezier(.25, .46, .45, .94),
+    background 0.35s cubic-bezier(.25, .46, .45, .94),
+    box-shadow 0.35s cubic-bezier(.25, .46, .45, .94);
 }
 
 .pd-plan:hover {
   transform: translateY(-3px);
-  border-color: rgba(217,185,138,0.45);
+  border-color: rgba(217, 185, 138, 0.45);
+  background: rgba(255, 255, 255, 0.038);
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.22);
 }
 
 .pd-plan-badge {
   font-size: 0.72rem;
   letter-spacing: 0.22em;
-  color: rgba(217,185,138,0.92);
+  color: rgba(217, 185, 138, 0.92);
 }
 
 .pd-plan-title {
   font-size: 1.23rem;
+  line-height: 1.45;
   margin-top: 0.38rem;
-  color: rgba(255,255,255,0.96);
+  color: rgba(255, 255, 255, 0.96);
 }
 
 .pd-plan-price {
   font-size: 1.33rem;
   margin-top: 0.22rem;
-  color: rgba(217,185,138,0.97);
+  color: rgba(217, 185, 138, 0.97);
   font-weight: 400;
+  letter-spacing: 0.03em;
 }
 
 .pd-plan-detail {
   font-size: 0.95rem;
-  color: rgba(255,255,255,0.82);
+  color: rgba(255, 255, 255, 0.82);
   margin-top: 1rem;
   line-height: 1.82;
 }
 
 .pd-plan-best {
   font-size: 0.84rem;
-  margin-top: 0.55rem;
-  color: rgba(255,255,255,0.58);
+  margin-top: 0.7rem;
+  color: rgba(255, 255, 255, 0.58);
+  line-height: 1.7;
 }
 
 /* ===============================================
-   Detail Block（膜：深度レベル 1）
+   Plan Includes
+=============================================== */
+.pd-plan-includes {
+  margin-top: 1.25rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(217, 185, 138, 0.12);
+}
+
+.pd-plan-includes-list {
+  display: grid;
+  gap: 0.48rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.pd-plan-includes-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.58rem;
+  color: rgba(255, 255, 255, 0.56);
+  font-size: 0.74rem;
+  line-height: 1.85;
+  letter-spacing: 0.08em;
+}
+
+.pd-plan-includes-dot {
+  width: 4px;
+  height: 4px;
+  margin-top: 0.72em;
+  flex: 0 0 4px;
+  border-radius: 9999px;
+  background: rgba(217, 185, 138, 0.68);
+  box-shadow: 0 0 8px rgba(217, 185, 138, 0.18);
+}
+
+/* ===============================================
+   Large Plan
+=============================================== */
+.pd-plan-large {
+  padding: 2.15rem 2rem;
+}
+
+.pd-plan-large .pd-plan-detail {
+  max-width: 760px;
+}
+
+/* ===============================================
+   Detail Block
 =============================================== */
 .pd-detail-block {
   margin-top: 2.7rem;
   margin-bottom: 1.7rem;
   padding: 2rem 1.55rem;
-  background: rgba(255,255,255,0.018); /* ← v6.2 で膜を薄く再定義 */
-  border: 1px solid rgba(217,185,138,0.14);
+  background: rgba(255, 255, 255, 0.018);
+  border: 1px solid rgba(217, 185, 138, 0.14);
   border-radius: 0.65rem;
   backdrop-filter: blur(2.5px);
+  -webkit-backdrop-filter: blur(2.5px);
 }
 
 .pd-detail-title {
-  color: rgba(217,185,138,0.94);
+  color: rgba(217, 185, 138, 0.94);
   letter-spacing: 0.15em;
   font-size: 0.96rem;
   margin-bottom: 1rem;
 }
 
 .pd-detail-list {
-  color: rgba(255,255,255,0.88);
+  margin: 0;
+  padding-left: 0.8rem;
+  color: rgba(255, 255, 255, 0.88);
   font-size: 0.93rem;
   line-height: 1.9;
-  padding-left: 0.6rem;
+}
+
+.pd-detail-list li + li {
+  margin-top: 0.3rem;
 }
 
 /* ===============================================
-   Text Block（線：呼吸・区切り）
+   Detail 2 Columns
+=============================================== */
+.pd-detail-columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2.4rem 3rem;
+  margin-top: 1.65rem;
+  padding-top: 1.2rem;
+  border-top: 1px solid rgba(217, 185, 138, 0.10);
+}
+
+/* ===============================================
+   Text Block
 =============================================== */
 .pd-textblock {
-  border-left: 1px solid rgba(217,185,138,0.28);
+  border-left: 1px solid rgba(217, 185, 138, 0.28);
   padding-left: 1.3rem;
   margin: 1.5rem 0 2.6rem;
   font-size: 0.94rem;
   line-height: 1.92;
-  color: rgba(255,255,255,0.88);
+  color: rgba(255, 255, 255, 0.88);
+  list-style: none;
+}
+
+.pd-textblock li {
+  position: relative;
+  padding-left: 0.15rem;
+}
+
+.pd-textblock li + li {
+  margin-top: 0.48rem;
 }
 
 /* ===============================================
    Thanks / CTA
 =============================================== */
 .pd-thanks {
-  color: rgba(255,255,255,0.82);
+  color: rgba(255, 255, 255, 0.82);
   text-align: center;
   margin-top: 4.6rem;
   margin-bottom: 1.6rem;
   font-size: 0.97rem;
+  line-height: 1.95;
 }
 
 .pd-cta {
   display: inline-block;
   padding: 0.95rem 3.9rem;
   border-radius: 9999px;
-  border: 1px solid rgba(217,185,138,0.94);
-  color: rgba(217,185,138,0.97);
+  border: 1px solid rgba(217, 185, 138, 0.94);
+  color: rgba(217, 185, 138, 0.97);
   letter-spacing: 0.20em;
   font-size: 0.92rem;
-  transition: all 0.35s cubic-bezier(.25,.46,.45,.94);
+  transition:
+    background 0.35s cubic-bezier(.25, .46, .45, .94),
+    color 0.35s cubic-bezier(.25, .46, .45, .94),
+    transform 0.35s cubic-bezier(.25, .46, .45, .94),
+    box-shadow 0.35s cubic-bezier(.25, .46, .45, .94);
 }
 
 .pd-cta:hover {
-  background: rgba(217,185,138,0.94);
+  background: rgba(217, 185, 138, 0.94);
   color: #000;
+  transform: translateY(-1px);
+  box-shadow: 0 10px 28px rgba(217, 185, 138, 0.15);
 }
 
 /* ===============================================
    Utility
 =============================================== */
 .bg-gold\/25 {
-  background-color: rgba(217,185,138,0.25);
+  background-color: rgba(217, 185, 138, 0.25);
 }
-/* ============================================================
-   Detail 2 Columns — Exhibition Layout (左右展示)
-============================================================ */
-.pd-detail-columns {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 2.4rem 3rem; /* 行間 × 列間 */
-  margin-top: 1.6rem;
+
+/* ===============================================
+   Responsive
+=============================================== */
+@media (max-width: 1024px) {
+  .pd-title {
+    font-size: clamp(2.15rem, 4.5vw, 2.55rem);
+  }
+
+  .pd-lead {
+    max-width: 680px;
+  }
+
+  .pd-plan {
+    padding: 1.75rem;
+  }
+
+  .pd-plan-large {
+    padding: 1.95rem 1.75rem;
+  }
+
+  .pd-detail-columns {
+    gap: 2rem 2rem;
+  }
 }
 
 @media (max-width: 768px) {
+  .pd-title {
+    font-size: 2rem;
+    letter-spacing: 0.16em;
+    margin-bottom: 0.45rem;
+  }
+
+  .pd-sub {
+    font-size: 0.82rem;
+    letter-spacing: 0.11em;
+    margin-bottom: 2.5rem;
+  }
+
+  .pd-lead {
+    font-size: 0.94rem;
+    line-height: 1.9;
+    margin-bottom: 3.8rem;
+  }
+
+  .pd-section-title {
+    font-size: 0.92rem;
+    letter-spacing: 0.14em;
+    margin-top: 3.4rem;
+  }
+
+  .pd-section-title.is-main {
+    font-size: 1rem;
+    letter-spacing: 0.18em;
+    margin-top: 3.7rem;
+  }
+
+  .pd-plan {
+    padding: 1.45rem 1.25rem;
+    border-radius: 0.72rem;
+  }
+
+  .pd-plan-title {
+    font-size: 1.08rem;
+  }
+
+  .pd-plan-price {
+    font-size: 1.18rem;
+  }
+
+  .pd-plan-detail {
+    font-size: 0.9rem;
+    line-height: 1.78;
+  }
+
+  .pd-plan-best {
+    font-size: 0.79rem;
+  }
+
+  .pd-plan-includes {
+    margin-top: 1rem;
+    padding-top: 0.85rem;
+  }
+
+  .pd-plan-includes-item {
+    font-size: 0.71rem;
+    line-height: 1.8;
+    letter-spacing: 0.06em;
+  }
+
+  .pd-plan-large {
+    padding: 1.6rem 1.25rem;
+  }
+
   .pd-detail-columns {
-    grid-template-columns: 1fr; /* SPは1カラム */
-    gap: 2rem;
+    grid-template-columns: 1fr;
+    gap: 1.8rem;
+    margin-top: 1.4rem;
+  }
+
+  .pd-detail-title {
+    font-size: 0.88rem;
+    margin-bottom: 0.8rem;
+  }
+
+  .pd-detail-list {
+    font-size: 0.88rem;
+    line-height: 1.82;
+  }
+
+  .pd-textblock {
+    padding-left: 1rem;
+    margin: 1.2rem 0 2.15rem;
+    font-size: 0.89rem;
+    line-height: 1.85;
+  }
+
+  .pd-thanks {
+    font-size: 0.9rem;
+    line-height: 1.9;
+    margin-top: 3.8rem;
+  }
+
+  .pd-cta {
+    width: min(100%, 320px);
+    text-align: center;
+    padding: 0.95rem 1.4rem;
+    font-size: 0.86rem;
+    letter-spacing: 0.16em;
+  }
+}
+
+@media (max-width: 480px) {
+  .pd-title {
+    font-size: 1.8rem;
+    letter-spacing: 0.13em;
+  }
+
+  .pd-sub {
+    font-size: 0.76rem;
+    line-height: 1.7;
+  }
+
+  .pd-lead {
+    font-size: 0.9rem;
+    line-height: 1.86;
+  }
+
+  .pd-plan-badge {
+    font-size: 0.66rem;
+    letter-spacing: 0.18em;
+  }
+
+  .pd-plan-title {
+    font-size: 1rem;
+  }
+
+  .pd-plan-price {
+    font-size: 1.08rem;
+  }
+
+  .pd-plan-detail,
+  .pd-detail-list,
+  .pd-textblock {
+    font-size: 0.86rem;
+  }
+
+  .pd-plan-includes-item {
+    font-size: 0.68rem;
   }
 }

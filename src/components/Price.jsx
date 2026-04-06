@@ -28,7 +28,6 @@ export default function Price() {
   return (
     <section id="price" ref={sectionRef} className="price-section aq-fade">
       <div className="relative mx-auto max-w-5xl px-6">
-        {/* 中央軸ゴールドライン */}
         <div className="price-gold-line" />
 
         {/* ===== PAGE TITLE ===== */}
@@ -90,8 +89,8 @@ export default function Price() {
             を事前にお伝えします。
             <br />
             <span className="price-lead-note">
-              ※ 現在はポートフォリオ強化期間のため、
-              初回の方には控えめな価格で制作しています。
+              はじめての方でも進めやすいよう、
+              公開に必要な初期設定まで含めて分かりやすくご案内しています。
             </span>
           </p>
         </div>
@@ -135,11 +134,11 @@ export default function Price() {
             <br />
             <br />
             <span className="price-lead-note">
-              ※ 現在はポートフォリオ強化期間のため、
+              はじめての方でも進めやすいよう、
               <br />
-              初回の方には控えめな価格で
+              公開に必要な初期設定まで含めて
               <br />
-              制作しています。
+              分かりやすくご案内しています。
             </span>
           </p>
         </div>
@@ -151,6 +150,12 @@ export default function Price() {
             title="Landing Page（1ページ）"
             price="¥60,000〜"
             desc="商品紹介・サービス紹介・ブランド紹介など、1ページで魅力を伝えるための構成。情報を上品に、分かりやすくまとめます。"
+            includes={[
+              "オリジナルデザイン",
+              "スマホ対応",
+              "公開初期設定",
+              "ドメイン / サーバー接続サポート"
+            ]}
           />
 
           <PriceCard
@@ -158,6 +163,12 @@ export default function Price() {
             title="Small Website（小規模サイト）"
             price="¥120,000〜"
             desc="カフェ・サロン・美容・個人事業向け。トップ＋2〜4ページを想定した、小さくても伝わりやすいサイト設計です。"
+            includes={[
+              "トップ + 下層2〜4ページ",
+              "スマホ対応",
+              "公開初期設定",
+              "ドメイン / サーバー接続サポート"
+            ]}
           />
 
           <PriceCard
@@ -165,6 +176,12 @@ export default function Price() {
             title="Brand Site（世界観重視）"
             price="¥240,000〜"
             desc="写真・色・余白・文字の統一を前提に、ブランド全体の世界観を丁寧に構築。トップ＋4〜10ページほどを想定しています。"
+            includes={[
+              "世界観設計",
+              "複数ページ対応",
+              "スマホ対応",
+              "公開初期設定 / 接続サポート"
+            ]}
           />
         </div>
 
@@ -189,6 +206,10 @@ export default function Price() {
         {/* NOTE */}
         <div className="hidden sm:block">
           <p className="price-note aq-fade delay-6">
+            ドメイン代・サーバー代は実費となりますが、
+            <strong>取得や接続のサポートは料金内で対応</strong>
+            しています。
+            <br />
             追加ページや機能追加もご相談可能です。
             <br />
             <strong>内容に応じて、事前に分かりやすくご案内します。</strong>
@@ -197,6 +218,17 @@ export default function Price() {
 
         <div className="block sm:hidden">
           <p className="price-note aq-fade delay-6">
+            ドメイン代・サーバー代は
+            <br />
+            実費となりますが、
+            <br />
+            <strong>
+              取得や接続のサポートは
+              <br />
+              料金内で対応しています。
+            </strong>
+            <br />
+            <br />
             追加ページや機能追加も
             <br />
             ご相談可能です。
@@ -222,13 +254,30 @@ export default function Price() {
 }
 
 /* ===== Price Card ===== */
-const PriceCard = React.memo(function PriceCard({ label, title, desc, price }) {
+const PriceCard = React.memo(function PriceCard({
+  label,
+  title,
+  desc,
+  price,
+  includes = [],
+}) {
   return (
     <div className="price-card">
       <p className="price-card-label">{label}</p>
       <h3 className="price-card-title">{title}</h3>
       <p className="price-card-price">{price}</p>
       <p className="price-card-desc">{desc}</p>
+
+      {includes.length > 0 && (
+        <ul className="mt-5 space-y-2 text-[0.72rem] leading-[1.9] tracking-[0.08em] text-white/54">
+          {includes.map((item) => (
+            <li key={item} className="flex items-start gap-2">
+              <span className="mt-[0.55em] h-[3px] w-[3px] rounded-full bg-[#cdbd8f]/65" />
+              <span>{item}</span>
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 });

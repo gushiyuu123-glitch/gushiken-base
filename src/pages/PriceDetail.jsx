@@ -17,7 +17,6 @@ export default function PriceDetail() {
       className="aq-fade bg-[#0b0b0b] min-h-screen text-white py-24 md:py-32 px-6"
     >
       <div className="max-w-5xl mx-auto relative">
-
         {/* Left Line */}
         <div className="hidden md:block absolute left-0 top-10 w-px h-[86%] bg-[rgba(217,185,138,0.25)]" />
 
@@ -27,7 +26,9 @@ export default function PriceDetail() {
 
         {/* Lead */}
         <p className="pd-lead">
-          Webサイトは、お店やブランドの「最初の印象」をつくる、とても大切な場所です。
+          Webサイトは、お店やブランドの
+          <span className="text-white/90">「最初の印象」</span>
+          をつくる大切な場所です。
           <br />
           ヒアリングでは、目的や雰囲気、こだわりをゆっくり伺いながら、
           <br />
@@ -36,91 +37,105 @@ export default function PriceDetail() {
           </span>
           <br />
           <br />
-          ご依頼前に総額を必ずご提示し、途中で金額が変わることはありません。
+          ご依頼前に総額を必ずご提示し、
+          <span className="text-white/90">
+            途中で金額が変わることはありません。
+          </span>
         </p>
 
         {/* ========= PLANS ========= */}
         <SectionTitle main>プランと料金</SectionTitle>
 
         <div className="grid gap-10 md:grid-cols-3 mb-24">
-
-          {/* PLAN 01 */}
           <PlanCard
             badge="PLAN 01"
             title="Landing Page"
             price="¥60,000〜"
-            detail="1ページで魅力をわかりやすくまとめるLP。写真・余白・流れを整え、落ち着きのある高品質なページに仕上げます。"
+            detail="1ページで魅力をわかりやすくまとめるLP。写真・余白・流れを整え、印象と伝わりやすさを両立したページに仕上げます。"
             bestFor="まずはしっかり魅せたい方向け。"
+            includes={[
+              "オリジナルデザイン",
+              "スマホ対応",
+              "公開初期設定",
+              "ドメイン / サーバー接続サポート"
+            ]}
           />
 
-          {/* PLAN 02 */}
           <PlanCard
             badge="PLAN 02"
             title="Small Website"
             price="¥120,000〜"
-            detail="トップ＋数ページ構成の小規模サイト。読みやすさと導線を整え、やさしい安心感のある公式サイトを制作します。"
+            detail="トップ＋数ページ構成の小規模サイト。読みやすさと導線を整え、安心感のある公式サイトを制作します。"
             bestFor="店舗・サロン・小規模事業に最適。"
+            includes={[
+              "トップ + 下層2〜4ページ",
+              "スマホ対応",
+              "公開初期設定",
+              "ドメイン / サーバー接続サポート"
+            ]}
           />
 
-          {/* PLAN 03 */}
           <PlanCard
             badge="PLAN 03"
             title="Brand Site"
             price="¥240,000〜"
-            detail="写真・色・文字の表情まで統一し、ブランドの世界観を“ひとつの物語”として仕上げるプランです。"
+            detail="写真・色・文字の表情まで統一し、ブランド全体の世界観を“ひとつの物語”として仕上げるプランです。"
             bestFor="世界観を大切にしたいブランド向け。"
+            includes={[
+              "世界観設計",
+              "複数ページ対応",
+              "スマホ対応",
+              "公開初期設定 / 接続サポート"
+            ]}
           />
-
         </div>
 
-{/* ====== PLAN 04 ====== */}
-<SectionTitle main>運用・保守（Subscription）</SectionTitle>
+        {/* ====== PLAN 04 ====== */}
+        <SectionTitle main>運用・保守（Subscription）</SectionTitle>
 
-<div className="pd-plan pd-plan-large mb-16">
-  <p className="pd-plan-badge">PLAN 04</p>
-  <h3 className="pd-plan-title">Maintenance / Subscription</h3>
-  <p className="pd-plan-price">¥9,800 / 月</p>
+        <div className="pd-plan pd-plan-large mb-16">
+          <p className="pd-plan-badge">PLAN 04</p>
+          <h3 className="pd-plan-title">Maintenance / Subscription</h3>
+          <p className="pd-plan-price">¥9,800 / 月</p>
 
-  <p className="pd-plan-detail">
-    日々の更新を“世界観を崩さず”やさしく整えていく運用プランです。
-    文言・写真の差し替え、NEW情報の追加など、細かな更新をまとめてお任せいただけます。
-  </p>
+          <p className="pd-plan-detail">
+            日々の更新を
+            <strong>世界観を崩さず整えていく</strong>
+            運用プランです。
+            文言・写真の差し替え、NEW情報の追加など、
+            細かな更新をまとめてお任せいただけます。
+          </p>
 
-  {/* ▼ ２カラム構造 */}
-  <div className="pd-detail-columns">
+          <div className="pd-detail-columns">
+            <div>
+              <h4 className="pd-detail-title mt-4">【月額に含まれる内容】</h4>
+              <ul className="pd-detail-list">
+                <li>文言の調整・メニューの差し替え</li>
+                <li>写真の軽いレタッチ・差し替え</li>
+                <li>NEW情報・イベントの更新</li>
+                <li>営業時間 / Google Map の更新</li>
+                <li>バナーや見出しの軽い色調整</li>
+              </ul>
+            </div>
 
-    {/* 左：含まれる内容 */}
-    <div>
-      <h4 className="pd-detail-title mt-4">【月額に含まれる内容】</h4>
-      <ul className="pd-detail-list">
-        <li>文言の調整・メニューの差し替え</li>
-        <li>写真の軽いレタッチ・差し替え</li>
-        <li>NEW情報・イベントの更新</li>
-        <li>営業時間 / Google Map の更新</li>
-        <li>バナーや見出しの軽い色調整</li>
-      </ul>
-    </div>
-
-    {/* 右：含まれない内容 */}
-    <div>
-      <h4 className="pd-detail-title mt-4">【月額に含まれない内容】</h4>
-      <ul className="pd-detail-list">
-        <li>新ページ / 新セクションの追加</li>
-        <li>大きなデザイン変更</li>
-        <li>写真撮影</li>
-        <li>長めのコピー制作</li>
-        <li>大規模な仕様変更</li>
-      </ul>
-    </div>
-
-  </div>
-</div>
+            <div>
+              <h4 className="pd-detail-title mt-4">【月額に含まれない内容】</h4>
+              <ul className="pd-detail-list">
+                <li>新ページ / 新セクションの追加</li>
+                <li>大きなデザイン変更</li>
+                <li>写真撮影</li>
+                <li>長めのコピー制作</li>
+                <li>大規模な仕様変更</li>
+              </ul>
+            </div>
+          </div>
+        </div>
 
         {/* ========= Flow ========= */}
         <SectionTitle main>制作の流れ</SectionTitle>
         <TextBlock>
-          <li>① ヒアリング（目的・雰囲気・強みを共有）</li>
-          <li>② 世界観ボードの作成</li>
+          <li>① ヒアリング（目的・雰囲気・強みの整理）</li>
+          <li>② 方向性の共有 / 構成の確認</li>
           <li>③ 着手金 50% → デザイン開始</li>
           <li>④ 初稿提出 → 微調整</li>
           <li>⑤ 実装 → 最終確認</li>
@@ -132,14 +147,20 @@ export default function PriceDetail() {
         <TextBlock>
           <li>着手金：50%（制作開始前）</li>
           <li>残額：公開前にお支払いください。</li>
+          <li>事前に確定した総額から、途中で金額が変わることはありません。</li>
         </TextBlock>
 
         {/* ========= Notes ========= */}
         <SectionTitle main>注意事項</SectionTitle>
         <TextBlock>
-          <li>制作前に総額を確定します。途中で金額が変わることはありません。</li>
-          <li>納期目安：3〜6週間。</li>
+          <li>納期目安：2〜5週間。</li>
           <li>短納期・最低価格重視のご依頼には対応していません。</li>
+          <li>
+            ドメイン代・サーバー代は実費となりますが、
+            <span className="text-white/85">
+              取得や接続のサポートは料金内で対応しています。
+            </span>
+          </li>
           <li>
             完成後のページ追加も柔軟に対応可能です。
             <span className="text-white/85">（追加料金は事前にご案内します）</span>
@@ -161,20 +182,22 @@ export default function PriceDetail() {
         <TextBlock>
           <li>タイトル・説明文・OGP画像の設定は標準対応です。</li>
           <li>画像軽量化・表示速度の最適化も含まれます。</li>
+          <li>公開に必要な初期設定まで、分かりやすくサポートします。</li>
         </TextBlock>
 
         {/* ========= Option ========= */}
         <SectionTitle>追加オプション</SectionTitle>
         <TextBlock>
           <li>microCMS 導入：¥30,000〜</li>
-          <li>ドメイン / サーバー設定代行：¥20,000〜</li>
           <li>高度レタッチ：¥10,000〜</li>
           <li>追加ページ：内容によりお見積もり</li>
+          <li>ロゴ / 印刷物 / 撮影まわり：内容に応じてご相談</li>
         </TextBlock>
 
         {/* CTA */}
         <p className="pd-thanks">
-          ここまでご覧いただき、ありがとうございます。<br />
+          ここまでご覧いただき、ありがとうございます。
+          <br />
           「少し気になっただけ」という段階でも、どうぞ気軽にご相談ください。
         </p>
 
@@ -183,57 +206,67 @@ export default function PriceDetail() {
             CONTACT
           </Link>
         </div>
-        <script
-  type="application/ld+json"
-  dangerouslySetInnerHTML={{
-    __html: JSON.stringify({
-      "@context": "https://schema.org",
-      "@type": "WebPage",
-      name: "Price Detail",
-      url: "https://gushikendesign.com/price",
-      description:
-        "LP制作・小規模サイト・ブランドサイト・運用プランの詳細。目的や雰囲気を丁寧に伺い、一緒に最適な見せ方を整理して制作します。",
-      breadcrumb: {
-        "@type": "BreadcrumbList",
-        itemListElement: [
-          { "@type": "ListItem", position: 1, name: "Home", item: "https://gushikendesign.com/" },
-          { "@type": "ListItem", position: 2, name: "Price", item: "https://gushikendesign.com/price" }
-        ]
-      },
-      mainEntity: [
-        {
-          "@type": "Service",
-          name: "Landing Page",
-          price: "60000 JPY",
-          description:
-            "1ページで魅力をまとめるLPプラン。写真・余白・流れを整え、高品質で落ち着いたデザインに仕上げます。"
-        },
-        {
-          "@type": "Service",
-          name: "Small Website",
-          price: "120000 JPY",
-          description:
-            "トップ＋数ページの小規模サイト。読みやすく安心感のある構成を丁寧に設計します。"
-        },
-        {
-          "@type": "Service",
-          name: "Brand Site",
-          price: "240000 JPY",
-          description:
-            "写真・色・文字の表情まで統一し、世界観を“ひとつの物語”として仕上げるブランドプラン。"
-        },
-        {
-          "@type": "Service",
-          name: "Maintenance / Subscription",
-          price: "9800 JPY (Monthly)",
-          description:
-            "文言・写真の差し替え、NEW情報更新などをまとめて行う運用プラン。世界観を崩さずやさしく整え続けます。"
-        }
-      ]
-    })
-  }}
-></script>
 
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "WebPage",
+              name: "Price Detail",
+              url: "https://gushikendesign.com/price",
+              description:
+                "LP制作・小規模サイト・ブランドサイト・運用プランの詳細。目的や雰囲気を丁寧に伺い、一緒に最適な見せ方を整理して制作します。",
+              breadcrumb: {
+                "@type": "BreadcrumbList",
+                itemListElement: [
+                  {
+                    "@type": "ListItem",
+                    position: 1,
+                    name: "Home",
+                    item: "https://gushikendesign.com/"
+                  },
+                  {
+                    "@type": "ListItem",
+                    position: 2,
+                    name: "Price",
+                    item: "https://gushikendesign.com/price"
+                  }
+                ]
+              },
+              mainEntity: [
+                {
+                  "@type": "Service",
+                  name: "Landing Page",
+                  price: "60000 JPY",
+                  description:
+                    "1ページで魅力をまとめるLPプラン。オリジナルデザイン・スマホ対応・公開初期設定まで含みます。"
+                },
+                {
+                  "@type": "Service",
+                  name: "Small Website",
+                  price: "120000 JPY",
+                  description:
+                    "トップ＋数ページの小規模サイト。読みやすく安心感のある構成を丁寧に設計します。"
+                },
+                {
+                  "@type": "Service",
+                  name: "Brand Site",
+                  price: "240000 JPY",
+                  description:
+                    "写真・色・文字の表情まで統一し、世界観を“ひとつの物語”として仕上げるブランドプラン。"
+                },
+                {
+                  "@type": "Service",
+                  name: "Maintenance / Subscription",
+                  price: "9800 JPY (Monthly)",
+                  description:
+                    "文言・写真の差し替え、NEW情報更新などをまとめて行う運用プラン。世界観を崩さず整え続けます。"
+                }
+              ]
+            })
+          }}
+        />
       </div>
     </section>
   );
@@ -251,7 +284,7 @@ function SectionTitle({ children, main }) {
   );
 }
 
-function PlanCard({ badge, title, price, detail, bestFor }) {
+function PlanCard({ badge, title, price, detail, bestFor, includes = [] }) {
   return (
     <div className="pd-plan">
       <p className="pd-plan-badge">{badge}</p>
@@ -259,6 +292,17 @@ function PlanCard({ badge, title, price, detail, bestFor }) {
       <p className="pd-plan-price">{price}</p>
       <p className="pd-plan-detail">{detail}</p>
       <p className="pd-plan-best">{bestFor}</p>
+
+      {includes.length > 0 && (
+    <ul className="pd-plan-includes pd-plan-includes-list">
+  {includes.map((item) => (
+    <li key={item} className="pd-plan-includes-item">
+      <span className="pd-plan-includes-dot" />
+      <span>{item}</span>
+    </li>
+  ))}
+</ul>
+      )}
     </div>
   );
 }
