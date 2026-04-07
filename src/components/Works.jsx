@@ -78,32 +78,12 @@ export default function Works() {
           </div>
 
           <div className="works-grid">
-            {/* 1 → KISUI（BIG） */}
-            <a
-              href="https://kisui.vercel.app/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="work-card aq-fade delay-3"
-              aria-label="KISUI のサイトを見る"
-            >
-              <img
-                src="/assets/kisui.webp"
-                alt="KISUI｜スキンケアブランドサイト制作（透明感×信頼感×上質設計）"
-                loading="lazy"
-                decoding="async"
-              />
-              <div className="work-text">
-                <h3>KISUI</h3>
-                <p>Skin Care / Transparency × Grace</p>
-              </div>
-            </a>
-
-            {/* 2 → LÜMIN（BIG） */}
+            {/* 1 → LÜMIN（BIG） */}
             <a
               href="https://lumin-audio.vercel.app/"
               target="_blank"
               rel="noopener noreferrer"
-              className="work-card aq-fade delay-4"
+              className="work-card aq-fade delay-3"
               aria-label="LÜMIN のサイトを見る"
             >
               <img
@@ -118,12 +98,12 @@ export default function Works() {
               </div>
             </a>
 
-            {/* 3 → ROSE VEIL（SMALL） */}
+            {/* 2 → ROSE VEIL（BIG） */}
             <a
               href="https://rose-veil.vercel.app/"
               target="_blank"
               rel="noopener noreferrer"
-              className="work-card aq-fade delay-5"
+              className="work-card aq-fade delay-4"
               aria-label="ROSE VEIL のサイトを見る"
             >
               <img
@@ -135,6 +115,26 @@ export default function Works() {
               <div className="work-text">
                 <h3>ROSE VEIL</h3>
                 <p>Fragrance EC / Luxury × Visual Air</p>
+              </div>
+            </a>
+
+            {/* 3 → CRESTED GECKO（SMALL） */}
+            <a
+              href="https://crested-gecko-site.vercel.app/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="work-card aq-fade delay-5"
+              aria-label="CRESTED GECKO のサイトを見る"
+            >
+              <img
+                src="/works/crested-gecko1.webp"
+                alt="CRESTED GECKO｜クレステッドゲッコー専門販売サイト制作（異物感×信頼設計×世界観）"
+                loading="lazy"
+                decoding="async"
+              />
+              <div className="work-text">
+                <h3>CRESTED GECKO</h3>
+                <p>Specialty Store / Instinct × Trust</p>
               </div>
             </a>
           </div>
