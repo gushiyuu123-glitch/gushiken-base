@@ -1464,7 +1464,7 @@ export const worksData = [
         slug: "OriginRoom",
         desc: "世界観の原点。\nGUSHIKEN DESIGN の思想と美意識が生まれる場所。",
         link: "https://origin-gray.vercel.app/", // ←URL差し替え
-        img: "/works/origin.webp", // ←画像差し替え
+        img: "/works/origin2.webp", // ←画像差し替え
 
         // ✅ 別格フラグ（UIで特別扱いする）
         isOrigin: true,
@@ -1495,7 +1495,7 @@ export const worksData = [
 
   desc: "境界 × 研究室 × 未来感。\nAI研究室に入り込むようなWeb体験を構築した作品。",
   link: "https://singularity-lab-chi.vercel.app/",
-  img: "/works/singularity-lab.webp",
+  img: "/works/singularity-lab1.webp",
 
   isNew: true,
   createdAt: "2026-04-06",
