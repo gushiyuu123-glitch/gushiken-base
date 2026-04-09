@@ -5,10 +5,8 @@ export default function About() {
   return (
     <section id="about" className="about-section aq-fade">
       <div className="max-w-4xl mx-auto px-6 relative">
-        {/* 左の細金ライン */}
         <div className="about-gold-line aq-fade delay-1"></div>
 
-        {/* タイトル */}
         <h2
           className="
             aq-fade delay-1
@@ -22,7 +20,6 @@ export default function About() {
           ABOUT
         </h2>
 
-        {/* 翻訳レイヤー */}
         <p
           className="
             aq-fade delay-1
@@ -33,12 +30,10 @@ export default function About() {
             pl-1
           "
         >
-          ― 制作者について（どんな人が作っているのか） ―
+          ― 制作者について ―
         </p>
 
-        {/* =====================
-            PC
-        ===================== */}
+        {/* PC */}
         <div className="hidden sm:block">
           <p
             className="
@@ -47,20 +42,22 @@ export default function About() {
               leading-[2.1] sm:leading-[2.2]
             "
           >
-            「テンプレの雰囲気は嫌だけど、ハイブランドほど固くしたくない」
+            「テンプレのような雰囲気は避けたい。
+            <br />
+            でも、ハイブランドのように固すぎる印象にもしたくない」
+            <br />
             <br />
             そんな
             <span className="text-white/95">
-              “上品で落ち着いたデザイン”
+              上品で落ち着いたデザイン
             </span>
             を求める方へ向けて制作しています。
             <br />
-            <br />
             美容・EC・店舗・サロンなど、
             <span className="text-white/90">
-              業界ごとの“伝わり方”に合わせた作品づくり
+              業種に合わせた見せ方
             </span>
-            を継続してきました。
+            を大切にしています。
           </p>
 
           <p
@@ -70,26 +67,27 @@ export default function About() {
               leading-[2.2] sm:leading-[2.3]
             "
           >
-            私が一番大切にしているのは、
+            大切にしているのは、
             <span className="text-white/95">
-              「見やすさ」と「安心感」が自然に感じられること。
+              見やすさと安心感が自然に伝わること。
             </span>
             <br />
-            どれだけデザインが綺麗でも、情報が読みづらければ意味がありません。
+            どれだけ見た目が整っていても、内容が伝わりにくければ意味がありません。
             <br />
             <br />
-            写真・色・余白・文字の表情を揃え、
+            写真・色・余白・文字のバランスを丁寧に整えながら、
             <span className="text-white/90">
-              静かで雰囲気のある世界観
+              サービスやブランドの魅力が伝わる形
             </span>
-            をつくります。
-            ガチャガチャしない、落ち着いた“やさしい強さ”のあるデザインを心がけています。
+            に仕上げています。
+            <br />
+            ガチャガチャしすぎず、落ち着きがあり、
+            <br />
+            「ちゃんとしている」と感じてもらえる印象を大切にしています。
           </p>
         </div>
 
-        {/* =====================
-            SP
-        ===================== */}
+        {/* SP */}
         <div className="block sm:hidden">
           <p
             className="
@@ -98,9 +96,12 @@ export default function About() {
               leading-[2.1]
             "
           >
-            「テンプレっぽい雰囲気は嫌だけど、
+            「テンプレっぽい雰囲気は避けたい。
             <br />
-            ハイブランドほど固くしたくない」
+            でも、ハイブランドほど
+            <br />
+            固くしたくない」
+            <br />
             <br />
             そんな
             <span className="text-white/95">
@@ -108,13 +109,10 @@ export default function About() {
             </span>
             を求める方へ向けて制作しています。
             <br />
-            <br />
             美容・EC・店舗・サロンなど、
             <br />
             <span className="text-white/90">
-              業界ごとの伝わり方に合わせた
-              <br />
-              作品づくり
+              業種に合わせた見せ方
             </span>
             を大切にしています。
           </p>
@@ -126,25 +124,25 @@ export default function About() {
               leading-[2.15]
             "
           >
-            私が大切にしているのは、
+            大切にしているのは、
             <br />
             <span className="text-white/95">
-              「見やすさ」と「安心感」
+              見やすさと安心感
             </span>
             が自然に伝わること。
             <br />
             <br />
             どれだけ綺麗に見えても、
             <br />
-            情報が読みづらければ意味がありません。
+            内容が伝わりにくければ意味がありません。
             <br />
             <br />
             写真・色・余白・文字を整えながら、
             <br />
             <span className="text-white/90">
-              静かで雰囲気のある世界観
+              魅力が伝わる形
             </span>
-            をつくっています。
+            に仕上げています。
           </p>
         </div>
 
@@ -170,13 +168,13 @@ export default function About() {
             >
               Designer / Front-end Creator
               <br />
-              沖縄を拠点に、ブランドサイト・サロン・カフェ・個人ビジネスなど、
-              上品で“伝わる”Webサイトを制作しています。
+              沖縄を拠点に、ブランドサイト・サロン・カフェ・個人ビジネスなどの
+              Webサイトを制作しています。
               <br />
               <br />
-              デザインと実装を同じ視点で扱うことで、
+              デザインから実装まで一貫して対応することで、
               <span className="text-white/90">
-                見た目だけで終わらず「使いやすさ」まで含めて完成させる
+                見た目だけで終わらず、使いやすさまで含めて整える
               </span>
               ことを大切にしています。
             </p>
@@ -202,7 +200,7 @@ export default function About() {
               Webサイトを制作しています。
               <br />
               <br />
-              デザインと実装を同じ視点で扱い、
+              デザインから実装まで一貫して対応し、
               <br />
               <span className="text-white/90">
                 見た目だけでなく
@@ -225,38 +223,36 @@ export default function About() {
               transition
             "
           >
-            note（制作の裏側はこちら）
+            note（制作の背景はこちら）
           </a>
         </div>
 
         <div className="space-y-8 sm:space-y-9 mb-16 sm:mb-20">
           <div className="aq-fade delay-5">
-            <h4 className="about-style-title">・整列と余白を丁寧に扱う</h4>
+            <h4 className="about-style-title">・見やすく整理する</h4>
             <p className="about-style-text">
-              情報の置き方を整えることで、自然に読みやすく、落ち着いた画面になります。
+              情報を整え、初めて訪れた方にも伝わりやすい画面を目指します。
             </p>
           </div>
 
           <div className="aq-fade delay-5">
-            <h4 className="about-style-title">・写真と色の一貫性を大切にする</h4>
+            <h4 className="about-style-title">・雰囲気をそろえる</h4>
             <p className="about-style-text">
-              世界観を崩さないために、明るさ・色味・質感を揃えて統一感をつくります。
+              写真や色のトーンを整え、ブランドらしさが伝わる印象にまとめます。
             </p>
           </div>
 
           <div className="aq-fade delay-6">
-            <h4 className="about-style-title">・動きは最小限で静かに美しく</h4>
+            <h4 className="about-style-title">・動きは控えめに使う</h4>
             <p className="about-style-text">
-              過度なアニメーションは使わず、
-              「呼吸するような自然な動き」だけを加えています。
+              過度な演出に頼らず、見やすさや印象を損なわない範囲で整えます。
             </p>
           </div>
 
           <div className="aq-fade delay-6">
-            <h4 className="about-style-title">・デザインと技術をつなげる</h4>
+            <h4 className="about-style-title">・デザインから実装まで対応する</h4>
             <p className="about-style-text">
-              コードで再現できる設計を前提に、
-              長く運用しやすい形で仕上げます。
+              完成後の見え方まで含めて、全体の印象がぶれないよう制作しています。
             </p>
           </div>
         </div>
@@ -270,11 +266,11 @@ export default function About() {
               leading-[2.1] sm:leading-[2.2]
             "
           >
-            あなたのブランドやお店の“らしさ”を、
+            あなたのブランドやお店のらしさを、
             <span className="text-white/95">
-              静かで上品なデザイン
+              落ち着きと品のあるWebサイト
             </span>
-            へと丁寧に翻訳します。
+            として丁寧に形にします。
           </p>
         </div>
 
@@ -287,12 +283,12 @@ export default function About() {
               leading-[2.1]
             "
           >
-            あなたのブランドやお店の“らしさ”を、
+            あなたのブランドやお店のらしさを、
             <br />
             <span className="text-white/95">
-              静かで上品なデザイン
+              落ち着きと品のあるWebサイト
             </span>
-            へ丁寧に翻訳します。
+            として丁寧に形にします。
           </p>
         </div>
       </div>

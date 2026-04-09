@@ -11,7 +11,6 @@ export default function Philosophy() {
       "
     >
       <div className="relative mx-auto max-w-4xl px-6">
-        {/* SEO極薄リード */}
         <p
           className="
             mb-6
@@ -21,13 +20,11 @@ export default function Philosophy() {
             text-white/25
           "
         >
-          美容・EC・店舗・サロン向けWebデザインの制作方針
+          美容・EC・店舗・サロン向けWebデザインについて
         </p>
 
-        {/* 左ライン */}
         <div className="philo-gold-line aq-fade delay-1"></div>
 
-        {/* タイトル */}
         <h2
           className="
             aq-fade delay-1
@@ -39,10 +36,9 @@ export default function Philosophy() {
           "
           translate="no"
         >
-          PHILOSOPHY
+          ABOUT DESIGN
         </h2>
 
-        {/* サブタイトル */}
         <p
           className="
             aq-fade delay-1
@@ -52,184 +48,190 @@ export default function Philosophy() {
             text-white/60
           "
         >
-          ― 制作の考え方 ―
+          ― 大切にしていること ―
         </p>
 
-        {/* =====================
-            PC
-        ===================== */}
+        {/* PC */}
         <div className="hidden sm:block">
           <p className="philo-lead aq-fade delay-2">
-            私が大切にしているのは、
+            大切にしているのは、
             <br />
             <span className="text-white/95">
-              「見やすさ」と「伝わりやすさ」を軸にしたデザインです。
+              見やすく、伝わりやすく、安心して読めること。
             </span>
             <br />
-            美容・EC・店舗・サロンなど、
+            そのうえで、業種ごとの雰囲気や魅力が
             <br />
-            業種ごとの空気感を大切にしながら、
-            <strong className="text-white/90">
-              安心して読み進められる構造
-            </strong>
-            を整えています。
+            自然に伝わるデザインを心がけています。
           </p>
 
           <p className="philo-body aq-fade delay-3">
-            デザインは、ただ整って見えれば良いわけではありません。
+            Webサイトは、見た目が整っているだけではなく、
             <br />
-            タイトルの強弱、行間、余白、視線の流れ。
-            <br />
-            そうした細部を丁寧に積み重ねることで、
+            初めて訪れた方にも内容が伝わりやすく、
             <span className="text-white/90">
-              サービスの魅力や価値が自然に伝わる設計
+              安心して読み進めてもらえること
             </span>
-            が生まれると考えています。
+            が大切だと考えています。
             <br />
             <br />
-            派手さよりも、読み手が迷わず理解できること。
+            そのために、文字の見やすさや余白の取り方、
             <br />
-            そして、
+            情報の見せ方まで丁寧に整えながら、
             <span className="text-white/90">
-              見た人が「ちゃんとしている」と感じられること。
+              サービスやブランドの魅力が自然に伝わる形
             </span>
+            を目指しています。
             <br />
-            それが、信頼につながるWebデザインの土台だと思っています。
+            <br />
+            派手に見せるよりも、
+            <br />
+            きちんとして見えること、伝わること、
+            <br />
+            そして「ここなら安心できそう」と感じてもらえること。
+            <br />
+            そうした印象の積み重ねを大切にしています。
           </p>
 
           <div className="mt-14 space-y-5">
             <div className="aq-fade delay-4">
-              <h3 className="philo-subtitle">1. Order（秩序）</h3>
+              <h3 className="philo-subtitle">見やすさ</h3>
               <p className="philo-subtext">
-                情報の優先順位を整え、
+                情報を整理し、
                 <br />
-                初めて訪れた人でも迷わず理解できる構造をつくります。
+                初めて訪れた方にも内容が伝わりやすい形に整えます。
               </p>
             </div>
 
             <div className="aq-fade delay-5">
-              <h3 className="philo-subtitle">2. Tension（緊張）</h3>
+              <h3 className="philo-subtitle">雰囲気づくり</h3>
               <p className="philo-subtext">
-                文字・余白・光のリズムを微調整し、
+                業種やブランドに合った印象を大切にしながら、
                 <br />
-                画面に品のある集中感をつくります。
+                落ち着きのある画面に仕上げます。
               </p>
             </div>
 
             <div className="aq-fade delay-6">
-              <h3 className="philo-subtitle">3. Silence（静けさ）</h3>
+              <h3 className="philo-subtitle">一貫した制作</h3>
               <p className="philo-subtext">
-                余白は空白ではなく、
+                デザインだけでなく実装まで含めて、
                 <br />
-                世界観と安心感を支えるための大切な要素です。
+                全体の印象がぶれないよう丁寧にまとめています。
               </p>
             </div>
           </div>
 
           <p className="philo-last aq-fade delay-7">
             <span className="text-white/95">
-              迷わず読めて、安心して選べるデザインを。
+              伝わりやすく、印象に残り、安心して見られるサイトを。
             </span>
             <br />
             <span className="text-white/80">
-              「ここなら任せられそう」と思ってもらえるよう、
+              ご相談いただく方にとって、
               <br />
-              設計から丁寧につくり込んでいます。
+              「お願いしやすい」と感じてもらえることも大切にしています。
             </span>
           </p>
         </div>
 
-        {/* =====================
-            SP
-        ===================== */}
+        {/* SP */}
         <div className="block sm:hidden">
           <p className="philo-lead aq-fade delay-2">
-            私が大切にしているのは、
+            大切にしているのは、
             <br />
             <span className="text-white/95">
-              「見やすさ」と
+              見やすく、
               <br />
-              「伝わりやすさ」
+              伝わりやすく、
+              <br />
+              安心して読めること。
             </span>
-            を軸にしたデザインです。
             <br />
             <br />
-            業種ごとの空気感を大切にしながら、
+            そのうえで、
             <br />
-            <strong className="text-white/90">
-              安心して読み進められる構造
-            </strong>
-            を整えています。
+            業種ごとの雰囲気や魅力が
+            <br />
+            自然に伝わるデザインを心がけています。
           </p>
 
           <p className="philo-body aq-fade delay-3">
-            デザインは、ただ整って見えれば
+            Webサイトは、
             <br />
-            良いわけではありません。
+            見た目が整っているだけではなく、
+            <br />
+            初めて訪れた方にも
+            <br />
+            内容が伝わりやすいことが大切です。
             <br />
             <br />
-            タイトルの強弱、行間、余白、
+            そのために、
             <br />
-            視線の流れ。
+            文字の見やすさや余白の取り方、
             <br />
-            そうした細部を重ねることで、
+            情報の見せ方まで丁寧に整えながら、
             <span className="text-white/90">
-              魅力や価値が自然に伝わる設計
+              魅力が自然に伝わる形
             </span>
-            が生まれると考えています。
+            を目指しています。
             <br />
             <br />
             派手さよりも、
             <br />
-            読み手が迷わず理解できること。
+            きちんとして見えること。
             <br />
-            それが信頼につながる
+            そして、
             <br />
-            デザインの土台だと思っています。
+            「ここなら安心できそう」と
+            <br />
+            感じてもらえることを大切にしています。
           </p>
 
           <div className="mt-12 space-y-5">
             <div className="aq-fade delay-4">
-              <h3 className="philo-subtitle">1. Order（秩序）</h3>
+              <h3 className="philo-subtitle">見やすさ</h3>
               <p className="philo-subtext">
-                情報の優先順位を整え、
+                情報を整理し、
                 <br />
-                迷わず理解できる構造をつくります。
+                内容が伝わりやすい形に整えます。
               </p>
             </div>
 
             <div className="aq-fade delay-5">
-              <h3 className="philo-subtitle">2. Tension（緊張）</h3>
+              <h3 className="philo-subtitle">雰囲気づくり</h3>
               <p className="philo-subtext">
-                文字・余白・光を微調整し、
+                業種やブランドに合った印象を大切にし、
                 <br />
-                品のある集中感をつくります。
+                落ち着きのある画面に仕上げます。
               </p>
             </div>
 
             <div className="aq-fade delay-6">
-              <h3 className="philo-subtitle">3. Silence（静けさ）</h3>
+              <h3 className="philo-subtitle">一貫した制作</h3>
               <p className="philo-subtext">
-                余白は空白ではなく、
+                デザインから実装まで、
                 <br />
-                世界観と安心感を支える要素です。
+                全体の印象がぶれないようまとめています。
               </p>
             </div>
           </div>
 
           <p className="philo-last aq-fade delay-7">
             <span className="text-white/95">
-              迷わず読めて、
+              伝わりやすく、
               <br />
-              安心して選べるデザインを。
+              印象に残り、
+              <br />
+              安心して見られるサイトを。
             </span>
             <br />
             <span className="text-white/80">
-              「ここなら任せられそう」と
+              「お願いしやすい」と
               <br />
-              思ってもらえるよう、
+              感じてもらえることも
               <br />
-              設計から丁寧につくり込んでいます。
+              大切にしています。
             </span>
           </p>
         </div>
