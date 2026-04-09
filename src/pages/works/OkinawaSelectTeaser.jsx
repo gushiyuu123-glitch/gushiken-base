@@ -1,30 +1,15 @@
-// src/pages/works/OkinawaSelectTeaser.jsx
 import React, { useEffect, useMemo } from "react";
 import { Link } from "react-router-dom";
 
-/**
- * OKINAWA SELECT — TEASER (Trailer page)
- * - Hero含めて画像4枚固定
- * - “本編前の予告”＝説明しすぎず、余白で魅せる
- *
- * 使い方：
- * 1) 画像を /public/works1/ に置く
- *    - okinawa-select-hero.jpg
- *    - okinawa-select-02.jpg
- *    - okinawa-select-03.jpg
- *    - okinawa-select-04.jpg
- * 2) App.jsx にルート追加
- *    <Route path="/works/okinawa-select" element={<OkinawaSelectTeaser />} />
- */
 export default function OkinawaSelectTeaser() {
   useEffect(() => window.scrollTo(0, 0), []);
 
   const assets = useMemo(
     () => ({
-      hero: "/works1/okinawa-select-hero.png", // IMG_01 (Hero)
-      m2: "/works1/okinawa-select-02.png", // IMG_02 (Material)
-      m3: "/works1/okinawa-select-03.png", // IMG_03 (Structure)
-      m4: "/works1/okinawa-select-04.png", // IMG_04 (Commerce)
+      hero: "/works1/okinawa-select-hero.png",
+      m2: "/works1/okinawa-select-02.png",
+      m3: "/works1/okinawa-select-03.png",
+      m4: "/works1/okinawa-select-04.png",
     }),
     []
   );
@@ -32,44 +17,38 @@ export default function OkinawaSelectTeaser() {
   return (
     <section className="min-h-screen bg-[#f6f3ee] text-[#231f1b] pb-28">
       <script
-  type="application/ld+json"
-  dangerouslySetInnerHTML={{
-    __html: JSON.stringify({
-      "@context": "https://schema.org",
-      "@type": "CreativeWork",
-      "@id": "https://gushikendesign.com/works/okinawa-select#teaser",
-      "name": "OKINAWA SELECT｜Quiet Commerce Concept (Teaser)",
-      "description":
-        "沖縄の素材を『商品』ではなく『暮らしの空気』として再編集する、静かなコンセプト・コマースサイトのティーザーページ。本編に入る前の予告として、余白と構図のみで世界観を提示する。",
-      "creator": {
-        "@type": "Person",
-        "name": "裕人 具志堅",
-        "alternateName": "Yuto Gushiken",
-        "url": "https://gushikendesign.com/"
-      },
-      "publisher": {
-        "@type": "Organization",
-        "name": "GUSHIKEN DESIGN",
-        "url": "https://gushikendesign.com/"
-      },
-      "inLanguage": "ja",
-      "url": "https://gushikendesign.com/works/okinawa-select",
-      "isBasedOn": {
-        "@type": "WebSite",
-        "name": "OKINAWA SELECT",
-        "url": "https://okinawa-select.vercel.app/"
-      },
-      "isPartOf": {
-        "@type": "CreativeWork",
-        "name": "OKINAWA SELECT｜Quiet Commerce Concept"
-      }
-    })
-  }}
-/>
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "CreativeWork",
+            "@id": "https://gushikendesign.com/works/okinawa-select#teaser",
+            name: "OKINAWA SELECT｜Concept Commerce Teaser",
+            description:
+              "沖縄の素材や空気感を、静かなトーンで見せるコンセプト・コマースサイトのティーザーページ。本編へ入る前に、世界観の一部をやわらかく伝える作品。",
+            creator: {
+              "@type": "Person",
+              name: "裕人 具志堅",
+              alternateName: "Yuto Gushiken",
+              url: "https://gushikendesign.com/",
+            },
+            publisher: {
+              "@type": "Organization",
+              name: "GUSHIKEN DESIGN",
+              url: "https://gushikendesign.com/",
+            },
+            inLanguage: "ja",
+            url: "https://gushikendesign.com/works/okinawa-select",
+            isBasedOn: {
+              "@type": "WebSite",
+              name: "OKINAWA SELECT",
+              url: "https://okinawa-select.vercel.app/",
+            },
+          }),
+        }}
+      />
 
-      {/* =========================
-          HERO (IMG_01)
-      ========================= */}
+      {/* HERO */}
       <div className="relative w-full overflow-hidden">
         {/* SP */}
         <div className="block md:hidden relative w-full h-[78vh]">
@@ -84,7 +63,6 @@ export default function OkinawaSelectTeaser() {
             "
           />
 
-          {/* Quiet veil */}
           <div className="absolute inset-0 bg-white/10" />
           <div className="absolute inset-0 bg-gradient-to-b from-white/10 via-[#f6f3ee]/35 to-[#f6f3ee]/88" />
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_62%_22%,rgba(255,255,255,0.55),transparent_62%)]" />
@@ -105,11 +83,11 @@ export default function OkinawaSelectTeaser() {
             </p>
 
             <p className="mt-6 text-[#231f1b]/78 text-[0.95rem] leading-[2.05] max-w-[34ch]">
-              沖縄の素材を、<br />
-              “暮らしの空気”として再編集する。
+              沖縄の素材を、
+              <br />
+              暮らしに寄り添う静かな存在として見せる。
             </p>
 
-            {/* Teaser CTA (控えめ) */}
             <div className="mt-8">
               <a
                 href="https://okinawa-select.vercel.app/"
@@ -159,12 +137,10 @@ export default function OkinawaSelectTeaser() {
             "
           />
 
-          {/* Quiet veil */}
           <div className="absolute inset-0 bg-white/10" />
           <div className="absolute inset-0 bg-gradient-to-b from-white/08 via-[#f6f3ee]/24 to-[#f6f3ee]/86" />
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_64%_22%,rgba(255,255,255,0.55),transparent_62%)]" />
 
-          {/* Title block */}
           <div className="absolute left-[clamp(28px,6.5vw,120px)] bottom-[14vh] max-w-[760px]">
             <p className="text-[0.68rem] tracking-[0.42em] text-[#6b625a]">
               WORKS — CONCEPT COMMERCE SITE
@@ -185,10 +161,9 @@ export default function OkinawaSelectTeaser() {
             <p className="mt-8 text-[#231f1b]/74 text-[1.06rem] leading-[2.25] max-w-[46ch]">
               布、石、サンゴ、香り。
               <br />
-              商品ではなく、空気として編集する。
+              沖縄の素材を、静かな暮らしの印象として見せる。
             </p>
 
-            {/* Teaser CTA (控えめ / 1回だけ) */}
             <div className="mt-10 flex items-center gap-6">
               <a
                 href="https://okinawa-select.vercel.app/"
@@ -219,7 +194,6 @@ export default function OkinawaSelectTeaser() {
             </div>
           </div>
 
-          {/* Small back (PC only, very quiet) */}
           <div className="absolute right-[clamp(20px,3vw,44px)] bottom-[6vh]">
             <Link
               to="/works"
@@ -231,12 +205,8 @@ export default function OkinawaSelectTeaser() {
         </div>
       </div>
 
-      {/* =========================
-          BODY (No extra images)
-          "予告"＝説明しすぎない
-      ========================= */}
+      {/* BODY */}
       <div className="max-w-6xl mx-auto px-7 md:px-10">
-        {/* Intro text only */}
         <div className="pt-20 md:pt-24">
           <div className="border-t border-[#231f1b]/10 pt-14 md:pt-16">
             <p className="text-center text-[0.72rem] tracking-[0.36em] text-[#6b625a]">
@@ -246,30 +216,27 @@ export default function OkinawaSelectTeaser() {
             <h2 className="mt-8 text-center text-[1.18rem] md:text-[1.22rem] font-light tracking-[0.18em] text-[#231f1b]/92 leading-[2.2]">
               OKINAWA SELECT は、
               <br className="hidden md:block" />
-              沖縄の素材を「商品」として並べるためのサイトではありません。
+              沖縄の素材や空気感を静かに見せるためのティーザーページです。
             </h2>
 
             <p className="mt-10 text-center text-[#231f1b]/70 text-[0.98rem] md:text-[1.04rem] leading-[2.35] md:leading-[2.55] font-light max-w-[62ch] mx-auto">
               布、石、サンゴ、香り。
               <br />
-              それらを “暮らしの空気” として再編集するための
+              商品を並べる前に、
               <br className="hidden md:block" />
-              コンセプト・コマースサイトです。
+              まずは世界観の一部がやわらかく伝わることを大切にしています。
             </p>
           </div>
         </div>
 
-        {/* =========================
-            SECTION 03 — MATERIAL FIRST (IMG_02)
-        ========================= */}
         <Section
-          kicker="MATERIAL FIRST"
-          title="素材が先に立ち上がる構成。"
+          kicker="MATERIAL"
+          title="素材の静かな魅力が先に伝わる。"
           body={
             <>
-              商品名より先に、質感と温度が届くように。
+              名前や説明より前に、
               <br />
-              価格ではなく、触れたくなる“静かな衝動”を設計した。
+              質感や空気感がゆっくり届くようにまとめました。
             </>
           }
           img={assets.m2}
@@ -277,17 +244,14 @@ export default function OkinawaSelectTeaser() {
           align="right"
         />
 
-        {/* =========================
-            SECTION 04 — STRUCTURE (IMG_03)
-        ========================= */}
         <Section
-          kicker="STRUCTURE AS EXPERIENCE"
-          title="情報設計そのものが、ブランド体験になる。"
+          kicker="FLOW"
+          title="自然に見進められる流れ。"
           body={
             <>
-              Concept / Collections / Items / Story
+              コンセプト、コレクション、アイテム、ストーリー。
               <br />
-              構造の順番が、そのまま“理解のリズム”になるように。
+              それぞれが無理なくつながるように、静かなトーンで整理しています。
             </>
           }
           img={assets.m3}
@@ -295,17 +259,16 @@ export default function OkinawaSelectTeaser() {
           align="left"
         />
 
-        {/* =========================
-            SECTION 05 — QUIET COMMERCE (IMG_04)
-        ========================= */}
         <Section
           kicker="QUIET COMMERCE"
-          title="買わせない。急がせない。"
+          title="やさしく伝わる、静かなコマース。"
           body={
             <>
-              それでも、人は手を伸ばす。
+              強く押し出さなくても、
               <br />
-              “静かなコマース”の触感を残すために、UIの主張を削った。
+              見ているうちに手を伸ばしたくなるような、
+              <br />
+              落ち着いた印象を大切にしています。
             </>
           }
           img={assets.m4}
@@ -313,9 +276,6 @@ export default function OkinawaSelectTeaser() {
           align="right"
         />
 
-        {/* =========================
-            Final CTA (only once)
-        ========================= */}
         <div className="pt-16 md:pt-20 pb-8 text-center">
           <a
             href="https://okinawa-select.vercel.app/"
@@ -353,18 +313,12 @@ export default function OkinawaSelectTeaser() {
   );
 }
 
-/* =========================
-   Section Component
-   - 画像は必ず1枚（合計4枚ルール維持）
-   - “予告”＝余白と構図で魅せる
-========================= */
 function Section({ kicker, title, body, img, imgAlt, align = "left" }) {
   const isLeft = align === "left";
 
   return (
     <div className="pt-20 md:pt-24">
       <div className="grid md:grid-cols-12 gap-10 md:gap-14 items-start">
-        {/* Text */}
         <div className={`md:col-span-5 ${isLeft ? "md:order-1" : "md:order-2"}`}>
           <p className="text-[0.72rem] tracking-[0.36em] text-[#6b625a]">
             {kicker}
@@ -381,12 +335,12 @@ function Section({ kicker, title, body, img, imgAlt, align = "left" }) {
           <div className="mt-10 h-px w-28 bg-gradient-to-r from-[#231f1b]/40 to-transparent" />
 
           <p className="mt-7 text-[#6b625a] text-[0.74rem] tracking-[0.26em] leading-[2.0]">
-         Only a fragment.  
-The rest unfolds inside.
+            Only a fragment.
+            <br />
+            The rest unfolds inside.
           </p>
         </div>
 
-        {/* Image */}
         <div className={`md:col-span-7 ${isLeft ? "md:order-2" : "md:order-1"}`}>
           <div
             className="
@@ -411,7 +365,6 @@ The rest unfolds inside.
             />
           </div>
 
-          {/* quiet label */}
           <div className="pt-6">
             <p className="text-[#6b625a] text-[0.70rem] tracking-[0.32em]">
               TRAILER CUT

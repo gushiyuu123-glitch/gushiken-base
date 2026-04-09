@@ -1,4 +1,3 @@
-// src/pages/works/ReCamp.jsx
 import { useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 
@@ -16,54 +15,51 @@ export default function ReCamp() {
         background: "linear-gradient(180deg,#22221f 0%,#1a1a18 100%)",
       }}
     >
-<script
-  type="application/ld+json"
-  dangerouslySetInnerHTML={{
-    __html: JSON.stringify({
-      "@context": "https://schema.org",
-      "@type": "CreativeWork",
-      "@id": "https://gushikendesign.com/works/recamp#creativework",
-      name: "Re:Camp — Outdoor Gear Studio | Brand Concept Web Design",
-      inLanguage: "ja",
-      url: "https://gushikendesign.com/works/recamp",
-      description:
-        "Re:Camp は、“焚き火のあとの静けさ”を起点に、アウトドアギアの距離感・温度・余韻を体験に翻訳したブランドコンセプトWebデザイン。情報訴求ではなく、触れたあとの感覚を中心に構成した前座ページ。",
-      image: [
-        "https://gushikendesign.com/works1/Camp.png",
-        "https://gushikendesign.com/works1/mori.png"
-      ],
-      creator: {
-        "@type": "Person",
-        name: "具志堅 裕人",
-        alternateName: "Yuto Gushiken",
-        url: "https://gushikendesign.com/"
-      },
-      publisher: {
-        "@type": "Organization",
-        name: "GUSHIKEN DESIGN",
-        url: "https://gushikendesign.com/"
-      },
-      isBasedOn: {
-        "@type": "WebSite",
-        name: "Re:Camp Official Site",
-        url: "https://recamp-site.vercel.app/"
-      },
-      genre: [
-        "Web Design",
-        "Outdoor Concept",
-        "Brand Experience",
-        "React",
-        "Vite",
-        "Tailwind"
-      ]
-    })
-  }}
-/>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "CreativeWork",
+            "@id": "https://gushikendesign.com/works/recamp#creativework",
+            name: "Re:Camp — Outdoor Gear Studio | Brand Concept Web Design",
+            inLanguage: "ja",
+            url: "https://gushikendesign.com/works/recamp",
+            description:
+              "焚き火のあとの静けさや、夜のアウトドアの空気感を大切にしたブランドコンセプトWebデザイン。ギアそのものを強く語るのではなく、雰囲気の余韻が残る入口ページとしてまとめた作品。",
+            image: [
+              "https://gushikendesign.com/works1/Camp.png",
+              "https://gushikendesign.com/works1/mori.png"
+            ],
+            creator: {
+              "@type": "Person",
+              name: "具志堅 裕人",
+              alternateName: "Yuto Gushiken",
+              url: "https://gushikendesign.com/"
+            },
+            publisher: {
+              "@type": "Organization",
+              name: "GUSHIKEN DESIGN",
+              url: "https://gushikendesign.com/"
+            },
+            isBasedOn: {
+              "@type": "WebSite",
+              name: "Re:Camp Official Site",
+              url: "https://recamp-site.vercel.app/"
+            },
+            genre: [
+              "Web Design",
+              "Outdoor Concept",
+              "Brand Website",
+              "React",
+              "Vite",
+              "Tailwind"
+            ]
+          })
+        }}
+      />
 
-
-      {/* ===============================
-          FIXED 背景（森の奥 / 記憶として残る層）
-      =============================== */}
+      {/* 背景 */}
       <div
         aria-hidden
         className="fixed inset-0 -z-10 bg-cover bg-center"
@@ -74,7 +70,6 @@ export default function ReCamp() {
         }}
       />
 
-      {/* 火の余熱 */}
       <div
         aria-hidden
         className="fixed inset-0 -z-10"
@@ -90,7 +85,6 @@ export default function ReCamp() {
         }}
       />
 
-      {/* 夜霧 */}
       <div
         aria-hidden
         className="fixed inset-0 -z-10"
@@ -106,9 +100,7 @@ export default function ReCamp() {
         }}
       />
 
-      {/* ===============================
-          HERO（焚き火：一度だけ見せる）
-      =============================== */}
+      {/* HERO */}
       <section className="relative h-[100vh] flex items-end">
         <img
           ref={heroRef}
@@ -133,55 +125,40 @@ export default function ReCamp() {
         </div>
       </section>
 
-      {/* ===============================
-          INTRO（前座 / 体験の翻訳）
-      =============================== */}
+      {/* INTRO */}
       <section className="px-[6vw] py-[18vh] max-w-[62rem] mx-auto space-y-14">
         <p className="text-[0.75rem] tracking-[0.32em] text-white/60 uppercase">
           CONCEPT
         </p>
 
         <h2 className="text-[1.8rem] leading-[1.75] tracking-[0.06em]">
-          焚き火が消えたあとに、  
+          焚き火が消えたあとに、
           <br />
-          なぜか道具だけが、  
+          なぜか道具だけが、
+          <br />
           すぐそばに感じられる。
         </h2>
 
         <p className="leading-[2.1] text-[1.05rem] text-white/85">
-          Re:Camp では、アウトドアギアを「見せる対象」ではなく、
+          Re:Camp では、アウトドアギアを強く押し出すのではなく、
           <br />
-          <strong>すでに手元にある存在</strong>として扱っています。
+          夜の空気や、火が消えたあとの静けさごと
+          <br />
+          ひとつの印象として見せることを大切にしました。
         </p>
 
         <p className="leading-[2.1] text-[1.05rem] text-white/80">
-          画面に強い主張を与えすぎず、
+          情報を増やしすぎず、
           <br />
-          光の入り方、距離感、余白の密度によって
-          <br />
-          「触れたあと」を想像させる構成を意識しました。
-        </p>
-
-        <p className="leading-[2.1] text-[1.05rem] text-white/78">
-          情報は最小限に抑え、
-          <br />
-          代わりに、視線の止まり方や
-          <br />
-          スクロールの速度が自然に落ちるポイントを設計しています。
+          余韻が静かに残るような見え方に整えています。
         </p>
 
         <p className="leading-[2.1] text-[1.05rem] text-white/75">
-          これは、完成したサイトへ向かうための
+          これは、本編サイトへ入る前に
           <br />
-          <strong>「前座の一枚」</strong>です。
-          <br />
-          世界観に触れたあと、
-          静かに本編へ進んでもらうための入口として構成しました。
+          Re:Camp の空気感に触れてもらうための入口ページです。
         </p>
 
-        {/* ===============================
-            Links
-        =============================== */}
         <div className="pt-[6vh] flex gap-8 flex-wrap">
           <Link
             to="/works"

@@ -1,4 +1,3 @@
-// src/pages/works/Lucent.jsx
 import React, { useEffect, useMemo } from "react";
 import { Link } from "react-router-dom";
 
@@ -43,9 +42,8 @@ export default function Lucent() {
 
   return (
     <section className="min-h-screen bg-[#f6f2eb] text-[#3a2f28] pb-32">
-
       {/* =========================
-          TOP BAR（LILU準拠）
+          TOP BAR
       ========================= */}
       <header className="sticky top-0 z-50 bg-[#f6f2eb]/85 backdrop-blur border-b border-[#3a2f28]/10">
         <div className="max-w-[1120px] mx-auto px-8 h-[72px] flex items-center justify-between">
@@ -61,129 +59,119 @@ export default function Lucent() {
       </header>
 
       {/* =========================
-          HERO（既存そのまま）
+          HERO
       ========================= */}
-   <div className="relative w-full h-[88vh] md:h-[92vh] overflow-hidden">
+      <div className="relative w-full h-[88vh] md:h-[92vh] overflow-hidden">
+        <img
+          src={assets.hero}
+          alt="Hair Salon LUCENT — Concept Hero"
+          className="
+            absolute inset-0 w-full h-full object-cover
+            object-[69%_50%]
+            md:object-[45%_50%]
+            brightness-[0.94]
+            contrast-[0.96]
+            scale-[1.04]
+          "
+        />
+        <div
+          className="absolute inset-0 bg-gradient-to-b
+            from-[#f6f2eb]/22
+            via-[#f6f2eb]/48
+            to-[#f6f2eb]/96
+          "
+        />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_68%_26%,rgba(255,255,255,0.38),transparent_65%)]" />
+        <div className="absolute inset-0 bg-gradient-to-b from-white/10 via-[#f6f2eb]/20 to-[#f6f2eb]/92" />
 
-<img
-  src={assets.hero}
-  alt="Hair Salon LUCENT — Concept Hero"
-  className="
-    absolute inset-0 w-full h-full object-cover
-    object-[69%_50%]        /* ← SP：少し左 */
-    md:object-[45%_50%]    /* ← PC：今まで通り */
-    brightness-[0.94]
-    contrast-[0.96]
-    scale-[1.04]
-  "
-/>
-<div className="absolute inset-0 bg-gradient-to-b
-  from-[#f6f2eb]/22
-  via-[#f6f2eb]/48
-  to-[#f6f2eb]/96
-" />
-<div className="absolute inset-0 bg-[radial-gradient(circle_at_68%_26%,rgba(255,255,255,0.38),transparent_65%)]" />
+        <div
+          className="
+            absolute
+            bottom-[8vh] left-1/2 -translate-x-1/2
+            text-center
 
-        {/* Veil */}
-  {/* Veil */}
-<div className="absolute inset-0 bg-gradient-to-b from-white/10 via-[#f6f2eb]/20 to-[#f6f2eb]/92" />
+            md:bottom-[14vh]
+            md:left-[clamp(28px,7vw,120px)]
+            md:translate-x-0
+            md:text-left
+          "
+        >
+          <p
+            className="
+              text-[0.62rem] tracking-[0.36em] text-[#6a5b50]
+              md:text-[0.72rem]
+              md:tracking-[0.38em]
+            "
+          >
+            WORKS — HAIR SALON CONCEPT SITE
+          </p>
 
-{/* ===== Text ===== */}
-<div
-  className="
-    absolute
-    bottom-[8vh] left-1/2 -translate-x-1/2
-    text-center
+          <h1
+            className="
+              mt-4
+              text-[2.6rem] tracking-[0.22em] font-light leading-[1.05]
+              md:mt-6
+              md:text-[4.2rem]
+              md:tracking-[0.18em]
+              md:leading-[1.02]
+            "
+          >
+            LUCENT
+          </h1>
 
-    md:bottom-[14vh]
-    md:left-[clamp(28px,7vw,120px)]
-    md:translate-x-0
-    md:text-left
-  "
->
-  <p
-    className="
-      text-[0.62rem] tracking-[0.36em] text-[#6a5b50]
-
-      md:text-[0.72rem]
-      md:tracking-[0.38em]
-    "
-  >
-    WORKS — HAIR SALON CONCEPT SITE
-  </p>
-
-  <h1
-    className="
-      mt-4
-      text-[2.6rem] tracking-[0.22em] font-light leading-[1.05]
-
-      md:mt-6
-      md:text-[4.2rem]
-      md:tracking-[0.18em]
-      md:leading-[1.02]
-    "
-  >
-    LUCENT
-  </h1>
-
-  <p
-    className="
-      mt-3
-      text-[#6a5b50]
-      tracking-[0.28em]
-      text-[0.72rem]
-
-      md:mt-5
-      md:text-[0.92rem]
-      md:tracking-[0.30em]
-    "
-  >
-    LIGHT / SILENCE / LINE
-  </p>
-</div>
-
+          <p
+            className="
+              mt-3
+              text-[#6a5b50]
+              tracking-[0.28em]
+              text-[0.72rem]
+              md:mt-5
+              md:text-[0.92rem]
+              md:tracking-[0.30em]
+            "
+          >
+            LIGHT / SILENCE / LINE
+          </p>
+        </div>
       </div>
 
       {/* =========================
-          INTRO（LILU型）
+          INTRO
       ========================= */}
       <div className="max-w-[1120px] mx-auto px-8 pt-24">
         <p className="text-[0.72rem] tracking-[0.34em] text-[#6a5b50]">
           PROJECT OVERVIEW
         </p>
 
-<p className="mt-6 text-[#3a2f28]/75 text-[1.04rem] leading-[2.3] max-w-[56ch] font-light">
-  ヘアサロン LUCENT のために制作した、<br />
-  静かな印象を大切にしたティーザーページです。<br />
-  説明を加えすぎず、<br />
-  画面から自然に雰囲気が伝わる構成に整えました。
-</p>
+        <p className="mt-6 text-[#3a2f28]/75 text-[1.04rem] leading-[2.3] max-w-[56ch] font-light">
+          ヘアサロン LUCENT のために制作した、
+          <br />
+          静かな印象を大切にしたティーザーページです。
+          <br />
+          説明を加えすぎず、
+          <br />
+          画面から自然に雰囲気が伝わる見え方にまとめました。
+        </p>
 
-
-        {/* Meta */}
         <div className="mt-14 flex gap-20">
           <div>
             <p className="text-[0.7rem] tracking-[0.22em] text-[#6a5b50] mb-2">
               ROLE
             </p>
-            <p className="text-[0.85rem]">
-              UI / UX / Visual Design
-            </p>
+            <p className="text-[0.85rem]">Visual Design / Front-end</p>
           </div>
 
           <div>
             <p className="text-[0.7rem] tracking-[0.22em] text-[#6a5b50] mb-2">
               TYPE
             </p>
-            <p className="text-[0.85rem]">
-              Concept Teaser Page
-            </p>
+            <p className="text-[0.85rem]">Concept Teaser Page</p>
           </div>
         </div>
       </div>
 
       {/* =========================
-          VISUAL（LILUのVisual枠）
+          VISUAL
       ========================= */}
       <div className="max-w-[1120px] mx-auto px-8 pt-32">
         <h2 className="text-[0.78rem] tracking-[0.34em] text-[#6a5b50]">
@@ -205,18 +193,18 @@ export default function Lucent() {
       </div>
 
       {/* =========================
-          DESIGN INTENT（UX枠）
+          DETAILS
       ========================= */}
       <div className="max-w-[1120px] mx-auto px-8 pt-36">
         <h2 className="text-center text-[0.8rem] tracking-[0.34em] mb-16">
-          DESIGN INTENT
+          DETAILS
         </h2>
 
         <div className="grid md:grid-cols-3 gap-12">
           {[
-            ["LIGHT", "写真と背景の明暗を調整し、内容が読み取りやすい構成にした"],
-            ["SILENCE", "情報を抑え、思考を邪魔しない構成"],
-            ["LINE", "余白とラインで印象を整える視線誘導"],
+            ["LIGHT", "やわらかな明るさで、清潔感と上品さが自然に伝わること"],
+            ["SILENCE", "情報を絞ることで、落ち着いて見られる空気をつくること"],
+            ["LINE", "余白や細いラインで、全体の印象をすっきり整えること"],
           ].map(([t, d]) => (
             <div
               key={t}
@@ -227,9 +215,7 @@ export default function Lucent() {
                 p-10
               "
             >
-              <p className="text-[0.72rem] tracking-[0.28em] mb-4">
-                {t}
-              </p>
+              <p className="text-[0.72rem] tracking-[0.28em] mb-4">{t}</p>
               <p className="text-[0.95rem] leading-[2.2] text-[#3a2f28]/70">
                 {d}
               </p>
@@ -239,7 +225,7 @@ export default function Lucent() {
       </div>
 
       {/* =========================
-          FOOTER（LILU統一）
+          FOOTER
       ========================= */}
       <div className="max-w-[1120px] mx-auto px-8 pt-36 text-center">
         <PrimaryCTA />

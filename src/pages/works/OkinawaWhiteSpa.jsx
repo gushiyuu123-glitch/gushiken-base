@@ -1,4 +1,3 @@
-// src/pages/works/OkinawaWhiteSpa.jsx
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 
@@ -17,20 +16,21 @@ export default function OkinawaWhiteSpa() {
   const titleEN = "Private Spa Experience Design";
   const tagline = "WHITE × SILENCE × PRIVATE RETREAT";
 
-  const outline = `白を「明るさ」ではなく、視線を落ち着かせるための“静けさ”として扱った、
+  const outline = `白をやわらかな清潔感として見せながら、
+落ち着いた空気が自然に伝わるようにまとめた、
 プライベートスパのコンセプトLPです。
 
-装飾で高級感を作るのではなく、
-余白・文字の距離・UIの重心・光の階調だけで
-「整う」という感覚が成立する温度を狙いました。
+装飾を増やしすぎず、
+全体を静かなトーンで整えることで、
+“整う”感覚がやさしく残る印象を目指しました。
 
-情報量を抑えても実在感が薄れないよう、
-線の緊張感はわずかに残し、
-ホテルの公式サイトのように“説明しない安心”を優先しています。`;
+情報量を抑えながらも、
+実在感や上質さが薄れないよう、
+安心して見られるページに仕上げています。`;
 
   return (
     <section className="min-h-screen bg-[#fbfcfd] text-[#0f141a] pb-40">
-      {/* ================= JSON-LD ================= */}
+      {/* JSON-LD */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
@@ -41,7 +41,7 @@ export default function OkinawaWhiteSpa() {
               "https://gushikendesign.com/works/okinawa-white-spa#creativework",
             name: `${titleJP}｜${titleEN}`,
             description:
-              "白を『明るさ』ではなく『静けさ』として扱い、余白・行間・光の階調だけで『整う体験』を設計したプライベートスパLP。情報量を抑えながら、実在感と上質さが持続する画面温度を構築。",
+              "白のやわらかな清潔感と静かな空気を大切にしながら、落ち着いて見られる印象にまとめたプライベートスパのコンセプトLP。上質さと安心感の両方を意識した作品。",
             creator: {
               "@type": "Person",
               name: "裕人 具志堅",
@@ -64,11 +64,9 @@ export default function OkinawaWhiteSpa() {
         }}
       />
 
-      {/* =========================================================
-          HERO — Luxury Hotel Tone (quiet, precise, airy)
-      ========================================================= */}
+      {/* HERO */}
       <div className="relative w-full overflow-hidden">
-        {/* ====== SP ====== */}
+        {/* SP */}
         <div className="block md:hidden">
           <header className="sticky top-0 z-50 bg-white/78 backdrop-blur border-b border-black/10">
             <div className="px-5 h-[64px] flex items-center justify-between">
@@ -98,10 +96,7 @@ export default function OkinawaWhiteSpa() {
                 loading="eager"
               />
 
-              {/* film（弱め） */}
               <div className="absolute inset-0 bg-gradient-to-b from-white/22 via-white/8 to-white/66" />
-
-              {/* highlight core */}
               <div
                 className="absolute inset-0 pointer-events-none"
                 style={{
@@ -110,7 +105,6 @@ export default function OkinawaWhiteSpa() {
                 }}
               />
 
-              {/* Titles */}
               <div className="absolute bottom-10 left-6 right-6">
                 <p className="text-[10px] tracking-[0.34em] text-black/35 mb-3">
                   SELECTED WORKS
@@ -133,18 +127,16 @@ export default function OkinawaWhiteSpa() {
               </div>
             </div>
 
-            {/* micro note */}
             <p className="px-6 mt-10 text-[12px] leading-[2.2] tracking-[0.06em] text-black/55">
               “静けさが、贅沢になる。”
               <br />
-              説明で納得させるのではなく、空気で伝える設計へ。
+              やさしく整った空気が、そのまま印象として残るページへ。
             </p>
           </div>
         </div>
 
-        {/* ====== PC ====== */}
+        {/* PC */}
         <div className="hidden md:block">
-          {/* top bar */}
           <header className="sticky top-0 z-50 bg-white/72 backdrop-blur border-b border-black/10">
             <div className="max-w-[1180px] mx-auto px-12 h-[72px] flex items-center justify-between">
               <div className="flex items-center gap-10">
@@ -178,10 +170,8 @@ export default function OkinawaWhiteSpa() {
             </div>
           </header>
 
-          {/* hero layout */}
           <div className="max-w-[1240px] mx-auto px-12 pt-16 pb-24">
             <div className="grid grid-cols-[0.95fr_1.05fr] gap-16 items-end">
-              {/* left text */}
               <div>
                 <p className="text-[12px] tracking-[0.34em] text-black/35 mb-6">
                   PRIVATE SPA / CONCEPT LP
@@ -200,19 +190,18 @@ export default function OkinawaWhiteSpa() {
                 <p className="mt-10 text-[15px] leading-[2.35] tracking-[0.06em] text-black/58 max-w-[560px]">
                   “静けさが、贅沢になる。”
                   <br />
-                  余白と光の階調だけで、気持ちが整う温度を設計した。
+                  白のやわらかな清潔感と、落ち着いた空気感を大切にまとめました。
                   <br />
-                  ホテルの公式サイトのように、説明を削り、信頼だけを残す。
+                  説明を増やしすぎず、安心感が自然に残ることを目指しています。
                 </p>
 
-                {/* meta */}
                 <div className="mt-14 flex gap-14">
                   <div>
                     <p className="text-[11px] tracking-[0.22em] text-black/35 mb-2">
                       ROLE
                     </p>
                     <p className="text-[12px] tracking-[0.08em] text-black/60">
-                      UX / UI / Visual Tone
+                      Web Design / Front-end
                     </p>
                   </div>
                   <div>
@@ -220,13 +209,12 @@ export default function OkinawaWhiteSpa() {
                       INTENT
                     </p>
                     <p className="text-[12px] tracking-[0.08em] text-black/60">
-                      Calm / Premium / Low-Pressure
+                      Calm / Premium / Private
                     </p>
                   </div>
                 </div>
               </div>
 
-              {/* right image */}
               <div>
                 <div className="relative overflow-hidden rounded-[18px] border border-black/10 bg-white">
                   <img
@@ -236,10 +224,8 @@ export default function OkinawaWhiteSpa() {
                     loading="eager"
                   />
 
-                  {/* ultra thin glass */}
                   <div className="absolute inset-0 pointer-events-none bg-gradient-to-b from-white/10 via-transparent to-white/20" />
 
-                  {/* quiet highlight */}
                   <div
                     className="absolute inset-0 pointer-events-none"
                     style={{
@@ -258,9 +244,7 @@ export default function OkinawaWhiteSpa() {
         </div>
       </div>
 
-      {/* =========================================================
-          OUTLINE — Hotel-like editorial block
-      ========================================================= */}
+      {/* OUTLINE */}
       <div className="max-w-[860px] mx-auto px-6 md:px-0 mt-20 md:mt-24">
         <div className="flex items-center gap-3 mb-8">
           <p className="text-[11px] tracking-[0.34em] text-black/35">
@@ -275,20 +259,18 @@ export default function OkinawaWhiteSpa() {
 
         <div className="mt-12 flex flex-wrap gap-8 text-[12px] tracking-[0.20em] text-black/40">
           <span className="border border-black/10 rounded-full px-4 py-2 bg-white/55 backdrop-blur-[6px]">
-            WHITE AS SILENCE
+            WHITE TONE
           </span>
           <span className="border border-black/10 rounded-full px-4 py-2 bg-white/55 backdrop-blur-[6px]">
-            LOW-PRESSURE UX
+            QUIET IMPRESSION
           </span>
           <span className="border border-black/10 rounded-full px-4 py-2 bg-white/55 backdrop-blur-[6px]">
-            HOTEL-LIKE RHYTHM
+            PRIVATE SPA
           </span>
         </div>
       </div>
 
-      {/* =========================================================
-          GALLERY — Exhibition tone (2 visuals only)
-      ========================================================= */}
+      {/* GALLERY */}
       <div className="max-w-[980px] mx-auto px-6 md:px-0 mt-20 md:mt-24">
         <div className="flex items-center gap-3 mb-8">
           <p className="text-[11px] tracking-[0.34em] text-black/35">
@@ -298,11 +280,10 @@ export default function OkinawaWhiteSpa() {
         </div>
 
         <p className="text-[13px] leading-[2.25] tracking-[0.06em] text-black/52 font-light">
-          点数は増やさない。空間の“白さ”と“間”が伝わる構図だけを残す。
+          点数を増やしすぎず、白の空気感と落ち着きが伝わるビジュアルだけを残しました。
         </p>
 
         <div className="mt-12 space-y-14 md:space-y-18">
-          {/* visual 1 */}
           <figure className="relative overflow-hidden rounded-[18px] border border-black/10 bg-white">
             <img
               src={assets.v1}
@@ -313,7 +294,6 @@ export default function OkinawaWhiteSpa() {
             <div className="absolute inset-0 pointer-events-none bg-gradient-to-b from-white/10 via-transparent to-white/18" />
           </figure>
 
-          {/* visual 2 */}
           <figure className="relative overflow-hidden rounded-[18px] border border-black/10 bg-white">
             <img
               src={assets.v2}
@@ -326,16 +306,14 @@ export default function OkinawaWhiteSpa() {
         </div>
       </div>
 
-      {/* =========================================================
-          CTA — Hotel-ish quiet finish
-      ========================================================= */}
+      {/* CTA */}
       <div className="max-w-[860px] mx-auto px-6 md:px-0 mt-24 md:mt-28 text-center">
         <p className="text-[13px] leading-[2.35] tracking-[0.08em] text-black/50 font-light">
-          “予約を促す”のではなく、
+          強く押し出さなくても、
           <br />
-          “安心して置いておける場所”を作る。
+          静かな印象はしっかり残る。
           <br />
-          高級感は、説明ではなく、体験のリズムで成立する。
+          やさしく整った空気を、そのまま届けることを大切にしました。
         </p>
 
         <div className="mt-12 flex flex-col items-center gap-10">

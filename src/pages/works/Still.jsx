@@ -1,15 +1,25 @@
-// src/pages/works/Still.jsx
-import React, { useEffect } from "react";
+// src/pages/works/TheCalmOkinawa.jsx
+import { useEffect, useMemo } from "react";
+import { Link } from "react-router-dom";
 
-export default function Still() {
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
+export default function TheCalmOkinawa() {
+  
+  useEffect(() => window.scrollTo(0, 0), []);
+
+  const assets = useMemo(
+    () => ({
+      hero: "/works1/calm-hero.png",
+      room: "/works1/calm-room1.jpg", // 昼 or 夜、どちらかに統一
+      sea: "/works1/calm-sea.png",
+    }),
+    []
+  );
 
   return (
-    <section className="bg-[#f7f7f8] text-[#0e0e0e] min-h-screen pb-44">
+    
+    <section className="min-h-screen bg-[#f6f4ef] text-[#1b1b1b]">
 {/* =========================================
-      SEO / JSON-LD（STILL）
+      SEO / JSON-LD（THE CALM OKINAWA）
 ========================================= */}
 <script
   type="application/ld+json"
@@ -17,20 +27,20 @@ export default function Still() {
     __html: JSON.stringify({
       "@context": "https://schema.org",
       "@type": "CreativeWork",
-      "@id": "https://still-ec.vercel.app/",
-      name: "STILL｜Minimal Fashion EC Design",
-      url: "https://still-ec.vercel.app/",
+      "@id": "https://the-calm-okinawa.vercel.app/",
+      name: "THE CALM OKINAWA — Resort Hotel Concept Website",
+      url: "https://the-calm-okinawa.vercel.app/",
       inLanguage: "ja",
       description:
-        "黒と建築構図で“静かな緊張”を作ったミニマルFashion EC。余白よりも骨格で魅せる、GUSHIKEN DESIGN の世界観設計プロジェクト。",
-      image: "https://still-ec.vercel.app/ogp-still.jpg",
+        "沖縄の光と風の“静寂”を翻訳し、ホテル滞在の余韻を感じさせるコンセプトWebサイト。余白・光・呼吸を中心に構成したGUSHIKEN DESIGNのSX作品。",
+      image: "https://the-calm-okinawa.vercel.app/ogp-calm.jpg",
       creator: {
         "@type": "Organization",
         name: "GUSHIKEN DESIGN",
       },
       about: {
         "@type": "WebSite",
-        name: "STILL Fashion EC Site",
+        name: "THE CALM OKINAWA",
       },
       isBasedOn: ["React", "Vite", "Tailwind CSS", "GSAP", "IntersectionObserver"],
     }),
@@ -38,173 +48,161 @@ export default function Still() {
 />
 
 {/* =========================================
-      OGP（SNS向け）
+      OGP（SNS共通イメージ）
 ========================================= */}
-<meta property="og:title" content="STILL｜Minimal Fashion EC Design" />
-<meta property="og:description" content="黒 × 建築 × ミニマル構図で“静かな緊張”をデザインした EC コンセプト。" />
-<meta property="og:image" content="https://still-ec.vercel.app/ogp-still.jpg" />
+<meta property="og:title" content="THE CALM OKINAWA — Resort Hotel Concept Website" />
+<meta property="og:description" content="光と風でつくる静寂のリゾート体験。沖縄の空気を翻訳した世界観デザイン。" />
+<meta property="og:image" content="https://the-calm-okinawa.vercel.app/ogp-calm.jpg" />
 <meta property="og:type" content="website" />
 
 {/* =========================================
-      META（Google向け）
+      META（検索エンジン）
 ========================================= */}
-<meta
-  name="description"
-  content="建築構図・陰影・縦リズムを用い、商品を静かに引き立てるミニマルEC。空気感で質を伝える high-end UI 設計。"
+<meta 
+  name="description" 
+  content="沖縄の“静けさ”をテーマに設計した、世界観 × 余白 × 呼吸が中心のコンセプトWebサイト。GUSHIKEN DESIGN によるリゾート系ハイエンドUI。" 
 />
 <meta name="twitter:card" content="summary_large_image" />
 
-      {/* =========================================================
-          HERO — Black × Architecture × Mode Precision
-      ========================================================= */}
-      <div className="relative w-full overflow-hidden bg-[#050505] text-white">
 
-        {/* ===== SP ===== */}
-        <div className="block md:hidden w-full aspect-[4/5] relative">
-          <img
-            src="/works1/still-hero.png"
-            alt="STILL — Minimal Fashion EC Design"
-            className="absolute inset-0 w-full h-full object-cover brightness-[0.90] scale-[1.06] transform-gpu"
-          />
+      {/* =========================
+         HERO — 感情を開く
+      ========================= */}
+      <div className="relative h-[92vh] overflow-hidden">
+        <img
+          src={assets.hero}
+          alt="THE CALM OKINAWA"
+          className="absolute inset-0 w-full h-full object-cover scale-[1.05]"
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/20 to-black/60" />
 
-          <div className="absolute inset-0 bg-gradient-to-b from-black/65 via-black/25 to-black/90" />
+        <div className="absolute bottom-[16vh] left-[clamp(24px,6vw,120px)] max-w-[720px] text-white">
+          <p className="text-[0.72rem] tracking-[0.38em] opacity-80">
+            RESORT HOTEL CONCEPT
+          </p>
 
-          <div className="absolute bottom-10 left-6">
-            <h1 className="text-[2.3rem] tracking-[0.26em] font-light">
-              STILL
-            </h1>
-            <p className="text-white/55 tracking-[0.32em] text-[0.72rem] mt-2">
-              MODE MINIMAL × ARCHITECTURE
-            </p>
-            <p className="mt-4 text-white/40 text-[0.7rem] tracking-[0.18em]">
-              A silent fashion EC designed like architecture.
-            </p>
-          </div>
-        </div>
+          <h1 className="mt-6 text-[clamp(2.8rem,5vw,4.4rem)] font-light tracking-[0.18em]">
+            THE CALM OKINAWA
+          </h1>
 
-        {/* ===== PC ===== */}
-        <div className="hidden md:block w-full h-[100vh] relative">
-          <img
-            src="/works1/still-hero.png"
-            alt="STILL Minimal Fashion EC"
-            className="absolute inset-0 w-full h-full object-cover brightness-[0.88] scale-[1.04]"
-          />
-
-          <img
-            src="/works1/still-hero.png"
-            alt="STILL Light Layer"
-            className="absolute inset-0 w-full h-full object-cover brightness-[1.02] scale-[1.01] mix-blend-screen opacity-[0.18]"
-          />
-
-          <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/22 to-black/92" />
-
-          <div className="absolute bottom-[19vh] left-[clamp(48px,10vw,200px)] max-w-[640px]">
-            <h1 className="text-[4.45rem] tracking-[0.28em] font-light leading-[1.12]">
-              STILL
-            </h1>
-            <p className="text-white/55 tracking-[0.33em] text-[1.03rem] mt-4">
-              MODE MINIMAL × ARCHITECTURE
-            </p>
-            <p className="mt-6 text-white/40 text-[0.78rem] tracking-[0.18em] leading-[2.0]">
-              A minimal fashion EC concept inspired by architectural composition,
-              vertical rhythm, and silent interaction design.
-            </p>
-          </div>
+          <p className="mt-8 text-[1.05rem] leading-[2.4] opacity-85 max-w-[44ch]">
+            光と風のあいだに、  
+            記憶に残る「静けさ」を設計する。
+          </p>
         </div>
       </div>
 
-      {/* =========================================================
-          OUTLINE — Concept & Translation Layer
-      ========================================================= */}
-      <div className="max-w-4xl mx-auto px-8 md:px-0 mt-32 mb-32">
-
-        <h2 className="text-[0.9rem] tracking-[0.30em] text-black/40 mb-10">
-          PROJECT OUTLINE
-        </h2>
-
-<p className="text-[1.15rem] leading-[2.3] text-black/85 font-light tracking-[0.004em] whitespace-pre-line">
-{`白を基調に、引き締まりのある建築的な構図で構成したECサイトです。
-
-装飾的な演出に頼らず、
-構図・余白・情報の強弱のみで、
-画面が自然に成立するよう設計しています。
-
-白は余白として使うのではなく、
-視線を整理し、商品や世界観に自然と集中できる
-背景として捉えています。
-縦ラインのリズムや要素間の距離を細かく調整することで、
-スクロール中も画面の密度が崩れない構成を意識しました。
-
-派手さはありませんが、
-商品と世界観を落ち着いて味わえる、
-モード系ファッションECの体験設計を目指しています。`}
-</p>
-
-        {/* SEO / Explanation */}
-        <p className="mt-12 text-black/55 text-[0.95rem] leading-[2.4] font-light">
-          This project explores a minimal fashion EC design inspired by architectural UI principles.
-          By controlling vertical layout, shadow density, and silent transitions,
-          the interface creates a calm yet tense shopping experience for high-end fashion brands.
+      {/* =========================
+         CONCEPT — テキストのみ
+      ========================= */}
+      <div className="max-w-4xl mx-auto px-8 pt-36">
+        <p className="text-[0.75rem] tracking-[0.38em] text-[#7a8b8f]">
+          CONCEPT
         </p>
 
-        <div className="mt-10 text-black/45 text-[0.82rem] leading-relaxed tracking-[0.12em]">
-          <p className="mt-10 text-black/45 text-[0.82rem] leading-relaxed tracking-[0.12em]">
-  Tech — React / Modern Frontend
+        <h2 className="mt-6 text-[2rem] font-light leading-[1.7]">
+          何もしない贅沢が、  
+          いちばん深く残る。
+        </h2>
+
+    <p className="mt-10 text-[1.02rem] leading-[2.5] text-[#1b1b1b]/75 max-w-[56ch]">
+  THE CALM OKINAWA は、  
+  情報を重ねて魅せるのではなく、  
+  必要なものだけを残すことで、心地よい体験をつくりました。
+  <br /><br />
+  光の入り方、  
+  スクロールの緩急、  
+  言葉の置き場所。
+  <br /><br />
+  それぞれが、  
+  ホテルで感じる静かな時間を思い出させるための要素です。
 </p>
+
+      </div>
+
+      {/* =========================
+         ROOM — 滞在を想像させる
+      ========================= */}
+      <div className="max-w-6xl mx-auto px-8 pt-40">
+        <p className="text-[0.75rem] tracking-[0.38em] text-[#7a8b8f]">
+          ROOM
+        </p>
+
+        <h3 className="mt-6 text-[1.9rem] font-light">
+          光と風が、部屋になる。
+        </h3>
+
+        <div className="mt-20 grid md:grid-cols-2 gap-16 items-center">
+          <img
+            src={assets.room}
+            alt="calm room"
+            className="rounded-[12px] shadow-[0_40px_120px_rgba(0,0,0,0.18)]"
+          />
+
+          <p className="text-[1.02rem] leading-[2.4] text-[#1b1b1b]/75">
+            大きな開口部から差し込む朝の光。
+            <br />
+            カーテンが風に揺れる音。
+            <br /><br />
+            部屋は「滞在する場所」ではなく、  
+            外の自然とつながるための装置。
+          </p>
         </div>
       </div>
 
-      {/* =========================================================
-          VISUALS — Vertical Exhibition
-      ========================================================= */}
-      <div className="max-w-5xl mx-auto px-8 md:px-0 mt-28 space-y-32">
+      {/* =========================
+         SEA — 余韻で閉じる
+      ========================= */}
+      <div className="mt-44 relative h-[70vh]">
+        <img
+          src={assets.sea}
+          alt="calm sea"
+          className="absolute inset-0 w-full h-full object-cover"
+        />
+        <div className="absolute inset-0 bg-black/60" />
 
-        <div>
-          <img
-            src="/works1/still-visual1.jpg"
-            alt="Architectural composition in fashion UI"
-            className="w-full object-cover brightness-[0.95]"
-          />
-          <p className="mt-6 text-black/45 text-[0.78rem] tracking-[0.14em]">
-            Vertical composition inspired by architectural photography.
-          </p>
-        </div>
+        <div className="relative h-full flex items-center justify-center text-center text-white px-6">
+       <div className="relative h-full flex flex-col items-center justify-center text-center text-white px-6">
+  <p className="text-[1.15rem] leading-[2.6] tracking-[0.12em] max-w-[60ch] opacity-85">
+    “Silence is not empty.  
+    It is full of answers.”
+  </p>
 
-        <div>
-          <img
-            src="/works1/still-visual2.png"
-            alt="Fashion imagery treated as structure"
-            className="w-full object-cover brightness-[0.94]"
-          />
-          <p className="mt-6 text-black/45 text-[0.78rem] tracking-[0.14em]">
-            Fashion imagery treated as structure, not decoration.
-          </p>
+  {/* VISIT LINK */}
+  <a
+    href="https://the-calm-okinawa.vercel.app/"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="
+      mt-16
+      inline-flex items-center justify-center
+      px-14 py-[14px]
+      rounded-full
+      border border-white/40
+      text-white
+      text-[0.78rem]
+      tracking-[0.32em]
+      hover:bg-white hover:text-black
+      transition-all duration-500
+    "
+  >
+    VISIT SITE →
+  </a>
+</div>
+
         </div>
       </div>
 
-      {/* =========================================================
-          CTA
-      ========================================================= */}
-      <div className="text-center mt-44">
-        <a
-          href="https://still-ec.vercel.app"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="
-            inline-block
-            px-14 py-4
-            text-[0.9rem]
-            tracking-[0.30em]
-            border border-black/25
-            rounded-full
-            hover:border-black/55
-            hover:shadow-[0_0_30px_rgba(0,0,0,0.12)]
-            hover:-translate-y-[2px]
-            transition-all duration-500
-          "
+      {/* =========================
+         BACK
+      ========================= */}
+      <div className="py-28 text-center bg-[#0b0b0b]">
+        <Link
+          to="/works"
+          className="text-[#bfc7c9] hover:text-white tracking-[0.32em] text-[0.75rem]"
         >
-          VISIT SITE →
-        </a>
+          ← BACK TO WORKS
+        </Link>
       </div>
     </section>
   );

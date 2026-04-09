@@ -3,7 +3,6 @@ import { useEffect, useMemo } from "react";
 export default function RyukaIntro() {
   useEffect(() => window.scrollTo(0, 0), []);
 
-  // 写真構成（Hero含め5枚・順番固定）
   const gallery = useMemo(
     () => [
       "/works1/ryuka.png",
@@ -15,99 +14,85 @@ export default function RyukaIntro() {
     []
   );
 
-return (
-  <section
-    className="
-      min-h-screen overflow-x-hidden
-      text-slate-900
-      bg-[linear-gradient(180deg,#f6fdff_0%,#ffffff_60%,#fff6fb_100%)]
-    "
-  >
-{/* =========================================
-    SEO / JSON-LD（RYUKA）
-========================================= */}
-<script
-  type="application/ld+json"
-  dangerouslySetInnerHTML={{
-    __html: JSON.stringify({
-      "@context": "https://schema.org",
-      "@type": "CreativeWork",
-      "@id": "https://gushikendesign.com/works/ryuka#creativework",
-      "name": "琉香 RYUKA — 体験型フレグランスブランドサイト",
-      "headline": "香りは、記憶のかたちをしている",
-      "description":
-        "沖縄の光・風・海・琉球ガラス工芸をモチーフにした、体験型フレグランスブランドサイト。世界観・写真・余白・光を中心に“静けさの体験”を設計した作品。",
-      "inLanguage": "ja",
-      "image": [
-        "https://gushikendesign.com/works/ryuka/ogp.png",
-        "/works1/ryuka.png",
-        "/works1/ryuka_product.png",
-        "/works1/ryuka_scene.png",
-        "/works1/ryuka_glass.png",
-        "/works1/ryuka_after.png"
-      ],
-      "url": "https://gushikendesign.com/works/ryuka",
-      "creator": {
-        "@type": "Person",
-        "name": "裕人 具志堅"
-      },
-      "publisher": {
-        "@type": "Organization",
-        "name": "GUSHIKEN DESIGN",
-        "url": "https://gushikendesign.com/"
-      },
-      "keywords": [
-        "フレグランス",
-        "沖縄デザイン",
-        "琉球ガラス",
-        "世界観構築",
-        "体験型Webサイト",
-        "React",
-        "Vite",
-        "Tailwind CSS",
-        "GSAP Motion",
-        "高級ECデザイン",
-        "PC/SP 分離構造"
-      ]
-    })
-  }}
-/>
+  return (
+    <section
+      className="
+        min-h-screen overflow-x-hidden
+        text-slate-900
+        bg-[linear-gradient(180deg,#f6fdff_0%,#ffffff_60%,#fff6fb_100%)]
+      "
+    >
+      {/* SEO / JSON-LD */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "CreativeWork",
+            "@id": "https://gushikendesign.com/works/ryuka#creativework",
+            name: "琉香 RYUKA — フレグランスブランドサイト",
+            headline: "香りは、記憶のかたちをしている",
+            description:
+              "沖縄の光・風・海・琉球ガラスから着想を得て制作したフレグランスブランドサイト。香りや空気感が静かに伝わることを大切にした作品。",
+            inLanguage: "ja",
+            image: [
+              "https://gushikendesign.com/works/ryuka/ogp.png",
+              "/works1/ryuka.png",
+              "/works1/ryuka_product.png",
+              "/works1/ryuka_scene.png",
+              "/works1/ryuka_glass.png",
+              "/works1/ryuka_after.png"
+            ],
+            url: "https://gushikendesign.com/works/ryuka",
+            creator: {
+              "@type": "Person",
+              name: "裕人 具志堅"
+            },
+            publisher: {
+              "@type": "Organization",
+              name: "GUSHIKEN DESIGN",
+              url: "https://gushikendesign.com/"
+            },
+            keywords: [
+              "フレグランス",
+              "沖縄デザイン",
+              "琉球ガラス",
+              "ブランドサイト",
+              "React",
+              "Vite",
+              "Tailwind CSS",
+              "高級ECデザイン"
+            ]
+          })
+        }}
+      />
 
-{/* =========================================
-    OGP（SNS用）
-========================================= */}
-<meta
-  property="og:title"
-  content="RYUKA — 体験型フレグランスブランドサイト"
-/>
-<meta
-  property="og:description"
-  content="沖縄の光・風・静けさを閉じ込めた、体験型フレグランスWeb作品。"
-/>
-<meta
-  property="og:image"
-  content="https://gushikendesign.com/works/ryuka/ogp.png"
-/>
-<meta property="og:type" content="website" />
+      {/* OGP */}
+      <meta
+        property="og:title"
+        content="RYUKA — フレグランスブランドサイト"
+      />
+      <meta
+        property="og:description"
+        content="沖縄の光・風・静けさから着想を得て制作したフレグランスWeb作品。"
+      />
+      <meta
+        property="og:image"
+        content="https://gushikendesign.com/works/ryuka/ogp.png"
+      />
+      <meta property="og:type" content="website" />
 
-{/* =========================================
-    META（Google）
-========================================= */}
-<meta
-  name="description"
-  content="沖縄の感覚（光・風・海・琉球ガラス）から着想し、“香り＝記憶体験”としてデザインしたフレグランスブランドサイト。静けさ・余白・光のレイヤーを重ねたUI設計。"
-/>
-<meta name="twitter:card" content="summary_large_image" />
+      {/* META */}
+      <meta
+        name="description"
+        content="沖縄の光・風・海・琉球ガラスから着想を得て制作したフレグランスブランドサイト。香りや空気感が静かに伝わることを大切にした作品。"
+      />
+      <meta name="twitter:card" content="summary_large_image" />
 
-    {/* ↓ ここから既存の中身（PC/SP 分岐など） */}
-
-      {/* =========================
-          PC
-      ========================== */}
+      {/* PC */}
       <div className="pc-only">
         <div className="mx-auto max-w-[1080px] px-8 pt-28">
-
-          {/* ===== HERO ===== */}
+          {/* HERO */}
           <header className="text-center">
             <p className="text-[11px] tracking-[0.38em] text-slate-500">
               WORK DETAIL / CASE STUDY
@@ -120,112 +105,108 @@ return (
             <p className="mt-6 text-[15px] leading-[2.1] text-slate-600">
               沖縄の光と香りをテーマにした、<br />
               <span className="text-slate-900">
-                体験型フレグランスブランドサイト
+                フレグランスブランドサイト
               </span>
             </p>
           </header>
 
-          {/* ===== KEY PHRASE ===== */}
+          {/* KEY PHRASE */}
           <section className="my-28 text-center">
             <p className="font-[serif] text-[24px] leading-[1.9] text-[#ff9ac7] tracking-[0.06em]">
               “香りを買う”のではなく、<br />
-              “記憶を体験する”
+              “記憶を感じる”
             </p>
           </section>
 
-          {/* ===== CONCEPT ===== */}
-  <TextBlock title="コンセプト">
-  <p>
-    琉香は、沖縄の海・光・風・琉球ガラス工芸から着想した
-    フレグランスブランドのコンセプトサイトとして設計しました。
-  </p>
-  <p className="mt-6">
-    本作品では、購入率や回遊効率を優先するのではなく、
-    <strong>「香りに触れる前の記憶体験」</strong>を先に届けることを重視しています。
-  </p>
-  <p className="mt-6">
-    そのため、情報量はあえて抑え、
-    光・余白・写真の切り替わりによって
-    展示を見るような感覚をUI全体で設計しました。
-  </p>
-</TextBlock>
+          {/* CONCEPT */}
+          <TextBlock title="コンセプト">
+            <p>
+              琉香は、沖縄の海・光・風・琉球ガラス工芸から着想した
+              フレグランスブランドのコンセプトサイトです。
+            </p>
+            <p className="mt-6">
+              本作品では、情報を詰め込みすぎず、
+              香りに触れる前の空気感や印象が
+              やわらかく伝わることを大切にしました。
+            </p>
+            <p className="mt-6">
+              光や写真、余白の見え方を整えながら、
+              展示を見るような静かな世界観を目指しています。
+            </p>
+          </TextBlock>
 
-    {/* ===== HERO + GALLERY ===== */}
-<GalleryExhibition images={gallery} />
+          {/* HERO + GALLERY */}
+          <GalleryExhibition images={gallery} />
 
-          {/* ===== SITE STRUCTURE ===== */}
-  <TextBlock title="構造（Structure）">
+          {/* STRUCTURE */}
+          <TextBlock title="サイト構成">
+            <ul className="list-disc list-inside space-y-3">
+              <li>Top：ブランドの雰囲気を伝える入口</li>
+              <li>Store：実在店舗や接点の紹介</li>
+              <li>Boutique：香りを選ぶページ</li>
+              <li>商品詳細：背景や魅力が伝わる見せ方</li>
+              <li>Story / Exhibit：ブランドの空気感を補うコンテンツ</li>
+            </ul>
+            <p className="mt-6">
+              世界観を大切にしながらも、
+              香りやブランドの魅力が自然に伝わるような流れを意識しています。
+            </p>
+          </TextBlock>
 
-  <ul className="list-disc list-inside space-y-3">
-    <li>Top：ブランド世界観の提示</li>
-    <li>Store：実在店舗・接点の明示</li>
-    <li>Boutique：香りを“選ぶ”導線</li>
-    <li>商品詳細：背景・物語を含めた展示設計</li>
-    <li>Story / Exhibit：香りの記憶を補完するコンテンツ</li>
-  </ul>
-  <p className="mt-6">
-    「世界観 → 香り → 体験」という順序を崩さないことで、
-    商材を扱いながらもブランディングを損なわない構造を意識しています。
-    実案件でも転用可能な情報設計です。
-  </p>
-</TextBlock>
+          {/* TECH */}
+          <TextBlock title="IMPLEMENTATION">
+            <ul className="list-disc list-inside space-y-3">
+              <li>React ベースの構成</li>
+              <li>やわらかな光の変化</li>
+              <li>香りの展示を見せるビジュアル表現</li>
+              <li>ブランドの印象を損なわない画面設計</li>
+            </ul>
 
+            <p className="mt-6">
+              演出を増やしすぎず、静かに見られることを優先しながら、
+              全体を落ち着いたトーンでまとめています。
+            </p>
+          </TextBlock>
 
-          {/* ===== TECH ===== */}
-<TextBlock title="IMPLEMENTATION">
-  <ul className="list-disc list-inside space-y-3">
-    <li>React ベースの最小構造</li>
-    <li>静かな光の変化（Day / Night）</li>
-    <li>香り展示のためのライトボックス</li>
-    <li>ブランド体験を妨げない UI 設計</li>
-  </ul>
+          {/* POSITION */}
+          <TextBlock title="作品の位置づけ">
+            <p>
+              ブランド設計からフロントエンドまでを一貫して担当し、
+              実在ブランドを想定したサイトとして制作しました。
+            </p>
+            <p className="mt-6">
+              世界観と見やすさの両方を意識しながら、
+              香りという商材の魅力が静かに伝わる形を目指しています。
+            </p>
+          </TextBlock>
 
-  <p className="mt-6">
-    “見せる”よりも“感じる”ための実装を優先し、
-    演出を控えめに統合しています。
-  </p>
-</TextBlock>
-
-
-
-          {/* ===== POSITION ===== */}
-   <TextBlock title="作品の位置づけ">
-  <p>
-    ブランド設計から UI / フロントエンドまでを一貫して担当し、
-    実在ブランドを想定した“体験型サイト”として制作しました。
-  </p>
-  <p className="mt-6">
-    世界観と情報設計の両立をテーマに、
-    商材の価値を損なわない構成を目指しています。
-  </p>
-</TextBlock>
-
-{/* ===== CTA ZONE ===== */}
-<section className="
-  mt-40
-  pb-48
-  text-center
-">
-  <a
-    href="https://ryuka-official.vercel.app/"
-    target="_blank"
-    rel="noopener noreferrer"
-    className="
-      inline-flex items-center gap-3
-      rounded-full px-10 py-5
-      border border-slate-300
-      bg-white
-      text-slate-900
-      text-[14px] tracking-[0.16em]
-      shadow-[0_30px_100px_rgba(0,0,0,0.14)]
-      hover:shadow-[0_40px_120px_rgba(0,0,0,0.18)]
-      transition
-    "
-  >
-    View RYUKA Site →
-  </a>
-</section>
-
+          {/* CTA */}
+          <section
+            className="
+              mt-40
+              pb-48
+              text-center
+            "
+          >
+            <a
+              href="https://ryuka-official.vercel.app/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="
+                inline-flex items-center gap-3
+                rounded-full px-10 py-5
+                border border-slate-300
+                bg-white
+                text-slate-900
+                text-[14px] tracking-[0.16em]
+                shadow-[0_30px_100px_rgba(0,0,0,0.14)]
+                hover:shadow-[0_40px_120px_rgba(0,0,0,0.18)]
+                transition
+              "
+            >
+              View RYUKA Site →
+            </a>
+          </section>
         </div>
       </div>
     </section>
@@ -235,164 +216,131 @@ return (
 function GalleryExhibition({ images }) {
   return (
     <>
-{/* =========================
-   PC ONLY
-========================== */}
-<section className="hidden md:block">
+      {/* PC ONLY */}
+      <section className="hidden md:block">
+        <section className="relative">
+          <div className="pt-[35vh] pb-[25vh]">
+            <div className="sticky top-0 h-screen overflow-hidden">
+              <img
+                src={images[0]}
+                alt=""
+                className="absolute inset-0 w-full h-full object-cover"
+              />
 
- <section className="relative">
+              <div className="absolute inset-0 bg-white/55" />
 
-  {/* スクロール時間（短く） */}
-  <div className="pt-[35vh] pb-[25vh]">
+              <div className="relative z-10 h-full flex items-center justify-center text-center px-8">
+                <div>
+                  <p className="text-[12px] tracking-[0.36em] text-slate-600">
+                    FRAGRANCE EXPERIENCE
+                  </p>
 
-    <div className="sticky top-0 h-screen overflow-hidden">
+                  <p className="mt-10 font-[serif] text-[38px] leading-[1.6] tracking-[0.12em] text-slate-900">
+                    香りは、<br />
+                    記憶のかたちをしている。
+                  </p>
 
-      {/* HERO画像 */}
-      <img
-        src={images[0]}
-        alt=""
-        className="absolute inset-0 w-full h-full object-cover"
-      />
+                  <p className="mt-10 text-[13px] tracking-[0.32em] text-slate-600">
+                    光、風、静けさ。<br />
+                    沖縄の感覚を閉じ込めて。
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
 
-      {/* 白ベール */}
-      <div className="absolute inset-0 bg-white/55" />
+        <section className="mt-40 relative">
+          <div className="grid grid-cols-12 gap-16 items-start">
+            <div className="col-span-7">
+              <p className="mb-6 text-[13px] tracking-[0.28em] text-slate-500">
+                SCENE
+              </p>
+              <img
+                src={images[1]}
+                className="w-full h-[520px] object-cover rounded-[6px]"
+              />
+            </div>
 
-      {/* タイポ */}
-      <div className="relative z-10 h-full flex items-center justify-center text-center px-8">
-        <div>
-          <p className="text-[12px] tracking-[0.36em] text-slate-600">
-            FRAGRANCE EXPERIENCE
-          </p>
+            <div className="col-span-5 mt-32">
+              <p className="mb-6 text-[13px] tracking-[0.28em] text-slate-500">
+                MATERIAL
+              </p>
+              <img
+                src={images[2]}
+                className="w-full h-[520px] object-cover rounded-[6px]"
+              />
+            </div>
+          </div>
 
-          <p className="mt-10 font-[serif] text-[38px] leading-[1.6] tracking-[0.12em] text-slate-900">
-            香りは、<br />
-            記憶のかたちをしている。
-          </p>
+          <div className="mt-40 text-center">
+            <img
+              src={images[3]}
+              className="mx-auto w-[520px] h-[380px] object-cover rounded-[6px]"
+            />
+            <p className="mt-10 text-[14px] tracking-[0.28em] text-slate-500">
+              静かに残る、余韻。
+            </p>
+          </div>
+        </section>
+      </section>
 
-          <p className="mt-10 text-[13px] tracking-[0.32em] text-slate-600">
-            光、風、静けさ。<br />
-            沖縄の感覚を閉じ込めて。
-          </p>
-        </div>
-      </div>
-
-    </div>
-
-  </div>
-</section>
-
-
-  {/* =========================
-     SPACE 02
-  ========================== */}
-  <section className="mt-40 relative">
-
-    <div className="grid grid-cols-12 gap-16 items-start">
-
-      {/* SCENE */}
-      <div className="col-span-7">
-        <p className="mb-6 text-[13px] tracking-[0.28em] text-slate-500">
-          SCENE
-        </p>
-        <img
-          src={images[1]}
-          className="w-full h-[520px] object-cover rounded-[6px]"
-        />
-      </div>
-
-      {/* MATERIAL */}
-      <div className="col-span-5 mt-32">
-        <p className="mb-6 text-[13px] tracking-[0.28em] text-slate-500">
-          MATERIAL
-        </p>
-        <img
-          src={images[2]}
-          className="w-full h-[520px] object-cover rounded-[6px]"
-        />
-      </div>
-    </div>
-
-    {/* AFTER */}
-    <div className="mt-40 text-center">
-      <img
-        src={images[3]}
-        className="mx-auto w-[520px] h-[380px] object-cover rounded-[6px]"
-      />
-      <p className="mt-10 text-[14px] tracking-[0.28em] text-slate-500">
-        静かに残る、余韻。
-      </p>
-    </div>
-
-  </section>
-</section>
-
-      {/* =========================
-         SP ONLY（fixed 無し）
-      ========================== */}
+      {/* SP ONLY */}
       <section className="md:hidden mt-24 space-y-24 px-5">
-{/* =========================
-   SP ONLY（HERO + TYPO）
-========================== */}
-<section className="md:hidden mt-24 px-5">
+        <section className="md:hidden mt-24 px-5">
+          <div className="relative h-[70vh] overflow-hidden rounded-[6px]">
+            <img
+              src={images[0]}
+              alt=""
+              className="absolute inset-0 w-full h-full object-cover"
+            />
 
-  {/* HERO */}
-  <div className="relative h-[70vh] overflow-hidden rounded-[6px]">
+            <div className="absolute inset-0 bg-white/65" />
 
-    {/* 画像 */}
-    <img
-      src={images[0]}
-      alt=""
-      className="absolute inset-0 w-full h-full object-cover"
-    />
+            <div
+              className="
+                relative z-10
+                h-full
+                flex items-center justify-center
+                text-center
+                px-6
+              "
+            >
+              <div>
+                <p className="text-[11px] tracking-[0.32em] text-slate-600">
+                  FRAGRANCE EXPERIENCE
+                </p>
 
-    {/* ベール（SPは少し強め） */}
-    <div className="absolute inset-0 bg-white/65" />
+                <p
+                  className="
+                    mt-8
+                    font-[serif]
+                    text-[28px]
+                    leading-[1.65]
+                    tracking-[0.1em]
+                    text-slate-900
+                  "
+                >
+                  香りは、<br />
+                  記憶のかたちをしている。
+                </p>
 
-    {/* タイポ */}
-    <div className="
-      relative z-10
-      h-full
-      flex items-center justify-center
-      text-center
-      px-6
-    ">
-      <div>
-        <p className="text-[11px] tracking-[0.32em] text-slate-600">
-          FRAGRANCE EXPERIENCE
-        </p>
+                <p
+                  className="
+                    mt-8
+                    text-[12px]
+                    tracking-[0.26em]
+                    text-slate-600
+                  "
+                >
+                  光、風、静けさ。<br />
+                  沖縄の感覚を閉じ込めて。
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
 
-        <p
-          className="
-            mt-8
-            font-[serif]
-            text-[28px]
-            leading-[1.65]
-            tracking-[0.1em]
-            text-slate-900
-          "
-        >
-          香りは、<br />
-          記憶のかたちをしている。
-        </p>
-
-        <p
-          className="
-            mt-8
-            text-[12px]
-            tracking-[0.26em]
-            text-slate-600
-          "
-        >
-          光、風、静けさ。<br />
-          沖縄の感覚を閉じ込めて。
-        </p>
-      </div>
-    </div>
-  </div>
-</section>
-
-
-        {/* SCENE */}
         <div>
           <img
             src={images[1]}
@@ -401,7 +349,6 @@ function GalleryExhibition({ images }) {
           />
         </div>
 
-        {/* MATERIAL */}
         <div>
           <img
             src={images[2]}
@@ -410,7 +357,6 @@ function GalleryExhibition({ images }) {
           />
         </div>
 
-        {/* AFTER */}
         <div>
           <img
             src={images[3]}
@@ -418,13 +364,10 @@ function GalleryExhibition({ images }) {
             className="w-full h-[360px] object-cover rounded-[6px]"
           />
         </div>
-
       </section>
     </>
   );
 }
-
-
 
 function TextBlock({ title, children }) {
   return (

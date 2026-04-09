@@ -5,7 +5,6 @@ import usePageFade from "../../hooks/usePageFade";
 export default function WhiteDarkCacao() {
   useEffect(() => window.scrollTo(0, 0), []);
 
-  // ===== Assets =====
   const assets = useMemo(
     () => ({
       heroWhite: "/works1/white-dark-hero1.png",
@@ -21,9 +20,6 @@ export default function WhiteDarkCacao() {
   const liveUrl = "https://white-dark-cacao.vercel.app/";
   const canonicalUrl = "https://gushikendesign.com/works/white-dark-cacao";
 
-  /* =========================
-     FADE IN
-  ========================= */
   usePageFade(".lux-fade", {
     y: 18,
     duration: 1.1,
@@ -40,41 +36,34 @@ export default function WhiteDarkCacao() {
 
   return (
     <section className="min-h-screen bg-white text-[#1a1a1a]">
-
-      {/* ======================================================
-          ★ SEO HEAD（title / meta / OG / Twitter / canonical）
-      ====================================================== */}
+      {/* SEO */}
       <head>
         <title>WHITE × DARK CACAO — 高級ショコラEC | GUSHIKEN DESIGN</title>
         <meta
           name="description"
-          content="WHITE × DARK CACAO — ホテルの静けさとショコラの深度を重ねた高級ECデザイン。世界観と体験を最優先して設計した作品。"
+          content="WHITE × DARK CACAO — ホテルのような静かな上質感と、ショコラの奥行きを重ねた高級ECデザイン。落ち着いて選べる空気を大切にした作品。"
         />
         <link rel="canonical" href={canonicalUrl} />
 
-        {/* OpenGraph */}
         <meta property="og:title" content="WHITE × DARK CACAO — 高級ショコラEC" />
         <meta
           property="og:description"
-          content="ホテルの静けさとショコラの深度を重ねたECデザイン。GUSHIKEN DESIGN による作品。"
+          content="ホテルのような静かな上質感と、ショコラの奥行きを重ねたECデザイン。GUSHIKEN DESIGN による作品。"
         />
         <meta property="og:type" content="website" />
         <meta property="og:url" content={canonicalUrl} />
         <meta property="og:image" content={assets.heroWhite} />
 
-        {/* Twitter Card */}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="WHITE × DARK CACAO — 高級ショコラEC" />
         <meta
           name="twitter:description"
-          content="ホテルの静けさとショコラの深度を重ねた高級ECデザイン。"
+          content="ホテルのような静かな上質感と、ショコラの奥行きを重ねた高級ECデザイン。"
         />
         <meta name="twitter:image" content={assets.heroWhite} />
       </head>
 
-      {/* ======================================================
-          ★ JSON-LD（CreativeWork + Breadcrumb）
-      ====================================================== */}
+      {/* JSON-LD */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
@@ -86,7 +75,7 @@ export default function WhiteDarkCacao() {
             url: canonicalUrl,
             inLanguage: "ja",
             description:
-              "ホテルの静けさとショコラの深度を重ねた高級ECデザイン。世界観と体験を最優先して設計した作品。",
+              "ホテルのような静かな上質感と、ショコラの奥行きを重ねた高級ECデザイン。落ち着いて選べる空気を大切にした作品。",
             image: assets.heroWhite,
             creator: {
               "@type": "Organization",
@@ -98,7 +87,6 @@ export default function WhiteDarkCacao() {
         }}
       />
 
-      {/* ==== BreadcrumbList ==== */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
@@ -123,11 +111,8 @@ export default function WhiteDarkCacao() {
         }}
       />
 
-      {/* =========================
-          PC
-      ========================= */}
+      {/* PC */}
       <div className="hidden md:block">
-        {/* ===== Top bar ===== */}
         <header className="sticky top-0 z-50 bg-white/70 backdrop-blur border-b border-neutral-300">
           <div className="max-w-[1120px] mx-auto px-12 h-[72px] flex items-center justify-between">
             <div className="flex items-center gap-10">
@@ -162,10 +147,8 @@ export default function WhiteDarkCacao() {
           </div>
         </header>
 
-        {/* ===== HERO ===== */}
         <div className="max-w-[1240px] mx-auto px-12 pt-20 pb-32">
           <div className="grid grid-cols-2 gap-12 items-end">
-            {/* LEFT copy */}
             <div className="lux-fade">
               <p className="text-[12px] tracking-[0.22em] text-neutral-500 mb-6">
                 CHOCOLATE / EC BRAND
@@ -176,9 +159,11 @@ export default function WhiteDarkCacao() {
               </h1>
 
               <p className="mt-10 text-[15px] leading-[2.2] tracking-[0.06em] text-neutral-600 max-w-[560px]">
-                ホテルの“静けさ”とショコラの“深さ”を重ねた世界観設計。
+                ホテルのような静かな上質感と、
+                ショコラの深みを重ねたECデザイン。
                 <br />
-                理解するより先に、空気で「質」を伝える構造にした。
+                説明を増やしすぎず、
+                落ち着いて選べる空気を大切にしました。
               </p>
 
               <div className="mt-14 flex gap-14">
@@ -187,7 +172,7 @@ export default function WhiteDarkCacao() {
                     ROLE
                   </p>
                   <p className="text-[12px] tracking-[0.08em] text-neutral-700">
-                    UX / UI / EC Design
+                    Web Design / EC Design
                   </p>
                 </div>
 
@@ -202,10 +187,8 @@ export default function WhiteDarkCacao() {
               </div>
             </div>
 
-            {/* RIGHT visuals */}
             <div className="lux-fade-soft">
               <div className="relative flex gap-6">
-                {/* White */}
                 <div className="relative border border-neutral-200 overflow-hidden">
                   <img
                     src={assets.heroWhite}
@@ -214,7 +197,6 @@ export default function WhiteDarkCacao() {
                   <div className="absolute inset-0 bg-white/10" />
                 </div>
 
-                {/* Dark */}
                 <div className="relative border border-neutral-200 overflow-hidden translate-y-10">
                   <img
                     src={assets.heroDark}
@@ -231,7 +213,6 @@ export default function WhiteDarkCacao() {
           </div>
         </div>
 
-        {/* ===== SECTION: Brand Concept ===== */}
         <div className="bg-[#f8f8f6] border-y border-neutral-300">
           <div className="max-w-[1120px] mx-auto px-12 py-28">
             <div className="grid grid-cols-2 gap-20">
@@ -241,28 +222,22 @@ export default function WhiteDarkCacao() {
                 </h2>
                 <p className="text-[14px] leading-[2.4] tracking-[0.06em] text-neutral-600 whitespace-pre-line">
                   WHITE × DARK CACAO は、
-                  「急いで決める」よりも
-                  「落ち着いて選ぶ」ことをブランド価値と考えている。
-                  ホテルのロビーのように、
-                  空気で“質”が伝わる構造を目指し、
-                  情報よりも空気、説明よりも余白に比重を置いた。
+                  “急いで決める”よりも
+                  “落ち着いて選ぶ”時間を大切にしたブランドです。
+                  ホテルのロビーのような空気感を意識しながら、
+                  情報よりも印象が先に残る見せ方を目指しました。
                 </p>
               </div>
 
               <div className="lux-fade">
                 <h2 className="text-[20px] tracking-[0.14em] text-neutral-900 mb-10">
-                  デザイン意図
+                  大切にした印象
                 </h2>
                 <p className="text-[14px] leading-[2.4] tracking-[0.06em] text-neutral-600 whitespace-pre-line">
-                  商品ではなく、
-                  “選ぶ時間”の高級感を演出する。
-                  そのために
-                  ・白＝静  
-                  ・黒＝深度  
-                  ・金＝温かみ  
-                  の三相でリズムを作り、
-                  「読む → 感じる → そっと選ぶ」
-                  という高価格帯らしい心理ラインを敷いた。
+                  WHITE と DARK、
+                  二つのトーンを行き来しながら、
+                  静けさ・深み・温かみが自然に伝わるよう整えました。
+                  高価格帯らしい落ち着きのある空気を大切にしています。
                 </p>
               </div>
             </div>
@@ -276,27 +251,27 @@ export default function WhiteDarkCacao() {
               </div>
               <div className="col-span-5 text-[14px] tracking-[0.06em] text-neutral-600 leading-[2.4]">
                 “白の静けさは、ブランドの入口。”
-                初動で「清潔 × 落ち着き × 信頼」を伝える役割を担う。
+                <br />
+                最初に、清潔感と落ち着きが自然に伝わるようにまとめています。
               </div>
             </div>
           </div>
         </div>
 
-        {/* ===== SECTION: Duality ===== */}
         <div className="max-w-[1120px] mx-auto px-12 py-32">
           <h2 className="lux-fade text-center text-[22px] tracking-[0.18em] text-neutral-900 mb-16">
             WHITE と DARK、二つの世界観
           </h2>
 
           <div className="grid grid-cols-2 gap-16">
-            {/* WHITE */}
             <div className="lux-fade border border-neutral-200 bg-white p-12">
               <p className="text-[12px] tracking-[0.18em] text-neutral-500 mb-6">
                 WHITE — QUIET SWEETNESS
               </p>
               <p className="text-[14px] leading-[2.3] tracking-[0.06em] text-neutral-600 mb-10">
-                明るさより“静けさ”を優先した甘さ。  
-                ホテルの朝食のような丁寧さを意識した世界観。
+                明るさだけでなく、
+                静かでやわらかな甘さを感じるトーン。
+                丁寧さや上品さが伝わる世界観を意識しています。
               </p>
 
               <img
@@ -305,14 +280,14 @@ export default function WhiteDarkCacao() {
               />
             </div>
 
-            {/* DARK */}
             <div className="lux-fade border border-neutral-200 bg-white p-12">
               <p className="text-[12px] tracking-[0.18em] text-neutral-500 mb-6">
                 DARK — QUIET BITTERNESS
               </p>
               <p className="text-[14px] leading-[2.3] tracking-[0.06em] text-neutral-600 mb-10">
-                情報を削り、静かに沈むような深度を優先。
-                高級ホテルのバーの “暗さの質” を翻訳したレイアウト。
+                情報を詰め込みすぎず、
+                静かに深みが残るトーン。
+                夜のバーのような落ち着きを感じる世界観にまとめました。
               </p>
 
               <img
@@ -323,18 +298,16 @@ export default function WhiteDarkCacao() {
           </div>
         </div>
 
-        {/* ===== TECH / LIVE ===== */}
         <div className="max-w-[1120px] mx-auto px-12 py-28">
           <div className="grid grid-cols-2 gap-20 items-start">
             <div className="lux-fade">
               <h2 className="text-[18px] tracking-[0.16em] text-neutral-900 mb-10">
-                STRUCTURE & STACK
+                STACK
               </h2>
               <ul className="text-[14px] leading-[2.4] tracking-[0.06em] text-neutral-600 space-y-3">
                 <li>・React / Vite</li>
                 <li>・Tailwind CSS (v3)</li>
-                <li>・WHITE/DARK の二元構造を心理軸で翻訳</li>
-                <li>・動きは “演出” ではなく “呼吸” レベルまで抑制</li>
+                <li>・GSAP</li>
               </ul>
             </div>
 
@@ -384,7 +357,7 @@ export default function WhiteDarkCacao() {
         </div>
       </div>
 
-      {/* ===== SP ===== */}
+      {/* SP */}
       <div className="md:hidden">
         <header className="sticky top-0 z-50 bg-white/80 backdrop-blur border-b border-neutral-200">
           <div className="px-5 h-[64px] flex items-center justify-between">
@@ -416,9 +389,9 @@ export default function WhiteDarkCacao() {
           </h1>
 
           <p className="mt-8 text-[13px] leading-[2.2] tracking-[0.06em] text-neutral-600 lux-fade-soft">
-            ホテルの静けさをまとうショコラブランド。
+            ホテルのような静かな上質感をまとったショコラブランド。
             <br />
-            “説明より空気” を優先したデザイン。
+            落ち着いて選べる空気を大切にしたデザインです。
           </p>
 
           <div className="mt-12 grid grid-cols-2 gap-4 lux-fade-soft">
@@ -435,26 +408,23 @@ export default function WhiteDarkCacao() {
 
         <div className="bg-[#f8f8f6] border-y border-neutral-200">
           <div className="px-6 py-20 space-y-12">
-            <div className="lux-fade-sp">
+            <div className="lux-fade-soft">
               <h2 className="text-[16px] tracking-[0.14em] text-neutral-900 mb-5">
                 ブランドの考え方
               </h2>
               <p className="text-[13px] leading-[2.4] tracking-[0.06em] text-neutral-600 whitespace-pre-line">
-                情報よりも世界観。
-                <br />
-                説明よりも空気。
-                <br />
-                ブランドの“静けさ”が価値になる構造。
+                落ち着いて選ぶ時間そのものを大切にしながら、
+                情報よりも印象が先に伝わることを目指しました。
               </p>
             </div>
 
-            <div className="lux-fade-sp">
+            <div className="lux-fade-soft">
               <h2 className="text-[16px] tracking-[0.14em] text-neutral-900 mb-5">
-                デザイン意図
+                大切にした印象
               </h2>
               <p className="text-[13px] leading-[2.4] tracking-[0.06em] text-neutral-600 whitespace-pre-line">
-                WHITE と DARK の二つの軸で、  
-                「読む → 感じる → 選ぶ」のリズムを設計。
+                WHITE と DARK の二つのトーンで、
+                静けさと深みが自然に伝わるようにまとめています。
               </p>
             </div>
 
@@ -466,13 +436,13 @@ export default function WhiteDarkCacao() {
         </div>
 
         <div className="px-6 py-20 space-y-10">
-          {[ 
+          {[
             { title: "WHITE — QUIET SWEETNESS", img: assets.detail1 },
             { title: "DARK — QUIET BITTERNESS", img: assets.detail2 },
           ].map((x) => (
             <div
               key={x.title}
-              className="border border-neutral-200 bg-white p-8 lux-fade-sp"
+              className="border border-neutral-200 bg-white p-8 lux-fade-soft"
             >
               <p className="text-[11px] tracking-[0.20em] text-neutral-500 mb-4">
                 {x.title}
@@ -482,14 +452,14 @@ export default function WhiteDarkCacao() {
                 className="w-full h-[200px] object-cover border border-neutral-200 mb-5"
               />
               <p className="text-[12px] leading-[2.2] tracking-[0.06em] text-neutral-700">
-                静けさと深度を世界観として翻訳したセクション。
+                それぞれのトーンが静かに印象に残るように整えたセクションです。
               </p>
             </div>
           ))}
         </div>
 
         <div className="px-6 py-20">
-          <div className="border border-neutral-200 bg-[#fafafa] p-10 lux-fade-sp">
+          <div className="border border-neutral-200 bg-[#fafafa] p-10 lux-fade-soft">
             <p className="text-[11px] tracking-[0.22em] text-neutral-500 mb-6">
               LIVE
             </p>

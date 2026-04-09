@@ -1,4 +1,3 @@
-// src/pages/works/Resonance.jsx
 import React, { useEffect } from "react";
 
 export default function Resonance() {
@@ -8,88 +7,75 @@ export default function Resonance() {
 
   return (
     <section className="bg-[#f8fafc] text-[#0e0e0e] min-h-screen pb-40">
+      {/* SEO / JSON-LD */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "CreativeWork",
+            "@id": "https://gushikendesign.com/works/resonance#creativework",
+            name: "RÉSONANCE｜Cinematic Restaurant Experience Design",
+            alternateName: "レゾナンス — シネマティック・レストランデザイン",
+            description:
+              "光と静けさ、夜の余韻を大切にしながらまとめたシネマティック・レストランLP。料理や空間の空気感が、やわらかく印象に残ることを目指した作品。",
+            inLanguage: "ja",
+            url: "https://gushikendesign.com/works/resonance",
+            image: [
+              "https://gushikendesign.com/works/resonance/ogp.png",
+              "/works1/resonance-hero1.png",
+              "/works1/resonance1.png",
+              "/works1/resonance2.png",
+              "/works1/resonance3.png"
+            ],
+            creator: {
+              "@type": "Person",
+              name: "裕人 具志堅",
+              alternateName: "Yuto Gushiken",
+              url: "https://gushikendesign.com/"
+            },
+            publisher: {
+              "@type": "Organization",
+              name: "GUSHIKEN DESIGN",
+              url: "https://gushikendesign.com/"
+            },
+            about: [
+              "シネマティック LP",
+              "レストラン Webデザイン",
+              "高級飲食店サイト",
+              "React Design",
+              "Vite / Tailwind CSS",
+              "GSAP Motion"
+            ],
+            isBasedOn: {
+              "@type": "WebSite",
+              name: "RÉSONANCE Restaurant Site",
+              url: "https://resonance-restaurant.vercel.app/"
+            }
+          })
+        }}
+      />
 
-{/* =========================================
-    SEO / JSON-LD（RÉSONANCE）
-========================================= */}
-<script
-  type="application/ld+json"
-  dangerouslySetInnerHTML={{
-    __html: JSON.stringify({
-      "@context": "https://schema.org",
-      "@type": "CreativeWork",
-      "@id": "https://gushikendesign.com/works/resonance#creativework",
-      "name": "RÉSONANCE｜Cinematic Restaurant Experience Design",
-      "alternateName": "レゾナンス — 温度 × 静寂 × 夜の深度デザイン",
-      "description":
-        "料理の“温度変化”をUIに翻訳した、静かなシネマティック・レストランLP。光・温度・余白・夜の深度を軸に、視線がゆっくり漂うUXを React / Vite / Tailwind / GSAP で設計した作品。",
-      "inLanguage": "ja",
-      "url": "https://gushikendesign.com/works/resonance",
-      "image": [
-        "https://gushikendesign.com/works/resonance/ogp.png",
-        "/works1/resonance-hero1.png",
-        "/works1/resonance1.png",
-        "/works1/resonance2.png",
-        "/works1/resonance3.png"
-      ],
-      "creator": {
-        "@type": "Person",
-        "name": "裕人 具志堅",
-        "alternateName": "Yuto Gushiken",
-        "url": "https://gushikendesign.com/"
-      },
-      "publisher": {
-        "@type": "Organization",
-        "name": "GUSHIKEN DESIGN",
-        "url": "https://gushikendesign.com/"
-      },
-      "about": [
-        "シネマティック LP",
-        "レストラン Webデザイン",
-        "料理の温度変化 UI",
-        "光 × 影の深度設計",
-        "静寂 UX",
-        "高級飲食店サイト",
-        "React Design",
-        "Vite / Tailwind CSS",
-        "GSAP Motion",
-        "PC/SP DOM 分離"
-      ],
-      "isBasedOn": {
-        "@type": "WebSite",
-        "name": "RÉSONANCE Restaurant Site",
-        "url": "https://resonance-restaurant.vercel.app/"
-      }
-    })
-  }}
-/>
+      {/* OGP */}
+      <meta property="og:title" content="RÉSONANCE — Cinematic Restaurant LP" />
+      <meta
+        property="og:description"
+        content="光と静けさ、夜の余韻を大切にまとめたシネマティック・レストランLP。"
+      />
+      <meta
+        property="og:image"
+        content="https://gushikendesign.com/works/resonance/ogp.png"
+      />
+      <meta property="og:type" content="website" />
 
-{/* =========================================
-    OGP（SNS）
-========================================= */}
-<meta property="og:title" content="RÉSONANCE — Cinematic Restaurant LP" />
-<meta
-  property="og:description"
-  content="料理の“温度変化”をUIに翻訳した、静かなシネマティック・レストランLP。"
-/>
-<meta
-  property="og:image"
-  content="https://gushikendesign.com/works/resonance/ogp.png"
-/>
-<meta property="og:type" content="website" />
+      {/* META */}
+      <meta
+        name="description"
+        content="RÉSONANCE は、光と静けさ、夜の余韻を大切にしながらまとめたシネマティック・レストランLP。料理や空間の空気感がやわらかく印象に残る作品。"
+      />
+      <meta name="twitter:card" content="summary_large_image" />
 
-{/* =========================================
-    META（Google）
-========================================= */}
-<meta
-  name="description"
-  content="RÉSONANCE は、料理の温度変化・光の密度・夜の深度を UI に翻訳した静かなシネマティックレストランLP。視線の速度と余白を軸に、世界観を崩さない体験型Webデザイン。"
-/>
-<meta name="twitter:card" content="summary_large_image" />
-
-      {/* =========================================================
-          HERO — White × Cinematic Silence
-      ========================================================= */}
+      {/* HERO */}
       <div className="relative w-full overflow-hidden">
         {/* SP */}
         <div className="block md:hidden w-full aspect-[4/5] relative">
@@ -128,65 +114,54 @@ export default function Resonance() {
         </div>
       </div>
 
-      {/* =========================================================
-          OUTLINE
-      ========================================================= */}
+      {/* OUTLINE */}
       <div className="max-w-4xl mx-auto px-8 md:px-0 mt-36">
         <h2 className="text-[0.95rem] tracking-[0.32em] text-black/40 mb-12">
           PROJECT OUTLINE
         </h2>
 
         <p className="text-[1.12rem] leading-[2.55] text-black/85 font-light whitespace-pre-line">
-{`光 × 温度 × 静寂。
+{`光 × 静けさ × 夜の余韻。
 
-料理の“温度変化”を UI に翻訳した、
-静かなシネマティック・レストランLP。
+RÉSONANCE は、
+料理や空間の空気感が
+やわらかく印象に残ることを大切にした、
+シネマティック・レストランLPです。
 
-影のコントラストを抑え、
-視線がゆっくり漂うように整え、
-
-明るさと影の“密度”だけで
-夜の深度を設計した。
+影のコントラストを強くしすぎず、
+静かなトーンの中で、
+上品さが自然に伝わるようにまとめました。
 
 見せすぎず、語りすぎない。
-余白が記憶に残る時間デザイン。`}
+その余白ごと印象に残るページを目指しています。`}
         </p>
 
         <div className="mt-10 text-black/45 text-[0.82rem] tracking-[0.14em]">
-         TECH — React / Vite / Tailwind / Silent Scroll Structure
+          TECH — React / Vite / Tailwind / GSAP
         </div>
       </div>
 
-      {/* =========================================================
-          CONCEPT
-      ========================================================= */}
+      {/* CONCEPT */}
       <div className="max-w-4xl mx-auto px-8 md:px-0 mt-40">
         <h2 className="text-[0.9rem] tracking-[0.32em] text-black/35 mb-12">
           CONCEPT
         </h2>
 
         <p className="text-[1.08rem] leading-[2.6] text-black/80 font-light whitespace-pre-line">
-{`料理は、完成した瞬間が最も美しいとは限らない。
+{`料理は、味だけでなく、
+その場の空気や時間ごと記憶に残るものだと思っています。
 
 火入れ直後の緊張、
-湯気が消えるまでの数十秒、
-温度が落ち着いたあとの静けさ。
+湯気が消えるまでの静けさ、
+そして、落ち着いたあとの余韻。
 
 RÉSONANCE では、
-その“時間差”を UI に翻訳した。
-
-スクロールは急がせず、
-コントラストは主張せず、
-ただ、温度が下がる速度だけを設計する。
-
-Web である前に、
-これは「体験の編集」である。`}
+そうした空気感が画面越しにもやわらかく伝わるよう、
+静かな印象を大切にまとめました。`}
         </p>
       </div>
 
-      {/* =========================================================
-          VISUAL SEQUENCE
-      ========================================================= */}
+      {/* VISUAL SEQUENCE */}
       <div className="max-w-5xl mx-auto px-8 md:px-0 mt-40 space-y-32">
         {[
           "/works1/resonance1.png",
@@ -208,23 +183,18 @@ Web である前に、
         ))}
       </div>
 
-      {/* =========================================================
-          DETAIL — After Temperature
-      ========================================================= */}
+      {/* DETAIL */}
       <div className="max-w-4xl mx-auto px-8 md:px-0 mt-44">
         <p className="text-[0.95rem] leading-[2.5] text-black/60 font-light whitespace-pre-line">
-{`温度が下がったあとに残るものは、
-味ではなく、記憶だ。
+{`見終わったあとに残るのは、
+情報よりも、静かな印象かもしれない。
 
 その余韻が、
-視線の奥に沈んでいくまで、
-この UI は語らない。`}
+ゆっくり記憶に残るようなページを目指しました。`}
         </p>
       </div>
 
-      {/* =========================================================
-          CTA
-      ========================================================= */}
+      {/* CTA */}
       <div className="text-center mt-40">
         <a
           href="https://resonance-restaurant.vercel.app/"
@@ -246,7 +216,6 @@ Web である前に、
           VISIT SITE →
         </a>
       </div>
-
     </section>
   );
 }

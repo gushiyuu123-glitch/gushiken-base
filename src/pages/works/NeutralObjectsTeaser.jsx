@@ -17,44 +17,38 @@ export default function NeutralObjectsTeaser() {
   return (
     <section className="bg-[#f7f5f1] text-[#2f2a25]">
       <script
-  type="application/ld+json"
-  dangerouslySetInnerHTML={{
-    __html: JSON.stringify({
-      "@context": "https://schema.org",
-      "@type": "CreativeWork",
-      "@id": "https://gushikendesign.com/works/neutral-objects#teaser",
-      "name": "NEUTRAL OBJECTS｜Quiet Objects Concept (Teaser)",
-      "description":
-        "語らない物、主張しないかたち。暮らしの速度を少し落とすために設計された、静かなオブジェクト群を扱うコンセプト・コマースサイトのティーザーページ。全体像ではなく断片のみを提示する予告作品。",
-      "creator": {
-        "@type": "Person",
-        "name": "裕人 具志堅",
-        "alternateName": "Yuto Gushiken",
-        "url": "https://gushikendesign.com/"
-      },
-      "publisher": {
-        "@type": "Organization",
-        "name": "GUSHIKEN DESIGN",
-        "url": "https://gushikendesign.com/"
-      },
-      "inLanguage": "ja",
-      "url": "https://gushikendesign.com/works/neutral-objects",
-      "isBasedOn": {
-        "@type": "WebSite",
-        "name": "NEUTRAL OBJECTS",
-        "url": "https://neutral-objects.vercel.app/"
-      },
-      "isPartOf": {
-        "@type": "CreativeWork",
-        "name": "NEUTRAL OBJECTS｜Quiet Objects Concept"
-      }
-    })
-  }}
-/>
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "CreativeWork",
+            "@id": "https://gushikendesign.com/works/neutral-objects#teaser",
+            name: "NEUTRAL OBJECTS｜Concept Commerce Teaser",
+            description:
+              "静かなオブジェクト群を、やわらかなトーンで見せるコンセプト・コマースサイトのティーザーページ。全体を語りすぎず、世界観の一部だけを見せる作品。",
+            creator: {
+              "@type": "Person",
+              name: "裕人 具志堅",
+              alternateName: "Yuto Gushiken",
+              url: "https://gushikendesign.com/"
+            },
+            publisher: {
+              "@type": "Organization",
+              name: "GUSHIKEN DESIGN",
+              url: "https://gushikendesign.com/"
+            },
+            inLanguage: "ja",
+            url: "https://gushikendesign.com/works/neutral-objects",
+            isBasedOn: {
+              "@type": "WebSite",
+              name: "NEUTRAL OBJECTS",
+              url: "https://neutral-objects.vercel.app/"
+            }
+          })
+        }}
+      />
 
-      {/* =========================
-          HERO
-      ========================= */}
+      {/* HERO */}
       <div className="relative w-full h-[92vh] overflow-hidden">
         <img
           src={assets.hero}
@@ -66,7 +60,6 @@ export default function NeutralObjectsTeaser() {
           "
         />
 
-        {/* veil */}
         <div className="absolute inset-0 bg-gradient-to-b from-white/30 via-white/40 to-[#f7f5f1]/90" />
 
         <div className="absolute bottom-[14vh] left-[clamp(24px,6vw,120px)] max-w-[720px]">
@@ -79,13 +72,13 @@ export default function NeutralObjectsTeaser() {
           </h1>
 
           <p className="mt-6 text-[#6b645d] tracking-[0.32em] text-[0.9rem]">
-            Objects that do not speak.
+            Objects for Quiet Living.
           </p>
 
           <p className="mt-8 text-[#2f2a25]/75 text-[1.05rem] leading-[2.3] max-w-[46ch]">
-            ただ、そこにあるだけでいい。
+            ただ、そこにあるだけで心地いい。
             <br />
-            暮らしの速度を、少し落とすためのかたち。
+            暮らしに静かになじむオブジェクトたち。
           </p>
 
           <div className="mt-10 flex items-center gap-6">
@@ -116,9 +109,7 @@ export default function NeutralObjectsTeaser() {
         </div>
       </div>
 
-      {/* =========================
-          TRAILER CUTS
-      ========================= */}
+      {/* TRAILER CUTS */}
       <div className="max-w-6xl mx-auto px-7 md:px-10 py-28">
         <div className="border-t border-[#2f2a25]/10 pt-20">
           <p className="text-[0.72rem] tracking-[0.36em] text-[#6b645d]">
@@ -126,9 +117,9 @@ export default function NeutralObjectsTeaser() {
           </p>
 
           <p className="mt-6 text-[#2f2a25]/70 text-[1.05rem] leading-[2.4] max-w-[60ch]">
-            This page shows only fragments.
+            This page shows only a few selected scenes.
             <br />
-            The rest is meant to be lived with.
+            The rest continues inside the main site.
           </p>
 
           <div className="mt-16 grid gap-14">
@@ -143,45 +134,41 @@ export default function NeutralObjectsTeaser() {
                 "
               />
             ))}
-            
           </div>
-<div className="text-center mt-24 flex flex-col items-center gap-8">
-  {/* ENTER SITE（弱めCTA） */}
-  <a
-    href="https://neutral-objects.vercel.app/"
-    target="_blank"
-    rel="noopener noreferrer"
-    className="
-      inline-flex items-center justify-center
-      px-10 py-[12px]
-      rounded-full
-      border border-[#2f2a25]/18
-      text-[#2f2a25]
-      text-[0.74rem]
-      tracking-[0.32em]
-      hover:bg-[#2f2a25]
-      hover:text-[#f7f5f1]
-      transition-all duration-500
-    "
-  >
-    ENTER THE SITE →
-  </a>
 
-  {/* BACK */}
-  <Link
-    to="/works"
-    className="
-      text-[#6b645d]
-      hover:text-[#2f2a25]
-      tracking-[0.28em]
-      text-[0.75rem]
-    "
-  >
-    ← BACK TO WORKS
-  </Link>
-</div>
+          <div className="text-center mt-24 flex flex-col items-center gap-8">
+            <a
+              href="https://neutral-objects.vercel.app/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="
+                inline-flex items-center justify-center
+                px-10 py-[12px]
+                rounded-full
+                border border-[#2f2a25]/18
+                text-[#2f2a25]
+                text-[0.74rem]
+                tracking-[0.32em]
+                hover:bg-[#2f2a25]
+                hover:text-[#f7f5f1]
+                transition-all duration-500
+              "
+            >
+              ENTER THE SITE →
+            </a>
 
-          
+            <Link
+              to="/works"
+              className="
+                text-[#6b645d]
+                hover:text-[#2f2a25]
+                tracking-[0.28em]
+                text-[0.75rem]
+              "
+            >
+              ← BACK TO WORKS
+            </Link>
+          </div>
         </div>
       </div>
     </section>
