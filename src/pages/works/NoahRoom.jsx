@@ -24,41 +24,79 @@ const seasons = [
   },
 ];
 
-const fadeUp = {
-  initial: { opacity: 0, y: 22 },
-  whileInView: { opacity: 1, y: 0 },
-  viewport: { once: true, amount: 0.25 },
-  transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] },
+const easeSilent = [0.22, 0.56, 0.18, 1];
+
+const reveal = {
+  hidden: {
+    opacity: 0,
+    y: 18,
+    scale: 0.995,
+  },
+  show: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: {
+      duration: 1.02,
+      ease: easeSilent,
+    },
+  },
+};
+
+const revealSoft = {
+  hidden: {
+    opacity: 0,
+    y: 18,
+    scale: 0.995,
+  },
+  show: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: {
+      duration: 0.96,
+      ease: easeSilent,
+    },
+  },
+};
+
+const sectionIntro = {
+  hidden: {},
+  show: {
+    transition: {
+      staggerChildren: 0.1,
+    },
+  },
 };
 
 export default function NoahRoom() {
   return (
     <main className="min-h-screen bg-[#0a0c10] text-white">
-      <section className="px-6 md:px-10 pt-28 md:pt-36 pb-16 border-b border-white/10">
-        <div className="max-w-6xl mx-auto grid gap-10 md:grid-cols-[1.15fr_0.85fr] items-end">
+      {/* HERO */}
+      <section className="border-b border-white/10 px-6 pb-16 pt-28 md:px-10 md:pt-36">
+        <div className="mx-auto grid max-w-6xl gap-10 md:grid-cols-[1.15fr_0.85fr] md:items-end">
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
+            variants={sectionIntro}
+            initial="hidden"
+            animate="show"
           >
-            <p className="text-[0.72rem] tracking-[0.28em] text-white/45 mb-4">
+            <motion.p
+              variants={revealSoft}
+              className="mb-4 text-[0.72rem] tracking-[0.28em] text-white/45"
+            >
               ART / CREATIVE
-            </p>
+            </motion.p>
 
             <motion.h1
-              className="text-[clamp(2.4rem,6vw,5.8rem)] leading-[0.95] tracking-[0.08em] font-light"
-              initial={{ opacity: 0, y: 14 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.85, delay: 0.08, ease: [0.22, 1, 0.36, 1] }}
+              variants={reveal}
+              className="text-[clamp(2.4rem,6vw,5.8rem)] font-light leading-[0.95] tracking-[0.08em]"
             >
               NOAH
             </motion.h1>
 
             <motion.p
-              className="mt-6 max-w-2xl text-white/72 leading-8 text-[0.98rem] md:text-[1.04rem]"
-              initial={{ opacity: 0, y: 18 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.95, delay: 0.16, ease: [0.22, 1, 0.36, 1] }}
+              variants={revealSoft}
+              className="mt-6 max-w-2xl text-[0.98rem] leading-8 text-white/72 md:text-[1.04rem]"
             >
               愛が災厄になったあとも、なお消えなかったもの。
               孤独な少年と人工知能の出会いから始まり、
@@ -67,35 +105,43 @@ export default function NoahRoom() {
           </motion.div>
 
           <motion.div
-            className="overflow-hidden rounded-[28px] border border-white/10 bg-white/5"
-            initial={{ opacity: 0, y: 24, scale: 0.985 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            transition={{ duration: 1.05, delay: 0.18, ease: [0.22, 1, 0.36, 1] }}
+            variants={reveal}
+            initial="hidden"
+            animate="show"
+            className="overflow-hidden rounded-[14px] border border-white/10 bg-white/5"
           >
-            <motion.img
+            <img
               src="/works/noah-main.webp"
               alt="NOAH key visual"
-              className="w-full h-full object-cover"
-              initial={{ scale: 1.04 }}
-              animate={{ scale: 1 }}
-              transition={{ duration: 1.4, ease: [0.22, 1, 0.36, 1] }}
+              className="h-full w-full object-cover"
             />
           </motion.div>
         </div>
       </section>
 
-      <section className="px-6 md:px-10 py-20 md:py-28">
-        <div className="max-w-6xl mx-auto">
+      {/* ARCHIVE */}
+      <section className="px-6 py-20 md:px-10 md:py-28">
+        <div className="mx-auto max-w-6xl">
           <motion.div
             className="mb-12 md:mb-16"
-            {...fadeUp}
+            variants={sectionIntro}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true, amount: 0.2 }}
           >
-            <p className="text-[0.72rem] tracking-[0.26em] text-white/40 mb-3">
+            <motion.p
+              variants={revealSoft}
+              className="mb-3 text-[0.72rem] tracking-[0.26em] text-white/40"
+            >
               WEB ARCHIVE
-            </p>
-            <h2 className="text-[1.5rem] md:text-[2rem] font-light tracking-[0.06em]">
+            </motion.p>
+
+            <motion.h2
+              variants={revealSoft}
+              className="text-[1.5rem] font-light tracking-[0.06em] md:text-[2rem]"
+            >
               3 Seasons
-            </h2>
+            </motion.h2>
           </motion.div>
 
           <div className="grid gap-8">
@@ -105,47 +151,77 @@ export default function NoahRoom() {
                 href={season.link}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group grid md:grid-cols-[1.05fr_0.95fr] overflow-hidden rounded-[28px] border border-white/10 bg-white/[0.03] hover:bg-white/[0.05] transition"
-                initial={{ opacity: 0, y: 28 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.22 }}
+                className="
+                  group grid overflow-hidden rounded-[14px]
+                  border border-white/10 bg-white/[0.03]
+                  transition-[transform,border-color,box-shadow,background-color]
+                  duration-[380ms]
+                  ease-[cubic-bezier(0.22,0.56,0.18,1)]
+                  hover:-translate-y-[3px]
+                  hover:border-white/16
+                  hover:bg-white/[0.045]
+                  hover:shadow-[0_18px_34px_rgba(0,0,0,0.34)]
+                  md:grid-cols-[1.05fr_0.95fr]
+                "
+                variants={reveal}
+                initial="hidden"
+                whileInView="show"
+                viewport={{ once: true, amount: 0.18 }}
                 transition={{
-                  duration: 0.82,
-                  delay: index * 0.08,
-                  ease: [0.22, 1, 0.36, 1],
+                  duration: 0.98,
+                  delay: index * 0.06,
+                  ease: easeSilent,
                 }}
-                whileHover={{ y: -3 }}
               >
-                <div className="p-7 md:p-10 flex flex-col justify-between">
+                <div className="flex flex-col justify-between p-7 md:p-10">
                   <div>
-                    <p className="text-[0.72rem] tracking-[0.26em] text-white/38 mb-4">
+                    <p className="mb-4 text-[0.72rem] tracking-[0.26em] text-white/38">
                       {season.title}
                     </p>
-                    <h3 className="text-[1.25rem] md:text-[1.7rem] leading-[1.35] font-medium">
+
+                    <h3 className="text-[1.25rem] font-medium leading-[1.35] md:text-[1.7rem]">
                       {season.subtitle}
                     </h3>
-                    <p className="mt-5 text-white/68 leading-8 text-[0.95rem]">
+
+                    <p className="mt-5 text-[0.95rem] leading-8 text-white/68">
                       {season.desc}
                     </p>
                   </div>
 
-                  <motion.div
-                    className="mt-8 inline-flex items-center gap-3 text-[0.82rem] tracking-[0.18em] text-white/74"
-                    whileHover={{ x: 4 }}
-                    transition={{ duration: 0.25 }}
+                  <div
+                    className="
+                      mt-8 inline-flex items-center gap-3
+                      text-[0.82rem] tracking-[0.18em] text-white/74
+                      transition-colors duration-[280ms] ease-out
+                      group-hover:text-white/92
+                    "
                   >
-                    VIEW SITE
-                    <span>→</span>
-                  </motion.div>
+                    <span>VIEW SITE</span>
+                    <span
+                      className="
+                        transition-transform duration-[300ms] ease-out
+                        group-hover:translate-x-[3px]
+                      "
+                    >
+                      →
+                    </span>
+                  </div>
                 </div>
 
-                <div className="min-h-[260px] md:min-h-[320px] overflow-hidden">
-                  <motion.img
+                <div className="min-h-[260px] overflow-hidden md:min-h-[320px]">
+                  <img
                     src={season.img}
                     alt={season.title}
-                    className="w-full h-full object-cover"
-                    whileHover={{ scale: 1.025 }}
-                    transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+                    className="
+                      h-full w-full object-cover
+                      brightness-[0.92]
+                      scale-[1.002]
+                      transition-[transform,filter]
+                      duration-[620ms]
+                      ease-[cubic-bezier(0.22,0.56,0.18,1)]
+                      group-hover:brightness-[0.99]
+                      group-hover:scale-[1.02]
+                    "
                   />
                 </div>
               </motion.a>

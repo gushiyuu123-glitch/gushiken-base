@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState, useCallback } from "react";
 import Category from "../components/Category";
 import WorkItem from "../components/WorkItem";
 import CategoryTabs from "../components/CategoryTabs";
@@ -19,103 +19,109 @@ export default function WorksList() {
   ================================ */
   const isNewItem = (item) => {
     if (!item.createdAt) return false;
-    const now = Date.now();
+
     const created = new Date(item.createdAt).getTime();
-    return (now - created) / (1000 * 3600 * 24) <= 30;
+    if (Number.isNaN(created)) return false;
+
+    return (Date.now() - created) / 86_400_000 <= 30;
   };
 
   /* ================================
         enrichedData
   ================================ */
-  const enrichedData = worksData.map((block) => ({
-    ...block,
-    items: block.items.map((item) => ({
-      ...item,
-      isNew: item.isNew || isNewItem(item),
-    })),
-  }));
+  const enrichedData = useMemo(
+    () =>
+      worksData.map((block) => ({
+        ...block,
+        items: block.items.map((item) => ({
+          ...item,
+          isNew: item.isNew || isNewItem(item),
+        })),
+      })),
+    []
+  );
 
   /* ================================
         カテゴリーリスト
   ================================ */
-  const categoryList = ["ALL", "NEW", ...enrichedData.map((b) => b.category)];
+  const categoryList = useMemo(
+    () => ["ALL", "NEW", ...enrichedData.map((b) => b.category)],
+    [enrichedData]
+  );
 
   /* ================================
         フィルタリング
   ================================ */
-  const filteredData =
-    activeCategory === "ALL"
-      ? enrichedData
-      : activeCategory === "NEW"
-        ? [
-            {
-              category: "NEW",
-              subtitle: "最新作 — Newly Published Works",
-              items: enrichedData.flatMap((b) => b.items.filter((i) => i.isNew)),
-            },
-          ]
-        : enrichedData.filter(
-            (b) => normalize(b.category) === normalize(activeCategory)
-          );
+  const filteredData = useMemo(() => {
+    if (activeCategory === "ALL") return enrichedData;
+
+    if (activeCategory === "NEW") {
+      return [
+        {
+          category: "NEW",
+          subtitle: "最新作 — Newly Published Works",
+          items: enrichedData.flatMap((b) => b.items.filter((i) => i.isNew)),
+        },
+      ];
+    }
+
+    return enrichedData.filter(
+      (b) => normalize(b.category) === normalize(activeCategory)
+    );
+  }, [activeCategory, enrichedData]);
 
   /* ================================
-        PC fade-in
+        aq-fade observer
+        CSS側の aq-fade を主役にして、
+        JS は aq-show を付けるだけにする
   ================================ */
   useEffect(() => {
     const root = rootRef.current;
     if (!root) return;
 
     const items = root.querySelectorAll(".aq-fade");
+    if (!items.length) return;
 
     items.forEach((el) => {
       el.classList.remove("aq-show");
-      el.style.opacity = 0;
-      el.style.transform = "translateY(18px)";
-      el.style.filter = "blur(4px)";
     });
 
     const io = new IntersectionObserver(
-      (entries) =>
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) entry.target.classList.add("aq-show");
-        }),
-      { threshold: 0.14 }
-    );
-
-    items.forEach((el) => io.observe(el));
-    return () => io.disconnect();
-  }, [activeCategory]);
-
-  /* ================================
-        SP slide-in
-  ================================ */
-  useEffect(() => {
-    const items = document.querySelectorAll(".sp-slide-in");
-
-    const io = new IntersectionObserver(
       (entries) => {
-        entries.forEach((e) => {
-          if (e.isIntersecting) e.target.classList.add("show");
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("aq-show");
+            io.unobserve(entry.target);
+          }
         });
       },
-      { threshold: 0.18 }
+      {
+        threshold: 0.14,
+        rootMargin: "0px 0px -6% 0px",
+      }
     );
 
     items.forEach((el) => io.observe(el));
+
     return () => io.disconnect();
   }, [activeCategory]);
 
   /* ================================
         Category click
   ================================ */
-  const handleChangeCategory = (cat) => {
+  const handleChangeCategory = useCallback((cat) => {
     setActiveCategory(cat);
 
+    if (!rootRef.current) return;
+
+    const top =
+      rootRef.current.getBoundingClientRect().top + window.scrollY - 40;
+
     window.scrollTo({
-      top: rootRef.current.offsetTop - 40,
+      top,
       behavior: "smooth",
     });
-  };
+  }, []);
 
   /* ================================
         RENDER
@@ -126,7 +132,7 @@ export default function WorksList() {
 
       <div ref={rootRef} className="mx-auto max-w-6xl lg:max-w-7xl">
         {/* ================= TOP ================= */}
-        <div className="aq-fade mb-24 md:mb-28">
+        <div className="aq-fade delay-1 mb-24 md:mb-28">
           <div className="mb-6 h-px w-12 bg-gradient-to-r from-white/20 to-white/5" />
 
           <p className="mb-3 text-[0.74rem] tracking-[0.30em] text-white/30">
@@ -144,14 +150,16 @@ export default function WorksList() {
           </p>
         </div>
 
-        <div className="aq-fade mb-16 h-px w-16 bg-white/12" />
+        <div className="aq-fade delay-2 mb-16 h-px w-16 bg-white/12" />
 
         {/* ================= TABS ================= */}
-        <CategoryTabs
-          activeCategory={activeCategory}
-          setActiveCategory={handleChangeCategory}
-          categoryList={categoryList}
-        />
+        <div className="aq-fade delay-2">
+          <CategoryTabs
+            activeCategory={activeCategory}
+            setActiveCategory={handleChangeCategory}
+            categoryList={categoryList}
+          />
+        </div>
 
         {/* ================= BLOCKS ================= */}
         <div className="space-y-36 md:space-y-40">
@@ -160,13 +168,24 @@ export default function WorksList() {
               block.category === "HOTEL" ||
               block.category === "FOOD / FURNITURE / BRAND";
 
-            const showCategoryNewBadge =
-              block.category !== "HOTEL" &&
-              block.category !== "FOOD / FURNITURE / BRAND";
+            const showCategoryNewBadge = !hideNewBadgeForItems;
+
+            const delayClass =
+              blockIndex % 5 === 0
+                ? "delay-1"
+                : blockIndex % 5 === 1
+                ? "delay-2"
+                : blockIndex % 5 === 2
+                ? "delay-3"
+                : blockIndex % 5 === 3
+                ? "delay-4"
+                : "delay-5";
 
             return (
-              <div key={`${block.category}-${blockIndex}`} className="aq-fade">
-                {/* ORIGIN 特別表示（ART のみ） */}
+              <div
+                key={`${block.category}-${blockIndex}`}
+                className={`aq-fade ${delayClass}`}
+              >
                 {block.items.some((i) => i.isOrigin) && (
                   <div className="mb-20 text-center md:mb-24">
                     <p className="mb-5 text-[0.7rem] tracking-[0.42em] text-white/40">
@@ -197,9 +216,7 @@ export default function WorksList() {
                       link={`/works/${item.slug}`}
                       img={item.img}
                       tags={item.tags}
-                      isNew={!hideNewBadgeForItems && item.isNew}
                       createdAt={!item.isOrigin ? item.createdAt : null}
-                      isOrigin={item.isOrigin}
                     />
                   ))}
                 </Category>

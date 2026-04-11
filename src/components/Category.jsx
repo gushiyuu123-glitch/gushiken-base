@@ -10,22 +10,17 @@ export default function Category({
 }) {
   const items = React.Children.toArray(children);
 
-  /* ============================================================
-        normalize（揺れ完全吸収版）
-  ============================================================ */
   const normalize = (str = "") =>
     str
-      .replace(/\s+/g, "")       // 全スペース除去
-      .replace(/[／・]/g, "/")   // 全角スラッシュ・中点 → 半角 /
-      .replace(/-{1,}/g, "")     // "-" のゆれ消去
-      .replace(/_/g, "")         // "_" のゆれ消去
+      .replace(/\s+/g, "")
+      .replace(/[／・]/g, "/")
+      .replace(/-{1,}/g, "")
+      .replace(/_/g, "")
       .toLowerCase();
 
   const key = normalize(title);
+  const hasNew = itemsRaw.some((item) => item.isNew === true);
 
-  const hasNew = itemsRaw.some((i) => i.isNew === true);
-
-  /* 幅マッピング（normalize後で一致させる） */
   const widthMap = {
     [normalize("PICK UP")]: "w-[88%]",
     [normalize("BEAUTY / SALON")]: "w-[94%]",
@@ -40,28 +35,28 @@ export default function Category({
   return (
     <section
       className={`
-        aq-fade w-full relative
-        ${accent ? "pt-5 pb-12 bg-white/[0.02] rounded-xl" : ""}
+        relative w-full
+        ${accent ? "rounded-[12px] bg-white/[0.02] px-5 py-6 md:px-6 md:py-7" : ""}
       `}
     >
       {/* HEADER */}
-      <div className="mb-12 relative">
+      <div className="relative mb-12">
         <div
           className={`
-            h-px mb-6
+            mb-6 h-px
             ${
               accent
-                ? "w-20 bg-gradient-to-r from-amber-300/60 to-amber-200/10"
-                : "w-12 bg-gradient-to-r from-white/28 to-white/5"
+                ? "w-20 bg-gradient-to-r from-amber-200/44 to-amber-200/8"
+                : "w-12 bg-gradient-to-r from-white/26 to-white/5"
             }
           `}
         />
 
-        <div className="flex items-center">
+        <div className="flex items-center gap-3">
           <h2
             className={`
-              text-white font-light tracking-[0.22em]
-              ${accent ? "text-[1.18rem]" : "text-[1.02rem] md:text-[1.14rem]"}
+              font-light tracking-[0.22em] text-white
+              ${accent ? "text-[1.14rem]" : "text-[1.02rem] md:text-[1.12rem]"}
             `}
           >
             {title}
@@ -70,13 +65,10 @@ export default function Category({
           {showNewBadge && hasNew && (
             <span
               className="
-                ml-3 px-2 py-[2px]
-                text-[0.65rem] tracking-[0.18em]
-                rounded-sm
-                text-amber-300 bg-white/5
-                border border-amber-300/40
-                shadow-[0_0_12px_rgba(255,200,120,0.25)]
-                animate-pulse
+                inline-flex items-center justify-center
+                rounded-sm border border-amber-200/26
+                bg-white/4 px-2 py-[2px]
+                text-[0.62rem] tracking-[0.18em] text-amber-200/88
               "
             >
               NEW
@@ -84,27 +76,30 @@ export default function Category({
           )}
         </div>
 
-        <p
-          className={`
-            mt-2 leading-relaxed tracking-[0.14em]
-            ${
-              accent
-                ? "text-white/60 text-[0.86rem]"
-                : "text-white/38 text-[0.78rem]"
-            }
-          `}
-        >
-          {subtitle}
-        </p>
+        {!!subtitle && (
+          <p
+            className={`
+              mt-2 leading-relaxed tracking-[0.14em]
+              ${
+                accent
+                  ? "text-[0.84rem] text-white/56"
+                  : "text-[0.78rem] text-white/38"
+              }
+            `}
+          >
+            {subtitle}
+          </p>
+        )}
       </div>
 
-      {/* SP（横スクロール） */}
-      <div className="sm:hidden w-full relative mb-20 pt-4">
+      {/* SP RAIL */}
+      <div className="relative mb-20 w-full pt-4 sm:hidden">
         <div className="relative px-1">
           <div
             className="
-              works-rail flex gap-5 px-4 py-4
-              overflow-x-auto overflow-y-hidden no-scrollbar
+              works-rail no-scrollbar flex gap-5
+              overflow-x-auto overflow-y-hidden
+              px-4 py-4
               snap-x snap-mandatory
               overscroll-x-contain
               [scroll-behavior:smooth]
@@ -116,7 +111,7 @@ export default function Category({
                 className={`
                   works-card flex-shrink-0
                   ${cardWidth}
-                  ${index === 0 ? "snap-start is-first" : "snap-center"}
+                  ${index === 0 ? "is-first snap-start" : "snap-center"}
                 `}
               >
                 {child}
@@ -128,11 +123,11 @@ export default function Category({
 
       {/* PC GRID */}
       {accent ? (
-        <div className="hidden sm:grid grid-cols-2 gap-x-12 gap-y-16">
+        <div className="hidden grid-cols-2 gap-x-12 gap-y-16 sm:grid">
           {items}
         </div>
       ) : (
-        <div className="hidden sm:grid grid-cols-2 xl:grid-cols-3 gap-x-12 gap-y-16">
+        <div className="hidden grid-cols-2 gap-x-12 gap-y-16 sm:grid xl:grid-cols-3">
           {items}
         </div>
       )}

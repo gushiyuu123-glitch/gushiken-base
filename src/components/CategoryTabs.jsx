@@ -1,39 +1,33 @@
 // src/components/CategoryTabs.jsx
 import React from "react";
+import { motion } from "motion/react";
 
 export default function CategoryTabs({
   activeCategory,
   setActiveCategory,
   categoryList,
 }) {
-  /* ============================================================
-        normalize（揺れ完全吸収版）
-        → Category.jsx と100%同一にして整合性を取る
-  ============================================================ */
   const normalize = (str = "") =>
     str
-      .replace(/\s+/g, "")       // 全スペース除去
-      .replace(/[／・]/g, "/")   // 全角スラッシュ・中点を半角に統一
-      .replace(/-{1,}/g, "")     // ハイフン吸収
-      .replace(/_/g, "")         // アンダーバー吸収
+      .replace(/\s+/g, "")
+      .replace(/[／・]/g, "/")
+      .replace(/-{1,}/g, "")
+      .replace(/_/g, "")
       .toLowerCase();
 
   return (
-    <div className="aq-fade mb-16">
-
+    <div className="mb-16">
       {/* ================================ */}
-      {/* 📱 SP（横スクローラー） */}
+      {/* 📱 SP */}
       {/* ================================ */}
       <div
         className="
-          flex md:hidden
-          overflow-x-auto no-scrollbar
-          gap-2.5
-          px-3 py-2
+          no-scrollbar flex gap-2.5 overflow-x-auto
+          px-3 py-2 md:hidden
           [scroll-snap-type:x_mandatory]
           [overscroll-behavior-x:contain]
         "
-        style={{ WebkitOverflowScrolling: 'touch' }}
+        style={{ WebkitOverflowScrolling: "touch" }}
       >
         {categoryList.map((cat) => {
           const active = normalize(activeCategory) === normalize(cat);
@@ -41,39 +35,47 @@ export default function CategoryTabs({
           return (
             <button
               key={cat}
+              type="button"
               onClick={() => setActiveCategory(cat)}
               className={`
-                scroll-snap-align-start
-                px-4 py-[0.46rem]
-                text-[0.65rem]
-                tracking-[0.18em]
-                rounded-full
-                whitespace-nowrap
-                border
-                transition-all duration-350
-                backdrop-blur-[3px]
+                relative shrink-0 whitespace-nowrap
+                rounded-[999px] border px-4 py-[0.48rem]
+                text-[0.64rem] tracking-[0.18em]
+                transition-[color,border-color,background-color,transform,box-shadow]
+                duration-[360ms]
+                ease-[cubic-bezier(0.22,1,0.36,1)]
+                [scroll-snap-align:start]
                 ${
                   active
-                    ? "bg-white text-black border-white shadow-[0_0_14px_rgba(255,255,255,0.16)]"
-                    : "border-white/14 text-white/55 hover:text-white/85 hover:border-white/28"
+                    ? "border-white/24 text-white bg-white/[0.06] shadow-[0_0_18px_rgba(255,255,255,0.04)]"
+                    : "border-white/12 bg-transparent text-white/52 hover:border-white/24 hover:text-white/82"
                 }
               `}
             >
-              {cat}
+              {active && (
+                <motion.span
+                  layoutId="category-tab-pill"
+                  className="absolute inset-0 rounded-[999px] bg-white/[0.06]"
+                  transition={{
+                    duration: 0.34,
+                    ease: [0.22, 1, 0.36, 1],
+                  }}
+                />
+              )}
+
+              <span className="relative z-10">{cat}</span>
             </button>
           );
         })}
       </div>
 
       {/* ================================ */}
-      {/* 💻 PC（Boutique Tabs） */}
+      {/* 💻 PC */}
       {/* ================================ */}
       <div
         className="
-          hidden md:flex
-          flex-wrap justify-center
-          gap-3
-          px-2 pt-2 pb-3
+          hidden flex-wrap justify-center gap-3
+          px-2 pb-3 pt-2 md:flex
         "
       >
         {categoryList.map((cat) => {
@@ -82,24 +84,34 @@ export default function CategoryTabs({
           return (
             <button
               key={cat}
+              type="button"
               onClick={() => setActiveCategory(cat)}
               className={`
-                px-6 py-[0.52rem]
-                text-[0.75rem]
-                tracking-[0.22em]
-                rounded-full
-                whitespace-nowrap
-                border
-                transition-all duration-400
-                backdrop-blur-[3px]
+                relative whitespace-nowrap
+                rounded-[999px] border px-6 py-[0.56rem]
+                text-[0.74rem] tracking-[0.22em]
+                transition-[color,border-color,background-color,transform,box-shadow]
+                duration-[380ms]
+                ease-[cubic-bezier(0.22,1,0.36,1)]
                 ${
                   active
-                    ? "bg-white text-black border-white shadow-[0_0_20px_rgba(255,255,255,0.22)]"
-                    : "border-white/16 text-white/55 hover:text-white/85 hover:border-white/30"
+                    ? "border-white/26 text-white bg-white/[0.065] shadow-[0_0_22px_rgba(255,255,255,0.045)]"
+                    : "border-white/14 bg-transparent text-white/54 hover:border-white/26 hover:text-white/84"
                 }
               `}
             >
-              {cat}
+              {active && (
+                <motion.span
+                  layoutId="category-tab-pill"
+                  className="absolute inset-0 rounded-[999px] bg-white/[0.065]"
+                  transition={{
+                    duration: 0.34,
+                    ease: [0.22, 1, 0.36, 1],
+                  }}
+                />
+              )}
+
+              <span className="relative z-10">{cat}</span>
             </button>
           );
         })}

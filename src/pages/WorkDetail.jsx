@@ -1,61 +1,105 @@
 // src/pages/WorkDetail.jsx
-import React, { useMemo, useEffect, useRef } from "react";
+import React, { useMemo, useRef } from "react";
 import { useParams, Link } from "react-router-dom";
+import { motion } from "motion/react";
 import { worksData } from "../data/worksData";
-import gsap from "gsap";
 
+/* ================================
+   motion variants
+================================ */
+const heroContainer = {
+  hidden: {},
+  show: {
+    transition: {
+      staggerChildren: 0.12,
+      delayChildren: 0.06,
+    },
+  },
+};
+
+const fadeUp = {
+  hidden: { opacity: 0, y: 18 },
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.82,
+      ease: [0.22, 1, 0.36, 1],
+    },
+  },
+};
+
+const visualItem = {
+  hidden: { opacity: 0, y: 22 },
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.9,
+      ease: [0.22, 1, 0.36, 1],
+    },
+  },
+};
+
+const sectionFade = {
+  hidden: { opacity: 0, y: 18 },
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.76,
+      ease: [0.22, 1, 0.36, 1],
+    },
+  },
+};
+
+/* ================================
+   utils
+================================ */
+const normalizeSlug = (str = "") =>
+  str.replace(/\s+/g, "").replace(/[^\w-]/g, "").toLowerCase();
+
+const isNewItem = (work) => {
+  if (work.tags?.includes("NEW")) return true;
+  if (!work.createdAt) return false;
+
+  const created = new Date(work.createdAt).getTime();
+  if (Number.isNaN(created)) return false;
+
+  return (Date.now() - created) / 86_400_000 <= 30;
+};
+
+/* ================================
+   component
+================================ */
 export default function WorkDetail() {
   const { slug } = useParams();
   const rootRef = useRef(null);
 
-  const normalizeSlug = (s = "") =>
-    s.replace(/\s+/g, "").replace(/[^\w\-]/g, "").toLowerCase();
-
   const normalizedSlug = normalizeSlug(slug);
-  const allWorks = useMemo(() => worksData.flatMap((b) => b.items), []);
+
+  const allWorks = useMemo(() => worksData.flatMap((block) => block.items), []);
 
   const work = useMemo(() => {
-    return allWorks.find(
-      (i) => normalizeSlug(i.slug) === normalizedSlug
-    );
-  }, [normalizedSlug, allWorks]);
-
-  /* ===============================
-     フェード（静かな呼吸）
-  =============================== */
-  useEffect(() => {
-    const elements = rootRef.current?.querySelectorAll(".fade-up");
-    if (!elements) return;
-
-    elements.forEach((el) => {
-      gsap.fromTo(
-        el,
-        { opacity: 0, y: 28 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 1.4,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: el,
-            start: "top 85%",
-          },
-        }
-      );
-    });
-  }, []);
+    return allWorks.find((item) => normalizeSlug(item.slug) === normalizedSlug);
+  }, [allWorks, normalizedSlug]);
 
   if (!work) {
     return (
-      <main className="min-h-screen bg-[#0b0b0b] text-white px-6 py-24">
-        <div className="max-w-3xl mx-auto">
-          <p className="text-white/60 tracking-[0.18em] text-xs mb-4">
+      <main className="min-h-screen bg-[#0b0b0b] px-6 py-24 text-white md:px-10">
+        <div className="mx-auto max-w-3xl">
+          <p className="mb-4 text-xs tracking-[0.18em] text-white/60">
             NOT FOUND
           </p>
-          <h1 className="text-2xl tracking-[0.18em] font-light mb-10">
+
+          <h1 className="mb-10 text-2xl font-light tracking-[0.18em]">
             WORK NOT FOUND
           </h1>
-          <Link to="/works" className="text-white/70">
+
+          <Link
+            to="/works"
+            className="text-white/70 transition hover:text-white"
+          >
             ← BACK TO WORKS
           </Link>
         </div>
@@ -63,20 +107,17 @@ export default function WorkDetail() {
     );
   }
 
-  const isNew =
-    work.tags?.includes("NEW") ||
-    (work.createdAt &&
-      (Date.now() - new Date(work.createdAt).getTime()) /
-        (1000 * 60 * 60 * 24) <= 30);
+  const isNew = isNewItem(work);
+  const visuals = work.detail?.visuals?.length ? work.detail.visuals : [work.img];
 
   return (
     <main
       ref={rootRef}
-      className="relative min-h-screen bg-[#080706] text-white overflow-x-hidden"
+      className="relative min-h-screen overflow-x-hidden bg-[#080706] text-white"
     >
       {/* 全体光膜 */}
       <div
-        className="absolute inset-0 pointer-events-none"
+        className="pointer-events-none absolute inset-0"
         style={{
           background:
             "radial-gradient(1200px 800px at 50% 20%, rgba(255,255,255,0.03), transparent 70%)",
@@ -84,137 +125,160 @@ export default function WorkDetail() {
       />
 
       {/* ================= HERO ================= */}
-      <section className="relative pt-32 pb-20 px-6 md:px-10 fade-up">
-        <div className="max-w-6xl mx-auto">
-          <div className="w-12 h-px bg-gradient-to-r from-white/20 to-white/5 mb-6" />
+      <section className="relative px-6 pb-20 pt-32 md:px-10">
+        <motion.div
+          className="mx-auto max-w-6xl"
+          variants={heroContainer}
+          initial="hidden"
+          animate="show"
+        >
+          <motion.div
+            variants={fadeUp}
+            className="mb-6 h-px w-12 bg-gradient-to-r from-white/20 to-white/5"
+          />
 
-          <div className="flex items-center gap-3 mb-5">
+          <motion.div
+            variants={fadeUp}
+            className="mb-5 flex items-center gap-3"
+          >
             <p className="text-[0.65rem] tracking-[0.32em] text-white/35">
               WORK DETAIL
             </p>
+
             {isNew && (
-              <span className="px-2 py-[2px] text-[0.62rem] tracking-[0.22em] rounded-sm text-amber-200/90 bg-white/5 border border-amber-200/20">
+              <span className="rounded-sm border border-amber-200/20 bg-white/5 px-2 py-[2px] text-[0.62rem] tracking-[0.22em] text-amber-200/90">
                 NEW
               </span>
             )}
-          </div>
+          </motion.div>
 
-          <h1 className="text-[2.4rem] md:text-[3.2rem] tracking-[0.18em] font-light leading-[1.1]">
+          <motion.h1
+            variants={fadeUp}
+            className="text-[2.4rem] font-light leading-[1.1] tracking-[0.18em] md:text-[3.2rem]"
+          >
             {work.title}
-          </h1>
+          </motion.h1>
 
-          <p className="mt-8 text-white/50 leading-relaxed whitespace-pre-line max-w-2xl">
+          <motion.p
+            variants={fadeUp}
+            className="mt-8 max-w-2xl whitespace-pre-line leading-relaxed text-white/50"
+          >
             {work.desc}
-          </p>
+          </motion.p>
 
-<div className="mt-14 flex flex-wrap items-center gap-5">
+          <motion.div
+            variants={fadeUp}
+            className="mt-14 flex flex-wrap items-center gap-5"
+          >
+            <Link
+              to="/works"
+              className="
+                inline-flex h-[48px] items-center justify-center
+                rounded-full border border-white/12 px-8
+                text-[11px] tracking-[0.22em] text-white/70
+                transition-all duration-500
+                hover:border-white/20 hover:bg-white/5 hover:text-white
+              "
+            >
+              ← BACK
+            </Link>
 
-  {/* BACK */}
-  <Link
-    to="/works"
-    className="
-      inline-flex items-center justify-center
-      px-8 h-[48px]
-      rounded-full
-      border border-white/12
-      text-white/70
-      tracking-[0.22em] text-[11px]
-      transition-all duration-500
-      hover:bg-white/5
-      hover:text-white
-      hover:border-white/20
-    "
-  >
-    ← BACK
-  </Link>
-
-  {/* VISIT */}
-  <a
-    href={work.link}
-    target="_blank"
-    rel="noopener noreferrer"
-    className="
-      inline-flex items-center justify-center
-      px-8 h-[48px]
-      rounded-full
-      bg-white/6
-      border border-white/15
-      text-white
-      tracking-[0.22em] text-[11px]
-      backdrop-blur-[3px]
-      transition-all duration-500
-      hover:bg-white/14
-      hover:border-white/30
-      hover:shadow-[0_0_30px_rgba(255,255,255,0.06)]
-    "
-  >
-    VISIT SITE →
-  </a>
-
-</div>
-
-        </div>
+            <a
+              href={work.link}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="
+                inline-flex h-[48px] items-center justify-center
+                rounded-full border border-white/15 bg-white/6 px-8
+                text-[11px] tracking-[0.22em] text-white
+                transition-all duration-500
+                hover:border-white/28 hover:bg-white/12
+                hover:shadow-[0_0_30px_rgba(255,255,255,0.05)]
+              "
+            >
+              VISIT SITE →
+            </a>
+          </motion.div>
+        </motion.div>
       </section>
 
       {/* ================= VISUAL ================= */}
-      <section className="px-6 md:px-10 pb-24 fade-up">
-        <div className="max-w-6xl mx-auto space-y-24">
-          {(work.detail?.visuals || [work.img]).map((v, i) => (
-            <div
-              key={i}
-              className="relative rounded-[20px] overflow-hidden border border-white/10 bg-black/80"
+      <section className="px-6 pb-24 md:px-10">
+        <div className="mx-auto max-w-6xl space-y-24">
+          {visuals.map((visual, index) => (
+            <motion.div
+              key={`${visual}-${index}`}
+              className="relative overflow-hidden rounded-[20px] border border-white/10 bg-black/80"
+              variants={visualItem}
+              initial="hidden"
+              whileInView="show"
+              viewport={{ once: true, amount: 0.16 }}
             >
               <img
-                src={v}
-                alt={`${work.title} visual ${i + 1}`}
+                src={visual}
+                alt={`${work.title} visual ${index + 1}`}
                 className="w-full object-cover brightness-[0.92] contrast-[1.05]"
                 loading="lazy"
               />
 
-              {/* 光の滲み */}
               <div
-                className="absolute inset-0 pointer-events-none"
+                className="pointer-events-none absolute inset-0"
                 style={{
                   background:
                     "radial-gradient(circle at 70% 10%, rgba(255,245,220,0.06), transparent 60%)",
                 }}
               />
-            </div>
+            </motion.div>
           ))}
         </div>
       </section>
 
       {/* ================= TAGS ================= */}
-      <section className="px-6 md:px-10 pb-28 fade-up">
-        <div className="max-w-6xl mx-auto">
-          <h2 className="text-[0.9rem] tracking-[0.22em] text-white/80 mb-8">
-            TAGS
-          </h2>
+      {!!work.tags?.length && (
+        <section className="px-6 pb-28 md:px-10">
+          <motion.div
+            className="mx-auto max-w-6xl"
+            variants={sectionFade}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true, amount: 0.24 }}
+          >
+            <h2 className="mb-8 text-[0.9rem] tracking-[0.22em] text-white/80">
+              TAGS
+            </h2>
 
-          <div className="flex flex-wrap gap-2">
-            {(work.tags || []).map((t) => (
-              <span
-                key={t}
-                className="px-3 py-[6px] text-[11px] tracking-[0.14em] bg-white/4 border border-white/8 rounded-full text-white/60"
-              >
-                {t}
-              </span>
-            ))}
-          </div>
-        </div>
-      </section>
+            <div className="flex flex-wrap gap-2">
+              {work.tags.map((tag) => (
+                <span
+                  key={tag}
+                  className="rounded-full border border-white/8 bg-white/4 px-3 py-[6px] text-[11px] tracking-[0.14em] text-white/60"
+                >
+                  {tag}
+                </span>
+              ))}
+            </div>
+          </motion.div>
+        </section>
+      )}
 
       {/* ================= FOOTER ================= */}
-      <section className="px-6 md:px-10 pb-36 fade-up">
-        <div className="max-w-6xl mx-auto">
-          <div className="h-px w-full bg-gradient-to-r from-white/12 to-transparent mb-12" />
+      <section className="px-6 pb-36 md:px-10">
+        <motion.div
+          className="mx-auto max-w-6xl"
+          variants={sectionFade}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, amount: 0.24 }}
+        >
+          <div className="mb-12 h-px w-full bg-gradient-to-r from-white/12 to-transparent" />
+
           <Link
             to="/works"
-            className="text-white/70 hover:text-white transition tracking-[0.22em] text-xs"
+            className="text-xs tracking-[0.22em] text-white/70 transition hover:text-white"
           >
             ← BACK TO WORKS LIST
           </Link>
-        </div>
+        </motion.div>
       </section>
     </main>
   );
