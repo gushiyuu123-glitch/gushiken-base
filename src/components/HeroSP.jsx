@@ -1,308 +1,206 @@
-import React, { useMemo } from "react";
-import heroSP from "../assets/hero-sp3.png";
+import React from "react";
+import heroSP from "../assets/hero-sp33.png";
 
 export default function HeroSP() {
-  const particles = useMemo(
-    () =>
-      [...Array(8)].map((_, i) => ({
-        id: i,
-        left: `${Math.random() * 100}%`,
-        top: `${Math.random() * 100}%`,
-        delay: `${Math.random() * 7}s`,
-      })),
-    []
-  );
-
   return (
-    <section className="relative w-full h-[90vh] overflow-hidden bg-black md:hidden">
-      {/* =====================
-          BACKGROUND IMAGE
-      ===================== */}
-      <div className="absolute inset-0 overflow-hidden">
+    <section className="relative h-[92svh] w-full overflow-hidden bg-[#0a0a0a] md:hidden">
+      {/* BACKGROUND */}
+      <div className="absolute inset-0">
         <img
           src={heroSP}
           alt="沖縄のWebデザイン・ホームページ制作｜美容・店舗・ブランド向け"
           className="
+            hero-sp-image
             h-full w-full object-cover
-            brightness-[0.99]
-            scale-[1.02]
-            animate-[heroFloatSP_22s_ease-in-out_infinite]
-            will-change-[transform,opacity]
-            [transform:translateZ(0)]
+            object-[50%_18%]
           "
         />
       </div>
 
-      {/* =====================
-          TEXT PROTECTION GRADIENT
-      ===================== */}
+      {/* TOP VEIL */}
       <div
         className="
-          pointer-events-none absolute inset-0
-          bg-gradient-to-b
-          from-[rgba(0,0,0,0.08)]
-          via-[rgba(0,0,0,0.02)]
-          to-transparent
+          pointer-events-none absolute inset-x-0 top-0 z-[1]
+          h-[96px]
+          bg-[linear-gradient(180deg,rgba(6,6,6,0.30)_0%,rgba(6,6,6,0.12)_48%,transparent_100%)]
         "
       />
 
-      {/* =====================
-          AMBIENT LIGHTS
-      ===================== */}
-      <div className="pointer-events-none absolute inset-0">
-        <div
-          className="
-            absolute left-[18%] top-[34%]
-            h-[240px] w-[240px]
-            rounded-full
-            bg-[rgba(220,190,140,0.07)]
-            blur-[120px]
-          "
-        />
-      </div>
-
-      <div className="pointer-events-none absolute inset-0 mix-blend-screen">
-        <div
-          className="
-            absolute right-[14%] top-[28%]
-            h-[220px] w-[220px]
-            rounded-full
-            bg-[rgba(90,160,255,0.10)]
-            blur-[130px]
-          "
-        />
-      </div>
-
-      {/* =====================
-          BOTTOM GRADIENT
-      ===================== */}
+      {/* GLOBAL DEPTH */}
       <div
         className="
-          pointer-events-none absolute bottom-0 left-0
-          h-[230px] w-full
-          bg-gradient-to-t
-          from-[rgba(0,0,0,0.42)]
-          to-transparent
+          pointer-events-none absolute inset-0 z-[1]
+          bg-[linear-gradient(180deg,rgba(0,0,0,0.04)_0%,rgba(0,0,0,0.02)_24%,rgba(0,0,0,0.10)_58%,rgba(0,0,0,0.34)_100%)]
         "
       />
 
-      {/* =====================
-          PARTICLES
-      ===================== */}
-      <div className="pointer-events-none absolute inset-0 overflow-hidden">
-        <div className="absolute inset-0 animate-[particleRise_14s_linear_infinite] opacity-[0.35]">
-          {particles.map((particle) => (
-            <div
-              key={particle.id}
+      {/* LEFT TEXT SHADOW */}
+      <div
+        className="
+          pointer-events-none absolute inset-y-0 left-0 z-[1]
+          w-[82%]
+          bg-[linear-gradient(90deg,rgba(0,0,0,0.22)_0%,rgba(0,0,0,0.08)_42%,transparent_100%)]
+        "
+      />
+
+      {/* BOTTOM READABILITY */}
+      <div
+        className="
+          pointer-events-none absolute inset-x-0 bottom-0 z-[1]
+          h-[220px]
+          bg-[linear-gradient(180deg,transparent_0%,rgba(0,0,0,0.08)_28%,rgba(0,0,0,0.34)_100%)]
+        "
+      />
+
+      {/* FILM NOISE */}
+      <div
+        className="
+          pointer-events-none absolute inset-0 z-[1] opacity-[0.028]
+          [background-image:radial-gradient(rgba(255,255,255,0.40)_0.42px,transparent_0.42px)]
+          [background-size:4px_4px]
+        "
+      />
+
+      {/* TEXT BLOCK */}
+      <div className="absolute inset-x-0 bottom-[3.8rem] z-[2] px-6">
+        <div className="max-w-[18.5rem]">
+          <div className="hero-sp-fade hero-sp-fade-1">
+            <p className="mb-2.5 text-[0.72rem] tracking-[0.12em] text-white/60">
+              沖縄のWebデザイン / ホームページ制作
+            </p>
+          </div>
+
+          <div className="hero-sp-fade hero-sp-fade-2 pl-[2px]">
+            <p
               className="
-                absolute h-[1.4px] w-[1.4px]
-                rounded-full bg-white
-                opacity-[0.22]
-                animate-[spark_7s_ease-in-out_infinite]
-                will-change-[transform,opacity]
-                [transform:translateZ(0)]
+                mb-3
+                text-[0.88rem] font-light leading-[1.68]
+                tracking-[0.06em] text-white/84
               "
-              style={{
-                left: particle.left,
-                top: particle.top,
-                animationDelay: particle.delay,
-              }}
-            />
-          ))}
+            >
+              整えることで、価値は伝わる。
+            </p>
+          </div>
+
+          <h1
+            className="
+              hero-sp-fade hero-sp-fade-3
+              mb-4
+              text-[2.08rem] font-light leading-[1.01]
+              tracking-[0.16em] text-white/97
+            "
+          >
+            GUSHIKEN
+            <br />
+            DESIGN
+          </h1>
+
+          <div
+            className="
+              hero-sp-fade hero-sp-fade-4
+              mb-4 h-px w-[52px] bg-white/56
+            "
+          />
+
+          <div className="hero-sp-fade hero-sp-fade-5 pl-[8px]">
+            <p
+              className="
+                max-w-[16.8rem]
+                text-[0.92rem] leading-[1.78]
+                tracking-[0.01em] text-white/90
+              "
+            >
+              店舗・サロン・ブランドの価値を、
+              <br />
+              上品に、伝わりやすく整えるWeb制作
+
+              <span className="mt-3 block text-[0.76rem] leading-[1.76] tracking-[0.07em] text-white/64">
+                見やすさと高級感を両立し、
+                <br />
+                信頼感のある印象へ整えます。
+              </span>
+            </p>
+          </div>
         </div>
       </div>
 
-      {/* =====================
-          TEXT CONTENT
-      ===================== */}
-      <div className="absolute left-6 right-4 top-[96px]">
-        {/* SEO / category assist */}
-        <p
-          className="
-            mb-3
-            text-[0.78rem]
-            tracking-[0.12em]
-            text-white/60
-          "
-        >
-          沖縄のWebデザイン / ホームページ制作
-        </p>
-
-        {/* TITLE */}
-        <h1
-          className="
-            elegant-title no-warp-gpu
-            mb-3
-            text-[2rem]
-            font-normal
-            leading-[1.04]
-            tracking-[0.22em]
-            text-white/95
-          "
-        >
-          GUSHIKEN
-          <br />
-          DESIGN
-        </h1>
-
-        {/* LINE */}
-        <div
-          className="
-            elegant-sub delay-[0.15s] no-warp-gpu
-            mb-4
-            h-[1px] w-12
-            bg-white/75
-          "
-        />
-
-        {/* COPY */}
-        <p
-          className="
-            elegant-sub delay-[0.3s] no-warp-gpu
-            max-w-[88%]
-            text-[1rem]
-            leading-[1.7]
-            tracking-wide
-            text-white/95
-          "
-        >
-          <span className="block no-warp-gpu">
-            店舗・サロン・ブランドの価値を、
-          </span>
-          <span className="block no-warp-gpu">
-            上品に、伝わりやすく整えるWeb制作
-          </span>
-
-          <span
-            className="
-              no-warp-gpu
-              mt-4 block
-              text-[0.75rem]
-              tracking-[0.14em]
-              text-white/75
-              drop-shadow-[0_1px_2px_rgba(0,0,0,0.35)]
-            "
-          >
-            見やすさと高級感を両立した設計
-          </span>
-        </p>
+      {/* SCROLL HINT */}
+      <div className="pointer-events-none absolute bottom-4 left-1/2 z-[2] -translate-x-1/2">
+        <div className="scroll-hint-sp" />
       </div>
 
-      {/* =====================
-          SCROLL HINT
-      ===================== */}
-      <div className="pointer-events-none absolute bottom-6 left-1/2 -translate-x-1/2">
-        <div className="scroll-hint no-warp-gpu" />
-      </div>
-
-      {/* =====================
-          STYLES
-      ===================== */}
       <style>{`
-        @keyframes heroFloatSP {
+        .hero-sp-image {
+          filter: brightness(0.98) saturate(0.92) contrast(1.01);
+          transform: scale(1.015);
+          animation: heroSPStill 18s ease-in-out infinite;
+          will-change: transform;
+        }
+
+        @keyframes heroSPStill {
           0% {
-            transform: scale(1.02) translate(0, 0);
+            transform: scale(1.015) translate3d(0, 0, 0);
           }
           50% {
-            transform: scale(1.025) translate(4px, 6px);
+            transform: scale(1.022) translate3d(-1px, 4px, 0);
           }
           100% {
-            transform: scale(1.02) translate(0, 0);
+            transform: scale(1.015) translate3d(0, 0, 0);
           }
         }
 
-        @keyframes spark {
-          0%, 100% {
-            opacity: 0;
-            transform: translateY(0) scale(0.6);
-          }
-          50% {
-            opacity: 0.35;
-            transform: translateY(-18px) scale(1);
-          }
-        }
-
-        @keyframes particleRise {
-          0% {
-            transform: translateY(0);
-          }
-          100% {
-            transform: translateY(-40px);
-          }
-        }
-
-        .no-warp-gpu {
+        .hero-sp-fade {
+          opacity: 0;
+          transform: translate3d(0, 14px, 0) scale(0.995);
+          animation: heroSPReveal 0.98s cubic-bezier(.22,.56,.18,1) forwards;
           will-change: transform, opacity;
           backface-visibility: hidden;
-          transform: translateZ(0);
         }
 
-        .elegant-title,
-        .elegant-sub {
-          will-change: transform, opacity;
-          backface-visibility: hidden;
-          transform: translateZ(0);
-        }
+        .hero-sp-fade-1 { animation-delay: 0.06s; }
+        .hero-sp-fade-2 { animation-delay: 0.14s; }
+        .hero-sp-fade-3 { animation-delay: 0.22s; }
+        .hero-sp-fade-4 { animation-delay: 0.30s; }
+        .hero-sp-fade-5 { animation-delay: 0.38s; }
 
-        .elegant-title {
-          opacity: 0;
-          transform: translateY(14px);
-          letter-spacing: 0.32em;
-          animation: titleFade 1.4s cubic-bezier(.25,.46,.25,1) forwards;
-        }
-
-        @keyframes titleFade {
-          0% {
-            opacity: 0;
-            transform: translateY(14px);
-            letter-spacing: 0.32em;
-          }
-          60% {
-            opacity: 1;
-            transform: translateY(0);
-          }
-          100% {
-            opacity: 1;
-            transform: translateY(0);
-            letter-spacing: 0.22em;
-            text-shadow: 0 2px 8px rgba(0,0,0,0.28);
-          }
-        }
-
-        .elegant-sub {
-          opacity: 0;
-          transform: translateY(12px);
-          animation: subFade 1.05s cubic-bezier(.25,.46,.25,1) forwards;
-        }
-
-        @keyframes subFade {
+        @keyframes heroSPReveal {
           to {
             opacity: 1;
-            transform: translateY(0);
+            transform: translate3d(0, 0, 0) scale(1);
           }
         }
 
-        .scroll-hint {
+        .scroll-hint-sp {
           width: 1px;
-          height: 42px;
+          height: 28px;
           background: linear-gradient(
             to bottom,
             rgba(255,255,255,0),
-            rgba(255,255,255,0.6),
+            rgba(255,255,255,0.52),
             rgba(255,255,255,0)
           );
-          animation: scrollPulse 2.4s ease-in-out infinite;
+          animation: scrollPulseSP 2.5s ease-in-out infinite;
         }
 
-        @keyframes scrollPulse {
-          0% {
-            opacity: 0.2;
+        @keyframes scrollPulseSP {
+          0% { opacity: 0.18; }
+          50% { opacity: 0.56; }
+          100% { opacity: 0.18; }
+        }
+
+        @media (max-width: 380px) {
+          .hero-sp-image {
+            object-position: 52% 16%;
           }
-          50% {
-            opacity: 0.6;
-          }
-          100% {
-            opacity: 0.2;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+          .hero-sp-image,
+          .hero-sp-fade,
+          .scroll-hint-sp {
+            animation: none !important;
+            transform: none !important;
+            opacity: 1 !important;
           }
         }
       `}</style>
