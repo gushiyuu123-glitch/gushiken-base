@@ -32,11 +32,10 @@ export default function WorkItem({
         : { to: link })}
       className="
         work-card aq-fade
-        group block relative
-        rounded-[12px]
-        overflow-hidden
-        bg-[#0a0a0a]
+        group relative block
+        overflow-hidden rounded-[12px]
         border border-white/10
+        bg-[#0a0a0a]
         shadow-[0_0_18px_rgba(0,0,0,0.46)]
         transform-gpu
         transition-[transform,border-color,box-shadow,background-color]
@@ -50,7 +49,7 @@ export default function WorkItem({
       {/* subtle glow */}
       <div
         className="
-          absolute inset-0 pointer-events-none rounded-[12px]
+          pointer-events-none absolute inset-0 rounded-[12px]
           opacity-0
           transition-opacity duration-[460ms]
           ease-[cubic-bezier(0.22,0.56,0.18,1)]
@@ -64,7 +63,7 @@ export default function WorkItem({
       {/* noise */}
       <div
         className="
-          absolute inset-0 pointer-events-none
+          pointer-events-none absolute inset-0
           opacity-[0.045]
           bg-[url('/grain-gold.png')]
           mix-blend-overlay
@@ -72,11 +71,11 @@ export default function WorkItem({
       />
 
       {/* IMAGE */}
-      <div className="relative w-full aspect-[16/10] overflow-hidden">
+      <div className="relative w-full aspect-[16/9] overflow-hidden md:aspect-[16/10]">
         {isNew && (
           <span
             className="
-              absolute top-3 left-3 z-20
+              absolute left-3 top-3 z-20
               rounded-sm border border-white/24
               bg-black/30 px-3 py-[3px]
               text-[10px] font-light uppercase tracking-[0.28em]
@@ -106,7 +105,7 @@ export default function WorkItem({
         />
 
         <div
-          className="absolute inset-0 pointer-events-none"
+          className="pointer-events-none absolute inset-0"
           style={{
             background:
               "linear-gradient(to top, rgba(0,0,0,0.16), rgba(0,0,0,0.02) 42%, rgba(0,0,0,0.08))",
@@ -115,12 +114,13 @@ export default function WorkItem({
       </div>
 
       {/* TEXT */}
-      <div className="relative p-7 pb-9 text-white">
+      <div className="relative p-5 pb-6 text-white md:p-7 md:pb-9">
         <h3
           className="
-            mb-3 text-[1.02rem]
-            font-light leading-[1.45]
-            tracking-[0.16em] text-white/90
+            mb-2 text-[0.96rem]
+            font-light leading-[1.38]
+            tracking-[0.12em] text-white/90
+            md:mb-3 md:text-[1.02rem] md:tracking-[0.16em]
           "
         >
           {title}
@@ -128,9 +128,10 @@ export default function WorkItem({
 
         <p
           className="
-            mb-6 max-w-[360px]
-            whitespace-pre-line text-[0.85rem]
-            leading-[1.9] text-white/55
+            mb-4 max-w-[360px]
+            whitespace-pre-line text-[0.8rem]
+            leading-[1.75] text-white/55
+            md:mb-6 md:text-[0.85rem] md:leading-[1.9]
           "
         >
           {desc}
@@ -139,10 +140,11 @@ export default function WorkItem({
         <span
           className="
             inline-flex items-center gap-2
-            text-[0.74rem] tracking-[0.24em]
+            text-[0.68rem] tracking-[0.18em]
             text-white/62
             transition-colors duration-[280ms] ease-out
             group-hover:text-white/88
+            md:text-[0.74rem] md:tracking-[0.24em]
           "
         >
           <span>作品詳細へ</span>
