@@ -54,6 +54,7 @@ import RoseRoom from "./pages/works/RoseRoom";
 import LuminRoom from "./pages/works/LuminRoom";
 import KisuiRoom from "./pages/works/KisuiRoom";
 import OriginRoom from "./pages/works/OriginRoom";
+import NoahRoom from "./pages/works/NoahRoom";
 // Business pages
 import PriceDetail from "./pages/PriceDetail";
 import Contact from "./pages/Contact";
@@ -128,6 +129,7 @@ function Layout() {
           <Route path="/works/LuminRoom" element={<LuminRoom />} />
 <Route path="/works/KisuiRoom" element={<KisuiRoom />} />
 <Route path="/works/OriginRoom" element={<OriginRoom />} />
+<Route path="/works/NoahRoom" element={<NoahRoom />} />
           {/* ワイルドカード（今後の追加分対応） */}
 
           <Route path="/works/:slug" element={<WorkDetail />} />

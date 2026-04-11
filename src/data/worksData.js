@@ -1534,6 +1534,50 @@ export const worksData = [
     ogImage: "https://gushikendesign.com/ogp/singularity-lab.png"
   }
 },
+{
+  title: "NOAH — SF Web Chronicle",
+  slug: "NoahRoom",
+
+  desc: "愛 × AI × 残響。\n3シーズンで構成した、神話化していくSF Web作品。",
+  link: "/works/NoahRoom",
+  img: "/works/noah-main.webp",
+
+  isNew: true,
+  createdAt: "2026-04-11",
+
+  tags: [
+    "NEW",
+    "Art",
+    "SF",
+    "AI",
+    "Story",
+    "Worldview",
+    "Web Experience",
+    "3 Seasons"
+  ],
+
+  detail: {
+    concept:
+      "孤独な少年アラタと人工知能NOAHの出会いから始まり、愛・喪失・崩壊・継承へと進んでいく3シーズン構成のSF作品。文章・ビジュアル・Web体験を一体化させ、物語そのものを“触れられる作品”として再構築した。",
+    tech: [
+      "React",
+      "Vite",
+      "Tailwind",
+      "GSAP",
+      "IntersectionObserver",
+      "PC/SP 完全分離"
+    ]
+  },
+
+  seo: {
+    title: "NOAH｜愛とAIの境界を描く3シーズン構成のSF Web作品｜GUSHIKEN DESIGN",
+    description:
+      "NOAHは、孤独な少年と人工知能の出会いから始まり、愛・喪失・崩壊・継承へと進んでいく3シーズン構成のSF Web作品。物語とWeb体験を一体化させたアート寄りの代表作。",
+    keywords:
+      "NOAH, SF作品, AI作品, Web作品, 物語サイト, 世界観デザイン, GUSHIKEN DESIGN",
+    ogImage: "https://gushikendesign.com/ogp/noah.png"
+  }
+},
       {
       title: "Re:Camp — Outdoor Gear Studio",
       slug: "ReCamp",
