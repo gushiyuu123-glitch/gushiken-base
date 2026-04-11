@@ -1,121 +1,88 @@
-import React, { useMemo } from "react";
-import hero from "../assets/hero3.png";
+import React from "react";
+import heroRoom from "../assets/hero-room.png";
 
 export default function Hero() {
-  const dustParticles = useMemo(
-    () =>
-      [...Array(10)].map((_, i) => ({
-        id: i,
-        left: `${Math.random() * 100}%`,
-        top: `${Math.random() * 100}%`,
-        rotate: `${Math.random() * 40 - 20}deg`,
-        delay: `${Math.random() * 7.5}s`,
-      })),
-    []
-  );
-
   return (
-    <section className="relative w-full h-[92vh] overflow-hidden bg-black pb-[8rem] md:h-screen">
-      {/* =====================
-          BACKGROUND
-      ===================== */}
-      <div className="absolute inset-0 overflow-hidden">
+    <section className="relative h-[92vh] w-full overflow-hidden bg-[#0a0a0a] pb-[8rem] md:h-screen">
+      {/* BACKGROUND */}
+      <div className="absolute inset-0">
         <img
-          src={hero}
-          alt="美容・EC・店舗向けの高品質Webデザイン｜沖縄フリーランス GUSHIKEN DESIGN"
+          src={heroRoom}
+          alt="沖縄のWebデザイン / ホームページ制作｜GUSHIKEN DESIGN"
           className="
+            hero-image
             h-full w-full object-cover
-            brightness-[1.05]
-            scale-[1.015]
-            animate-[heroFloat_22s_ease-in-out_infinite]
-            will-change-transform
+            object-[58%_center]
+            md:object-center
           "
         />
       </div>
 
-      {/* =====================
-          AMBIENT LIGHTS
-      ===================== */}
-      <div className="pointer-events-none absolute inset-0">
-        <div
-          className="
-            absolute left-[12%] top-[30%]
-            h-[430px] w-[430px]
-            rounded-full
-            bg-[rgba(220,190,140,0.085)]
-            blur-[150px]
-          "
-        />
-      </div>
-
-      <div className="pointer-events-none absolute inset-0 mix-blend-screen">
-        <div
-          className="
-            absolute right-[14%] top-[22%]
-            h-[330px] w-[330px]
-            rounded-full
-            bg-[rgba(120,170,255,0.10)]
-            blur-[160px]
-          "
-        />
-      </div>
-
-      {/* =====================
-          BOTTOM GRADIENT
-      ===================== */}
+      {/* TOP VEIL : ヘッダーとの馴染み */}
       <div
         className="
-          pointer-events-none absolute bottom-0 left-0
-          h-[240px] w-full
-          bg-gradient-to-t
-          from-[rgba(0,0,0,0.24)]
-          to-transparent
+          pointer-events-none absolute inset-x-0 top-0 z-[1]
+          h-[120px]
+          bg-[linear-gradient(180deg,rgba(6,6,6,0.34)_0%,rgba(6,6,6,0.16)_46%,transparent_100%)]
         "
       />
 
-      {/* =====================
-          DUST PARTICLES
-      ===================== */}
-      <div className="pointer-events-none absolute inset-0 overflow-hidden">
-        {dustParticles.map((particle) => (
-          <div
-            key={particle.id}
-            className="
-              absolute h-[8px] w-[2px]
-              rounded-full bg-white/25
-              opacity-0
-              animate-[dustFloat_9s_ease-in-out_infinite]
-              will-change-[transform,opacity]
-            "
-            style={{
-              left: particle.left,
-              top: particle.top,
-              transform: `rotate(${particle.rotate})`,
-              animationDelay: particle.delay,
-            }}
-          />
-        ))}
-      </div>
-
-      {/* =====================
-          TEXT BLOCK
-      ===================== */}
+      {/* GLOBAL DEPTH */}
       <div
         className="
-          absolute
-          left-8 right-6 bottom-20
-          max-w-xl
-          md:left-20 md:bottom-32
+          pointer-events-none absolute inset-0 z-[1]
+          bg-[linear-gradient(180deg,rgba(0,0,0,0.10)_0%,rgba(0,0,0,0.06)_34%,rgba(0,0,0,0.18)_72%,rgba(0,0,0,0.34)_100%)]
+        "
+      />
+
+      {/* LEFT SOFT SHADOW FOR TEXT LEGIBILITY */}
+      <div
+        className="
+          pointer-events-none absolute inset-y-0 left-0 z-[1]
+          w-[54%]
+          bg-[linear-gradient(90deg,rgba(0,0,0,0.22)_0%,rgba(0,0,0,0.10)_42%,transparent_100%)]
+        "
+      />
+
+      {/* SUBTLE NOISE / FILM FEEL */}
+      <div
+        className="
+          pointer-events-none absolute inset-0 z-[1] opacity-[0.045]
+          [background-image:radial-gradient(rgba(255,255,255,0.42)_0.45px,transparent_0.45px)]
+          [background-size:4px_4px]
+        "
+      />
+
+      {/* TEXT BLOCK */}
+      <div
+        className="
+          absolute bottom-16 left-7 right-6 z-[2]
+          max-w-[560px]
+          md:bottom-24 md:left-16
+          lg:bottom-28 lg:left-20
         "
       >
-        {/* TITLE */}
+        <div className="hero-fade hero-fade-1">
+          <p
+            className="
+              mb-4
+              text-[0.72rem] tracking-[0.26em]
+              text-white/52
+              md:mb-5
+            "
+          >
+            OKINAWA / WEB DESIGN / BRAND SITE
+          </p>
+        </div>
+
         <h1
           className="
-            stylish-title gpu-fix
+            hero-fade hero-fade-2
             mb-5
-            text-[2.15rem] font-light leading-[1.12]
-            tracking-[0.28em] text-white
-            md:text-[4.25rem]
+            text-[2.3rem] font-light leading-[1.04]
+            tracking-[0.22em] text-white
+            md:mb-6 md:text-[4.1rem]
+            lg:text-[4.6rem]
           "
         >
           GUSHIKEN
@@ -123,29 +90,27 @@ export default function Hero() {
           DESIGN
         </h1>
 
-        {/* UNDERLINE */}
         <div
           className="
-            stylish-sub delay-[0.12s] gpu-fix
-            mb-6 h-[1px] w-24 bg-white/60
+            hero-fade hero-fade-3
+            mb-6 h-px w-24 bg-white/50
+            md:mb-7
           "
         />
 
-        {/* COPY BLOCK */}
         <p
           className="
-            stylish-sub delay-[0.28s] gpu-fix
-            max-w-md
-            text-[0.95rem] leading-relaxed tracking-wide text-white/90
-            md:text-[1.12rem]
+            hero-fade hero-fade-4
+            max-w-[31rem]
+            text-[0.95rem] leading-[2.05]
+            tracking-[0.02em] text-white/84
+            md:text-[1.05rem] md:leading-[2.1]
           "
         >
-          {/* レイヤー1：カテゴリ補助 */}
-          <span className="mb-3 block text-[0.82rem] tracking-[0.12em] text-white/60">
+          <span className="mb-3 block text-[0.8rem] tracking-[0.12em] text-white/58 md:text-[0.84rem]">
             沖縄のWebデザイン / ホームページ制作
           </span>
 
-          {/* レイヤー2：主コピー */}
           <span className="block">
             店舗・サロン・ブランドの価値を、
           </span>
@@ -153,15 +118,7 @@ export default function Hero() {
             上品に、伝わりやすく整えるWeb制作
           </span>
 
-          {/* レイヤー3：補助メリット */}
-          <span
-            className="
-              mt-4 block
-              text-[0.82em]
-              tracking-[0.14em]
-              text-white/58
-            "
-          >
+          <span className="mt-4 block text-[0.84em] leading-[1.9] tracking-[0.08em] text-white/56">
             見やすさと高級感を両立し、
             <br />
             信頼感のある印象へ整えます。
@@ -169,89 +126,68 @@ export default function Hero() {
         </p>
       </div>
 
-      {/* =====================
-          STYLES
-      ===================== */}
+      {/* BOTTOM BREATH */}
+      <div
+        className="
+          pointer-events-none absolute inset-x-0 bottom-0 z-[1]
+          h-[180px]
+          bg-[linear-gradient(180deg,transparent_0%,rgba(0,0,0,0.10)_36%,rgba(0,0,0,0.28)_100%)]
+        "
+      />
+
       <style>{`
-        @keyframes heroFloat {
+        .hero-image {
+          filter: brightness(0.92) saturate(0.9) contrast(1.02);
+          transform: scale(1.01);
+          animation: heroStill 16s ease-in-out infinite;
+          will-change: transform;
+        }
+
+        @keyframes heroStill {
           0% {
-            transform: scale(1.015) translate(0, 0);
+            transform: scale(1.01) translate3d(0, 0, 0);
           }
           50% {
-            transform: scale(1.02) translate(4px, 8px);
+            transform: scale(1.022) translate3d(-2px, 4px, 0);
           }
           100% {
-            transform: scale(1.015) translate(0, 0);
+            transform: scale(1.01) translate3d(0, 0, 0);
           }
         }
 
-        @keyframes dustFloat {
-          0% {
-            opacity: 0;
-            transform: translateY(0) scale(0.8);
-          }
-          35% {
-            opacity: 0.5;
-            transform: translateY(-14px) scale(1);
-          }
-          70% {
-            opacity: 0.25;
-            transform: translateY(-24px) scale(1);
-          }
-          100% {
-            opacity: 0;
-            transform: translateY(-36px) scale(0.9);
-          }
-        }
-
-        .gpu-fix {
+        .hero-fade {
+          opacity: 0;
+          transform: translate3d(0, 18px, 0) scale(0.995);
+          animation: heroReveal 1.05s cubic-bezier(.22,.56,.18,1) forwards;
           will-change: transform, opacity;
           backface-visibility: hidden;
-          transform: translateZ(0);
         }
 
-        .stylish-title {
-          opacity: 0;
-          transform: translateY(22px);
-          animation: titleReveal 1.35s cubic-bezier(.23,.7,.3,1) forwards;
-        }
+        .hero-fade-1 { animation-delay: 0.08s; }
+        .hero-fade-2 { animation-delay: 0.16s; }
+        .hero-fade-3 { animation-delay: 0.24s; }
+        .hero-fade-4 { animation-delay: 0.34s; }
 
-        @keyframes titleReveal {
-          0% {
-            opacity: 0;
-            transform: translateY(22px);
-            letter-spacing: 0.4em;
-          }
-          45% {
-            opacity: 1;
-            transform: translateY(0);
-          }
-          100% {
-            opacity: 1;
-            transform: translateY(0);
-            letter-spacing: 0.28em;
-            text-shadow: 0 2px 8px rgba(0,0,0,0.22);
-          }
-        }
-
-        .stylish-sub {
-          opacity: 0;
-          transform: translate(12px, 14px);
-          animation: subFlow 1.15s cubic-bezier(.25,.46,.25,1) forwards;
-        }
-
-        .stylish-sub.delay-\\[0\\.12s\\] {
-          animation-delay: 0.12s;
-        }
-
-        .stylish-sub.delay-\\[0\\.28s\\] {
-          animation-delay: 0.28s;
-        }
-
-        @keyframes subFlow {
+        @keyframes heroReveal {
           to {
             opacity: 1;
-            transform: translate(0, 0);
+            transform: translate3d(0, 0, 0) scale(1);
+          }
+        }
+
+        @media (max-width: 768px) {
+          .hero-image {
+            animation-duration: 18s;
+            filter: brightness(0.9) saturate(0.88) contrast(1.02);
+          }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+          .hero-image,
+          .hero-fade {
+            animation: none !important;
+            transform: none !important;
+            opacity: 1 !important;
           }
         }
       `}</style>
