@@ -13,17 +13,13 @@ const STATIC_ASSETS = [
   "/offline.html",
   "/manifest.json",
 
-  "/favicon-16.png",
-  "/favicon-32.png",
-  "/favicon-48.png",
-  "/favicon-64.png",
-  "/favicon-96.png",
-  "/favicon-128.png",
-  "/favicon-192.png",
-  "/favicon-256.png",
-  "/favicon-512.png",
+  "/favicon-16-v2.png",
+  "/favicon-32-v2.png",
+  "/favicon-192-v2.png",
+  "/favicon-512-v2.png",
+  "/apple-touch-icon.png",
 
-  "/ogp.png",
+  "/ogp-v2.png",
   "/sitemap.xml",
   "/robots.txt"
 ];
