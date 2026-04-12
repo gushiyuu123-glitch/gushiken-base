@@ -14,21 +14,21 @@ export default function Hero() {
     >
       {/* BACKGROUND IMAGE */}
       <div className="absolute inset-0">
-        <img
-          src={heroRoom}
-          alt="沖縄のWebデザイン / ホームページ制作｜GUSHIKEN DESIGN"
-          className="
-            hero-image hero-image-reveal
-            h-full w-full object-cover
-            object-[58%_center]
-            md:object-center
-            select-none
-          "
-          loading="eager"
-          decoding="async"
-          fetchpriority="high"
-          draggable="false"
-        />
+  <img
+  src={heroRoom}
+  alt="沖縄のWebデザイン / ホームページ制作｜GUSHIKEN DESIGN"
+  className="
+    hero-image hero-image-reveal
+    h-full w-full object-cover
+    object-[58%_center]
+    md:object-center
+    select-none
+  "
+  loading="eager"
+  decoding="async"
+  fetchPriority="high"
+  draggable="false"
+/>
       </div>
 
       {/* TOP VEIL */}

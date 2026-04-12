@@ -24,7 +24,7 @@ export default function HeroSP() {
           "
           loading="eager"
           decoding="async"
-          fetchpriority="high"
+        fetchpriority="high"
           draggable="false"
         />
       </div>
