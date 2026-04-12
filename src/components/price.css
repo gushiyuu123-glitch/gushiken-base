@@ -444,11 +444,14 @@
     padding: 1.9rem 1.35rem 1.6rem;
   }
 
-  .price-btn {
-    width: 100%;
-    min-height: 48px;
-    padding: 0 1rem;
-  }
+.price-btn {
+  width: fit-content;
+  min-width: 176px;
+  min-height: 42px;
+  padding: 0 1rem;
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+}
 }
 
 @media (prefers-reduced-motion: reduce) {
