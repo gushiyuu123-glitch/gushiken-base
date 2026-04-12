@@ -45,8 +45,10 @@ export default function NewsDetail() {
     null;
 
   return (
-    <article className={styles.wrapper}>
+    <article className={`${styles.wrapper} aq-fade aq-show`}>
       <header className={styles.header}>
+        <p className={styles.kicker}>NEWS</p>
+
         <h1 className={styles.title}>{article.title}</h1>
 
         {date && (
@@ -73,4 +75,3 @@ export default function NewsDetail() {
     </article>
   );
 }
-

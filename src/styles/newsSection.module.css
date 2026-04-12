@@ -1,197 +1,240 @@
-/* ============================================================
-   NEWS SECTION — Dior Exhibition × Yuto Minimal FINAL EDITION
-   Silent UI Fade System v4.2 完全統合版
-============================================================ */
+/* ==========================================================
+   News Section
+   Quiet Black × Soft Editorial × Home Ending Tone
+========================================================== */
 
-/* ------------------------------------------------------------ */
-/* GLOBAL FADE HANDLING（Silent UI v4.2 補強）                 */
-/* ------------------------------------------------------------ */
-
-/* 初期透明（SPA の描画ずれ対策） */
-.aq-fade {
-  opacity: 0;
-  transform: translateY(22px);
-  transition:
-    opacity 1.0s cubic-bezier(.25,.46,.45,.94),
-    transform 1.0s cubic-bezier(.25,.46,.45,.94);
-}
-
-.aq-show {
-  opacity: 1 !important;
-  transform: translateY(0) !important;
-}
-
-/* 遅延 */
-.delay-1 { transition-delay: 0.12s; }
-.delay-2 { transition-delay: 0.24s; }
-.delay-3 { transition-delay: 0.36s; }
-.delay-4 { transition-delay: 0.48s; }
-
-/* ------------------------------------------------------------ */
-/* WRAPPER（静かな展示空間の“箱”）                           */
-/* ------------------------------------------------------------ */
+/* ------------------------------------------------------------
+   WRAPPER
+------------------------------------------------------------ */
 .wrapper {
   max-width: 900px;
   margin: 0 auto;
-  padding: 96px 24px 104px;
-  color: white;
+  padding: 96px 24px 108px;
+  color: rgba(255, 255, 255, 0.92);
   position: relative;
 }
 
-/* ------------------------------------------------------------ */
-/* TITLE（柔らかい残光）                                      */
-/* ------------------------------------------------------------ */
-.title {
+.header {
+  margin-bottom: 46px;
   text-align: center;
-  font-size: 34px;
+}
+
+.kicker {
+  margin: 0 0 12px;
+  color: rgba(255, 255, 255, 0.36);
+  font-size: 0.7rem;
+  line-height: 1;
+  letter-spacing: 0.22em;
+}
+
+.title {
+  margin: 0 0 10px;
+  color: rgba(255, 255, 255, 0.97);
+  font-size: clamp(1.95rem, 4vw, 2.6rem);
   font-weight: 300;
-  letter-spacing: 0.18em;
-  margin-bottom: 14px;
-  text-shadow: 0 1px 12px rgba(255, 255, 255, 0.08);
-  opacity: 0.94;
+  line-height: 1.18;
+  letter-spacing: 0.08em;
 }
 
-/* 中央ライン（展示室の“細い光の柱”） */
-.underline {
-  width: 44px;
-  height: 1px;
-  background: linear-gradient(
-    to right,
-    transparent,
-    rgba(255,255,255,0.38),
-    transparent
-  );
-  margin: 0 auto 52px;
+.lead {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.54);
+  font-size: 0.9rem;
+  line-height: 1.8;
+  letter-spacing: 0.03em;
 }
 
-/* ------------------------------------------------------------ */
-/* LIST（静かに積み上がる構造）                               */
-/* ------------------------------------------------------------ */
+/* ------------------------------------------------------------
+   LIST
+------------------------------------------------------------ */
 .list {
   display: flex;
   flex-direction: column;
-  gap: 36px;
+  gap: 26px;
 }
 
-/* アイテム */
+/* ------------------------------------------------------------
+   ITEM
+------------------------------------------------------------ */
 .item {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
+  gap: 22px;
   padding-bottom: 18px;
 
-  border-bottom: 1px solid rgba(255,255,255,0.08);
-
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   text-decoration: none;
-  color: white;
+  color: inherit;
 
   transition:
-    opacity 0.45s ease,
-    transform 0.45s ease,
-    border-color 0.45s ease;
+    opacity 0.3s ease,
+    transform 0.42s ease,
+    border-color 0.3s ease;
 }
 
 .item:hover {
-  opacity: 0.78;
-  border-color: rgba(255,255,255,0.18);
-  transform: translateY(-1px);
+  opacity: 0.92;
+  border-color: rgba(255, 255, 255, 0.14);
+  transform: translateY(-2px);
 }
 
-/* ------------------------------------------------------------ */
-/* DATE（注釈のような数字感）                                 */
-/* ------------------------------------------------------------ */
+/* ------------------------------------------------------------
+   DATE
+------------------------------------------------------------ */
 .date {
-  opacity: 0.48;
-  font-size: 13px;
-  letter-spacing: 0.1em;
+  margin: 0;
+  color: rgba(255, 255, 255, 0.42);
+  font-size: 0.76rem;
+  letter-spacing: 0.08em;
+  line-height: 1.6;
   white-space: nowrap;
-  font-feature-settings: "palt";
+  flex-shrink: 0;
 }
 
-/* ------------------------------------------------------------ */
-/* ITEM TITLE（細く柔らかいテキスト）                         */
-/* ------------------------------------------------------------ */
+/* ------------------------------------------------------------
+   ITEM TITLE
+------------------------------------------------------------ */
 .itemTitle {
-  font-size: 18px;
+  margin: 0;
   flex: 1;
-  margin-left: 28px;
-
-  line-height: 1.75;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 1.02rem;
+  line-height: 1.7;
   font-weight: 300;
   letter-spacing: 0.03em;
-  opacity: 0.92;
 }
 
-/* ------------------------------------------------------------ */
-/* MORE（光の粒度を上げるボタン）                             */
-/* ------------------------------------------------------------ */
+/* ------------------------------------------------------------
+   MORE
+------------------------------------------------------------ */
 .moreWrap {
   text-align: center;
-  margin-top: 56px;
+  margin-top: 48px;
 }
 
 .more {
-  padding: 9px 26px;
-  border-radius: 22px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 168px;
+  min-height: 46px;
+  padding: 0 1.25rem;
 
-  border: 1px solid rgba(255,255,255,0.18);
-  color: white;
-  font-size: 14px;
-  letter-spacing: 0.08em;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 999px;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.026) 0%,
+      rgba(255, 255, 255, 0.012) 100%
+    );
+
+  color: rgba(255, 255, 255, 0.84);
+  font-size: 0.74rem;
+  letter-spacing: 0.12em;
   text-decoration: none;
 
-  backdrop-filter: blur(2px);
+  box-shadow:
+    0 14px 36px rgba(0, 0, 0, 0.22),
+    inset 0 1px 0 rgba(255, 255, 255, 0.035);
 
   transition:
-    background 0.35s ease,
-    border-color 0.35s ease,
-    opacity 0.35s ease;
+    transform 0.7s cubic-bezier(.22,.56,.18,1),
+    border-color 0.42s ease,
+    color 0.42s ease,
+    background 0.42s ease,
+    box-shadow 0.42s ease;
 }
 
 .more:hover {
-  background: rgba(255,255,255,0.06);
-  border-color: rgba(255,255,255,0.32);
-  opacity: 0.9;
+  transform: translateY(-2px);
+  border-color: rgba(255, 255, 255, 0.2);
+  color: rgba(255, 255, 255, 0.96);
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.038) 0%,
+      rgba(255, 255, 255, 0.014) 100%
+    );
+  box-shadow:
+    0 18px 48px rgba(0, 0, 0, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.045);
 }
 
-/* ------------------------------------------------------------ */
-/* LOADING / ERROR（静かな表示）                               */
-/* ------------------------------------------------------------ */
-.loading {
+/* ------------------------------------------------------------
+   LOADING / ERROR
+------------------------------------------------------------ */
+.loading,
+.error {
   text-align: center;
-  opacity: 0.65;
-  font-size: 14px;
-  letter-spacing: 0.08em;
+  font-size: 0.84rem;
+  line-height: 1.7;
+  letter-spacing: 0.04em;
+}
+
+.loading {
+  color: rgba(255, 255, 255, 0.46);
 }
 
 .error {
-  text-align: center;
-  color: #ffbdbd;
-  opacity: 0.85;
-  font-size: 14px;
-  letter-spacing: 0.08em;
+  color: rgba(255, 160, 160, 0.9);
 }
 
-/* ------------------------------------------------------------ */
-/* SP（世界観を壊さない最小調整）                              */
-/* ------------------------------------------------------------ */
+/* ------------------------------------------------------------
+   MOBILE
+------------------------------------------------------------ */
 @media (max-width: 640px) {
   .wrapper {
-    padding: 72px 20px 84px;
+    padding: 72px 20px 88px;
+  }
+
+  .header {
+    margin-bottom: 34px;
+  }
+
+  .kicker {
+    font-size: 0.66rem;
+    letter-spacing: 0.18em;
+  }
+
+  .title {
+    font-size: 1.8rem;
+    margin-bottom: 9px;
+  }
+
+  .lead {
+    font-size: 0.84rem;
+    line-height: 1.74;
+  }
+
+  .list {
+    gap: 18px;
   }
 
   .item {
     flex-direction: column;
     gap: 6px;
+    padding-bottom: 16px;
   }
 
   .itemTitle {
-    margin-left: 0;
-    font-size: 16px;
-    line-height: 1.6;
+    font-size: 0.96rem;
+    line-height: 1.62;
   }
 
   .date {
-    font-size: 12px;
+    font-size: 0.72rem;
+  }
+
+  .moreWrap {
+    margin-top: 38px;
+  }
+
+  .more {
+    min-width: 156px;
+    min-height: 44px;
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
   }
 }

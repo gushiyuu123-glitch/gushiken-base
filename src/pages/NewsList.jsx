@@ -27,11 +27,15 @@ export default function NewsList() {
 
   return (
     <section className={styles.wrapper}>
-      <h1 className={styles.title}>NEWS</h1>
+      <header className={styles.header}>
+        <p className={styles.kicker}>NEWS</p>
+        <h1 className={styles.title}>お知らせ</h1>
+        <p className={styles.lead}>
+          制作のお知らせや更新情報を、静かにまとめています。
+        </p>
+      </header>
 
-      {loading && (
-        <p className={styles.loading}>Loading…</p>
-      )}
+      {loading && <p className={styles.loading}>読み込み中…</p>}
 
       {!loading && (
         <div className={styles.list}>
@@ -43,12 +47,14 @@ export default function NewsList() {
               aria-label={item.title}
             >
               {item.eyecatch && (
-                <img
-                  src={item.eyecatch.url}
-                  className={styles.thumb}
-                  alt=""
-                  loading="lazy"
-                />
+                <div className={styles.thumbWrap}>
+                  <img
+                    src={item.eyecatch.url}
+                    className={styles.thumb}
+                    alt=""
+                    loading="lazy"
+                  />
+                </div>
               )}
 
               <div className={styles.meta}>
@@ -57,9 +63,7 @@ export default function NewsList() {
                     ? new Date(item.publishedAt).toLocaleDateString("ja-JP")
                     : ""}
                 </p>
-                <h2 className={styles.itemTitle}>
-                  {item.title}
-                </h2>
+                <h2 className={styles.itemTitle}>{item.title}</h2>
               </div>
             </Link>
           ))}
@@ -68,4 +72,3 @@ export default function NewsList() {
     </section>
   );
 }
-

@@ -1,5 +1,6 @@
 /* ======================================================
-   GUSHIKEN DESIGN — Premium Navigation Final Optimized
+   GUSHIKEN DESIGN — Navigation Integrated Edition
+   Quiet Black × Soft Glass × Calm Direction
 ====================================================== */
 
 /* ------------------------------------------------------
@@ -14,28 +15,28 @@
   z-index: 999999;
 
   transition:
-    opacity 0.55s cubic-bezier(.19,1,.22,1),
-    transform 0.55s cubic-bezier(.19,1,.22,1),
-    background 0.55s ease,
-    border-bottom-color 0.55s ease,
-    box-shadow 0.55s ease,
-    backdrop-filter 0.55s ease;
+    opacity 0.55s cubic-bezier(.22,.56,.18,1),
+    transform 0.55s cubic-bezier(.22,.56,.18,1),
+    background 0.45s ease,
+    border-bottom-color 0.45s ease,
+    box-shadow 0.45s ease,
+    backdrop-filter 0.45s ease;
 }
 
 :local(.navIdle) {
-  background: rgba(0, 0, 0, 0.28);
-  backdrop-filter: blur(14px) saturate(130%);
-  -webkit-backdrop-filter: blur(14px) saturate(130%);
-  border-bottom: 1px solid rgba(215, 195, 154, 0.12);
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+  background: rgba(0, 0, 0, 0.18);
+  backdrop-filter: blur(10px) saturate(118%);
+  -webkit-backdrop-filter: blur(10px) saturate(118%);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.14);
 }
 
 :local(.navActive) {
-  background: rgba(0, 0, 0, 0.54);
-  backdrop-filter: blur(22px) saturate(150%);
-  -webkit-backdrop-filter: blur(22px) saturate(150%);
-  border-bottom: 1px solid rgba(215, 195, 154, 0.22);
-  box-shadow: 0 18px 46px rgba(0, 0, 0, 0.3);
+  background: rgba(0, 0, 0, 0.42);
+  backdrop-filter: blur(16px) saturate(128%);
+  -webkit-backdrop-filter: blur(16px) saturate(128%);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 16px 38px rgba(0, 0, 0, 0.22);
 }
 
 /* ------------------------------------------------------
@@ -57,15 +58,15 @@
 ------------------------------------------------------ */
 :local(.navLogo) {
   color: rgba(255, 255, 255, 0.95);
-  font-size: 1.08rem;
+  font-size: 1.04rem;
   font-weight: 300;
-  letter-spacing: 0.26em;
+  letter-spacing: 0.24em;
   text-decoration: none;
-  transition: opacity 0.35s ease;
+  transition: opacity 0.3s ease;
 }
 
 :local(.navLogo:hover) {
-  opacity: 0.74;
+  opacity: 0.76;
 }
 
 /* ------------------------------------------------------
@@ -73,21 +74,21 @@
 ------------------------------------------------------ */
 :local(.navPc) {
   display: flex;
-  gap: 48px;
+  gap: 46px;
   align-items: center;
 }
 
 :local(.navItem) {
   position: relative;
   padding: 6px 2px 12px;
-  font-size: 0.88rem;
+  font-size: 0.84rem;
   font-weight: 300;
-  letter-spacing: 0.18em;
-  color: rgba(255, 255, 255, 0.78);
+  letter-spacing: 0.17em;
+  color: rgba(255, 255, 255, 0.76);
   text-decoration: none;
   transition:
-    color 0.35s ease,
-    opacity 0.35s ease;
+    color 0.3s ease,
+    opacity 0.3s ease;
 }
 
 :local(.navItem)::after {
@@ -99,14 +100,14 @@
   height: 1px;
   background: linear-gradient(
     to right,
-    rgba(215, 195, 154, 0.14),
-    rgba(215, 195, 154, 0.88)
+    rgba(255, 255, 255, 0.10),
+    rgba(255, 255, 255, 0.62)
   );
-  transition: width 0.55s cubic-bezier(.19,1,.22,1);
+  transition: width 0.5s cubic-bezier(.22,.56,.18,1);
 }
 
 :local(.navItem:hover) {
-  color: rgba(255, 255, 255, 0.98);
+  color: rgba(255, 255, 255, 0.97);
 }
 
 :local(.navItem:hover)::after {
@@ -121,6 +122,7 @@
   border: 0;
   background: transparent;
 }
+
 /* ------------------------------------------------------
    MOBILE
 ------------------------------------------------------ */
@@ -134,8 +136,8 @@
   }
 
   :local(.navLogo) {
-    font-size: 0.92rem;
-    letter-spacing: 0.18em;
+    font-size: 0.9rem;
+    letter-spacing: 0.17em;
   }
 
   :local(.hamburger) {
@@ -156,9 +158,9 @@
     border-radius: 999px;
     transform-origin: center;
     transition:
-      transform 0.45s cubic-bezier(.19,1,.22,1),
-      opacity 0.45s cubic-bezier(.19,1,.22,1),
-      background 0.35s ease;
+      transform 0.42s cubic-bezier(.22,.56,.18,1),
+      opacity 0.42s cubic-bezier(.22,.56,.18,1),
+      background 0.3s ease;
   }
 
   :local(.hamburgerOpen) span:nth-child(1) {
@@ -179,12 +181,12 @@
   :local(.mobileOverlay) {
     position: fixed;
     inset: 0;
-    background: rgba(0, 0, 0, 0.34);
-    backdrop-filter: blur(7px);
-    -webkit-backdrop-filter: blur(7px);
+    background: rgba(0, 0, 0, 0.28);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
     opacity: 0;
     pointer-events: none;
-    transition: opacity 0.32s ease;
+    transition: opacity 0.3s ease;
     z-index: 999997;
   }
 
@@ -195,7 +197,6 @@
 
   /* ------------------------------------------------------
      MOBILE NAV PANEL
-     位置はここだけで管理
   ------------------------------------------------------ */
   :local(.mobileNav) {
     --mobile-nav-top: 88px;
@@ -221,10 +222,10 @@
         rgba(10, 10, 10, 0.96) 100%
       );
     box-shadow:
-      0 18px 44px rgba(0, 0, 0, 0.34),
-      0 0 0 1px rgba(220, 190, 140, 0.05) inset;
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
+      0 18px 44px rgba(0, 0, 0, 0.30),
+      inset 0 1px 0 rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
 
     max-height: var(--mobile-nav-max-height);
     overflow-y: auto;
@@ -235,8 +236,8 @@
     pointer-events: none;
 
     transition:
-      transform 0.32s cubic-bezier(.22,1,.36,1),
-      opacity 0.32s ease;
+      transform 0.3s cubic-bezier(.22,1,.36,1),
+      opacity 0.3s ease;
 
     z-index: 999998;
   }
@@ -262,7 +263,7 @@
     margin: 0;
     font-size: 0.68rem;
     letter-spacing: 0.2em;
-    color: rgba(220, 190, 140, 0.72);
+    color: rgba(255, 255, 255, 0.52);
   }
 
   :local(.mobileClose) {
@@ -274,8 +275,8 @@
     background: rgba(255, 255, 255, 0.02);
     cursor: pointer;
     transition:
-      background 0.3s ease,
-      opacity 0.3s ease;
+      background 0.28s ease,
+      opacity 0.28s ease;
   }
 
   :local(.mobileClose:hover) {
@@ -315,28 +316,28 @@
     border-bottom: 1px solid rgba(255, 255, 255, 0.06);
     color: rgba(255, 255, 255, 0.9);
     transition:
-      color 0.3s ease,
-      transform 0.3s ease,
-      border-color 0.3s ease;
+      color 0.28s ease,
+      transform 0.28s ease,
+      border-color 0.28s ease;
   }
 
   :local(.mobileNavItem:hover) {
     color: rgba(255, 255, 255, 0.98);
     transform: translateX(2px);
-    border-bottom-color: rgba(220, 190, 140, 0.12);
+    border-bottom-color: rgba(255, 255, 255, 0.12);
   }
 
   :local(.mobileNavText) {
-    font-size: 0.98rem;
+    font-size: 0.96rem;
     font-weight: 300;
-    letter-spacing: 0.12em;
+    letter-spacing: 0.11em;
   }
 
   :local(.mobileNavArrow) {
-    color: rgba(220, 190, 140, 0.72);
+    color: rgba(255, 255, 255, 0.48);
     font-size: 0.84rem;
     transform: translateX(0);
-    transition: transform 0.3s ease, opacity 0.3s ease;
+    transition: transform 0.28s ease, opacity 0.28s ease;
   }
 
   :local(.mobileNavItem:hover) :local(.mobileNavArrow) {
@@ -359,7 +360,6 @@
 
 /* ------------------------------------------------------
    VERY SMALL DEVICES
-   top を上書きしない
 ------------------------------------------------------ */
 @media (max-width: 390px) {
   :local(.mobileNav) {
@@ -377,8 +377,8 @@
   }
 
   :local(.mobileNavText) {
-    font-size: 0.94rem;
-    letter-spacing: 0.1em;
+    font-size: 0.92rem;
+    letter-spacing: 0.09em;
   }
 
   :local(.mobileNavNote) {
@@ -386,6 +386,7 @@
     line-height: 1.7;
   }
 }
+
 /* ------------------------------------------------------
    DESKTOP SAFETY
 ------------------------------------------------------ */
@@ -404,6 +405,6 @@
 :local(.mobileNavItem):focus-visible,
 :local(.navItem):focus-visible,
 :local(.navLogo):focus-visible {
-  outline: 1px solid rgba(220, 190, 140, 0.42);
+  outline: 1px solid rgba(255, 255, 255, 0.34);
   outline-offset: 3px;
 }

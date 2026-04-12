@@ -1,56 +1,90 @@
 /* =====================================================
-   CONTACT — Silent UI v4.4
-   Dior Exhibition × Calm Luxury × Noah Final Edition
+   CONTACT
+   Quiet Black × Calm CTA × Final Section
 ===================================================== */
 
 /* ----------------------------------------------
    Section
 ---------------------------------------------- */
 .contact-section {
-  background: #0b0b0b;
-  min-height: 100svh;
-  padding: clamp(80px, 12vh, 140px) 0;
+  position: relative;
+  overflow: hidden;
+  background:
+    linear-gradient(
+      180deg,
+      #0a0a0a 0%,
+      #0b0b0b 22%,
+      #090909 60%,
+      #0a0a0a 100%
+    );
+  min-height: 88svh;
+  padding: clamp(80px, 12vh, 130px) 0;
 
   display: flex;
   align-items: center;
   justify-content: center;
+}
 
-  position: relative;
-  overflow: hidden;
+.contact-section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255,255,255,0.018) 0%,
+      transparent 16%,
+      transparent 82%,
+      rgba(255,255,255,0.012) 100%
+    );
+  opacity: 0.9;
+}
+
+.contact-section::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: radial-gradient(
+    rgba(255,255,255,0.20) 0.42px,
+    transparent 0.42px
+  );
+  background-size: 4px 4px;
+  opacity: 0.022;
 }
 
 /* ----------------------------------------------
-   Container（中心線を美しく合わせる）
+   Container
 ---------------------------------------------- */
 .contact-container {
-  max-width: 620px;
-  margin: 0 auto;
-  padding: 0 clamp(40px, 6vw, 80px);
   position: relative;
+  z-index: 1;
+  width: min(100%, 720px);
+  margin: 0 auto;
+  padding: 0 clamp(28px, 5vw, 72px);
 }
 
-/* コンテンツ中央寄せ（左右の“芯”を合わせる） */
 .contact-content {
   text-align: center;
-  padding-left: clamp(10px, 1.6vw, 24px);
 }
 
 /* ----------------------------------------------
-   Architectural Gold Line（建築的ライン）
+   Center Line
 ---------------------------------------------- */
 .contact-gold-line {
   position: absolute;
-  left: clamp(-6px, -1vw, -16px);
-  top: 10%;
-  height: 78%;
+  left: 50%;
+  top: 0.8rem;
+  transform: translateX(-50%);
   width: 1px;
-
+  height: calc(100% - 1.6rem);
   background: linear-gradient(
     to bottom,
-    rgba(215,195,154,0.55),
-    rgba(215,195,154,0.12)
+    rgba(255,255,255,0.26),
+    rgba(255,255,255,0.06)
   );
-  opacity: 0.52;
+  opacity: 0.72;
   pointer-events: none;
 }
 
@@ -58,30 +92,31 @@
    Title
 ---------------------------------------------- */
 .contact-title {
-  color: #fff;
-  font-size: clamp(2rem, 3.1vw, 2.6rem);
+  margin: 0 0 clamp(26px, 4vh, 40px);
+  color: rgba(255,255,255,0.97);
+  font-size: clamp(2rem, 3vw, 2.6rem);
   font-weight: 300;
-  letter-spacing: 0.24em;
-
-  margin-bottom: clamp(28px, 4vh, 42px);
+  line-height: 1;
+  letter-spacing: 0.22em;
 }
 
 /* ----------------------------------------------
    Lead / Sub Lead
 ---------------------------------------------- */
 .contact-lead {
-  color: rgba(255,255,255,0.92);
+  margin: 0 0 1.2rem;
+  color: rgba(255,255,255,0.90);
   font-size: 1rem;
-  line-height: 1.85;
-  letter-spacing: 0.04em;
-  margin-bottom: 1.6rem;
+  line-height: 1.95;
+  letter-spacing: 0.035em;
 }
 
 .contact-lead-sub {
-  color: rgba(255,255,255,0.72);
-  font-size: 0.9rem;
-  line-height: 1.85;
-  margin-bottom: 2.4rem;
+  margin: 0 0 2.2rem;
+  color: rgba(255,255,255,0.66);
+  font-size: 0.92rem;
+  line-height: 1.92;
+  letter-spacing: 0.03em;
 }
 
 /* ----------------------------------------------
@@ -90,58 +125,78 @@
 .contact-actions {
   display: flex;
   flex-direction: column;
-  gap: 1.4rem;
-  margin-bottom: 2.4rem;
+  gap: 1.1rem;
+  margin-bottom: 2.2rem;
 }
 
-/* CTA Button（薄金×透明膜） */
 .contact-btn {
-  display: inline-block;
-  padding: 0.9rem 2.8rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 250px;
+  min-height: 52px;
+  padding: 0 1.6rem;
 
-  font-size: 0.9rem;
-  letter-spacing: 0.18em;
+  border: 1px solid rgba(255,255,255,0.14);
+  border-radius: 999px;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255,255,255,0.026) 0%,
+      rgba(255,255,255,0.012) 100%
+    );
 
-  color: rgba(217,185,138,0.88);
-  border: 1.5px solid rgba(217,185,138,0.85);
-  border-radius: 4px;
+  color: rgba(255,255,255,0.84);
+  font-size: 0.78rem;
+  letter-spacing: 0.16em;
   text-decoration: none;
 
-  backdrop-filter: blur(4px);
-  background: rgba(217,185,138,0.05);
+  box-shadow:
+    0 14px 36px rgba(0,0,0,0.22),
+    inset 0 1px 0 rgba(255,255,255,0.035);
 
-  box-shadow: 0 0 18px rgba(217,185,138,0.06);
-  transition: all 0.35s cubic-bezier(.19,1,.22,1);
+  transition:
+    transform 0.7s cubic-bezier(.22,.56,.18,1),
+    border-color 0.42s ease,
+    color 0.42s ease,
+    background 0.42s ease,
+    box-shadow 0.42s ease;
 }
 
-.contact-btn:hover {
-  background: rgba(217,185,138,0.92);
-  color: #000;
+.contact-btn:hover,
+.contact-btn:focus-visible {
   transform: translateY(-2px);
-  box-shadow: 0 10px 24px rgba(217,185,138,0.25);
-}
-
-/* LINE Link */
-.contact-sub-link {
-  font-size: 0.85rem;
-  letter-spacing: 0.06em;
-  color: rgba(230,225,218,0.9);
-  text-decoration: none;
-  opacity: 0.65;
-  transition: opacity .28s ease;
-}
-
-.contact-sub-link:hover {
-  opacity: 1;
+  border-color: rgba(255,255,255,0.2);
+  color: rgba(255,255,255,0.96);
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255,255,255,0.038) 0%,
+      rgba(255,255,255,0.014) 100%
+    );
+  box-shadow:
+    0 18px 48px rgba(0,0,0,0.28),
+    inset 0 1px 0 rgba(255,255,255,0.045);
+  outline: none;
 }
 
 /* ----------------------------------------------
-   Footer Text
+   Footer
 ---------------------------------------------- */
 .contact-footer {
-  font-size: 0.72rem;
-  letter-spacing: 0.06em;
-  color: rgba(255,255,255,0.34);
+  margin: 0;
+  color: rgba(255,255,255,0.36);
+  font-size: 0.74rem;
+  line-height: 1.9;
+  letter-spacing: 0.04em;
+}
+
+/* ----------------------------------------------
+   AQ FADE
+---------------------------------------------- */
+.contact-section .aq-fade {
+  filter: none !important;
+  backdrop-filter: none !important;
 }
 
 /* ----------------------------------------------
@@ -149,17 +204,57 @@
 ---------------------------------------------- */
 @media (max-width: 768px) {
   .contact-section {
-    padding: clamp(68px, 11vh, 100px) 0;
+    min-height: auto;
+    padding: 10vh 0;
+  }
+
+  .contact-container {
+    width: 100%;
+    padding: 0 1.25rem;
+  }
+
+  .contact-gold-line {
+    top: 0.3rem;
+    height: calc(100% - 0.6rem);
+    opacity: 0.76;
+  }
+
+  .contact-title {
+    margin-bottom: 1.8rem;
+    font-size: 1.95rem;
+    letter-spacing: 0.16em;
+  }
+
+  .contact-lead {
+    font-size: 0.95rem;
+    line-height: 1.92;
+  }
+
+  .contact-lead-sub {
+    margin-bottom: 2rem;
+    font-size: 0.88rem;
+    line-height: 1.9;
   }
 
   .contact-btn {
     width: 100%;
-    padding: 1.05rem 0;
-    font-size: 1rem;
-    letter-spacing: 0.22em;
+    min-height: 48px;
+    padding: 0 1rem;
+    font-size: 0.82rem;
+    letter-spacing: 0.14em;
   }
 
-  .contact-gold-line {
-    opacity: 0.58;
+  .contact-footer {
+    font-size: 0.72rem;
+    line-height: 1.86;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .contact-section *,
+  .contact-section *::before,
+  .contact-section *::after {
+    transition: none !important;
+    animation: none !important;
   }
 }

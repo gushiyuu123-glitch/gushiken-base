@@ -1,18 +1,17 @@
 /* =========================================================
-   FOOTER — Silent UI v4.3
-   Dior Exhibition Glow × Minimal Gold Line
-   Noah Final Edition
+   FOOTER — Integrated Edition
+   Quiet Black × Soft Ending × Calm Structure
 ========================================================= */
 
 /* ---------------------------------------------
-   Section Fade（IntersectionObserver 用）
+   Section Fade
 --------------------------------------------- */
 .footer-section {
   opacity: 0;
-  transform: translateY(22px);
+  transform: translateY(16px);
   transition:
-    opacity 1.15s cubic-bezier(.25,.46,.45,.94),
-    transform 1.15s cubic-bezier(.25,.46,.45,.94);
+    opacity 1.02s cubic-bezier(.22,.56,.18,1),
+    transform 1.02s cubic-bezier(.22,.56,.18,1);
 }
 
 .footer-section.aq-show {
@@ -21,7 +20,7 @@
 }
 
 /* ---------------------------------------------
-   Base Link Tap Area（全リンク共通）
+   Base Link Area
 --------------------------------------------- */
 .hiddenLink {
   position: relative;
@@ -31,13 +30,13 @@
 }
 
 /* =========================================================
-   NAV LINKS（WORKS / ABOUT / PRICE …）
+   NAV LINKS
 ========================================================= */
 .footer-link {
   position: relative;
   color: rgba(255,255,255,0.62);
   letter-spacing: 0.08em;
-  transition: color .35s ease;
+  transition: color 0.32s ease;
 }
 
 .footer-link::after {
@@ -49,10 +48,10 @@
   height: 1px;
   background: linear-gradient(
     to right,
-    rgba(215,195,154,0.15),
-    rgba(215,195,154,0.75)
+    rgba(255,255,255,0.10),
+    rgba(255,255,255,0.60)
   );
-  transition: width .45s cubic-bezier(.19,1,.22,1);
+  transition: width 0.42s cubic-bezier(.22,.56,.18,1);
 }
 
 .footer-link:hover {
@@ -64,14 +63,14 @@
 }
 
 /* =========================================================
-   SNS LINKS（Instagram / X）
+   SNS LINKS
 ========================================================= */
 .footer-sns {
   position: relative;
-  color: rgba(255,255,255,0.6);
+  color: rgba(255,255,255,0.58);
   font-size: 0.9rem;
   letter-spacing: 0.05em;
-  transition: color .35s ease;
+  transition: color 0.32s ease;
 }
 
 .footer-sns::after {
@@ -82,11 +81,11 @@
   width: 0;
   height: 1px;
   background: rgba(255,255,255,0.18);
-  transition: width .35s ease;
+  transition: width 0.32s ease;
 }
 
 .footer-sns:hover {
-  color: rgba(255,255,255,0.98);
+  color: rgba(255,255,255,0.96);
 }
 
 .footer-sns:hover::after {
@@ -94,15 +93,15 @@
 }
 
 /* =========================================================
-   PROJECT LINKS（Experimental）
+   PROJECT LINKS
 ========================================================= */
 .footer-project-link {
   position: relative;
   font-size: 0.78rem;
-  letter-spacing: 0.17em;
+  letter-spacing: 0.15em;
   color: rgba(255,255,255,0.46);
   text-decoration: none;
-  transition: color .45s cubic-bezier(.25,.46,.45,.94);
+  transition: color 0.38s cubic-bezier(.22,.56,.18,1);
 }
 
 .footer-project-link::after {
@@ -113,11 +112,11 @@
   width: 0;
   height: 1px;
   background: rgba(255,255,255,0.22);
-  transition: width .45s cubic-bezier(.25,.46,.45,.94);
+  transition: width 0.38s cubic-bezier(.22,.56,.18,1);
 }
 
 .footer-project-link:hover {
-  color: rgba(255,255,255,0.92);
+  color: rgba(255,255,255,0.9);
 }
 
 .footer-project-link:hover::after {
@@ -131,16 +130,35 @@
 }
 
 /* =========================================================
-   LEGAL LINKS（利用規約 / プライバシー）
+   LEGAL LINKS
 ========================================================= */
 .footer-legal {
   color: rgba(255,255,255,0.38);
   letter-spacing: 0.12em;
-  transition: opacity .35s ease;
+  transition: opacity 0.32s ease, color 0.32s ease;
 }
 
 .footer-legal:hover {
-  opacity: 0.75;
+  opacity: 1;
+  color: rgba(255,255,255,0.68);
+}
+
+/* =========================================================
+   LAB
+========================================================= */
+.footer-lab {
+  display: block;
+  margin-top: 0.45rem;
+  font-size: 0.74rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.26);
+  transition: color 0.38s ease, opacity 0.38s ease;
+}
+
+.footer-lab:hover {
+  color: rgba(255,255,255,0.56);
+  opacity: 1;
 }
 
 /* =========================================================
@@ -156,21 +174,31 @@
   .footer-sns {
     font-size: 0.86rem;
   }
+
+  .footer-project-link {
+    font-size: 0.74rem;
+    letter-spacing: 0.13em;
+  }
+
+  .footer-lab {
+    font-size: 0.7rem;
+    letter-spacing: 0.14em;
+  }
 }
 
-/* =========================================================
-   LAB / SUBTEXT
-========================================================= */
-.footer-lab {
-  display: block;
-  margin-top: 0.45rem;
-  font-size: 0.74rem;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: rgba(255,255,255,0.28);
-  transition: color .45s ease;
-}
+@media (prefers-reduced-motion: reduce) {
+  .footer-section,
+  .footer-link,
+  .footer-sns,
+  .footer-project-link,
+  .footer-legal,
+  .footer-lab {
+    transition: none !important;
+    animation: none !important;
+  }
 
-.footer-lab:hover {
-  color: rgba(255,255,255,0.60);
+  .footer-section {
+    opacity: 1 !important;
+    transform: none !important;
+  }
 }

@@ -1,4 +1,3 @@
-// src/pages/Contact.jsx
 import React, { useEffect, useRef, useState } from "react";
 import styles from "../styles/contact.module.css";
 
@@ -10,24 +9,15 @@ export default function Contact() {
   const [status, setStatus] = useState("idle");
   const [message, setMessage] = useState("");
 
-  /* ----------------------------------------------------
-      Page Fade-in（Silent UI v4.2）
-      ※ aq-fade の制御は App.jsx で一元管理
-  ---------------------------------------------------- */
   useEffect(() => {
     const root = rootRef.current;
     if (!root) return;
-
-    // Contact page 専用のフェードのみ
     root.classList.add(styles.show);
   }, []);
 
-  /* ----------------------------------------------------
-      SEO（Contact 専用）
-  ---------------------------------------------------- */
   useEffect(() => {
     const description =
-      "GUSHIKEN DESIGN へのお問い合わせページ。サイト制作やブランド設計の相談を、目的の整理から丁寧にサポートします。";
+      "GUSHIKEN DESIGN へのお問い合わせページ。サイト制作やブランド設計のご相談を、目的の整理から丁寧にサポートします。";
 
     let meta = document.querySelector('meta[name="description"]');
     if (!meta) {
@@ -46,9 +36,6 @@ export default function Contact() {
     canonical.href = "https://gushikendesign.com/contact";
   }, []);
 
-  /* ----------------------------------------------------
-      Form Submit
-  ---------------------------------------------------- */
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (status === "loading") return;
@@ -71,7 +58,6 @@ export default function Contact() {
       setStatus("success");
       setMessage("送信が完了しました。お問い合わせありがとうございます。");
       form.reset();
-
     } catch (err) {
       console.error(err);
       setStatus("error");
@@ -82,83 +68,114 @@ export default function Contact() {
   return (
     <section ref={rootRef} className={`${styles.contactSection} aq-fade`}>
       <div className={styles.container}>
-
-        {/* 金ライン */}
         <div className={styles.goldLine} />
 
-        {/* TITLE */}
         <h1 className={`${styles.title} aq-fade delay-1`} translate="no">
           CONTACT
         </h1>
 
-        {/* LEAD */}
         <p className={`${styles.lead} aq-fade delay-2`}>
-          「まず相談だけしたい」という段階でも大丈夫です。<br />
-          お店の雰囲気・伝えたいこと・なんとなくのイメージだけでも構いません。<br />
-          言語化が難しい部分はこちらで整理し、最適な形をご提案します。
+          まだ内容が固まっていない段階でも大丈夫です。
+          <br />
+          「こんな雰囲気にしたい」「こんな見せ方をしたい」など、
+          <br />
+          大まかなイメージからでもご相談いただけます。
         </p>
 
-        {/* FORM */}
         <form className={`${styles.form} aq-fade delay-3`} onSubmit={handleSubmit}>
-
           <FormField label="お名前" required htmlFor="name">
-            <input id="name" name="name" type="text" required className={styles.input} autoComplete="name" />
+            <input
+              id="name"
+              name="name"
+              type="text"
+              required
+              className={styles.input}
+              autoComplete="name"
+            />
           </FormField>
 
           <FormField label="メールアドレス" required htmlFor="email">
-            <input id="email" name="email" type="email" required className={styles.input} autoComplete="email" />
+            <input
+              id="email"
+              name="email"
+              type="email"
+              required
+              className={styles.input}
+              autoComplete="email"
+            />
           </FormField>
 
           <FormField label="電話番号（任意）" htmlFor="tel">
-            <input id="tel" name="tel" type="tel" className={styles.input} autoComplete="tel" />
+            <input
+              id="tel"
+              name="tel"
+              type="tel"
+              className={styles.input}
+              autoComplete="tel"
+            />
           </FormField>
 
           <FormField label="ご希望のプラン" htmlFor="plan">
             <select id="plan" name="plan" className={styles.select} defaultValue="">
-              <option value="" disabled>未選択</option>
+              <option value="" disabled>
+                未選択
+              </option>
               <option value="lp">ランディングページ</option>
               <option value="small">小規模サイト（2〜4P）</option>
-              <option value="brand">ブランドサイト（4〜6P）</option>
+              <option value="brand">ブランドサイト</option>
+              <option value="consult">相談しながら決めたい</option>
             </select>
           </FormField>
 
           <FormField label="写真素材について" htmlFor="photo">
             <select id="photo" name="photo" className={styles.select} defaultValue="">
-              <option value="" disabled>未選択</option>
+              <option value="" disabled>
+                未選択
+              </option>
               <option value="have">写真あり</option>
               <option value="will-shoot">これから撮影予定</option>
               <option value="consult">相談したい</option>
             </select>
           </FormField>
 
-          <FormField label="予算感（任意）" htmlFor="budget">
+          <FormField label="ご予算感（任意）" htmlFor="budget">
             <select id="budget" name="budget" className={styles.select} defaultValue="">
-              <option value="" disabled>未選択</option>
-              <option value="80">6万円</option>
-              <option value="150">12万円</option>
-              <option value="300">20万円</option>
+              <option value="" disabled>
+                未選択
+              </option>
+              <option value="60">6万円前後</option>
+              <option value="120">12万円前後</option>
+              <option value="240">24万円前後</option>
               <option value="unknown">未定</option>
             </select>
           </FormField>
 
-          <FormField label="詳細内容" required htmlFor="detail">
-            <textarea id="detail" name="detail" rows={6} required className={styles.textarea} />
+          <FormField label="ご相談内容" required htmlFor="detail">
+            <textarea
+              id="detail"
+              name="detail"
+              rows={6}
+              required
+              className={styles.textarea}
+              placeholder="ご相談内容やイメージ、ご希望の雰囲気などを自由にご記入ください。"
+            />
           </FormField>
 
-          {/* 注意 */}
           <p className={`${styles.note} aq-fade delay-4`}>
-            ※ 写真がなくても問題ありません。イメージに合わせて最適な形を一緒に考えます。<br />
-            ※ 通常 24 時間以内にご返信いたします。
+            ※ 写真がなくても問題ありません。内容に合わせて進め方をご案内します。
+            <br />
+            ※ 通常 24 時間以内を目安にご返信しています。
           </p>
 
-          {/* CTA */}
           <div className={`${styles.cta} aq-fade delay-5`}>
             <button
               type="submit"
-              className={`${styles.submitBtn} ${status === "loading" ? styles.submitDisabled : ""}`}
+              className={`${styles.submitBtn} ${
+                status === "loading" ? styles.submitDisabled : ""
+              }`}
               disabled={status === "loading"}
             >
-              {status === "loading" ? "送信中..." : "送　信"}
+              {status === "loading" ? "送信中..." : "送信する"}
             </button>
 
             {message && (
@@ -175,15 +192,11 @@ export default function Contact() {
               </p>
             )}
           </div>
-
         </form>
-
       </div>
     </section>
   );
 }
-
-/* --------------------------------------------- */
 
 function FormField({ label, children, required, htmlFor }) {
   return (

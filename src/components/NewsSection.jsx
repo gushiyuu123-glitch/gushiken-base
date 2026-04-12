@@ -31,26 +31,32 @@ export default function NewsSection() {
   }, []);
 
   return (
-    <section className={styles.wrapper} aria-labelledby="news-heading">
-      {/* タイトル */}
-      <h2 id="news-heading" className={styles.title}>
-        NEWS
-      </h2>
-      <div className={styles.underline} />
+    <section
+      className={`${styles.wrapper} aq-fade`}
+      aria-labelledby="news-heading"
+    >
+      <header className={`${styles.header} aq-fade delay-1`}>
+        <p className={styles.kicker}>NEWS</p>
+        <h2 id="news-heading" className={styles.title}>
+          お知らせ
+        </h2>
+        <p className={styles.lead}>
+          制作のお知らせや更新情報を、静かにまとめています。
+        </p>
+      </header>
 
-      {/* ローディング / エラー */}
       {loading && (
         <p className={styles.loading} aria-live="polite">
-          Loading…
+          読み込み中…
         </p>
       )}
+
       {error && !loading && (
         <p className={styles.error} aria-live="assertive">
           お知らせを読み込めませんでした
         </p>
       )}
 
-      {/* リスト */}
       {!loading && !error && (
         <div className={styles.list}>
           {news.map((item) => {
@@ -73,11 +79,10 @@ export default function NewsSection() {
         </div>
       )}
 
-      {/* もっと見る */}
       {!loading && !error && news.length > 0 && (
         <div className={styles.moreWrap}>
           <Link to="/news" className={styles.more}>
-            もっと見る →
+            もっと見る
           </Link>
         </div>
       )}

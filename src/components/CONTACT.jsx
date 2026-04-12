@@ -36,53 +36,47 @@ export default function Contact() {
         <div className="contact-gold-line" />
 
         <div className="contact-content">
-          {/* タイトル */}
           <h2 className="contact-title aq-fade delay-1" translate="no">
             CONTACT
           </h2>
 
-          {/* =====================
-              LEAD / PC
-          ===================== */}
+          {/* PC */}
           <div className="hidden sm:block">
             <p className="contact-lead aq-fade delay-2">
-              このサイトの世界観や考え方に、
-              少しでも合いそうだと感じていただけた方へ。
+              このサイトの雰囲気に
+              <span className="text-white/95">少しでも合いそう</span>
+              と感じていただけた方へ。
             </p>
 
             <p className="contact-lead-sub aq-fade delay-3">
-              まだ内容が固まっていなくても問題ありません。
+              まだ内容が固まっていなくても大丈夫です。
               <br />
-              「こんな雰囲気にしたい」「こう見せたい」など、
-              大まかな方向性だけでもお送りください。
+              「こんな雰囲気にしたい」くらいの段階からご相談いただけます。
             </p>
           </div>
 
-          {/* =====================
-              LEAD / SP
-          ===================== */}
+          {/* SP */}
           <div className="block sm:hidden">
             <p className="contact-lead aq-fade delay-2">
-              このサイトの世界観や考え方に、
+              このサイトの雰囲気に
               <br />
-              少しでも合いそうだと
-              <br />
-              感じていただけた方へ。
+              <span className="text-white/95">
+                少しでも合いそう
+              </span>
+              と感じていただけた方へ。
             </p>
 
             <p className="contact-lead-sub aq-fade delay-3">
               まだ内容が固まっていなくても
               <br />
-              問題ありません。
+              大丈夫です。
               <br />
               <br />
               「こんな雰囲気にしたい」
               <br />
-              「こう見せたい」など、
+              くらいの段階から
               <br />
-              大まかな方向性だけでも
-              <br />
-              お送りください。
+              ご相談いただけます。
             </p>
           </div>
 
@@ -92,30 +86,26 @@ export default function Contact() {
             </a>
           </div>
 
-          {/* =====================
-              FOOTER / PC
-          ===================== */}
+          {/* PC */}
           <div className="hidden sm:block">
             <p className="contact-footer aq-fade delay-5">
-              ※ 内容やスケジュールによっては、対応が難しい場合があります。
+              ※ 内容やスケジュールによっては、お受けできない場合があります。
               <br />
-              その際も、必ず理由を添えて丁寧にお返事いたします。
+              その際も、できるだけ丁寧にお返事いたします。
             </p>
           </div>
 
-          {/* =====================
-              FOOTER / SP
-          ===================== */}
+          {/* SP */}
           <div className="block sm:hidden">
             <p className="contact-footer aq-fade delay-5">
-              ※ 内容やスケジュールによっては、
+              ※ 内容やスケジュールによっては
               <br />
-              対応が難しい場合があります。
+              お受けできない場合があります。
               <br />
               <br />
-              その際も、理由を添えて
+              その際も、
               <br />
-              丁寧にお返事いたします。
+              できるだけ丁寧にお返事いたします。
             </p>
           </div>
         </div>

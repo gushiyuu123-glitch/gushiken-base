@@ -3,8 +3,8 @@ import styles from "./Nav.module.css";
 
 const navItems = [
   { href: "#works", label: "WORKS" },
-  { href: "#philosophy", label: "PHILOSOPHY" },
   { href: "#about", label: "ABOUT" },
+  { href: "#philosophy", label: "POLICY" },
   { href: "#price", label: "PRICE" },
   { href: "#contact", label: "CONTACT" },
 ];

@@ -17,8 +17,8 @@
   transform-origin: bottom right;
   pointer-events: none;
   transition:
-    opacity 0.34s ease,
-    transform 0.34s ease;
+    opacity 0.32s ease,
+    transform 0.32s ease;
 }
 
 .floating-faq-panel.is-open {
@@ -36,8 +36,8 @@
       rgba(11, 11, 11, 0.96) 100%
     );
   box-shadow:
-    0 18px 44px rgba(0, 0, 0, 0.34),
-    0 0 0 1px rgba(220, 190, 140, 0.05) inset;
+    0 18px 44px rgba(0, 0, 0, 0.30),
+    inset 0 1px 0 rgba(255, 255, 255, 0.03);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border-radius: 18px;
@@ -60,7 +60,7 @@
   margin: 0 0 4px;
   font-size: 0.68rem;
   letter-spacing: 0.18em;
-  color: rgba(220, 190, 140, 0.72);
+  color: rgba(255, 255, 255, 0.48);
 }
 
 .floating-faq-title {
@@ -141,13 +141,13 @@
   margin-top: 1px;
   font-size: 1rem;
   line-height: 1;
-  color: rgba(220, 190, 140, 0.82);
+  color: rgba(255, 255, 255, 0.48);
 }
 
 .floating-faq-answer-wrap {
   display: grid;
   grid-template-rows: 0fr;
-  transition: grid-template-rows 0.32s ease;
+  transition: grid-template-rows 0.3s ease;
 }
 
 .floating-faq-item.is-active .floating-faq-answer-wrap {
@@ -188,7 +188,7 @@
   min-height: 40px;
   padding: 0 14px;
   border-radius: 999px;
-  border: 1px solid rgba(220, 190, 140, 0.18);
+  border: 1px solid rgba(255, 255, 255, 0.14);
   text-decoration: none;
   font-size: 0.78rem;
   letter-spacing: 0.12em;
@@ -201,8 +201,8 @@
 }
 
 .floating-faq-link:hover {
-  background: rgba(220, 190, 140, 0.07);
-  border-color: rgba(220, 190, 140, 0.32);
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(255, 255, 255, 0.22);
   color: rgba(255, 255, 255, 0.96);
   transform: translateY(-1px);
 }
@@ -224,29 +224,29 @@
       rgba(10, 10, 10, 0.94) 100%
     );
   box-shadow:
-    0 12px 28px rgba(0, 0, 0, 0.28),
-    0 0 0 1px rgba(220, 190, 140, 0.05) inset;
+    0 12px 28px rgba(0, 0, 0, 0.24),
+    inset 0 1px 0 rgba(255, 255, 255, 0.03);
   color: rgba(255, 255, 255, 0.9);
   cursor: pointer;
   transition:
-    transform 0.3s ease,
-    box-shadow 0.3s ease,
-    border-color 0.3s ease,
-    background 0.3s ease,
-    color 0.3s ease;
+    transform 0.28s ease,
+    box-shadow 0.28s ease,
+    border-color 0.28s ease,
+    background 0.28s ease,
+    color 0.28s ease;
 }
 
 .floating-faq-toggle:hover {
   transform: translateY(-1px);
-  border-color: rgba(220, 190, 140, 0.24);
+  border-color: rgba(255, 255, 255, 0.18);
   box-shadow:
-    0 16px 34px rgba(0, 0, 0, 0.32),
-    0 0 0 1px rgba(220, 190, 140, 0.07) inset;
+    0 16px 34px rgba(0, 0, 0, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04);
   color: rgba(255, 255, 255, 0.96);
 }
 
 .floating-faq-toggle.is-open {
-  border-color: rgba(220, 190, 140, 0.24);
+  border-color: rgba(255, 255, 255, 0.18);
   background:
     linear-gradient(
       180deg,
@@ -261,7 +261,7 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  color: rgba(220, 190, 140, 0.82);
+  color: rgba(255, 255, 255, 0.62);
   flex-shrink: 0;
 }
 
@@ -286,7 +286,7 @@
 .floating-faq-toggle:focus-visible,
 .floating-faq-link:focus-visible,
 .floating-faq-close:focus-visible {
-  outline: 1px solid rgba(220, 190, 140, 0.42);
+  outline: 1px solid rgba(255, 255, 255, 0.34);
   outline-offset: 2px;
 }
 

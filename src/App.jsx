@@ -1,9 +1,4 @@
-// ============================================================================
-// App.jsx — Silent UI v4.3（最適化済み）
-// GUSHIKEN DESIGN × NOA
-// ============================================================================
-
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
 
 import Nav from "./components/Nav";
@@ -16,7 +11,7 @@ import Home from "./pages/Home";
 import WorksList from "./pages/WorksList";
 import WorkDetail from "./pages/WorkDetail";
 
-// ---- 作品ページ群（読み込み） ----
+// Works
 import NoirLux from "./pages/works/NoirLux";
 import Resonance from "./pages/works/Resonance";
 import Still from "./pages/works/Still";
@@ -55,6 +50,7 @@ import LuminRoom from "./pages/works/LuminRoom";
 import KisuiRoom from "./pages/works/KisuiRoom";
 import OriginRoom from "./pages/works/OriginRoom";
 import NoahRoom from "./pages/works/NoahRoom";
+
 // Business pages
 import PriceDetail from "./pages/PriceDetail";
 import Contact from "./pages/Contact";
@@ -70,10 +66,6 @@ import NewsDetail from "./pages/NewsDetail";
 // Experiments
 import Layer0 from "./pages/Layer0";
 
-
-// ============================================================================
-// Layout（全ページ共通）
-// ============================================================================
 function Layout() {
   const { pathname } = useLocation();
   const isHome = pathname === "/";
@@ -88,10 +80,7 @@ function Layout() {
         <Routes>
           <Route path="/" element={<Home />} />
 
-          {/* ---------------- Works ---------------- */}
           <Route path="/works" element={<WorksList />} />
-
-          {/* 個別作品ページ */}
           <Route path="/works/noir-lux" element={<NoirLux />} />
           <Route path="/works/resonance" element={<Resonance />} />
           <Route path="/works/still" element={<Still />} />
@@ -127,14 +116,11 @@ function Layout() {
           <Route path="/works/TakumiRoom" element={<TakumiRoom />} />
           <Route path="/works/RoseRoom" element={<RoseRoom />} />
           <Route path="/works/LuminRoom" element={<LuminRoom />} />
-<Route path="/works/KisuiRoom" element={<KisuiRoom />} />
-<Route path="/works/OriginRoom" element={<OriginRoom />} />
-<Route path="/works/NoahRoom" element={<NoahRoom />} />
-          {/* ワイルドカード（今後の追加分対応） */}
-
+          <Route path="/works/KisuiRoom" element={<KisuiRoom />} />
+          <Route path="/works/OriginRoom" element={<OriginRoom />} />
+          <Route path="/works/NoahRoom" element={<NoahRoom />} />
           <Route path="/works/:slug" element={<WorkDetail />} />
 
-          {/* Business */}
           <Route path="/price" element={<PriceDetail />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/terms" element={<Terms />} />
@@ -142,11 +128,9 @@ function Layout() {
           <Route path="/legal" element={<Legal />} />
           <Route path="/privacy" element={<Privacy />} />
 
-          {/* News */}
           <Route path="/news" element={<NewsList />} />
           <Route path="/news/:id" element={<NewsDetail />} />
 
-          {/* Hidden Lab */}
           <Route path="/layer0" element={<Layer0 />} />
         </Routes>
       </main>
@@ -156,15 +140,23 @@ function Layout() {
   );
 }
 
-
-// ============================================================================
-// App：Silent UI Fade Engine v4.3
-// ============================================================================
 export default function App() {
+  const location = useLocation();
+  const observerRef = useRef(null);
+
   useEffect(() => {
-    const runFade = () => {
-      const els = document.querySelectorAll(".aq-fade");
+    const setupFade = () => {
+      if (observerRef.current) {
+        observerRef.current.disconnect();
+        observerRef.current = null;
+      }
+
+      const els = Array.from(document.querySelectorAll(".aq-fade"));
       if (!els.length) return;
+
+      els.forEach((el) => {
+        el.classList.remove("aq-show");
+      });
 
       const io = new IntersectionObserver(
         (entries) => {
@@ -172,33 +164,56 @@ export default function App() {
             if (!entry.isIntersecting) return;
 
             const el = entry.target;
-            el.style.animationDelay = `${Math.random() * 120}ms`;
             el.classList.add("aq-show");
             io.unobserve(el);
           });
         },
         {
-          threshold: 0.15,
-          rootMargin: "0px 0px -12% 0px", // ← 精度UP
+          threshold: 0.14,
+          rootMargin: "0px 0px -10% 0px",
         }
       );
 
       els.forEach((el) => io.observe(el));
-
-      return () => io.disconnect();
+      observerRef.current = io;
     };
 
-    // 初回実行
-    runFade();
+    const raf = requestAnimationFrame(setupFade);
 
-    // ページ遷移のタイミングだけ拾う
-    const pageRoot = document.getElementById("page-root");
-    const mo = new MutationObserver(() => {
-      requestAnimationFrame(runFade);
-    });
-    mo.observe(pageRoot, { childList: true });
+    return () => {
+      cancelAnimationFrame(raf);
+      if (observerRef.current) {
+        observerRef.current.disconnect();
+        observerRef.current = null;
+      }
+    };
+  }, [location.pathname]);
 
-    return () => mo.disconnect();
+  useEffect(() => {
+    const sentinel = document.createElement("div");
+    sentinel.setAttribute("aria-hidden", "true");
+    sentinel.style.position = "absolute";
+    sentinel.style.top = "120vh";
+    sentinel.style.width = "1px";
+    sentinel.style.height = "1px";
+    sentinel.style.pointerEvents = "none";
+    document.body.appendChild(sentinel);
+
+    const glowObserver = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting) return;
+        document.body.classList.add("scrolled");
+        glowObserver.disconnect();
+      },
+      { threshold: 0.01 }
+    );
+
+    glowObserver.observe(sentinel);
+
+    return () => {
+      glowObserver.disconnect();
+      sentinel.remove();
+    };
   }, []);
 
   return <Layout />;

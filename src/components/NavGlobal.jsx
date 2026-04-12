@@ -19,7 +19,7 @@ export default function NavGlobal() {
 
   const isActive = (path) =>
     pathname === path
-      ? "text-[#d7c39a] opacity-100"
+      ? "text-white opacity-100"
       : "text-white/68 hover:text-white opacity-100";
 
   /* ----------------------------------------------------
@@ -74,7 +74,6 @@ export default function NavGlobal() {
 
   /* ----------------------------------------------------
      開いたら最初のリンクへ
-     ※ デフォルト青枠を避けるため、Link 側で focus-visible を明示
   ---------------------------------------------------- */
   useEffect(() => {
     if (!isOpen) return;
@@ -97,8 +96,8 @@ export default function NavGlobal() {
           border-b transition-all duration-500
           ${
             isSolid
-              ? "border-white/10 bg-black/65 backdrop-blur-[18px] shadow-[0_8px_22px_rgba(0,0,0,0.32)]"
-              : "border-white/5 bg-black/35 backdrop-blur-[14px]"
+              ? "border-white/12 bg-black/42 backdrop-blur-[16px] shadow-[0_16px_38px_rgba(0,0,0,0.22)]"
+              : "border-white/8 bg-black/18 backdrop-blur-[10px]"
           }
         `}
       >
@@ -113,10 +112,10 @@ export default function NavGlobal() {
             to="/"
             translate="no"
             className="
-              text-[0.95rem] font-light tracking-[0.28em] text-white
+              text-[0.95rem] font-light tracking-[0.24em] text-white
               transition hover:opacity-80
               focus-visible:outline-none
-              focus-visible:ring-1 focus-visible:ring-[#d7c39a]/40
+              focus-visible:ring-1 focus-visible:ring-white/30
               focus-visible:ring-offset-2 focus-visible:ring-offset-black
             "
           >
@@ -132,11 +131,11 @@ export default function NavGlobal() {
                 className={`
                   relative pb-2 transition
                   focus-visible:outline-none
-                  focus-visible:ring-1 focus-visible:ring-[#d7c39a]/40
+                  focus-visible:ring-1 focus-visible:ring-white/30
                   focus-visible:ring-offset-2 focus-visible:ring-offset-black
                   ${isActive(item.to)}
                   after:absolute after:bottom-0 after:left-0 after:h-px after:w-0
-                  after:bg-gradient-to-r after:from-[#d7c39a]/20 after:to-[#d7c39a]
+                  after:bg-gradient-to-r after:from-white/10 after:to-white/60
                   after:transition-all after:duration-500
                   hover:after:w-full
                 `}
@@ -158,7 +157,7 @@ export default function NavGlobal() {
               relative z-[10000] flex h-[20px] w-[26px] flex-col
               justify-between md:hidden
               focus-visible:outline-none
-              focus-visible:ring-1 focus-visible:ring-[#d7c39a]/40
+              focus-visible:ring-1 focus-visible:ring-white/30
               focus-visible:ring-offset-4 focus-visible:ring-offset-black
             "
           >
@@ -187,7 +186,7 @@ export default function NavGlobal() {
       {/* ================= SP Overlay ================= */}
       <div
         className={`
-          fixed inset-0 z-[9996] bg-black/35 backdrop-blur-[6px]
+          fixed inset-0 z-[9996] bg-black/28 backdrop-blur-[6px]
           transition-all duration-500 md:hidden
           ${isOpen ? "opacity-100" : "pointer-events-none opacity-0"}
         `}
@@ -203,8 +202,8 @@ export default function NavGlobal() {
           z-[9997] max-h-[calc(100svh-108px)] overflow-y-auto
           rounded-[22px] border border-white/10
           bg-[linear-gradient(180deg,rgba(18,18,18,0.96)_0%,rgba(10,10,10,0.96)_100%)]
-          shadow-[0_18px_44px_rgba(0,0,0,0.34),0_0_0_1px_rgba(220,190,140,0.05)_inset]
-          backdrop-blur-[16px]
+          shadow-[0_18px_44px_rgba(0,0,0,0.30),inset_0_1px_0_rgba(255,255,255,0.03)]
+          backdrop-blur-[12px]
           transition-all duration-500 md:hidden
           ${
             isOpen
@@ -218,7 +217,7 @@ export default function NavGlobal() {
       >
         <div className="flex flex-col px-5 pb-5 pt-4">
           <div className="mb-4 flex items-center justify-between">
-            <p className="text-[0.72rem] tracking-[0.18em] text-[#d7c39a]/75">
+            <p className="text-[0.72rem] tracking-[0.18em] text-white/52">
               MENU
             </p>
 
@@ -230,7 +229,7 @@ export default function NavGlobal() {
                 relative h-8 w-8 rounded-full transition
                 hover:bg-white/5
                 focus-visible:outline-none
-                focus-visible:ring-1 focus-visible:ring-[#d7c39a]/40
+                focus-visible:ring-1 focus-visible:ring-white/30
                 focus-visible:ring-offset-2 focus-visible:ring-offset-black
               "
             >
@@ -253,26 +252,26 @@ export default function NavGlobal() {
                   text-[1rem] tracking-[0.16em]
                   transition
                   focus-visible:outline-none
-                  focus-visible:ring-1 focus-visible:ring-[#d7c39a]/40
+                  focus-visible:ring-1 focus-visible:ring-white/30
                   focus-visible:ring-offset-2 focus-visible:ring-offset-black
                   ${
                     pathname === item.to
-                      ? "text-[#d7c39a]"
+                      ? "text-white"
                       : "text-white/88 hover:translate-x-[2px] hover:text-white"
                   }
                 `}
               >
                 <span>{item.label}</span>
-                <span className="text-[0.88rem] text-[#d7c39a]/72">→</span>
+                <span className="text-[0.88rem] text-white/46">→</span>
               </Link>
             ))}
           </div>
 
           <div className="pt-5">
             <p className="text-[0.72rem] leading-[1.8] tracking-[0.08em] text-white/30">
-              NOT INDEXED. NOT ANNOUNCED.
+              Quiet structure.
               <br />
-              ONLY DISCOVERED.
+              Clear direction.
             </p>
           </div>
         </div>

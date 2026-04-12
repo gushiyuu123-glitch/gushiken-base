@@ -74,23 +74,24 @@ export default function Price() {
         ===================== */}
         <div className="hidden sm:block">
           <p className="price-philosophy aq-fade delay-2">
-            Webサイトは、サービスやお店の魅力を
-            <span className="text-white/95">分かりやすく伝えるための窓口</span>
+            Webサイトは、
+            <span className="text-white/95">
+              魅力を分かりやすく伝えるための窓口
+            </span>
             です。
             <br />
-            見た目だけでなく、伝わりやすさや使いやすさも含めて丁寧に設計しています。
+            見た目だけでなく、伝わりやすさや使いやすさまで含めて整えています。
           </p>
 
           <p className="price-lead aq-fade delay-3">
-            下記はあくまで目安の料金です。
+            下記は制作費の目安です。
             <br />
-            制作前にヒアリングを行い、
+            ご相談前に、
             <strong>「総額」「納品物」「進め方」</strong>
-            を事前にお伝えします。
+            を分かりやすくご案内します。
             <br />
             <span className="price-lead-note">
-              はじめての方でも進めやすいよう、
-              公開に必要な初期設定まで含めて分かりやすくご案内しています。
+              初めての方でも進めやすいよう、公開準備まで含めてサポートしています。
             </span>
           </p>
         </div>
@@ -102,43 +103,37 @@ export default function Price() {
           <p className="price-philosophy aq-fade delay-2">
             Webサイトは、
             <br />
-            サービスやお店の魅力を
-            <br />
             <span className="text-white/95">
-              分かりやすく伝えるための窓口
+              魅力を分かりやすく伝えるための窓口
             </span>
             です。
             <br />
             <br />
             見た目だけでなく、
             <br />
-            伝わりやすさや使いやすさも含めて
+            伝わりやすさや使いやすさまで
             <br />
-            丁寧に設計しています。
+            丁寧に整えています。
           </p>
 
           <p className="price-lead aq-fade delay-3">
-            下記はあくまで
-            <br />
-            目安の料金です。
+            下記は制作費の目安です。
             <br />
             <br />
-            制作前にヒアリングを行い、
+            ご相談前に、
             <br />
             <strong>
               「総額」「納品物」
               <br />
               「進め方」
             </strong>
-            を事前にお伝えします。
+            を分かりやすくご案内します。
             <br />
             <br />
             <span className="price-lead-note">
-              はじめての方でも進めやすいよう、
+              公開準備まで含めて
               <br />
-              公開に必要な初期設定まで含めて
-              <br />
-              分かりやすくご案内しています。
+              サポートしています。
             </span>
           </p>
         </div>
@@ -149,12 +144,12 @@ export default function Price() {
             label="PLAN 01"
             title="Landing Page（1ページ）"
             price="¥60,000〜"
-            desc="商品紹介・サービス紹介・ブランド紹介など、1ページで魅力を伝えるための構成。情報を上品に、分かりやすくまとめます。"
+            desc="商品やサービスの魅力を、1ページで分かりやすく伝えるためのプランです。"
             includes={[
               "オリジナルデザイン",
               "スマホ対応",
               "公開初期設定",
-              "ドメイン / サーバー接続サポート"
+              "ドメイン / サーバー接続サポート",
             ]}
           />
 
@@ -162,12 +157,12 @@ export default function Price() {
             label="PLAN 02"
             title="Small Website（小規模サイト）"
             price="¥120,000〜"
-            desc="カフェ・サロン・美容・個人事業向け。トップ＋2〜4ページを想定した、小さくても伝わりやすいサイト設計です。"
+            desc="トップページと数ページで、お店やサービスをきちんと伝えたい方向けのプランです。"
             includes={[
               "トップ + 下層2〜4ページ",
               "スマホ対応",
               "公開初期設定",
-              "ドメイン / サーバー接続サポート"
+              "ドメイン / サーバー接続サポート",
             ]}
           />
 
@@ -175,12 +170,12 @@ export default function Price() {
             label="PLAN 03"
             title="Brand Site（世界観重視）"
             price="¥240,000〜"
-            desc="写真・色・余白・文字の統一を前提に、ブランド全体の世界観を丁寧に構築。トップ＋4〜10ページほどを想定しています。"
+            desc="写真・色・余白まで整えながら、ブランド全体の印象を丁寧につくるプランです。"
             includes={[
               "世界観設計",
               "複数ページ対応",
               "スマホ対応",
-              "公開初期設定 / 接続サポート"
+              "公開初期設定 / 接続サポート",
             ]}
           />
         </div>
@@ -194,51 +189,40 @@ export default function Price() {
             </h3>
             <p className="price-card-price">¥9,800 / 月</p>
             <p className="price-card-desc">
-              文言・写真・料金の差し替え、
-              バナーの軽微な修正、
-              イベント情報の追加など、
-              <strong>世界観を崩さない更新</strong>
-              を代行します。
+              文言や写真の差し替え、軽微な修正など、
+              <strong>サイトの雰囲気を保ちながら更新</strong>
+              を行います。
             </p>
           </div>
         </div>
 
-        {/* NOTE */}
+        {/* NOTE / PC */}
         <div className="hidden sm:block">
           <p className="price-note aq-fade delay-6">
-            ドメイン代・サーバー代は実費となりますが、
-            <strong>取得や接続のサポートは料金内で対応</strong>
-            しています。
+            ドメイン代・サーバー代は実費です。
             <br />
-            追加ページや機能追加もご相談可能です。
+            取得や接続のサポートは料金内で対応しています。
             <br />
-            <strong>内容に応じて、事前に分かりやすくご案内します。</strong>
+            追加ページや機能追加も、内容に応じてご案内します。
           </p>
         </div>
 
+        {/* NOTE / SP */}
         <div className="block sm:hidden">
           <p className="price-note aq-fade delay-6">
             ドメイン代・サーバー代は
             <br />
-            実費となりますが、
+            実費です。
             <br />
-            <strong>
-              取得や接続のサポートは
-              <br />
-              料金内で対応しています。
-            </strong>
+            <br />
+            取得や接続のサポートは
+            <br />
+            料金内で対応しています。
             <br />
             <br />
             追加ページや機能追加も
             <br />
-            ご相談可能です。
-            <br />
-            <br />
-            <strong>
-              内容に応じて、
-              <br />
-              事前に分かりやすくご案内します。
-            </strong>
+            内容に応じてご案内します。
           </p>
         </div>
 

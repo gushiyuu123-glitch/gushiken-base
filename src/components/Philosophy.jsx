@@ -25,31 +25,31 @@ export default function Philosophy() {
 
         <div className="philo-gold-line aq-fade delay-1"></div>
 
-        <h2
-          className="
-            aq-fade delay-1
-            mb-3 pl-1
-            text-[2.6rem]
-            font-light
-            tracking-[0.20em]
-            text-white
-          "
-          translate="no"
-        >
-          ABOUT DESIGN
-        </h2>
+  <h2
+  className="
+    aq-fade delay-1
+    mb-3 pl-1
+    text-[2.6rem]
+    font-light
+    tracking-[0.20em]
+    text-white
+  "
+  translate="no"
+>
+  DESIGN POLICY
+</h2>
 
-        <p
-          className="
-            aq-fade delay-1
-            mb-10 pl-1
-            text-[0.9rem]
-            tracking-[0.12em]
-            text-white/60
-          "
-        >
-          ― 大切にしていること ―
-        </p>
+<p
+  className="
+    aq-fade delay-1
+    mb-10 pl-1
+    text-[0.9rem]
+    tracking-[0.12em]
+    text-white/60
+  "
+>
+  ― 制作で大切にしていること ―
+</p>
 
         {/* PC */}
         <div className="hidden sm:block">

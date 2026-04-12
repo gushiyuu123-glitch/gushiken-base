@@ -13,7 +13,7 @@ import FloatingFAQ from "../components/FloatingFAQ";
 export default function Home() {
   useEffect(() => {
     const description =
-      "沖縄のフリーランスWebデザイナー GUSHIKEN DESIGN。高品質Webサイト制作、ブランドサイト、事業サイト、UI/UX設計まで一貫対応。美容・店舗・コーポレート向けテンプレートも販売中。";
+      "沖縄のフリーランスWebデザイナー GUSHIKEN DESIGN。高品質なWebサイト制作、ブランドサイト、事業サイト、UI/UX設計まで一貫対応。美容・店舗・ブランド向けを中心に、上品で伝わりやすいWeb制作を行っています。";
 
     let metaDesc = document.querySelector('meta[name="description"]');
     if (!metaDesc) {
@@ -34,42 +34,49 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="home-wrapper">
+    <main className="home-wrapper">
       <Title text="GUSHIKEN DESIGN — Minimal Art Web Studio" />
 
-      <section className="hidden md:block aq-fade">
+      {/* HERO */}
+      <div className="hidden md:block">
         <Hero />
-      </section>
+      </div>
 
-      <section className="md:hidden aq-fade">
+      <div className="md:hidden">
         <HeroSP />
-      </section>
+      </div>
 
-      <section id="works" className="aq-fade">
+      {/* WORKS */}
+      <div>
         <Works />
-      </section>
+      </div>
 
-      <section id="philosophy" className="aq-fade">
-        <Philosophy />
-      </section>
-
-      <section id="about" className="aq-fade">
+      {/* ABOUT */}
+      <div>
         <About />
-      </section>
+      </div>
 
-      <section id="price" className="aq-fade">
+      {/* PHILOSOPHY / DESIGN POLICY */}
+      <div>
+        <Philosophy />
+      </div>
+
+      {/* PRICE */}
+      <div>
         <Price />
-      </section>
+      </div>
 
-      <section id="contact" className="aq-fade">
+      {/* CONTACT */}
+      <div>
         <Contact />
-      </section>
+      </div>
 
-      <section id="news" className="aq-fade">
+      {/* NEWS */}
+      <div>
         <NewsSection />
-      </section>
+      </div>
 
       <FloatingFAQ />
-    </div>
+    </main>
   );
 }
