@@ -3,7 +3,14 @@ import heroSP from "../assets/hero-sp33.png";
 
 export default function HeroSP() {
   return (
-    <section className="relative h-[92svh] w-full overflow-hidden bg-[#0a0a0a] md:hidden">
+    <section
+      className="
+        relative w-full overflow-hidden bg-[#0a0a0a]
+        h-[92svh] min-h-[600px]
+        md:hidden
+      "
+      aria-label="GUSHIKEN DESIGN スマートフォン ヒーローセクション"
+    >
       {/* BACKGROUND */}
       <div className="absolute inset-0">
         <img
@@ -13,63 +20,100 @@ export default function HeroSP() {
             hero-sp-image
             h-full w-full object-cover
             object-[50%_18%]
+            select-none
           "
+          loading="eager"
+          decoding="async"
+          fetchpriority="high"
+          draggable="false"
         />
       </div>
 
       {/* TOP VEIL */}
       <div
+        aria-hidden="true"
         className="
           pointer-events-none absolute inset-x-0 top-0 z-[1]
-          h-[96px]
-          bg-[linear-gradient(180deg,rgba(6,6,6,0.30)_0%,rgba(6,6,6,0.12)_48%,transparent_100%)]
+          h-[98px]
+          bg-[linear-gradient(180deg,rgba(6,6,6,0.38)_0%,rgba(6,6,6,0.16)_46%,transparent_100%)]
         "
       />
 
       {/* GLOBAL DEPTH */}
       <div
+        aria-hidden="true"
         className="
           pointer-events-none absolute inset-0 z-[1]
-          bg-[linear-gradient(180deg,rgba(0,0,0,0.04)_0%,rgba(0,0,0,0.02)_24%,rgba(0,0,0,0.10)_58%,rgba(0,0,0,0.34)_100%)]
+          bg-[linear-gradient(180deg,rgba(0,0,0,0.05)_0%,rgba(0,0,0,0.03)_22%,rgba(0,0,0,0.10)_58%,rgba(0,0,0,0.36)_100%)]
         "
       />
 
-      {/* LEFT TEXT SHADOW */}
+      {/* LEFT SHADOW */}
       <div
+        aria-hidden="true"
         className="
           pointer-events-none absolute inset-y-0 left-0 z-[1]
-          w-[82%]
-          bg-[linear-gradient(90deg,rgba(0,0,0,0.22)_0%,rgba(0,0,0,0.08)_42%,transparent_100%)]
+          w-[84%]
+          bg-[linear-gradient(90deg,rgba(0,0,0,0.26)_0%,rgba(0,0,0,0.09)_42%,transparent_100%)]
+        "
+      />
+
+      {/* LEFT SOFT FOG */}
+      <div
+        aria-hidden="true"
+        className="
+          pointer-events-none absolute inset-y-0 left-0 z-[1]
+          w-[36%]
+          bg-[linear-gradient(90deg,rgba(0,0,0,0.14)_0%,transparent_100%)]
         "
       />
 
       {/* BOTTOM READABILITY */}
       <div
+        aria-hidden="true"
         className="
           pointer-events-none absolute inset-x-0 bottom-0 z-[1]
-          h-[220px]
-          bg-[linear-gradient(180deg,transparent_0%,rgba(0,0,0,0.08)_28%,rgba(0,0,0,0.34)_100%)]
+          h-[240px]
+          bg-[linear-gradient(180deg,transparent_0%,rgba(0,0,0,0.08)_26%,rgba(0,0,0,0.38)_100%)]
+        "
+      />
+
+      {/* EDGE VIGNETTE */}
+      <div
+        aria-hidden="true"
+        className="
+          pointer-events-none absolute inset-0 z-[1]
+          [box-shadow:inset_0_0_80px_rgba(0,0,0,0.12)]
         "
       />
 
       {/* FILM NOISE */}
       <div
+        aria-hidden="true"
         className="
-          pointer-events-none absolute inset-0 z-[1] opacity-[0.028]
+          pointer-events-none absolute inset-0 z-[1] opacity-[0.03]
           [background-image:radial-gradient(rgba(255,255,255,0.40)_0.42px,transparent_0.42px)]
           [background-size:4px_4px]
         "
       />
 
       {/* TEXT BLOCK */}
-      <div className="absolute inset-x-0 bottom-[3.8rem] z-[2] px-6">
-        <div className="max-w-[18.5rem]">
+      <div className="absolute inset-x-0 bottom-[3.9rem] z-[2] px-6">
+        <div className="max-w-[19rem]">
+          {/* LABEL */}
           <div className="hero-sp-fade hero-sp-fade-1">
-            <p className="mb-2.5 text-[0.72rem] tracking-[0.12em] text-white/60">
+            <p
+              className="
+                mb-2.5
+                text-[0.72rem] leading-none
+                tracking-[0.12em] text-white/58
+              "
+            >
               沖縄のWebデザイン / ホームページ制作
             </p>
           </div>
 
+          {/* HOOK */}
           <div className="hero-sp-fade hero-sp-fade-2 pl-[2px]">
             <p
               className="
@@ -82,6 +126,7 @@ export default function HeroSP() {
             </p>
           </div>
 
+          {/* TITLE */}
           <h1
             className="
               hero-sp-fade hero-sp-fade-3
@@ -95,31 +140,38 @@ export default function HeroSP() {
             DESIGN
           </h1>
 
+          {/* DIVIDER */}
           <div
             className="
               hero-sp-fade hero-sp-fade-4
-              mb-4 h-px w-[52px] bg-white/56
+              mb-4 h-px w-[54px] bg-white/54
             "
           />
 
+          {/* BODY */}
           <div className="hero-sp-fade hero-sp-fade-5 pl-[8px]">
-            <p
+            <div
               className="
-                max-w-[16.8rem]
-                text-[0.92rem] leading-[1.78]
+                max-w-[16.9rem]
+                text-[0.92rem] leading-[1.8]
                 tracking-[0.01em] text-white/90
               "
             >
-              店舗・サロン・ブランドの価値を、
-              <br />
-              上品に、伝わりやすく整えるWeb制作
+              <p className="mb-1.5">店舗・サロン・ブランドの価値を、</p>
+              <p>上品に、伝わりやすく整えるWeb制作</p>
 
-              <span className="mt-3 block text-[0.76rem] leading-[1.76] tracking-[0.07em] text-white/64">
+              <p
+                className="
+                  mt-3
+                  text-[0.76rem] leading-[1.76]
+                  tracking-[0.07em] text-white/64
+                "
+              >
                 見やすさと高級感を両立し、
                 <br />
                 信頼感のある印象へ整えます。
-              </span>
-            </p>
+              </p>
+            </div>
           </div>
         </div>
       </div>
@@ -131,21 +183,22 @@ export default function HeroSP() {
 
       <style>{`
         .hero-sp-image {
-          filter: brightness(0.98) saturate(0.92) contrast(1.01);
-          transform: scale(1.015);
+          filter: brightness(0.97) saturate(0.92) contrast(1.01);
+          transform: scale(1.016);
           animation: heroSPStill 18s ease-in-out infinite;
           will-change: transform;
+          backface-visibility: hidden;
         }
 
         @keyframes heroSPStill {
           0% {
-            transform: scale(1.015) translate3d(0, 0, 0);
+            transform: scale(1.016) translate3d(0, 0, 0);
           }
           50% {
-            transform: scale(1.022) translate3d(-1px, 4px, 0);
+            transform: scale(1.023) translate3d(-1px, 4px, 0);
           }
           100% {
-            transform: scale(1.015) translate3d(0, 0, 0);
+            transform: scale(1.016) translate3d(0, 0, 0);
           }
         }
 
@@ -164,7 +217,11 @@ export default function HeroSP() {
         .hero-sp-fade-5 { animation-delay: 0.38s; }
 
         @keyframes heroSPReveal {
-          to {
+          0% {
+            opacity: 0;
+            transform: translate3d(0, 14px, 0) scale(0.995);
+          }
+          100% {
             opacity: 1;
             transform: translate3d(0, 0, 0) scale(1);
           }
@@ -176,7 +233,7 @@ export default function HeroSP() {
           background: linear-gradient(
             to bottom,
             rgba(255,255,255,0),
-            rgba(255,255,255,0.52),
+            rgba(255,255,255,0.5),
             rgba(255,255,255,0)
           );
           animation: scrollPulseSP 2.5s ease-in-out infinite;
@@ -188,9 +245,15 @@ export default function HeroSP() {
           100% { opacity: 0.18; }
         }
 
-        @media (max-width: 380px) {
+        @media (max-width: 390px) {
           .hero-sp-image {
-            object-position: 52% 16%;
+            object-position: 52% 17%;
+          }
+        }
+
+        @media (max-width: 370px) {
+          .hero-sp-image {
+            object-position: 53% 16%;
           }
         }
 
