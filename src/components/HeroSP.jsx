@@ -6,7 +6,7 @@ export default function HeroSP() {
     <section
       className="
         relative w-full overflow-hidden bg-[#0a0a0a]
-        h-[92svh] min-h-[600px]
+        h-[92svh] min-h-[640px]
         md:hidden
       "
       aria-label="GUSHIKEN DESIGN スマートフォン ヒーローセクション"
@@ -17,7 +17,7 @@ export default function HeroSP() {
           src={heroSP}
           alt="沖縄のWebデザイン・ホームページ制作｜美容・店舗・ブランド向け"
           className="
-            hero-sp-image
+            hero-sp-image hero-sp-image-reveal
             h-full w-full object-cover
             object-[50%_18%]
             select-none
@@ -65,6 +65,7 @@ export default function HeroSP() {
           pointer-events-none absolute inset-y-0 left-0 z-[1]
           w-[36%]
           bg-[linear-gradient(90deg,rgba(0,0,0,0.14)_0%,transparent_100%)]
+
         "
       />
 
@@ -98,7 +99,7 @@ export default function HeroSP() {
       />
 
       {/* TEXT BLOCK */}
-      <div className="absolute inset-x-0 bottom-[3.9rem] z-[2] px-6">
+      <div className="absolute inset-x-0 bottom-[4.55rem] z-[2] px-6">
         <div className="max-w-[19rem]">
           {/* LABEL */}
           <div className="hero-sp-fade hero-sp-fade-1">
@@ -190,6 +191,14 @@ export default function HeroSP() {
           backface-visibility: hidden;
         }
 
+        .hero-sp-image-reveal {
+          opacity: 0;
+          animation:
+            heroSPImageReveal 1.1s cubic-bezier(.22,.56,.18,1) 0.02s forwards,
+            heroSPStill 18s ease-in-out 1.1s infinite;
+          will-change: transform, opacity, filter;
+        }
+
         @keyframes heroSPStill {
           0% {
             transform: scale(1.016) translate3d(0, 0, 0);
@@ -202,6 +211,19 @@ export default function HeroSP() {
           }
         }
 
+        @keyframes heroSPImageReveal {
+          0% {
+            opacity: 0;
+            transform: scale(1.026) translate3d(0, 6px, 0);
+            filter: brightness(0.9) saturate(0.9) contrast(1.01);
+          }
+          100% {
+            opacity: 1;
+            transform: scale(1.016) translate3d(0, 0, 0);
+            filter: brightness(0.97) saturate(0.92) contrast(1.01);
+          }
+        }
+
         .hero-sp-fade {
           opacity: 0;
           transform: translate3d(0, 14px, 0) scale(0.995);
@@ -210,11 +232,11 @@ export default function HeroSP() {
           backface-visibility: hidden;
         }
 
-        .hero-sp-fade-1 { animation-delay: 0.06s; }
-        .hero-sp-fade-2 { animation-delay: 0.14s; }
-        .hero-sp-fade-3 { animation-delay: 0.22s; }
-        .hero-sp-fade-4 { animation-delay: 0.30s; }
-        .hero-sp-fade-5 { animation-delay: 0.38s; }
+        .hero-sp-fade-1 { animation-delay: 0.08s; }
+        .hero-sp-fade-2 { animation-delay: 0.16s; }
+        .hero-sp-fade-3 { animation-delay: 0.24s; }
+        .hero-sp-fade-4 { animation-delay: 0.32s; }
+        .hero-sp-fade-5 { animation-delay: 0.40s; }
 
         @keyframes heroSPReveal {
           0% {
@@ -259,11 +281,13 @@ export default function HeroSP() {
 
         @media (prefers-reduced-motion: reduce) {
           .hero-sp-image,
+          .hero-sp-image-reveal,
           .hero-sp-fade,
           .scroll-hint-sp {
             animation: none !important;
             transform: none !important;
             opacity: 1 !important;
+            filter: brightness(0.97) saturate(0.92) contrast(1.01) !important;
           }
         }
       `}</style>

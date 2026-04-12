@@ -17,14 +17,6 @@ export default function NavGlobal() {
   const buttonRef = useRef(null);
   const firstLinkRef = useRef(null);
 
-  const isActive = (path) =>
-    pathname === path
-      ? "text-white opacity-100"
-      : "text-white/68 hover:text-white opacity-100";
-
-  /* ----------------------------------------------------
-     Scroll：透明 → 濃く
-  ---------------------------------------------------- */
   useEffect(() => {
     const onScroll = () => {
       setIsSolid(window.scrollY > 12);
@@ -36,9 +28,6 @@ export default function NavGlobal() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  /* ----------------------------------------------------
-     SP open 時：背景スクロール禁止
-  ---------------------------------------------------- */
   useEffect(() => {
     document.body.style.overflow = isOpen ? "hidden" : "";
     return () => {
@@ -46,16 +35,10 @@ export default function NavGlobal() {
     };
   }, [isOpen]);
 
-  /* ----------------------------------------------------
-     ルート変更時は閉じる
-  ---------------------------------------------------- */
   useEffect(() => {
     setIsOpen(false);
   }, [pathname]);
 
-  /* ----------------------------------------------------
-     Esc で閉じる
-  ---------------------------------------------------- */
   useEffect(() => {
     if (!isOpen) return;
 
@@ -72,9 +55,6 @@ export default function NavGlobal() {
     return () => window.removeEventListener("keydown", onKeyDown);
   }, [isOpen]);
 
-  /* ----------------------------------------------------
-     開いたら最初のリンクへ
-  ---------------------------------------------------- */
   useEffect(() => {
     if (!isOpen) return;
 
@@ -90,17 +70,17 @@ export default function NavGlobal() {
   return (
     <>
       {/* ================= NAV BAR ================= */}
-      <nav
-        className={`
-          fixed left-0 top-0 z-[9998] w-full
-          border-b transition-all duration-500
-          ${
-            isSolid
-              ? "border-white/12 bg-black/42 backdrop-blur-[16px] shadow-[0_16px_38px_rgba(0,0,0,0.22)]"
-              : "border-white/8 bg-black/18 backdrop-blur-[10px]"
-          }
-        `}
-      >
+<nav
+  className={`
+    fixed left-0 top-0 z-[9998] w-full
+    transition-all duration-500
+    ${
+      isSolid
+        ? "bg-black/42 backdrop-blur-[16px] shadow-[0_16px_38px_rgba(0,0,0,0.22)]"
+        : "bg-black/18 backdrop-blur-[10px]"
+    }
+  `}
+>
         <div
           className="
             mx-auto flex max-w-6xl items-center justify-between
@@ -124,25 +104,42 @@ export default function NavGlobal() {
 
           {/* ================= PC ================= */}
           <div className="hidden items-center gap-10 text-sm tracking-wider md:flex">
-            {navItems.map((item) => (
-              <Link
-                key={item.to}
-                to={item.to}
-                className={`
-                  relative pb-2 transition
-                  focus-visible:outline-none
-                  focus-visible:ring-1 focus-visible:ring-white/30
-                  focus-visible:ring-offset-2 focus-visible:ring-offset-black
-                  ${isActive(item.to)}
-                  after:absolute after:bottom-0 after:left-0 after:h-px after:w-0
-                  after:bg-gradient-to-r after:from-white/10 after:to-white/60
-                  after:transition-all after:duration-500
-                  hover:after:w-full
-                `}
-              >
-                {item.label}
-              </Link>
-            ))}
+            {navItems.map((item) => {
+              const active = pathname === item.to;
+
+              return (
+                <Link
+                  key={item.to}
+                  to={item.to}
+                  className={`
+                    group relative pb-2 transition-all duration-500
+                    focus-visible:outline-none
+                    focus-visible:ring-1 focus-visible:ring-white/30
+                    focus-visible:ring-offset-2 focus-visible:ring-offset-black
+                    ${
+                      active
+                        ? "text-white [text-shadow:0_0_12px_rgba(255,255,255,0.12)]"
+                        : "text-white/68 hover:text-white"
+                    }
+                  `}
+                >
+                  <span className="relative z-[1] transition-all duration-500 group-hover:[text-shadow:0_0_10px_rgba(255,255,255,0.10)]">
+                    {item.label}
+                  </span>
+
+                  {/* hover専用の下線 */}
+                  <span
+                    aria-hidden="true"
+                    className="
+                      pointer-events-none absolute bottom-0 left-0 h-px w-0
+                      bg-gradient-to-r from-white/10 via-white/60 to-white/10
+                      opacity-0 transition-all duration-500
+                      group-hover:w-full group-hover:opacity-100
+                    "
+                  />
+                </Link>
+              );
+            })}
           </div>
 
           {/* ================= SP Hamburger ================= */}
@@ -239,32 +236,38 @@ export default function NavGlobal() {
           </div>
 
           <div className="flex flex-col">
-            {navItems.map((item, index) => (
-              <Link
-                key={item.to}
-                to={item.to}
-                ref={index === 0 ? firstLinkRef : null}
-                onClick={closeMenu}
-                className={`
-                  flex items-center justify-between
-                  border-b border-white/8
-                  py-[15px]
-                  text-[1rem] tracking-[0.16em]
-                  transition
-                  focus-visible:outline-none
-                  focus-visible:ring-1 focus-visible:ring-white/30
-                  focus-visible:ring-offset-2 focus-visible:ring-offset-black
-                  ${
-                    pathname === item.to
-                      ? "text-white"
-                      : "text-white/88 hover:translate-x-[2px] hover:text-white"
-                  }
-                `}
-              >
-                <span>{item.label}</span>
-                <span className="text-[0.88rem] text-white/46">→</span>
-              </Link>
-            ))}
+            {navItems.map((item, index) => {
+              const active = pathname === item.to;
+
+              return (
+                <Link
+                  key={item.to}
+                  to={item.to}
+                  ref={index === 0 ? firstLinkRef : null}
+                  onClick={closeMenu}
+                  className={`
+                    flex items-center justify-between
+                    border-b border-white/8
+                    py-[15px]
+                    text-[1rem] tracking-[0.16em]
+                    transition
+                    focus-visible:outline-none
+                    focus-visible:ring-1 focus-visible:ring-white/30
+                    focus-visible:ring-offset-2 focus-visible:ring-offset-black
+                    ${
+                      active
+                        ? "text-white [text-shadow:0_0_12px_rgba(255,255,255,0.12)]"
+                        : "text-white/88 hover:translate-x-[2px] hover:text-white"
+                    }
+                  `}
+                >
+                  <span>{item.label}</span>
+                  <span className={`${active ? "text-white/60" : "text-white/46"} text-[0.88rem]`}>
+                    →
+                  </span>
+                </Link>
+              );
+            })}
           </div>
 
           <div className="pt-5">

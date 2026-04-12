@@ -18,7 +18,7 @@ export default function Hero() {
           src={heroRoom}
           alt="沖縄のWebデザイン / ホームページ制作｜GUSHIKEN DESIGN"
           className="
-            hero-image
+            hero-image hero-image-reveal
             h-full w-full object-cover
             object-[58%_center]
             md:object-center
@@ -238,6 +238,14 @@ export default function Hero() {
           backface-visibility: hidden;
         }
 
+        .hero-image-reveal {
+          opacity: 0;
+          animation:
+            heroImageReveal 1.18s cubic-bezier(.22,.56,.18,1) 0.02s forwards,
+            heroStill 18s ease-in-out 1.18s infinite;
+          will-change: transform, opacity, filter;
+        }
+
         @keyframes heroStill {
           0% {
             transform: scale(1.012) translate3d(0, 0, 0);
@@ -250,6 +258,19 @@ export default function Hero() {
           }
         }
 
+        @keyframes heroImageReveal {
+          0% {
+            opacity: 0;
+            transform: scale(1.028) translate3d(0, 8px, 0);
+            filter: brightness(0.84) saturate(0.88) contrast(1.01);
+          }
+          100% {
+            opacity: 1;
+            transform: scale(1.012) translate3d(0, 0, 0);
+            filter: brightness(0.91) saturate(0.9) contrast(1.02);
+          }
+        }
+
         .hero-fade {
           opacity: 0;
           transform: translate3d(0, 18px, 0) scale(0.995);
@@ -258,11 +279,11 @@ export default function Hero() {
           backface-visibility: hidden;
         }
 
-        .hero-fade-1 { animation-delay: 0.05s; }
-        .hero-fade-2 { animation-delay: 0.13s; }
-        .hero-fade-3 { animation-delay: 0.21s; }
-        .hero-fade-4 { animation-delay: 0.29s; }
-        .hero-fade-5 { animation-delay: 0.37s; }
+        .hero-fade-1 { animation-delay: 0.08s; }
+        .hero-fade-2 { animation-delay: 0.16s; }
+        .hero-fade-3 { animation-delay: 0.24s; }
+        .hero-fade-4 { animation-delay: 0.32s; }
+        .hero-fade-5 { animation-delay: 0.40s; }
 
         @keyframes heroReveal {
           0% {
@@ -277,17 +298,37 @@ export default function Hero() {
 
         @media (max-width: 768px) {
           .hero-image {
-            animation-duration: 20s;
             filter: brightness(0.89) saturate(0.88) contrast(1.02);
+          }
+
+          .hero-image-reveal {
+            animation:
+              heroImageRevealSp 1.12s cubic-bezier(.22,.56,.18,1) 0.02s forwards,
+              heroStill 20s ease-in-out 1.12s infinite;
+          }
+
+          @keyframes heroImageRevealSp {
+            0% {
+              opacity: 0;
+              transform: scale(1.024) translate3d(0, 6px, 0);
+              filter: brightness(0.83) saturate(0.86) contrast(1.01);
+            }
+            100% {
+              opacity: 1;
+              transform: scale(1.012) translate3d(0, 0, 0);
+              filter: brightness(0.89) saturate(0.88) contrast(1.02);
+            }
           }
         }
 
         @media (prefers-reduced-motion: reduce) {
           .hero-image,
+          .hero-image-reveal,
           .hero-fade {
             animation: none !important;
             transform: none !important;
             opacity: 1 !important;
+            filter: brightness(0.91) saturate(0.9) contrast(1.02) !important;
           }
         }
       `}</style>
