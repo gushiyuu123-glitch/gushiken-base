@@ -4,17 +4,22 @@ export default {
   theme: {
     extend: {
       /* ============================
-         COLORS – 金 / 黒 / 白（3本柱）
+         COLORS – Quiet Black / Soft White / Accent
       ============================ */
       colors: {
-        gold: "#d9b98a",                // 上品な金
-        blackDeep: "#0b0b0b",           // 本拠地の黒
+        blackDeep: "#0b0b0b",
         blackSoft: "rgba(15,15,15,0.92)",
         whiteSoft: "rgba(255,255,255,0.85)",
+        whiteMuted: "rgba(255,255,255,0.6)",
+        whiteFaint: "rgba(255,255,255,0.38)",
+        accentSoft: "rgba(255,255,255,0.14)",
+
+        /* 補助用。主役にはしない */
+        gold: "#d9b98a",
       },
 
       /* ============================
-         FONT FAMILY（世界観固定）
+         FONT FAMILY
       ============================ */
       fontFamily: {
         sans: ["Inter", "system-ui", "sans-serif"],
@@ -22,7 +27,7 @@ export default {
       },
 
       /* ============================
-         TRACKING（GUSHIKEN専用）
+         TRACKING
       ============================ */
       letterSpacing: {
         wide18: "0.18em",
@@ -32,60 +37,49 @@ export default {
       },
 
       /* ============================
-         BORDER / LINES（0.18線）
+         BORDER
       ============================ */
       borderWidth: {
-        thin18: "0.18px",
+        hairline: "0.5px",
       },
 
       /* ============================
-         SHADOW（高級感）
+         SHADOW
       ============================ */
       boxShadow: {
-        softGlow: "0 0 28px rgba(0,0,0,0.45)",
-        imageFloat: "0 40px 110px rgba(0,0,0,0.16)",
+        softDepth: "0 14px 36px rgba(0,0,0,0.22)",
+        mediumDepth: "0 18px 48px rgba(0,0,0,0.28)",
+        imageFloat: "0 32px 80px rgba(0,0,0,0.16)",
       },
 
       /* ============================
-         BACKDROP（ガラス系UI）
+         MOTION
       ============================ */
-      backdropBlur: {
-        xs: "2px",
-        sm: "4px",
-        md: "6px",
-        lg: "10px",
+      transitionTimingFunction: {
+        silent: "cubic-bezier(.22,.56,.18,1)",
       },
 
-      /* ============================
-         MOTION（Silent UI Tokens）
-      ============================ */
       keyframes: {
         fadeUp: {
           "0%": {
             opacity: 0,
-            transform: "translateY(14px) scale(0.995)",
+            transform: "translateY(16px) scale(0.996)",
           },
           "100%": {
             opacity: 1,
             transform: "translateY(0) scale(1)",
           },
         },
-        breathe: {
+        breatheSoft: {
           "0%": { transform: "scale(1)" },
-          "50%": { transform: "scale(1.012)" },
+          "50%": { transform: "scale(1.008)" },
           "100%": { transform: "scale(1)" },
-        },
-        floatSoft: {
-          "0%": { transform: "translateY(0)" },
-          "50%": { transform: "translateY(6px)" },
-          "100%": { transform: "translateY(0)" },
         },
       },
 
       animation: {
-        fadeUp: "fadeUp 0.85s cubic-bezier(.22,.61,.36,1) forwards",
-        breathe: "breathe 5.6s ease-in-out infinite",
-        floatSoft: "floatSoft 4.5s ease-in-out infinite",
+        fadeUp: "fadeUp 1.02s cubic-bezier(.22,.56,.18,1) forwards",
+        breatheSoft: "breatheSoft 5.8s ease-in-out infinite",
       },
     },
   },

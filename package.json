@@ -12,9 +12,9 @@
     "generate-sitemap": "node scripts/generate-sitemap.cjs",
     "sitemap": "node scripts/generate-sitemap.js",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "prepare": "husky install"
   },
-  "prepare": "husky install",
   "dependencies": {
     "@vercel/analytics": "^1.6.1",
     "axios": "^1.13.2",

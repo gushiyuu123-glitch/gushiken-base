@@ -2,7 +2,6 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
   <!-- Viewport -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
@@ -28,6 +27,9 @@
 
   <!-- Author -->
   <meta name="author" content="GUSHIKEN DESIGN" />
+
+  <!-- Theme -->
+  <meta name="theme-color" content="#0b0b0b" />
 
   <!-- Domain Verify -->
   <meta name="p:domain_verify" content="48dd0e90de53ad499404794fccf42239" />
@@ -69,20 +71,27 @@
   />
   <meta name="twitter:image" content="https://gushikendesign.com/ogp-v2.png" />
 
-  <!-- Favicon / App Icons -->
-  <link rel="icon" href="/favicon-32-v2.png" sizes="32x32" type="image/png" />
-  <link rel="icon" href="/favicon-16-v2.png" sizes="16x16" type="image/png" />
-  <link rel="icon" href="/favicon-192-v2.png" sizes="192x192" type="image/png" />
-  <link rel="icon" href="/favicon-512-v2.png" sizes="512x512" type="image/png" />
+  <!-- Icons -->
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16-v2.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32-v2.png" />
+  <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192-v2.png" />
+  <link rel="icon" type="image/png" sizes="512x512" href="/favicon-512-v2.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
 
-  <link rel="apple-touch-icon" href="/ogp-v2.png" sizes="180x180" />
-  <meta name="theme-color" content="#ffffff" />
+  <!-- Manifest -->
   <link rel="manifest" href="/manifest.json" />
 
   <!-- FOUC防止 -->
   <style>
-    #root { opacity: 0; transition: opacity .25s ease; }
-    #root.show { opacity: 1; }
+    #root {
+      opacity: 0;
+      transition: opacity .25s ease;
+    }
+
+    #root.show {
+      opacity: 1;
+    }
+
     .visually-hidden {
       position: absolute;
       width: 1px;

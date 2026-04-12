@@ -5,7 +5,7 @@ const path = require('path');
 // Base URL can be overridden with SITE_URL env variable
 const BASE = process.env.SITE_URL || 'https://gushikendesign.com/';
 
-const routes = ['/', '/works', '/price', '/contact'];
+const routes = ['/', '/works', '/price', '/contact', '/news'];
 
 const urls = routes.map((r) => {
   return `  <url>\n    <loc>${BASE.replace(/\/$/, '') + r}\n    </loc>\n  </url>`;

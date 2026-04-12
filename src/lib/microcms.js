@@ -45,8 +45,7 @@ export async function getNewsList({ limit = 10, offset = 0 } = {}) {
 // ===================================
 export async function getNewsDetail(id) {
   if (!id) {
-    console.error("❌ getNewsDetail に ID がありません");
-    return null;
+    throw new Error("getNewsDetail に ID がありません");
   }
 
   try {
@@ -54,8 +53,6 @@ export async function getNewsDetail(id) {
     return res.data;
   } catch (err) {
     console.error(`❌ NEWS詳細取得エラー（id: ${id}）`, err);
-    return null;
+    throw err;
   }
 }
-
-

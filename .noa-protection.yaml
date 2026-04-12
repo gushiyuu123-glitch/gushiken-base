@@ -4,6 +4,8 @@ description: "An agent that permanently protects the user's UI/visual design. It
 
 # Permanent No-Touch Zones
 no_touch_files:
+  - "src/**/*.js"
+  - "src/**/*.ts"
   - "src/**/*.jsx"
   - "src/**/*.tsx"
   - "src/**/*.css"
@@ -14,8 +16,8 @@ no_touch_files:
   - "src/pages/**"
   - "src/layouts/**"
   - "public/**/*.html"
+  - "public/**/*.css"
   - "index.html"
-
 # Allowed Zones
 allowed_files:
   - "scripts/**"

@@ -17,7 +17,7 @@ function makeStamp() {
 
 if (!fs.existsSync(swPath)) {
   console.error('sw.js not found at', swPath);
-  process.exitCode = 1;
+  process.exit(1);
 }
 
 const stamp = makeStamp();
@@ -27,7 +27,7 @@ const newContent = content.replace(/const\s+CACHE_STAMP\s*=\s*"[^"]*"\s*;?/, `co
 
 if (newContent === content) {
   console.error('Failed to replace CACHE_STAMP in', swPath);
-  process.exitCode = 1;
+  process.exit(1);
 }
 
 fs.writeFileSync(swPath, newContent, 'utf8');
