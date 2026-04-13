@@ -78,23 +78,23 @@ export default function Works() {
           </div>
 
           <div className="works-grid">
-            {/* 1 → LÜMIN（BIG） */}
+            {/* 1 → VELMONT（BIG） */}
             <a
-              href="https://lumin-audio.vercel.app/"
+              href="https://velmont-virid.vercel.app/"
               target="_blank"
               rel="noopener noreferrer"
               className="work-card aq-fade delay-3"
-              aria-label="LÜMIN のサイトを見る"
+              aria-label="VELMONT のサイトを見る"
             >
               <img
-                src="/assets/lomin.webp"
-                alt="LÜMIN｜イヤホン・オーディオ製品のECサイト制作（ミニマル×高品質）"
+                src="/works/velmonte2.webp"
+                alt="VELMONT｜高級車ショールームサイト制作（静かな信頼感×高級感×導線設計）"
                 loading="lazy"
                 decoding="async"
               />
               <div className="work-text">
-                <h3>LÜMIN</h3>
-                <p>Audio EC / Minimal × Precision</p>
+                <h3>VELMONT</h3>
+                <p>Luxury Auto / Quiet Trust × Precision</p>
               </div>
             </a>
 
@@ -118,23 +118,23 @@ export default function Works() {
               </div>
             </a>
 
-            {/* 3 → CRESTED GECKO（SMALL） */}
+            {/* 3 → LÜMIN（SMALL） */}
             <a
-              href="https://crested-gecko-site.vercel.app/"
+              href="https://lumin-audio.vercel.app/"
               target="_blank"
               rel="noopener noreferrer"
               className="work-card aq-fade delay-5"
-              aria-label="CRESTED GECKO のサイトを見る"
+              aria-label="LÜMIN のサイトを見る"
             >
               <img
-                src="/works/crested-gecko1.webp"
-                alt="CRESTED GECKO｜クレステッドゲッコー専門販売サイト制作（異物感×信頼設計×世界観）"
+                src="/assets/lomin.webp"
+                alt="LÜMIN｜イヤホン・オーディオ製品のECサイト制作（ミニマル×高品質）"
                 loading="lazy"
                 decoding="async"
               />
               <div className="work-text">
-                <h3>CRESTED GECKO</h3>
-                <p>Specialty Store / Instinct × Trust</p>
+                <h3>LÜMIN</h3>
+                <p>Audio EC / Minimal × Precision</p>
               </div>
             </a>
           </div>
