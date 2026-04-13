@@ -10,6 +10,49 @@ export const worksData = [
   subtitle: "世界観の“核”を示す代表作",
   accent: true,
   items: [
+        {
+      title: "VELMONT — Luxury Auto Showroom",
+      slug: "VelmontRoom",
+      desc: "静かな信頼感 × 精度 × 高級感。比較し、納得し、選ぶまでの体験ごと整えた高級車サイト。",
+      link: "https://velmont-virid.vercel.app/",
+      img: "/works/velmonte22.webp",
+      isNew: true,
+      createdAt: "2026-04-13",
+      tags: [
+        "NEW",
+        "PICKUP",
+        "Luxury",
+        "Automotive",
+        "Showroom",
+        "Branding",
+        "Quiet Trust",
+        "Dark",
+        "UI/UX",
+        "PC/SP 分離"
+      ],
+
+      detail: {
+        concept:
+          "高級感を単なる装飾ではなく“選ばせ方”として設計した高級車サイト。派手な演出で押すのではなく、静かな信頼感、比較しやすさ、納得して選べる導線まで含めて整え、空間そのものの上質さをWeb上で成立させることを目指した。",
+        tech: [
+          "React",
+          "Vite",
+          "Tailwind",
+          "GSAP",
+          "IntersectionObserver",
+          "PC/SP 完全分離"
+        ]
+      },
+
+      seo: {
+        title: "VELMONT｜静かな信頼感と高級感を両立した高級車サイト｜GUSHIKEN DESIGN",
+        description:
+          "VELMONTは、高級感を見た目だけで終わらせず、比較し、納得し、選ぶまでの体験ごと整えた高級車サイト。静かな信頼感と精度を軸に、上質な導線設計を構築した代表作。",
+        keywords:
+          "高級車サイト, 中古車販売サイト, ショールームサイト, 高級感デザイン, 自動車サイト制作, React, GSAP, GUSHIKEN DESIGN",
+        ogImage: "https://gushikendesign.com/ogp/velmont.png"
+      }
+    },
  {
   title: "CRESTED GECKO — Specialty Gecko Site",
   slug: "CrestedGeckoRoom",
@@ -215,66 +258,6 @@ export const worksData = [
       }
     },
 
-    {
-      title: "RÉSONANCE — Restaurant",
-      slug: "resonance",
-      desc: "時間 × 熱 × 静寂。“一夜の体験”をUIに落とした代表作。",
-      link: "https://resonance-restaurant.vercel.app/",
-      img: "/works/resonance.webp",
-      isNew: true,
-      createdAt: "2025-02-10",
-      tags: ["PICKUP", "Restaurant", "Black", "Cinematic"],
-
-      seo: {
-        title: "RÉSONANCE｜静寂×光×熱で“一夜の体験”を再構築したレストランUI",
-        description:
-          "RÉSONANCE は料理・光・時間の温度変化をストーリーとして設計し、Cinematic Scroll の表現で“一夜の体験”を再構築したレストランUI。黒・光・炎のコントラストで重厚な世界観を形成。",
-        keywords:
-          "レストランLP, 黒デザイン, シネマティック, 高級飲食店サイト, 世界観デザイン, 沖縄Webデザイン",
-        ogImage: "https://gushikendesign.com/ogp/resonance.png"
-      }
-    },
-
-    {
-      title: "SAKURAI CLINIC",
-      slug: "SakuraiDerm",
-      desc: "桜 × 静寂 × 美容医療。信頼と余白の最適化。",
-      link: "https://sakurai-clinic.vercel.app/",
-      img: "/works/sakurai.webp",
-      isNew: true,
-      createdAt: "2026-01-21",
-      tags: ["PICKUP", "Clinic", "Beauty"],
-
-      seo: {
-        title: "SAKURAI CLINIC｜桜×静寂×美容医療デザイン",
-        description:
-          "桜の静けさを軸に、“怖さのない美容医療”として信頼・柔らかさ・余白を最適化した美容皮膚科サイト。光や写真の粒度を整え、直感的に安心できる導線を構築した作品。",
-        keywords:
-          "美容皮膚科, クリニックサイト, 桜デザイン, 信頼設計, 医療UI, 沖縄Web制作",
-        ogImage: "https://gushikendesign.com/ogp/sakurai.png"
-      }
-    },
-
-    {
-      title: "TAKUMI — Architecture Studio",
-      slug: "TakumiRoom",
-      desc: "建築 × 物質 × 静けさ。陰影と構造の代表作。",
-      link: "https://takumi-ochre.vercel.app/",
-      img: "/assets/takumi.webp",
-      isNew: false,
-      createdAt: "2025-11-XX",
-      tags: ["PICKUP", "Architecture", "Concrete", "Shadow"],
-
-      seo: {
-        title: "TAKUMI — Architecture Studio｜建築×陰影×構造美のデザイン",
-        description:
-          "TAKUMI は建築の“骨格”に着目し、光と影の構造を丁寧に整えた世界観デザイン。物質の密度・動線・余白を UI に翻訳し、静かな建築美を表現した代表作。",
-        keywords:
-          "建築, 建築デザイン, 陰影, 静寂UI, 世界観デザイン, 高級感サイト, 沖縄 Webデザイン",
-        ogImage: "https://gushikendesign.com/ogp/takumi.png"
-      }
-    },
-
 
   ]
 },
@@ -285,86 +268,7 @@ export const worksData = [
   category: "BEAUTY / SALON",
   subtitle: "美容・サロン向けの上質な余白デザイン",
   items: [
-    {
-  title: "KISUI — Skin Care Water Essence",
-  slug: "KisuiRoom",
-  desc: "透明 × 静けさ × 素肌。水と光の粒度で“肌のやさしさ”を構築したスキンケアブランド。",
-  link: "https://kisui.vercel.app/",
-  img: "/works/kisui.webp",
-  isNew: true,
-  createdAt: "2026-02-28",
-  tags: [
-    "NEW",
-    "透明感", "水", "静寂", "余白",
-    "Beauty", "Skincare",
-    "Luxury", "Minimal",
-    "GSAP", "PC/SP 完全分離"
-  ],
-
-  detail: {
-    concept:
-      "“肌に触れた瞬間の静けさ”を軸に、光膜・水膜・余白の階調で構成したスキンケアデザイン。広告的な圧を排除し、素肌に寄り添うような透明感を中心に設計されたブランドUI。",
-    tech: [
-      "React",
-      "Vite",
-      "Tailwind",
-      "GSAP",
-      "IntersectionObserver",
-      "PC/SP 完全分離"
-    ]
-  },
-
-  seo: {
-    title: "KISUI — 透明×静寂のスキンケアブランドUI｜GUSHIKEN DESIGN",
-    description:
-      "KISUI は水と光の粒度を0.3px単位で整え、“肌に優しい透明感”を再構築したスキンケアブランド。余白・光膜・水膜の三層レイヤーで静けさと上質感を両立したUIデザイン。",
-    keywords:
-      "スキンケアEC, 化粧水LP, 透明感デザイン, 静寂UI, 美容Webデザイン, 沖縄 Web制作, KISUI",
-    ogImage: "https://gushikendesign.com/ogp/kisui.png"
-  }
-},
-    {
-      title: "LILU nail salon",
-      slug: "LILU",
-      desc: "可愛い × 上品 × 直感設計。\n20代女性の感覚で“選ばれる”ために構築したネイルサロンUI。",
-      link: "https://lilu-drab.vercel.app/",
-      img: "/works/lilu.webp",
-      isNew: true,
-      createdAt: "2025-02-28",
-      tags: [
-        "ピンク",
-        "余白",
-        "上品",
-        "直感設計",
-        "Beauty",
-        "Salon",
-        "UI/UX",
-        "Visual First",
-        "PC/SP 分離"
-      ],
-      detail: {
-        concept:
-          "20代女性が“考えずに好きだと感じること”を起点に、写真・余白・色・タイポグラフィを最小限の情報設計で構成。SNS閲覧後の『最後の決め手』になることを目的に、違和感や選択ストレスを排除したビジュアル主導のサロンサイト。",
-        tech: [
-          "React",
-          "Vite",
-          "Tailwind",
-          "GSAP",
-          "PC/SP 完全分離",
-          "microCMS（NEWS連携）"
-        ]
-      },
-
-      seo: {
-        title: "LILU nail salon｜可愛い×上品×直感設計のネイルサロンWebデザイン",
-        description:
-          "LILUは“可愛いのに上品”を両立し、20代女性が直感で選べる導線に最適化したネイルサロンサイト。余白・写真・ピンクの粒度を整え、選択ストレスを減らすUI/UXを設計。",
-        keywords:
-          "ネイルサロン ホームページ, サロンWebデザイン, ピンクデザイン, 余白デザイン, UI/UX, 女性向けサイト, 沖縄 Webデザイン",
-        ogImage: "https://gushikendesign.com/ogp/lilu.png"
-      }
-    },
-
+    
     {
       title: "SAKURAI CLINIC",
       slug: "SakuraiDerm",
@@ -407,6 +311,86 @@ export const worksData = [
         ogImage: "https://gushikendesign.com/ogp/sakurai.png"
       }
     },
+ {
+      title: "LILU nail salon",
+      slug: "LILU",
+      desc: "可愛い × 上品 × 直感設計。\n20代女性の感覚で“選ばれる”ために構築したネイルサロンUI。",
+      link: "https://lilu-drab.vercel.app/",
+      img: "/works/lilu.webp",
+      isNew: true,
+      createdAt: "2025-02-28",
+      tags: [
+        "ピンク",
+        "余白",
+        "上品",
+        "直感設計",
+        "Beauty",
+        "Salon",
+        "UI/UX",
+        "Visual First",
+        "PC/SP 分離"
+      ],
+      detail: {
+        concept:
+          "20代女性が“考えずに好きだと感じること”を起点に、写真・余白・色・タイポグラフィを最小限の情報設計で構成。SNS閲覧後の『最後の決め手』になることを目的に、違和感や選択ストレスを排除したビジュアル主導のサロンサイト。",
+        tech: [
+          "React",
+          "Vite",
+          "Tailwind",
+          "GSAP",
+          "PC/SP 完全分離",
+          "microCMS（NEWS連携）"
+        ]
+      },
+
+      seo: {
+        title: "LILU nail salon｜可愛い×上品×直感設計のネイルサロンWebデザイン",
+        description:
+          "LILUは“可愛いのに上品”を両立し、20代女性が直感で選べる導線に最適化したネイルサロンサイト。余白・写真・ピンクの粒度を整え、選択ストレスを減らすUI/UXを設計。",
+        keywords:
+          "ネイルサロン ホームページ, サロンWebデザイン, ピンクデザイン, 余白デザイン, UI/UX, 女性向けサイト, 沖縄 Webデザイン",
+        ogImage: "https://gushikendesign.com/ogp/lilu.png"
+      }
+    },
+    {
+  title: "KISUI — Skin Care Water Essence",
+  slug: "KisuiRoom",
+  desc: "透明 × 静けさ × 素肌。水と光の粒度で“肌のやさしさ”を構築したスキンケアブランド。",
+  link: "https://kisui.vercel.app/",
+  img: "/works/kisui.webp",
+  isNew: true,
+  createdAt: "2026-02-28",
+  tags: [
+    "NEW",
+    "透明感", "水", "静寂", "余白",
+    "Beauty", "Skincare",
+    "Luxury", "Minimal",
+    "GSAP", "PC/SP 完全分離"
+  ],
+
+  detail: {
+    concept:
+      "“肌に触れた瞬間の静けさ”を軸に、光膜・水膜・余白の階調で構成したスキンケアデザイン。広告的な圧を排除し、素肌に寄り添うような透明感を中心に設計されたブランドUI。",
+    tech: [
+      "React",
+      "Vite",
+      "Tailwind",
+      "GSAP",
+      "IntersectionObserver",
+      "PC/SP 完全分離"
+    ]
+  },
+
+  seo: {
+    title: "KISUI — 透明×静寂のスキンケアブランドUI｜GUSHIKEN DESIGN",
+    description:
+      "KISUI は水と光の粒度を0.3px単位で整え、“肌に優しい透明感”を再構築したスキンケアブランド。余白・光膜・水膜の三層レイヤーで静けさと上質感を両立したUIデザイン。",
+    keywords:
+      "スキンケアEC, 化粧水LP, 透明感デザイン, 静寂UI, 美容Webデザイン, 沖縄 Web制作, KISUI",
+    ogImage: "https://gushikendesign.com/ogp/kisui.png"
+  }
+},
+   
 
     {
       title: "RIN — Eyelash Salon",
