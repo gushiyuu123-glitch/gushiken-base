@@ -3,146 +3,152 @@ import "./philosophy.css";
 
 function VisualPrinciples() {
   return (
-<div className="aq-fade delay-7 mt-8 mb-16 sm:mt-10 sm:mb-20">
-  <div className="relative pl-6 sm:pl-8">
-    {/* 全体をつなぐ縦軸 */}
-    <div
-      className="absolute left-[10px] top-[34px] bottom-[14px] w-px"
-      style={{
-        background:
-          "linear-gradient(to bottom, rgba(255,255,255,0.16), rgba(255,255,255,0.05) 68%, transparent)",
-      }}
-    />
+    <div className="aq-fade delay-7 mt-8 mb-16 sm:mt-10 sm:mb-20">
+      <div className="relative pl-6 sm:pl-8">
+        {/* 全体をつなぐ縦軸 */}
+        <div
+          className="absolute left-[10px] top-[34px] bottom-[14px] w-px"
+          style={{
+            background:
+              "linear-gradient(to bottom, rgba(255,255,255,0.16), rgba(255,255,255,0.05) 68%, transparent)",
+          }}
+        />
 
-    <p className="text-white/18 text-[0.6rem] tracking-[0.24em] mb-10 uppercase">
-      ― DESIGN IN PRACTICE ―
-    </p>
-
-    {/* 01 */}
-    <div className="relative mb-10">
-      <span
-        className="absolute left-[-6px] top-[2px] text-[2.8rem] sm:text-[3rem] font-extralight tracking-[0.06em] select-none"
-        style={{ color: "rgba(255,255,255,0.055)", lineHeight: 1 }}
-        aria-hidden="true"
-      >
-        01
-      </span>
-
-      <div className="ml-10 sm:ml-12">
-        <div className="flex items-baseline gap-4 flex-wrap mb-3">
-          <span className="text-[1.52rem] sm:text-[1.7rem] font-light tracking-[0.16em] text-white/84">
-            見やすさ
-          </span>
-          <span className="text-[0.62rem] tracking-[0.2em] text-white/20 font-light pb-[2px]">
-            CLARITY
-          </span>
-        </div>
-
-        <div className="flex flex-col gap-[5px] mb-3">
-          <div
-            className="h-[1.5px] w-full"
-            style={{ background: "rgba(255,255,255,0.48)" }}
-          />
-          <div
-            className="h-px w-[76%]"
-            style={{ background: "rgba(255,255,255,0.16)" }}
-          />
-          <div
-            className="h-px w-[50%]"
-            style={{ background: "rgba(255,255,255,0.08)" }}
-          />
-        </div>
-
-        <p className="text-white/30 text-[0.67rem] tracking-[0.13em] leading-[1.9]">
-          必要な情報が見つけやすく、自然に読み進められる画面へ。
+        <p className="text-white/18 text-[0.6rem] tracking-[0.24em] mb-10 uppercase">
+          ― DESIGN IN PRACTICE ―
         </p>
-      </div>
-    </div>
 
-    {/* 02 */}
-    <div className="relative mb-10">
-      <span
-        className="absolute left-[-6px] top-[2px] text-[2.8rem] sm:text-[3rem] font-extralight tracking-[0.06em] select-none"
-        style={{ color: "rgba(255,255,255,0.055)", lineHeight: 1 }}
-        aria-hidden="true"
-      >
-        02
-      </span>
-
-      <div className="ml-10 sm:ml-12">
-        <div className="flex items-baseline gap-4 flex-wrap mb-3">
-          <span className="text-[1.52rem] sm:text-[1.7rem] font-light tracking-[0.16em] text-white/84">
-            雰囲気づくり
+        {/* 01 */}
+        <div className="relative mb-10">
+          <span
+            className="absolute left-[-6px] top-[2px] text-[2.8rem] sm:text-[3rem] font-extralight tracking-[0.06em] select-none"
+            style={{ color: "rgba(255,255,255,0.055)", lineHeight: 1 }}
+            aria-hidden="true"
+          >
+            01
           </span>
-          <span className="text-[0.62rem] tracking-[0.2em] text-white/20 font-light pb-[2px]">
-            ATMOSPHERE
-          </span>
-        </div>
 
-        <div className="flex gap-[10px] items-stretch mb-3">
-          <div
-            className="w-[3px] rounded-[1px]"
-            style={{ background: "rgba(201,169,110,0.88)" }}
-          />
-          <div className="flex-1 flex flex-col gap-[5px]">
-            <div
-              className="h-px w-full"
-              style={{ background: "rgba(201,169,110,0.34)" }}
-            />
-            <div
-              className="h-px w-[68%]"
-              style={{ background: "rgba(201,169,110,0.16)" }}
-            />
-            <div
-              className="h-px w-[44%]"
-              style={{ background: "rgba(201,169,110,0.08)" }}
-            />
+          <div className="ml-10 sm:ml-12">
+            <div className="flex items-baseline gap-4 flex-wrap mb-3">
+              <span className="text-[1.52rem] sm:text-[1.7rem] font-light tracking-[0.16em] text-white/84">
+                見やすさ
+              </span>
+              <span className="text-[0.62rem] tracking-[0.2em] text-white/20 font-light pb-[2px]">
+                CLARITY
+              </span>
+            </div>
+
+            <div className="flex flex-col gap-[5px] mb-3">
+              <div
+                className="h-[1.5px] w-full"
+                style={{ background: "rgba(255,255,255,0.48)" }}
+              />
+              <div
+                className="h-px w-[76%]"
+                style={{ background: "rgba(255,255,255,0.16)" }}
+              />
+              <div
+                className="h-px w-[50%]"
+                style={{ background: "rgba(255,255,255,0.08)" }}
+              />
+            </div>
+
+            <p className="text-white/30 text-[0.67rem] tracking-[0.13em] leading-[1.9]">
+              情報の優先順位を整え、
+              <br />
+              初めての方にも迷わず伝わる画面へ。
+            </p>
           </div>
         </div>
 
-        <p className="text-white/30 text-[0.67rem] tracking-[0.13em] leading-[1.9]">
-          色・写真・余白を整え、ブランドらしさが自然に伝わる印象へ。
-        </p>
-      </div>
-    </div>
-
-    {/* 03 */}
-    <div className="relative">
-      <span
-        className="absolute left-[-6px] top-[2px] text-[2.8rem] sm:text-[3rem] font-extralight tracking-[0.06em] select-none"
-        style={{ color: "rgba(255,255,255,0.055)", lineHeight: 1 }}
-        aria-hidden="true"
-      >
-        03
-      </span>
-
-      <div className="ml-10 sm:ml-12">
-        <div className="flex items-baseline gap-4 flex-wrap mb-3">
-          <span className="text-[1.52rem] sm:text-[1.7rem] font-light tracking-[0.16em] text-white/84">
-            一貫した制作
+        {/* 02 */}
+        <div className="relative mb-10">
+          <span
+            className="absolute left-[-6px] top-[2px] text-[2.8rem] sm:text-[3rem] font-extralight tracking-[0.06em] select-none"
+            style={{ color: "rgba(255,255,255,0.055)", lineHeight: 1 }}
+            aria-hidden="true"
+          >
+            02
           </span>
-          <span className="text-[0.62rem] tracking-[0.2em] text-white/20 font-light pb-[2px]">
-            CONSISTENCY
-          </span>
+
+          <div className="ml-10 sm:ml-12">
+            <div className="flex items-baseline gap-4 flex-wrap mb-3">
+              <span className="text-[1.52rem] sm:text-[1.7rem] font-light tracking-[0.16em] text-white/84">
+                雰囲気づくり
+              </span>
+              <span className="text-[0.62rem] tracking-[0.2em] text-white/20 font-light pb-[2px]">
+                ATMOSPHERE
+              </span>
+            </div>
+
+            <div className="flex gap-[10px] items-stretch mb-3">
+              <div
+                className="w-[3px] rounded-[1px]"
+                style={{ background: "rgba(201,169,110,0.88)" }}
+              />
+              <div className="flex-1 flex flex-col gap-[5px]">
+                <div
+                  className="h-px w-full"
+                  style={{ background: "rgba(201,169,110,0.34)" }}
+                />
+                <div
+                  className="h-px w-[68%]"
+                  style={{ background: "rgba(201,169,110,0.16)" }}
+                />
+                <div
+                  className="h-px w-[44%]"
+                  style={{ background: "rgba(201,169,110,0.08)" }}
+                />
+              </div>
+            </div>
+
+            <p className="text-white/30 text-[0.67rem] tracking-[0.13em] leading-[1.9]">
+              色・写真・余白を整え、
+              <br />
+              ブランドらしさが自然に伝わる印象へ。
+            </p>
+          </div>
         </div>
 
-        <div className="flex gap-[6px] mb-3">
-          {[...Array(3)].map((_, i) => (
-            <div
-              key={i}
-              className="flex-1 h-[1.5px]"
-              style={{ background: "rgba(255,255,255,0.28)" }}
-            />
-          ))}
-        </div>
+        {/* 03 */}
+        <div className="relative">
+          <span
+            className="absolute left-[-6px] top-[2px] text-[2.8rem] sm:text-[3rem] font-extralight tracking-[0.06em] select-none"
+            style={{ color: "rgba(255,255,255,0.055)", lineHeight: 1 }}
+            aria-hidden="true"
+          >
+            03
+          </span>
 
-        <p className="text-white/30 text-[0.67rem] tracking-[0.13em] leading-[1.9]">
-          デザインから実装まで、全体の印象がぶれないよう丁寧に仕上げます。
-        </p>
+          <div className="ml-10 sm:ml-12">
+            <div className="flex items-baseline gap-4 flex-wrap mb-3">
+              <span className="text-[1.52rem] sm:text-[1.7rem] font-light tracking-[0.16em] text-white/84">
+                一貫した制作
+              </span>
+              <span className="text-[0.62rem] tracking-[0.2em] text-white/20 font-light pb-[2px]">
+                CONSISTENCY
+              </span>
+            </div>
+
+            <div className="flex gap-[6px] mb-3">
+              {[...Array(3)].map((_, i) => (
+                <div
+                  key={i}
+                  className="flex-1 h-[1.5px]"
+                  style={{ background: "rgba(255,255,255,0.28)" }}
+                />
+              ))}
+            </div>
+
+            <p className="text-white/30 text-[0.67rem] tracking-[0.13em] leading-[1.9]">
+              デザインから実装まで一貫して整え、
+              <br />
+              細部までぶれない仕上がりへ。
+            </p>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-</div>
   );
 }
 
@@ -238,35 +244,6 @@ export default function Philosophy() {
             そうした印象の積み重ねを大切にしています。
           </p>
 
-          <div className="mt-14 space-y-5">
-            <div className="aq-fade delay-4">
-              <h3 className="philo-subtitle">見やすさ</h3>
-              <p className="philo-subtext">
-                情報を整理し、
-                <br />
-                初めて訪れた方にも内容が伝わりやすい形に整えます。
-              </p>
-            </div>
-
-            <div className="aq-fade delay-5">
-              <h3 className="philo-subtitle">雰囲気づくり</h3>
-              <p className="philo-subtext">
-                業種やブランドに合った印象を大切にしながら、
-                <br />
-                落ち着きのある画面に仕上げます。
-              </p>
-            </div>
-
-            <div className="aq-fade delay-6">
-              <h3 className="philo-subtitle">一貫した制作</h3>
-              <p className="philo-subtext">
-                デザインだけでなく実装まで含めて、
-                <br />
-                全体の印象がぶれないよう丁寧にまとめています。
-              </p>
-            </div>
-          </div>
-
           <VisualPrinciples />
 
           <p className="philo-last aq-fade delay-8">
@@ -336,35 +313,6 @@ export default function Philosophy() {
             <br />
             感じてもらえることを大切にしています。
           </p>
-
-          <div className="mt-12 space-y-5">
-            <div className="aq-fade delay-4">
-              <h3 className="philo-subtitle">見やすさ</h3>
-              <p className="philo-subtext">
-                情報を整理し、
-                <br />
-                内容が伝わりやすい形に整えます。
-              </p>
-            </div>
-
-            <div className="aq-fade delay-5">
-              <h3 className="philo-subtitle">雰囲気づくり</h3>
-              <p className="philo-subtext">
-                業種やブランドに合った印象を大切にし、
-                <br />
-                落ち着きのある画面に仕上げます。
-              </p>
-            </div>
-
-            <div className="aq-fade delay-6">
-              <h3 className="philo-subtitle">一貫した制作</h3>
-              <p className="philo-subtext">
-                デザインから実装まで、
-                <br />
-                全体の印象がぶれないようまとめています。
-              </p>
-            </div>
-          </div>
 
           <VisualPrinciples />
 
