@@ -1,5 +1,5 @@
 /* =========================================================
-   FOOTER — Integrated Edition
+   FOOTER — Improved Edition
    Quiet Black × Soft Ending × Calm Structure
 ========================================================= */
 
@@ -20,13 +20,28 @@
 }
 
 /* ---------------------------------------------
-   Base Link Area
+   Top Accent Line
 --------------------------------------------- */
-.hiddenLink {
-  position: relative;
-  display: inline-block;
-  padding: 6px 10px;
-  margin: -6px -10px;
+.footer-top-line {
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    transparent,
+    rgba(255,255,255,0.12) 30%,
+    rgba(255,255,255,0.06) 70%,
+    transparent
+  );
+}
+
+/* ---------------------------------------------
+   Column Label
+--------------------------------------------- */
+.footer-col-label {
+  font-size: 0.6rem;
+  letter-spacing: 0.22em;
+  color: rgba(255,255,255,0.18);
+  text-transform: uppercase;
+  margin: 0 0 0.25rem;
 }
 
 /* =========================================================
@@ -34,8 +49,9 @@
 ========================================================= */
 .footer-link {
   position: relative;
-  color: rgba(255,255,255,0.62);
-  letter-spacing: 0.08em;
+  color: rgba(255,255,255,0.55);
+  font-size: 0.8rem;
+  letter-spacing: 0.14em;
   transition: color 0.32s ease;
 }
 
@@ -67,9 +83,9 @@
 ========================================================= */
 .footer-sns {
   position: relative;
-  color: rgba(255,255,255,0.58);
-  font-size: 0.9rem;
-  letter-spacing: 0.05em;
+  color: rgba(255,255,255,0.50);
+  font-size: 0.82rem;
+  letter-spacing: 0.06em;
   transition: color 0.32s ease;
 }
 
@@ -97,9 +113,9 @@
 ========================================================= */
 .footer-project-link {
   position: relative;
-  font-size: 0.78rem;
-  letter-spacing: 0.15em;
-  color: rgba(255,255,255,0.46);
+  font-size: 0.76rem;
+  letter-spacing: 0.13em;
+  color: rgba(255,255,255,0.42);
   text-decoration: none;
   transition: color 0.38s cubic-bezier(.22,.56,.18,1);
 }
@@ -123,23 +139,17 @@
   width: 100%;
 }
 
-.footer-project-label {
-  font-size: 0.63rem;
-  letter-spacing: 0.18em;
-  color: rgba(255,255,255,0.30);
-}
-
 /* =========================================================
    LEGAL LINKS
 ========================================================= */
 .footer-legal {
-  color: rgba(255,255,255,0.38);
-  letter-spacing: 0.12em;
-  transition: opacity 0.32s ease, color 0.32s ease;
+  color: rgba(255,255,255,0.32);
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  transition: color 0.32s ease;
 }
 
 .footer-legal:hover {
-  opacity: 1;
   color: rgba(255,255,255,0.68);
 }
 
@@ -147,42 +157,60 @@
    LAB
 ========================================================= */
 .footer-lab {
-  display: block;
-  margin-top: 0.45rem;
-  font-size: 0.74rem;
+  font-size: 0.72rem;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: rgba(255,255,255,0.26);
-  transition: color 0.38s ease, opacity 0.38s ease;
+  color: rgba(255,255,255,0.24);
+  transition: color 0.38s ease;
 }
 
 .footer-lab:hover {
   color: rgba(255,255,255,0.56);
-  opacity: 1;
+}
+
+/* =========================================================
+   BOTTOM
+========================================================= */
+.footer-bottom {
+  border-top: 1px solid rgba(255,255,255,0.06);
+}
+
+.footer-guide-text {
+  color: rgba(255,255,255,0.22);
+  font-size: 0.68rem;
+  letter-spacing: 0.09em;
+  line-height: 1.85;
+  margin: 0;
+}
+
+.footer-copyright {
+  color: rgba(255,255,255,0.22);
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  margin: 0;
 }
 
 /* =========================================================
    Mobile
 ========================================================= */
 @media (max-width: 768px) {
-  .footer-section {
-    padding-top: 3.5rem !important;
-    padding-bottom: 3.5rem !important;
-  }
-
   .footer-link,
   .footer-sns {
-    font-size: 0.86rem;
+    font-size: 0.84rem;
   }
 
   .footer-project-link {
-    font-size: 0.74rem;
-    letter-spacing: 0.13em;
+    font-size: 0.72rem;
   }
 
   .footer-lab {
-    font-size: 0.7rem;
+    font-size: 0.68rem;
     letter-spacing: 0.14em;
+  }
+
+  .footer-guide-text,
+  .footer-copyright {
+    font-size: 0.65rem;
   }
 }
 
