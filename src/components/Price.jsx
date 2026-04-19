@@ -23,10 +23,9 @@ function PriceVisual() {
     <div className="aq-fade delay-4 mb-12 sm:mb-14">
 
       {/* ── 制作の流れ ── */}
-      <p className="text-white/25 text-[0.68rem] tracking-[0.22em] mb-7 uppercase">
-        ― 制作の流れ ―
-      </p>
-
+ <p className="text-white/25 text-[0.68rem] tracking-[0.22em] mb-7 uppercase text-center">
+  ― 制作の流れ ―
+</p>
       <div className="relative flex items-start justify-between">
         {/* 背面ライン */}
         <div
@@ -80,9 +79,9 @@ function PriceVisual() {
       />
 
       {/* ── 全プラン共通 ── */}
-      <p className="text-white/25 text-[0.68rem] tracking-[0.22em] mb-5 uppercase">
-        ― 全プラン共通 ―
-      </p>
+<p className="text-white/25 text-[0.68rem] tracking-[0.22em] mb-5 uppercase text-center">
+  ― 全プラン共通 ―
+</p>
 
       <div className="flex flex-col gap-[13px]">
         {INCLUDES.map(({ label, full }) => (
