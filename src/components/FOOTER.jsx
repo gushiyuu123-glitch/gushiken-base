@@ -51,9 +51,14 @@ export default function Footer() {
             Okinawa, Japan
           </p>
 
+     <p className="text-white/28 text-[0.78rem] leading-[1.9] mt-5 max-w-[18rem]">
+  沖縄を拠点に、<br></br>
+  伝わり方まで整えるWeb制作を行っています。
+</p>
+
           <a
             href="/layer0"
-            className="footer-lab transition block mt-3"
+            className="footer-lab transition block mt-5"
           >
             HIDDEN LABORATORY
           </a>
@@ -69,7 +74,7 @@ export default function Footer() {
         </nav>
 
         {/* プロジェクト + SNS + 法務 */}
-        <div className="flex flex-col gap-4 text-sm tracking-[0.12em]">
+        <div className="flex flex-col gap-5 text-sm tracking-[0.12em]">
           <div className="flex flex-col gap-2">
             <p className="footer-project-label">EXPERIMENTAL PROJECTS</p>
 
@@ -94,8 +99,10 @@ export default function Footer() {
             </a>
           </div>
 
+          <div className="w-full h-px bg-white/8" />
+
           {/* SNS */}
-          <div className="flex items-center gap-6 mt-3">
+          <div className="flex items-center gap-6">
             <a
               href="https://www.instagram.com/"
               target="_blank"
@@ -117,8 +124,10 @@ export default function Footer() {
             </a>
           </div>
 
+          <div className="w-full h-px bg-white/8" />
+
           {/* 法務 */}
-          <div className="flex flex-col gap-1 mt-3 text-xs tracking-[0.15em]">
+          <div className="flex flex-col gap-1 text-xs tracking-[0.15em]">
             <a href="/legal" className="footer-legal">特商法表記</a>
             <a href="/terms" className="footer-legal">利用規約</a>
             <a href="/refund" className="footer-legal">返金規約</a>
@@ -136,12 +145,12 @@ export default function Footer() {
           mt-10 leading-[1.9]
         "
       >
-        本サイトのデザイン・文章は
+        このサイトのデザインや文章は、
         <span className="text-white/50 font-light">
-          紹介・引用は歓迎しています。
+          紹介・引用の範囲であれば歓迎しています。
         </span>
         <br />
-        無断転載・複製・再配布・商用利用はお控えください。
+        無断転載・複製・再配布・商用利用はご遠慮ください。
       </p>
 
       {/* COPYRIGHT */}
