@@ -223,7 +223,7 @@ export default function About() {
               transition
             "
           >
-            note（制作の背景はこちら）
+            制作の背景や考え方を見る
           </a>
         </div>
 
@@ -257,18 +257,136 @@ export default function About() {
           </div>
         </div>
 
+        {/* ── Design Palette ── */}
+        <div className="aq-fade delay-7 mb-16 sm:mb-20">
+          <p className="text-white/25 text-[0.68rem] tracking-[0.22em] mb-5 pl-1">
+            ― DESIGN PALETTE ―
+          </p>
+
+          {/* PC intro */}
+          <div className="hidden sm:block">
+            <p className="text-white/50 text-[0.88rem] leading-[2] tracking-[0.08em] mb-7">
+              落ち着き・品・やわらかさを保つために、
+              <br />
+              色や余白、文字のトーンも細かく整えています。
+            </p>
+          </div>
+
+          {/* SP intro */}
+          <div className="block sm:hidden">
+            <p className="text-white/50 text-[0.86rem] leading-[1.95] tracking-[0.08em] mb-7">
+              落ち着き・品・やわらかさを保つために、
+              <br />
+              色や余白、文字のトーンも
+              <br />
+              細かく整えています。
+            </p>
+          </div>
+
+          {/* Color Swatches */}
+          <div className="flex gap-2 sm:gap-3 mb-7">
+            {[
+              { bg: "#0d0d0d", label: "DEEP" },
+              { bg: "#1a1a1a", label: "BASE" },
+              { bg: "#2c2b29", label: "WARM" },
+              { bg: "rgba(255,255,255,0.5)", label: "LIGHT" },
+              { bg: "linear-gradient(135deg,#c9a96e,#e8d5a3)", label: "GOLD" },
+            ].map(({ bg, label }) => (
+              <div key={label} className="flex-1 flex flex-col gap-2">
+                <div
+                  className="rounded-[2px] border border-white/[0.07]"
+                  style={{ height: "68px", background: bg }}
+                />
+                <p className="text-[0.58rem] tracking-[0.16em] text-white/20 text-center">
+                  {label}
+                </p>
+              </div>
+            ))}
+          </div>
+
+          {/* Font / Spacing / Tone */}
+          <div
+            className="grid grid-cols-3 gap-5 pt-6"
+            style={{ borderTop: "1px solid rgba(255,255,255,0.07)" }}
+          >
+            <div>
+              <p className="text-[0.6rem] tracking-[0.2em] text-white/20 mb-2 uppercase">
+                Font
+              </p>
+              <p className="text-white/65 text-[1rem] tracking-[0.08em] font-light leading-relaxed">
+                Aa Bb
+              </p>
+              <p className="text-[0.72rem] tracking-[0.13em] text-white/30 mt-1">
+                細字・余白重視
+              </p>
+            </div>
+
+            <div>
+              <p className="text-[0.6rem] tracking-[0.2em] text-white/20 mb-3 uppercase">
+                Spacing
+              </p>
+              <div className="flex flex-col gap-[5px] mb-2">
+                <div
+                  className="h-[1.5px] w-full"
+                  style={{ background: "rgba(255,255,255,0.12)" }}
+                />
+                <div
+                  className="h-[1.5px] w-[68%]"
+                  style={{ background: "rgba(255,255,255,0.08)" }}
+                />
+                <div
+                  className="h-[1.5px] w-[42%]"
+                  style={{ background: "rgba(255,255,255,0.05)" }}
+                />
+              </div>
+              <p className="text-[0.72rem] tracking-[0.13em] text-white/30">
+                余白で整理する
+              </p>
+            </div>
+
+            <div>
+              <p className="text-[0.6rem] tracking-[0.2em] text-white/20 mb-3 uppercase">
+                Tone
+              </p>
+              <div className="flex gap-[6px] mb-2">
+                {[
+                  { bg: "#0e0e0e", border: "rgba(255,255,255,0.18)" },
+                  { bg: "#2c2b29", border: "rgba(255,255,255,0.12)" },
+                  { bg: "rgba(255,255,255,0.5)", border: "rgba(255,255,255,0.12)" },
+                  { bg: "#c9a96e", border: "transparent" },
+                ].map(({ bg, border }, i) => (
+                  <div
+                    key={i}
+                    className="rounded-full"
+                    style={{
+                      width: 15,
+                      height: 15,
+                      background: bg,
+                      border: `1px solid ${border}`,
+                    }}
+                  />
+                ))}
+              </div>
+              <p className="text-[0.72rem] tracking-[0.13em] text-white/30">
+                落ち着きを保つ
+              </p>
+            </div>
+          </div>
+        </div>
+        {/* ── /Design Palette ── */}
+
         {/* PC */}
         <div className="hidden sm:block">
           <p
             className="
-              about-last aq-fade delay-7
+              about-last aq-fade delay-8
               text-[0.95rem] sm:text-[1rem]
               leading-[2.1] sm:leading-[2.2]
             "
           >
             あなたのブランドやお店のらしさを、
             <span className="text-white/95">
-              落ち着きと品のあるWebサイト
+              落ち着きと品が伝わるWebサイト
             </span>
             として丁寧に形にします。
           </p>
@@ -278,7 +396,7 @@ export default function About() {
         <div className="block sm:hidden">
           <p
             className="
-              about-last aq-fade delay-7
+              about-last aq-fade delay-8
               text-[0.95rem]
               leading-[2.1]
             "
@@ -286,7 +404,7 @@ export default function About() {
             あなたのブランドやお店のらしさを、
             <br />
             <span className="text-white/95">
-              落ち着きと品のあるWebサイト
+              落ち着きと品が伝わるWebサイト
             </span>
             として丁寧に形にします。
           </p>

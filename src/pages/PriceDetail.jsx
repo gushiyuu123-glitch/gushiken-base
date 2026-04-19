@@ -26,20 +26,14 @@ export default function PriceDetail() {
         {/* Lead */}
         <p className="pd-lead">
           Webサイトは、
-          <span className="text-white/90">魅力を分かりやすく伝えるための窓口</span>
+          <span className="text-white/90">魅力や信頼感を伝えるための窓口</span>
           です。
           <br />
-          ご相談前に、目的や雰囲気を伺いながら、
-          <span className="text-white/90">
-            どんな見せ方が合うかを一緒に整理
-          </span>
-          していきます。
+          目的や雰囲気を伺いながら、
+          <span className="text-white/90">どんな見せ方が合うかを整理</span>
+          し、
           <br />
-          <br />
-          料金は事前に総額をご案内し、
-          <span className="text-white/90">
-            途中で大きく変わることはありません。
-          </span>
+          料金は事前に総額をご案内したうえで進めています。
         </p>
 
         {/* ========= PLANS ========= */}
@@ -51,7 +45,7 @@ export default function PriceDetail() {
             title="Landing Page"
             price="¥60,000〜"
             detail="商品やサービスの魅力を、1ページで分かりやすく伝えるためのプランです。"
-            bestFor="まずは1ページでしっかり伝えたい方向け。"
+            bestFor="まずは1ページでしっかり伝えたい方におすすめです。"
             includes={[
               "オリジナルデザイン",
               "スマホ対応",
@@ -65,7 +59,7 @@ export default function PriceDetail() {
             title="Small Website"
             price="¥120,000〜"
             detail="トップページと数ページで、お店やサービスをきちんと伝えたい方向けのプランです。"
-            bestFor="店舗・サロン・小規模事業におすすめ。"
+            bestFor="店舗・サロン・小規模事業のサイトにおすすめです。"
             includes={[
               "トップ + 下層2〜4ページ",
               "スマホ対応",
@@ -78,8 +72,8 @@ export default function PriceDetail() {
             badge="PLAN 03"
             title="Brand Site"
             price="¥240,000〜"
-            detail="写真・色・余白まで整えながら、ブランド全体の印象を丁寧につくるプランです。"
-            bestFor="世界観を大切にしたいブランド向け。"
+            detail="写真・色・余白まで整えながら、ブランド全体の印象と信頼感が伝わるサイトを丁寧につくるプランです。"
+            bestFor="世界観を大切にしたいブランドや店舗におすすめです。"
             includes={[
               "世界観設計",
               "複数ページ対応",
@@ -99,8 +93,8 @@ export default function PriceDetail() {
 
           <p className="pd-plan-detail">
             文言や写真の差し替え、最新情報の追加など、
-            <strong>サイトの雰囲気を保ちながら更新</strong>
-            を行うプランです。
+            <strong>サイトの雰囲気を保ちながら整えるための運用プラン</strong>
+            です。
           </p>
 
           <div className="pd-detail-columns">
@@ -116,7 +110,7 @@ export default function PriceDetail() {
             </div>
 
             <div>
-              <h4 className="pd-detail-title mt-4">月額に含まれない内容</h4>
+              <h4 className="pd-detail-title mt-4">別途ご相談となる内容</h4>
               <ul className="pd-detail-list">
                 <li>新ページ / 新セクションの追加</li>
                 <li>大きなデザイン変更</li>
@@ -151,7 +145,12 @@ export default function PriceDetail() {
         <SectionTitle main>ご確認いただきたいこと</SectionTitle>
         <TextBlock>
           <li>納期の目安は 2〜5週間です。</li>
-          <li>短納期・最低価格重視のご依頼には対応していません。</li>
+          <li>
+            品質を保つため、
+            <span className="text-white/85">
+              短納期のみを優先するご依頼には合わない場合があります。
+            </span>
+          </li>
           <li>
             ドメイン代・サーバー代は実費ですが、
             <span className="text-white/85">
@@ -177,9 +176,9 @@ export default function PriceDetail() {
         </TextBlock>
 
         {/* ========= SEO ========= */}
-        <SectionTitle>SEO・初期設定</SectionTitle>
+        <SectionTitle>公開前の初期設定について</SectionTitle>
         <TextBlock>
-          <li>タイトル・説明文・OGP画像の設定は標準対応です。</li>
+          <li>タイトル・説明文・OGP画像・favicon などの初期設定は標準対応です。</li>
           <li>画像軽量化・表示速度の最適化も含まれます。</li>
           <li>公開に必要な初期設定まで、分かりやすくサポートします。</li>
         </TextBlock>
@@ -187,7 +186,7 @@ export default function PriceDetail() {
         {/* ========= Option ========= */}
         <SectionTitle>追加オプション</SectionTitle>
         <TextBlock>
-          <li>microCMS 導入：¥30,000〜</li>
+          <li>お知らせ更新機能の導入：¥30,000〜</li>
           <li>高度レタッチ：¥10,000〜</li>
           <li>追加ページ：内容に応じてお見積もり</li>
           <li>ロゴ / 印刷物 / 撮影まわり：内容に応じてご相談</li>
@@ -253,7 +252,7 @@ export default function PriceDetail() {
                   name: "Brand Site",
                   price: "240000 JPY",
                   description:
-                    "写真・色・余白まで整えながら、ブランド全体の印象を丁寧につくるプランです。",
+                    "写真・色・余白まで整えながら、ブランド全体の印象と信頼感が伝わるサイトを丁寧につくるプランです。",
                 },
                 {
                   "@type": "Service",

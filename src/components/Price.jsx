@@ -56,43 +56,20 @@ export default function Price() {
           料金プラン / PRICING PLANS
         </h3>
 
-        {/* ===== Sub Lead ===== */}
-        <p
-          className="
-            aq-fade delay-1
-            mb-10
-            text-[0.85rem] sm:text-[0.9rem]
-            tracking-[0.12em]
-            text-white/60
-          "
-        >
-          ― 料金について（制作費の目安） ―
-        </p>
-
         {/* =====================
             LEAD / PC
         ===================== */}
         <div className="hidden sm:block">
           <p className="price-philosophy aq-fade delay-2">
-            Webサイトは、
-            <span className="text-white/95">
-              魅力を分かりやすく伝えるための窓口
-            </span>
-            です。
+            制作費の目安を、分かりやすくまとめています。
             <br />
-            見た目だけでなく、伝わりやすさや使いやすさまで含めて整えています。
+            初めての方でも進めやすいよう、公開準備まで含めてサポートします。
           </p>
 
           <p className="price-lead aq-fade delay-3">
-            下記は制作費の目安です。
-            <br />
             ご相談前に、
             <strong>「総額」「納品物」「進め方」</strong>
-            を分かりやすくご案内します。
-            <br />
-            <span className="price-lead-note">
-              初めての方でも進めやすいよう、公開準備まで含めてサポートしています。
-            </span>
+            を事前にご案内します。
           </p>
         </div>
 
@@ -101,25 +78,19 @@ export default function Price() {
         ===================== */}
         <div className="block sm:hidden">
           <p className="price-philosophy aq-fade delay-2">
-            Webサイトは、
+            制作費の目安を、
             <br />
-            <span className="text-white/95">
-              魅力を分かりやすく伝えるための窓口
-            </span>
-            です。
+            分かりやすくまとめています。
             <br />
             <br />
-            見た目だけでなく、
+            初めての方でも、
             <br />
-            伝わりやすさや使いやすさまで
+            公開準備まで含めて
             <br />
-            丁寧に整えています。
+            サポートします。
           </p>
 
           <p className="price-lead aq-fade delay-3">
-            下記は制作費の目安です。
-            <br />
-            <br />
             ご相談前に、
             <br />
             <strong>
@@ -127,14 +98,7 @@ export default function Price() {
               <br />
               「進め方」
             </strong>
-            を分かりやすくご案内します。
-            <br />
-            <br />
-            <span className="price-lead-note">
-              公開準備まで含めて
-              <br />
-              サポートしています。
-            </span>
+            を事前にご案内します。
           </p>
         </div>
 
@@ -144,7 +108,7 @@ export default function Price() {
             label="PLAN 01"
             title="Landing Page（1ページ）"
             price="¥60,000〜"
-            desc="商品やサービスの魅力を、1ページで分かりやすく伝えるためのプランです。"
+            desc="商品やサービスの魅力を、1ページで分かりやすく伝えたい方向けのプランです。まずはシンプルに整えたい方におすすめです。"
             includes={[
               "オリジナルデザイン",
               "スマホ対応",
@@ -157,7 +121,7 @@ export default function Price() {
             label="PLAN 02"
             title="Small Website（小規模サイト）"
             price="¥120,000〜"
-            desc="トップページと数ページで、お店やサービスをきちんと伝えたい方向けのプランです。"
+            desc="トップページと数ページで、お店やサービスをきちんと伝えたい方向けのプランです。店舗・サロン・小規模事業におすすめです。"
             includes={[
               "トップ + 下層2〜4ページ",
               "スマホ対応",
@@ -170,7 +134,7 @@ export default function Price() {
             label="PLAN 03"
             title="Brand Site（世界観重視）"
             price="¥240,000〜"
-            desc="写真・色・余白まで整えながら、ブランド全体の印象を丁寧につくるプランです。"
+            desc="写真・色・余白まで整えながら、ブランド全体の印象と信頼感が伝わるサイトを丁寧につくるプランです。世界観を大切にしたい方におすすめです。"
             includes={[
               "世界観設計",
               "複数ページ対応",
@@ -191,7 +155,7 @@ export default function Price() {
             <p className="price-card-desc">
               文言や写真の差し替え、軽微な修正など、
               <strong>サイトの雰囲気を保ちながら更新</strong>
-              を行います。
+              を行うプランです。
             </p>
           </div>
         </div>
@@ -201,9 +165,7 @@ export default function Price() {
           <p className="price-note aq-fade delay-6">
             ドメイン代・サーバー代は実費です。
             <br />
-            取得や接続のサポートは料金内で対応しています。
-            <br />
-            追加ページや機能追加も、内容に応じてご案内します。
+            公開に必要な初期設定や接続サポートは、料金内で対応します。
           </p>
         </div>
 
@@ -215,14 +177,11 @@ export default function Price() {
             実費です。
             <br />
             <br />
-            取得や接続のサポートは
+            公開に必要な初期設定や
             <br />
-            料金内で対応しています。
+            接続サポートは、
             <br />
-            <br />
-            追加ページや機能追加も
-            <br />
-            内容に応じてご案内します。
+            料金内で対応します。
           </p>
         </div>
 

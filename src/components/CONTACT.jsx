@@ -44,14 +44,14 @@ export default function Contact() {
           <div className="hidden sm:block">
             <p className="contact-lead aq-fade delay-2">
               このサイトの雰囲気に
-              <span className="text-white/95">少しでも合いそう</span>
-              と感じていただけた方へ。
+              <span className="text-white/95">少しでも惹かれた方</span>
+              へ。
             </p>
 
             <p className="contact-lead-sub aq-fade delay-3">
               まだ内容が固まっていなくても大丈夫です。
               <br />
-              「こんな雰囲気にしたい」くらいの段階からご相談いただけます。
+              雰囲気や目的を伺いながら、合う形を一緒に整えていきます。
             </p>
           </div>
 
@@ -60,10 +60,8 @@ export default function Contact() {
             <p className="contact-lead aq-fade delay-2">
               このサイトの雰囲気に
               <br />
-              <span className="text-white/95">
-                少しでも合いそう
-              </span>
-              と感じていただけた方へ。
+              <span className="text-white/95">少しでも惹かれた方</span>
+              へ。
             </p>
 
             <p className="contact-lead-sub aq-fade delay-3">
@@ -72,17 +70,17 @@ export default function Contact() {
               大丈夫です。
               <br />
               <br />
-              「こんな雰囲気にしたい」
+              雰囲気や目的を伺いながら、
               <br />
-              くらいの段階から
+              合う形を一緒に
               <br />
-              ご相談いただけます。
+              整えていきます。
             </p>
           </div>
 
           <div className="contact-actions aq-fade delay-4">
             <a href="/contact" className="contact-btn">
-              お問い合わせフォームへ
+              お問い合わせはこちら
             </a>
           </div>
 
