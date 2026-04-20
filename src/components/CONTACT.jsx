@@ -4,15 +4,15 @@ import "./contact.css";
 const STARTERS = [
   "「まだ内容が決まっていないけど…」",
   "「予算の目安が知りたい」",
-  "「どんなサイトが合うか相談したい」",
+  "「どんなサイトが合うか知りたい」",
   "「今のサイトをリニューアルしたい」",
 ];
 
 function ContactVisual() {
   return (
     <div className="aq-fade delay-4 mb-8 sm:mb-10">
-      <p className="text-white/18 text-[0.58rem] tracking-[0.26em] mb-5 uppercase">
-        ― こんなご相談から ―
+      <p className="text-white/28 text-[0.7rem] sm:text-[0.72rem] tracking-[0.2em] mb-5 uppercase">
+        ― こんな段階から ―
       </p>
 
       <div
@@ -30,10 +30,10 @@ function ContactVisual() {
                   : "none",
             }}
           >
-            <span className="text-white/30 text-[0.68rem] sm:text-[0.7rem] tracking-[0.12em] leading-[1.6] text-left">
+            <span className="text-white/34 text-[0.72rem] sm:text-[0.74rem] tracking-[0.11em] leading-[1.65] text-left">
               {text}
             </span>
-            <span className="text-white/30 text-[0.62rem] tracking-[0.08em] ml-4 flex-shrink-0">
+            <span className="text-white/34 text-[0.68rem] tracking-[0.08em] ml-4 flex-shrink-0">
               ✓
             </span>
           </div>
@@ -45,8 +45,8 @@ function ContactVisual() {
           className="flex-1 h-px"
           style={{ background: "rgba(255,255,255,0.06)" }}
         />
-        <p className="text-white/20 text-[0.6rem] tracking-[0.16em] whitespace-nowrap">
-          まだ検討段階でも、お気軽にご相談ください。
+        <p className="text-white/24 text-[0.66rem] sm:text-[0.68rem] tracking-[0.14em] whitespace-nowrap">
+          まだ具体的でなくても、大丈夫です。
         </p>
         <div
           className="flex-1 h-px"
@@ -106,7 +106,7 @@ export default function Contact() {
             <p className="contact-lead-sub aq-fade delay-3">
               まだ内容が固まっていなくても大丈夫です。
               <br />
-              ご希望や目的を伺いながら、合う形を一緒に整えていきます。
+              必要な部分は順に確認しながら、無理のない形で進めます。
             </p>
           </div>
 
@@ -124,11 +124,11 @@ export default function Contact() {
               大丈夫です。
               <br />
               <br />
-              ご希望や目的を伺いながら、
+              必要な部分は順に確認しながら、
               <br />
-              合う形を一緒に
+              無理のない形で
               <br />
-              整えていきます。
+              進めます。
             </p>
           </div>
 
