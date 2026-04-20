@@ -76,14 +76,13 @@ export default function Works() {
             <span className="arrow">→</span>
           </div>
 
-          {/* カード群はまとめてフェード */}
-          <div className="works-grid aq-fade delay-3">
+          <div className="works-grid">
             {/* 1 → VELMONT */}
             <a
               href="https://velmont-virid.vercel.app/"
               target="_blank"
               rel="noopener noreferrer"
-              className="work-card"
+              className="work-card aq-fade delay-3"
               aria-label="VELMONT のサイトを見る"
             >
               <img
@@ -103,7 +102,7 @@ export default function Works() {
               href="https://rose-veil.vercel.app/"
               target="_blank"
               rel="noopener noreferrer"
-              className="work-card"
+              className="work-card aq-fade delay-4"
               aria-label="ROSE VEIL のサイトを見る"
             >
               <img
@@ -123,7 +122,7 @@ export default function Works() {
               href="https://lumin-audio.vercel.app/"
               target="_blank"
               rel="noopener noreferrer"
-              className="work-card"
+              className="work-card aq-fade delay-5"
               aria-label="LÜMIN のサイトを見る"
             >
               <img
@@ -143,7 +142,7 @@ export default function Works() {
         {/* =====================
             VIEW ALL
         ===================== */}
-        <div className="works-viewall aq-fade delay-4">
+        <div className="works-viewall aq-fade delay-6">
           <a href="/works" className="viewall-btn">
             VIEW ALL WORKS
           </a>

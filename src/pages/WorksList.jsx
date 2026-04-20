@@ -73,8 +73,6 @@ export default function WorksList() {
 
   /* ================================
         aq-fade observer
-        CSS側の aq-fade を主役にして、
-        JS は aq-show を付けるだけにする
   ================================ */
   useEffect(() => {
     const root = rootRef.current;
@@ -128,7 +126,7 @@ export default function WorksList() {
         RENDER
   ================================ */
   return (
-    <section className="min-h-screen overflow-x-hidden bg-[#070604] px-6 py-24 md:px-10 lg:px-16">
+    <section className="min-h-screen bg-[#070604] px-6 py-24 pb-32 md:px-10 lg:px-16">
       <div className="ambient-glow" style={{ height: "1px" }} />
 
       <div ref={rootRef} className="mx-auto max-w-6xl lg:max-w-7xl">
@@ -155,11 +153,29 @@ export default function WorksList() {
 
         {/* ================= TABS ================= */}
         <div className="aq-fade delay-2">
-          <CategoryTabs
-            activeCategory={activeCategory}
-            setActiveCategory={handleChangeCategory}
-            categoryList={categoryList}
-          />
+          <div
+            className="-mx-6 overflow-x-auto px-6 md:mx-0 md:px-0"
+            style={{
+              WebkitOverflowScrolling: "touch",
+              overscrollBehaviorX: "contain",
+              scrollbarWidth: "none",
+              msOverflowStyle: "none",
+              touchAction: "pan-x",
+            }}
+          >
+            <div
+              className="min-w-max"
+              style={{
+                touchAction: "pan-x",
+              }}
+            >
+              <CategoryTabs
+                activeCategory={activeCategory}
+                setActiveCategory={handleChangeCategory}
+                categoryList={categoryList}
+              />
+            </div>
+          </div>
         </div>
 
         {/* ================= BLOCKS ================= */}
@@ -238,12 +254,13 @@ export default function WorksList() {
           note — 制作の裏側
         </a>
       </div>
-<FloatingShareButton
-  label="SHARE"
-  showAfter={260}
-  title="WORKS"
-  shareText="GUSHIKEN DESIGN — WORKS"
-/>
+
+      <FloatingShareButton
+        label="SHARE"
+        showAfter={260}
+        title="WORKS"
+        shareText="GUSHIKEN DESIGN — WORKS"
+      />
     </section>
   );
 }

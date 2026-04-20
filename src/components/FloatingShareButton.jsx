@@ -57,6 +57,7 @@ function injectStyles() {
   transition:
     opacity 0.6s cubic-bezier(0.22,1,0.36,1),
     transform 0.6s cubic-bezier(0.22,1,0.36,1);
+  pointer-events: none;
 }
 .fsb-root.hidden {
   opacity: 0;
@@ -103,12 +104,15 @@ function injectStyles() {
   transform-origin: bottom right;
   transition:
     opacity 0.42s cubic-bezier(0.22,1,0.36,1),
-    transform 0.42s cubic-bezier(0.22,1,0.36,1);
+    transform 0.42s cubic-bezier(0.22,1,0.36,1),
+    visibility 0s linear;
+  pointer-events: auto;
 }
 .fsb-panel.closed {
   opacity: 0;
   transform: scale(0.96) translateY(8px);
   pointer-events: none;
+  visibility: hidden;
 }
 
 .fsb-header {
@@ -144,6 +148,7 @@ function injectStyles() {
   background: transparent;
   color: rgba(255,255,255,0.26);
   cursor: pointer;
+  pointer-events: auto;
   transition: border-color 0.26s, color 0.26s, background 0.26s;
 }
 .fsb-close-btn:hover {
@@ -171,6 +176,7 @@ function injectStyles() {
   position: relative;
   opacity: 0;
   transform: translateX(6px);
+  pointer-events: auto;
   transition:
     background 0.22s,
     opacity 0.38s cubic-bezier(0.22,1,0.36,1),
@@ -239,6 +245,7 @@ function injectStyles() {
   cursor: pointer;
   opacity: 0;
   transform: translateY(4px);
+  pointer-events: auto;
   transition:
     background 0.22s,
     border-color 0.22s,
@@ -270,6 +277,8 @@ function injectStyles() {
     0 1px 0 rgba(255,255,255,0.04) inset,
     0 12px 42px rgba(0,0,0,0.30);
   cursor: pointer;
+  pointer-events: auto;
+  touch-action: manipulation;
   transition:
     border-color 0.32s,
     background 0.32s,
@@ -384,7 +393,9 @@ function buildItems(
       label: "LINE",
       sub: "Send",
       onClick: () => {
-        openWin(`https://social-plugins.line.me/lineit/share?url=${encode(shareUrl)}`);
+        openWin(
+          `https://social-plugins.line.me/lineit/share?url=${encode(shareUrl)}`
+        );
         closeMenu();
       },
     },
@@ -404,7 +415,9 @@ function buildItems(
       label: "Facebook",
       sub: "Share",
       onClick: () => {
-        openWin(`https://www.facebook.com/sharer/sharer.php?u=${encode(shareUrl)}`);
+        openWin(
+          `https://www.facebook.com/sharer/sharer.php?u=${encode(shareUrl)}`
+        );
         closeMenu();
       },
     },
@@ -413,7 +426,9 @@ function buildItems(
       label: "LinkedIn",
       sub: "Post",
       onClick: () => {
-        openWin(`https://www.linkedin.com/sharing/share-offsite/?url=${encode(shareUrl)}`);
+        openWin(
+          `https://www.linkedin.com/sharing/share-offsite/?url=${encode(shareUrl)}`
+        );
         closeMenu();
       },
     },
@@ -431,7 +446,9 @@ function buildItems(
       label: "Telegram",
       sub: "Send",
       onClick: () => {
-        openWin(`https://t.me/share/url?url=${encode(shareUrl)}&text=${encode(shareText)}`);
+        openWin(
+          `https://t.me/share/url?url=${encode(shareUrl)}&text=${encode(shareText)}`
+        );
         closeMenu();
       },
     },
@@ -444,7 +461,7 @@ export default function FloatingShareButton({
   showAfter = 260,
   url,
   title = "WORKS",
-  shareText = "NOAH — WORKS",
+  shareText = "GUSHIKEN DESIGN — WORKS",
 }) {
   const [isVisible, setIsVisible] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
@@ -488,7 +505,7 @@ export default function FloatingShareButton({
   useEffect(() => {
     if (!isOpen) return;
 
-    const onDown = (e) => {
+    const onPointerDown = (e) => {
       if (!wrapRef.current?.contains(e.target)) {
         setIsOpen(false);
       }
@@ -500,13 +517,13 @@ export default function FloatingShareButton({
       }
     };
 
-    document.addEventListener("mousedown", onDown);
-    document.addEventListener("touchstart", onDown);
+    document.addEventListener("mousedown", onPointerDown);
+    document.addEventListener("touchstart", onPointerDown, { passive: true });
     document.addEventListener("keydown", onKey);
 
     return () => {
-      document.removeEventListener("mousedown", onDown);
-      document.removeEventListener("touchstart", onDown);
+      document.removeEventListener("mousedown", onPointerDown);
+      document.removeEventListener("touchstart", onPointerDown);
       document.removeEventListener("keydown", onKey);
     };
   }, [isOpen]);
