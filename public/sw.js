@@ -1,14 +1,11 @@
 // =====================================================
-//  GUSHIKEN DESIGN — Ultra-Stable Service Worker (No White Screen)
+//  GUSHIKEN DESIGN — Ultra-Stable Service Worker
 // =====================================================
 
-// Cache naming: use a stable prefix and a deployment stamp so older caches are
-// reliably removed. Bump this stamp on deploy to force clients to refresh.
 const CACHE_PREFIX = "gushiken-design-";
-const CACHE_STAMP = "v20260412184417"; // bump this value on deploy (e.g. v6, v7...) or include timestamp
+const CACHE_STAMP = "v20260412184417";
 const CACHE_NAME = `${CACHE_PREFIX}${CACHE_STAMP}`;
 
-// キャッシュする安全なファイルのみ（public にある実際のファイルに合わせる）
 const STATIC_ASSETS = [
   "/offline.html",
   "/manifest.json",
@@ -21,13 +18,12 @@ const STATIC_ASSETS = [
 
   "/ogp-v2.png",
   "/sitemap.xml",
-  "/robots.txt"
+  "/robots.txt",
 ];
 
 // ===========================
 // Install
 // ===========================
-
 self.addEventListener("install", (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => cache.addAll(STATIC_ASSETS))
@@ -38,44 +34,29 @@ self.addEventListener("install", (event) => {
 // ===========================
 // Activate
 // ===========================
-
 self.addEventListener("activate", (event) => {
-  // Remove any caches that don't match the current cache prefix + stamp.
   event.waitUntil(
     caches.keys().then((keys) =>
       Promise.all(
         keys
-          .filter((k) => k !== CACHE_NAME && !k.startsWith(CACHE_PREFIX))
-          .map((k) => caches.delete(k))
-      )
-    )
-  );
-
-  // Also remove caches that share the prefix but are stale (different stamp)
-  event.waitUntil(
-    caches.keys().then((keys) =>
-      Promise.all(
-        keys
-          .filter((k) => k.startsWith(CACHE_PREFIX) && k !== CACHE_NAME)
-          .map((k) => caches.delete(k))
+          .filter((key) => key.startsWith(CACHE_PREFIX) && key !== CACHE_NAME)
+          .map((key) => caches.delete(key))
       )
     )
   );
 
   self.clients.claim();
 
-  // notify clients that a new SW has taken control
   self.clients.matchAll().then((clients) => {
     clients.forEach((client) => {
-      client.postMessage({ type: 'SW_UPDATED', version: CACHE_NAME });
+      client.postMessage({ type: "SW_UPDATED", version: CACHE_NAME });
     });
   });
 });
 
 // ===========================
-// Fetch Handler（最重要）
+// Fetch
 // ===========================
-
 self.addEventListener("fetch", (event) => {
   const req = event.request;
   const url = new URL(req.url);
@@ -83,34 +64,49 @@ self.addEventListener("fetch", (event) => {
   // 外部ドメインは対象外
   if (url.origin !== location.origin) return;
 
-  // HTML は絶対にキャッシュしない（白画面対策）
-  if (req.headers.get("accept")?.includes("text/html")) {
+  // POST / PUT / DELETE などはキャッシュしない
+  if (req.method !== "GET") return;
+
+  // ナビゲーション系HTMLは常にネット優先
+  if (
+    req.mode === "navigate" ||
+    req.headers.get("accept")?.includes("text/html")
+  ) {
     event.respondWith(
       fetch(req).catch(() => caches.match("/offline.html"))
     );
     return;
   }
 
-  // その他は Cache First（安全）
+  // 静的ファイルは Cache First
   event.respondWith(
     caches.match(req).then((cached) => {
       if (cached) return cached;
-      return fetch(req)
-        .then((res) => {
-          return caches.open(CACHE_NAME).then((cache) => {
-            cache.put(req, res.clone());
-            return res;
-          });
-        })
-        .catch(() => caches.match("/offline.html"));
+
+      return fetch(req).then((res) => {
+        // 成功レスポンスだけ保存
+        if (!res || res.status !== 200 || res.type !== "basic") {
+          return res;
+        }
+
+        const resClone = res.clone();
+        caches.open(CACHE_NAME).then((cache) => {
+          cache.put(req, resClone);
+        });
+
+        return res;
+      });
     })
   );
 });
 
-// Allow the page to instruct the SW to skip waiting (for immediate activation)
-self.addEventListener('message', (event) => {
+// ===========================
+// Message
+// ===========================
+self.addEventListener("message", (event) => {
   if (!event.data) return;
-  if (event.data.type === 'SKIP_WAITING') {
+
+  if (event.data.type === "SKIP_WAITING") {
     self.skipWaiting();
   }
 });

@@ -328,20 +328,20 @@ export default function About() {
               </p>
             </div>
 
-            <a
-              href="https://note.com/noahgushi123"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="
-                inline-block mt-6
-                text-white/50 hover:text-white/80
-                underline underline-offset-[4px]
-                text-[0.85rem] tracking-[0.14em]
-                transition
-              "
-            >
-              制作記録を見る
-            </a>
+       <a
+  href="https://note.com/noahgushi123"
+  target="_blank"
+  rel="noopener noreferrer"
+  className="
+    inline-block mt-6
+    text-white/50 hover:text-white/80
+    underline underline-offset-[4px]
+    text-[0.85rem] tracking-[0.14em]
+    transition
+  "
+>
+  制作の裏側を見る
+</a>
           </div>
 
           {/* Qualifications */}
