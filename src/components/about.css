@@ -21,7 +21,6 @@
     );
 }
 
-/* 微細な空気粒子 */
 .about-section::before {
   content: "";
   position: absolute;
@@ -51,10 +50,7 @@
   opacity: 0.022;
 }
 
-/* JSX側に残っていても暴れないようにする */
-.about-noise {
-  display: none;
-}
+.about-noise { display: none; }
 
 /* 左ライン */
 .about-gold-line {
@@ -122,7 +118,6 @@
   letter-spacing: 0.04em;
 }
 
-/* note link */
 .about-section a[href*="note.com"] {
   display: inline-block;
   margin-left: 0.95rem;
@@ -174,12 +169,16 @@
   gap: 0.95rem;
 }
 
-.qualification-card {
-  min-height: 100%;
-  padding: 1.35rem 1.4rem 1.1rem;
-  border: 1px solid rgba(255,255,255,0.08);
+/* -------------------------------------------------------
+   QCARD — 新デザイン
+------------------------------------------------------- */
+.qcard {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem 1.45rem 1.2rem;
   border-radius: 4px;
-  background: rgba(255,255,255,0.02);
+  overflow: hidden;
   transition:
     transform 0.55s cubic-bezier(.22,.56,.18,1),
     border-color 0.35s ease,
@@ -187,92 +186,271 @@
     box-shadow 0.35s ease;
 }
 
-.qualification-card.is-clickable {
+/* ── Acquired（取得済み）スタイル ── */
+.qcard--acquired {
+  border: 1px solid rgba(201,169,110,0.18);
+  background:
+    linear-gradient(
+      160deg,
+      rgba(201,169,110,0.045) 0%,
+      rgba(201,169,110,0.015) 40%,
+      rgba(255,255,255,0.012) 100%
+    );
+}
+
+/* ── Learning（学習中）スタイル ── */
+.qcard--learning {
+  border: 1px solid rgba(255,255,255,0.07);
+  background: rgba(255,255,255,0.018);
+}
+
+/* ── クリッカブル ── */
+.qcard--clickable {
   cursor: pointer;
 }
 
-.qualification-card.is-clickable:hover,
-.qualification-card.is-clickable:focus-visible {
-  transform: translateY(-2px);
-  border-color: rgba(255,255,255,0.14);
-  background: rgba(255,255,255,0.028);
-  box-shadow: 0 14px 36px rgba(0,0,0,0.18);
+.qcard--clickable:hover,
+.qcard--clickable:focus-visible {
+  transform: translateY(-3px);
   outline: none;
 }
 
-.qualification-card__top {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 0.9rem;
-  margin-bottom: 1rem;
+.qcard--acquired.qcard--clickable:hover,
+.qcard--acquired.qcard--clickable:focus-visible {
+  border-color: rgba(201,169,110,0.32);
+  background:
+    linear-gradient(
+      160deg,
+      rgba(201,169,110,0.07) 0%,
+      rgba(201,169,110,0.025) 40%,
+      rgba(255,255,255,0.015) 100%
+    );
+  box-shadow:
+    0 16px 42px rgba(0,0,0,0.22),
+    0 0 0 1px rgba(201,169,110,0.08) inset;
 }
 
-.qualification-card__status {
-  margin-bottom: 0.45rem;
-  color: rgba(255,255,255,0.28);
-  font-size: 0.62rem;
+.qcard--learning.qcard--clickable:hover,
+.qcard--learning.qcard--clickable:focus-visible {
+  border-color: rgba(255,255,255,0.13);
+  background: rgba(255,255,255,0.026);
+  box-shadow: 0 14px 36px rgba(0,0,0,0.18);
+}
+
+/* 上端グロウライン */
+.qcard__accent-line {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  pointer-events: none;
+}
+
+.qcard--acquired .qcard__accent-line {
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(201,169,110,0.55) 35%,
+    rgba(232,213,163,0.70) 55%,
+    rgba(201,169,110,0.40) 75%,
+    transparent 100%
+  );
+}
+
+.qcard--learning .qcard__accent-line {
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255,255,255,0.10) 40%,
+    rgba(255,255,255,0.14) 55%,
+    rgba(255,255,255,0.08) 72%,
+    transparent 100%
+  );
+}
+
+/* ── アイコン行 ── */
+.qcard__icon-row {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  margin-bottom: 1.15rem;
+}
+
+/* 王冠 SVG */
+.crown-icon {
+  width: 34px;
+  height: auto;
+  flex-shrink: 0;
+  stroke: #c9a96e;
+  opacity: 0.72;
+  transition: opacity 0.35s ease;
+}
+
+.qcard--acquired.qcard--clickable:hover .crown-icon,
+.qcard--acquired.qcard--clickable:focus-visible .crown-icon {
+  opacity: 0.92;
+}
+
+/* 学習アイコン SVG */
+.study-icon {
+  width: 28px;
+  height: auto;
+  flex-shrink: 0;
+  stroke: rgba(255,255,255,0.32);
+  transition: stroke 0.35s ease;
+}
+
+/* ステータス EN */
+.qcard__status-en {
+  font-size: 0.58rem;
   letter-spacing: 0.22em;
   text-transform: uppercase;
 }
 
-.qualification-card__title {
-  color: rgba(255,255,255,0.90);
-  font-size: 1rem;
+.qcard--acquired .qcard__status-en {
+  color: rgba(201,169,110,0.60);
+}
+
+.qcard--learning .qcard__status-en {
+  color: rgba(255,255,255,0.24);
+}
+
+/* ── ボディ ── */
+.qcard__body {
+  flex: 1;
+  margin-bottom: 1.05rem;
+}
+
+.qcard__status {
+  margin-bottom: 0.38rem;
+  font-size: 0.60rem;
+  letter-spacing: 0.20em;
+}
+
+.qcard--acquired .qcard__status {
+  color: rgba(201,169,110,0.55);
+}
+
+.qcard--learning .qcard__status {
+  color: rgba(255,255,255,0.28);
+}
+
+.qcard__title {
+  color: rgba(255,255,255,0.92);
+  font-size: 0.98rem;
   font-weight: 300;
-  line-height: 1.8;
-  letter-spacing: 0.08em;
+  line-height: 1.75;
+  letter-spacing: 0.07em;
+  margin-bottom: 0.35rem;
 }
 
-.qualification-card__org {
-  margin-top: 0.15rem;
-  color: rgba(255,255,255,0.38);
-  font-size: 0.77rem;
-  line-height: 1.8;
-  letter-spacing: 0.08em;
+.qcard__org {
+  color: rgba(255,255,255,0.36);
+  font-size: 0.74rem;
+  line-height: 1.75;
+  letter-spacing: 0.07em;
 }
 
-.qualification-card__badge {
-  flex-shrink: 0;
-  border: 1px solid rgba(255,255,255,0.08);
+.qcard__org-sep {
+  margin: 0 0.28em;
+  opacity: 0.5;
+}
+
+/* ── バッジ ── */
+.qcard__badge-row {
+  margin-bottom: 0.95rem;
+}
+
+.qcard__badge {
+  display: inline-block;
+  padding: 0.32rem 0.68rem;
   border-radius: 999px;
-  background: rgba(255,255,255,0.03);
-  padding: 0.42rem 0.72rem;
-}
-
-.qualification-card__badge span {
-  color: rgba(255,255,255,0.40);
-  font-size: 0.58rem;
+  font-size: 0.57rem;
   letter-spacing: 0.14em;
   white-space: nowrap;
 }
 
-.qualification-card__bottom {
+.qcard--acquired .qcard__badge {
+  border: 1px solid rgba(201,169,110,0.22);
+  background: rgba(201,169,110,0.06);
+  color: rgba(201,169,110,0.65);
+}
+
+.qcard--learning .qcard__badge {
+  border: 1px solid rgba(255,255,255,0.08);
+  background: rgba(255,255,255,0.028);
+  color: rgba(255,255,255,0.36);
+}
+
+/* ── フッター ── */
+.qcard__footer {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 0.8rem;
-  padding-top: 0.95rem;
+  padding-top: 0.9rem;
   border-top: 1px solid rgba(255,255,255,0.06);
 }
 
-.qualification-card__hint {
-  color: rgba(255,255,255,0.42);
-  font-size: 0.72rem;
-  letter-spacing: 0.12em;
-  line-height: 1.7;
+.qcard__hint {
+  color: rgba(255,255,255,0.38);
+  font-size: 0.68rem;
+  letter-spacing: 0.10em;
+  line-height: 1.6;
 }
 
-.qualification-card__view {
-  color: rgba(255,255,255,0.28);
-  font-size: 0.68rem;
-  letter-spacing: 0.16em;
+/* VIEW ボタン */
+.qcard__view-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.3em;
+  flex-shrink: 0;
+  transition: gap 0.35s ease;
+}
+
+.qcard__view-text {
+  font-size: 0.64rem;
+  letter-spacing: 0.18em;
   transition: color 0.35s ease;
 }
 
-.qualification-card.is-clickable:hover .qualification-card__view,
-.qualification-card.is-clickable:focus-visible .qualification-card__view {
+.qcard__view-arrow {
+  font-size: 0.68rem;
+  transition: color 0.35s ease, transform 0.45s cubic-bezier(.22,.56,.18,1);
+  display: inline-block;
+}
+
+.qcard--acquired .qcard__view-text,
+.qcard--acquired .qcard__view-arrow {
+  color: rgba(201,169,110,0.45);
+}
+
+.qcard--learning .qcard__view-text,
+.qcard--learning .qcard__view-arrow {
+  color: rgba(255,255,255,0.26);
+}
+
+.qcard--acquired.qcard--clickable:hover .qcard__view-text,
+.qcard--acquired.qcard--clickable:focus-visible .qcard__view-text {
+  color: rgba(201,169,110,0.78);
+}
+
+.qcard--acquired.qcard--clickable:hover .qcard__view-arrow,
+.qcard--acquired.qcard--clickable:focus-visible .qcard__view-arrow {
+  color: rgba(201,169,110,0.78);
+  transform: translateX(3px);
+}
+
+.qcard--learning.qcard--clickable:hover .qcard__view-text,
+.qcard--learning.qcard--clickable:focus-visible .qcard__view-text {
   color: rgba(255,255,255,0.52);
+}
+
+.qcard--learning.qcard--clickable:hover .qcard__view-arrow,
+.qcard--learning.qcard--clickable:focus-visible .qcard__view-arrow {
+  color: rgba(255,255,255,0.52);
+  transform: translateX(3px);
 }
 
 /* -------------------------------------------------------
@@ -371,7 +549,6 @@
   letter-spacing: 0.04em;
 }
 
-/* JSXの space-y を殺さずに空気だけ整える */
 .about-section .space-y-8 > * + *,
 .about-section .space-y-9 > * + * {
   margin-top: 0 !important;
@@ -482,39 +659,38 @@
     gap: 0.85rem;
   }
 
-  .qualification-card {
-    padding: 1.15rem 1.05rem 1rem;
+  .qcard {
+    padding: 1.25rem 1.1rem 1.05rem;
   }
 
-  .qualification-card__top {
-    gap: 0.7rem;
-    margin-bottom: 0.85rem;
+  .qcard__icon-row {
+    margin-bottom: 0.95rem;
+    gap: 0.58rem;
   }
 
-  .qualification-card__title {
-    font-size: 0.92rem;
-    line-height: 1.75;
+  .crown-icon {
+    width: 28px;
   }
 
-  .qualification-card__org {
-    font-size: 0.73rem;
+  .study-icon {
+    width: 24px;
   }
 
-  .qualification-card__badge {
-    padding: 0.38rem 0.58rem;
+  .qcard__title {
+    font-size: 0.90rem;
   }
 
-  .qualification-card__badge span {
-    font-size: 0.54rem;
+  .qcard__org {
+    font-size: 0.71rem;
   }
 
-  .qualification-card__hint {
-    font-size: 0.68rem;
-    letter-spacing: 0.1em;
+  .qcard__hint {
+    font-size: 0.65rem;
+    letter-spacing: 0.08em;
   }
 
-  .qualification-card__view {
-    font-size: 0.64rem;
+  .qcard__view-text {
+    font-size: 0.60rem;
   }
 
   .certificate-modal {

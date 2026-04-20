@@ -2,6 +2,7 @@ import React, { useEffect, useMemo, useRef, useState, useCallback } from "react"
 import Category from "../components/Category";
 import WorkItem from "../components/WorkItem";
 import CategoryTabs from "../components/CategoryTabs";
+import FloatingShareButton from "../components/FloatingShareButton";
 import { worksData } from "../data/worksData";
 
 export default function WorksList() {
@@ -237,6 +238,12 @@ export default function WorksList() {
           note — 制作の裏側
         </a>
       </div>
+<FloatingShareButton
+  label="SHARE"
+  showAfter={260}
+  title="WORKS"
+  shareText="NOAH — WORKS"
+/>
     </section>
   );
 }
