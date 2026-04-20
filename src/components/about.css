@@ -56,7 +56,7 @@
   display: none;
 }
 
-/* 左ラインは金ではなく静かな白グレーへ */
+/* 左ライン */
 .about-gold-line {
   position: absolute;
   left: 0;
@@ -145,6 +145,213 @@
 }
 
 /* -------------------------------------------------------
+   QUALIFICATIONS
+------------------------------------------------------- */
+.qualifications-block {
+  margin-bottom: 4.5rem;
+}
+
+.qualifications-label {
+  padding-left: 0.95rem;
+  margin-bottom: 1.15rem;
+  color: rgba(255,255,255,0.24);
+  font-size: 0.68rem;
+  letter-spacing: 0.22em;
+}
+
+.qualifications-intro {
+  padding-left: 0.95rem;
+  margin-bottom: 1.8rem;
+  color: rgba(255,255,255,0.50);
+  font-size: 0.88rem;
+  line-height: 2;
+  letter-spacing: 0.08em;
+}
+
+.qualifications-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.95rem;
+}
+
+.qualification-card {
+  min-height: 100%;
+  padding: 1.35rem 1.4rem 1.1rem;
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 4px;
+  background: rgba(255,255,255,0.02);
+  transition:
+    transform 0.55s cubic-bezier(.22,.56,.18,1),
+    border-color 0.35s ease,
+    background 0.35s ease,
+    box-shadow 0.35s ease;
+}
+
+.qualification-card.is-clickable {
+  cursor: pointer;
+}
+
+.qualification-card.is-clickable:hover,
+.qualification-card.is-clickable:focus-visible {
+  transform: translateY(-2px);
+  border-color: rgba(255,255,255,0.14);
+  background: rgba(255,255,255,0.028);
+  box-shadow: 0 14px 36px rgba(0,0,0,0.18);
+  outline: none;
+}
+
+.qualification-card__top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.9rem;
+  margin-bottom: 1rem;
+}
+
+.qualification-card__status {
+  margin-bottom: 0.45rem;
+  color: rgba(255,255,255,0.28);
+  font-size: 0.62rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+.qualification-card__title {
+  color: rgba(255,255,255,0.90);
+  font-size: 1rem;
+  font-weight: 300;
+  line-height: 1.8;
+  letter-spacing: 0.08em;
+}
+
+.qualification-card__org {
+  margin-top: 0.15rem;
+  color: rgba(255,255,255,0.38);
+  font-size: 0.77rem;
+  line-height: 1.8;
+  letter-spacing: 0.08em;
+}
+
+.qualification-card__badge {
+  flex-shrink: 0;
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 999px;
+  background: rgba(255,255,255,0.03);
+  padding: 0.42rem 0.72rem;
+}
+
+.qualification-card__badge span {
+  color: rgba(255,255,255,0.40);
+  font-size: 0.58rem;
+  letter-spacing: 0.14em;
+  white-space: nowrap;
+}
+
+.qualification-card__bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.8rem;
+  padding-top: 0.95rem;
+  border-top: 1px solid rgba(255,255,255,0.06);
+}
+
+.qualification-card__hint {
+  color: rgba(255,255,255,0.42);
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  line-height: 1.7;
+}
+
+.qualification-card__view {
+  color: rgba(255,255,255,0.28);
+  font-size: 0.68rem;
+  letter-spacing: 0.16em;
+  transition: color 0.35s ease;
+}
+
+.qualification-card.is-clickable:hover .qualification-card__view,
+.qualification-card.is-clickable:focus-visible .qualification-card__view {
+  color: rgba(255,255,255,0.52);
+}
+
+/* -------------------------------------------------------
+   CERTIFICATE MODAL
+------------------------------------------------------- */
+.certificate-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 120;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1rem;
+  background: rgba(5,5,5,0.82);
+  backdrop-filter: blur(8px);
+}
+
+.certificate-modal__inner {
+  width: min(100%, 1040px);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 6px;
+  background: rgba(20,20,20,0.96);
+  box-shadow: 0 24px 80px rgba(0,0,0,0.45);
+  padding: 0.95rem;
+}
+
+.certificate-modal__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 0.85rem;
+  padding: 0 0.15rem;
+}
+
+.certificate-modal__label {
+  margin-bottom: 0.22rem;
+  color: rgba(255,255,255,0.28);
+  font-size: 0.62rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+.certificate-modal__title {
+  color: rgba(255,255,255,0.88);
+  font-size: 0.94rem;
+  font-weight: 300;
+  letter-spacing: 0.1em;
+}
+
+.certificate-modal__close {
+  border: 0;
+  background: transparent;
+  color: rgba(255,255,255,0.45);
+  font-size: 0.72rem;
+  letter-spacing: 0.16em;
+  cursor: pointer;
+  transition: color 0.35s ease;
+}
+
+.certificate-modal__close:hover,
+.certificate-modal__close:focus-visible {
+  color: rgba(255,255,255,0.82);
+  outline: none;
+}
+
+.certificate-modal__imageWrap {
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 4px;
+}
+
+.certificate-modal__image {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* -------------------------------------------------------
    STYLE BLOCKS
 ------------------------------------------------------- */
 .about-style-title {
@@ -196,7 +403,6 @@
   backdrop-filter: none !important;
 }
 
-/* 既存 reset を少し安全に */
 .fade-up,
 .fade-up.show,
 .about-section.show,
@@ -225,7 +431,9 @@
   .about-text,
   .about-style-title,
   .about-style-text,
-  .about-last {
+  .about-last,
+  .qualifications-label,
+  .qualifications-intro {
     padding-left: 0.72rem;
   }
 
@@ -251,6 +459,84 @@
     margin-bottom: 2rem;
     font-size: 0.88rem;
     line-height: 1.94;
+  }
+
+  .qualifications-block {
+    margin-bottom: 4rem;
+  }
+
+  .qualifications-label {
+    margin-bottom: 1rem;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+  }
+
+  .qualifications-intro {
+    margin-bottom: 1.4rem;
+    font-size: 0.84rem;
+    line-height: 1.95;
+  }
+
+  .qualifications-grid {
+    grid-template-columns: 1fr;
+    gap: 0.85rem;
+  }
+
+  .qualification-card {
+    padding: 1.15rem 1.05rem 1rem;
+  }
+
+  .qualification-card__top {
+    gap: 0.7rem;
+    margin-bottom: 0.85rem;
+  }
+
+  .qualification-card__title {
+    font-size: 0.92rem;
+    line-height: 1.75;
+  }
+
+  .qualification-card__org {
+    font-size: 0.73rem;
+  }
+
+  .qualification-card__badge {
+    padding: 0.38rem 0.58rem;
+  }
+
+  .qualification-card__badge span {
+    font-size: 0.54rem;
+  }
+
+  .qualification-card__hint {
+    font-size: 0.68rem;
+    letter-spacing: 0.1em;
+  }
+
+  .qualification-card__view {
+    font-size: 0.64rem;
+  }
+
+  .certificate-modal {
+    padding: 1rem 0.75rem;
+  }
+
+  .certificate-modal__inner {
+    padding: 0.72rem;
+  }
+
+  .certificate-modal__header {
+    align-items: flex-start;
+    margin-bottom: 0.7rem;
+  }
+
+  .certificate-modal__title {
+    font-size: 0.82rem;
+    line-height: 1.7;
+  }
+
+  .certificate-modal__close {
+    font-size: 0.64rem;
   }
 
   .about-style-title {
@@ -281,7 +567,10 @@
 @media (prefers-reduced-motion: reduce) {
   .about-section *,
   .about-section *::before,
-  .about-section *::after {
+  .about-section *::after,
+  .certificate-modal *,
+  .certificate-modal *::before,
+  .certificate-modal *::after {
     transition: none !important;
     animation: none !important;
   }
