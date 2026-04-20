@@ -6,7 +6,7 @@ export default function HeroSP() {
     <section
       className="
         relative w-full overflow-hidden bg-[#0a0a0a]
-        h-[92svh] min-h-[640px]
+        h-[90svh] min-h-[600px]
         md:hidden
       "
       aria-label="GUSHIKEN DESIGN スマートフォン ヒーローセクション"
@@ -85,7 +85,7 @@ export default function HeroSP() {
         aria-hidden="true"
         className="
           pointer-events-none absolute inset-x-0 bottom-0 z-[1]
-          h-[240px]
+          h-[230px]
           bg-[linear-gradient(180deg,transparent_0%,rgba(0,0,0,0.08)_26%,rgba(0,0,0,0.38)_100%)]
         "
       />
@@ -110,7 +110,7 @@ export default function HeroSP() {
       />
 
       {/* TEXT BLOCK */}
-      <div className="absolute inset-x-0 bottom-[4.55rem] z-[2] px-6">
+      <div className="absolute inset-x-0 bottom-[4.2rem] z-[2] px-6">
         <div className="max-w-[19rem]">
           {/* LABEL */}
           <div className="hero-sp-fade hero-sp-fade-1">
@@ -189,7 +189,7 @@ export default function HeroSP() {
       </div>
 
       {/* SCROLL HINT */}
-      <div className="pointer-events-none absolute bottom-4 left-1/2 z-[2] -translate-x-1/2">
+      <div className="pointer-events-none absolute bottom-5 left-1/2 z-[2] -translate-x-1/2">
         <div className="scroll-hint-sp" />
       </div>
 
@@ -205,8 +205,8 @@ export default function HeroSP() {
         .hero-sp-image-reveal {
           opacity: 0;
           animation:
-            heroSPImageReveal 1.45s cubic-bezier(.18,.62,.2,1) 0.04s forwards,
-            heroSPStill 18s ease-in-out 1.5s infinite;
+            heroSPImageReveal 1.42s cubic-bezier(.18,.62,.2,1) 0.04s forwards,
+            heroSPStill 18s ease-in-out 1.46s infinite;
         }
 
         .hero-sp-image-veil {
@@ -254,12 +254,12 @@ export default function HeroSP() {
           0% {
             opacity: 0;
             transform: scale(1.03) translate3d(0, 10px, 0);
-            filter: brightness(0.88) saturate(0.88) contrast(1.01) blur(0.35px);
+            filter: brightness(0.88) saturate(0.88) contrast(1.01) blur(0.12px);
           }
           45% {
             opacity: 0.72;
             transform: scale(1.022) translate3d(0, 3px, 0);
-            filter: brightness(0.93) saturate(0.9) contrast(1.012) blur(0.18px);
+            filter: brightness(0.93) saturate(0.9) contrast(1.012) blur(0.04px);
           }
           100% {
             opacity: 1;
@@ -318,20 +318,20 @@ export default function HeroSP() {
 
         .scroll-hint-sp {
           width: 1px;
-          height: 28px;
+          height: 26px;
           background: linear-gradient(
             to bottom,
             rgba(255,255,255,0),
-            rgba(255,255,255,0.5),
+            rgba(255,255,255,0.42),
             rgba(255,255,255,0)
           );
-          animation: scrollPulseSP 2.5s ease-in-out infinite;
+          animation: scrollPulseSP 2.9s ease-in-out infinite;
         }
 
         @keyframes scrollPulseSP {
-          0% { opacity: 0.18; }
-          50% { opacity: 0.56; }
-          100% { opacity: 0.18; }
+          0% { opacity: 0.14; }
+          50% { opacity: 0.42; }
+          100% { opacity: 0.14; }
         }
 
         @media (max-width: 390px) {

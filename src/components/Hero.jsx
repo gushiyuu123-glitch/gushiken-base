@@ -1,5 +1,6 @@
 import React from "react";
 import heroRoom from "../assets/hero-room.png";
+import styles from "./Hero.module.css";
 
 export default function Hero() {
   return (
@@ -14,21 +15,22 @@ export default function Hero() {
     >
       {/* BACKGROUND IMAGE */}
       <div className="absolute inset-0">
-  <img
-  src={heroRoom}
-  alt="沖縄のWebデザイン / ホームページ制作｜GUSHIKEN DESIGN"
-  className="
-    hero-image hero-image-reveal
-    h-full w-full object-cover
-    object-[58%_center]
-    md:object-center
-    select-none
-  "
-  loading="eager"
-  decoding="async"
-  fetchPriority="high"
-  draggable="false"
-/>
+        <img
+          src={heroRoom}
+          alt="沖縄のWebデザイン / ホームページ制作｜GUSHIKEN DESIGN"
+          className={`
+            ${styles.heroImage}
+            ${styles.heroImageReveal}
+            h-full w-full object-cover
+            object-[58%_center]
+            md:object-center
+            select-none
+          `}
+          loading="eager"
+          decoding="async"
+          fetchPriority="high"
+          draggable="false"
+        />
       </div>
 
       {/* TOP VEIL */}
@@ -112,7 +114,7 @@ export default function Hero() {
         "
       >
         {/* LABEL */}
-        <div className="hero-fade hero-fade-1">
+        <div className={`${styles.heroFade} ${styles.heroFade1}`}>
           <p
             className="
               mb-4
@@ -127,7 +129,7 @@ export default function Hero() {
         </div>
 
         {/* HOOK */}
-        <div className="hero-fade hero-fade-2 md:pl-[10px]">
+        <div className={`${styles.heroFade} ${styles.heroFade2} md:pl-[10px]`}>
           <p
             className="
               mb-4
@@ -143,15 +145,15 @@ export default function Hero() {
 
         {/* TITLE */}
         <h1
-          className="
-            hero-fade hero-fade-3
+          className={`
+            ${styles.heroFade} ${styles.heroFade3}
             mb-5
             text-[2.18rem] font-light leading-[1.03]
             tracking-[0.2em] text-white
             sm:text-[2.5rem]
             md:mb-7 md:pl-[6px] md:text-[4.05rem]
             lg:text-[4.55rem]
-          "
+          `}
         >
           GUSHIKEN
           <br />
@@ -160,16 +162,16 @@ export default function Hero() {
 
         {/* DIVIDER */}
         <div
-          className="
-            hero-fade hero-fade-4
+          className={`
+            ${styles.heroFade} ${styles.heroFade4}
             mb-6 h-px w-[72px]
             bg-white/44
             md:mb-8 md:ml-[6px] md:w-[80px]
-          "
+          `}
         />
 
         {/* BODY */}
-        <div className="hero-fade hero-fade-5 md:ml-[18px]">
+        <div className={`${styles.heroFade} ${styles.heroFade5} md:ml-[18px]`}>
           <div
             className="
               max-w-[30rem]
@@ -209,6 +211,27 @@ export default function Hero() {
         </div>
       </div>
 
+      {/* SCROLL INDICATOR */}
+      <div
+        aria-hidden="true"
+        className={`
+          ${styles.heroFade} ${styles.heroFade5}
+          absolute bottom-7 left-1/2 z-[2]
+          -translate-x-1/2
+          flex flex-col items-center gap-[10px]
+        `}
+      >
+        <p className="text-white/18 text-[0.5rem] tracking-[0.24em] uppercase">
+          SCROLL
+        </p>
+        <div
+          className="relative h-8 w-px"
+          style={{ background: "rgba(255,255,255,0.08)" }}
+        >
+          <div className={styles.heroScrollDot} />
+        </div>
+      </div>
+
       {/* BOTTOM BREATH */}
       <div
         aria-hidden="true"
@@ -228,110 +251,6 @@ export default function Hero() {
           bg-[linear-gradient(180deg,transparent_0%,rgba(0,0,0,0.12)_100%)]
         "
       />
-
-      <style>{`
-        .hero-image {
-          filter: brightness(0.91) saturate(0.9) contrast(1.02);
-          transform: scale(1.012);
-          animation: heroStill 18s ease-in-out infinite;
-          will-change: transform;
-          backface-visibility: hidden;
-        }
-
-        .hero-image-reveal {
-          opacity: 0;
-          animation:
-            heroImageReveal 1.18s cubic-bezier(.22,.56,.18,1) 0.02s forwards,
-            heroStill 18s ease-in-out 1.18s infinite;
-          will-change: transform, opacity, filter;
-        }
-
-        @keyframes heroStill {
-          0% {
-            transform: scale(1.012) translate3d(0, 0, 0);
-          }
-          50% {
-            transform: scale(1.02) translate3d(-1px, 4px, 0);
-          }
-          100% {
-            transform: scale(1.012) translate3d(0, 0, 0);
-          }
-        }
-
-        @keyframes heroImageReveal {
-          0% {
-            opacity: 0;
-            transform: scale(1.028) translate3d(0, 8px, 0);
-            filter: brightness(0.84) saturate(0.88) contrast(1.01);
-          }
-          100% {
-            opacity: 1;
-            transform: scale(1.012) translate3d(0, 0, 0);
-            filter: brightness(0.91) saturate(0.9) contrast(1.02);
-          }
-        }
-
-        .hero-fade {
-          opacity: 0;
-          transform: translate3d(0, 18px, 0) scale(0.995);
-          animation: heroReveal 1.05s cubic-bezier(.22,.56,.18,1) forwards;
-          will-change: transform, opacity;
-          backface-visibility: hidden;
-        }
-
-        .hero-fade-1 { animation-delay: 0.08s; }
-        .hero-fade-2 { animation-delay: 0.16s; }
-        .hero-fade-3 { animation-delay: 0.24s; }
-        .hero-fade-4 { animation-delay: 0.32s; }
-        .hero-fade-5 { animation-delay: 0.40s; }
-
-        @keyframes heroReveal {
-          0% {
-            opacity: 0;
-            transform: translate3d(0, 18px, 0) scale(0.995);
-          }
-          100% {
-            opacity: 1;
-            transform: translate3d(0, 0, 0) scale(1);
-          }
-        }
-
-        @media (max-width: 768px) {
-          .hero-image {
-            filter: brightness(0.89) saturate(0.88) contrast(1.02);
-          }
-
-          .hero-image-reveal {
-            animation:
-              heroImageRevealSp 1.12s cubic-bezier(.22,.56,.18,1) 0.02s forwards,
-              heroStill 20s ease-in-out 1.12s infinite;
-          }
-
-          @keyframes heroImageRevealSp {
-            0% {
-              opacity: 0;
-              transform: scale(1.024) translate3d(0, 6px, 0);
-              filter: brightness(0.83) saturate(0.86) contrast(1.01);
-            }
-            100% {
-              opacity: 1;
-              transform: scale(1.012) translate3d(0, 0, 0);
-              filter: brightness(0.89) saturate(0.88) contrast(1.02);
-            }
-          }
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-          .hero-image,
-          .hero-image-reveal,
-          .hero-fade {
-            animation: none !important;
-            transform: none !important;
-            opacity: 1 !important;
-            filter: brightness(0.91) saturate(0.9) contrast(1.02) !important;
-          }
-        }
-      `}</style>
     </section>
   );
 }
