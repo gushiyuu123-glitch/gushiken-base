@@ -242,7 +242,7 @@ export default function WorksList() {
   label="SHARE"
   showAfter={260}
   title="WORKS"
-  shareText="NOAH — WORKS"
+  shareText="GUSHIKEN DESIGN — WORKS"
 />
     </section>
   );
