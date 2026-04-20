@@ -1,4 +1,3 @@
-// src/pages/Works.jsx
 import React, { useEffect, useRef } from "react";
 import "./works.css";
 
@@ -36,7 +35,7 @@ export default function Works() {
       id="works"
       ref={worksRef}
       className="
-        aq-fade aq-root
+        aq-root
         pt-[12vh] pb-[12vh]
         md:pt-[16vh] md:pb-[16vh]
       "
@@ -77,13 +76,14 @@ export default function Works() {
             <span className="arrow">→</span>
           </div>
 
-          <div className="works-grid">
-            {/* 1 → VELMONT（BIG） */}
+          {/* カード群はまとめてフェード */}
+          <div className="works-grid aq-fade delay-3">
+            {/* 1 → VELMONT */}
             <a
               href="https://velmont-virid.vercel.app/"
               target="_blank"
               rel="noopener noreferrer"
-              className="work-card aq-fade delay-3"
+              className="work-card"
               aria-label="VELMONT のサイトを見る"
             >
               <img
@@ -98,12 +98,12 @@ export default function Works() {
               </div>
             </a>
 
-            {/* 2 → ROSE VEIL（BIG） */}
+            {/* 2 → ROSE VEIL */}
             <a
               href="https://rose-veil.vercel.app/"
               target="_blank"
               rel="noopener noreferrer"
-              className="work-card aq-fade delay-4"
+              className="work-card"
               aria-label="ROSE VEIL のサイトを見る"
             >
               <img
@@ -118,12 +118,12 @@ export default function Works() {
               </div>
             </a>
 
-            {/* 3 → LÜMIN（SMALL） */}
+            {/* 3 → LÜMIN */}
             <a
               href="https://lumin-audio.vercel.app/"
               target="_blank"
               rel="noopener noreferrer"
-              className="work-card aq-fade delay-5"
+              className="work-card"
               aria-label="LÜMIN のサイトを見る"
             >
               <img
@@ -143,7 +143,7 @@ export default function Works() {
         {/* =====================
             VIEW ALL
         ===================== */}
-        <div className="works-viewall aq-fade delay-6">
+        <div className="works-viewall aq-fade delay-4">
           <a href="/works" className="viewall-btn">
             VIEW ALL WORKS
           </a>
