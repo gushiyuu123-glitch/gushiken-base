@@ -54,9 +54,9 @@ function VisualPrinciples() {
             </div>
 
             <p className="text-white/30 text-[0.67rem] tracking-[0.13em] leading-[1.9]">
-              情報の優先順位を整え、
+              情報が探しやすく、
               <br />
-              初めての方にも迷わず伝わる画面へ。
+              迷わず読み進められる画面へ。
             </p>
           </div>
         </div>
@@ -103,9 +103,9 @@ function VisualPrinciples() {
             </div>
 
             <p className="text-white/30 text-[0.67rem] tracking-[0.13em] leading-[1.9]">
-              色・写真・余白を整え、
+              業種やブランドに合った、
               <br />
-              ブランドらしさが自然に伝わる印象へ。
+              落ち着いた印象へ。
             </p>
           </div>
         </div>
@@ -141,9 +141,9 @@ function VisualPrinciples() {
             </div>
 
             <p className="text-white/30 text-[0.67rem] tracking-[0.13em] leading-[1.9]">
-              デザインから実装まで一貫して整え、
+              ご相談から公開まで、
               <br />
-              細部までぶれない仕上がりへ。
+              安心して進められる形へ。
             </p>
           </div>
         </div>
@@ -208,55 +208,55 @@ export default function Philosophy() {
             大切にしているのは、
             <br />
             <span className="text-white/95">
-              見やすく、伝わりやすく、安心して読めること。
+              見やすく、伝わりやすく、安心して見てもらえること。
             </span>
             <br />
             そのうえで、業種ごとの雰囲気や魅力が
             <br />
-            自然に伝わるデザインを心がけています。
+            自然に伝わるサイトを目指しています。
           </p>
 
           <p className="philo-body aq-fade delay-3">
-            Webサイトは、見た目が整っているだけではなく、
+            Webサイトは、見た目が整っているだけでなく、
             <br />
             初めて訪れた方にも内容が伝わりやすく、
             <span className="text-white/90">
-              安心して読み進めてもらえること
+              不安なく読み進めてもらえること
             </span>
             が大切だと考えています。
             <br />
             <br />
-            そのために、文字の見やすさ、余白の取り方、
+            写真や文章の見え方を整えながら、
             <br />
-            情報の流れまで丁寧に整えながら、
+            全体をすっきりまとめ、
             <span className="text-white/90">
-              サービスやブランドの魅力が自然に伝わる形
+              信頼感につながる印象
             </span>
             を目指しています。
             <br />
             <br />
-            派手に見せるよりも、
+            派手さよりも、
             <br />
             きちんとして見えること、伝わること、
             <br />
-            そして「ここなら安心できそう」と感じてもらえること。
+            そして「ここなら相談しやすそう」と感じてもらえること。
             <br />
-            そうした印象の積み重ねを大切にしています。
+            そうした印象を大切にしています。
           </p>
 
           <VisualPrinciples />
 
           <p className="philo-last aq-fade delay-8">
             <span className="text-white/95">
-              見た目を整えるだけでなく、
+              見やすさと印象の両方を整え、
               <br />
-              ブランドの価値まできちんと伝わるサイトを。
+              ブランドの魅力がきちんと伝わるサイトを。
             </span>
             <br />
             <span className="text-white/80">
               ご相談いただく方にとって、
               <br />
-              「お願いしやすい」と感じてもらえる安心感も大切にしています。
+              「お願いしやすい」と感じてもらえることも大切にしています。
             </span>
           </p>
         </div>
@@ -271,7 +271,7 @@ export default function Philosophy() {
               <br />
               伝わりやすく、
               <br />
-              安心して読めること。
+              安心して見てもらえること。
             </span>
             <br />
             <br />
@@ -279,28 +279,32 @@ export default function Philosophy() {
             <br />
             業種ごとの雰囲気や魅力が
             <br />
-            自然に伝わるデザインを心がけています。
+            自然に伝わるサイトを
+            <br />
+            目指しています。
           </p>
 
           <p className="philo-body aq-fade delay-3">
             Webサイトは、
             <br />
-            見た目が整っているだけではなく、
+            見た目が整っているだけでなく、
             <br />
             初めて訪れた方にも
             <br />
-            内容が伝わりやすいことが大切です。
+            内容が伝わりやすく、
+            <br />
+            不安なく見てもらえることが大切です。
             <br />
             <br />
-            そのために、
+            写真や文章の見え方を整えながら、
             <br />
-            文字の見やすさや余白の取り方、
-            <br />
-            情報の流れまで丁寧に整えながら、
+            全体をすっきりまとめ、
             <span className="text-white/90">
-              魅力が自然に伝わる形
+              信頼感につながる印象
             </span>
-            を目指しています。
+            を
+            <br />
+            目指しています。
             <br />
             <br />
             派手さよりも、
@@ -309,18 +313,20 @@ export default function Philosophy() {
             <br />
             そして、
             <br />
-            「ここなら安心できそう」と
+            「ここなら相談しやすそう」と
             <br />
-            感じてもらえることを大切にしています。
+            感じてもらえることを
+            <br />
+            大切にしています。
           </p>
 
           <VisualPrinciples />
 
           <p className="philo-last aq-fade delay-8">
             <span className="text-white/95">
-              見た目を整えるだけでなく、
+              見やすさと印象の両方を整え、
               <br />
-              ブランドの価値まで
+              ブランドの魅力が
               <br />
               きちんと伝わるサイトを。
             </span>
@@ -328,7 +334,7 @@ export default function Philosophy() {
             <span className="text-white/80">
               「お願いしやすい」と
               <br />
-              感じてもらえる安心感も
+              感じてもらえることも
               <br />
               大切にしています。
             </span>

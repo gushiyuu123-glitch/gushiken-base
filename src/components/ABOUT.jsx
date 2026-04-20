@@ -161,22 +161,17 @@ export default function About() {
                 leading-[2.1] sm:leading-[2.2]
               "
             >
-              「テンプレのような雰囲気は避けたい。
-              <br />
-              でも、ハイブランドのように固すぎる印象にもしたくない」
-              <br />
-              <br />
-              そんな
+              落ち着いた印象で、
               <span className="text-white/95">
-                上品で落ち着いたデザイン
+                ちゃんと伝わるWebサイト
               </span>
-              を求める方へ向けて制作しています。
+              を作りたい方へ。
               <br />
               美容・EC・店舗・サロンなど、
               <span className="text-white/90">
-                業種に合わせた見せ方
+                雰囲気と見やすさの両方
               </span>
-              を大切にしています。
+              を大切にしたサイトを制作しています。
             </p>
 
             <p
@@ -188,21 +183,21 @@ export default function About() {
             >
               大切にしているのは、
               <span className="text-white/95">
-                見やすさと安心感が自然に伝わること。
+                必要な情報が自然に伝わり、安心して見てもらえること。
               </span>
               <br />
-              どれだけ見た目が整っていても、内容が伝わりにくければ意味がありません。
+              見た目を整えるだけでなく、内容がきちんと伝わることも大切にしています。
               <br />
               <br />
-              写真・色・余白・文字のバランスを丁寧に整えながら、
+              写真・色・余白・文字のバランスを整えながら、
               <span className="text-white/90">
                 サービスやブランドの魅力が伝わる形
               </span>
               に仕上げています。
               <br />
-              ガチャガチャしすぎず、落ち着きがあり、
+              落ち着きがあり、
               <br />
-              「ちゃんとしている」と感じてもらえる印象を大切にしています。
+              信頼感のある印象を目指しています。
             </p>
           </div>
 
@@ -215,25 +210,24 @@ export default function About() {
                 leading-[2.1]
               "
             >
-              「テンプレっぽい雰囲気は避けたい。
+              落ち着いた印象で、
               <br />
-              でも、ハイブランドほど
-              <br />
-              固くしたくない」
-              <br />
-              <br />
-              そんな
               <span className="text-white/95">
-                上品で落ち着いたデザイン
+                ちゃんと伝わるWebサイト
               </span>
-              を求める方へ向けて制作しています。
+              を
+              <br />
+              作りたい方へ。
+              <br />
               <br />
               美容・EC・店舗・サロンなど、
               <br />
               <span className="text-white/90">
-                業種に合わせた見せ方
+                雰囲気と見やすさの両方
               </span>
-              を大切にしています。
+              を大切にした
+              <br />
+              サイトを制作しています。
             </p>
 
             <p
@@ -246,14 +240,17 @@ export default function About() {
               大切にしているのは、
               <br />
               <span className="text-white/95">
-                見やすさと安心感
+                必要な情報が自然に伝わり、
+                <br />
+                安心して見てもらえること。
               </span>
-              が自然に伝わること。
               <br />
               <br />
-              どれだけ綺麗に見えても、
+              見た目を整えるだけでなく、
               <br />
-              内容が伝わりにくければ意味がありません。
+              内容がきちんと伝わることも
+              <br />
+              大切にしています。
               <br />
               <br />
               写真・色・余白・文字を整えながら、
@@ -291,11 +288,12 @@ export default function About() {
                 Webサイトを制作しています。
                 <br />
                 <br />
-                デザインから実装まで一貫して対応することで、
+                デザインから実装まで一貫して対応し、
                 <span className="text-white/90">
-                  見た目だけで終わらず、使いやすさまで含めて整える
+                  見た目と使いやすさの両方
                 </span>
-                ことを大切にしています。
+                を整えながら、
+                公開まで丁寧に進めています。
               </p>
             </div>
 
@@ -322,11 +320,11 @@ export default function About() {
                 デザインから実装まで一貫して対応し、
                 <br />
                 <span className="text-white/90">
-                  見た目だけでなく
-                  <br />
-                  使いやすさまで整える
+                  見た目と使いやすさの両方
                 </span>
-                ことを大切にしています。
+                を整えながら、
+                <br />
+                公開まで丁寧に進めています。
               </p>
             </div>
 
@@ -342,7 +340,7 @@ export default function About() {
                 transition
               "
             >
-              制作の背景や考え方を見る
+              制作記録を見る
             </a>
           </div>
 
@@ -353,20 +351,20 @@ export default function About() {
             {/* PC */}
             <div className="hidden sm:block">
               <p className="qualifications-intro">
-                制作の印象だけでなく、
+                基礎知識の積み重ねとして、
                 <br />
-                基礎知識と積み重ねも含めて、静かに信頼へつなげています。
+                資格取得と学習も継続しています。
               </p>
             </div>
 
             {/* SP */}
             <div className="block sm:hidden">
               <p className="qualifications-intro">
-                制作の印象だけでなく、
+                基礎知識の積み重ねとして、
                 <br />
-                基礎知識と積み重ねも含めて、
+                資格取得と学習も
                 <br />
-                静かに信頼へつなげています。
+                継続しています。
               </p>
             </div>
 
@@ -384,57 +382,57 @@ export default function About() {
 
           <div className="space-y-8 sm:space-y-9 mb-16 sm:mb-20">
             <div className="aq-fade delay-5">
-              <h4 className="about-style-title">・見やすく整理する</h4>
+              <h4 className="about-style-title">・内容が伝わるよう整える</h4>
               <p className="about-style-text">
-                情報を整え、初めて訪れた方にも伝わりやすい画面を目指します。
+                必要な情報が自然に伝わる、見やすい画面を目指します。
               </p>
             </div>
 
             <div className="aq-fade delay-5">
-              <h4 className="about-style-title">・雰囲気をそろえる</h4>
+              <h4 className="about-style-title">・印象を丁寧にまとめる</h4>
               <p className="about-style-text">
-                写真や色のトーンを整え、ブランドらしさが伝わる印象にまとめます。
+                写真や色の雰囲気をそろえ、ブランドに合った印象に仕上げます。
               </p>
             </div>
 
             <div className="aq-fade delay-6">
-              <h4 className="about-style-title">・動きは控えめに使う</h4>
+              <h4 className="about-style-title">・使いやすさにも配慮する</h4>
               <p className="about-style-text">
-                過度な演出に頼らず、見やすさや印象を損なわない範囲で整えます。
+                見た目だけでなく、初めて訪れた方にもわかりやすい構成を心がけています。
               </p>
             </div>
 
             <div className="aq-fade delay-6">
-              <h4 className="about-style-title">・デザインから実装まで対応する</h4>
+              <h4 className="about-style-title">・公開まで丁寧に進める</h4>
               <p className="about-style-text">
-                完成後の見え方まで含めて、全体の印象がぶれないよう制作しています。
+                デザインから実装まで対応し、公開まで丁寧に進めています。
               </p>
             </div>
           </div>
 
-          {/* ── Design Palette ── */}
+          {/* ── Site Tone ── */}
           <div className="aq-fade delay-7 mb-16 sm:mb-20">
             <p className="text-white/25 text-[0.68rem] tracking-[0.22em] mb-5 pl-1">
-              ― DESIGN PALETTE ―
+              ― SITE TONE ―
             </p>
 
             {/* PC intro */}
             <div className="hidden sm:block">
               <p className="text-white/50 text-[0.88rem] leading-[2] tracking-[0.08em] mb-7">
-                落ち着き・品・やわらかさを保つために、
+                掲載しているサイトでは、
                 <br />
-                色や余白、文字のトーンも細かく整えています。
+                落ち着いた印象と読みやすさの両立を大切にしています。
               </p>
             </div>
 
             {/* SP intro */}
             <div className="block sm:hidden">
               <p className="text-white/50 text-[0.86rem] leading-[1.95] tracking-[0.08em] mb-7">
-                落ち着き・品・やわらかさを保つために、
+                掲載しているサイトでは、
                 <br />
-                色や余白、文字のトーンも
+                落ち着いた印象と読みやすさの
                 <br />
-                細かく整えています。
+                両立を大切にしています。
               </p>
             </div>
 
@@ -470,7 +468,7 @@ export default function About() {
                   Aa Bb
                 </p>
                 <p className="text-[0.72rem] tracking-[0.13em] text-white/30 mt-1">
-                  細字・余白重視
+                  軽やかな印象
                 </p>
               </div>
 
@@ -493,7 +491,7 @@ export default function About() {
                   />
                 </div>
                 <p className="text-[0.72rem] tracking-[0.13em] text-white/30">
-                  余白で整理する
+                  見やすさを整える
                 </p>
               </div>
 
@@ -521,7 +519,7 @@ export default function About() {
                   ))}
                 </div>
                 <p className="text-[0.72rem] tracking-[0.13em] text-white/30">
-                  落ち着きを保つ
+                  印象を統一する
                 </p>
               </div>
             </div>
@@ -538,7 +536,7 @@ export default function About() {
             >
               あなたのブランドやお店のらしさを、
               <span className="text-white/95">
-                落ち着きと品が伝わるWebサイト
+                見やすく、上品に伝わるWebサイト
               </span>
               として丁寧に形にします。
             </p>
@@ -556,7 +554,7 @@ export default function About() {
               あなたのブランドやお店のらしさを、
               <br />
               <span className="text-white/95">
-                落ち着きと品が伝わるWebサイト
+                見やすく、上品に伝わるWebサイト
               </span>
               として丁寧に形にします。
             </p>
