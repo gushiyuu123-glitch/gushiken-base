@@ -1,3 +1,4 @@
+// src/pages/Works.jsx
 import React, { useEffect, useRef } from "react";
 import "./works.css";
 
@@ -35,7 +36,7 @@ export default function Works() {
       id="works"
       ref={worksRef}
       className="
-        aq-root
+        aq-fade aq-root
         pt-[12vh] pb-[12vh]
         md:pt-[16vh] md:pb-[16vh]
       "
@@ -77,7 +78,7 @@ export default function Works() {
           </div>
 
           <div className="works-grid">
-            {/* 1 → VELMONT */}
+            {/* 1 → VELMONT（BIG） */}
             <a
               href="https://velmont-virid.vercel.app/"
               target="_blank"
@@ -97,7 +98,7 @@ export default function Works() {
               </div>
             </a>
 
-            {/* 2 → ROSE VEIL */}
+            {/* 2 → ROSE VEIL（BIG） */}
             <a
               href="https://rose-veil.vercel.app/"
               target="_blank"
@@ -117,7 +118,7 @@ export default function Works() {
               </div>
             </a>
 
-            {/* 3 → LÜMIN */}
+            {/* 3 → LÜMIN（SMALL） */}
             <a
               href="https://lumin-audio.vercel.app/"
               target="_blank"

@@ -1,642 +1,406 @@
 /* ============================================================
-   GUSHIKEN DESIGN Core Index v6.1 Safe Merge
+   GUSHIKEN DESIGN Core Index v5
    Quiet Black × Silent Motion × Soft Depth
-   v5互換を残しつつ、v6の設計思想を安全に統合した版
+   統合最適化版
 ============================================================ */
-
-@import url('https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;1,300&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* ============================================================
+/* ------------------------------------------------------------
    ROOT TOKENS
-   ─ v6の意味トークンを採用
-   ─ v5変数名も alias として残す
-============================================================ */
+------------------------------------------------------------ */
 :root {
-  /* Surface */
-  --surface-base: #0a0a09;
-  --surface-raised: #0e0d0b;
-  --surface-overlay: #131210;
-  --surface-glass: rgba(11, 10, 9, 0.92);
-  --surface-frost: rgba(14, 13, 11, 0.78);
-  --surface-smoke: rgba(10, 10, 9, 0.60);
-
-  /* Ink */
-  --ink-98: rgba(255, 255, 255, 0.98);
-  --ink-95: rgba(255, 255, 255, 0.95);
-  --ink-90: rgba(255, 255, 255, 0.90);
-  --ink-82: rgba(255, 255, 255, 0.82);
-  --ink-70: rgba(255, 255, 255, 0.70);
-  --ink-56: rgba(255, 255, 255, 0.56);
-  --ink-42: rgba(255, 255, 255, 0.42);
-  --ink-30: rgba(255, 255, 255, 0.30);
-  --ink-20: rgba(255, 255, 255, 0.20);
-  --ink-12: rgba(255, 255, 255, 0.12);
-  --ink-07: rgba(255, 255, 255, 0.07);
-  --ink-04: rgba(255, 255, 255, 0.04);
-  --ink-02: rgba(255, 255, 255, 0.02);
-
-  /* Line */
-  --line-strong: rgba(255, 255, 255, 0.12);
-  --line-default: rgba(255, 255, 255, 0.07);
-  --line-faint: rgba(255, 255, 255, 0.04);
-  --line-ghost: rgba(255, 255, 255, 0.02);
-
-  /* Glow */
-  --glow-white: rgba(255, 255, 255, 0.10);
-  --glow-silver: rgba(200, 198, 194, 0.07);
-  --glow-warm: rgba(255, 246, 224, 0.06);
-  --glow-cold: rgba(200, 210, 230, 0.05);
-  --glow-soft: rgba(255, 255, 255, 0.05);
-
-  /* Shadow */
-  --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.18);
-  --shadow-md: 0 10px 28px rgba(0, 0, 0, 0.26);
-  --shadow-lg: 0 18px 48px rgba(0, 0, 0, 0.34);
-  --shadow-xl: 0 28px 72px rgba(0, 0, 0, 0.44);
-  --shadow-inset-highlight: 0 1px 0 rgba(255, 255, 255, 0.04) inset;
-
-  /* Easing */
-  --ease-enter: cubic-bezier(0.22, 1, 0.36, 1);
-  --ease-exit: cubic-bezier(0.40, 0.00, 0.60, 1.00);
-  --ease-hover: cubic-bezier(0.30, 0.60, 0.20, 1.00);
-  --ease-drift: cubic-bezier(0.22, 0.56, 0.18, 1.00);
-  --ease-spring: cubic-bezier(0.34, 1.20, 0.64, 1.00);
-
-  /* Rhythm */
-  --dur-instant: 0.12s;
-  --dur-fast: 0.26s;
-  --dur-base: 0.42s;
-  --dur-slow: 0.72s;
-  --dur-drift: 1.04s;
-  --dur-breathe: 2.60s;
-
-  /* Fade */
-  --fade-y: 14px;
-  --fade-scale: 0.997;
-
-  /* Typography */
-  --font-mono: 'DM Mono', 'Courier New', monospace;
-  --font-serif: 'Cormorant Garamond', 'Georgia', serif;
-  --font-system: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-
-  /* v5 alias ------------------------------------------------ */
-  --black-900: var(--surface-base);
+  /* Core */
+  --black-900: #0b0b0b;
   --black-880: rgba(10, 10, 10, 0.98);
   --black-850: rgba(12, 12, 12, 0.95);
   --black-800: rgba(18, 18, 18, 0.92);
 
-  --white-980: var(--ink-98);
+  --white-980: rgba(255, 255, 255, 0.98);
   --white-950: #fafafa;
-  --white-900: var(--ink-95);
-  --white-800: var(--ink-82);
-  --white-700: var(--ink-70);
-  --white-600: var(--ink-56);
+  --white-900: rgba(255, 255, 255, 0.95);
+  --white-800: rgba(255, 255, 255, 0.82);
+  --white-700: rgba(255, 255, 255, 0.7);
+  --white-600: rgba(255, 255, 255, 0.6);
   --white-500: rgba(255, 255, 255, 0.5);
-  --white-400: var(--ink-42);
-  --white-300: var(--ink-30);
-  --white-200: var(--ink-20);
-  --white-100: var(--ink-12);
+  --white-400: rgba(255, 255, 255, 0.4);
+  --white-300: rgba(255, 255, 255, 0.3);
+  --white-200: rgba(255, 255, 255, 0.2);
+  --white-100: rgba(255, 255, 255, 0.1);
 
+  /* Accent（補助用。主役にしない） */
   --accent-soft: rgba(255, 255, 255, 0.14);
   --accent-faint: rgba(255, 255, 255, 0.08);
 
-  --ease-silent: var(--ease-drift);
-  --fade-time: var(--dur-drift);
-  --fade-distance: var(--fade-y);
+  /* Motion */
+  --ease-silent: cubic-bezier(.22, .56, .18, 1);
+  --fade-time: 1.02s;
+  --fade-distance: 16px;
+  --fade-scale: 0.996;
 
+  /* Glow */
+  --glow-white: rgba(255, 255, 255, 0.1);
+  --glow-silver: rgba(180, 180, 180, 0.08);
+  --glow-soft: rgba(255, 255, 255, 0.05);
+
+  /* Shadow */
   --shadow-soft: 0 14px 36px rgba(0, 0, 0, 0.22);
-  --shadow-medium: var(--shadow-lg);
+  --shadow-medium: 0 18px 48px rgba(0, 0, 0, 0.28);
   --shadow-deep: 0 24px 64px rgba(0, 0, 0, 0.34);
 }
 
-/* ============================================================
-   GLOBAL RESET + BASE
-============================================================ */
-@layer base {
-  html {
-    background: var(--surface-base);
-    scroll-behavior: smooth;
-    -webkit-text-size-adjust: 100%;
-  }
-
-  body {
-    background: var(--surface-base);
-    color: var(--ink-90);
-    overflow-x: hidden;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    text-rendering: optimizeLegibility;
-    font-feature-settings: "kern" 1, "liga" 1;
-  }
-
-  *, *::before, *::after {
-    box-sizing: border-box;
-  }
-
-  #root {
-    min-height: 100vh;
-    opacity: 0;
-    transition: opacity 0.62s var(--ease-enter);
-  }
-
-  #root.show {
-    opacity: 1;
-  }
-
-  img,
-  picture,
-  video,
-  canvas,
-  svg {
-    display: block;
-    max-width: 100%;
-  }
-
-  a {
-    color: inherit;
-    text-decoration: none;
-  }
-
-  button,
-  input,
-  select,
-  textarea {
-    font: inherit;
-  }
-
-  button {
-    cursor: pointer;
-    background: transparent;
-    border: none;
-    padding: 0;
-  }
-
-  .no-scrollbar::-webkit-scrollbar {
-    display: none;
-  }
-
-  .no-scrollbar {
-    scrollbar-width: none;
-  }
-
-  ::selection {
-    background: var(--ink-12);
-    color: var(--ink-95);
-  }
-
-  :focus-visible {
-    outline: 1px solid var(--ink-30);
-    outline-offset: 3px;
-    border-radius: 2px;
-  }
+/* ------------------------------------------------------------
+   GLOBAL
+------------------------------------------------------------ */
+html {
+  background: var(--black-900);
+  scroll-behavior: smooth;
 }
 
-/* ============================================================
+body {
+  background: var(--black-900);
+  color: var(--white-900);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+#root {
+  min-height: 100vh;
+  opacity: 0;
+  transition: opacity 0.55s ease;
+}
+
+#root.show {
+  opacity: 1;
+}
+
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  color: inherit;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  scrollbar-width: none;
+}
+
+/* ------------------------------------------------------------
    1) Silent Fade
-============================================================ */
-@layer components {
-  .aq-fade {
-    opacity: 0;
-    transform: translateY(var(--fade-y)) scale(var(--fade-scale));
-    transition:
-      opacity var(--dur-drift) var(--ease-enter),
-      transform var(--dur-drift) var(--ease-enter);
-    filter: none !important;
-    backdrop-filter: none !important;
-  }
-
-  .aq-show {
-    opacity: 1 !important;
-    transform: translateY(0) scale(1) !important;
-    filter: none !important;
-    backdrop-filter: none !important;
-  }
-
-  .aq-fade-x {
-    opacity: 0;
-    transform: translateX(-10px);
-    transition:
-      opacity var(--dur-drift) var(--ease-enter),
-      transform var(--dur-drift) var(--ease-enter);
-    filter: none !important;
-    backdrop-filter: none !important;
-  }
-
-  .aq-fade-x.aq-show {
-    transform: translateX(0) !important;
-  }
-
-  /* Delay tokens */
-  .delay-1 { transition-delay: 0.08s; }
-  .delay-2 { transition-delay: 0.16s; }
-  .delay-3 { transition-delay: 0.24s; }
-  .delay-4 { transition-delay: 0.32s; }
-  .delay-5 { transition-delay: 0.40s; }
-  .delay-6 { transition-delay: 0.48s; }
-  .delay-7 { transition-delay: 0.56s; }
-  .delay-8 { transition-delay: 0.64s; }
-
-  /* blur完全禁止（適用範囲を狭めた安全版） */
-  .aq-fade,
-  .aq-fade-x,
-  .aq-show,
-  .animate-fadeUp {
-    filter: none !important;
-    backdrop-filter: none !important;
-  }
+------------------------------------------------------------ */
+.aq-fade {
+  opacity: 0;
+  transform: translateY(var(--fade-distance)) scale(var(--fade-scale));
+  transition:
+    opacity var(--fade-time) var(--ease-silent),
+    transform var(--fade-time) var(--ease-silent);
+  filter: none !important;
+  backdrop-filter: none !important;
 }
 
-/* ============================================================
+.aq-show {
+  opacity: 1 !important;
+  transform: translateY(0) scale(1) !important;
+  filter: none !important;
+  backdrop-filter: none !important;
+}
+
+/* Delay tokens */
+.delay-1 { transition-delay: 0.10s; }
+.delay-2 { transition-delay: 0.18s; }
+.delay-3 { transition-delay: 0.26s; }
+.delay-4 { transition-delay: 0.34s; }
+.delay-5 { transition-delay: 0.42s; }
+.delay-6 { transition-delay: 0.50s; }
+.delay-7 { transition-delay: 0.58s; }
+
+/* blur完全禁止 */
+[class*="fade"],
+[class*="Fade"],
+.animate-fadeUp {
+  filter: none !important;
+  backdrop-filter: none !important;
+}
+
+/* ------------------------------------------------------------
    2) Ambient Glow
-============================================================ */
-@layer components {
-  .ambient-glow {
-    position: relative;
-    opacity: 0;
-    transition: opacity var(--dur-breathe) var(--ease-drift);
-  }
-
-  .ambient-glow::before,
-  .ambient-glow::after {
-    content: "";
-    position: absolute;
-    border-radius: 9999px;
-    pointer-events: none;
-  }
-
-  .ambient-glow::before {
-    top: 12%;
-    left: -12%;
-    width: 320px;
-    height: 320px;
-    background: radial-gradient(circle, var(--glow-cold) 0%, transparent 72%);
-    filter: blur(100px);
-    opacity: 0;
-    transition:
-      opacity var(--dur-breathe) var(--ease-drift),
-      transform 3.2s var(--ease-drift);
-  }
-
-  .ambient-glow::after {
-    bottom: 14%;
-    right: -8%;
-    width: 380px;
-    height: 380px;
-    background: radial-gradient(circle, var(--glow-warm) 0%, transparent 72%);
-    filter: blur(120px);
-    opacity: 0;
-    transition:
-      opacity var(--dur-breathe) var(--ease-drift),
-      transform 3.8s var(--ease-drift);
-    transition-delay: 0.4s;
-  }
-
-  body.scrolled .ambient-glow {
-    opacity: 1;
-  }
-
-  body.scrolled .ambient-glow::before {
-    opacity: 0.9;
-    transform: translate(8px, -8px);
-  }
-
-  body.scrolled .ambient-glow::after {
-    opacity: 0.9;
-    transform: translate(-8px, 8px);
-  }
-
-  .glow-spot {
-    position: absolute;
-    border-radius: 9999px;
-    pointer-events: none;
-    filter: blur(80px);
-    opacity: 0;
-    transition: opacity 1.8s var(--ease-drift);
-  }
-
-  .glow-spot-sm { width: 160px; height: 160px; filter: blur(60px); }
-  .glow-spot-md { width: 280px; height: 280px; filter: blur(90px); }
-  .glow-spot-lg { width: 420px; height: 420px; filter: blur(140px); }
-
-  .glow-spot-white { background: radial-gradient(circle, var(--glow-white) 0%, transparent 70%); }
-  .glow-spot-silver { background: radial-gradient(circle, var(--glow-silver) 0%, transparent 70%); }
-  .glow-spot-warm { background: radial-gradient(circle, var(--glow-warm) 0%, transparent 70%); }
-  .glow-spot-cold { background: radial-gradient(circle, var(--glow-cold) 0%, transparent 70%); }
-
-  .glow-spot.active {
-    opacity: 1;
-  }
+------------------------------------------------------------ */
+.ambient-glow {
+  position: relative;
+  opacity: 0;
+  transition: opacity 2.2s ease;
 }
 
-/* ============================================================
+.ambient-glow::before,
+.ambient-glow::after {
+  content: "";
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(120px);
+  opacity: 0.04;
+  pointer-events: none;
+}
+
+.ambient-glow::before {
+  top: 18%;
+  left: -10%;
+  width: 240px;
+  height: 240px;
+  background: var(--glow-white);
+}
+
+.ambient-glow::after {
+  bottom: 16%;
+  right: -10%;
+  width: 300px;
+  height: 300px;
+  background: var(--glow-silver);
+}
+
+body.scrolled .ambient-glow {
+  opacity: 1;
+}
+
+body.scrolled .ambient-glow::before,
+body.scrolled .ambient-glow::after {
+  opacity: 0.1;
+  filter: blur(140px);
+}
+
+/* ------------------------------------------------------------
    3) Elevated Card Motion
-============================================================ */
-@layer components {
-  .elevated-card,
-  .dior-card {
-    position: relative;
-    transition:
-      transform 0.72s var(--ease-drift),
-      box-shadow 0.48s var(--ease-hover),
-      border-color 0.48s var(--ease-hover),
-      background 0.48s var(--ease-hover);
-    box-shadow: 0 0 0 transparent;
-  }
-
-  .elevated-card:hover,
-  .dior-card:hover {
-    transform: translateY(-2px);
-    box-shadow:
-      var(--shadow-md),
-      0 -3px 10px rgba(255, 255, 255, 0.025);
-  }
-
-  .soft-frame-glow,
-  .dior-frame-glow {
-    position: relative;
-    overflow: hidden;
-  }
-
-  .soft-frame-glow::before,
-  .dior-frame-glow::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(
-      ellipse 80% 60% at 20% 15%,
-      rgba(255, 255, 255, 0.055),
-      transparent 65%
-    );
-    opacity: 0;
-    transition: opacity 0.92s var(--ease-hover);
-    pointer-events: none;
-    z-index: 1;
-  }
-
-  .elevated-card:hover .soft-frame-glow::before,
-  .dior-card:hover .dior-frame-glow::before {
-    opacity: 1;
-  }
-
-  .card-image,
-  .dior-img {
-    transition:
-      transform var(--dur-slow) var(--ease-drift),
-      filter 0.82s var(--ease-hover);
-    filter: brightness(0.87) contrast(1.04);
-  }
-
-  .elevated-card:hover .card-image,
-  .dior-card:hover .dior-img {
-    transform: scale(1.016);
-    filter: brightness(0.94) contrast(1.06);
-  }
+------------------------------------------------------------ */
+.elevated-card {
+  position: relative;
+  transition:
+    transform 0.75s var(--ease-silent),
+    box-shadow 0.45s ease,
+    border-color 0.45s ease,
+    background 0.45s ease;
+  box-shadow: 0 0 0 rgba(255,255,255,0);
 }
 
-/* ============================================================
+.elevated-card:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    0 12px 28px rgba(0, 0, 0, 0.28),
+    0 -4px 12px rgba(255, 255, 255, 0.03);
+}
+
+.soft-frame-glow::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    circle at 22% 18%,
+    rgba(255,255,255,0.06),
+    transparent 70%
+  );
+  opacity: 0;
+  transition: opacity 0.9s ease;
+  pointer-events: none;
+}
+
+.elevated-card:hover .soft-frame-glow::before {
+  opacity: 0.18;
+}
+
+.card-image {
+  transition:
+    transform 1s var(--ease-silent),
+    filter 0.8s ease;
+  filter: brightness(0.88) contrast(1.04);
+}
+
+.elevated-card:hover .card-image {
+  transform: scale(1.018);
+  filter: brightness(0.94) contrast(1.06);
+}
+
+/* 旧クラス互換 */
+.dior-card {
+  position: relative;
+  transition:
+    transform 0.75s var(--ease-silent),
+    box-shadow 0.45s ease,
+    border-color 0.45s ease,
+    background 0.45s ease;
+  box-shadow: 0 0 0 rgba(255,255,255,0);
+}
+
+.dior-card:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    0 12px 28px rgba(0, 0, 0, 0.28),
+    0 -4px 12px rgba(255, 255, 255, 0.03);
+}
+
+.dior-frame-glow::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    circle at 22% 18%,
+    rgba(255,255,255,0.06),
+    transparent 70%
+  );
+  opacity: 0;
+  transition: opacity 0.9s ease;
+  pointer-events: none;
+}
+
+.dior-card:hover .dior-frame-glow::before {
+  opacity: 0.18;
+}
+
+.dior-img {
+  transition:
+    transform 1s var(--ease-silent),
+    filter 0.8s ease;
+  filter: brightness(0.88) contrast(1.04);
+}
+
+.dior-card:hover .dior-img {
+  transform: scale(1.018);
+  filter: brightness(0.94) contrast(1.06);
+}
+
+/* ------------------------------------------------------------
    4) Surface Grain
-============================================================ */
-@layer components {
-  .surface-grain,
-  .dior-grain {
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    border-radius: inherit;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23g)' opacity='1'/%3E%3C/svg%3E");
-    background-size: 180px 180px;
-    opacity: 0.022;
-    mix-blend-mode: overlay;
-  }
-
-  .surface-grain-dense {
-    background-size: 90px 90px;
-    opacity: 0.018;
-  }
-
-  .surface-grain-coarse {
-    background-size: 280px 280px;
-    opacity: 0.028;
-  }
+------------------------------------------------------------ */
+.surface-grain,
+.dior-grain {
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(
+    rgba(255,255,255,0.18) 0.42px,
+    transparent 0.42px
+  );
+  background-size: 4px 4px;
+  opacity: 0.022;
+  pointer-events: none;
+  mix-blend-mode: normal;
 }
 
-/* ============================================================
+/* ------------------------------------------------------------
    5) Horizontal Rail
-============================================================ */
-@layer components {
-  .works-rail {
-    scroll-snap-type: x mandatory;
-    scroll-behavior: smooth;
-    -webkit-overflow-scrolling: touch;
-  }
-
-  .works-card {
-    scroll-snap-stop: always;
-    scroll-snap-align: start;
-    transition:
-      transform var(--dur-base) var(--ease-drift),
-      box-shadow var(--dur-base) var(--ease-drift),
-      opacity var(--dur-fast) var(--ease-hover);
-    opacity: 0.96;
-  }
-
-  .works-rail:active .works-card {
-    transform: translateY(-1px) scale(0.988);
-    box-shadow: var(--shadow-md);
-  }
-
-  .works-rail:not(:active) .works-card {
-    transform: none;
-    box-shadow: var(--shadow-sm);
-  }
-
-  .works-card:hover {
-    opacity: 1;
-  }
-
-  /* Rail内ではフェード無効 */
-  .works-rail .aq-fade,
-  .works-rail .aq-fade-x,
-  .works-rail .aq-show {
-    opacity: 1 !important;
-    transform: none !important;
-    transition: none !important;
-  }
-
-  .works-rail-wrap {
-    position: relative;
-  }
-
-  .works-rail-wrap::before,
-  .works-rail-wrap::after {
-    content: "";
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    width: 48px;
-    pointer-events: none;
-    z-index: 2;
-  }
-
-  .works-rail-wrap::before {
-    left: 0;
-    background: linear-gradient(90deg, var(--surface-base), transparent);
-  }
-
-  .works-rail-wrap::after {
-    right: 0;
-    background: linear-gradient(-90deg, var(--surface-base), transparent);
-  }
+------------------------------------------------------------ */
+.works-rail {
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
 }
 
-/* ============================================================
+.works-card {
+  scroll-snap-stop: always;
+  transition:
+    transform 0.36s var(--ease-silent),
+    box-shadow 0.36s var(--ease-silent),
+    opacity 0.28s ease;
+  opacity: 0.96;
+}
+
+.works-rail:active .works-card {
+  transform: translateY(-1px) scale(0.99);
+  box-shadow: 0 10px 28px rgba(0,0,0,0.26);
+}
+
+.works-rail:not(:active) .works-card {
+  transform: translateY(0) scale(1);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.22);
+}
+
+.works-card:hover {
+  opacity: 1;
+}
+
+/* Rail内ではフェード無効 */
+.works-rail .aq-fade,
+.works-rail [class*="aq-"] {
+  opacity: 1 !important;
+  transform: none !important;
+  transition: none !important;
+}
+
+/* ------------------------------------------------------------
    6) Scroll Hint
-============================================================ */
-@layer components {
-  .scroll-hint {
-    width: 1px;
-    height: 24px;
-    border-radius: 9999px;
-    overflow: hidden;
-    position: relative;
-  }
+------------------------------------------------------------ */
+.scroll-hint {
+  width: 1px;
+  height: 22px;
+  background: linear-gradient(
+    180deg,
+    rgba(255,255,255,0),
+    rgba(255,255,255,0.52),
+    rgba(255,255,255,0)
+  );
+  border-radius: 9999px;
+  animation: scrollPulse 2.4s ease-in-out infinite;
+}
 
-  .scroll-hint::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(
-      180deg,
-      transparent 0%,
-      var(--ink-56) 40%,
-      var(--ink-42) 60%,
-      transparent 100%
-    );
-    animation: scroll-hint-flow 2.6s var(--ease-drift) infinite;
+@keyframes scrollPulse {
+  0% {
+    opacity: 0;
+    transform: translateY(-6px);
   }
-
-  @keyframes scroll-hint-flow {
-    0%   { transform: translateY(-100%); opacity: 0; }
-    20%  { opacity: 1; }
-    80%  { opacity: 0.7; }
-    100% { transform: translateY(200%); opacity: 0; }
+  40% {
+    opacity: 0.58;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(8px);
   }
 }
 
-/* ============================================================
-   7) Glass Surface
-============================================================ */
-@layer components {
-  .glass {
-    background: var(--surface-glass);
-    border: 1px solid var(--line-default);
-    backdrop-filter: blur(18px) saturate(1.12);
-    -webkit-backdrop-filter: blur(18px) saturate(1.12);
-    box-shadow:
-      var(--shadow-inset-highlight),
-      var(--shadow-lg);
-  }
-
-  .glass-sm {
-    background: var(--surface-frost);
-    border: 1px solid var(--line-faint);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    box-shadow:
-      var(--shadow-inset-highlight),
-      var(--shadow-md);
-  }
-
-  .glass-dark {
-    background: var(--surface-smoke);
-    border: 1px solid var(--line-ghost);
-    backdrop-filter: blur(24px) saturate(0.96);
-    -webkit-backdrop-filter: blur(24px) saturate(0.96);
-    box-shadow:
-      var(--shadow-inset-highlight),
-      var(--shadow-xl);
-  }
-}
-
-/* ============================================================
-   8) Typography Utilities
-============================================================ */
-@layer utilities {
-  .font-mono { font-family: var(--font-mono); }
-  .font-serif { font-family: var(--font-serif); }
-  .font-system { font-family: var(--font-system); }
-
-  .font-thin { font-weight: 300; }
-
-  .tracking-label { letter-spacing: 0.28em; }
-  .tracking-title { letter-spacing: 0.08em; }
-  .tracking-eyebrow { letter-spacing: 0.36em; }
-  .tracking-tight { letter-spacing: 0.02em; }
-
-  .text-ink-98 { color: var(--ink-98); }
-  .text-ink-90 { color: var(--ink-90); }
-  .text-ink-70 { color: var(--ink-70); }
-  .text-ink-56 { color: var(--ink-56); }
-  .text-ink-42 { color: var(--ink-42); }
-  .text-ink-30 { color: var(--ink-30); }
-  .text-ink-20 { color: var(--ink-20); }
-  .text-ink-12 { color: var(--ink-12); }
-}
-
-/* ============================================================
-   9) Reduced Motion
-============================================================ */
+/* ------------------------------------------------------------
+   7) Reduced Motion
+------------------------------------------------------------ */
 @media (prefers-reduced-motion: reduce) {
-  :root {
-    --dur-instant: 0s;
-    --dur-fast: 0s;
-    --dur-base: 0s;
-    --dur-slow: 0s;
-    --dur-drift: 0s;
-    --dur-breathe: 0s;
-    --fade-y: 0px;
-    --fade-scale: 1;
-  }
-
-  html {
-    scroll-behavior: auto;
-  }
-
   #root {
     transition: none !important;
     opacity: 1 !important;
   }
 
   .aq-fade,
-  .aq-fade-x,
-  .aq-show {
-    opacity: 1 !important;
-    transform: none !important;
-    transition: none !important;
-  }
-
+  .aq-show,
   .ambient-glow,
   .ambient-glow::before,
   .ambient-glow::after,
   .elevated-card,
-  .dior-card,
   .soft-frame-glow::before,
-  .dior-frame-glow::before,
   .card-image,
+  .dior-card,
+  .dior-frame-glow::before,
   .dior-img,
   .works-card,
-  .scroll-hint,
-  .scroll-hint::before,
-  .glow-spot {
+  .scroll-hint {
     transition: none !important;
     animation: none !important;
     transform: none !important;
+  }
+
+  .aq-fade,
+  .aq-show {
+    opacity: 1 !important;
   }
 }
