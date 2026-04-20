@@ -9,15 +9,9 @@ export default function WorksList() {
   const rootRef = useRef(null);
   const [activeCategory, setActiveCategory] = useState("ALL");
 
-  /* ================================
-        normalize
-  ================================ */
   const normalize = (str = "") =>
     str.replace(/\s+/g, "").replace(/／/g, "/").toLowerCase();
 
-  /* ================================
-        NEW 判定（30日以内）
-  ================================ */
   const isNewItem = (item) => {
     if (!item.createdAt) return false;
 
@@ -27,9 +21,6 @@ export default function WorksList() {
     return (Date.now() - created) / 86_400_000 <= 30;
   };
 
-  /* ================================
-        enrichedData
-  ================================ */
   const enrichedData = useMemo(
     () =>
       worksData.map((block) => ({
@@ -42,17 +33,11 @@ export default function WorksList() {
     []
   );
 
-  /* ================================
-        カテゴリーリスト
-  ================================ */
   const categoryList = useMemo(
     () => ["ALL", "NEW", ...enrichedData.map((b) => b.category)],
     [enrichedData]
   );
 
-  /* ================================
-        フィルタリング
-  ================================ */
   const filteredData = useMemo(() => {
     if (activeCategory === "ALL") return enrichedData;
 
@@ -71,9 +56,6 @@ export default function WorksList() {
     );
   }, [activeCategory, enrichedData]);
 
-  /* ================================
-        aq-fade observer
-  ================================ */
   useEffect(() => {
     const root = rootRef.current;
     if (!root) return;
@@ -105,9 +87,6 @@ export default function WorksList() {
     return () => io.disconnect();
   }, [activeCategory]);
 
-  /* ================================
-        Category click
-  ================================ */
   const handleChangeCategory = useCallback((cat) => {
     setActiveCategory(cat);
 
@@ -122,11 +101,8 @@ export default function WorksList() {
     });
   }, []);
 
-  /* ================================
-        RENDER
-  ================================ */
   return (
-    <section className="min-h-screen bg-[#070604] px-6 py-24 pb-32 md:px-10 lg:px-16">
+    <section className="min-h-screen overflow-x-hidden bg-[#070604] px-6 py-24 pb-32 md:px-10 lg:px-16">
       <div className="ambient-glow" style={{ height: "1px" }} />
 
       <div ref={rootRef} className="mx-auto max-w-6xl lg:max-w-7xl">
@@ -152,30 +128,12 @@ export default function WorksList() {
         <div className="aq-fade delay-2 mb-16 h-px w-16 bg-white/12" />
 
         {/* ================= TABS ================= */}
-        <div className="aq-fade delay-2">
-          <div
-            className="-mx-6 overflow-x-auto px-6 md:mx-0 md:px-0"
-            style={{
-              WebkitOverflowScrolling: "touch",
-              overscrollBehaviorX: "contain",
-              scrollbarWidth: "none",
-              msOverflowStyle: "none",
-              touchAction: "pan-x",
-            }}
-          >
-            <div
-              className="min-w-max"
-              style={{
-                touchAction: "pan-x",
-              }}
-            >
-              <CategoryTabs
-                activeCategory={activeCategory}
-                setActiveCategory={handleChangeCategory}
-                categoryList={categoryList}
-              />
-            </div>
-          </div>
+        <div className="aq-fade delay-2 overflow-x-hidden">
+          <CategoryTabs
+            activeCategory={activeCategory}
+            setActiveCategory={handleChangeCategory}
+            categoryList={categoryList}
+          />
         </div>
 
         {/* ================= BLOCKS ================= */}
