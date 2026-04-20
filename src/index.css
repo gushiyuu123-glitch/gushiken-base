@@ -4,10 +4,11 @@
    統合最適化版
 ============================================================ */
 
+@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400&family=Cormorant+Garamond:wght@300;400&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
 /* ------------------------------------------------------------
    ROOT TOKENS
 ------------------------------------------------------------ */

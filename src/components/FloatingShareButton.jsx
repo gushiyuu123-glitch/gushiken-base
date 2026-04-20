@@ -45,8 +45,6 @@ function injectStyles() {
   if (document.getElementById("fsb-styles")) return;
 
   const css = `
-@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400&family=Cormorant+Garamond:wght@300;400&display=swap');
-
 .fsb-root {
   position: fixed;
   bottom: 1.25rem;
@@ -349,7 +347,16 @@ function injectStyles() {
 }
 
 /* ───────────────────────── helpers ───────────────────────── */
-function buildItems(shareUrl, shareText, encode, openWin, closeMenu, copyFn, notify) {
+function buildItems(
+  shareUrl,
+  shareText,
+  encode,
+  openWin,
+  closeMenu,
+  copyFn,
+  notify,
+  setCopiedKey
+) {
   return [
     {
       key: "copy",
@@ -357,8 +364,8 @@ function buildItems(shareUrl, shareText, encode, openWin, closeMenu, copyFn, not
       sub: "URL",
       onClick: async () => {
         await copyFn(shareUrl);
+        setCopiedKey("copy");
         notify("Copied to clipboard");
-        closeMenu();
       },
     },
     {
@@ -442,6 +449,7 @@ export default function FloatingShareButton({
   const [isVisible, setIsVisible] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [notice, setNotice] = useState("");
+  const [copiedKey, setCopiedKey] = useState("");
   const wrapRef = useRef(null);
 
   useEffect(() => {
@@ -470,6 +478,12 @@ export default function FloatingShareButton({
     const timer = setTimeout(() => setNotice(""), 2000);
     return () => clearTimeout(timer);
   }, [notice]);
+
+  useEffect(() => {
+    if (!copiedKey) return;
+    const timer = setTimeout(() => setCopiedKey(""), 1400);
+    return () => clearTimeout(timer);
+  }, [copiedKey]);
 
   useEffect(() => {
     if (!isOpen) return;
@@ -566,7 +580,8 @@ export default function FloatingShareButton({
     openWin,
     closeMenu,
     copyToClipboard,
-    notify
+    notify,
+    setCopiedKey
   );
 
   const handleItemClick = async (item) => {
@@ -578,14 +593,8 @@ export default function FloatingShareButton({
   };
 
   return (
-    <div
-      ref={wrapRef}
-      className={`fsb-root${isVisible ? "" : " hidden"}`}
-    >
-      <div
-        className={`fsb-toast${notice ? "" : " hidden"}`}
-        aria-live="polite"
-      >
+    <div ref={wrapRef} className={`fsb-root${isVisible ? "" : " hidden"}`}>
+      <div className={`fsb-toast${notice ? "" : " hidden"}`} aria-live="polite">
         {notice || "\u00a0"}
       </div>
 
@@ -619,19 +628,19 @@ export default function FloatingShareButton({
                 className="fsb-item"
                 onClick={() => handleItemClick(item)}
               >
-                <span className="fsb-item-label">{item.label}</span>
-                <span className="fsb-item-sub">{item.sub}</span>
+                <span className="fsb-item-label">
+                  {copiedKey === item.key ? "Copied" : item.label}
+                </span>
+                <span className="fsb-item-sub">
+                  {copiedKey === item.key ? "DONE" : item.sub}
+                </span>
               </button>
             </li>
           ))}
         </ul>
 
         {canNative && !preferNative && (
-          <button
-            type="button"
-            className="fsb-native"
-            onClick={handleNative}
-          >
+          <button type="button" className="fsb-native" onClick={handleNative}>
             <span className="fsb-item-label">More options</span>
             <span className="fsb-item-sub">SYSTEM</span>
           </button>
