@@ -1,96 +1,112 @@
 /* ======================================================
-   GUSHIKEN DESIGN — Navigation Integrated Edition
-   Quiet Black × Soft Glass × Calm Direction
+   GUSHIKEN DESIGN — Navigation Upgraded Edition
+   Japanese Luxury · Gold Active States · Refined Detail
 ====================================================== */
 
-/* ------------------------------------------------------
-   ROOT NAV
------------------------------------------------------- */
+/* ─── Variables ──────────────────────────────────── */
+:root {
+  --nav-gold:        #c9a865;
+  --nav-gold-dim:    rgba(201, 168, 101, 0.22);
+  --nav-gold-border: rgba(201, 168, 101, 0.32);
+  --nav-gold-glow:   rgba(201, 168, 101, 0.06);
+}
+
+/* ─── Root Nav ───────────────────────────────────── */
 :local(.navRoot) {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
-  height: 70px;
+  height: 68px;
   z-index: 999999;
-
   transition:
-    opacity 0.55s cubic-bezier(.22,.56,.18,1),
-    transform 0.55s cubic-bezier(.22,.56,.18,1),
-    background 0.45s ease,
-    border-bottom-color 0.45s ease,
-    box-shadow 0.45s ease,
-    backdrop-filter 0.45s ease;
+    background          0.5s  ease,
+    border-bottom-color 0.5s  ease,
+    box-shadow          0.5s  ease,
+    backdrop-filter     0.5s  ease;
 }
 
 :local(.navIdle) {
-  background: rgba(0, 0, 0, 0.18);
-  backdrop-filter: blur(10px) saturate(118%);
-  -webkit-backdrop-filter: blur(10px) saturate(118%);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.14);
+  background: rgba(0, 0, 0, 0.12);
+  backdrop-filter: blur(10px) saturate(115%);
+  -webkit-backdrop-filter: blur(10px) saturate(115%);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: none;
 }
 
 :local(.navActive) {
-  background: rgba(0, 0, 0, 0.42);
-  backdrop-filter: blur(16px) saturate(128%);
-  -webkit-backdrop-filter: blur(16px) saturate(128%);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
-  box-shadow: 0 16px 38px rgba(0, 0, 0, 0.22);
+  background: rgba(6, 6, 6, 0.78);
+  backdrop-filter: blur(18px) saturate(130%);
+  -webkit-backdrop-filter: blur(18px) saturate(130%);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.09);
+  box-shadow: 0 1px 0 rgba(201, 168, 101, 0.04),
+              0 12px 40px rgba(0, 0, 0, 0.22);
 }
 
-/* ------------------------------------------------------
-   INNER
------------------------------------------------------- */
+/* ─── Inner ──────────────────────────────────────── */
 :local(.navInner) {
-  max-width: 1350px;
+  max-width: 1280px;
   margin: 0 auto;
-  height: 70px;
-  padding: 0 32px;
-
+  height: 68px;
+  padding: 0 2.4rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-/* ------------------------------------------------------
-   LOGO
------------------------------------------------------- */
+/* ─── Logo ───────────────────────────────────────── */
 :local(.navLogo) {
-  color: rgba(255, 255, 255, 0.95);
-  font-size: 1.04rem;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  color: rgba(255, 255, 255, 0.94);
+  font-size: 0.9rem;
   font-weight: 300;
-  letter-spacing: 0.24em;
+  letter-spacing: 0.26em;
   text-decoration: none;
-  transition: opacity 0.3s ease;
+  transition: opacity 0.35s ease;
 }
 
 :local(.navLogo:hover) {
-  opacity: 0.76;
+  opacity: 0.72;
 }
 
-/* ------------------------------------------------------
-   PC NAV
------------------------------------------------------- */
+/* Thin gold rule beside logo */
+:local(.navLogoRule) {
+  display: block;
+  width: 1px;
+  height: 12px;
+  background: rgba(201, 168, 101, 0.35);
+  flex-shrink: 0;
+}
+
+:local(.navLogoBrand) {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 0.78rem;
+  font-weight: 300;
+  letter-spacing: 0.22em;
+  color: rgba(255, 255, 255, 0.46);
+}
+
+/* ─── PC Nav ─────────────────────────────────────── */
 :local(.navPc) {
   display: flex;
-  gap: 46px;
+  gap: 44px;
   align-items: center;
 }
 
 :local(.navItem) {
   position: relative;
   padding: 6px 2px 12px;
-  font-size: 0.84rem;
+  font-size: 0.78rem;
   font-weight: 300;
-  letter-spacing: 0.17em;
-  color: rgba(255, 255, 255, 0.76);
+  letter-spacing: 0.2em;
+  color: rgba(255, 255, 255, 0.52);
   text-decoration: none;
-  transition:
-    color 0.3s ease,
-    opacity 0.3s ease;
+  transition: color 0.35s ease;
 }
 
+/* Gold underline — hidden by default */
 :local(.navItem)::after {
   content: "";
   position: absolute;
@@ -100,71 +116,113 @@
   height: 1px;
   background: linear-gradient(
     to right,
-    rgba(255, 255, 255, 0.10),
-    rgba(255, 255, 255, 0.62)
+    transparent,
+    var(--nav-gold),
+    transparent
   );
-  transition: width 0.5s cubic-bezier(.22,.56,.18,1);
+  transition: width 0.55s cubic-bezier(0.22, 0.56, 0.18, 1),
+              opacity 0.55s ease;
+  opacity: 0;
 }
 
 :local(.navItem:hover) {
-  color: rgba(255, 255, 255, 0.97);
+  color: rgba(255, 255, 255, 0.92);
 }
 
 :local(.navItem:hover)::after {
   width: 100%;
+  opacity: 0.55;
 }
 
-/* ------------------------------------------------------
-   HAMBURGER
------------------------------------------------------- */
+/* Active state — static gold line + brighter text */
+:local(.navItemActive) {
+  color: rgba(255, 255, 255, 0.94);
+}
+
+:local(.navItemActive)::after {
+  width: 100%;
+  opacity: 0.75;
+}
+
+:local(.navItemActive:hover)::after {
+  opacity: 0.9;
+}
+
+/* Active dot accent above text */
+:local(.navItemActive)::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: var(--nav-gold);
+  opacity: 0.55;
+}
+
+/* ─── Hamburger ──────────────────────────────────── */
 :local(.hamburger) {
   display: none;
   border: 0;
   background: transparent;
+  padding: 0;
+  cursor: pointer;
 }
 
-/* ------------------------------------------------------
-   MOBILE
------------------------------------------------------- */
+/* ─── Mobile ─────────────────────────────────────── */
 @media (max-width: 767px) {
   :local(.navPc) {
     display: none;
   }
 
   :local(.navInner) {
-    padding: 0 18px;
+    padding: 0 1.25rem;
   }
 
   :local(.navLogo) {
-    font-size: 0.9rem;
-    letter-spacing: 0.17em;
+    font-size: 0.78rem;
+    letter-spacing: 0.2em;
+  }
+
+  :local(.navLogoRule),
+  :local(.navLogoBrand) {
+    display: none;
   }
 
   :local(.hamburger) {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    width: 30px;
-    height: 20px;
+    width: 26px;
+    height: 18px;
     cursor: pointer;
     z-index: 1000001;
-    padding: 0;
   }
 
   :local(.hamburger) span {
     width: 100%;
-    height: 1.5px;
-    background: rgba(255, 255, 255, 0.92);
+    height: 1px;
+    background: rgba(255, 255, 255, 0.85);
     border-radius: 999px;
     transform-origin: center;
     transition:
-      transform 0.42s cubic-bezier(.22,.56,.18,1),
-      opacity 0.42s cubic-bezier(.22,.56,.18,1),
-      background 0.3s ease;
+      transform 0.45s cubic-bezier(0.22, 0.56, 0.18, 1),
+      opacity   0.45s cubic-bezier(0.22, 0.56, 0.18, 1);
+  }
+
+  :local(.hamburger) span:last-child {
+    width: 60%;
+    margin-left: auto;
+    transition:
+      transform 0.45s cubic-bezier(0.22, 0.56, 0.18, 1),
+      opacity   0.45s cubic-bezier(0.22, 0.56, 0.18, 1),
+      width     0.45s cubic-bezier(0.22, 0.56, 0.18, 1);
   }
 
   :local(.hamburgerOpen) span:nth-child(1) {
-    transform: translateY(9px) rotate(45deg);
+    transform: translateY(8.5px) rotate(45deg);
   }
 
   :local(.hamburgerOpen) span:nth-child(2) {
@@ -172,21 +230,20 @@
   }
 
   :local(.hamburgerOpen) span:nth-child(3) {
-    transform: translateY(-9px) rotate(-45deg);
+    width: 100%;
+    transform: translateY(-8.5px) rotate(-45deg);
   }
 
-  /* ------------------------------------------------------
-     MOBILE OVERLAY
-  ------------------------------------------------------ */
+  /* ─── Mobile Overlay ─────────────────────────── */
   :local(.mobileOverlay) {
     position: fixed;
     inset: 0;
-    background: rgba(0, 0, 0, 0.28);
-    backdrop-filter: blur(6px);
-    -webkit-backdrop-filter: blur(6px);
+    background: rgba(0, 0, 0, 0.32);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
     opacity: 0;
     pointer-events: none;
-    transition: opacity 0.3s ease;
+    transition: opacity 0.35s ease;
     z-index: 999997;
   }
 
@@ -195,50 +252,38 @@
     pointer-events: auto;
   }
 
-  /* ------------------------------------------------------
-     MOBILE NAV PANEL
-  ------------------------------------------------------ */
+  /* ─── Mobile Nav Panel ───────────────────────── */
   :local(.mobileNav) {
-    --mobile-nav-top: 88px;
-    --mobile-nav-side: 12px;
-    --mobile-nav-radius: 22px;
-    --mobile-nav-max-height: calc(100svh - 108px);
-
     position: fixed;
-    top: var(--mobile-nav-top);
-    left: var(--mobile-nav-side);
-    right: var(--mobile-nav-side);
+    top: 84px;
+    left: 14px;
+    right: 14px;
     width: auto;
-    max-width: 420px;
+    max-width: 400px;
     margin-left: auto;
     margin-right: auto;
 
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: var(--mobile-nav-radius);
-    background:
-      linear-gradient(
-        180deg,
-        rgba(18, 18, 18, 0.96) 0%,
-        rgba(10, 10, 10, 0.96) 100%
-      );
+    border: 1px solid rgba(255, 255, 255, 0.09);
+    border-top: 1px solid rgba(201, 168, 101, 0.14);
+    border-radius: 20px;
+    background: rgba(10, 10, 10, 0.96);
     box-shadow:
-      0 18px 44px rgba(0, 0, 0, 0.30),
-      inset 0 1px 0 rgba(255, 255, 255, 0.03);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+      0 0 0 0.5px rgba(201, 168, 101, 0.06),
+      0 24px 60px rgba(0, 0, 0, 0.45),
+      inset 0 1px 0 rgba(255, 255, 255, 0.04);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
 
-    max-height: var(--mobile-nav-max-height);
+    max-height: calc(100svh - 108px);
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
 
-    transform: translateY(-10px) scale(0.985);
+    transform: translateY(-8px) scale(0.99);
     opacity: 0;
     pointer-events: none;
-
     transition:
-      transform 0.3s cubic-bezier(.22,1,.36,1),
-      opacity 0.3s ease;
-
+      transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+      opacity   0.35s ease;
     z-index: 999998;
   }
 
@@ -249,47 +294,63 @@
   }
 
   :local(.mobileNavInner) {
-    padding: 16px 18px 18px;
+    padding: 1.1rem 1.2rem 1.4rem;
   }
 
+  /* Panel header */
   :local(.mobileNavTop) {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 10px;
+    margin-bottom: 0.7rem;
+    padding-bottom: 0.8rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
   }
 
   :local(.mobileNavLabel) {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
     margin: 0;
-    font-size: 0.68rem;
-    letter-spacing: 0.2em;
-    color: rgba(255, 255, 255, 0.52);
+    font-size: 0.65rem;
+    letter-spacing: 0.28em;
+    color: rgba(255, 255, 255, 0.36);
+  }
+
+  /* Gold rule before MENU label */
+  :local(.mobileNavLabel)::before {
+    content: '';
+    display: block;
+    width: 14px;
+    height: 1px;
+    background: var(--nav-gold);
+    opacity: 0.55;
+    flex-shrink: 0;
   }
 
   :local(.mobileClose) {
     position: relative;
-    width: 34px;
-    height: 34px;
-    border: 0;
-    border-radius: 999px;
+    width: 32px;
+    height: 32px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 50%;
     background: rgba(255, 255, 255, 0.02);
     cursor: pointer;
-    transition:
-      background 0.28s ease,
-      opacity 0.28s ease;
+    transition: border-color 0.28s ease, background 0.28s ease;
   }
 
   :local(.mobileClose:hover) {
-    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.14);
+    background: rgba(255, 255, 255, 0.04);
   }
 
   :local(.mobileClose) span {
     position: absolute;
     left: 9px;
-    top: 16px;
-    width: 16px;
+    top: 15px;
+    width: 14px;
     height: 1px;
-    background: rgba(255, 255, 255, 0.72);
+    background: rgba(255, 255, 255, 0.62);
     border-radius: 999px;
   }
 
@@ -301,6 +362,7 @@
     transform: rotate(-45deg);
   }
 
+  /* Nav links */
   :local(.mobileNavLinks) {
     display: flex;
     flex-direction: column;
@@ -310,86 +372,73 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    min-height: 58px;
-    padding: 0;
+    min-height: 56px;
+    padding: 0 0.2rem;
     text-decoration: none;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-    color: rgba(255, 255, 255, 0.9);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.055);
+    color: rgba(255, 255, 255, 0.72);
     transition:
-      color 0.28s ease,
-      transform 0.28s ease,
-      border-color 0.28s ease;
+      color     0.3s ease,
+      transform 0.3s ease;
+  }
+
+  :local(.mobileNavItem:last-child) {
+    border-bottom: none;
   }
 
   :local(.mobileNavItem:hover) {
-    color: rgba(255, 255, 255, 0.98);
-    transform: translateX(2px);
-    border-bottom-color: rgba(255, 255, 255, 0.12);
+    color: rgba(255, 255, 255, 0.95);
+    transform: translateX(3px);
+  }
+
+  /* Active mobile item */
+  :local(.mobileNavItemActive) {
+    color: var(--nav-gold);
+  }
+
+  :local(.mobileNavItemActive:hover) {
+    color: var(--nav-gold);
+    opacity: 0.85;
   }
 
   :local(.mobileNavText) {
-    font-size: 0.96rem;
+    font-size: 0.9rem;
     font-weight: 300;
-    letter-spacing: 0.11em;
+    letter-spacing: 0.14em;
   }
 
   :local(.mobileNavArrow) {
-    color: rgba(255, 255, 255, 0.48);
-    font-size: 0.84rem;
-    transform: translateX(0);
-    transition: transform 0.28s ease, opacity 0.28s ease;
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.28);
+    transition: transform 0.3s ease, color 0.3s ease;
   }
 
   :local(.mobileNavItem:hover) :local(.mobileNavArrow) {
     transform: translateX(2px);
+    color: rgba(255, 255, 255, 0.48);
   }
 
+  :local(.mobileNavItemActive) :local(.mobileNavArrow) {
+    color: rgba(201, 168, 101, 0.55);
+  }
+
+  /* Footer */
   :local(.mobileNavFooter) {
-    margin-top: 14px;
-    padding-top: 2px;
+    margin-top: 1rem;
+    padding-top: 0.9rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.055);
   }
 
   :local(.mobileNavNote) {
     margin: 0;
-    font-size: 0.7rem;
-    line-height: 1.75;
-    letter-spacing: 0.08em;
-    color: rgba(255, 255, 255, 0.3);
+    font-size: 0.68rem;
+    line-height: 1.8;
+    letter-spacing: 0.1em;
+    color: rgba(255, 255, 255, 0.24);
   }
 }
 
-/* ------------------------------------------------------
-   VERY SMALL DEVICES
------------------------------------------------------- */
-@media (max-width: 390px) {
-  :local(.mobileNav) {
-    --mobile-nav-side: 10px;
-    --mobile-nav-radius: 20px;
-    --mobile-nav-max-height: calc(100svh - 108px);
-  }
-
-  :local(.mobileNavInner) {
-    padding: 14px 16px 16px;
-  }
-
-  :local(.mobileNavItem) {
-    min-height: 54px;
-  }
-
-  :local(.mobileNavText) {
-    font-size: 0.92rem;
-    letter-spacing: 0.09em;
-  }
-
-  :local(.mobileNavNote) {
-    font-size: 0.66rem;
-    line-height: 1.7;
-  }
-}
-
-/* ------------------------------------------------------
-   DESKTOP SAFETY
------------------------------------------------------- */
+/* ─── Desktop safety ─────────────────────────────── */
 @media (min-width: 768px) {
   :local(.mobileOverlay),
   :local(.mobileNav) {
@@ -397,14 +446,34 @@
   }
 }
 
-/* ------------------------------------------------------
-   FOCUS
------------------------------------------------------- */
+/* ─── Focus ──────────────────────────────────────── */
 :local(.hamburger):focus-visible,
 :local(.mobileClose):focus-visible,
 :local(.mobileNavItem):focus-visible,
 :local(.navItem):focus-visible,
 :local(.navLogo):focus-visible {
-  outline: 1px solid rgba(255, 255, 255, 0.34);
+  outline: 1px solid rgba(201, 168, 101, 0.4);
   outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* ─── Very small devices ─────────────────────────── */
+@media (max-width: 390px) {
+  :local(.mobileNav) {
+    left: 10px;
+    right: 10px;
+    border-radius: 18px;
+  }
+
+  :local(.mobileNavInner) {
+    padding: 1rem 1.05rem 1.2rem;
+  }
+
+  :local(.mobileNavItem) {
+    min-height: 52px;
+  }
+
+  :local(.mobileNavText) {
+    font-size: 0.86rem;
+  }
 }
