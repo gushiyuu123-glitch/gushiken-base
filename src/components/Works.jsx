@@ -26,30 +26,26 @@ export default function Works() {
     });
 
     // ── カード連鎖フェードイン ─────────────────────────────────
-    // 監視はカード1（VELMONT）のみ。
-    // 発火後 VELMONT → ROSE VEIL → LÜMIN の順に連鎖。
-    // タイミングはすべてJS制御（CSSのdelay混在を排除）。
+    // aq-chain に依存せず、全カード aq-fade を使用。
+    // 遅延は transitionDelay をDOM要素に直接書き込む。
+    // → CSSファイルの状態に関係なく確実に動作する。
     const [card1, card2, card3] = cards;
     if (!card1) return () => cleanups.forEach((c) => c());
+
+    // Observer発火前にセットしておく（タイミング競合を防ぐ）
+    if (card2) card2.style.transitionDelay = "280ms";
+    if (card3) card3.style.transitionDelay = "520ms";
 
     const observer = new IntersectionObserver(
       (entries) => {
         if (!entries[0].isIntersecting) return;
         observer.disconnect();
 
-        // VELMONT：即座
-        card1.classList.add("aq-show");
-
-        // ROSE VEIL：220ms 後
-        const t2 = setTimeout(() => card2?.classList.add("aq-show"), 220);
-
-        // LÜMIN：440ms 後（220ms 間隔で統一）
-        const t3 = setTimeout(() => card3?.classList.add("aq-show"), 440);
-
-        cleanups.push(() => {
-          clearTimeout(t2);
-          clearTimeout(t3);
-        });
+        // 3枚まとめて aq-show を付与
+        // → transitionDelay が各カードに効いて順番に出てくる
+        [card1, card2, card3].forEach((card) =>
+          card?.classList.add("aq-show")
+        );
       },
       { threshold: 0.12 }
     );
@@ -108,7 +104,7 @@ export default function Works() {
 
           <div className="works-grid">
 
-            {/* 1 → VELMONT（BIG）★ 監視の起点 / delay-* は持たせない */}
+            {/* 1 → VELMONT（BIG）★ 監視の起点 */}
             <a
               href="https://velmont-virid.vercel.app/"
               target="_blank"
@@ -128,12 +124,12 @@ export default function Works() {
               </div>
             </a>
 
-            {/* 2 → ROSE VEIL / JS連鎖（+220ms） */}
+            {/* 2 → ROSE VEIL（+220ms） */}
             <a
               href="https://rose-veil.vercel.app/"
               target="_blank"
               rel="noopener noreferrer"
-              className="work-card aq-chain"
+              className="work-card aq-fade"
               aria-label="ROSE VEIL のサイトを見る"
             >
               <img
@@ -148,12 +144,12 @@ export default function Works() {
               </div>
             </a>
 
-            {/* 3 → LÜMIN / JS連鎖（+440ms） */}
+            {/* 3 → LÜMIN（+440ms） */}
             <a
               href="https://lumin-audio.vercel.app/"
               target="_blank"
               rel="noopener noreferrer"
-              className="work-card aq-chain"
+              className="work-card aq-fade"
               aria-label="LÜMIN のサイトを見る"
             >
               <img
