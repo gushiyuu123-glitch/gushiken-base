@@ -12,12 +12,11 @@ export default function Works() {
     const cards = root.querySelectorAll(".work-card");
     const cleanups = [];
 
+    // ── img-loaded（金フレーム表示用）──────────────────────────
     cards.forEach((card) => {
       const img = card.querySelector("img");
       if (!img) return;
-
       const markLoaded = () => card.classList.add("img-loaded");
-
       if (img.complete) {
         markLoaded();
       } else {
@@ -26,9 +25,39 @@ export default function Works() {
       }
     });
 
-    return () => {
-      cleanups.forEach((cleanup) => cleanup());
-    };
+    // ── カード連鎖フェードイン ─────────────────────────────────
+    // 監視はカード1（VELMONT）のみ。
+    // 発火後 VELMONT → ROSE VEIL → LÜMIN の順に連鎖。
+    // タイミングはすべてJS制御（CSSのdelay混在を排除）。
+    const [card1, card2, card3] = cards;
+    if (!card1) return () => cleanups.forEach((c) => c());
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (!entries[0].isIntersecting) return;
+        observer.disconnect();
+
+        // VELMONT：即座
+        card1.classList.add("aq-show");
+
+        // ROSE VEIL：220ms 後
+        const t2 = setTimeout(() => card2?.classList.add("aq-show"), 220);
+
+        // LÜMIN：440ms 後（220ms 間隔で統一）
+        const t3 = setTimeout(() => card3?.classList.add("aq-show"), 440);
+
+        cleanups.push(() => {
+          clearTimeout(t2);
+          clearTimeout(t3);
+        });
+      },
+      { threshold: 0.12 }
+    );
+
+    observer.observe(card1);
+    cleanups.push(() => observer.disconnect());
+
+    return () => cleanups.forEach((c) => c());
   }, []);
 
   return (
@@ -78,12 +107,13 @@ export default function Works() {
           </div>
 
           <div className="works-grid">
-            {/* 1 → VELMONT（BIG） */}
+
+            {/* 1 → VELMONT（BIG）★ 監視の起点 / delay-* は持たせない */}
             <a
               href="https://velmont-virid.vercel.app/"
               target="_blank"
               rel="noopener noreferrer"
-              className="work-card aq-fade delay-3"
+              className="work-card aq-fade"
               aria-label="VELMONT のサイトを見る"
             >
               <img
@@ -98,12 +128,12 @@ export default function Works() {
               </div>
             </a>
 
-            {/* 2 → ROSE VEIL（BIG） */}
+            {/* 2 → ROSE VEIL / JS連鎖（+220ms） */}
             <a
               href="https://rose-veil.vercel.app/"
               target="_blank"
               rel="noopener noreferrer"
-              className="work-card aq-fade delay-4"
+              className="work-card aq-chain"
               aria-label="ROSE VEIL のサイトを見る"
             >
               <img
@@ -118,12 +148,12 @@ export default function Works() {
               </div>
             </a>
 
-            {/* 3 → LÜMIN（SMALL） */}
+            {/* 3 → LÜMIN / JS連鎖（+440ms） */}
             <a
               href="https://lumin-audio.vercel.app/"
               target="_blank"
               rel="noopener noreferrer"
-              className="work-card aq-fade delay-5"
+              className="work-card aq-chain"
               aria-label="LÜMIN のサイトを見る"
             >
               <img
@@ -137,6 +167,7 @@ export default function Works() {
                 <p>Audio EC / Minimal × Precision</p>
               </div>
             </a>
+
           </div>
         </div>
 
