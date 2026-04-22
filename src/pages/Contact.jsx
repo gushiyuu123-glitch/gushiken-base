@@ -16,7 +16,7 @@ export default function Contact() {
 
   useEffect(() => {
     const description =
-      "GUSHIKEN DESIGN へのお問い合わせページ。サイト制作やブランド設計のご相談を、目的の整理から丁寧にサポートします。";
+      "GUSHIKEN DESIGN お問い合わせ。沖縄のWeb制作・Webデザイン。印象を整えるサイト制作のご相談を受け付けています。";
 
     let meta = document.querySelector('meta[name="description"]');
     if (!meta) {
@@ -66,12 +66,9 @@ export default function Contact() {
 
   return (
     <section ref={rootRef} className={`${styles.contactSection} aq-fade`}>
-      {/* Grain texture */}
       <div className={styles.grain} aria-hidden="true" />
 
       <div className={styles.container}>
-
-        {/* Header */}
         <header className={`${styles.header} aq-fade delay-1`}>
           <p className={styles.eyebrow}>CONTACT</p>
           <h1 className={styles.title} translate="no">お問い合わせ</h1>
@@ -86,58 +83,27 @@ export default function Contact() {
           </p>
         </header>
 
-        {/* Form */}
-        <form
-          className={`${styles.form} aq-fade delay-2`}
-          onSubmit={handleSubmit}
-          noValidate
-        >
+        <form className={`${styles.form} aq-fade delay-2`} onSubmit={handleSubmit} noValidate>
           <FormField label="お名前" required htmlFor="name">
-            <input
-              id="name"
-              name="name"
-              type="text"
-              required
-              className={styles.input}
-              autoComplete="name"
-            />
+            <input id="name" name="name" type="text" required className={styles.input} autoComplete="name" />
           </FormField>
 
           <FormField label="メールアドレス" required htmlFor="email">
-            <input
-              id="email"
-              name="email"
-              type="email"
-              required
-              className={styles.input}
-              autoComplete="email"
-            />
+            <input id="email" name="email" type="email" required className={styles.input} autoComplete="email" />
           </FormField>
 
           <FormField label="電話番号（任意）" htmlFor="tel">
-            <input
-              id="tel"
-              name="tel"
-              type="tel"
-              className={styles.input}
-              autoComplete="tel"
-            />
+            <input id="tel" name="tel" type="tel" className={styles.input} autoComplete="tel" />
           </FormField>
 
-          {/* Two-column row on wider screens */}
           <div className={styles.row}>
             <FormField label="ご希望のプラン" htmlFor="plan">
               <div className={styles.selectWrap}>
-                <select
-                  id="plan"
-                  name="plan"
-                  className={styles.select}
-                  defaultValue=""
-                >
+                <select id="plan" name="plan" className={styles.select} defaultValue="">
                   <option value="" disabled>未選択</option>
                   <option value="lp">ランディングページ</option>
                   <option value="small">小規模サイト（2〜4P）</option>
-                  <option value="brand">ブランドサイト</option>
+                  <option value="impression">印象重視サイト</option>
                   <option value="consult">相談しながら決めたい</option>
                 </select>
                 <span className={styles.selectArrow} aria-hidden="true" />
@@ -146,12 +112,7 @@ export default function Contact() {
 
             <FormField label="写真素材について" htmlFor="photo">
               <div className={styles.selectWrap}>
-                <select
-                  id="photo"
-                  name="photo"
-                  className={styles.select}
-                  defaultValue=""
-                >
+                <select id="photo" name="photo" className={styles.select} defaultValue="">
                   <option value="" disabled>未選択</option>
                   <option value="have">写真あり</option>
                   <option value="will-shoot">これから撮影予定</option>
@@ -164,12 +125,7 @@ export default function Contact() {
 
           <FormField label="ご予算感（任意）" htmlFor="budget">
             <div className={styles.selectWrap}>
-              <select
-                id="budget"
-                name="budget"
-                className={styles.select}
-                defaultValue=""
-              >
+              <select id="budget" name="budget" className={styles.select} defaultValue="">
                 <option value="" disabled>未選択</option>
                 <option value="60">6万円前後</option>
                 <option value="120">12万円前後</option>
@@ -187,19 +143,17 @@ export default function Contact() {
               rows={6}
               required
               className={styles.textarea}
-              placeholder="ご相談内容やイメージ、ご希望の雰囲気などを自由にご記入ください。"
+              placeholder="目的・現状・参考サイトなど、書ける範囲で大丈夫です。"
             />
           </FormField>
 
-          {/* Notes */}
           <ul className={styles.notes}>
             <li>写真がなくても問題ありません。内容に合わせて進め方をご案内します。</li>
+            <li>写真がある場合、明るさ・色の軽い補正は料金内です（個別補正はオプション）。</li>
             <li>通常 24 時間以内を目安にご返信しています。</li>
           </ul>
 
-          {/* Submit */}
           <div className={styles.cta}>
-            {/* Ornament */}
             <div className={styles.ornament} aria-hidden="true">
               <span className={styles.ornamentLine} />
               <span className={styles.ornamentDot} />
@@ -208,9 +162,7 @@ export default function Contact() {
 
             <button
               type="submit"
-              className={`${styles.submitBtn} ${
-                status === "loading" ? styles.submitDisabled : ""
-              }`}
+              className={`${styles.submitBtn} ${status === "loading" ? styles.submitDisabled : ""}`}
               disabled={status === "loading"}
             >
               {status === "loading" ? (
@@ -221,14 +173,7 @@ export default function Contact() {
               ) : (
                 <>
                   <span>送信する</span>
-                  <svg
-                    className={styles.submitArrow}
-                    width="13"
-                    height="13"
-                    viewBox="0 0 13 13"
-                    fill="none"
-                    aria-hidden="true"
-                  >
+                  <svg className={styles.submitArrow} width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden="true">
                     <path
                       d="M1.5 6.5H11.5M7 2L11.5 6.5L7 11"
                       stroke="currentColor"
@@ -243,24 +188,9 @@ export default function Contact() {
 
             {message && (
               <p
-                className={`${styles.statusMsg} ${
-                  status === "success"
-                    ? styles.statusSuccess
-                    : styles.statusError
-                }`}
+                className={`${styles.statusMsg} ${status === "success" ? styles.statusSuccess : styles.statusError}`}
                 role="status"
               >
-                {status === "success" ? (
-                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true" style={{ flexShrink: 0, marginTop: "0.1em" }}>
-                    <circle cx="7" cy="7" r="6" stroke="currentColor" strokeWidth="1"/>
-                    <path d="M4 7l2 2 4-4" stroke="currentColor" strokeWidth="1.1" strokeLinecap="round" strokeLinejoin="round"/>
-                  </svg>
-                ) : (
-                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true" style={{ flexShrink: 0, marginTop: "0.1em" }}>
-                    <circle cx="7" cy="7" r="6" stroke="currentColor" strokeWidth="1"/>
-                    <path d="M7 4.5V7.5M7 9.5v.5" stroke="currentColor" strokeWidth="1.1" strokeLinecap="round"/>
-                  </svg>
-                )}
                 {message}
               </p>
             )}
@@ -271,15 +201,12 @@ export default function Contact() {
   );
 }
 
-/* ─── FormField ──────────────────────────────────── */
 function FormField({ label, children, required, htmlFor }) {
   return (
     <div className={styles.field}>
       <label className={styles.label} htmlFor={htmlFor}>
         {label}
-        {required && (
-          <span className={styles.req} aria-hidden="true"> *</span>
-        )}
+        {required && <span className={styles.req} aria-hidden="true"> *</span>}
       </label>
       {children}
     </div>

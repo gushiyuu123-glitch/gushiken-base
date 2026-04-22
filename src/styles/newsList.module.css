@@ -202,3 +202,228 @@
     font-size: 0.84rem;
   }
 }
+/* ==========================================================
+   News List
+   Quiet Black × Editorial List × Soft Exhibition
+========================================================== */
+
+/* ===============================
+   LAYOUT
+================================ */
+.wrapper {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 108px 24px 124px;
+  color: rgba(255, 255, 255, 0.92);
+}
+
+.header {
+  margin-bottom: 48px;
+}
+
+.kicker {
+  margin: 0 0 12px;
+  color: rgba(255, 255, 255, 0.38);
+  font-size: 0.7rem;
+  line-height: 1;
+  letter-spacing: 0.22em;
+}
+
+.title {
+  margin: 0 0 12px;
+  color: rgba(255, 255, 255, 0.97);
+  font-size: clamp(2rem, 4vw, 2.8rem);
+  font-weight: 300;
+  line-height: 1.15;
+  letter-spacing: 0.08em;
+}
+
+.lead {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.56);
+  font-size: 0.92rem;
+  line-height: 1.8;
+  letter-spacing: 0.03em;
+}
+
+/* ===============================
+   LIST
+================================ */
+.list {
+  display: grid;
+  gap: 22px;
+}
+
+/* ===============================
+   ITEM
+================================ */
+.item {
+  display: flex;
+  gap: 22px;
+  align-items: center;
+  text-decoration: none;
+  color: inherit;
+  padding: 18px 0 22px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  transition:
+    opacity 0.28s ease,
+    transform 0.42s ease,
+    border-color 0.28s ease;
+}
+
+.item:hover {
+  opacity: 0.92;
+  transform: translateY(-2px);
+  border-color: rgba(255, 255, 255, 0.14);
+}
+
+/* ✅ キーボード操作の気配だけ残す */
+.item:focus-visible {
+  outline: 1px solid rgba(220, 226, 235, 0.26);
+  outline-offset: 6px;
+  border-radius: 8px;
+}
+
+/* ===============================
+   THUMB
+================================ */
+.thumbWrap {
+  flex-shrink: 0;
+  width: 176px;
+  height: 116px;
+  overflow: hidden;
+  border-radius: 0.95rem;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.02) 0%,
+      rgba(255, 255, 255, 0.008) 100%
+    ),
+    rgba(14, 14, 14, 0.96);
+  box-shadow:
+    0 16px 42px rgba(0, 0, 0, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.02);
+}
+
+.thumb {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition:
+    transform 0.8s cubic-bezier(.22,.56,.18,1),
+    filter 0.5s ease;
+  filter: brightness(0.9) contrast(1.03);
+}
+
+.item:hover .thumb {
+  transform: scale(1.018);
+  filter: brightness(0.96) contrast(1.05);
+}
+
+/* ===============================
+   META
+================================ */
+.meta {
+  flex: 1;
+  min-width: 0;
+}
+
+.date {
+  margin: 0 0 8px;
+  color: rgba(255, 255, 255, 0.44);
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  line-height: 1.5;
+}
+
+.itemTitle {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.92);
+  font-size: 1.1rem;
+  font-weight: 300;
+  line-height: 1.55;
+  letter-spacing: 0.03em;
+}
+
+/* ===============================
+   LOADING / ERROR / EMPTY
+================================ */
+.loading {
+  color: rgba(255, 255, 255, 0.46);
+  font-size: 0.9rem;
+  letter-spacing: 0.03em;
+}
+
+.error {
+  color: rgba(255, 130, 120, 0.82);
+  font-size: 0.9rem;
+  letter-spacing: 0.03em;
+}
+
+.empty {
+  color: rgba(255, 255, 255, 0.38);
+  font-size: 0.9rem;
+  letter-spacing: 0.03em;
+}
+
+/* ===============================
+   MOBILE
+================================ */
+@media (max-width: 768px) {
+  .wrapper {
+    padding: 84px 20px 100px;
+  }
+
+  .header {
+    margin-bottom: 36px;
+  }
+
+  .kicker {
+    font-size: 0.66rem;
+    letter-spacing: 0.18em;
+  }
+
+  .title {
+    font-size: 1.9rem;
+    margin-bottom: 10px;
+  }
+
+  .lead {
+    font-size: 0.86rem;
+    line-height: 1.76;
+  }
+
+  .list {
+    gap: 18px;
+  }
+
+  .item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 0 0 20px;
+  }
+
+  .thumbWrap {
+    width: 100%;
+    height: 200px;
+    border-radius: 0.9rem;
+  }
+
+  .date {
+    margin-bottom: 6px;
+    font-size: 0.74rem;
+  }
+
+  .itemTitle {
+    font-size: 1rem;
+    line-height: 1.52;
+  }
+
+  .loading,
+  .error,
+  .empty {
+    font-size: 0.84rem;
+  }
+}

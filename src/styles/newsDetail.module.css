@@ -67,6 +67,10 @@
   font-size: 1.02rem;
   line-height: 2;
   letter-spacing: 0.02em;
+
+  /* ✅ 崩れ防止（長いURL/コード/英数字） */
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
 .body > *:first-child {
@@ -195,6 +199,55 @@
   letter-spacing: 0.04em;
 }
 
+.error {
+  padding: 120px 20px 40px;
+  text-align: center;
+  color: rgba(255, 130, 120, 0.82);
+  font-size: 0.9rem;
+  letter-spacing: 0.04em;
+}
+
+/* ===============================
+   BACK LINK
+================================ */
+.backWrap {
+  margin-top: 64px;
+  display: flex;
+  justify-content: center;
+}
+
+.backLink {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 0 18px;
+  border-radius: 999px;
+  border: 1px solid rgba(220, 226, 235, 0.14);
+  background: rgba(255, 255, 255, 0.02);
+  text-decoration: none;
+  color: rgba(255, 255, 255, 0.78);
+  font-size: 0.78rem;
+  letter-spacing: 0.14em;
+  transition:
+    transform 0.42s cubic-bezier(.22,.56,.18,1),
+    border-color 0.28s ease,
+    background 0.28s ease,
+    color 0.28s ease;
+}
+
+.backLink:hover {
+  transform: translateY(-1px);
+  border-color: rgba(220, 226, 235, 0.22);
+  background: rgba(255, 255, 255, 0.04);
+  color: rgba(255, 255, 255, 0.92);
+}
+
+.backLink:focus-visible {
+  outline: 1px solid rgba(220, 226, 235, 0.30);
+  outline-offset: 3px;
+}
+
 /* ===============================
    MOBILE
 ================================ */
@@ -252,5 +305,14 @@
   .loading {
     padding: 96px 20px;
     font-size: 0.84rem;
+  }
+
+  .error {
+    padding: 96px 20px 34px;
+    font-size: 0.84rem;
+  }
+
+  .backWrap {
+    margin-top: 52px;
   }
 }

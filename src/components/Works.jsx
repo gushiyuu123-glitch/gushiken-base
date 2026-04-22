@@ -26,13 +26,9 @@ export default function Works() {
     });
 
     // ── カード連鎖フェードイン ─────────────────────────────────
-    // aq-chain に依存せず、全カード aq-fade を使用。
-    // 遅延は transitionDelay をDOM要素に直接書き込む。
-    // → CSSファイルの状態に関係なく確実に動作する。
     const [card1, card2, card3] = cards;
     if (!card1) return () => cleanups.forEach((c) => c());
 
-    // Observer発火前にセットしておく（タイミング競合を防ぐ）
     if (card2) card2.style.transitionDelay = "280ms";
     if (card3) card3.style.transitionDelay = "520ms";
 
@@ -40,12 +36,7 @@ export default function Works() {
       (entries) => {
         if (!entries[0].isIntersecting) return;
         observer.disconnect();
-
-        // 3枚まとめて aq-show を付与
-        // → transitionDelay が各カードに効いて順番に出てくる
-        [card1, card2, card3].forEach((card) =>
-          card?.classList.add("aq-show")
-        );
+        [card1, card2, card3].forEach((card) => card?.classList.add("aq-show"));
       },
       { threshold: 0.12 }
     );
@@ -74,8 +65,10 @@ export default function Works() {
           <h2 className="works-title" translate="no">
             WORKS
           </h2>
-          <p className="works-sub">SELECTED PROJECTS</p>
 
+          <p className="works-sub">SELECTED WORKS</p>
+
+          {/* ✅ 文章だけ最適化（欲張り感を削る / カテゴリ列挙を削る） */}
           <p
             className="
               mt-3
@@ -86,9 +79,9 @@ export default function Works() {
               text-white/60
             "
           >
-            美容・EC・店舗向けを中心に、
-            <br className="hidden md:block" />
-            上品さと伝わりやすさを両立したWebサイトを制作しています。
+       見え方を整える制作をしています。
+<br className="hidden md:block" />
+制作例をまとめました。
           </p>
         </div>
 
@@ -103,7 +96,6 @@ export default function Works() {
           </div>
 
           <div className="works-grid">
-
             {/* 1 → VELMONT（BIG）★ 監視の起点 */}
             <a
               href="https://velmont-virid.vercel.app/"
@@ -114,13 +106,13 @@ export default function Works() {
             >
               <img
                 src="/works/velmonte2.webp"
-                alt="VELMONT｜高級車ショールームサイト制作（静かな信頼感×高級感×導線設計）"
+                alt="VELMONT｜高級車ショールームサイト制作（信頼感×高級感×導線設計）"
                 loading="lazy"
                 decoding="async"
               />
               <div className="work-text">
                 <h3>VELMONT</h3>
-                <p>Luxury Auto / Quiet Trust × Precision</p>
+                <p>Luxury Auto / Trust × Precision</p>
               </div>
             </a>
 
@@ -163,7 +155,6 @@ export default function Works() {
                 <p>Audio EC / Minimal × Precision</p>
               </div>
             </a>
-
           </div>
         </div>
 
@@ -184,7 +175,7 @@ export default function Works() {
               text-white/30
             "
           >
-            Curated under the AXIS philosophy
+            制作例（抜粋）
           </p>
         </div>
       </div>

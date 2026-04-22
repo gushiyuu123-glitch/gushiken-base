@@ -12,20 +12,24 @@ function PriceVisual() {
   ];
 
   const INCLUDES = [
-    { label: "オリジナルデザイン",     full: true  },
-    { label: "スマホ対応",             full: true  },
-    { label: "公開初期設定",           full: true  },
-    { label: "ドメイン接続サポート",   full: true  },
-    { label: "運用・保守",             full: false },
+    { label: "オリジナルデザイン",               full: true  },
+    { label: "スマホ対応",                       full: true  },
+
+    // ✅ 追加：標準に含める（軽い補正だけ）
+    { label: "写真の軽い補正（明るさ・色）",     full: true  },
+
+    { label: "公開初期設定",                     full: true  },
+    { label: "ドメイン接続サポート",             full: true  },
+    { label: "運用・保守",                       full: false },
   ];
 
   return (
     <div className="aq-fade delay-4 mb-12 sm:mb-14">
-
       {/* ── 制作の流れ ── */}
- <p className="text-white/25 text-[0.68rem] tracking-[0.22em] mb-7 uppercase text-center">
-  ― 制作の流れ ―
-</p>
+      <p className="text-white/25 text-[0.68rem] tracking-[0.22em] mb-7 uppercase text-center">
+        ― 制作の流れ ―
+      </p>
+
       <div className="relative flex items-start justify-between">
         {/* 背面ライン */}
         <div
@@ -40,14 +44,14 @@ function PriceVisual() {
               style={{
                 background: gold ? "#1e1a12" : "#1a1a1a",
                 border: `1px solid ${
-                  gold ? "rgba(201,169,110,0.60)" : "rgba(255,255,255,0.22)"
+                  gold ? "rgba(217,185,138,0.55)" : "rgba(255,255,255,0.22)"
                 }`,
               }}
             />
             <p
               className="text-[0.68rem] tracking-[0.14em] mb-[5px]"
               style={{
-                color: gold ? "rgba(201,169,110,0.50)" : "rgba(255,255,255,0.22)",
+                color: gold ? "rgba(217,185,138,0.50)" : "rgba(255,255,255,0.22)",
               }}
             >
               {num}
@@ -55,7 +59,7 @@ function PriceVisual() {
             <p
               className="text-[0.75rem] sm:text-[0.78rem] tracking-[0.1em] mb-[4px] leading-[1.5]"
               style={{
-                color: gold ? "rgba(201,169,110,0.75)" : "rgba(255,255,255,0.55)",
+                color: gold ? "rgba(217,185,138,0.78)" : "rgba(255,255,255,0.55)",
               }}
             >
               {label}
@@ -63,7 +67,7 @@ function PriceVisual() {
             <p
               className="text-[0.62rem] sm:text-[0.65rem] tracking-[0.08em] leading-[1.5]"
               style={{
-                color: gold ? "rgba(201,169,110,0.35)" : "rgba(255,255,255,0.22)",
+                color: gold ? "rgba(217,185,138,0.35)" : "rgba(255,255,255,0.22)",
               }}
             >
               {sub}
@@ -79,9 +83,9 @@ function PriceVisual() {
       />
 
       {/* ── 全プラン共通 ── */}
-<p className="text-white/25 text-[0.68rem] tracking-[0.22em] mb-5 uppercase text-center">
-  ― 全プラン共通 ―
-</p>
+      <p className="text-white/25 text-[0.68rem] tracking-[0.22em] mb-5 uppercase text-center">
+        ― 全プラン共通 ―
+      </p>
 
       <div className="flex flex-col gap-[13px]">
         {INCLUDES.map(({ label, full }) => (
@@ -105,8 +109,8 @@ function PriceVisual() {
                 style={{
                   width: full ? "100%" : "40%",
                   background: full
-                    ? "rgba(255,255,255,0.38)"
-                    : "rgba(201,169,110,0.42)",
+                    ? "rgba(220,226,235,0.38)" // ✅ subaccent寄せ
+                    : "rgba(217,185,138,0.34)",
                 }}
               />
             </div>
@@ -138,9 +142,7 @@ export default function Price() {
       ([entry]) => {
         if (!entry.isIntersecting) return;
         el.classList.add("aq-show");
-        el.querySelectorAll(".aq-fade").forEach((x) => {
-          x.classList.add("aq-show");
-        });
+        el.querySelectorAll(".aq-fade").forEach((x) => x.classList.add("aq-show"));
         io.unobserve(el);
       },
       { threshold: 0.2 }
@@ -155,7 +157,6 @@ export default function Price() {
       <div className="relative mx-auto max-w-5xl px-6">
         <div className="price-gold-line" />
 
-        {/* ===== PAGE TITLE ===== */}
         <h2
           translate="no"
           className="
@@ -168,7 +169,6 @@ export default function Price() {
           PRICE
         </h2>
 
-        {/* ===== SECTION TITLE ===== */}
         <h3
           className="
             price-section-title aq-fade delay-1
@@ -193,6 +193,8 @@ export default function Price() {
             ご相談前に、
             <strong>「総額」「納品内容」「公開までの流れ」</strong>
             を事前にご確認いただけます。
+            <br />
+            <span className="price-lead-note">※ 表示価格は税込の目安です（内容により変動）</span>
           </p>
         </div>
 
@@ -215,10 +217,11 @@ export default function Price() {
               「公開までの流れ」
             </strong>
             を事前にご確認いただけます。
+            <br />
+            <span className="price-lead-note">※ 表示価格は税込の目安です</span>
           </p>
         </div>
 
-        {/* ── Visual ── */}
         <PriceVisual />
 
         {/* PLAN 01〜03 */}
@@ -251,11 +254,11 @@ export default function Price() {
 
           <PriceCard
             label="PLAN 03"
-            title="Brand Site（世界観重視）"
+            title="Impression Site（印象重視）"
             price="¥240,000〜"
-            desc="写真・色・余白まで丁寧に整えながら、ブランド全体の印象と信頼感を深く伝えるプランです。世界観を大切にしたい方におすすめです。"
+            desc="写真・色・余白まで整えながら、全体の見え方を揃えて信頼感をつくるプランです。雰囲気や印象を大切にしたい方におすすめです。"
             includes={[
-              "世界観設計",
+              "印象設計",
               "複数ページ対応",
               "スマホ対応",
               "公開初期設定 / 接続サポート",
@@ -267,9 +270,7 @@ export default function Price() {
         <div className="special-plan aq-fade delay-6">
           <div className="price-card price-card-special">
             <p className="price-card-label">PLAN 04</p>
-            <h3 className="price-card-title">
-              Maintenance / Subscription（運用・保守）
-            </h3>
+            <h3 className="price-card-title">Maintenance / Subscription（運用・保守）</h3>
             <p className="price-card-price">¥9,800 / 月</p>
             <p className="price-card-desc">
               文言や写真の差し替え、軽微な修正など、
@@ -279,7 +280,7 @@ export default function Price() {
           </div>
         </div>
 
-        {/* NOTE / PC */}
+        {/* NOTE */}
         <div className="hidden sm:block">
           <p className="price-note aq-fade delay-7">
             ドメイン代・サーバー代は実費です。
@@ -288,7 +289,6 @@ export default function Price() {
           </p>
         </div>
 
-        {/* NOTE / SP */}
         <div className="block sm:hidden">
           <p className="price-note aq-fade delay-7">
             ドメイン代・サーバー代は
@@ -304,7 +304,6 @@ export default function Price() {
           </p>
         </div>
 
-        {/* CTA */}
         <div className="price-cta aq-fade delay-8 mt-16">
           <Link to="/price" className="price-btn">
             料金の詳細を見る →
@@ -316,13 +315,7 @@ export default function Price() {
 }
 
 /* ===== Price Card ===== */
-const PriceCard = React.memo(function PriceCard({
-  label,
-  title,
-  desc,
-  price,
-  includes = [],
-}) {
+const PriceCard = React.memo(function PriceCard({ label, title, desc, price, includes = [] }) {
   return (
     <div className="price-card">
       <p className="price-card-label">{label}</p>
@@ -334,7 +327,10 @@ const PriceCard = React.memo(function PriceCard({
         <ul className="mt-5 space-y-2 text-[0.72rem] leading-[1.9] tracking-[0.08em] text-white/54">
           {includes.map((item) => (
             <li key={item} className="flex items-start gap-2">
-              <span className="mt-[0.55em] h-[3px] w-[3px] rounded-full bg-[#cdbd8f]/65" />
+              <span
+                className="mt-[0.55em] h-[3px] w-[3px] rounded-full"
+                style={{ background: "rgba(220,226,235,0.42)" }}
+              />
               <span>{item}</span>
             </li>
           ))}

@@ -5,14 +5,8 @@ function VisualPrinciples() {
   return (
     <div className="aq-fade delay-7 mt-8 mb-16 sm:mt-10 sm:mb-20">
       <div className="relative pl-6 sm:pl-8">
-        {/* 全体をつなぐ縦軸 */}
-        <div
-          className="absolute left-[10px] top-[34px] bottom-[14px] w-px"
-          style={{
-            background:
-              "linear-gradient(to bottom, rgba(255,255,255,0.16), rgba(255,255,255,0.05) 68%, transparent)",
-          }}
-        />
+        {/* 全体をつなぐ縦軸（subaccent寄せ） */}
+        <div className="vp-axis" aria-hidden="true" />
 
         <p className="text-white/18 text-[0.6rem] tracking-[0.24em] mb-10 uppercase">
           ― DESIGN IN PRACTICE ―
@@ -20,11 +14,7 @@ function VisualPrinciples() {
 
         {/* 01 */}
         <div className="relative mb-10">
-          <span
-            className="absolute left-[-6px] top-[2px] text-[2.8rem] sm:text-[3rem] font-extralight tracking-[0.06em] select-none"
-            style={{ color: "rgba(255,255,255,0.055)", lineHeight: 1 }}
-            aria-hidden="true"
-          >
+          <span className="vp-num" aria-hidden="true">
             01
           </span>
 
@@ -39,18 +29,9 @@ function VisualPrinciples() {
             </div>
 
             <div className="flex flex-col gap-[5px] mb-3">
-              <div
-                className="h-[1.5px] w-full"
-                style={{ background: "rgba(255,255,255,0.48)" }}
-              />
-              <div
-                className="h-px w-[76%]"
-                style={{ background: "rgba(255,255,255,0.16)" }}
-              />
-              <div
-                className="h-px w-[50%]"
-                style={{ background: "rgba(255,255,255,0.08)" }}
-              />
+              <div className="vp-line vp-line--strong" />
+              <div className="vp-line vp-line--mid w-[76%]" />
+              <div className="vp-line vp-line--thin w-[50%]" />
             </div>
 
             <p className="text-white/30 text-[0.67rem] tracking-[0.13em] leading-[1.9]">
@@ -63,11 +44,7 @@ function VisualPrinciples() {
 
         {/* 02 */}
         <div className="relative mb-10">
-          <span
-            className="absolute left-[-6px] top-[2px] text-[2.8rem] sm:text-[3rem] font-extralight tracking-[0.06em] select-none"
-            style={{ color: "rgba(255,255,255,0.055)", lineHeight: 1 }}
-            aria-hidden="true"
-          >
+          <span className="vp-num" aria-hidden="true">
             02
           </span>
 
@@ -82,41 +59,25 @@ function VisualPrinciples() {
             </div>
 
             <div className="flex gap-[10px] items-stretch mb-3">
-              <div
-                className="w-[3px] rounded-[1px]"
-                style={{ background: "rgba(201,169,110,0.88)" }}
-              />
+              <div className="vp-goldbar" aria-hidden="true" />
               <div className="flex-1 flex flex-col gap-[5px]">
-                <div
-                  className="h-px w-full"
-                  style={{ background: "rgba(201,169,110,0.34)" }}
-                />
-                <div
-                  className="h-px w-[68%]"
-                  style={{ background: "rgba(201,169,110,0.16)" }}
-                />
-                <div
-                  className="h-px w-[44%]"
-                  style={{ background: "rgba(201,169,110,0.08)" }}
-                />
+                <div className="vp-goldline vp-goldline--strong" />
+                <div className="vp-goldline vp-goldline--mid w-[68%]" />
+                <div className="vp-goldline vp-goldline--thin w-[44%]" />
               </div>
             </div>
 
             <p className="text-white/30 text-[0.67rem] tracking-[0.13em] leading-[1.9]">
-              業種やブランドに合った、
+              業種やサービスに合った、
               <br />
-              落ち着いた印象へ。
+              空気感のある印象へ。
             </p>
           </div>
         </div>
 
         {/* 03 */}
         <div className="relative">
-          <span
-            className="absolute left-[-6px] top-[2px] text-[2.8rem] sm:text-[3rem] font-extralight tracking-[0.06em] select-none"
-            style={{ color: "rgba(255,255,255,0.055)", lineHeight: 1 }}
-            aria-hidden="true"
-          >
+          <span className="vp-num" aria-hidden="true">
             03
           </span>
 
@@ -132,11 +93,7 @@ function VisualPrinciples() {
 
             <div className="flex gap-[6px] mb-3">
               {[...Array(3)].map((_, i) => (
-                <div
-                  key={i}
-                  className="flex-1 h-[1.5px]"
-                  style={{ background: "rgba(255,255,255,0.28)" }}
-                />
+                <div key={i} className="flex-1 h-[1.5px] vp-line vp-line--mid" />
               ))}
             </div>
 
@@ -154,51 +111,20 @@ function VisualPrinciples() {
 
 export default function Philosophy() {
   return (
-    <section
-      id="philosophy"
-      className="
-        philo-section aq-fade aq-root
-        bg-[#0b0b0b]
-      "
-    >
+    <section id="philosophy" className="philo-section aq-root">
       <div className="relative mx-auto max-w-4xl px-6">
-        <p
-          className="
-            mb-6
-            select-none
-            text-[0.7rem]
-            tracking-[0.14em]
-            text-white/25
-          "
-        >
-          美容・EC・店舗・サロン向けWebデザインについて
+        {/* ✅ 上の小ラベル：SEO用にWeb制作は残すが、カテゴリ列挙は削る */}
+        <p className="philo-kicker aq-fade delay-1">
+          Web制作（印象設計）の考え方
         </p>
 
-        <div className="philo-gold-line aq-fade delay-1"></div>
+        <div className="philo-gold-line aq-fade delay-1" />
 
-        <h2
-          className="
-            aq-fade delay-1
-            mb-3 pl-1
-            text-[2.6rem]
-            font-light
-            tracking-[0.20em]
-            text-white
-          "
-          translate="no"
-        >
+        <h2 className="philo-title aq-fade delay-1" translate="no">
           DESIGN POLICY
         </h2>
 
-        <p
-          className="
-            aq-fade delay-1
-            mb-10 pl-1
-            text-[0.9rem]
-            tracking-[0.12em]
-            text-white/60
-          "
-        >
+        <p className="philo-sub aq-fade delay-1">
           ― 制作で大切にしていること ―
         </p>
 
@@ -211,37 +137,25 @@ export default function Philosophy() {
               見やすく、伝わりやすく、安心して見てもらえること。
             </span>
             <br />
-            そのうえで、業種ごとの雰囲気や魅力が
-            <br />
-            自然に伝わるサイトを目指しています。
+            そのうえで、写真や言葉の雰囲気が自然に伝わることを目指しています。
           </p>
 
           <p className="philo-body aq-fade delay-3">
             Webサイトは、見た目が整っているだけでなく、
             <br />
             初めて訪れた方にも内容が伝わりやすく、
-            <span className="text-white/90">
-              不安なく読み進めてもらえること
-            </span>
+            <span className="text-white/90">不安なく読み進めてもらえること</span>
             が大切だと考えています。
             <br />
             <br />
-            写真や文章の見え方を整えながら、
-            <br />
-            全体をすっきりまとめ、
-            <span className="text-white/90">
-              信頼感につながる印象
-            </span>
-            を目指しています。
+            写真や文章の見え方を整えながら、全体をすっきりまとめ、
+            <span className="text-white/90">信頼につながる印象</span>
+            を作っていきます。
             <br />
             <br />
-            派手さよりも、
+            派手さよりも、きちんとして見えること、伝わること。
             <br />
-            きちんとして見えること、伝わること、
-            <br />
-            そして「ここなら相談しやすそう」と感じてもらえること。
-            <br />
-            そうした印象を大切にしています。
+            そして「ここなら相談しやすそう」と思ってもらえることを大切にしています。
           </p>
 
           <VisualPrinciples />
@@ -250,12 +164,10 @@ export default function Philosophy() {
             <span className="text-white/95">
               見やすさと印象の両方を整え、
               <br />
-              ブランドの魅力がきちんと伝わるサイトを。
+              魅力がきちんと伝わるサイトを。
             </span>
             <br />
             <span className="text-white/80">
-              ご相談いただく方にとって、
-              <br />
               「お願いしやすい」と感じてもらえることも大切にしています。
             </span>
           </p>
@@ -277,9 +189,9 @@ export default function Philosophy() {
             <br />
             そのうえで、
             <br />
-            業種ごとの雰囲気や魅力が
+            写真や言葉の雰囲気が
             <br />
-            自然に伝わるサイトを
+            自然に伝わることを
             <br />
             目指しています。
           </p>
@@ -299,12 +211,8 @@ export default function Philosophy() {
             写真や文章の見え方を整えながら、
             <br />
             全体をすっきりまとめ、
-            <span className="text-white/90">
-              信頼感につながる印象
-            </span>
-            を
-            <br />
-            目指しています。
+            <span className="text-white/90">信頼につながる印象</span>
+            を作っていきます。
             <br />
             <br />
             派手さよりも、
@@ -315,7 +223,7 @@ export default function Philosophy() {
             <br />
             「ここなら相談しやすそう」と
             <br />
-            感じてもらえることを
+            思ってもらえることを
             <br />
             大切にしています。
           </p>
@@ -326,9 +234,7 @@ export default function Philosophy() {
             <span className="text-white/95">
               見やすさと印象の両方を整え、
               <br />
-              ブランドの魅力が
-              <br />
-              きちんと伝わるサイトを。
+              魅力がきちんと伝わるサイトを。
             </span>
             <br />
             <span className="text-white/80">

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { getNewsList } from "../lib/microcms";
 import styles from "../styles/newsSection.module.css";
 import { Link } from "react-router-dom";
@@ -8,41 +8,61 @@ export default function NewsSection() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
 
+  const formatDate = useMemo(() => {
+    const fmt = new Intl.DateTimeFormat("ja-JP", {
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+    });
+    return (dateStr) => {
+      if (!dateStr) return "";
+      const d = new Date(dateStr);
+      if (Number.isNaN(d.getTime())) return "";
+      return fmt.format(d);
+    };
+  }, []);
+
   useEffect(() => {
     let mounted = true;
 
-    getNewsList({ limit: 3 })
-      .then((res) => {
+    (async () => {
+      try {
+        const res = await getNewsList({ limit: 3 });
         if (!mounted) return;
-        setNews(Array.isArray(res?.contents) ? res.contents : []);
-      })
-      .catch(() => {
+
+        const items = Array.isArray(res?.contents) ? res.contents : [];
+        setNews(items);
+        setError(false);
+      } catch {
         if (!mounted) return;
         setError(true);
-      })
-      .finally(() => {
+      } finally {
         if (!mounted) return;
         setLoading(false);
-      });
+      }
+    })();
 
     return () => {
       mounted = false;
     };
   }, []);
 
+  const hasNews = news.length > 0;
+
   return (
     <section
       className={`${styles.wrapper} aq-fade`}
       aria-labelledby="news-heading"
+      aria-busy={loading ? "true" : "false"}
     >
       <header className={`${styles.header} aq-fade delay-1`}>
         <p className={styles.kicker}>NEWS</p>
         <h2 id="news-heading" className={styles.title}>
           お知らせ
         </h2>
-        <p className={styles.lead}>
-          制作のお知らせや更新情報を、静かにまとめています。
-        </p>
+
+        {/* ✅ “静かに”は使わない */}
+        <p className={styles.lead}>制作の更新やお知らせをまとめています。</p>
       </header>
 
       {loading && (
@@ -57,7 +77,13 @@ export default function NewsSection() {
         </p>
       )}
 
-      {!loading && !error && (
+      {!loading && !error && !hasNews && (
+        <p className={styles.empty} aria-live="polite">
+          現在、お知らせはありません。
+        </p>
+      )}
+
+      {!loading && !error && hasNews && (
         <div className={styles.list}>
           {news.map((item) => {
             const date = item.publishedAt || item.createdAt || null;
@@ -69,9 +95,7 @@ export default function NewsSection() {
                 className={styles.item}
                 aria-label={`お知らせ: ${item.title}`}
               >
-                <p className={styles.date}>
-                  {date ? new Date(date).toLocaleDateString("ja-JP") : ""}
-                </p>
+                <p className={styles.date}>{formatDate(date)}</p>
                 <h3 className={styles.itemTitle}>{item.title}</h3>
               </Link>
             );
@@ -79,7 +103,7 @@ export default function NewsSection() {
         </div>
       )}
 
-      {!loading && !error && news.length > 0 && (
+      {!loading && !error && hasNews && (
         <div className={styles.moreWrap}>
           <Link to="/news" className={styles.more}>
             もっと見る

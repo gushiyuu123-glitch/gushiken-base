@@ -1,5 +1,5 @@
 /* =========================================================
-   FOOTER — Improved Edition
+   FOOTER — Silver Ending Edition
    Quiet Black × Soft Ending × Calm Structure
 ========================================================= */
 
@@ -20,17 +20,50 @@
 }
 
 /* ---------------------------------------------
-   Top Accent Line
+   Top Accent Line (SILVER / subtle glow)
 --------------------------------------------- */
 .footer-top-line {
   height: 1px;
   background: linear-gradient(
     to right,
-    transparent,
-    rgba(255,255,255,0.12) 30%,
-    rgba(255,255,255,0.06) 70%,
-    transparent
+    transparent 0%,
+    rgba(220,226,235,0.10) 22%,
+    rgba(220,226,235,0.24) 50%,
+    rgba(220,226,235,0.10) 78%,
+    transparent 100%
   );
+  box-shadow: 0 0 22px rgba(220,226,235,0.06);
+}
+
+/* ---------------------------------------------
+   Brand Mark (dot removed)
+--------------------------------------------- */
+.footer-brand-mark {
+  width: 22px;
+  height: 1px;
+  margin-bottom: 18px;
+  background: linear-gradient(
+    90deg,
+    rgba(220,226,235,0.55),
+    rgba(220,226,235,0.18)
+  );
+  box-shadow: 0 0 18px rgba(220,226,235,0.10);
+  border-radius: 999px;
+}
+
+/* ---------------------------------------------
+   Internal divider (replace bg-white/7)
+--------------------------------------------- */
+.footer-divider {
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    rgba(255,255,255,0.04),
+    rgba(220,226,235,0.10),
+    rgba(255,255,255,0.04)
+  );
+  opacity: 0.65;
 }
 
 /* ---------------------------------------------
@@ -64,8 +97,8 @@
   height: 1px;
   background: linear-gradient(
     to right,
-    rgba(255,255,255,0.10),
-    rgba(255,255,255,0.60)
+    rgba(220,226,235,0.12),
+    rgba(220,226,235,0.56)
   );
   transition: width 0.42s cubic-bezier(.22,.56,.18,1);
 }
@@ -96,7 +129,7 @@
   bottom: -0.30rem;
   width: 0;
   height: 1px;
-  background: rgba(255,255,255,0.18);
+  background: rgba(220,226,235,0.18);
   transition: width 0.32s ease;
 }
 
@@ -127,7 +160,7 @@
   bottom: -0.32rem;
   width: 0;
   height: 1px;
-  background: rgba(255,255,255,0.22);
+  background: rgba(220,226,235,0.20);
   transition: width 0.38s cubic-bezier(.22,.56,.18,1);
 }
 

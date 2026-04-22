@@ -1,23 +1,28 @@
-import React from "react";
+// src/sections/Hero.jsx
+import React, { useState } from "react";
 import heroRoom from "../assets/hero-room.png";
 import styles from "./Hero.module.css";
 
 export default function Hero() {
+  const [imgLoaded, setImgLoaded] = useState(false);
+
   return (
     <section
-      className="
+      className={`
+        ${styles.heroRoot}
         relative w-full overflow-hidden
         bg-[#0a0a0a]
         h-[92vh] min-h-[680px]
         md:h-screen md:min-h-[760px]
-      "
+      `}
+      data-loaded={imgLoaded ? "true" : "false"}
       aria-label="GUSHIKEN DESIGN ヒーローセクション"
     >
       {/* BACKGROUND IMAGE */}
       <div className="absolute inset-0">
         <img
           src={heroRoom}
-          alt="沖縄のWebデザイン / ホームページ制作｜GUSHIKEN DESIGN"
+          alt="沖縄のWeb制作・Webデザイン｜GUSHIKEN DESIGN"
           className={`
             ${styles.heroImage}
             ${styles.heroImageReveal}
@@ -30,6 +35,7 @@ export default function Hero() {
           decoding="async"
           fetchPriority="high"
           draggable="false"
+          onLoad={() => setImgLoaded(true)}
         />
       </div>
 
@@ -113,7 +119,7 @@ export default function Hero() {
           lg:left-20 lg:bottom-28
         "
       >
-        {/* LABEL */}
+        {/* LABEL（見られ方：印象設計） */}
         <div className={`${styles.heroFade} ${styles.heroFade1}`}>
           <p
             className="
@@ -124,7 +130,7 @@ export default function Hero() {
               md:mb-6
             "
           >
-            OKINAWA / WEB DESIGN / BRAND SITE
+            OKINAWA / IMPRESSION DESIGN
           </p>
         </div>
 
@@ -181,6 +187,7 @@ export default function Hero() {
               md:text-[1.04rem] md:leading-[2.08]
             "
           >
+            {/* ✅ SEO/安心（小さく残す） */}
             <p
               className="
                 mb-3
@@ -189,11 +196,11 @@ export default function Hero() {
                 md:text-[0.84rem]
               "
             >
-              沖縄のWebデザイン / ホームページ制作
+              沖縄のWeb制作・Webデザイン｜印象設計
             </p>
 
-            <p className="mb-2">店舗・サロン・ブランドの価値を、</p>
-            <p>上品に、伝わりやすく整えるWeb制作</p>
+            <p className="mb-2">店舗・サロン・サービスの価値を、</p>
+            <p>上品に、伝わりやすく整えるサイト制作</p>
 
             <p
               className="
@@ -211,25 +218,16 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* SCROLL INDICATOR */}
+      {/* SCROLL INDICATOR (Quiet metal line) */}
       <div
         aria-hidden="true"
         className={`
           ${styles.heroFade} ${styles.heroFade5}
           absolute bottom-7 left-1/2 z-[2]
           -translate-x-1/2
-          flex flex-col items-center gap-[10px]
         `}
       >
-        <p className="text-white/18 text-[0.5rem] tracking-[0.24em] uppercase">
-          SCROLL
-        </p>
-        <div
-          className="relative h-8 w-px"
-          style={{ background: "rgba(255,255,255,0.08)" }}
-        >
-          <div className={styles.heroScrollDot} />
-        </div>
+        <div className={styles.heroScrollLine} />
       </div>
 
       {/* BOTTOM BREATH */}

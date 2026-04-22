@@ -6,6 +6,7 @@ const STARTERS = [
   "「予算の目安が知りたい」",
   "「どんなサイトが合うか知りたい」",
   "「今のサイトをリニューアルしたい」",
+  "「見え方を整えたい」",
 ];
 
 function ContactVisual() {
@@ -33,7 +34,12 @@ function ContactVisual() {
             <span className="text-white/34 text-[0.72rem] sm:text-[0.74rem] tracking-[0.11em] leading-[1.65] text-left">
               {text}
             </span>
-            <span className="text-white/34 text-[0.68rem] tracking-[0.08em] ml-4 flex-shrink-0">
+
+            {/* ✓ は白じゃなく “銀寄せ” */}
+            <span
+              className="text-[0.68rem] tracking-[0.08em] ml-4 flex-shrink-0"
+              style={{ color: "rgba(220,226,235,0.40)" }}
+            >
               ✓
             </span>
           </div>
@@ -83,11 +89,7 @@ export default function Contact() {
   }, []);
 
   return (
-    <section
-      ref={sectionRef}
-      id="contact"
-      className="contact-section aq-fade"
-    >
+    <section ref={sectionRef} id="contact" className="contact-section aq-fade">
       <div className="contact-container">
         <div className="contact-gold-line" />
 
@@ -99,23 +101,23 @@ export default function Contact() {
           {/* PC */}
           <div className="hidden sm:block">
             <p className="contact-lead aq-fade delay-2">
-              このサイトの雰囲気や考え方に
-              <span className="text-white/95">共感してくださった方へ。</span>
+              このサイトの方向性が
+              <span className="text-white/95">合いそうなら。</span>
             </p>
 
             <p className="contact-lead-sub aq-fade delay-3">
               まだ内容が固まっていなくても大丈夫です。
               <br />
-              必要な部分は順に確認しながら、無理のない形で進めます。
+              要点はこちらで整理しながら、無理のない形で進めます。
             </p>
           </div>
 
           {/* SP */}
           <div className="block sm:hidden">
             <p className="contact-lead aq-fade delay-2">
-              このサイトの雰囲気や考え方に
+              このサイトの方向性が
               <br />
-              <span className="text-white/95">共感してくださった方へ。</span>
+              <span className="text-white/95">合いそうなら。</span>
             </p>
 
             <p className="contact-lead-sub aq-fade delay-3">
@@ -124,7 +126,7 @@ export default function Contact() {
               大丈夫です。
               <br />
               <br />
-              必要な部分は順に確認しながら、
+              要点はこちらで整理しながら、
               <br />
               無理のない形で
               <br />
@@ -144,7 +146,7 @@ export default function Contact() {
           {/* PC */}
           <div className="hidden sm:block">
             <p className="contact-footer aq-fade delay-6">
-              ※ 内容やスケジュールによっては、お受けできない場合があります。
+              ※ 時期や内容により、開始時期のご相談をお願いする場合があります。
               <br />
               その際も、できるだけ丁寧にご案内いたします。
             </p>
@@ -153,9 +155,11 @@ export default function Contact() {
           {/* SP */}
           <div className="block sm:hidden">
             <p className="contact-footer aq-fade delay-6">
-              ※ 内容やスケジュールによっては
+              ※ 時期や内容により
               <br />
-              お受けできない場合があります。
+              開始時期のご相談を
+              <br />
+              お願いする場合があります。
               <br />
               <br />
               その際も、

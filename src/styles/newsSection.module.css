@@ -238,3 +238,10 @@
     letter-spacing: 0.1em;
   }
 }
+.empty{
+  margin-top: 18px;
+  color: rgba(255,255,255,0.38);
+  font-size: 0.88rem;
+  line-height: 1.9;
+  letter-spacing: 0.03em;
+}

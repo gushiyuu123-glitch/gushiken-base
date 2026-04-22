@@ -19,7 +19,7 @@ export default function HeroSP() {
       <div className="absolute inset-0">
         <img
           src={heroSP}
-          alt="沖縄のWebデザイン・ホームページ制作｜美容・店舗・ブランド向け"
+          alt="沖縄のWeb制作・Webデザイン｜GUSHIKEN DESIGN"
           className="
             hero-sp-image
             h-full w-full object-cover
@@ -116,9 +116,10 @@ export default function HeroSP() {
       {/* TEXT BLOCK */}
       <div className="absolute inset-x-0 bottom-[4.2rem] z-[2] px-6">
         <div className="max-w-[19rem]">
+          {/* ✅ 肩書き（印象設計へ統一） */}
           <div className="hero-sp-fade hero-sp-fade-1">
-            <p className="mb-2.5 text-[0.72rem] leading-none tracking-[0.12em] text-white/58">
-              沖縄のWebデザイン / ホームページ制作
+            <p className="mb-2.5 text-[0.62rem] leading-none tracking-[0.26em] text-white/50 uppercase">
+              OKINAWA / IMPRESSION DESIGN
             </p>
           </div>
 
@@ -138,8 +139,14 @@ export default function HeroSP() {
 
           <div className="hero-sp-fade hero-sp-fade-5 pl-[8px]">
             <div className="max-w-[16.9rem] text-[0.92rem] leading-[1.8] tracking-[0.01em] text-white/90">
-              <p className="mb-1.5">店舗・サロン・ブランドの価値を、</p>
-              <p>上品に、伝わりやすく整えるWeb制作</p>
+              {/* ✅ SEO・安心（Web制作/Webデザインを残す） */}
+              <p className="mb-2 text-[0.74rem] leading-[1.6] tracking-[0.10em] text-white/58">
+                沖縄のWeb制作・Webデザイン｜印象設計
+              </p>
+
+              {/* “ブランド”を外して汎用化 */}
+              <p className="mb-1.5">店舗・サロン・サービスの価値を、</p>
+              <p>上品に、伝わりやすく整えるサイト制作</p>
 
               <p className="mt-3 text-[0.76rem] leading-[1.76] tracking-[0.07em] text-white/64">
                 見やすさと高級感を両立し、
@@ -159,14 +166,12 @@ export default function HeroSP() {
       <style>{`
         /* =========================
            核：SPで“切れ方”を制御する重心
-           ここだけ触ればいい
         ========================= */
         .hero-sp-root{
           --fx: 56%;
           --fy: 46%;
         }
 
-        /* iPhone mini系：少しだけ上に寄せる例 */
         @media (max-width: 390px){
           .hero-sp-root{ --fx: 56%; --fy: 43%; }
         }
@@ -174,14 +179,11 @@ export default function HeroSP() {
           .hero-sp-root{ --fx: 57%; --fy: 41%; }
         }
 
-        /* =========================
-           画像：coverは維持、でも scale を消して “余計な切れ” を止める
-        ========================= */
         .hero-sp-image{
           object-position: var(--fx) var(--fy);
           filter: brightness(0.968) saturate(0.92) contrast(1.015);
           opacity: 0;
-          transform: translate3d(0, 10px, 0) scale(1.01); /* ←最小だけ */
+          transform: translate3d(0, 10px, 0) scale(1.01);
           transition:
             opacity 1.42s cubic-bezier(0.18,0.62,0.2,1),
             transform 2.05s cubic-bezier(0.22,0.1,0.28,1),
@@ -192,10 +194,9 @@ export default function HeroSP() {
         }
         .hero-sp-root[data-loaded="true"] .hero-sp-image{
           opacity: 1;
-          transform: translate3d(0, 0, 0) scale(1); /* ←ここが重要（拡大しない） */
+          transform: translate3d(0, 0, 0) scale(1);
         }
 
-        /* veil/bloom：元の“気配”は維持しつつ、loadedで薄く抜く */
         .hero-sp-image-veil{
           opacity: 1;
           background: linear-gradient(
@@ -232,7 +233,6 @@ export default function HeroSP() {
           transform: scale(1);
         }
 
-        /* テキストフェード：元の設計 그대로 */
         .hero-sp-fade{
           opacity: 0;
           transform: translate3d(0, 14px, 0) scale(0.995);
@@ -258,9 +258,9 @@ export default function HeroSP() {
           height: 26px;
           background: linear-gradient(
             to bottom,
-            rgba(255,255,255,0),
-            rgba(255,255,255,0.42),
-            rgba(255,255,255,0)
+            rgba(220,226,235,0),
+            var(--subaccent, rgba(220,226,235,0.42)),
+            rgba(220,226,235,0)
           );
           animation: scrollPulseSP 2.9s ease-in-out infinite;
         }
@@ -270,7 +270,6 @@ export default function HeroSP() {
           100%{ opacity: 0.14; }
         }
 
-        /* Reduced motion */
         @media (prefers-reduced-motion: reduce){
           .hero-sp-image,
           .hero-sp-image-veil,
