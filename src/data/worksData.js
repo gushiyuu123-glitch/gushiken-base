@@ -268,7 +268,47 @@ export const worksData = [
   category: "BEAUTY / SALON",
   subtitle: "美容・サロン向けの上質な余白デザイン",
   items: [
-    
+    {
+  title: "NAGI — Thai Traditional Massage",
+  slug: "NagiRoom",
+  desc: "静かな癒し × 清潔感 × 安心。\n那覇のタイ古式マッサージ店を想定し、“日常の延長で届く上質さ”を整えたサロンサイト。",
+  link: "https://nagi-nu.vercel.app/",
+  img: "/works/nagi.webp",
+  isNew: true,
+  createdAt: "2026-04-22",
+  tags: [
+    "NEW",
+    "Salon",
+    "Relaxation",
+    "Thai Massage",
+    "Clean",
+    "Quiet",
+    "Trust",
+    "UI/UX",
+    "PC/SP 分離"
+  ],
+
+  detail: {
+    concept:
+      "高級すぎず、安っぽくもしない“ちょうど良い上質さ”を、余白と光と情報圧のコントロールで設計。地元の人が通いやすく、観光の人も自然に入りやすい空気感を優先しながら、予約導線は迷わせない強度で整えた。",
+    tech: [
+      "React",
+      "Vite",
+      "Tailwind",
+      "IntersectionObserver",
+      "PC/SP 完全分離"
+    ]
+  },
+
+  seo: {
+    title: "NAGI｜静かな癒しと清潔感を整えたタイ古式マッサージサイト｜GUSHIKEN DESIGN",
+    description:
+      "NAGIは那覇のタイ古式マッサージ店を想定し、静かな癒し・清潔感・安心感を最優先に設計したサロンサイト。地元客と観光客の両方が自然に入れる導線と余白のバランスを整えた制作例。",
+    keywords:
+      "タイ古式マッサージ サイト, リラクゼーション サロン ホームページ, 清潔感 デザイン, 予約導線 UI/UX, 沖縄 Web制作, GUSHIKEN DESIGN",
+    ogImage: "https://nagi-nu.vercel.app/ogp.png"
+  }
+},
     {
       title: "SAKURAI CLINIC",
       slug: "SakuraiDerm",
