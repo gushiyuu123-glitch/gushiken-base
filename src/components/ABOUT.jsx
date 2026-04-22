@@ -166,7 +166,7 @@ function CertificateModal({ item, onClose }) {
           </button>
         </div>
 
-      // ここに追加（CertificateModal の return 内）
+    
 <div className="certificate-modal__imageWrap">
   <img
     src={item.image}
