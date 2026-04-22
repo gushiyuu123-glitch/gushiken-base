@@ -414,3 +414,8 @@ body.scrolled .ambient-glow::after {
     opacity: 1 !important;
   }
 }
+html.scroll-lock,
+body.scroll-lock{
+  overflow: hidden;
+  height: 100%;
+}

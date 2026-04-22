@@ -1,93 +1,73 @@
-// src/components/NavGlobal.jsx
-// ※ 現在の NavGlobal を丸ごと置換してOK
-
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
+import { createPortal } from "react-dom";
 
-const navItems = [
+/* =========================
+   Tokens
+========================= */
+const NAV_HEIGHT = 68;
+const SCROLL_OFFSET = NAV_HEIGHT + 12;
+
+const ACCENT = "#d9b98a"; // gold
+const ACCENT_DIM = "rgba(217,185,138,0.22)";
+const ACCENT_BORDER = "rgba(217,185,138,0.32)";
+const ACCENT_GLOW = "rgba(217,185,138,0.06)";
+
+const SUBACCENT = "rgba(220, 226, 235, 0.78)"; // silver dot
+const SUBACCENT_DIM = "rgba(220, 226, 235, 0.22)";
+
+/* =========================
+   Lists
+========================= */
+const HOME_ITEMS = [
+  { href: "#works", label: "WORKS" },
+  { href: "#about", label: "ABOUT" },
+  { href: "#philosophy", label: "POLICY" },
+  { href: "#price", label: "PRICE" },
+  { href: "#contact", label: "CONTACT" },
+];
+
+const GLOBAL_ITEMS = [
   { to: "/works", label: "WORKS" },
   { to: "/price", label: "PRICE" },
   { to: "/news", label: "NEWS" },
   { to: "/contact", label: "CONTACT" },
 ];
 
-/* Accent system (aligned to your new tokens) */
-const ACCENT = "#d9b98a"; // gold
-const ACCENT_DIM = "rgba(217,185,138,0.22)";
-const ACCENT_BORDER = "rgba(217,185,138,0.32)";
-const ACCENT_GLOW = "rgba(217,185,138,0.06)";
+/* =========================
+   helpers
+========================= */
+function scrollToHash(hash) {
+  if (!hash?.startsWith("#")) return;
+  const el = document.querySelector(hash);
+  if (!el) return;
 
-/* Subaccent (silver) — dot only */
-const SUBACCENT = "rgba(220, 226, 235, 0.78)";
-const SUBACCENT_DIM = "rgba(220, 226, 235, 0.22)";
+  const top =
+    el.getBoundingClientRect().top + (window.scrollY || 0) - SCROLL_OFFSET;
+  const safeTop = Math.max(0, Math.round(top));
 
-/* =========================================================
-   Body Scroll Lock (robust)
-   - iOS/Safari scroll bleed 対策
-   - 「閉じたのにスクロール戻らない」系を潰す
-========================================================= */
-function useBodyScrollLock(locked) {
-  const scrollYRef = useRef(0);
-  const prevRef = useRef(null);
-
-  useEffect(() => {
-    if (!locked) return;
-
-    const body = document.body;
-    const docEl = document.documentElement;
-
-    scrollYRef.current = window.scrollY || window.pageYOffset || 0;
-    prevRef.current = {
-      overflow: body.style.overflow,
-      position: body.style.position,
-      top: body.style.top,
-      left: body.style.left,
-      right: body.style.right,
-      width: body.style.width,
-      paddingRight: body.style.paddingRight,
-    };
-
-    const scrollbarW = Math.max(0, window.innerWidth - docEl.clientWidth);
-
-    body.style.overflow = "hidden";
-    body.style.position = "fixed";
-    body.style.top = `-${scrollYRef.current}px`;
-    body.style.left = "0";
-    body.style.right = "0";
-    body.style.width = "100%";
-    if (scrollbarW) body.style.paddingRight = `${scrollbarW}px`;
-
-    return () => {
-      const prev = prevRef.current;
-      if (!prev) return;
-
-      body.style.overflow = prev.overflow;
-      body.style.position = prev.position;
-      body.style.top = prev.top;
-      body.style.left = prev.left;
-      body.style.right = prev.right;
-      body.style.width = prev.width;
-      body.style.paddingRight = prev.paddingRight;
-
-      window.scrollTo(0, scrollYRef.current);
-      prevRef.current = null;
-    };
-  }, [locked]);
+  if (window.location.hash !== hash) {
+    window.history.pushState(null, "", hash);
+  }
+  window.scrollTo({ top: safeTop, behavior: "smooth" });
 }
 
-export default function NavGlobal() {
+export default function NavGlobal({ mode }) {
   const { pathname } = useLocation();
+  const isHome = mode ? mode === "home" : pathname === "/";
 
   const [scrolled, setScrolled] = useState(false);
-  const [isOpen, setIsOpen] = useState(false);
+  const [open, setOpen] = useState(false);
+
+  // home active
+  const [activeHash, setActiveHash] = useState("");
 
   const buttonRef = useRef(null);
   const firstLinkRef = useRef(null);
   const panelRef = useRef(null);
+  const pendingHashRef = useRef(null);
 
-  useBodyScrollLock(isOpen);
-
-  /* ── Scroll → solid（RAFで軽量化） ── */
+  /* ── Scroll → solid（RAF） ── */
   useEffect(() => {
     let raf = 0;
     const onScroll = () => {
@@ -102,18 +82,21 @@ export default function NavGlobal() {
     };
   }, []);
 
-  /* ── Close on route change ── */
+  /* ── Route change → close + failsafe unlock ── */
   useEffect(() => {
-    setIsOpen(false);
+    setOpen(false);
+
+    // まれな残骸対策（念のため）
+    document.documentElement.classList.remove("scroll-lock");
+    document.body.classList.remove("scroll-lock");
   }, [pathname]);
 
   /* ── Close menu automatically when viewport becomes desktop ── */
   useEffect(() => {
     const mq = window.matchMedia("(min-width: 768px)");
     const closeIfDesktop = () => {
-      if (mq.matches) setIsOpen(false);
+      if (mq.matches) setOpen(false);
     };
-
     closeIfDesktop();
 
     if (mq.addEventListener) mq.addEventListener("change", closeIfDesktop);
@@ -125,71 +108,161 @@ export default function NavGlobal() {
     };
   }, []);
 
-  const close = useCallback((returnFocus = false) => {
-    setIsOpen(false);
-    if (returnFocus) setTimeout(() => buttonRef.current?.focus(), 0);
-  }, []);
-
-  const toggle = useCallback(() => setIsOpen((v) => !v), []);
-
-  /* ── Esc close + Focus trap（Tab事故防止） ── */
+  /* ── Scroll lock (NO body fixed) ── */
   useEffect(() => {
-    if (!isOpen) return;
+    if (!open) return;
 
+    const html = document.documentElement;
+    const body = document.body;
+    html.classList.add("scroll-lock");
+    body.classList.add("scroll-lock");
+
+    const panel = panelRef.current;
+
+    const preventOutside = (e) => {
+      // panel内のスクロールは許可
+      if (panel && panel.contains(e.target)) return;
+      e.preventDefault();
+    };
+
+    document.addEventListener("touchmove", preventOutside, { passive: false });
+
+    return () => {
+      document.removeEventListener("touchmove", preventOutside);
+      html.classList.remove("scroll-lock");
+      body.classList.remove("scroll-lock");
+    };
+  }, [open]);
+
+  /* ── Esc close + focus return ── */
+  useEffect(() => {
+    if (!open) return;
     const onKey = (e) => {
       if (e.key === "Escape") {
         e.preventDefault();
-        close(true);
+        setOpen(false);
+        setTimeout(() => buttonRef.current?.focus(), 0);
+      }
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [open]);
+
+  /* ── Focus first link on open ── */
+  useEffect(() => {
+    if (!open) return;
+    const t = setTimeout(() => firstLinkRef.current?.focus(), 80);
+    return () => clearTimeout(t);
+  }, [open]);
+
+  /* ── Home: hash sync ── */
+  useEffect(() => {
+    if (!isHome) return;
+
+    const sync = () => setActiveHash(window.location.hash || "");
+    sync();
+    window.addEventListener("hashchange", sync);
+    window.addEventListener("popstate", sync);
+    return () => {
+      window.removeEventListener("hashchange", sync);
+      window.removeEventListener("popstate", sync);
+    };
+  }, [isHome]);
+
+  /* ── Home: IntersectionObserver active follow ── */
+  useEffect(() => {
+    if (!isHome) return;
+
+    let observer = null;
+    let timer = null;
+    let tries = 0;
+    const MAX_TRIES = 8;
+
+    const setup = () => {
+      const targets = HOME_ITEMS
+        .map((i) => document.querySelector(i.href))
+        .filter(Boolean);
+
+      if (!targets.length) {
+        tries += 1;
+        if (tries <= MAX_TRIES) timer = window.setTimeout(setup, 180);
         return;
       }
 
-      if (e.key !== "Tab") return;
+      const thresholds = [0, 0.15, 0.3, 0.45, 0.6, 0.8, 1];
 
-      const root = panelRef.current;
-      if (!root) return;
+      observer = new IntersectionObserver(
+        (entries) => {
+          const visible = entries.filter((e) => e.isIntersecting);
+          if (!visible.length) return;
 
-      const focusables = Array.from(
-        root.querySelectorAll(
-          'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])'
-        )
-      ).filter((el) => !el.hasAttribute("aria-hidden"));
+          visible.sort((a, b) => {
+            const r = (b.intersectionRatio || 0) - (a.intersectionRatio || 0);
+            if (r) return r;
+            return (
+              Math.abs(a.boundingClientRect.top) -
+              Math.abs(b.boundingClientRect.top)
+            );
+          });
 
-      if (!focusables.length) return;
+          const id = visible[0]?.target?.id;
+          if (!id) return;
 
-      const first = focusables[0];
-      const last = focusables[focusables.length - 1];
+          const next = `#${id}`;
+          setActiveHash((prev) => (prev === next ? prev : next));
+        },
+        { rootMargin: "-35% 0px -55% 0px", threshold: thresholds }
+      );
 
-      if (e.shiftKey && document.activeElement === first) {
-        e.preventDefault();
-        last.focus();
-      } else if (!e.shiftKey && document.activeElement === last) {
-        e.preventDefault();
-        first.focus();
-      }
+      targets.forEach((el) => observer.observe(el));
     };
 
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, [isOpen, close]);
+    setup();
 
-  /* ── Focus first link ── */
+    return () => {
+      if (timer) window.clearTimeout(timer);
+      if (observer) observer.disconnect();
+    };
+  }, [isHome]);
+
+  /* ── If a hash was clicked while open: close → then scroll ── */
   useEffect(() => {
-    if (!isOpen) return;
-    const t = setTimeout(() => firstLinkRef.current?.focus(), 80);
-    return () => clearTimeout(t);
-  }, [isOpen]);
+    if (open) return;
+    const pending = pendingHashRef.current;
+    if (!pending) return;
 
-  const nav = useMemo(() => navItems, []);
+    pendingHashRef.current = null;
+    requestAnimationFrame(() => scrollToHash(pending));
+  }, [open]);
 
-  return (
+  const closeMenu = useCallback(() => setOpen(false), []);
+  const toggleMenu = useCallback(() => setOpen((v) => !v), []);
+
+  const handleAnchorClick = useCallback(
+    (href) => (e) => {
+      e.preventDefault();
+      setActiveHash((prev) => (prev === href ? prev : href));
+
+      if (open) {
+        pendingHashRef.current = href;
+        setOpen(false);
+        return;
+      }
+      scrollToHash(href);
+    },
+    [open]
+  );
+
+  const homeLinks = useMemo(() => HOME_ITEMS, []);
+  const globalLinks = useMemo(() => GLOBAL_ITEMS, []);
+
+  const ui = (
     <>
-      {/* ═══════════════════════════════════════════
-          NAV BAR
-      ═══════════════════════════════════════════ */}
+      {/* NAV BAR */}
       <nav
         className="fixed left-0 top-0 z-[9998] w-full transition-all duration-500"
         style={{
-          height: 68,
+          height: NAV_HEIGHT,
           background: scrolled ? "rgba(6,6,6,0.80)" : "rgba(0,0,0,0.12)",
           backdropFilter: scrolled
             ? "blur(18px) saturate(130%)"
@@ -210,7 +283,7 @@ export default function NavGlobal() {
           <Link
             to="/"
             translate="no"
-            onClick={() => isOpen && close(false)}
+            onClick={() => open && closeMenu()}
             className="flex items-center gap-3 text-white/94 no-underline transition-opacity duration-300 hover:opacity-70
                        focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#d9b98a]/40 focus-visible:ring-offset-2 focus-visible:ring-offset-black focus-visible:rounded"
             style={{
@@ -220,7 +293,6 @@ export default function NavGlobal() {
             }}
           >
             GUSHIKEN DESIGN
-            {/* Thin rule */}
             <span
               aria-hidden="true"
               style={{
@@ -231,7 +303,6 @@ export default function NavGlobal() {
                 flexShrink: 0,
               }}
             />
-            {/* Brand sub-label */}
             <span
               aria-hidden="true"
               style={{
@@ -246,81 +317,138 @@ export default function NavGlobal() {
             </span>
           </Link>
 
-          {/* ── PC Links ── */}
+          {/* PC Links */}
           <div className="hidden items-center gap-11 md:flex">
-            {nav.map((item) => {
-              const active = pathname === item.to;
-              return (
-                <Link
-                  key={item.to}
-                  to={item.to}
-                  className="group relative pb-3 no-underline transition-colors duration-300
-                             focus-visible:outline-none focus-visible:rounded"
-                  style={{
-                    fontSize: "0.76rem",
-                    fontWeight: 300,
-                    letterSpacing: "0.22em",
-                    color: active
-                      ? "rgba(255,255,255,0.94)"
-                      : "rgba(255,255,255,0.5)",
-                    paddingTop: "6px",
-                    position: "relative",
-                  }}
-                >
-                  {/* ✅ Active dot (SILVER) */}
-                  {active && (
-                    <span
-                      aria-hidden="true"
+            {isHome
+              ? homeLinks.map((item) => {
+                  const active = activeHash === item.href;
+                  return (
+                    <a
+                      key={item.href}
+                      href={item.href}
+                      onClick={handleAnchorClick(item.href)}
+                      className="group relative pb-3 no-underline transition-colors duration-300 focus-visible:outline-none focus-visible:rounded"
                       style={{
-                        position: "absolute",
-                        top: 0,
-                        left: "50%",
-                        transform: "translateX(-50%)",
-                        width: 3,
-                        height: 3,
-                        borderRadius: "50%",
-                        background: SUBACCENT,
-                        boxShadow: `0 0 0 0.5px ${SUBACCENT_DIM}`,
-                        opacity: 0.55,
+                        fontSize: "0.76rem",
+                        fontWeight: 300,
+                        letterSpacing: "0.22em",
+                        color: active
+                          ? "rgba(255,255,255,0.94)"
+                          : "rgba(255,255,255,0.5)",
+                        paddingTop: "6px",
+                        position: "relative",
                       }}
-                    />
-                  )}
+                    >
+                      {active && (
+                        <span
+                          aria-hidden="true"
+                          style={{
+                            position: "absolute",
+                            top: 0,
+                            left: "50%",
+                            transform: "translateX(-50%)",
+                            width: 3,
+                            height: 3,
+                            borderRadius: "50%",
+                            background: SUBACCENT,
+                            boxShadow: `0 0 0 0.5px ${SUBACCENT_DIM}`,
+                            opacity: 0.55,
+                          }}
+                        />
+                      )}
 
-                  <span className="transition-colors duration-300 group-hover:text-white/92">
-                    {item.label}
-                  </span>
+                      <span className="transition-colors duration-300 group-hover:text-white/92">
+                        {item.label}
+                      </span>
 
-                  {/* Gold underline */}
-                  <span
-                    aria-hidden="true"
-                    className="pointer-events-none absolute bottom-0 left-0 h-px transition-all duration-500"
-                    style={{
-                      width: active ? "100%" : "0%",
-                      opacity: active ? 0.75 : 0,
-                      background: `linear-gradient(to right, transparent, ${ACCENT}, transparent)`,
-                    }}
-                  />
-                  {/* Hover underline */}
-                  <span
-                    aria-hidden="true"
-                    className="pointer-events-none absolute bottom-0 left-0 h-px w-0 opacity-0 transition-all duration-500 group-hover:w-full group-hover:opacity-50"
-                    style={{
-                      background: `linear-gradient(to right, transparent, ${ACCENT}, transparent)`,
-                    }}
-                  />
-                </Link>
-              );
-            })}
+                      <span
+                        aria-hidden="true"
+                        className="pointer-events-none absolute bottom-0 left-0 h-px transition-all duration-500"
+                        style={{
+                          width: active ? "100%" : "0%",
+                          opacity: active ? 0.75 : 0,
+                          background: `linear-gradient(to right, transparent, ${ACCENT}, transparent)`,
+                        }}
+                      />
+                      <span
+                        aria-hidden="true"
+                        className="pointer-events-none absolute bottom-0 left-0 h-px w-0 opacity-0 transition-all duration-500 group-hover:w-full group-hover:opacity-50"
+                        style={{
+                          background: `linear-gradient(to right, transparent, ${ACCENT}, transparent)`,
+                        }}
+                      />
+                    </a>
+                  );
+                })
+              : globalLinks.map((item) => {
+                  const active = pathname === item.to;
+                  return (
+                    <Link
+                      key={item.to}
+                      to={item.to}
+                      className="group relative pb-3 no-underline transition-colors duration-300 focus-visible:outline-none focus-visible:rounded"
+                      style={{
+                        fontSize: "0.76rem",
+                        fontWeight: 300,
+                        letterSpacing: "0.22em",
+                        color: active
+                          ? "rgba(255,255,255,0.94)"
+                          : "rgba(255,255,255,0.5)",
+                        paddingTop: "6px",
+                        position: "relative",
+                      }}
+                    >
+                      {active && (
+                        <span
+                          aria-hidden="true"
+                          style={{
+                            position: "absolute",
+                            top: 0,
+                            left: "50%",
+                            transform: "translateX(-50%)",
+                            width: 3,
+                            height: 3,
+                            borderRadius: "50%",
+                            background: SUBACCENT,
+                            boxShadow: `0 0 0 0.5px ${SUBACCENT_DIM}`,
+                            opacity: 0.55,
+                          }}
+                        />
+                      )}
+
+                      <span className="transition-colors duration-300 group-hover:text-white/92">
+                        {item.label}
+                      </span>
+
+                      <span
+                        aria-hidden="true"
+                        className="pointer-events-none absolute bottom-0 left-0 h-px transition-all duration-500"
+                        style={{
+                          width: active ? "100%" : "0%",
+                          opacity: active ? 0.75 : 0,
+                          background: `linear-gradient(to right, transparent, ${ACCENT}, transparent)`,
+                        }}
+                      />
+                      <span
+                        aria-hidden="true"
+                        className="pointer-events-none absolute bottom-0 left-0 h-px w-0 opacity-0 transition-all duration-500 group-hover:w-full group-hover:opacity-50"
+                        style={{
+                          background: `linear-gradient(to right, transparent, ${ACCENT}, transparent)`,
+                        }}
+                      />
+                    </Link>
+                  );
+                })}
           </div>
 
-          {/* ── Hamburger ── */}
+          {/* Hamburger */}
           <button
             ref={buttonRef}
             type="button"
-            aria-label={isOpen ? "Close navigation" : "Open navigation"}
-            aria-expanded={isOpen}
+            aria-label={open ? "Close navigation" : "Open navigation"}
+            aria-expanded={open}
             aria-controls="global-mobile-navigation"
-            onClick={toggle}
+            onClick={toggleMenu}
             className="relative z-[10000] flex h-[18px] w-[26px] flex-col justify-between md:hidden
                        focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#d9b98a]/40 focus-visible:ring-offset-4 focus-visible:ring-offset-black"
           >
@@ -328,13 +456,13 @@ export default function NavGlobal() {
               <span
                 key={i}
                 style={{
-                  width: i === 2 && !isOpen ? "60%" : "100%",
-                  marginLeft: i === 2 && !isOpen ? "auto" : 0,
+                  width: i === 2 && !open ? "60%" : "100%",
+                  marginLeft: i === 2 && !open ? "auto" : 0,
                 }}
                 className={`h-px rounded bg-white/85 transition-all duration-[400ms]
-                  ${i === 0 && isOpen ? "translate-y-[8.5px] rotate-45" : ""}
-                  ${i === 1 && isOpen ? "opacity-0" : ""}
-                  ${i === 2 && isOpen ? "-translate-y-[8.5px] -rotate-45 !w-full !ml-0" : ""}
+                  ${i === 0 && open ? "translate-y-[8.5px] rotate-45" : ""}
+                  ${i === 1 && open ? "opacity-0" : ""}
+                  ${i === 2 && open ? "-translate-y-[8.5px] -rotate-45 !w-full !ml-0" : ""}
                 `}
               />
             ))}
@@ -342,25 +470,21 @@ export default function NavGlobal() {
         </div>
       </nav>
 
-      {/* ═══════════════════════════════════════════
-          MOBILE OVERLAY
-      ═══════════════════════════════════════════ */}
+      {/* MOBILE OVERLAY */}
       <div
         className={`fixed inset-0 z-[9996] transition-all duration-[350ms] md:hidden
-          ${isOpen ? "opacity-100" : "pointer-events-none opacity-0"}`}
+          ${open ? "opacity-100" : "pointer-events-none opacity-0"}`}
         style={{
           background: "rgba(0,0,0,0.32)",
           backdropFilter: "blur(5px)",
           WebkitBackdropFilter: "blur(5px)",
           overscrollBehavior: "contain",
         }}
-        onClick={() => close(true)}
-        aria-hidden={!isOpen}
+        onClick={closeMenu}
+        aria-hidden={!open}
       />
 
-      {/* ═══════════════════════════════════════════
-          MOBILE PANEL
-      ═══════════════════════════════════════════ */}
+      {/* MOBILE PANEL */}
       <div
         ref={panelRef}
         id="global-mobile-navigation"
@@ -368,10 +492,7 @@ export default function NavGlobal() {
           max-h-[calc(100svh-108px)] max-w-[400px] mx-auto
           overflow-y-auto rounded-[20px]
           transition-all duration-[350ms] md:hidden
-          ${isOpen
-            ? "translate-y-0 opacity-100"
-            : "pointer-events-none -translate-y-2 opacity-0"
-          }`}
+          ${open ? "translate-y-0 opacity-100" : "pointer-events-none -translate-y-2 opacity-0"}`}
         style={{
           background: "rgba(10,10,10,0.96)",
           border: `1px solid rgba(255,255,255,0.09)`,
@@ -384,10 +505,9 @@ export default function NavGlobal() {
         }}
         role="dialog"
         aria-modal="true"
-        aria-hidden={!isOpen}
+        aria-hidden={!open}
       >
         <div className="flex flex-col px-5 pb-[1.4rem] pt-[1.1rem]">
-          {/* Panel header */}
           <div
             className="mb-3 flex items-center justify-between pb-[0.8rem]"
             style={{ borderBottom: "1px solid rgba(255,255,255,0.06)" }}
@@ -416,9 +536,12 @@ export default function NavGlobal() {
 
             <button
               type="button"
-              onClick={() => close(true)}
+              onClick={() => {
+                setOpen(false);
+                setTimeout(() => buttonRef.current?.focus(), 0);
+              }}
               aria-label="Close navigation"
-              tabIndex={isOpen ? 0 : -1}
+              tabIndex={open ? 0 : -1}
               className="relative h-8 w-8 rounded-full transition duration-300 hover:bg-white/5
                          focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#d9b98a]/40"
               style={{ border: "1px solid rgba(255,255,255,0.08)" }}
@@ -428,54 +551,80 @@ export default function NavGlobal() {
             </button>
           </div>
 
-          {/* Links */}
           <div className="flex flex-col">
-            {nav.map((item, i) => {
-              const active = pathname === item.to;
-              return (
-                <Link
-                  key={item.to}
-                  to={item.to}
-                  ref={i === 0 ? firstLinkRef : null}
-                  onClick={() => close(false)}
-                  tabIndex={isOpen ? 0 : -1}
-                  className={`group flex items-center justify-between py-[15px] no-underline
-                              transition-[transform,color] duration-300
-                              focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#d9b98a]/40 focus-visible:rounded
-                              ${active ? "" : "hover:translate-x-[3px] hover:text-white/95"}`}
-                  style={{
-                    borderBottom:
-                      i < nav.length - 1
-                        ? "1px solid rgba(255,255,255,0.055)"
-                        : "none",
-                    color: active ? ACCENT : "rgba(255,255,255,0.72)",
-                  }}
-                >
-                  <span
-                    style={{
-                      fontSize: "0.9rem",
-                      fontWeight: 300,
-                      letterSpacing: "0.14em",
-                    }}
-                  >
-                    {item.label}
-                  </span>
-
-                  <span
-                    className={`text-[0.75rem] transition-[transform,color] duration-300
-                      ${active
-                        ? "text-[rgba(217,185,138,0.55)]"
-                        : "text-white/28 group-hover:translate-x-[2px] group-hover:text-white/48"
-                      }`}
-                  >
-                    →
-                  </span>
-                </Link>
-              );
-            })}
+            {isHome
+              ? homeLinks.map((item, i) => {
+                  const active = activeHash === item.href;
+                  return (
+                    <a
+                      key={item.href}
+                      href={item.href}
+                      ref={i === 0 ? firstLinkRef : null}
+                      tabIndex={open ? 0 : -1}
+                      onClick={handleAnchorClick(item.href)}
+                      className="group flex items-center justify-between py-[15px] no-underline transition-[transform,color] duration-300
+                                 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#d9b98a]/40 focus-visible:rounded"
+                      style={{
+                        borderBottom:
+                          i < homeLinks.length - 1
+                            ? "1px solid rgba(255,255,255,0.055)"
+                            : "none",
+                        color: active ? ACCENT : "rgba(255,255,255,0.72)",
+                      }}
+                    >
+                      <span style={{ fontSize: "0.9rem", fontWeight: 300, letterSpacing: "0.14em" }}>
+                        {item.label}
+                      </span>
+                      <span
+                        className={`text-[0.75rem] transition-[transform,color] duration-300 ${
+                          active
+                            ? "text-[rgba(217,185,138,0.55)]"
+                            : "text-white/28 group-hover:translate-x-[2px] group-hover:text-white/48"
+                        }`}
+                      >
+                        →
+                      </span>
+                    </a>
+                  );
+                })
+              : globalLinks.map((item, i) => {
+                  const active = pathname === item.to;
+                  return (
+                    <Link
+                      key={item.to}
+                      to={item.to}
+                      ref={i === 0 ? firstLinkRef : null}
+                      tabIndex={open ? 0 : -1}
+                      onClick={() => setOpen(false)}
+                      className={`group flex items-center justify-between py-[15px] no-underline
+                                  transition-[transform,color] duration-300
+                                  focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#d9b98a]/40 focus-visible:rounded
+                                  ${active ? "" : "hover:translate-x-[3px] hover:text-white/95"}`}
+                      style={{
+                        borderBottom:
+                          i < globalLinks.length - 1
+                            ? "1px solid rgba(255,255,255,0.055)"
+                            : "none",
+                        color: active ? ACCENT : "rgba(255,255,255,0.72)",
+                      }}
+                    >
+                      <span style={{ fontSize: "0.9rem", fontWeight: 300, letterSpacing: "0.14em" }}>
+                        {item.label}
+                      </span>
+                      <span
+                        className={`text-[0.75rem] transition-[transform,color] duration-300 ${
+                          active
+                            ? "text-[rgba(217,185,138,0.55)]"
+                            : "text-white/28 group-hover:translate-x-[2px] group-hover:text-white/48"
+                        }`}
+                      >
+                        →
+                      </span>
+                    </Link>
+                  );
+                })}
           </div>
 
-          {/* Footer tagline */}
           <div
             className="mt-4 pt-[0.9rem]"
             style={{ borderTop: "1px solid rgba(255,255,255,0.055)" }}
@@ -496,4 +645,6 @@ export default function NavGlobal() {
       </div>
     </>
   );
+
+  return createPortal(ui, document.body);
 }
