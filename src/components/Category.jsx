@@ -103,17 +103,22 @@ export default function Category({
               px-4 py-4
               snap-x snap-mandatory
               overscroll-x-contain
+              [scrollbar-width:none]
+              [-webkit-overflow-scrolling:touch]
+              [touch-action:pan-x]
             "
             style={{
               WebkitOverflowScrolling: "touch",
-              touchAction: "pan-y", // ✅ 画面引っ張り事故を減らす
+              // ✅ pan-y をやめる：横スワイプを殺さない
+              // ✅ pan-x のみ許可（縦スクロールはページ側に委ねる）
+              touchAction: "pan-x",
             }}
           >
             {items.map((child, index) => (
               <div
                 key={index}
                 className={`
-                  works-card flex-shrink-0
+                  works-card flex-none
                   ${cardWidth}
                   ${index === 0 ? "snap-start" : "snap-center"}
                 `}
