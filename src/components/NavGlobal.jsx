@@ -238,20 +238,22 @@ export default function NavGlobal({ mode }) {
   const closeMenu = useCallback(() => setOpen(false), []);
   const toggleMenu = useCallback(() => setOpen((v) => !v), []);
 
-  const handleAnchorClick = useCallback(
-    (href) => (e) => {
-      e.preventDefault();
-      setActiveHash((prev) => (prev === href ? prev : href));
+const handleAnchorClick = useCallback(
+  (href) => (e) => {
+    e.preventDefault();
+    setActiveHash((prev) => (prev === href ? prev : href));
 
-      if (open) {
-        pendingHashRef.current = href;
-        setOpen(false);
-        return;
-      }
-      scrollToHash(href);
-    },
-    [open]
-  );
+    // ✅ SP menu open時は close → then scroll（既存ロジックを活かす）
+    if (open) {
+      pendingHashRef.current = href;
+      setOpen(false);
+      return;
+    }
+
+    scrollToHash(href);
+  },
+  [open]
+);
 
   const homeLinks = useMemo(() => HOME_ITEMS, []);
   const globalLinks = useMemo(() => GLOBAL_ITEMS, []);
