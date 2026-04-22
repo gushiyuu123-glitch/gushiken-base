@@ -10,7 +10,7 @@ const QUALIFICATIONS = [
     org: "Webクリエイター能力認定試験",
     year: "2025",
     note: "証明書あり",
-    image: "/images/certificates/web-expert-certificate-site-final.webp",
+    image: "/images/certificates/web-expert-certificate-site-final1.webp",
     tier: "acquired",
   },
   {
@@ -166,9 +166,19 @@ function CertificateModal({ item, onClose }) {
           </button>
         </div>
 
-        <div className="certificate-modal__imageWrap">
-          <img src={item.image} alt={`${item.title} の証明画像`} className="certificate-modal__image" />
-        </div>
+      // ここに追加（CertificateModal の return 内）
+<div className="certificate-modal__imageWrap">
+  <img
+    src={item.image}
+    alt={`${item.title} の証明画像`}
+    className="certificate-modal__image"
+  />
+
+  {/* ✅ 追加：悪用対策の注記 */}
+  <p className="certificate-modal__note" aria-label="注意事項">
+    ※悪用防止のため、一部情報を加工・解像度調整しています。
+  </p>
+</div>
       </div>
     </div>
   );

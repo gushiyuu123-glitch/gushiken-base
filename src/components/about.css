@@ -622,3 +622,11 @@
     animation:none !important;
   }
 }
+/* about.css など（certificate-modal 系が入ってるCSS） */
+.certificate-modal__note{
+  margin-top: 10px;
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  line-height: 1.7;
+  color: rgba(255,255,255,0.55);
+}
