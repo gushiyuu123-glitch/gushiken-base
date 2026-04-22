@@ -9,6 +9,9 @@
   --nav-gold-dim:    rgba(201, 168, 101, 0.22);
   --nav-gold-border: rgba(201, 168, 101, 0.32);
   --nav-gold-glow:   rgba(201, 168, 101, 0.06);
+
+  /* ✅ Active dot only */
+  --nav-silver:      rgba(220, 226, 235, 0.78);
 }
 
 /* ─── Root Nav ───────────────────────────────────── */
@@ -148,7 +151,7 @@
   opacity: 0.9;
 }
 
-/* Active dot accent above text */
+/* ✅ Active dot accent above text (SILVER) */
 :local(.navItemActive)::before {
   content: "";
   position: absolute;
@@ -158,7 +161,7 @@
   width: 3px;
   height: 3px;
   border-radius: 50%;
-  background: var(--nav-gold);
+  background: var(--nav-silver);
   opacity: 0.55;
 }
 
@@ -173,13 +176,9 @@
 
 /* ─── Mobile ─────────────────────────────────────── */
 @media (max-width: 767px) {
-  :local(.navPc) {
-    display: none;
-  }
+  :local(.navPc) { display: none; }
 
-  :local(.navInner) {
-    padding: 0 1.25rem;
-  }
+  :local(.navInner) { padding: 0 1.25rem; }
 
   :local(.navLogo) {
     font-size: 0.78rem;
@@ -187,9 +186,7 @@
   }
 
   :local(.navLogoRule),
-  :local(.navLogoBrand) {
-    display: none;
-  }
+  :local(.navLogoBrand) { display: none; }
 
   :local(.hamburger) {
     display: flex;
@@ -221,18 +218,9 @@
       width     0.45s cubic-bezier(0.22, 0.56, 0.18, 1);
   }
 
-  :local(.hamburgerOpen) span:nth-child(1) {
-    transform: translateY(8.5px) rotate(45deg);
-  }
-
-  :local(.hamburgerOpen) span:nth-child(2) {
-    opacity: 0;
-  }
-
-  :local(.hamburgerOpen) span:nth-child(3) {
-    width: 100%;
-    transform: translateY(-8.5px) rotate(-45deg);
-  }
+  :local(.hamburgerOpen) span:nth-child(1) { transform: translateY(8.5px) rotate(45deg); }
+  :local(.hamburgerOpen) span:nth-child(2) { opacity: 0; }
+  :local(.hamburgerOpen) span:nth-child(3) { width: 100%; transform: translateY(-8.5px) rotate(-45deg); }
 
   /* ─── Mobile Overlay ─────────────────────────── */
   :local(.mobileOverlay) {
@@ -245,6 +233,9 @@
     pointer-events: none;
     transition: opacity 0.35s ease;
     z-index: 999997;
+
+    /* ✅ iOSの“ぬるっ”事故減 */
+    overscroll-behavior: contain;
   }
 
   :local(.mobileOverlayOpen) {
@@ -278,6 +269,9 @@
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
 
+    /* ✅ iOSのバウンス抑制 */
+    overscroll-behavior: contain;
+
     transform: translateY(-8px) scale(0.99);
     opacity: 0;
     pointer-events: none;
@@ -293,11 +287,8 @@
     pointer-events: auto;
   }
 
-  :local(.mobileNavInner) {
-    padding: 1.1rem 1.2rem 1.4rem;
-  }
+  :local(.mobileNavInner) { padding: 1.1rem 1.2rem 1.4rem; }
 
-  /* Panel header */
   :local(.mobileNavTop) {
     display: flex;
     align-items: center;
@@ -317,7 +308,6 @@
     color: rgba(255, 255, 255, 0.36);
   }
 
-  /* Gold rule before MENU label */
   :local(.mobileNavLabel)::before {
     content: '';
     display: block;
@@ -354,19 +344,10 @@
     border-radius: 999px;
   }
 
-  :local(.mobileClose) span:first-child {
-    transform: rotate(45deg);
-  }
+  :local(.mobileClose) span:first-child { transform: rotate(45deg); }
+  :local(.mobileClose) span:last-child  { transform: rotate(-45deg); }
 
-  :local(.mobileClose) span:last-child {
-    transform: rotate(-45deg);
-  }
-
-  /* Nav links */
-  :local(.mobileNavLinks) {
-    display: flex;
-    flex-direction: column;
-  }
+  :local(.mobileNavLinks) { display: flex; flex-direction: column; }
 
   :local(.mobileNavItem) {
     display: flex;
@@ -377,29 +358,18 @@
     text-decoration: none;
     border-bottom: 1px solid rgba(255, 255, 255, 0.055);
     color: rgba(255, 255, 255, 0.72);
-    transition:
-      color     0.3s ease,
-      transform 0.3s ease;
+    transition: color 0.3s ease, transform 0.3s ease;
   }
 
-  :local(.mobileNavItem:last-child) {
-    border-bottom: none;
-  }
+  :local(.mobileNavItem:last-child) { border-bottom: none; }
 
   :local(.mobileNavItem:hover) {
     color: rgba(255, 255, 255, 0.95);
     transform: translateX(3px);
   }
 
-  /* Active mobile item */
-  :local(.mobileNavItemActive) {
-    color: var(--nav-gold);
-  }
-
-  :local(.mobileNavItemActive:hover) {
-    color: var(--nav-gold);
-    opacity: 0.85;
-  }
+  :local(.mobileNavItemActive) { color: var(--nav-gold); }
+  :local(.mobileNavItemActive:hover) { color: var(--nav-gold); opacity: 0.85; }
 
   :local(.mobileNavText) {
     font-size: 0.9rem;
@@ -422,7 +392,6 @@
     color: rgba(201, 168, 101, 0.55);
   }
 
-  /* Footer */
   :local(.mobileNavFooter) {
     margin-top: 1rem;
     padding-top: 0.9rem;

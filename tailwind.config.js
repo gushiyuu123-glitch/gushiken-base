@@ -4,9 +4,33 @@ export default {
   theme: {
     extend: {
       /* ============================
-         COLORS – Quiet Black / Soft White / Accent
+         COLORS – Main / Assort / Accent / Subaccent
       ============================ */
       colors: {
+        /* ----------------------------
+           New naming (recommended)
+        ---------------------------- */
+        main: "#0b0b0b",                 // maincolor（黒）
+        mainSoft: "rgba(15,15,15,0.92)", // 面・パネル用
+
+        assort: "rgba(255,255,255,0.85)",       // アソート（白）
+        assortMuted: "rgba(255,255,255,0.60)",  // 補助テキスト
+        assortFaint: "rgba(255,255,255,0.38)",  // さらに薄い
+        assortLine: "rgba(255,255,255,0.14)",   // 細線・境界（旧 accentSoft）
+
+        accent: "#d9b98a",                       // アクセント（ゴールド）
+        accentDim: "rgba(217,185,138,0.22)",
+        accentBorder: "rgba(217,185,138,0.32)",
+        accentGlow: "rgba(217,185,138,0.06)",
+
+        subaccent: "#dce2eb",                    // サブアクセント（シルバー）
+        subaccentDim: "rgba(220,226,235,0.22)",
+        subaccentBorder: "rgba(220,226,235,0.32)",
+        subaccentGlow: "rgba(220,226,235,0.06)",
+
+        /* ----------------------------
+           Legacy aliases (keep existing code working)
+        ---------------------------- */
         blackDeep: "#0b0b0b",
         blackSoft: "rgba(15,15,15,0.92)",
         whiteSoft: "rgba(255,255,255,0.85)",
@@ -14,8 +38,9 @@ export default {
         whiteFaint: "rgba(255,255,255,0.38)",
         accentSoft: "rgba(255,255,255,0.14)",
 
-        /* 補助用。主役にはしない */
+        /* 補助用。主役にはしない（互換） */
         gold: "#d9b98a",
+        silver: "#dce2eb",
       },
 
       /* ============================
@@ -61,14 +86,8 @@ export default {
 
       keyframes: {
         fadeUp: {
-          "0%": {
-            opacity: 0,
-            transform: "translateY(16px) scale(0.996)",
-          },
-          "100%": {
-            opacity: 1,
-            transform: "translateY(0) scale(1)",
-          },
+          "0%": { opacity: 0, transform: "translateY(16px) scale(0.996)" },
+          "100%": { opacity: 1, transform: "translateY(0) scale(1)" },
         },
         breatheSoft: {
           "0%": { transform: "scale(1)" },

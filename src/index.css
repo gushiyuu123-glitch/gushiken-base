@@ -1,7 +1,7 @@
 /* ============================================================
-   GUSHIKEN DESIGN Core Index v5
-   Quiet Black × Silent Motion × Soft Depth
-   統合最適化版
+   GUSHIKEN DESIGN Core Index v6
+   Main(Black) × Assort(White) × Accent(Gold) × Subaccent(Silver)
+   統一トークン + 事故耐性版
 ============================================================ */
 
 @tailwind base;
@@ -12,8 +12,28 @@
    ROOT TOKENS
 ------------------------------------------------------------ */
 :root {
-  /* Core */
-  --black-900: #0b0b0b;
+  /* ===== New Naming ===== */
+  --main: #0b0b0b;
+  --main-soft: rgba(15, 15, 15, 0.92);
+
+  --assort: rgba(255, 255, 255, 0.85);
+  --assort-muted: rgba(255, 255, 255, 0.6);
+  --assort-faint: rgba(255, 255, 255, 0.38);
+  --assort-line: rgba(255, 255, 255, 0.14);
+  --assort-line-faint: rgba(255, 255, 255, 0.08);
+
+  --accent: #d9b98a;
+  --accent-dim: rgba(217, 185, 138, 0.22);
+  --accent-border: rgba(217, 185, 138, 0.32);
+  --accent-glow: rgba(217, 185, 138, 0.06);
+
+  --subaccent: rgba(220, 226, 235, 0.78);
+  --subaccent-dim: rgba(220, 226, 235, 0.22);
+  --subaccent-border: rgba(220, 226, 235, 0.32);
+  --subaccent-glow: rgba(220, 226, 235, 0.06);
+
+  /* ===== Legacy (keep existing code working) ===== */
+  --black-900: var(--main);
   --black-880: rgba(10, 10, 10, 0.98);
   --black-850: rgba(12, 12, 12, 0.95);
   --black-800: rgba(18, 18, 18, 0.92);
@@ -30,9 +50,12 @@
   --white-200: rgba(255, 255, 255, 0.2);
   --white-100: rgba(255, 255, 255, 0.1);
 
-  /* Accent（補助用。主役にしない） */
-  --accent-soft: rgba(255, 255, 255, 0.14);
-  --accent-faint: rgba(255, 255, 255, 0.08);
+  /* Accent soft (legacy) */
+  --accent-soft: var(--assort-line);
+  --accent-faint: var(--assort-line-faint);
+
+  /* nav silver (legacy) */
+  --nav-silver: var(--subaccent);
 
   /* Motion */
   --ease-silent: cubic-bezier(.22, .56, .18, 1);
@@ -41,8 +64,8 @@
   --fade-scale: 0.996;
 
   /* Glow */
-  --glow-white: rgba(255, 255, 255, 0.1);
-  --glow-silver: rgba(180, 180, 180, 0.08);
+  --glow-white: rgba(255, 255, 255, 0.10);
+  --glow-silver: var(--subaccent-glow);
   --glow-soft: rgba(255, 255, 255, 0.05);
 
   /* Shadow */
@@ -55,26 +78,34 @@
    GLOBAL
 ------------------------------------------------------------ */
 html {
-  background: var(--black-900);
+  background: var(--main);
   scroll-behavior: smooth;
+  scroll-padding-top: 84px; /* fixed nav offset */
+  color-scheme: dark;
 }
 
 body {
-  background: var(--black-900);
-  color: var(--white-900);
+  background: var(--main);
+  color: var(--assort);
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
 
+/* ✅ 黒画面停止を潰す（showが付かなくても一定時間後に表示） */
 #root {
   min-height: 100vh;
   opacity: 0;
   transition: opacity 0.55s ease;
+  animation: rootFailsafe 0s linear 1.6s forwards;
 }
 
 #root.show {
   opacity: 1;
+}
+
+@keyframes rootFailsafe {
+  to { opacity: 1; }
 }
 
 img,
@@ -86,24 +117,11 @@ svg {
   max-width: 100%;
 }
 
-a {
-  color: inherit;
-}
+a { color: inherit; }
+button, input, select, textarea { font: inherit; }
 
-button,
-input,
-select,
-textarea {
-  font: inherit;
-}
-
-.no-scrollbar::-webkit-scrollbar {
-  display: none;
-}
-
-.no-scrollbar {
-  scrollbar-width: none;
-}
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { scrollbar-width: none; }
 
 /* ------------------------------------------------------------
    1) Silent Fade
@@ -329,9 +347,7 @@ body.scrolled .ambient-glow::after {
   box-shadow: 0 6px 18px rgba(0,0,0,0.22);
 }
 
-.works-card:hover {
-  opacity: 1;
-}
+.works-card:hover { opacity: 1; }
 
 /* Rail内ではフェード無効 */
 .works-rail .aq-fade,
@@ -358,26 +374,20 @@ body.scrolled .ambient-glow::after {
 }
 
 @keyframes scrollPulse {
-  0% {
-    opacity: 0;
-    transform: translateY(-6px);
-  }
-  40% {
-    opacity: 0.58;
-    transform: translateY(0);
-  }
-  100% {
-    opacity: 0;
-    transform: translateY(8px);
-  }
+  0% { opacity: 0; transform: translateY(-6px); }
+  40% { opacity: 0.58; transform: translateY(0); }
+  100% { opacity: 0; transform: translateY(8px); }
 }
 
 /* ------------------------------------------------------------
    7) Reduced Motion
 ------------------------------------------------------------ */
 @media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+
   #root {
     transition: none !important;
+    animation: none !important;
     opacity: 1 !important;
   }
 

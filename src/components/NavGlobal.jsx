@@ -1,56 +1,176 @@
-import { useEffect, useRef, useState } from "react";
+// src/components/NavGlobal.jsx
+// ※ 現在の NavGlobal を丸ごと置換してOK
+
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 
 const navItems = [
-  { to: "/works",   label: "WORKS" },
-  { to: "/price",   label: "PRICE" },
-  { to: "/news",    label: "NEWS" },
+  { to: "/works", label: "WORKS" },
+  { to: "/price", label: "PRICE" },
+  { to: "/news", label: "NEWS" },
   { to: "/contact", label: "CONTACT" },
 ];
 
-/* Gold accent colour shared across both views */
-const GOLD        = "#c9a865";
-const GOLD_DIM    = "rgba(201,168,101,0.22)";
-const GOLD_BORDER = "rgba(201,168,101,0.32)";
+/* Accent system (aligned to your new tokens) */
+const ACCENT = "#d9b98a"; // gold
+const ACCENT_DIM = "rgba(217,185,138,0.22)";
+const ACCENT_BORDER = "rgba(217,185,138,0.32)";
+const ACCENT_GLOW = "rgba(217,185,138,0.06)";
+
+/* Subaccent (silver) — dot only */
+const SUBACCENT = "rgba(220, 226, 235, 0.78)";
+const SUBACCENT_DIM = "rgba(220, 226, 235, 0.22)";
+
+/* =========================================================
+   Body Scroll Lock (robust)
+   - iOS/Safari scroll bleed 対策
+   - 「閉じたのにスクロール戻らない」系を潰す
+========================================================= */
+function useBodyScrollLock(locked) {
+  const scrollYRef = useRef(0);
+  const prevRef = useRef(null);
+
+  useEffect(() => {
+    if (!locked) return;
+
+    const body = document.body;
+    const docEl = document.documentElement;
+
+    scrollYRef.current = window.scrollY || window.pageYOffset || 0;
+    prevRef.current = {
+      overflow: body.style.overflow,
+      position: body.style.position,
+      top: body.style.top,
+      left: body.style.left,
+      right: body.style.right,
+      width: body.style.width,
+      paddingRight: body.style.paddingRight,
+    };
+
+    const scrollbarW = Math.max(0, window.innerWidth - docEl.clientWidth);
+
+    body.style.overflow = "hidden";
+    body.style.position = "fixed";
+    body.style.top = `-${scrollYRef.current}px`;
+    body.style.left = "0";
+    body.style.right = "0";
+    body.style.width = "100%";
+    if (scrollbarW) body.style.paddingRight = `${scrollbarW}px`;
+
+    return () => {
+      const prev = prevRef.current;
+      if (!prev) return;
+
+      body.style.overflow = prev.overflow;
+      body.style.position = prev.position;
+      body.style.top = prev.top;
+      body.style.left = prev.left;
+      body.style.right = prev.right;
+      body.style.width = prev.width;
+      body.style.paddingRight = prev.paddingRight;
+
+      window.scrollTo(0, scrollYRef.current);
+      prevRef.current = null;
+    };
+  }, [locked]);
+}
 
 export default function NavGlobal() {
   const { pathname } = useLocation();
 
   const [scrolled, setScrolled] = useState(false);
-  const [isOpen,   setIsOpen]   = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
 
-  const buttonRef    = useRef(null);
+  const buttonRef = useRef(null);
   const firstLinkRef = useRef(null);
+  const panelRef = useRef(null);
 
-  /* ── Scroll → solid ── */
+  useBodyScrollLock(isOpen);
+
+  /* ── Scroll → solid（RAFで軽量化） ── */
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 12);
+    let raf = 0;
+    const onScroll = () => {
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(() => setScrolled(window.scrollY > 12));
+    };
     window.addEventListener("scroll", onScroll, { passive: true });
     onScroll();
-    return () => window.removeEventListener("scroll", onScroll);
+    return () => {
+      cancelAnimationFrame(raf);
+      window.removeEventListener("scroll", onScroll);
+    };
   }, []);
 
-  /* ── Body lock ── */
-  useEffect(() => {
-    document.body.style.overflow = isOpen ? "hidden" : "";
-    return () => { document.body.style.overflow = ""; };
-  }, [isOpen]);
-
   /* ── Close on route change ── */
-  useEffect(() => { setIsOpen(false); }, [pathname]);
+  useEffect(() => {
+    setIsOpen(false);
+  }, [pathname]);
 
-  /* ── Esc close ── */
+  /* ── Close menu automatically when viewport becomes desktop ── */
+  useEffect(() => {
+    const mq = window.matchMedia("(min-width: 768px)");
+    const closeIfDesktop = () => {
+      if (mq.matches) setIsOpen(false);
+    };
+
+    closeIfDesktop();
+
+    if (mq.addEventListener) mq.addEventListener("change", closeIfDesktop);
+    else mq.addListener(closeIfDesktop);
+
+    return () => {
+      if (mq.removeEventListener) mq.removeEventListener("change", closeIfDesktop);
+      else mq.removeListener(closeIfDesktop);
+    };
+  }, []);
+
+  const close = useCallback((returnFocus = false) => {
+    setIsOpen(false);
+    if (returnFocus) setTimeout(() => buttonRef.current?.focus(), 0);
+  }, []);
+
+  const toggle = useCallback(() => setIsOpen((v) => !v), []);
+
+  /* ── Esc close + Focus trap（Tab事故防止） ── */
   useEffect(() => {
     if (!isOpen) return;
+
     const onKey = (e) => {
       if (e.key === "Escape") {
-        setIsOpen(false);
-        setTimeout(() => buttonRef.current?.focus(), 0);
+        e.preventDefault();
+        close(true);
+        return;
+      }
+
+      if (e.key !== "Tab") return;
+
+      const root = panelRef.current;
+      if (!root) return;
+
+      const focusables = Array.from(
+        root.querySelectorAll(
+          'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])'
+        )
+      ).filter((el) => !el.hasAttribute("aria-hidden"));
+
+      if (!focusables.length) return;
+
+      const first = focusables[0];
+      const last = focusables[focusables.length - 1];
+
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
       }
     };
+
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [isOpen]);
+  }, [isOpen, close]);
 
   /* ── Focus first link ── */
   useEffect(() => {
@@ -59,7 +179,7 @@ export default function NavGlobal() {
     return () => clearTimeout(t);
   }, [isOpen]);
 
-  const close = () => setIsOpen(false);
+  const nav = useMemo(() => navItems, []);
 
   return (
     <>
@@ -70,9 +190,7 @@ export default function NavGlobal() {
         className="fixed left-0 top-0 z-[9998] w-full transition-all duration-500"
         style={{
           height: 68,
-          background: scrolled
-            ? "rgba(6,6,6,0.80)"
-            : "rgba(0,0,0,0.12)",
+          background: scrolled ? "rgba(6,6,6,0.80)" : "rgba(0,0,0,0.12)",
           backdropFilter: scrolled
             ? "blur(18px) saturate(130%)"
             : "blur(10px) saturate(115%)",
@@ -83,7 +201,7 @@ export default function NavGlobal() {
             ? "1px solid rgba(255,255,255,0.09)"
             : "1px solid rgba(255,255,255,0.05)",
           boxShadow: scrolled
-            ? `0 1px 0 ${GOLD_DIM}, 0 12px 40px rgba(0,0,0,0.22)`
+            ? `0 1px 0 ${ACCENT_DIM}, 0 12px 40px rgba(0,0,0,0.22)`
             : "none",
         }}
       >
@@ -92,8 +210,9 @@ export default function NavGlobal() {
           <Link
             to="/"
             translate="no"
+            onClick={() => isOpen && close(false)}
             className="flex items-center gap-3 text-white/94 no-underline transition-opacity duration-300 hover:opacity-70
-                       focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#c9a865]/40 focus-visible:ring-offset-2 focus-visible:ring-offset-black focus-visible:rounded"
+                       focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#d9b98a]/40 focus-visible:ring-offset-2 focus-visible:ring-offset-black focus-visible:rounded"
             style={{
               fontSize: "0.88rem",
               fontWeight: 300,
@@ -101,14 +220,14 @@ export default function NavGlobal() {
             }}
           >
             GUSHIKEN DESIGN
-            {/* Thin gold rule */}
+            {/* Thin rule */}
             <span
               aria-hidden="true"
               style={{
                 display: "block",
                 width: 1,
                 height: 12,
-                background: GOLD_BORDER,
+                background: ACCENT_BORDER,
                 flexShrink: 0,
               }}
             />
@@ -129,7 +248,7 @@ export default function NavGlobal() {
 
           {/* ── PC Links ── */}
           <div className="hidden items-center gap-11 md:flex">
-            {navItems.map((item) => {
+            {nav.map((item) => {
               const active = pathname === item.to;
               return (
                 <Link
@@ -148,7 +267,7 @@ export default function NavGlobal() {
                     position: "relative",
                   }}
                 >
-                  {/* Active dot */}
+                  {/* ✅ Active dot (SILVER) */}
                   {active && (
                     <span
                       aria-hidden="true"
@@ -160,7 +279,8 @@ export default function NavGlobal() {
                         width: 3,
                         height: 3,
                         borderRadius: "50%",
-                        background: GOLD,
+                        background: SUBACCENT,
+                        boxShadow: `0 0 0 0.5px ${SUBACCENT_DIM}`,
                         opacity: 0.55,
                       }}
                     />
@@ -177,7 +297,7 @@ export default function NavGlobal() {
                     style={{
                       width: active ? "100%" : "0%",
                       opacity: active ? 0.75 : 0,
-                      background: `linear-gradient(to right, transparent, ${GOLD}, transparent)`,
+                      background: `linear-gradient(to right, transparent, ${ACCENT}, transparent)`,
                     }}
                   />
                   {/* Hover underline */}
@@ -185,7 +305,7 @@ export default function NavGlobal() {
                     aria-hidden="true"
                     className="pointer-events-none absolute bottom-0 left-0 h-px w-0 opacity-0 transition-all duration-500 group-hover:w-full group-hover:opacity-50"
                     style={{
-                      background: `linear-gradient(to right, transparent, ${GOLD}, transparent)`,
+                      background: `linear-gradient(to right, transparent, ${ACCENT}, transparent)`,
                     }}
                   />
                 </Link>
@@ -200,15 +320,18 @@ export default function NavGlobal() {
             aria-label={isOpen ? "Close navigation" : "Open navigation"}
             aria-expanded={isOpen}
             aria-controls="global-mobile-navigation"
-            onClick={() => setIsOpen((v) => !v)}
+            onClick={toggle}
             className="relative z-[10000] flex h-[18px] w-[26px] flex-col justify-between md:hidden
-                       focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#c9a865]/40 focus-visible:ring-offset-4 focus-visible:ring-offset-black"
+                       focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#d9b98a]/40 focus-visible:ring-offset-4 focus-visible:ring-offset-black"
           >
             {[0, 1, 2].map((i) => (
               <span
                 key={i}
-                style={{ width: i === 2 && !isOpen ? "60%" : "100%", marginLeft: i === 2 && !isOpen ? "auto" : 0 }}
-                className={`h-px rounded bg-white/85 transition-all duration-400
+                style={{
+                  width: i === 2 && !isOpen ? "60%" : "100%",
+                  marginLeft: i === 2 && !isOpen ? "auto" : 0,
+                }}
+                className={`h-px rounded bg-white/85 transition-all duration-[400ms]
                   ${i === 0 && isOpen ? "translate-y-[8.5px] rotate-45" : ""}
                   ${i === 1 && isOpen ? "opacity-0" : ""}
                   ${i === 2 && isOpen ? "-translate-y-[8.5px] -rotate-45 !w-full !ml-0" : ""}
@@ -223,14 +346,15 @@ export default function NavGlobal() {
           MOBILE OVERLAY
       ═══════════════════════════════════════════ */}
       <div
-        className={`fixed inset-0 z-[9996] transition-all duration-350 md:hidden
+        className={`fixed inset-0 z-[9996] transition-all duration-[350ms] md:hidden
           ${isOpen ? "opacity-100" : "pointer-events-none opacity-0"}`}
         style={{
           background: "rgba(0,0,0,0.32)",
           backdropFilter: "blur(5px)",
           WebkitBackdropFilter: "blur(5px)",
+          overscrollBehavior: "contain",
         }}
-        onClick={close}
+        onClick={() => close(true)}
         aria-hidden={!isOpen}
       />
 
@@ -238,11 +362,12 @@ export default function NavGlobal() {
           MOBILE PANEL
       ═══════════════════════════════════════════ */}
       <div
+        ref={panelRef}
         id="global-mobile-navigation"
         className={`fixed left-[14px] right-[14px] top-[84px] z-[9997]
           max-h-[calc(100svh-108px)] max-w-[400px] mx-auto
           overflow-y-auto rounded-[20px]
-          transition-all duration-350 md:hidden
+          transition-all duration-[350ms] md:hidden
           ${isOpen
             ? "translate-y-0 opacity-100"
             : "pointer-events-none -translate-y-2 opacity-0"
@@ -250,10 +375,12 @@ export default function NavGlobal() {
         style={{
           background: "rgba(10,10,10,0.96)",
           border: `1px solid rgba(255,255,255,0.09)`,
-          borderTop: `1px solid ${GOLD_DIM}`,
-          boxShadow: `0 0 0 0.5px rgba(201,168,101,0.06), 0 24px 60px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.04)`,
+          borderTop: `1px solid ${ACCENT_DIM}`,
+          boxShadow: `0 0 0 0.5px ${ACCENT_GLOW}, 0 24px 60px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.04)`,
           backdropFilter: "blur(14px)",
           WebkitBackdropFilter: "blur(14px)",
+          overscrollBehavior: "contain",
+          WebkitOverflowScrolling: "touch",
         }}
         role="dialog"
         aria-modal="true"
@@ -265,7 +392,6 @@ export default function NavGlobal() {
             className="mb-3 flex items-center justify-between pb-[0.8rem]"
             style={{ borderBottom: "1px solid rgba(255,255,255,0.06)" }}
           >
-            {/* "MENU" with gold rule */}
             <p
               className="m-0 flex items-center gap-[0.55rem]"
               style={{
@@ -280,7 +406,7 @@ export default function NavGlobal() {
                   display: "block",
                   width: 14,
                   height: 1,
-                  background: GOLD,
+                  background: ACCENT,
                   opacity: 0.55,
                   flexShrink: 0,
                 }}
@@ -288,13 +414,13 @@ export default function NavGlobal() {
               MENU
             </p>
 
-            {/* Close button */}
             <button
               type="button"
-              onClick={close}
+              onClick={() => close(true)}
               aria-label="Close navigation"
+              tabIndex={isOpen ? 0 : -1}
               className="relative h-8 w-8 rounded-full transition duration-300 hover:bg-white/5
-                         focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#c9a865]/40"
+                         focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#d9b98a]/40"
               style={{ border: "1px solid rgba(255,255,255,0.08)" }}
             >
               <span className="absolute left-[9px] top-[15px] h-px w-[14px] rotate-45 rounded bg-white/62" />
@@ -304,36 +430,25 @@ export default function NavGlobal() {
 
           {/* Links */}
           <div className="flex flex-col">
-            {navItems.map((item, i) => {
+            {nav.map((item, i) => {
               const active = pathname === item.to;
               return (
                 <Link
                   key={item.to}
                   to={item.to}
                   ref={i === 0 ? firstLinkRef : null}
-                  onClick={close}
-                  className="flex items-center justify-between py-[15px] no-underline transition duration-300
-                             focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#c9a865]/40 focus-visible:rounded"
+                  onClick={() => close(false)}
+                  tabIndex={isOpen ? 0 : -1}
+                  className={`group flex items-center justify-between py-[15px] no-underline
+                              transition-[transform,color] duration-300
+                              focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#d9b98a]/40 focus-visible:rounded
+                              ${active ? "" : "hover:translate-x-[3px] hover:text-white/95"}`}
                   style={{
-                    borderBottom: i < navItems.length - 1
-                      ? "1px solid rgba(255,255,255,0.055)"
-                      : "none",
-                    color: active
-                      ? GOLD
-                      : "rgba(255,255,255,0.72)",
-                    transform: "translateX(0)",
-                  }}
-                  onMouseEnter={(e) => {
-                    if (!active) {
-                      e.currentTarget.style.transform = "translateX(3px)";
-                      e.currentTarget.style.color = "rgba(255,255,255,0.95)";
-                    }
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.transform = "translateX(0)";
-                    e.currentTarget.style.color = active
-                      ? GOLD
-                      : "rgba(255,255,255,0.72)";
+                    borderBottom:
+                      i < nav.length - 1
+                        ? "1px solid rgba(255,255,255,0.055)"
+                        : "none",
+                    color: active ? ACCENT : "rgba(255,255,255,0.72)",
                   }}
                 >
                   <span
@@ -345,13 +460,13 @@ export default function NavGlobal() {
                   >
                     {item.label}
                   </span>
+
                   <span
-                    style={{
-                      fontSize: "0.75rem",
-                      color: active
-                        ? "rgba(201,168,101,0.55)"
-                        : "rgba(255,255,255,0.28)",
-                    }}
+                    className={`text-[0.75rem] transition-[transform,color] duration-300
+                      ${active
+                        ? "text-[rgba(217,185,138,0.55)]"
+                        : "text-white/28 group-hover:translate-x-[2px] group-hover:text-white/48"
+                      }`}
                   >
                     →
                   </span>
