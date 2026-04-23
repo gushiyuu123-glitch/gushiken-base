@@ -1482,6 +1482,62 @@ export const worksData = [
   category: "ART / CREATIVE",
   subtitle: "光・影・静寂をテーマにしたアート表現",
   items: [
+    // ✅ MEISHIKI（アートサイト枠：ORIGINの次に配置）
+{
+  title: "MEISHIKI — 命式メモ",
+  slug: "MeishikiRoom",
+
+  desc:
+    "算命学の入口：年柱（年干支）を起こし、“命式メモ”として整える。\n" +
+    "予言ではなく、自己理解の記録。入力は保存しない。",
+
+  link: "https://meishiki-rose.vercel.app/",
+  img: "/works/meishiki.webp",
+
+  // NEW 扱い（30日以内なら自動でもNEW付くが、明示でOK）
+  isNew: true,
+  createdAt: "2026-04-23",
+
+  tags: [
+    "NEW",
+    "Art",
+    "Suanmeigaku",
+    "年柱",
+    "命式",
+    "Memo",
+    "Starfield",
+    "Canvas",
+    "Clipboard",
+    "Web Share",
+  ],
+
+  detail: {
+    concept:
+      "“当てる占い”ではなく、いまの自分を整えるためのメモ。\n" +
+      "生年月日から年柱（年干支）を算出し、短い断章として提示する。\n" +
+      "入力→読解→印（コピー/共有）までを、星の気配と余韻で一つの体験に統一。",
+
+    tech: [
+      "React",
+      "Vite",
+      "Tailwind CSS",
+      "Canvas",
+      "IntersectionObserver",
+      "Clipboard API",
+      "Web Share API",
+    ],
+  },
+
+  seo: {
+    title:
+      "MEISHIKI｜年柱（年干支）を“命式メモ”として整える占い体験｜GUSHIKEN DESIGN",
+    description:
+      "MEISHIKIは算命学の入口として年柱（年干支）を算出し、予言ではなく自己理解の記録として“命式メモ”に整える作品。星の気配と余韻で静かな読解体験を構築。",
+    keywords:
+      "算命学, 年柱, 年干支, 命式メモ, 占い体験, アートサイト, Web体験, Canvas, GUSHIKEN DESIGN",
+    ogImage: "https://meishiki-rose.vercel.app/ogp.png",
+  },
+},
           // ✅ ORIGIN（別格・時間軸の外）
       {
         title: "ORIGIN — The Source",
