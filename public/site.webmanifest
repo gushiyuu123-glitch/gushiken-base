@@ -1,19 +1,25 @@
 {
   "name": "GUSHIKEN DESIGN",
   "short_name": "GD",
+  "description": "沖縄を拠点に、上品で伝わりやすいWebサイトを制作するGUSHIKEN DESIGNの公式サイトです。",
+  "lang": "ja",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "theme_color": "#0b0b0b",
+  "background_color": "#0b0b0b",
   "icons": [
     {
       "src": "/android-chrome-192x192.png",
       "sizes": "192x192",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any"
     },
     {
       "src": "/android-chrome-512x512.png",
       "sizes": "512x512",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any"
     }
-  ],
-  "theme_color": "#0b0b0b",
-  "background_color": "#0b0b0b",
-  "display": "standalone"
+  ]
 }
