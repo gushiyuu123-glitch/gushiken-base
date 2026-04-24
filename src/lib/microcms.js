@@ -26,6 +26,14 @@ function assertMicroCmsEnv() {
   }
 }
 
+/**
+ * PWA / ホーム画面追加時に古いAPIレスポンスを掴ませないための
+ * キャッシュバスター。
+ */
+function createCacheBuster() {
+  return Date.now();
+}
+
 export async function getNewsList({ limit = 10, offset = 0 } = {}) {
   assertMicroCmsEnv();
 
@@ -35,6 +43,9 @@ export async function getNewsList({ limit = 10, offset = 0 } = {}) {
         limit,
         offset,
         orders: "-publishedAt",
+
+        // PWA / ホーム画面追加アプリの古いNEWSキャッシュ対策
+        _t: createCacheBuster(),
       },
     });
 
@@ -58,7 +69,13 @@ export async function getNewsDetail(id) {
   }
 
   try {
-    const res = await client.get(`/news/${id}`);
+    const res = await client.get(`/news/${id}`, {
+      params: {
+        // 詳細ページも古い記事データを掴まないようにする
+        _t: createCacheBuster(),
+      },
+    });
+
     return res.data;
   } catch (err) {
     console.error(`❌ NEWS詳細取得エラー（id: ${id}）`, err);

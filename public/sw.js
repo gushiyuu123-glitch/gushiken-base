@@ -1,10 +1,10 @@
 // =====================================================
-//  GUSHIKEN DESIGN — Ultra-Stable Service Worker V3
-//  No White Screen / Favicon V3 / Safe Cache Control
+//  GUSHIKEN DESIGN — Ultra-Stable Service Worker V4
+//  PWA Safe / No White Screen / Fresh JS / Safe Cache
 // =====================================================
 
 const CACHE_PREFIX = "gushiken-design-";
-const CACHE_STAMP = "v20260424194406";
+const CACHE_STAMP = "v20260425-pwa-safe-01";
 const CACHE_NAME = `${CACHE_PREFIX}${CACHE_STAMP}`;
 
 const STATIC_ASSETS = [
@@ -14,7 +14,7 @@ const STATIC_ASSETS = [
   "/site.webmanifest",
   "/browserconfig.xml",
 
-  // Favicons V3
+  // Favicons
   "/favicon.ico",
   "/favicon-16x16.png",
   "/favicon-32x32.png",
@@ -56,30 +56,68 @@ self.addEventListener("install", (event) => {
 // ===========================
 self.addEventListener("activate", (event) => {
   event.waitUntil(
-    caches.keys().then((keys) =>
-      Promise.all(
+    (async () => {
+      const keys = await caches.keys();
+
+      await Promise.all(
         keys
           .filter((key) => key.startsWith(CACHE_PREFIX) && key !== CACHE_NAME)
           .map((key) => caches.delete(key))
-      )
-    )
-  );
+      );
 
-  event.waitUntil(self.clients.claim());
+      await self.clients.claim();
 
-  event.waitUntil(
-    self.clients
-      .matchAll({ type: "window", includeUncontrolled: true })
-      .then((clients) => {
-        clients.forEach((client) => {
-          client.postMessage({
-            type: "SW_UPDATED",
-            version: CACHE_NAME,
-          });
+      const clients = await self.clients.matchAll({
+        type: "window",
+        includeUncontrolled: true,
+      });
+
+      clients.forEach((client) => {
+        client.postMessage({
+          type: "SW_UPDATED",
+          version: CACHE_NAME,
         });
-      })
+      });
+    })()
   );
 });
+
+// ===========================
+// Helpers
+// ===========================
+function isNavigationRequest(req) {
+  return (
+    req.mode === "navigate" ||
+    req.headers.get("accept")?.includes("text/html")
+  );
+}
+
+function isFreshAsset(req, url) {
+  return (
+    req.destination === "script" ||
+    req.destination === "style" ||
+    url.pathname.endsWith(".js") ||
+    url.pathname.endsWith(".css")
+  );
+}
+
+function isStaticAsset(req, url) {
+  return (
+    req.destination === "image" ||
+    req.destination === "font" ||
+    url.pathname.endsWith(".png") ||
+    url.pathname.endsWith(".jpg") ||
+    url.pathname.endsWith(".jpeg") ||
+    url.pathname.endsWith(".webp") ||
+    url.pathname.endsWith(".svg") ||
+    url.pathname.endsWith(".ico") ||
+    url.pathname.endsWith(".woff") ||
+    url.pathname.endsWith(".woff2") ||
+    url.pathname.endsWith(".xml") ||
+    url.pathname.endsWith(".txt") ||
+    url.pathname.endsWith(".webmanifest")
+  );
+}
 
 // ===========================
 // Fetch
@@ -87,51 +125,75 @@ self.addEventListener("activate", (event) => {
 self.addEventListener("fetch", (event) => {
   const req = event.request;
 
-  // POST / PUT / DELETE などはキャッシュしない
+  // GET以外はキャッシュしない
   if (req.method !== "GET") return;
 
   const url = new URL(req.url);
 
-  // 外部ドメインは対象外
-  if (url.origin !== location.origin) return;
+  // microCMS / 外部API / 外部ドメインはService Worker対象外
+  if (url.origin !== location.origin) {
+    return;
+  }
 
-  // ナビゲーション系HTMLは常にネット優先
-  // 古いHTMLをキャッシュして白画面になる事故を防ぐ
-  if (
-    req.mode === "navigate" ||
-    req.headers.get("accept")?.includes("text/html")
-  ) {
+  // HTMLは常にネット優先
+  // PWAで古いindex.htmlを掴んで白画面・古いJS参照になる事故を防ぐ
+  if (isNavigationRequest(req)) {
     event.respondWith(
       fetch(req, { cache: "no-store" }).catch(() => caches.match("/offline.html"))
     );
     return;
   }
 
-  // 静的ファイルは Cache First
-  event.respondWith(
-    caches.match(req).then((cached) => {
-      if (cached) return cached;
-
-      return fetch(req)
+  // JS / CSS は Network First
+  // ホーム画面追加アプリで古いJSチャンクを掴む事故を減らす
+  if (isFreshAsset(req, url)) {
+    event.respondWith(
+      fetch(req, { cache: "no-store" })
         .then((res) => {
-          // 成功レスポンスだけ保存
           if (!res || res.status !== 200 || res.type !== "basic") {
             return res;
           }
 
-          const resClone = res.clone();
+          const clone = res.clone();
 
           caches.open(CACHE_NAME).then((cache) => {
-            cache.put(req, resClone);
+            cache.put(req, clone);
           });
 
           return res;
         })
-        .catch(() => {
-          // HTML以外に offline.html を返すと画像/JS/CSS事故になるので返さない
-          return caches.match(req);
+        .catch(() => caches.match(req))
+    );
+    return;
+  }
+
+  // 画像・フォント・faviconなどは Cache First
+  if (isStaticAsset(req, url)) {
+    event.respondWith(
+      caches.match(req).then((cached) => {
+        if (cached) return cached;
+
+        return fetch(req).then((res) => {
+          if (!res || res.status !== 200 || res.type !== "basic") {
+            return res;
+          }
+
+          const clone = res.clone();
+
+          caches.open(CACHE_NAME).then((cache) => {
+            cache.put(req, clone);
+          });
+
+          return res;
         });
-    })
+      })
+    );
+    return;
+  }
+
+  // その他は基本ネット優先
+  event.respondWith(
+    fetch(req, { cache: "no-store" }).catch(() => caches.match(req))
   );
 });
 
