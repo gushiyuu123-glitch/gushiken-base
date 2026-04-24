@@ -23,9 +23,9 @@
 
   position: fixed;
 
-  /* FAQと被らないよう、少し上に逃がす */
+  /* 右下に自然に沈める：高すぎず、低すぎない位置 */
   right: var(--fsb-right, 24px);
-  bottom: calc(var(--fsb-bottom, 92px) + env(safe-area-inset-bottom));
+  bottom: calc(var(--fsb-bottom, 40px) + env(safe-area-inset-bottom));
 
   z-index: 9980;
 
@@ -696,8 +696,8 @@
   .fsb-root {
     right: 14px;
 
-    /* FAQと被りにくい高さ */
-    bottom: calc(var(--fsb-bottom-sp, 84px) + env(safe-area-inset-bottom));
+    /* SPは親指で押しやすく、画面下に寄せる */
+    bottom: calc(var(--fsb-bottom-sp, 20px) + env(safe-area-inset-bottom));
   }
 
   .fsb-panel {
