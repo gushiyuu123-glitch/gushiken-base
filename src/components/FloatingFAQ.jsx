@@ -1,4 +1,10 @@
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { Link, useLocation } from "react-router-dom";
 import { faqData } from "../data/faqData";
 import "./floating-faq.css";
@@ -31,27 +37,69 @@ export default function FloatingFAQ() {
 
   const location = useLocation();
 
-  const closePanel = () => {
+  const closePanel = useCallback(() => {
     setIsOpen(false);
     setActiveIndex(null);
-  };
+  }, []);
 
-  const togglePanel = () => {
+  const togglePanel = useCallback(() => {
     setIsOpen((prev) => !prev);
-  };
+  }, []);
 
-  const toggleItem = (index) => {
+  const toggleItem = useCallback((index) => {
     setActiveIndex((prev) => (prev === index ? null : index));
-  };
+  }, []);
 
   // ルート変更時に閉じる
   useEffect(() => {
     closePanel();
-  }, [location.pathname]);
+  }, [location.pathname, closePanel]);
+
+  // スマホでFAQを開いた時、背景スクロールを止める
+  useEffect(() => {
+    if (!isOpen) return undefined;
+    if (typeof window === "undefined") return undefined;
+
+    const isMobile = window.matchMedia("(max-width: 767px)").matches;
+    if (!isMobile) return undefined;
+
+    const scrollY = window.scrollY || document.documentElement.scrollTop || 0;
+
+    const previousHtmlOverflow = document.documentElement.style.overflow;
+
+    const previousBodyPosition = document.body.style.position;
+    const previousBodyTop = document.body.style.top;
+    const previousBodyLeft = document.body.style.left;
+    const previousBodyRight = document.body.style.right;
+    const previousBodyWidth = document.body.style.width;
+    const previousBodyOverflow = document.body.style.overflow;
+
+    document.documentElement.style.overflow = "hidden";
+
+    document.body.style.position = "fixed";
+    document.body.style.top = `-${scrollY}px`;
+    document.body.style.left = "0";
+    document.body.style.right = "0";
+    document.body.style.width = "100%";
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      document.documentElement.style.overflow = previousHtmlOverflow;
+
+      document.body.style.position = previousBodyPosition;
+      document.body.style.top = previousBodyTop;
+      document.body.style.left = previousBodyLeft;
+      document.body.style.right = previousBodyRight;
+      document.body.style.width = previousBodyWidth;
+      document.body.style.overflow = previousBodyOverflow;
+
+      window.scrollTo(0, scrollY);
+    };
+  }, [isOpen]);
 
   // 外側クリックで閉じる
   useEffect(() => {
-    if (!isOpen) return;
+    if (!isOpen) return undefined;
 
     const handler = (event) => {
       const wrap = wrapRef.current;
@@ -67,11 +115,11 @@ export default function FloatingFAQ() {
     return () => {
       document.removeEventListener("pointerdown", handler, { capture: true });
     };
-  }, [isOpen]);
+  }, [isOpen, closePanel]);
 
   // Escで閉じる
   useEffect(() => {
-    if (!isOpen) return;
+    if (!isOpen) return undefined;
 
     const handleKeyDown = (event) => {
       if (event.key !== "Escape") return;
@@ -86,11 +134,11 @@ export default function FloatingFAQ() {
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [isOpen]);
+  }, [isOpen, closePanel]);
 
   // 開いたら最初の質問へ
   useEffect(() => {
-    if (!isOpen) return;
+    if (!isOpen) return undefined;
 
     const raf = requestAnimationFrame(() => {
       firstQuestionRef.current?.focus();
@@ -101,10 +149,10 @@ export default function FloatingFAQ() {
 
   // フォーカストラップ
   useEffect(() => {
-    if (!isOpen) return;
+    if (!isOpen) return undefined;
 
     const panel = panelRef.current;
-    if (!panel) return;
+    if (!panel) return undefined;
 
     const onKeyDown = (event) => {
       if (event.key !== "Tab") return;
@@ -162,7 +210,7 @@ export default function FloatingFAQ() {
                   よくあるご質問
                 </p>
                 <p className="floating-faq-subtitle">
-                  ご依頼前の不安を、静かに整理します。
+                  ご依頼前の不安を、整理します。
                 </p>
               </div>
 
@@ -188,7 +236,9 @@ export default function FloatingFAQ() {
               return (
                 <div
                   key={item.question}
-                  className={`floating-faq-item ${expanded ? "is-active" : ""}`}
+                  className={`floating-faq-item ${
+                    expanded ? "is-active" : ""
+                  }`}
                 >
                   <button
                     ref={index === 0 ? firstQuestionRef : null}
@@ -259,7 +309,13 @@ export default function FloatingFAQ() {
           >
             <circle cx="12" cy="12" r="8.5" />
             <path d="M9.9 9.2a2.35 2.35 0 0 1 4.2 1.45c0 1.55-1.6 2.02-2.1 2.75-.22.32-.28.62-.28 1.1" />
-            <circle cx="12" cy="17.1" r="0.7" fill="currentColor" stroke="none" />
+            <circle
+              cx="12"
+              cy="17.1"
+              r="0.7"
+              fill="currentColor"
+              stroke="none"
+            />
           </svg>
         </span>
 

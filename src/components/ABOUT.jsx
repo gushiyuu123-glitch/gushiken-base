@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import SectionSvgTitle from "../components/SectionSvgTitle";
 import "./about.css";
 
@@ -258,6 +258,38 @@ function CertificateModal({ item, onClose }) {
 
 export default function About() {
   const [activeCertificate, setActiveCertificate] = useState(null);
+  const styleBlockRef = useRef(null);
+
+  useEffect(() => {
+    const root = styleBlockRef.current;
+    if (!root) return undefined;
+
+    const reveal = () => {
+      root.classList.add("is-in");
+    };
+
+    if (typeof IntersectionObserver === "undefined") {
+      reveal();
+      return undefined;
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry?.isIntersecting) return;
+
+        reveal();
+        observer.disconnect();
+      },
+      {
+        threshold: 0.18,
+        rootMargin: "0px 0px -10% 0px",
+      }
+    );
+
+    observer.observe(root);
+
+    return () => observer.disconnect();
+  }, []);
 
   return (
     <>
@@ -306,7 +338,8 @@ export default function About() {
             <p className="about-text">
               沖縄を拠点に、Web制作・Webデザインを行っています。
               <br />
-              デザインから実装まで一貫して対応し、<span>見え方と使いやすさ</span>を整えながら、公開まで丁寧に進めます。
+              デザインから実装まで一貫して対応し、<span>見え方と使いやすさ</span>
+              を整えながら、公開まで丁寧に進めます。
             </p>
 
             <a
@@ -342,14 +375,17 @@ export default function About() {
           </div>
 
           {/* STYLE */}
-          <div className="about-style-block">
-            <p className="about-style-label aq-fade delay-5">DESIGN APPROACH</p>
+          <div ref={styleBlockRef} className="about-style-block">
+            <p className="about-style-label about-style-reveal">
+              DESIGN APPROACH
+            </p>
 
             <div className="about-style-grid">
               {STYLE_ITEMS.map((item, index) => (
                 <div
                   key={item.title}
-                  className={`about-style-card aq-fade delay-${5 + index}`}
+                  className="about-style-card about-style-reveal"
+                  style={{ "--style-index": index }}
                 >
                   <span className="about-style-number">
                     {String(index + 1).padStart(2, "0")}

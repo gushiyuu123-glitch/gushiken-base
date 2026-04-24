@@ -1,198 +1,311 @@
-import React, { useEffect } from "react";
+// src/pages/PriceDetail.jsx
+import React, { useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
+import SectionSvgTitle from "../components/SectionSvgTitle";
 import "./priceDetail.css";
 
+const PAGE_TITLE = "料金の詳細｜GUSHIKEN DESIGN";
+const PAGE_DESCRIPTION =
+  "GUSHIKEN DESIGNの料金詳細ページ。LP・小規模サイト・印象重視サイト・運用保守の料金目安、制作の流れ、お支払い、追加オプションについてご案内しています。";
+const CANONICAL_URL = "https://gushikendesign.com/price";
+
+const PLANS = [
+  {
+    badge: "01",
+    title: "Landing Page",
+    jp: "1ページ構成",
+    price: "60,000",
+    detail:
+      "商品やサービスの魅力を、1ページで分かりやすく伝えるためのプランです。",
+    bestFor: "まずは固定費を抑えて、必要な情報を整理したい方に向いています。",
+    includes: [
+      "1ページ構成",
+      "オリジナルデザイン",
+      "スマホ対応",
+      "写真の軽い補正（明るさ・色）",
+      "公開初期設定",
+      "ドメイン / サーバー接続サポート",
+    ],
+  },
+  {
+    badge: "02",
+    title: "Small Website",
+    jp: "小規模サイト",
+    price: "120,000",
+    detail:
+      "トップページと下層ページで、お店やサービスの内容をきちんと伝えるプランです。",
+    bestFor: "店舗・サロン・小規模事業の標準的なサイトに向いています。",
+    includes: [
+      "トップ + 下層2〜4ページ",
+      "サービス内容の整理",
+      "スマホ対応",
+      "写真の軽い補正（明るさ・色）",
+      "公開初期設定",
+      "ドメイン / サーバー接続サポート",
+    ],
+  },
+  {
+    badge: "03",
+    title: "Impression Site",
+    jp: "印象重視サイト",
+    price: "240,000",
+    detail:
+      "写真・色・余白・導線まで整え、サービスの印象と信頼感を丁寧に伝えるプランです。",
+    bestFor: "見え方やブランドイメージまでしっかり整えたい方に向いています。",
+    includes: [
+      "印象設計",
+      "複数ページ対応",
+      "写真 / 色 / 余白のトーン調整",
+      "スマホ対応",
+      "公開初期設定 / 接続サポート",
+    ],
+    featured: true,
+    featuredLabel: "SIGNATURE",
+  },
+];
+
+const FLOW_STEPS = [
+  { n: "01", title: "ヒアリング", sub: "目的・内容・雰囲気・予算感の確認" },
+  { n: "02", title: "構成と進め方のご提案", sub: "LP / 複数ページ / 必要範囲の整理" },
+  { n: "03", title: "お見積もり・着手金", sub: "内容確定後、着手金50%で制作開始" },
+  { n: "04", title: "デザイン制作", sub: "見え方・情報整理・導線を設計" },
+  { n: "05", title: "実装・確認", sub: "スマホ対応・表示調整・公開前確認" },
+  { n: "06", title: "公開・納品", sub: "公開完了後、最終確認して納品" },
+];
+
+const OPTIONS = [
+  { name: "お知らせ更新機能の導入", price: "¥30,000〜" },
+  { name: "写真の個別補正（1枚）", price: "¥10,000〜" },
+  { name: "追加ページ", price: "内容に応じてお見積もり" },
+  { name: "ロゴ / 印刷物 / 撮影", price: "内容に応じてご相談" },
+];
+
+function setMetaByName(name, content) {
+  if (!content) return;
+
+  let tag = document.querySelector(`meta[name="${name}"]`);
+
+  if (!tag) {
+    tag = document.createElement("meta");
+    tag.setAttribute("name", name);
+    document.head.appendChild(tag);
+  }
+
+  tag.setAttribute("content", content);
+}
+
+function setMetaByProperty(property, content) {
+  if (!content) return;
+
+  let tag = document.querySelector(`meta[property="${property}"]`);
+
+  if (!tag) {
+    tag = document.createElement("meta");
+    tag.setAttribute("property", property);
+    document.head.appendChild(tag);
+  }
+
+  tag.setAttribute("content", content);
+}
+
+function setCanonical(href) {
+  if (!href) return;
+
+  let tag = document.querySelector('link[rel="canonical"]');
+
+  if (!tag) {
+    tag = document.createElement("link");
+    tag.setAttribute("rel", "canonical");
+    document.head.appendChild(tag);
+  }
+
+  tag.setAttribute("href", href);
+}
+
 export default function PriceDetail() {
+  const rootRef = useRef(null);
+
   useEffect(() => {
+    document.title = PAGE_TITLE;
+
+    setMetaByName("description", PAGE_DESCRIPTION);
+    setCanonical(CANONICAL_URL);
+
+    setMetaByProperty("og:title", PAGE_TITLE);
+    setMetaByProperty("og:description", PAGE_DESCRIPTION);
+    setMetaByProperty("og:url", CANONICAL_URL);
+    setMetaByProperty("og:type", "website");
+
+    setMetaByName("twitter:card", "summary_large_image");
+    setMetaByName("twitter:title", PAGE_TITLE);
+    setMetaByName("twitter:description", PAGE_DESCRIPTION);
+  }, []);
+
+  useEffect(() => {
+    const root = rootRef.current;
+    if (!root) return undefined;
+
+    const targets = Array.from(root.querySelectorAll(".pd-reveal"));
+
     const observer = new IntersectionObserver(
-      (entries) =>
-        entries.forEach((e) => {
-          if (e.isIntersecting) e.target.classList.add("pd-revealed");
-        }),
-      { threshold: 0.08 }
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          entry.target.classList.add("pd-revealed");
+          observer.unobserve(entry.target);
+        });
+      },
+      {
+        threshold: 0.1,
+        rootMargin: "0px 0px -10% 0px",
+      }
     );
-    document.querySelectorAll(".pd-reveal").forEach((el) => observer.observe(el));
+
+    targets.forEach((el) => observer.observe(el));
+
     return () => observer.disconnect();
   }, []);
 
   return (
-    <section className="pd-root">
+    <section ref={rootRef} className="pd-root" aria-labelledby="price-heading">
       <div className="pd-grain" aria-hidden="true" />
 
       <div className="pd-container">
-        {/* ── Header ── */}
+        <div className="pd-side-line" aria-hidden="true" />
+
         <header className="pd-header pd-reveal">
-          <p className="pd-eyebrow">PRICE DETAIL</p>
-          <h1 className="pd-title">料金の詳細と進め方</h1>
-          <div className="pd-title-rule" />
+          <SectionSvgTitle
+            title="PRICE"
+            sub="PRICE / DETAIL"
+            className="pd-svg-title"
+          />
+
+          <h1 id="price-heading" className="pd-hidden-heading">
+            料金の詳細と進め方
+          </h1>
+
+          <p className="pd-page-title">料金の詳細と進め方</p>
+
           <p className="pd-lead">
-            Webサイトは、
-            <span className="pd-lead-em">魅力や信頼感を伝えるための窓口</span>
+            Webサイトは、単に見た目を整えるだけでなく、
+            <br />
+            <span>魅力や信頼感を伝えるための窓口</span>
             です。
             <br />
-            目的や雰囲気を伺いながら、
-            <span className="pd-lead-em">どんな見せ方が合うかを整理</span>
-            し、
-            <br />
+            目的や雰囲気を伺いながら、どんな見せ方が合うかを整理し、
             料金は事前に総額をご案内したうえで進めています。
           </p>
 
-          {/* ✅ 税の迷いを消す */}
-          <p className="pd-taxnote">※ 表示価格はすべて税込の目安です（内容により変動します）</p>
+          <p className="pd-taxnote">
+            ※ 表示価格はすべて税込の目安です。内容により正式なお見積もりをご案内します。
+          </p>
         </header>
 
-        {/* ── Plans ── */}
         <SectionTitle main>プランと料金</SectionTitle>
+
         <div className="pd-plans pd-reveal">
-          <PlanCard
-            badge="01"
-            title="Landing Page"
-            price="60,000"
-            detail="商品やサービスの魅力を、1ページで分かりやすく伝えるためのプランです。"
-            bestFor="まずは1ページでしっかり伝えたい方におすすめです。"
-            includes={[
-              "オリジナルデザイン",
-              "スマホ対応",
-              "写真の軽い補正（明るさ・色）",
-              "公開初期設定",
-              "ドメイン / サーバー接続サポート",
-            ]}
-          />
-          <PlanCard
-            badge="02"
-            title="Small Website"
-            price="120,000"
-            detail="トップページと数ページで、お店やサービスをきちんと伝えたい方向けのプランです。"
-            bestFor="店舗・サロン・小規模事業のサイトにおすすめです。"
-            includes={[
-              "トップ + 下層2〜4ページ",
-              "スマホ対応",
-              "写真の軽い補正（明るさ・色）",
-              "公開初期設定",
-              "ドメイン / サーバー接続サポート",
-            ]}
-            featured
-          />
-          <PlanCard
-            badge="03"
-            title="Impression Site"
-            price="240,000"
-            detail="写真・色・余白まで整えながら、全体の印象と信頼感が伝わるサイトを丁寧につくるプランです。"
-            bestFor="見え方にこだわりたいサービスや店舗におすすめです。"
-            includes={[
-              "印象設計",
-              "複数ページ対応",
-              "スマホ対応",
-              "写真の軽い補正（明るさ・色）",
-              "公開初期設定 / 接続サポート",
-            ]}
-          />
+          {PLANS.map((plan) => (
+            <PlanCard key={plan.badge} {...plan} />
+          ))}
         </div>
 
-        {/* ── Maintenance ── */}
         <SectionTitle main>運用・保守</SectionTitle>
+
         <div className="pd-reveal">
           <MaintenanceCard />
         </div>
 
-        {/* ── Flow ── */}
         <SectionTitle main>制作の流れ</SectionTitle>
+
         <div className="pd-reveal">
           <FlowTimeline />
         </div>
 
-        {/* ── Payment ── */}
         <SectionTitle main>お支払いについて</SectionTitle>
+
         <div className="pd-reveal">
           <TextBlock>
             <li>着手金：50%（制作開始前）</li>
-            <li>残額：公開前にお支払いをお願いしています。</li>
-            <li>事前にご案内した総額から、大きく変わることはありません。</li>
+            <li>残金：公開完了・最終確認後、7日以内のお支払いをお願いしています。</li>
+            <li>内容の追加や変更がある場合は、必ず事前にご相談のうえで調整します。</li>
           </TextBlock>
         </div>
 
-        {/* ── Notes ── */}
         <SectionTitle main>ご確認いただきたいこと</SectionTitle>
+
         <div className="pd-reveal">
           <TextBlock>
-            <li>納期の目安は 2〜5週間です。</li>
+            <li>納期の目安は内容により2〜5週間前後です。</li>
+            <li>
+              素材のご提出が遅れた場合は、
+              <span className="pd-text-accent">納期も同じ日数分スライド</span>
+              します。
+            </li>
+            <li>
+              修正は回数と範囲を事前にご案内します。
+              <span className="pd-text-muted">
+                （1回＝まとめて1回分の修正指示）
+              </span>
+            </li>
             <li>
               品質を保つため、
               <span className="pd-text-accent">
                 短納期のみを優先するご依頼には合わない場合があります。
               </span>
             </li>
-            <li>
-              ドメイン代・サーバー代は実費ですが、
-              <span className="pd-text-accent">
-                取得や接続のサポートは料金内で対応しています。
-              </span>
-            </li>
-            <li>
-              完成後のページ追加も対応可能です。
-              <span className="pd-text-muted">（追加料金は事前にご案内します）</span>
-            </li>
           </TextBlock>
         </div>
 
-        {/* ── Visual ── */}
         <SectionTitle>写真・ビジュアルについて</SectionTitle>
+
         <div className="pd-reveal">
           <TextBlock>
             <li>素材が不足している場合は、雰囲気に合う画像選定も行います。</li>
-
-            {/* ✅ 線引き（これが超大事） */}
             <li>
               写真がある場合は、
               <span className="pd-text-accent">明るさ・色の軽い補正は料金内</span>
               です。
               <span className="pd-text-muted">（個別補正はオプション）</span>
             </li>
-
             <li>参考URLやイメージを共有いただくと、方向性を合わせやすくなります。</li>
-            <li className="pd-note">※ 参考サイトは方向性確認のために使用し、模倣は行いません。</li>
+            <li className="pd-note">
+              ※ 参考サイトは方向性確認のために使用し、模倣は行いません。
+            </li>
           </TextBlock>
         </div>
 
-        {/* ── SEO ── */}
         <SectionTitle>公開前の初期設定について</SectionTitle>
+
         <div className="pd-reveal">
           <TextBlock>
             <li>タイトル・説明文・OGP画像・favicon などの初期設定は標準対応です。</li>
             <li>画像軽量化・表示速度の最適化も含まれます。</li>
-            <li>公開に必要な初期設定まで、分かりやすくサポートします。</li>
+            <li>ドメイン・サーバー接続など、公開に必要な初期設定までサポートします。</li>
           </TextBlock>
         </div>
 
-        {/* ── Options ── */}
         <SectionTitle>追加オプション</SectionTitle>
+
         <div className="pd-reveal">
           <OptionsGrid />
         </div>
 
-        {/* ── CTA ── */}
         <div className="pd-cta-area pd-reveal">
           <div className="pd-cta-ornament" aria-hidden="true">
             <span />
             <span className="pd-cta-ornament-dot" />
             <span />
           </div>
+
           <p className="pd-thanks">
             ここまでご覧いただきありがとうございます。
             <br />
             まだ固まっていない段階でも、どうぞ気軽にご相談ください。
           </p>
+
           <Link to="/contact" className="pd-cta">
             <span>CONTACT</span>
-            <svg className="pd-cta-arrow" width="13" height="13" viewBox="0 0 13 13" fill="none">
-              <path
-                d="M1.5 6.5H11.5M7 2L11.5 6.5L7 11"
-                stroke="currentColor"
-                strokeWidth="1.1"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
+            <span aria-hidden="true">→</span>
           </Link>
         </div>
       </div>
@@ -200,23 +313,33 @@ export default function PriceDetail() {
   );
 }
 
-/* ── Sub-components ─────────────────────────── */
-
-function SectionTitle({ children, main }) {
+function SectionTitle({ children, main = false }) {
   return (
-    <h2 className={`pd-section-title ${main ? "is-main" : ""}`}>
+    <h2 className={`pd-section-title ${main ? "is-main" : ""} pd-reveal`}>
       <span className="pd-section-rule" aria-hidden="true" />
       {children}
     </h2>
   );
 }
 
-function PlanCard({ badge, title, price, detail, bestFor, includes = [], featured }) {
+function PlanCard({
+  badge,
+  title,
+  jp,
+  price,
+  detail,
+  bestFor,
+  includes = [],
+  featured = false,
+  featuredLabel = "RECOMMEND",
+}) {
   return (
-    <div className={`pd-plan-card ${featured ? "is-featured" : ""}`}>
-      {featured && <span className="pd-plan-popular">POPULAR</span>}
+    <article className={`pd-plan-card ${featured ? "is-featured" : ""}`}>
+      {featured && <span className="pd-plan-popular">{featuredLabel}</span>}
+
       <p className="pd-plan-num">PLAN {badge}</p>
       <h3 className="pd-plan-name">{title}</h3>
+      <p className="pd-plan-jp">{jp}</p>
 
       <div className="pd-plan-price-wrap">
         <p className="pd-plan-price-label">料金（税込）</p>
@@ -240,7 +363,7 @@ function PlanCard({ badge, title, price, detail, bestFor, includes = [], feature
           ))}
         </ul>
       )}
-    </div>
+    </article>
   );
 }
 
@@ -252,6 +375,7 @@ function MaintenanceCard() {
     "営業時間 / Google Map の更新",
     "バナーや見出しの軽微な調整",
   ];
+
   const extra = [
     "新ページ / 新セクションの追加",
     "大きなデザイン変更",
@@ -261,22 +385,25 @@ function MaintenanceCard() {
   ];
 
   return (
-    <div className="pd-maintenance">
+    <article className="pd-maintenance">
       <div className="pd-maintenance-header">
         <div className="pd-maintenance-info">
           <p className="pd-maintenance-num">PLAN 04</p>
           <h3 className="pd-maintenance-name">Maintenance / Subscription</h3>
+
           <p className="pd-maintenance-detail">
             文言や写真の差し替え、最新情報の追加など、
-            <strong>サイトの雰囲気を保ちながら整えるための運用プラン</strong>です。
+            <strong>サイトの雰囲気を保ちながら整えるための運用プラン</strong>
+            です。月管理は必須ではなく、必要な時だけの都度更新も対応できます。
           </p>
         </div>
 
         <div className="pd-maintenance-price-wrap">
           <p className="pd-maintenance-price-label">月額（税込）</p>
           <p className="pd-maintenance-price">
-            <span className="pd-maintenance-currency">¥</span>9,800
-            <span className="pd-maintenance-unit">&thinsp;/ 月</span>
+            <span className="pd-maintenance-currency">¥</span>
+            9,800
+            <span className="pd-maintenance-unit"> / 月</span>
           </p>
         </div>
       </div>
@@ -284,44 +411,45 @@ function MaintenanceCard() {
       <div className="pd-maintenance-cols">
         <div>
           <h4 className="pd-maintenance-col-title">月額に含まれる内容</h4>
+
           <ul className="pd-maintenance-list">
-            {included.map((t) => <li key={t}>{t}</li>)}
+            {included.map((item) => (
+              <li key={item}>{item}</li>
+            ))}
           </ul>
         </div>
+
         <div>
           <h4 className="pd-maintenance-col-title pd-maintenance-col-title--extra">
             別途ご相談となる内容
           </h4>
+
           <ul className="pd-maintenance-list pd-maintenance-list--extra">
-            {extra.map((t) => <li key={t}>{t}</li>)}
+            {extra.map((item) => (
+              <li key={item}>{item}</li>
+            ))}
           </ul>
         </div>
       </div>
-    </div>
+    </article>
   );
 }
 
 function FlowTimeline() {
-  const steps = [
-    { n: "01", title: "ヒアリング", sub: "目的・雰囲気・方向性の整理" },
-    { n: "02", title: "構成と進め方の共有", sub: null },
-    { n: "03", title: "着手金 50% → デザイン開始", sub: null },
-    { n: "04", title: "初稿提出 → 微調整", sub: null },
-    { n: "05", title: "実装 → 最終確認", sub: null },
-    { n: "06", title: "残額お支払い → 公開", sub: null },
-  ];
-
   return (
     <div className="pd-flow">
-      {steps.map((s, i) => (
-        <div key={i} className="pd-flow-item">
+      {FLOW_STEPS.map((step, index) => (
+        <div key={step.n} className="pd-flow-item">
           <div className="pd-flow-marker">
-            <div className="pd-flow-dot">{s.n}</div>
-            {i < steps.length - 1 && <div className="pd-flow-line" aria-hidden="true" />}
+            <div className="pd-flow-dot">{step.n}</div>
+            {index < FLOW_STEPS.length - 1 && (
+              <div className="pd-flow-line" aria-hidden="true" />
+            )}
           </div>
+
           <div className="pd-flow-body">
-            <p className="pd-flow-title">{s.title}</p>
-            {s.sub && <p className="pd-flow-sub">{s.sub}</p>}
+            <p className="pd-flow-title">{step.title}</p>
+            <p className="pd-flow-sub">{step.sub}</p>
           </div>
         </div>
       ))}
@@ -330,22 +458,12 @@ function FlowTimeline() {
 }
 
 function OptionsGrid() {
-  const options = [
-    { name: "お知らせ更新機能の導入", price: "¥30,000〜" },
-
-    // ✅ 変更：専門語をやめる
-    { name: "写真の個別補正（1枚）", price: "¥10,000〜" },
-
-    { name: "追加ページ", price: "内容に応じてお見積もり" },
-    { name: "ロゴ / 印刷物 / 撮影", price: "内容に応じてご相談" },
-  ];
-
   return (
     <div className="pd-options">
-      {options.map((o, i) => (
-        <div key={i} className="pd-option">
-          <p className="pd-option-name">{o.name}</p>
-          <p className="pd-option-price">{o.price}</p>
+      {OPTIONS.map((option) => (
+        <div key={option.name} className="pd-option">
+          <p className="pd-option-name">{option.name}</p>
+          <p className="pd-option-price">{option.price}</p>
         </div>
       ))}
     </div>

@@ -1,61 +1,173 @@
 /* ==========================================================
-   News Detail
-   Quiet Black × Editorial Calm × Soft Readability
+   News Detail — GUSHIKEN DESIGN OS
+   Record Room / Editorial Reading / Quiet Black
 ========================================================== */
 
-/* ===============================
-   LAYOUT
-================================ */
 .wrapper {
-  max-width: 860px;
-  margin: 0 auto;
-  padding: 112px 22px 128px;
+  position: relative;
+  overflow: hidden;
+
+  min-height: 100svh;
+  padding: 112px 0 128px;
+
+  background:
+    radial-gradient(
+      circle at 16% 0%,
+      rgba(201, 177, 138, 0.034),
+      transparent 30%
+    ),
+    linear-gradient(
+      180deg,
+      #0a0a0a 0%,
+      var(--main, #0b0b0b) 28%,
+      #090909 68%,
+      #0a0a0a 100%
+    );
+
   color: rgba(255, 255, 255, 0.92);
 }
 
+.wrapper::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.014) 0%,
+      transparent 18%,
+      transparent 82%,
+      rgba(255, 255, 255, 0.01) 100%
+    );
+
+  opacity: 0.9;
+}
+
+.wrapper::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+
+  background-image: radial-gradient(
+    rgba(255, 255, 255, 0.14) 0.42px,
+    transparent 0.42px
+  );
+  background-size: 4px 4px;
+  opacity: 0.016;
+}
+
+.inner {
+  position: relative;
+  z-index: 1;
+
+  width: min(88vw, 860px);
+  margin: 0 auto;
+}
+
+.sideLine {
+  position: absolute;
+  left: 0;
+  top: 2.2rem;
+
+  width: 1px;
+  height: calc(100% - 4.4rem);
+
+  background: linear-gradient(
+    to bottom,
+    rgba(201, 177, 138, 0.38),
+    rgba(220, 226, 235, 0.1),
+    rgba(255, 255, 255, 0.05)
+  );
+
+  pointer-events: none;
+  opacity: 0.84;
+}
+
+/* ===============================
+   HEADER
+================================ */
 .header {
-  margin-bottom: 52px;
+  position: relative;
+  padding-left: 1rem;
+  margin-bottom: 3.8rem;
 }
 
 .kicker {
-  margin: 0 0 12px;
-  color: rgba(255, 255, 255, 0.38);
-  font-size: 0.7rem;
+  position: relative;
+
+  margin: 0 0 1.1rem;
+  padding-top: 1.2rem;
+
+  color: rgba(201, 177, 138, 0.56);
+  font-size: 0.66rem;
   line-height: 1;
-  letter-spacing: 0.22em;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+}
+
+.kicker::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  width: 64px;
+  height: 1px;
+
+  background: linear-gradient(
+    90deg,
+    rgba(201, 177, 138, 0.72),
+    rgba(255, 255, 255, 0.12),
+    transparent
+  );
 }
 
 .title {
-  margin: 0 0 14px;
-  color: rgba(255, 255, 255, 0.97);
-  font-size: clamp(2rem, 4vw, 2.7rem);
+  max-width: 760px;
+  margin: 0 0 1rem;
+
+  color: rgba(255, 255, 255, 0.95);
+  font-size: clamp(2rem, 4.6vw, 3rem);
   font-weight: 300;
-  line-height: 1.28;
-  letter-spacing: 0.04em;
+  line-height: 1.32;
+  letter-spacing: 0.045em;
   text-wrap: balance;
 }
 
 .date {
   margin: 0;
-  color: rgba(255, 255, 255, 0.46);
-  font-size: 0.8rem;
-  letter-spacing: 0.08em;
+
+  color: rgba(201, 177, 138, 0.46);
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: 1rem;
+  line-height: 1;
+  letter-spacing: 0.06em;
 }
 
 /* ===============================
-   HERO IMAGE
+   EYECATCH
 ================================ */
 .figure {
-  margin: 0 0 52px;
+  margin: 0 0 4rem;
+  padding-left: 1rem;
 }
 
 .eyecatch {
-  width: 100%;
   display: block;
-  border-radius: 1.2rem;
+  width: 100%;
+  height: auto;
+
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-top-color: rgba(201, 177, 138, 0.16);
+  border-radius: 2px;
+
   background: rgba(255, 255, 255, 0.02);
+
   box-shadow:
-    0 22px 64px rgba(0, 0, 0, 0.22),
+    0 22px 64px rgba(0, 0, 0, 0.28),
     inset 0 1px 0 rgba(255, 255, 255, 0.02);
 }
 
@@ -63,12 +175,13 @@
    BODY
 ================================ */
 .body {
-  color: rgba(255, 255, 255, 0.82);
-  font-size: 1.02rem;
-  line-height: 2;
-  letter-spacing: 0.02em;
+  padding-left: 1rem;
 
-  /* ✅ 崩れ防止（長いURL/コード/英数字） */
+  color: rgba(255, 255, 255, 0.76);
+  font-size: 1rem;
+  line-height: 2.08;
+  letter-spacing: 0.035em;
+
   overflow-wrap: anywhere;
   word-break: break-word;
 }
@@ -78,80 +191,119 @@
 }
 
 .body p {
-  margin: 0 0 1.55em;
+  margin: 0 0 1.65em;
 }
 
 .body h2 {
-  margin: 2.5em 0 0.9em;
-  color: rgba(255, 255, 255, 0.95);
-  font-size: 1.45rem;
+  position: relative;
+
+  margin: 3em 0 1em;
+  padding-top: 1.15rem;
+
+  color: rgba(255, 255, 255, 0.94);
+  font-size: 1.42rem;
   font-weight: 300;
-  line-height: 1.45;
-  letter-spacing: 0.06em;
+  line-height: 1.55;
+  letter-spacing: 0.075em;
+}
+
+.body h2::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  width: 58px;
+  height: 1px;
+
+  background: linear-gradient(
+    90deg,
+    rgba(201, 177, 138, 0.58),
+    rgba(220, 226, 235, 0.12),
+    transparent
+  );
 }
 
 .body h3 {
-  margin: 2.15em 0 0.8em;
-  color: rgba(255, 255, 255, 0.9);
+  margin: 2.4em 0 0.8em;
+
+  color: rgba(255, 255, 255, 0.88);
   font-size: 1.12rem;
   font-weight: 400;
-  line-height: 1.55;
-  letter-spacing: 0.04em;
+  line-height: 1.6;
+  letter-spacing: 0.055em;
 }
 
 .body ul,
 .body ol {
-  margin: 0 0 1.6em 1.2em;
+  margin: 0 0 1.7em 1.15em;
   padding: 0;
 }
 
 .body li {
-  margin-bottom: 0.5em;
+  margin-bottom: 0.55em;
+  padding-left: 0.15em;
 }
 
 .body blockquote {
-  margin: 2em 0;
-  padding: 1rem 1.1rem 1rem 1.2rem;
-  border-left: 1px solid rgba(255, 255, 255, 0.18);
-  color: rgba(255, 255, 255, 0.72);
+  position: relative;
+
+  margin: 2.2em 0;
+  padding: 1.15rem 1.25rem 1.15rem 1.35rem;
+
+  border-left: 1px solid rgba(201, 177, 138, 0.42);
+  border-top: 1px solid rgba(255, 255, 255, 0.055);
+
   background:
-    linear-gradient(
-      180deg,
-      rgba(255, 255, 255, 0.018) 0%,
-      rgba(255, 255, 255, 0.008) 100%
-    );
-  border-radius: 0.85rem;
+    radial-gradient(
+      circle at 12% 0%,
+      rgba(201, 177, 138, 0.045),
+      transparent 42%
+    ),
+    rgba(255, 255, 255, 0.014);
+
+  color: rgba(255, 255, 255, 0.68);
+
+  border-radius: 2px;
 }
 
 .body a {
-  color: rgba(255, 255, 255, 0.9);
+  color: rgba(238, 226, 204, 0.9);
   text-decoration: underline;
-  text-underline-offset: 3px;
-  text-decoration-color: rgba(255, 255, 255, 0.24);
+  text-underline-offset: 4px;
+  text-decoration-color: rgba(201, 177, 138, 0.32);
+
   transition:
     color 0.28s ease,
     text-decoration-color 0.28s ease;
 }
 
-.body a:hover {
+.body a:hover,
+.body a:focus-visible {
   color: rgba(255, 255, 255, 0.98);
-  text-decoration-color: rgba(255, 255, 255, 0.42);
+  text-decoration-color: rgba(201, 177, 138, 0.62);
+  outline: none;
 }
 
 .body img {
-  max-width: 100%;
   display: block;
-  border-radius: 1rem;
-  margin: 36px 0;
+  max-width: 100%;
+
+  margin: 2.4rem 0;
+
+  border: 1px solid rgba(255, 255, 255, 0.065);
+  border-radius: 2px;
+
   box-shadow:
-    0 18px 48px rgba(0, 0, 0, 0.2),
+    0 18px 48px rgba(0, 0, 0, 0.24),
     inset 0 1px 0 rgba(255, 255, 255, 0.02);
 }
 
 .body hr {
-  margin: 2.6rem 0;
+  margin: 3rem 0;
+
   border: 0;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  border-top: 1px solid rgba(255, 255, 255, 0.075);
 }
 
 .body strong {
@@ -161,57 +313,70 @@
 
 .body code {
   padding: 0.16em 0.42em;
-  border-radius: 0.4rem;
-  background: rgba(255, 255, 255, 0.06);
-  color: rgba(255, 255, 255, 0.92);
+
+  border: 1px solid rgba(255, 255, 255, 0.075);
+  border-radius: 3px;
+
+  background: rgba(255, 255, 255, 0.045);
+
+  color: rgba(238, 226, 204, 0.9);
   font-size: 0.92em;
 }
 
 .body pre {
   overflow-x: auto;
-  margin: 2em 0;
+
+  margin: 2.2em 0;
   padding: 1rem 1.05rem;
-  border-radius: 0.95rem;
-  background:
-    linear-gradient(
-      180deg,
-      rgba(255, 255, 255, 0.022) 0%,
-      rgba(255, 255, 255, 0.01) 100%
-    ),
-    rgba(14, 14, 14, 0.96);
+
   border: 1px solid rgba(255, 255, 255, 0.08);
+  border-top-color: rgba(201, 177, 138, 0.14);
+  border-radius: 2px;
+
+  background:
+    radial-gradient(
+      circle at 10% 0%,
+      rgba(201, 177, 138, 0.035),
+      transparent 40%
+    ),
+    rgba(10, 10, 10, 0.96);
 }
 
 .body pre code {
   padding: 0;
+  border: 0;
   background: transparent;
-  border-radius: 0;
 }
 
 /* ===============================
-   LOADING / ERROR
+   STATE
 ================================ */
-.loading {
-  padding: 120px 20px;
-  text-align: center;
-  color: rgba(255, 255, 255, 0.48);
-  font-size: 0.9rem;
-  letter-spacing: 0.04em;
+.loading,
+.error {
+  margin: 0;
+  padding-left: 1rem;
+
+  color: rgba(255, 255, 255, 0.46);
+  font-size: 0.86rem;
+  line-height: 1.9;
+  letter-spacing: 0.08em;
 }
 
 .error {
-  padding: 120px 20px 40px;
-  text-align: center;
-  color: rgba(255, 130, 120, 0.82);
-  font-size: 0.9rem;
-  letter-spacing: 0.04em;
+  color: rgba(255, 150, 140, 0.82);
+}
+
+.stateBox {
+  padding-left: 1rem;
 }
 
 /* ===============================
    BACK LINK
 ================================ */
 .backWrap {
-  margin-top: 64px;
+  margin-top: 4rem;
+  padding-left: 1rem;
+
   display: flex;
   justify-content: center;
 }
@@ -220,32 +385,52 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
+
   min-height: 44px;
-  padding: 0 18px;
+  padding: 0 1.25rem;
+
+  border: 1px solid rgba(201, 177, 138, 0.22);
   border-radius: 999px;
-  border: 1px solid rgba(220, 226, 235, 0.14);
-  background: rgba(255, 255, 255, 0.02);
-  text-decoration: none;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(201, 177, 138, 0.04),
+      rgba(255, 255, 255, 0.01)
+    );
+
   color: rgba(255, 255, 255, 0.78);
-  font-size: 0.78rem;
+  font-size: 0.74rem;
+  line-height: 1;
   letter-spacing: 0.14em;
+  text-decoration: none;
+
   transition:
-    transform 0.42s cubic-bezier(.22,.56,.18,1),
-    border-color 0.28s ease,
-    background 0.28s ease,
-    color 0.28s ease;
+    transform 0.35s var(--ease-silent, cubic-bezier(.22,.56,.18,1)),
+    border-color 0.35s ease,
+    background 0.35s ease,
+    color 0.35s ease,
+    box-shadow 0.35s ease;
 }
 
-.backLink:hover {
-  transform: translateY(-1px);
-  border-color: rgba(220, 226, 235, 0.22);
-  background: rgba(255, 255, 255, 0.04);
-  color: rgba(255, 255, 255, 0.92);
-}
-
+.backLink:hover,
 .backLink:focus-visible {
-  outline: 1px solid rgba(220, 226, 235, 0.30);
-  outline-offset: 3px;
+  transform: translateY(-1px);
+  border-color: rgba(201, 177, 138, 0.36);
+  background: rgba(201, 177, 138, 0.06);
+  color: rgba(255, 255, 255, 0.94);
+  box-shadow:
+    0 14px 36px rgba(0, 0, 0, 0.24),
+    0 0 0 0.5px rgba(201, 177, 138, 0.055);
+  outline: none;
+}
+
+/* ===============================
+   AQ SAFETY
+================================ */
+.wrapper :global(.aq-fade) {
+  filter: none !important;
+  backdrop-filter: none !important;
 }
 
 /* ===============================
@@ -253,44 +438,61 @@
 ================================ */
 @media (max-width: 640px) {
   .wrapper {
-    padding: 84px 20px 100px;
+    padding: 88px 0 104px;
+  }
+
+  .inner {
+    width: calc(100% - 2rem);
+  }
+
+  .sideLine {
+    top: 1.6rem;
+    height: calc(100% - 3.2rem);
+    opacity: 0.76;
+  }
+
+  .header,
+  .figure,
+  .body,
+  .loading,
+  .error,
+  .stateBox,
+  .backWrap {
+    padding-left: 0.75rem;
   }
 
   .header {
-    margin-bottom: 40px;
+    margin-bottom: 3rem;
   }
 
   .kicker {
-    font-size: 0.66rem;
-    letter-spacing: 0.18em;
+    font-size: 0.62rem;
+    letter-spacing: 0.22em;
   }
 
   .title {
-    font-size: 1.75rem;
-    line-height: 1.34;
-    letter-spacing: 0.03em;
+    font-size: clamp(1.65rem, 8vw, 2.1rem);
+    line-height: 1.38;
+    letter-spacing: 0.035em;
   }
 
   .date {
-    font-size: 0.76rem;
+    font-size: 0.92rem;
   }
 
   .figure {
-    margin-bottom: 40px;
-  }
-
-  .eyecatch {
-    border-radius: 0.95rem;
+    margin-bottom: 3rem;
   }
 
   .body {
-    font-size: 0.95rem;
-    line-height: 1.9;
+    font-size: 0.92rem;
+    line-height: 1.95;
+    letter-spacing: 0.025em;
   }
 
   .body h2 {
     font-size: 1.18rem;
-    margin-top: 2.2em;
+    margin-top: 2.4em;
   }
 
   .body h3 {
@@ -298,21 +500,28 @@
   }
 
   .body img {
-    border-radius: 0.9rem;
-    margin: 28px 0;
-  }
-
-  .loading {
-    padding: 96px 20px;
-    font-size: 0.84rem;
-  }
-
-  .error {
-    padding: 96px 20px 34px;
-    font-size: 0.84rem;
+    margin: 2rem 0;
   }
 
   .backWrap {
-    margin-top: 52px;
+    margin-top: 3.4rem;
+  }
+}
+
+@media (max-width: 390px) {
+  .inner {
+    width: calc(100% - 1.5rem);
+  }
+}
+
+/* ===============================
+   REDUCED MOTION
+================================ */
+@media (prefers-reduced-motion: reduce) {
+  .wrapper *,
+  .wrapper *::before,
+  .wrapper *::after {
+    transition: none !important;
+    animation: none !important;
   }
 }

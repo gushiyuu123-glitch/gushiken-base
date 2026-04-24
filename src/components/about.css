@@ -1109,3 +1109,42 @@
     width: min(100%, 560px);
   }
 }
+/* -------------------------------------------------------
+   Style Cards Reveal
+   DESIGN APPROACH / 01 → 02 → 03 → 04 固定フェード
+------------------------------------------------------- */
+.about-style-reveal {
+  opacity: 0;
+  transform: translate3d(0, 18px, 0) scale(0.996);
+
+  transition:
+    opacity 0.82s var(--ease-silent, cubic-bezier(.22,.56,.18,1)),
+    transform 0.82s var(--ease-silent, cubic-bezier(.22,.56,.18,1));
+
+  will-change: opacity, transform;
+}
+
+/* ブロックが見えたら発火 */
+.about-style-block.is-in .about-style-reveal {
+  opacity: 1;
+  transform: translate3d(0, 0, 0) scale(1);
+}
+
+/* ラベルは先に出す */
+.about-style-block.is-in .about-style-label {
+  transition-delay: 0s;
+}
+
+/* カードは必ず 01 → 02 → 03 → 04 */
+.about-style-block.is-in .about-style-card {
+  transition-delay: calc(0.14s + (var(--style-index) * 0.14s));
+}
+
+/* reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .about-style-reveal {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}

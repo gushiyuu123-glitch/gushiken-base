@@ -1,5 +1,5 @@
 // src/components/SectionSvgTitle.jsx
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import "./section-svg-title.css";
 
 export default function SectionSvgTitle({
@@ -8,13 +8,43 @@ export default function SectionSvgTitle({
   count = "",
   className = "",
 }) {
+  const rootRef = useRef(null);
   const chars = Array.from(title);
 
-  // ざっくり横幅を確保（文字数に応じて少し広げる）
   const viewWidth = Math.max(920, chars.length * 120 + 120);
 
+  useEffect(() => {
+    const root = rootRef.current;
+    if (!root) return undefined;
+
+    const reveal = () => {
+      root.classList.add("is-in");
+    };
+
+    if (typeof IntersectionObserver === "undefined") {
+      reveal();
+      return undefined;
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry?.isIntersecting) return;
+        reveal();
+        observer.disconnect();
+      },
+      {
+        threshold: 0.18,
+        rootMargin: "0px 0px -8% 0px",
+      }
+    );
+
+    observer.observe(root);
+
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <div className={`section-svg-title ${className}`}>
+    <div ref={rootRef} className={`section-svg-title ${className}`}>
       {sub && <p className="section-svg-kicker">{sub}</p>}
 
       <div className="section-svg-row">

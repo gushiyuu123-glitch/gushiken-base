@@ -1,473 +1,679 @@
 /* ============================================================
-   Price Detail — Upgraded Edition
-   Japanese Luxury · Gold Accents · Editorial Depth
-   
-   Fonts: Cormorant Garamond (price numerals) + Noto Sans JP (body)
-   Loaded via index.html or a global stylesheet:
-   
-   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500&family=Noto+Sans+JP:wght@300;400&display=swap" rel="stylesheet">
+   Price Detail — GUSHIKEN DESIGN OS
+   Estimate Guide / Black Frame / Champagne Gold × Silver Line
 ============================================================ */
 
-/* ─── Custom Properties ────────────────────────────── */
-:root {
-  --pd-gold:         #c9a865;
-  --pd-gold-dim:     rgba(201, 168, 101, 0.14);
-  --pd-gold-border:  rgba(201, 168, 101, 0.24);
-  --pd-gold-glow:    rgba(201, 168, 101, 0.07);
-  --pd-bg:           #090909;
-  --pd-surface:      rgba(255, 255, 255, 0.025);
-  --pd-surface-hover:rgba(255, 255, 255, 0.038);
-  --pd-border:       rgba(255, 255, 255, 0.08);
-  --pd-border-hover: rgba(255, 255, 255, 0.15);
-  --pd-w96:          rgba(255, 255, 255, 0.96);
-  --pd-w84:          rgba(255, 255, 255, 0.84);
-  --pd-w72:          rgba(255, 255, 255, 0.72);
-  --pd-w56:          rgba(255, 255, 255, 0.56);
-  --pd-w38:          rgba(255, 255, 255, 0.38);
-  --pd-w16:          rgba(255, 255, 255, 0.16);
-  --pd-w08:          rgba(255, 255, 255, 0.08);
-  --pd-radius:       1.2rem;
-  --pd-font-serif:   'Cormorant Garamond', 'Georgia', serif;
-  --pd-font-sans:    'Noto Sans JP', 'Hiragino Kaku Gothic ProN', sans-serif;
-}
-
-/* ─── Page Root ─────────────────────────────────────── */
 .pd-root {
-  background: var(--pd-bg);
-  min-height: 100vh;
-  color: #fff;
-  font-family: var(--pd-font-sans);
+  --pd-gold: var(--accent, #d9b98a);
+  --pd-gold-soft: rgba(217, 185, 138, 0.06);
+  --pd-gold-border: rgba(217, 185, 138, 0.24);
+  --pd-silver: var(--subaccent, #dce2eb);
+  --pd-border: rgba(255, 255, 255, 0.075);
+  --pd-border-soft: rgba(255, 255, 255, 0.055);
+  --pd-white: rgba(255, 255, 255, 0.94);
+  --pd-w84: rgba(255, 255, 255, 0.84);
+  --pd-w64: rgba(255, 255, 255, 0.64);
+  --pd-w48: rgba(255, 255, 255, 0.48);
+  --pd-w34: rgba(255, 255, 255, 0.34);
+  --pd-w18: rgba(255, 255, 255, 0.18);
+  --pd-ease: var(--ease-silent, cubic-bezier(.22, .56, .18, 1));
+
   position: relative;
-  overflow-x: hidden;
+  overflow: hidden;
+
+  min-height: 100svh;
+  padding: 112px 0 128px;
+
+  background:
+    radial-gradient(
+      circle at 16% 0%,
+      rgba(217, 185, 138, 0.034),
+      transparent 30%
+    ),
+    linear-gradient(
+      180deg,
+      #0a0a0a 0%,
+      var(--main, #0b0b0b) 28%,
+      #090909 68%,
+      #0a0a0a 100%
+    );
+
+  color: rgba(255, 255, 255, 0.92);
 }
 
-/* ─── Grain Texture ─────────────────────────────────── */
-.pd-grain {
+.pd-root::before {
+  content: "";
+  position: absolute;
+  inset: 0;
   pointer-events: none;
-  position: fixed;
-  inset: -100px;
-  opacity: 0.028;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)'/%3E%3C/svg%3E");
-  background-size: 256px 256px;
-  mix-blend-mode: screen;
-  z-index: 0;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.014) 0%,
+      transparent 18%,
+      transparent 82%,
+      rgba(255, 255, 255, 0.01) 100%
+    );
+
+  opacity: 0.9;
 }
 
-/* ─── Container ─────────────────────────────────────── */
+.pd-root::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+
+  background-image: radial-gradient(
+    rgba(255, 255, 255, 0.14) 0.42px,
+    transparent 0.42px
+  );
+  background-size: 4px 4px;
+  opacity: 0.016;
+}
+
+.pd-grain {
+  display: none;
+}
+
 .pd-container {
-  max-width: 1020px;
-  margin: 0 auto;
-  padding: 7rem 2.2rem 7rem;
   position: relative;
   z-index: 1;
+
+  width: min(88vw, 1120px);
+  margin: 0 auto;
 }
 
-/* ─── Reveal Animation ───────────────────────────────── */
+.pd-side-line {
+  position: absolute;
+  left: 0;
+  top: 2.2rem;
+
+  width: 1px;
+  height: calc(100% - 4.4rem);
+
+  background: linear-gradient(
+    to bottom,
+    rgba(217, 185, 138, 0.38),
+    rgba(220, 226, 235, 0.1),
+    rgba(255, 255, 255, 0.05)
+  );
+
+  pointer-events: none;
+  opacity: 0.84;
+}
+
+/* ===============================
+   REVEAL
+================================ */
 .pd-reveal {
   opacity: 0;
-  transform: translateY(24px);
+  transform: translate3d(0, 20px, 0);
+
   transition:
-    opacity  0.9s cubic-bezier(0.22, 0.56, 0.18, 1),
-    transform 0.9s cubic-bezier(0.22, 0.56, 0.18, 1);
+    opacity 0.95s var(--pd-ease),
+    transform 0.95s var(--pd-ease);
+
+  will-change: opacity, transform;
 }
 
 .pd-reveal.pd-revealed {
   opacity: 1;
-  transform: none;
+  transform: translate3d(0, 0, 0);
 }
 
-/* ─── Header ─────────────────────────────────────────── */
+/* ===============================
+   HEADER
+================================ */
 .pd-header {
-  padding-bottom: 4.5rem;
-  border-bottom: 1px solid var(--pd-border);
+  position: relative;
+
+  padding-left: 1rem;
+  padding-bottom: 4.2rem;
   margin-bottom: 0;
 }
 
-.pd-eyebrow {
-  font-size: 0.7rem;
-  letter-spacing: 0.32em;
-  color: var(--pd-gold);
-  margin-bottom: 1.4rem;
-  font-weight: 400;
+.pd-svg-title {
+  max-width: 100%;
 }
 
-.pd-title {
-  font-family: var(--pd-font-serif);
-  font-size: clamp(2.2rem, 4.5vw, 3.6rem);
-  font-weight: 300;
-  letter-spacing: 0.08em;
-  line-height: 1.12;
-  color: var(--pd-w96);
-  margin-bottom: 1.6rem;
+.pd-svg-title .section-svg {
+  width: min(100%, 760px);
 }
 
-.pd-title-rule {
-  width: 36px;
+.pd-svg-title .section-svg-text {
+  font-size: 122px;
+}
+
+.pd-hidden-heading {
+  position: absolute;
+  width: 1px;
   height: 1px;
-  background: linear-gradient(90deg, var(--pd-gold) 0%, transparent 100%);
-  margin-bottom: 2rem;
-  opacity: 0.7;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+}
+
+.pd-page-title {
+  margin: 1.05rem 0 0;
+
+  color: rgba(255, 255, 255, 0.42);
+  font-size: 0.82rem;
+  line-height: 1;
+  letter-spacing: 0.14em;
 }
 
 .pd-lead {
-  font-size: 0.95rem;
-  line-height: 2.05;
-  color: var(--pd-w56);
-  max-width: 640px;
+  max-width: 760px;
+  margin: 2.35rem 0 0;
+
+  color: rgba(255, 255, 255, 0.62);
+  font-size: 0.96rem;
+  line-height: 2.1;
+  letter-spacing: 0.04em;
 }
 
-.pd-lead-em {
-  color: var(--pd-w84);
-  border-bottom: 1px solid rgba(201, 168, 101, 0.28);
-  padding-bottom: 0.05em;
+.pd-lead span,
+.pd-text-accent {
+  color: rgba(255, 255, 255, 0.92);
 }
 
-/* ─── Section Title ──────────────────────────────────── */
+.pd-taxnote {
+  margin: 1.45rem 0 0;
+
+  color: rgba(255, 255, 255, 0.38);
+  font-size: 0.78rem;
+  line-height: 1.8;
+  letter-spacing: 0.08em;
+}
+
+/* ===============================
+   SECTION TITLE
+================================ */
 .pd-section-title {
+  position: relative;
+
   display: flex;
   align-items: center;
   gap: 0.9rem;
-  margin-top: 5rem;
-  margin-bottom: 2rem;
-  font-size: 0.74rem;
+
+  margin: 4.8rem 0 1.8rem;
+  padding-left: 1rem;
+
+  color: rgba(255, 255, 255, 0.42);
+  font-size: 0.76rem;
   font-weight: 400;
-  letter-spacing: 0.24em;
-  color: var(--pd-w38);
+  line-height: 1;
+  letter-spacing: 0.2em;
 }
 
 .pd-section-title.is-main {
-  color: var(--pd-w72);
-  font-size: 0.8rem;
-  letter-spacing: 0.22em;
-  margin-top: 5.5rem;
+  margin-top: 5.4rem;
+  color: rgba(255, 255, 255, 0.62);
 }
 
 .pd-section-rule {
-  display: inline-block;
-  flex-shrink: 0;
-  width: 18px;
-  height: 1px;
-  background: var(--pd-gold);
-  opacity: 0.5;
-}
-
-.pd-section-title.is-main .pd-section-rule {
   width: 26px;
-  opacity: 0.85;
+  height: 1px;
+
+  background: linear-gradient(
+    90deg,
+    rgba(217, 185, 138, 0.74),
+    rgba(220, 226, 235, 0.14),
+    transparent
+  );
 }
 
-/* ─── Plan Cards Grid ────────────────────────────────── */
+/* ===============================
+   PLAN GRID
+================================ */
 .pd-plans {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1.5rem;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+
+  padding-left: 1rem;
 }
 
 .pd-plan-card {
-  background: var(--pd-surface);
-  border: 1px solid var(--pd-border);
-  border-radius: var(--pd-radius);
-  padding: 2rem 1.7rem;
-  display: flex;
-  flex-direction: column;
   position: relative;
   overflow: hidden;
+
+  display: flex;
+  flex-direction: column;
+
+  min-height: 100%;
+  padding: 1.85rem 1.45rem 1.55rem;
+
+  border: 1px solid var(--pd-border);
+  border-top-color: rgba(217, 185, 138, 0.16);
+  border-radius: 2px;
+
+  background:
+    radial-gradient(
+      circle at 16% 0%,
+      rgba(217, 185, 138, 0.04),
+      transparent 35%
+    ),
+    rgba(255, 255, 255, 0.012);
+
+  box-shadow:
+    0 0 0 0.5px rgba(217, 185, 138, 0.025),
+    0 18px 48px rgba(0, 0, 0, 0.24);
+
+  isolation: isolate;
+
   transition:
-    transform     0.42s cubic-bezier(0.22, 0.56, 0.18, 1),
-    border-color  0.42s ease,
-    box-shadow    0.42s ease,
-    background    0.42s ease;
+    transform 0.55s var(--pd-ease),
+    border-color 0.35s ease,
+    background 0.35s ease,
+    box-shadow 0.35s ease;
 }
 
-.pd-plan-card::after {
-  content: '';
+.pd-plan-card::before,
+.pd-maintenance::before,
+.pd-option::before {
+  content: "";
   position: absolute;
   inset: 0;
-  border-radius: var(--pd-radius);
-  background: radial-gradient(ellipse at 30% 0%, rgba(201,168,101,0.055) 0%, transparent 65%);
-  opacity: 0;
-  transition: opacity 0.42s ease;
+
+  pointer-events: none;
+
+  background-image: radial-gradient(
+    rgba(255, 255, 255, 0.13) 0.42px,
+    transparent 0.42px
+  );
+  background-size: 4px 4px;
+  opacity: 0.014;
+}
+
+.pd-plan-card::after,
+.pd-maintenance::after {
+  content: "";
+  position: absolute;
+  inset: 0 auto auto 0;
+
+  width: 100%;
+  height: 1px;
+
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(217, 185, 138, 0.5),
+    rgba(255, 255, 255, 0.12),
+    transparent
+  );
+
   pointer-events: none;
 }
 
-.pd-plan-card:hover {
-  transform: translateY(-5px);
-  border-color: var(--pd-gold-border);
-  background: var(--pd-surface-hover);
+.pd-plan-card:hover,
+.pd-plan-card:focus-within {
+  transform: translateY(-3px);
+  border-color: rgba(217, 185, 138, 0.26);
+
   box-shadow:
-    0 28px 70px rgba(0, 0, 0, 0.45),
-    0 0 0 0.5px rgba(201, 168, 101, 0.1);
+    0 0 0 0.5px rgba(217, 185, 138, 0.06),
+    0 24px 66px rgba(0, 0, 0, 0.34);
 }
 
-.pd-plan-card:hover::after {
-  opacity: 1;
-}
-
-/* Featured card */
 .pd-plan-card.is-featured {
-  border-color: rgba(201, 168, 101, 0.2);
-  background: rgba(201, 168, 101, 0.035);
+  border-color: rgba(217, 185, 138, 0.24);
+
+  background:
+    radial-gradient(
+      circle at 16% 0%,
+      rgba(217, 185, 138, 0.075),
+      transparent 36%
+    ),
+    rgba(255, 255, 255, 0.016);
 }
 
 .pd-plan-popular {
   position: absolute;
-  top: 1.1rem;
-  right: 1.1rem;
-  font-size: 0.58rem;
-  letter-spacing: 0.22em;
-  color: var(--pd-gold);
-  border: 1px solid var(--pd-gold-border);
-  padding: 0.22em 0.65em;
-  border-radius: 9999px;
-  font-weight: 400;
+  top: 1.15rem;
+  right: 1.15rem;
+  z-index: 1;
+
+  padding: 0.28rem 0.5rem;
+
+  border: 1px solid rgba(217, 185, 138, 0.22);
+
+  background: rgba(217, 185, 138, 0.045);
+
+  color: rgba(238, 226, 204, 0.72);
+  font-size: 0.52rem;
+  line-height: 1;
+  letter-spacing: 0.14em;
 }
 
 .pd-plan-num {
-  font-size: 0.65rem;
-  letter-spacing: 0.24em;
-  color: var(--pd-gold);
-  opacity: 0.72;
-  margin-bottom: 0.5rem;
+  position: relative;
+  z-index: 1;
+
+  margin: 0 0 0.75rem;
+
+  color: rgba(217, 185, 138, 0.56);
+  font-size: 0.62rem;
+  line-height: 1;
+  letter-spacing: 0.22em;
 }
 
 .pd-plan-name {
-  font-size: 1.05rem;
+  position: relative;
+  z-index: 1;
+
+  margin: 0;
+
+  color: rgba(255, 255, 255, 0.94);
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: 1.85rem;
   font-weight: 300;
-  color: var(--pd-w96);
-  letter-spacing: 0.03em;
-  margin-bottom: 1.3rem;
-  line-height: 1.4;
+  line-height: 1;
+  letter-spacing: 0.055em;
 }
 
-/* Price treatment */
+.pd-plan-jp {
+  position: relative;
+  z-index: 1;
+
+  margin: 0.55rem 0 1.3rem;
+
+  color: rgba(255, 255, 255, 0.38);
+  font-size: 0.74rem;
+  line-height: 1;
+  letter-spacing: 0.12em;
+}
+
 .pd-plan-price-wrap {
+  position: relative;
+  z-index: 1;
+
   padding: 1.05rem 0;
-  margin-bottom: 1.1rem;
-  border-top: 1px solid var(--pd-border);
-  border-bottom: 1px solid var(--pd-border);
+  margin-bottom: 1.15rem;
+
+  border-top: 1px solid var(--pd-border-soft);
+  border-bottom: 1px solid var(--pd-border-soft);
 }
 
 .pd-plan-price-label {
+  margin: 0 0 0.4rem;
+
+  color: rgba(255, 255, 255, 0.34);
   font-size: 0.62rem;
-  letter-spacing: 0.18em;
-  color: var(--pd-w38);
-  margin-bottom: 0.35rem;
+  line-height: 1;
+  letter-spacing: 0.16em;
 }
 
 .pd-plan-price {
-  font-family: var(--pd-font-serif);
-  font-size: 2.1rem;
-  font-weight: 400;
-  color: var(--pd-gold);
-  letter-spacing: 0.02em;
+  margin: 0;
+
+  color: rgba(238, 226, 204, 0.94);
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: 2.15rem;
+  font-weight: 300;
   line-height: 1;
+  letter-spacing: 0.02em;
 }
 
 .pd-plan-currency {
-  font-size: 1.2rem;
-  opacity: 0.8;
-  margin-right: 0.06em;
+  margin-right: 0.05em;
+  font-size: 1.15rem;
+  opacity: 0.82;
 }
 
 .pd-plan-suffix {
+  margin-left: 0.12em;
+  color: rgba(255, 255, 255, 0.34);
   font-size: 0.9rem;
-  color: var(--pd-w38);
-  margin-left: 0.1em;
 }
 
 .pd-plan-detail {
-  font-size: 0.87rem;
-  color: var(--pd-w56);
-  line-height: 1.9;
-  margin-bottom: 0.65rem;
+  position: relative;
+  z-index: 1;
+
   flex: 1;
+
+  margin: 0 0 0.72rem;
+
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.84rem;
+  line-height: 1.9;
+  letter-spacing: 0.035em;
 }
 
 .pd-plan-best {
-  font-size: 0.76rem;
-  color: var(--pd-w38);
-  line-height: 1.7;
-  margin-bottom: 1.2rem;
+  position: relative;
+  z-index: 1;
+
+  margin: 0 0 1.25rem;
+
+  color: rgba(255, 255, 255, 0.38);
+  font-size: 0.74rem;
+  line-height: 1.75;
+  letter-spacing: 0.04em;
 }
 
 .pd-plan-includes {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  border-top: 1px solid var(--pd-border);
-  padding-top: 1rem;
+  position: relative;
+  z-index: 1;
+
   display: grid;
-  gap: 0.5rem;
+  gap: 0.62rem;
+
+  margin: 0;
+  padding: 1.1rem 0 0;
+
+  border-top: 1px solid var(--pd-border-soft);
+  list-style: none;
 }
 
 .pd-plan-includes li {
   display: flex;
   align-items: flex-start;
-  gap: 0.6rem;
+  gap: 0.55rem;
+
+  color: rgba(255, 255, 255, 0.52);
   font-size: 0.72rem;
-  color: var(--pd-w38);
-  letter-spacing: 0.05em;
-  line-height: 1.7;
+  line-height: 1.75;
+  letter-spacing: 0.06em;
 }
 
 .pd-plan-dot {
-  display: block;
-  width: 4px;
-  height: 4px;
-  border-radius: 50%;
-  background: var(--pd-gold);
-  opacity: 0.45;
-  flex-shrink: 0;
-  margin-top: 0.58em;
+  flex: 0 0 auto;
+
+  width: 3px;
+  height: 3px;
+  margin-top: 0.78em;
+
+  background: rgba(220, 226, 235, 0.42);
 }
 
-/* ─── Maintenance Card ───────────────────────────────── */
+/* ===============================
+   MAINTENANCE
+================================ */
 .pd-maintenance {
-  background: var(--pd-surface);
-  border: 1px solid var(--pd-border);
-  border-radius: var(--pd-radius);
-  padding: 2.4rem 2.2rem;
   position: relative;
   overflow: hidden;
-  transition: border-color 0.4s ease;
-}
 
-.pd-maintenance:hover {
-  border-color: var(--pd-gold-border);
+  margin-left: 1rem;
+  padding: 1.95rem 1.65rem 1.75rem;
+
+  border: 1px solid var(--pd-border);
+  border-top-color: rgba(217, 185, 138, 0.16);
+  border-radius: 2px;
+
+  background:
+    radial-gradient(
+      circle at 16% 0%,
+      rgba(217, 185, 138, 0.045),
+      transparent 36%
+    ),
+    rgba(255, 255, 255, 0.012);
+
+  box-shadow:
+    0 0 0 0.5px rgba(217, 185, 138, 0.025),
+    0 18px 48px rgba(0, 0, 0, 0.22);
 }
 
 .pd-maintenance-header {
+  position: relative;
+  z-index: 1;
+
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
   gap: 2.4rem;
-  margin-bottom: 2rem;
-  padding-bottom: 2rem;
-  border-bottom: 1px solid var(--pd-border);
+
+  padding-bottom: 1.75rem;
+  margin-bottom: 1.75rem;
+
+  border-bottom: 1px solid var(--pd-border-soft);
 }
 
 .pd-maintenance-num {
-  font-size: 0.65rem;
-  letter-spacing: 0.24em;
-  color: var(--pd-gold);
-  opacity: 0.72;
-  margin-bottom: 0.5rem;
+  margin: 0 0 0.75rem;
+
+  color: rgba(217, 185, 138, 0.56);
+  font-size: 0.62rem;
+  line-height: 1;
+  letter-spacing: 0.22em;
 }
 
 .pd-maintenance-name {
-  font-size: 1.2rem;
+  margin: 0 0 0.85rem;
+
+  color: rgba(255, 255, 255, 0.94);
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: 1.7rem;
   font-weight: 300;
-  color: var(--pd-w96);
-  letter-spacing: 0.03em;
-  margin-bottom: 0.75rem;
+  line-height: 1.1;
+  letter-spacing: 0.05em;
 }
 
 .pd-maintenance-detail {
-  font-size: 0.88rem;
-  color: var(--pd-w56);
-  line-height: 1.9;
-  max-width: 520px;
+  max-width: 560px;
+  margin: 0;
+
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.86rem;
+  line-height: 1.95;
+  letter-spacing: 0.035em;
 }
 
 .pd-maintenance-detail strong {
-  color: var(--pd-w84);
-  font-weight: 400;
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 500;
 }
 
 .pd-maintenance-price-wrap {
-  flex-shrink: 0;
+  flex: 0 0 auto;
   text-align: right;
 }
 
 .pd-maintenance-price-label {
+  margin: 0 0 0.4rem;
+
+  color: rgba(255, 255, 255, 0.34);
   font-size: 0.62rem;
-  letter-spacing: 0.18em;
-  color: var(--pd-w38);
-  margin-bottom: 0.35rem;
+  line-height: 1;
+  letter-spacing: 0.16em;
 }
 
 .pd-maintenance-price {
-  font-family: var(--pd-font-serif);
-  font-size: 2.3rem;
-  font-weight: 400;
-  color: var(--pd-gold);
+  margin: 0;
+
+  color: rgba(238, 226, 204, 0.94);
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: 2.35rem;
+  font-weight: 300;
   line-height: 1;
-  white-space: nowrap;
 }
 
 .pd-maintenance-currency {
-  font-size: 1.3rem;
-  opacity: 0.8;
   margin-right: 0.05em;
+  font-size: 1.2rem;
 }
 
 .pd-maintenance-unit {
-  font-size: 0.95rem;
-  color: var(--pd-w38);
+  color: rgba(255, 255, 255, 0.34);
+  font-size: 0.92rem;
 }
 
 .pd-maintenance-cols {
+  position: relative;
+  z-index: 1;
+
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 2.4rem;
+  gap: 2rem;
 }
 
 .pd-maintenance-col-title {
-  font-size: 0.7rem;
-  letter-spacing: 0.2em;
-  color: var(--pd-w56);
-  margin-bottom: 0.9rem;
+  margin: 0 0 0.9rem;
   padding-bottom: 0.65rem;
-  border-bottom: 1px solid var(--pd-border);
+
+  border-bottom: 1px solid var(--pd-border-soft);
+
+  color: rgba(255, 255, 255, 0.58);
+  font-size: 0.7rem;
   font-weight: 400;
+  line-height: 1.5;
+  letter-spacing: 0.16em;
 }
 
 .pd-maintenance-col-title--extra {
-  color: var(--pd-w38);
+  color: rgba(255, 255, 255, 0.38);
 }
 
 .pd-maintenance-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
   display: grid;
-  gap: 0.45rem;
+  gap: 0.48rem;
+
+  margin: 0;
+  padding: 0;
+
+  list-style: none;
 }
 
 .pd-maintenance-list li {
-  font-size: 0.86rem;
-  color: var(--pd-w56);
-  line-height: 1.75;
-  padding-left: 1.2rem;
   position: relative;
+
+  padding-left: 1.05rem;
+
+  color: rgba(255, 255, 255, 0.52);
+  font-size: 0.82rem;
+  line-height: 1.8;
+  letter-spacing: 0.04em;
 }
 
 .pd-maintenance-list li::before {
-  content: '—';
+  content: "—";
   position: absolute;
   left: 0;
-  color: var(--pd-w16);
-  font-size: 0.7rem;
-  top: 0.15em;
+  top: 0.03em;
+
+  color: rgba(220, 226, 235, 0.22);
 }
 
 .pd-maintenance-list--extra li {
-  color: var(--pd-w38);
+  color: rgba(255, 255, 255, 0.34);
 }
 
-.pd-maintenance-list--extra li::before {
-  color: var(--pd-w08);
-}
-
-/* ─── Flow Timeline ──────────────────────────────────── */
+/* ===============================
+   FLOW
+================================ */
 .pd-flow {
   display: grid;
   gap: 0;
+
+  margin-left: 1rem;
 }
 
 .pd-flow-item {
   display: flex;
-  gap: 1.6rem;
+  gap: 1.25rem;
   align-items: flex-start;
 }
 
@@ -475,133 +681,168 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  flex-shrink: 0;
+  flex: 0 0 auto;
 }
 
 .pd-flow-dot {
-  width: 38px;
-  height: 38px;
-  border-radius: 50%;
-  border: 1px solid var(--pd-gold-border);
-  background: rgba(201, 168, 101, 0.05);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: var(--pd-font-serif);
-  font-size: 0.72rem;
-  letter-spacing: 0.06em;
-  color: var(--pd-gold);
-  flex-shrink: 0;
-  position: relative;
-  z-index: 1;
+
+  width: 38px;
+  height: 38px;
+
+  border: 1px solid rgba(217, 185, 138, 0.24);
+  border-radius: 999px;
+
+  background: rgba(217, 185, 138, 0.045);
+
+  color: rgba(238, 226, 204, 0.78);
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: 0.78rem;
+  line-height: 1;
+  letter-spacing: 0.04em;
 }
 
 .pd-flow-line {
   width: 1px;
-  flex: 1;
   min-height: 2.4rem;
-  background: linear-gradient(to bottom, var(--pd-gold-border), transparent);
-  margin: 0.25rem 0;
+  flex: 1;
+
+  margin: 0.3rem 0;
+
+  background: linear-gradient(
+    to bottom,
+    rgba(217, 185, 138, 0.22),
+    transparent
+  );
 }
 
 .pd-flow-body {
-  padding: 0.4rem 0 2.4rem;
+  padding: 0.32rem 0 2.35rem;
 }
 
 .pd-flow-title {
-  font-size: 0.94rem;
-  color: var(--pd-w84);
+  margin: 0 0 0.35rem;
+
+  color: rgba(255, 255, 255, 0.82);
+  font-size: 0.92rem;
   line-height: 1.55;
-  font-weight: 400;
+  letter-spacing: 0.06em;
 }
 
 .pd-flow-sub {
+  margin: 0;
+
+  color: rgba(255, 255, 255, 0.38);
   font-size: 0.78rem;
-  color: var(--pd-w38);
-  margin-top: 0.25rem;
-  line-height: 1.6;
+  line-height: 1.7;
+  letter-spacing: 0.04em;
 }
 
-/* ─── Text Block ─────────────────────────────────────── */
+/* ===============================
+   TEXT BLOCK
+================================ */
 .pd-textblock {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  border-left: 1px solid rgba(201, 168, 101, 0.22);
-  padding-left: 1.4rem;
   display: grid;
-  gap: 0.6rem;
+  gap: 0.62rem;
+
+  margin: 0 0 0 1rem;
+  padding: 0 0 0 1.2rem;
+
+  border-left: 1px solid rgba(217, 185, 138, 0.22);
+
+  list-style: none;
 }
 
 .pd-textblock li {
-  font-size: 0.91rem;
-  color: var(--pd-w72);
-  line-height: 1.92;
-}
-
-.pd-text-accent {
-  color: var(--pd-w84);
+  color: rgba(255, 255, 255, 0.64);
+  font-size: 0.9rem;
+  line-height: 1.95;
+  letter-spacing: 0.04em;
 }
 
 .pd-text-muted {
-  color: var(--pd-w38);
+  color: rgba(255, 255, 255, 0.38);
 }
 
 .pd-note {
+  color: rgba(255, 255, 255, 0.38) !important;
   font-size: 0.82rem !important;
-  color: var(--pd-w38) !important;
 }
 
-/* ─── Options Grid ───────────────────────────────────── */
+/* ===============================
+   OPTIONS
+================================ */
 .pd-options {
   display: grid;
   grid-template-columns: 1fr 1fr;
+
+  margin-left: 1rem;
+
   border: 1px solid var(--pd-border);
-  border-radius: 1rem;
+  border-radius: 2px;
+
   overflow: hidden;
 }
 
 .pd-option {
-  padding: 1.5rem 1.6rem;
-  border-right: 1px solid var(--pd-border);
-  border-bottom: 1px solid var(--pd-border);
-  background: var(--pd-surface);
-  transition: background 0.32s ease;
+  position: relative;
+  overflow: hidden;
+
+  padding: 1.45rem 1.55rem;
+
+  border-right: 1px solid var(--pd-border-soft);
+  border-bottom: 1px solid var(--pd-border-soft);
+
+  background: rgba(255, 255, 255, 0.012);
+
+  transition:
+    background 0.35s ease,
+    border-color 0.35s ease;
 }
 
 .pd-option:nth-child(even) {
   border-right: none;
 }
 
-.pd-option:nth-last-child(-n+2) {
+.pd-option:nth-last-child(-n + 2) {
   border-bottom: none;
 }
 
 .pd-option:hover {
-  background: var(--pd-surface-hover);
+  background: rgba(217, 185, 138, 0.035);
 }
 
 .pd-option-name {
-  font-size: 0.86rem;
-  color: var(--pd-w72);
-  line-height: 1.6;
-  margin-bottom: 0.5rem;
+  margin: 0 0 0.55rem;
+
+  color: rgba(255, 255, 255, 0.68);
+  font-size: 0.84rem;
+  line-height: 1.65;
+  letter-spacing: 0.045em;
 }
 
 .pd-option-price {
-  font-family: var(--pd-font-serif);
-  font-size: 1.15rem;
-  color: var(--pd-gold);
-  font-weight: 400;
-  letter-spacing: 0.02em;
+  margin: 0;
+
+  color: rgba(238, 226, 204, 0.82);
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: 1.2rem;
+  line-height: 1.2;
+  letter-spacing: 0.03em;
 }
 
-/* ─── CTA Area ───────────────────────────────────────── */
+/* ===============================
+   CTA
+================================ */
 .pd-cta-area {
-  text-align: center;
-  margin-top: 5.5rem;
+  margin: 5.4rem 0 0 1rem;
   padding-top: 4rem;
-  border-top: 1px solid var(--pd-border);
+
+  border-top: 1px solid var(--pd-border-soft);
+
+  text-align: center;
 }
 
 .pd-cta-ornament {
@@ -609,92 +850,103 @@
   align-items: center;
   justify-content: center;
   gap: 0.75rem;
-  margin-bottom: 2.2rem;
+
+  margin-bottom: 2.15rem;
 }
 
 .pd-cta-ornament span {
   display: block;
+
   width: 32px;
   height: 1px;
-  background: linear-gradient(90deg, transparent, var(--pd-gold));
-  opacity: 0.35;
+
+  background: linear-gradient(90deg, transparent, rgba(217, 185, 138, 0.44));
 }
 
 .pd-cta-ornament span:last-child {
-  background: linear-gradient(90deg, var(--pd-gold), transparent);
+  background: linear-gradient(90deg, rgba(217, 185, 138, 0.44), transparent);
 }
 
 .pd-cta-ornament-dot {
   width: 5px !important;
   height: 5px !important;
-  border-radius: 50% !important;
-  border: 1px solid var(--pd-gold-border) !important;
+
+  border: 1px solid rgba(217, 185, 138, 0.28) !important;
+  border-radius: 999px !important;
+
   background: transparent !important;
 }
 
 .pd-thanks {
-  color: var(--pd-w56);
-  font-size: 0.93rem;
+  margin: 0 0 2.15rem;
+
+  color: rgba(255, 255, 255, 0.56);
+  font-size: 0.94rem;
   line-height: 2;
-  margin-bottom: 2.2rem;
+  letter-spacing: 0.04em;
 }
 
 .pd-cta {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 0.75rem;
+  gap: 0.58rem;
+
+  min-height: 48px;
   min-width: 210px;
-  min-height: 52px;
-  padding: 0 2.2rem;
-  border-radius: 9999px;
-  border: 1px solid rgba(201, 168, 101, 0.32);
-  color: var(--pd-gold);
-  letter-spacing: 0.24em;
-  font-size: 0.7rem;
+  padding: 0 1.8rem;
+
+  border: 1px solid rgba(217, 185, 138, 0.26);
+  border-radius: 999px;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(217, 185, 138, 0.05),
+      rgba(255, 255, 255, 0.01)
+    );
+
+  color: rgba(238, 226, 204, 0.88);
+  font-size: 0.74rem;
+  line-height: 1;
+  letter-spacing: 0.18em;
   text-decoration: none;
-  background: linear-gradient(
-    180deg,
-    rgba(201, 168, 101, 0.05) 0%,
-    rgba(201, 168, 101, 0.01) 100%
-  );
-  box-shadow: 0 0 40px var(--pd-gold-glow);
-  transition:
-    transform     0.55s cubic-bezier(0.22, 0.56, 0.18, 1),
-    border-color  0.45s ease,
-    background    0.45s ease,
-    box-shadow    0.45s ease,
-    color         0.45s ease;
-}
 
-.pd-cta-arrow {
-  flex-shrink: 0;
-  transition: transform 0.45s cubic-bezier(0.22, 0.56, 0.18, 1);
-}
-
-.pd-cta:hover {
-  transform: translateY(-2px);
-  border-color: rgba(201, 168, 101, 0.6);
-  color: var(--pd-gold);
-  background: linear-gradient(
-    180deg,
-    rgba(201, 168, 101, 0.1) 0%,
-    rgba(201, 168, 101, 0.03) 100%
-  );
   box-shadow:
-    0 8px 42px rgba(201, 168, 101, 0.14),
-    0 0 0 0.5px rgba(201, 168, 101, 0.18);
+    0 14px 36px rgba(0, 0, 0, 0.22),
+    inset 0 1px 0 rgba(255, 255, 255, 0.035);
+
+  transition:
+    transform 0.35s var(--pd-ease),
+    border-color 0.35s ease,
+    background 0.35s ease,
+    color 0.35s ease,
+    box-shadow 0.35s ease;
 }
 
-.pd-cta:hover .pd-cta-arrow {
-  transform: translateX(3px);
+.pd-cta:hover,
+.pd-cta:focus-visible {
+  transform: translateY(-2px);
+
+  border-color: rgba(217, 185, 138, 0.42);
+
+  background: rgba(217, 185, 138, 0.07);
+
+  color: rgba(255, 255, 255, 0.96);
+
+  box-shadow:
+    0 18px 48px rgba(0, 0, 0, 0.3),
+    0 0 0 0.5px rgba(217, 185, 138, 0.06);
+
+  outline: none;
 }
 
-/* ─── Responsive ─────────────────────────────────────── */
-@media (max-width: 900px) {
+/* ===============================
+   MOBILE
+================================ */
+@media (max-width: 980px) {
   .pd-plans {
     grid-template-columns: 1fr;
-    gap: 1.2rem;
   }
 
   .pd-maintenance-header {
@@ -708,81 +960,140 @@
 }
 
 @media (max-width: 768px) {
-  .pd-container {
-    padding: 5rem 1.5rem 5rem;
+  .pd-root {
+    padding: 88px 0 104px;
   }
 
-  .pd-title {
-    font-size: 1.95rem;
+  .pd-container {
+    width: calc(100% - 2rem);
+  }
+
+  .pd-side-line {
+    top: 1.6rem;
+    height: calc(100% - 3.2rem);
+    opacity: 0.76;
+  }
+
+  .pd-header,
+  .pd-section-title,
+  .pd-plans,
+  .pd-maintenance,
+  .pd-flow,
+  .pd-textblock,
+  .pd-options,
+  .pd-cta-area {
+    margin-left: 0;
+    padding-left: 0.75rem;
+  }
+
+  .pd-header {
+    padding-bottom: 3.2rem;
+  }
+
+  .pd-svg-title .section-svg {
+    width: min(100%, 560px);
+  }
+
+  .pd-svg-title .section-svg-text {
+    font-size: 114px;
+  }
+
+  .pd-page-title {
+    font-size: 0.74rem;
+  }
+
+  .pd-lead {
+    margin-top: 1.8rem;
+    font-size: 0.9rem;
+    line-height: 2;
+  }
+
+  .pd-section-title {
+    margin-top: 3.6rem;
+    margin-bottom: 1.45rem;
+    font-size: 0.72rem;
+    letter-spacing: 0.16em;
+  }
+
+  .pd-section-title.is-main {
+    margin-top: 4rem;
+  }
+
+  .pd-plan-card,
+  .pd-maintenance {
+    padding: 1.65rem 1.25rem 1.45rem;
   }
 
   .pd-maintenance-cols {
     grid-template-columns: 1fr;
-    gap: 1.6rem;
+    gap: 1.45rem;
+  }
+
+  .pd-maintenance-name {
+    font-size: 1.45rem;
+  }
+
+  .pd-maintenance-price {
+    font-size: 2rem;
   }
 
   .pd-options {
     grid-template-columns: 1fr;
   }
 
-  .pd-option:nth-child(odd),
-  .pd-option:nth-child(even) {
+  .pd-option,
+  .pd-option:nth-child(even),
+  .pd-option:nth-last-child(-n + 2) {
     border-right: none;
-  }
-
-  .pd-option:nth-last-child(-n+2) {
-    border-bottom: 1px solid var(--pd-border);
+    border-bottom: 1px solid var(--pd-border-soft);
   }
 
   .pd-option:last-child {
     border-bottom: none;
   }
 
+  .pd-flow-dot {
+    width: 34px;
+    height: 34px;
+  }
+
   .pd-flow-body {
     padding-bottom: 2rem;
   }
 
-  .pd-section-title {
-    margin-top: 3.5rem;
+  .pd-cta-area {
+    margin-top: 4.4rem;
+    padding-top: 3.2rem;
   }
 
-  .pd-section-title.is-main {
-    margin-top: 4rem;
+  .pd-cta {
+    min-width: 190px;
   }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 390px) {
   .pd-container {
-    padding: 4rem 1.2rem 4rem;
+    width: calc(100% - 1.5rem);
   }
 
-  .pd-title {
-    font-size: 1.7rem;
-    letter-spacing: 0.06em;
-  }
-
-  .pd-maintenance {
-    padding: 1.8rem 1.4rem;
-  }
-
-  .pd-plan-card {
-    padding: 1.6rem 1.4rem;
-  }
-
-  .pd-options .pd-option {
-    padding: 1.2rem 1.3rem;
-  }
-
-  .pd-flow-dot {
-    width: 32px;
-    height: 32px;
-    font-size: 0.66rem;
+  .pd-plan-name {
+    font-size: 1.65rem;
   }
 }
-.pd-taxnote{
-  margin-top: 1.2rem;
-  font-size: 0.78rem;
-  line-height: 1.8;
-  letter-spacing: 0.08em;
-  color: var(--pd-w38);
+
+/* ===============================
+   REDUCED MOTION
+================================ */
+@media (prefers-reduced-motion: reduce) {
+  .pd-root *,
+  .pd-root *::before,
+  .pd-root *::after {
+    transition: none !important;
+    animation: none !important;
+  }
+
+  .pd-reveal {
+    opacity: 1 !important;
+    transform: none !important;
+  }
 }

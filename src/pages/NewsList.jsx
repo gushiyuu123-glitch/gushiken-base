@@ -2,6 +2,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import { getNewsList } from "../lib/microcms";
 import styles from "../styles/newsList.module.css";
 import { Link } from "react-router-dom";
+import SectionSvgTitle from "../components/SectionSvgTitle";
 
 export default function NewsList() {
   const [news, setNews] = useState([]);
@@ -14,23 +15,31 @@ export default function NewsList() {
       month: "2-digit",
       day: "2-digit",
     });
+
     return (dateStr) => {
       if (!dateStr) return "";
-      const d = new Date(dateStr);
-      if (Number.isNaN(d.getTime())) return "";
-      return fmt.format(d);
+
+      const date = new Date(dateStr);
+      if (Number.isNaN(date.getTime())) return "";
+
+      return fmt.format(date);
     };
   }, []);
 
   useEffect(() => {
     let mounted = true;
 
-    (async () => {
+    document.title = "NEWS｜GUSHIKEN DESIGN";
+
+    async function fetchNews() {
       try {
+        setLoading(true);
+
         const res = await getNewsList({ limit: 50 });
         if (!mounted) return;
 
         const items = Array.isArray(res?.contents) ? res.contents : [];
+
         setNews(items);
         setError(false);
       } catch {
@@ -40,7 +49,9 @@ export default function NewsList() {
         if (!mounted) return;
         setLoading(false);
       }
-    })();
+    }
+
+    fetchNews();
 
     return () => {
       mounted = false;
@@ -50,67 +61,96 @@ export default function NewsList() {
   const hasNews = news.length > 0;
 
   return (
-    <section className={styles.wrapper} aria-busy={loading ? "true" : "false"}>
-      <header className={styles.header}>
-        <p className={styles.kicker}>NEWS</p>
-        <h1 className={styles.title}>お知らせ</h1>
+    <section
+      className={`${styles.wrapper} aq-fade aq-show`}
+      aria-busy={loading ? "true" : "false"}
+      aria-labelledby="news-list-heading"
+    >
+      <div className={styles.inner}>
+        <div className={styles.sideLine} aria-hidden="true" />
 
-        {/* ✅ “静かに”は使わない */}
-        <p className={styles.lead}>制作の更新やお知らせをまとめています。</p>
-      </header>
+        <header className={styles.header}>
+          <SectionSvgTitle
+            title="NEWS"
+            sub="NEWS / ARCHIVE"
+            className={styles.svgTitle}
+          />
 
-      {loading && (
-        <p className={styles.loading} aria-live="polite">
-          読み込み中…
-        </p>
-      )}
+          <h1 id="news-list-heading" className={styles.hiddenHeading}>
+            お知らせ
+          </h1>
 
-      {error && !loading && (
-        <p className={styles.error} aria-live="assertive">
-          お知らせを読み込めませんでした
-        </p>
-      )}
+          <p className={styles.lead}>
+            制作の更新やお知らせをまとめています。
+          </p>
+        </header>
 
-      {!loading && !error && !hasNews && (
-        <p className={styles.empty} aria-live="polite">
-          現在、お知らせはありません。
-        </p>
-      )}
+        {loading && (
+          <p className={styles.stateText} aria-live="polite">
+            読み込み中…
+          </p>
+        )}
 
-      {!loading && !error && hasNews && (
-        <div className={styles.list}>
-          {news.map((item) => {
-            const date = item.publishedAt || item.createdAt || null;
+        {error && !loading && (
+          <div className={styles.stateBox} role="alert">
+            <p className={styles.error}>
+              お知らせを読み込めませんでした。
+            </p>
+            <Link to="/" className={styles.backLink}>
+              HOMEへ戻る
+            </Link>
+          </div>
+        )}
 
-            return (
-              <Link
-                to={`/news/${item.id}`}
-                key={item.id}
-                className={styles.item}
-                aria-label={`お知らせ: ${item.title}`}
-              >
-                {item.eyecatch?.url && (
-                  <div className={styles.thumbWrap}>
-                    <img
-                      src={item.eyecatch.url}
-                      className={styles.thumb}
-                      alt=""
-                      loading="lazy"
-                      decoding="async"
-                      draggable="false"
-                    />
+        {!loading && !error && !hasNews && (
+          <p className={styles.stateText} aria-live="polite">
+            現在、お知らせはありません。
+          </p>
+        )}
+
+        {!loading && !error && hasNews && (
+          <div className={styles.list}>
+            {news.map((item, index) => {
+              const date = item.publishedAt || item.createdAt || null;
+
+              return (
+                <Link
+                  to={`/news/${item.id}`}
+                  key={item.id}
+                  className={styles.item}
+                  aria-label={`お知らせ: ${item.title}`}
+                >
+                  <span className={styles.itemNumber} aria-hidden="true">
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+
+                  {item.eyecatch?.url && (
+                    <div className={styles.thumbWrap}>
+                      <img
+                        src={item.eyecatch.url}
+                        className={styles.thumb}
+                        alt=""
+                        loading="lazy"
+                        decoding="async"
+                        draggable="false"
+                      />
+                    </div>
+                  )}
+
+                  <div className={styles.meta}>
+                    <p className={styles.date}>{formatDate(date)}</p>
+                    <h2 className={styles.itemTitle}>{item.title}</h2>
                   </div>
-                )}
 
-                <div className={styles.meta}>
-                  <p className={styles.date}>{formatDate(date)}</p>
-                  <h2 className={styles.itemTitle}>{item.title}</h2>
-                </div>
-              </Link>
-            );
-          })}
-        </div>
-      )}
+                  <span className={styles.arrow} aria-hidden="true">
+                    →
+                  </span>
+                </Link>
+              );
+            })}
+          </div>
+        )}
+      </div>
     </section>
   );
 }

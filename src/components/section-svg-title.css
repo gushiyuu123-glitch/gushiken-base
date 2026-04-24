@@ -100,11 +100,11 @@
 
 /* aq-show時に順番に発火 */
 .aq-show .section-svg-char,
-.section-svg-title.aq-show .section-svg-char {
+.section-svg-title.aq-show .section-svg-char,
+.section-svg-title.is-in .section-svg-char {
   animation: sectionCharIn 0.9s cubic-bezier(.22,.56,.18,1) forwards;
   animation-delay: calc(var(--char-index) * 0.055s);
 }
-
 /* count */
 .section-svg-count {
   flex: 0 0 auto;
@@ -136,10 +136,10 @@
 }
 
 .aq-show .section-svg-line,
-.section-svg-title.aq-show .section-svg-line {
+.section-svg-title.aq-show .section-svg-line,
+.section-svg-title.is-in .section-svg-line {
   animation: sectionLineIn 0.95s cubic-bezier(.22,.56,.18,1) 0.42s forwards;
 }
-
 /* --------------------------------
    keyframes
 -------------------------------- */

@@ -1,6 +1,6 @@
 /* ============================================================
    GUSHIKEN DESIGN — Floating FAQ Final
-   Black Frame × Champagne Gold × Silver Line × Quiet Support
+   Black Frame × Champagne Gold × Silver Line × Bottom Sheet SP
 ============================================================ */
 
 .floating-faq-wrap {
@@ -12,10 +12,10 @@
   --faq-faint: var(--assort-faint, rgba(255, 255, 255, 0.38));
   --faq-line: var(--assort-line, rgba(255, 255, 255, 0.12));
 
-  --faq-gold: var(--accent, #c9b18a);
-  --faq-gold-dim: var(--accent-dim, rgba(201, 177, 138, 0.24));
-  --faq-gold-soft: var(--accent-soft, rgba(201, 177, 138, 0.14));
-  --faq-gold-glow: var(--accent-glow, rgba(201, 177, 138, 0.075));
+  --faq-gold: var(--accent, #d9b98a);
+  --faq-gold-dim: var(--accent-dim, rgba(217, 185, 138, 0.24));
+  --faq-gold-soft: var(--accent-soft, rgba(217, 185, 138, 0.14));
+  --faq-gold-glow: var(--accent-glow, rgba(217, 185, 138, 0.075));
 
   --faq-silver: var(--subaccent, rgba(220, 226, 235, 0.78));
   --faq-silver-dim: var(--subaccent-dim, rgba(220, 226, 235, 0.22));
@@ -39,6 +39,10 @@
 ------------------------------------------------------------ */
 .floating-faq-panel {
   width: min(380px, calc(100vw - 28px));
+
+  max-height: calc(100vh - 112px);
+  max-height: calc(100svh - 112px);
+
   margin-bottom: 12px;
 
   opacity: 0;
@@ -50,6 +54,7 @@
   transition:
     opacity 0.36s var(--faq-ease),
     transform 0.36s var(--faq-ease);
+
   will-change: opacity, transform;
 }
 
@@ -62,6 +67,12 @@
 .floating-faq-panel-inner {
   position: relative;
   overflow: hidden;
+
+  display: flex;
+  flex-direction: column;
+
+  max-height: inherit;
+
   border-radius: 22px;
 
   border: 1px solid rgba(255, 255, 255, 0.085);
@@ -70,7 +81,7 @@
   background:
     radial-gradient(
       circle at 14% 0%,
-      rgba(201, 177, 138, 0.055),
+      rgba(217, 185, 138, 0.055),
       transparent 34%
     ),
     linear-gradient(
@@ -107,6 +118,8 @@
 ------------------------------------------------------------ */
 .floating-faq-head {
   position: relative;
+  flex: 0 0 auto;
+
   padding: 17px 18px 13px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.06);
 }
@@ -116,12 +129,13 @@
   position: absolute;
   left: 18px;
   bottom: -1px;
+
   width: 76px;
   height: 1px;
 
   background: linear-gradient(
     90deg,
-    rgba(201, 177, 138, 0.72),
+    rgba(217, 185, 138, 0.72),
     rgba(255, 255, 255, 0.16),
     transparent
   );
@@ -137,15 +151,17 @@
 
 .floating-faq-label {
   margin: 0 0 6px;
+
   font-size: 0.64rem;
   line-height: 1;
   letter-spacing: 0.24em;
-  color: rgba(201, 177, 138, 0.62);
+  color: rgba(217, 185, 138, 0.62);
   text-transform: uppercase;
 }
 
 .floating-faq-title {
   margin: 0;
+
   font-size: 0.98rem;
   line-height: 1.4;
   letter-spacing: 0.08em;
@@ -154,6 +170,7 @@
 
 .floating-faq-subtitle {
   margin: 5px 0 0;
+
   font-size: 0.72rem;
   line-height: 1.65;
   letter-spacing: 0.08em;
@@ -163,11 +180,13 @@
 .floating-faq-close {
   position: relative;
   flex-shrink: 0;
+
   width: 30px;
   height: 30px;
 
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 9999px;
+
   background: rgba(255, 255, 255, 0.018);
 
   color: rgba(220, 226, 235, 0.58);
@@ -183,8 +202,10 @@
   position: absolute;
   left: 8px;
   top: 14px;
+
   width: 14px;
   height: 1px;
+
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.62);
 }
@@ -197,9 +218,10 @@
   transform: rotate(-45deg);
 }
 
-.floating-faq-close:hover {
+.floating-faq-close:hover,
+.floating-faq-close:focus-visible {
   transform: translateY(-1px);
-  border-color: rgba(201, 177, 138, 0.22);
+  border-color: rgba(217, 185, 138, 0.22);
   background: rgba(255, 255, 255, 0.045);
 }
 
@@ -207,9 +229,16 @@
    List
 ------------------------------------------------------------ */
 .floating-faq-list {
-  max-height: min(54vh, 440px);
+  flex: 1 1 auto;
+  min-height: 0;
+  max-height: none;
+
   overflow-y: auto;
   overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-y;
+
+  scrollbar-gutter: stable;
 }
 
 .floating-faq-list::-webkit-scrollbar {
@@ -237,6 +266,7 @@
 .floating-faq-question {
   width: 100%;
   min-height: 58px;
+
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
@@ -256,7 +286,8 @@
     color 0.28s ease;
 }
 
-.floating-faq-question:hover {
+.floating-faq-question:hover,
+.floating-faq-question:focus-visible {
   background: rgba(255, 255, 255, 0.025);
   color: rgba(255, 255, 255, 0.95);
 }
@@ -289,10 +320,13 @@
   position: absolute;
   left: 50%;
   top: 50%;
+
   width: 8px;
   height: 1px;
+
   border-radius: 999px;
   background: currentColor;
+
   transform: translate(-50%, -50%);
   transition: transform 0.28s var(--faq-ease);
 }
@@ -302,9 +336,9 @@
 }
 
 .floating-faq-item.is-active .floating-faq-icon {
-  border-color: rgba(201, 177, 138, 0.22);
-  background: rgba(201, 177, 138, 0.035);
-  color: rgba(201, 177, 138, 0.74);
+  border-color: rgba(217, 185, 138, 0.22);
+  background: rgba(217, 185, 138, 0.035);
+  color: rgba(217, 185, 138, 0.74);
 }
 
 .floating-faq-item.is-active .floating-faq-icon span:last-child {
@@ -315,6 +349,7 @@
 .floating-faq-answer-wrap {
   display: grid;
   grid-template-rows: 0fr;
+
   transition: grid-template-rows 0.36s var(--faq-ease);
 }
 
@@ -344,6 +379,8 @@
    Footer
 ------------------------------------------------------------ */
 .floating-faq-footer {
+  flex: 0 0 auto;
+
   padding: 16px 18px 18px;
 
   background:
@@ -352,11 +389,13 @@
       rgba(255, 255, 255, 0.012),
       rgba(255, 255, 255, 0.02)
     );
+
   border-top: 1px solid rgba(255, 255, 255, 0.052);
 }
 
 .floating-faq-note {
   margin: 0 0 12px;
+
   font-size: 0.74rem;
   line-height: 1.85;
   letter-spacing: 0.04em;
@@ -373,11 +412,12 @@
   padding: 0 15px;
 
   border-radius: 999px;
-  border: 1px solid rgba(201, 177, 138, 0.22);
+  border: 1px solid rgba(217, 185, 138, 0.22);
+
   background:
     linear-gradient(
       180deg,
-      rgba(201, 177, 138, 0.045),
+      rgba(217, 185, 138, 0.045),
       rgba(255, 255, 255, 0.01)
     );
 
@@ -393,10 +433,11 @@
     color 0.28s ease;
 }
 
-.floating-faq-link:hover {
+.floating-faq-link:hover,
+.floating-faq-link:focus-visible {
   transform: translateY(-1px);
-  border-color: rgba(201, 177, 138, 0.34);
-  background: rgba(201, 177, 138, 0.07);
+  border-color: rgba(217, 185, 138, 0.34);
+  background: rgba(217, 185, 138, 0.07);
   color: rgba(255, 255, 255, 0.95);
 }
 
@@ -415,13 +456,13 @@
   gap: 10px;
 
   border: 1px solid rgba(255, 255, 255, 0.085);
-  border-top: 1px solid rgba(201, 177, 138, 0.20);
+  border-top: 1px solid rgba(217, 185, 138, 0.2);
   border-radius: 999px;
 
   background:
     radial-gradient(
       circle at 24% 0%,
-      rgba(201, 177, 138, 0.055),
+      rgba(217, 185, 138, 0.055),
       transparent 48%
     ),
     linear-gradient(
@@ -446,22 +487,26 @@
     color 0.28s ease;
 }
 
-.floating-faq-toggle:hover {
+.floating-faq-toggle:hover,
+.floating-faq-toggle:focus-visible {
   transform: translateY(-1px);
-  border-color: rgba(201, 177, 138, 0.28);
+  border-color: rgba(217, 185, 138, 0.28);
+
   box-shadow:
-    0 0 0 0.5px rgba(201, 177, 138, 0.10),
+    0 0 0 0.5px rgba(217, 185, 138, 0.1),
     0 18px 42px rgba(0, 0, 0, 0.34),
     inset 0 1px 0 rgba(255, 255, 255, 0.055);
+
   color: rgba(255, 255, 255, 0.96);
 }
 
 .floating-faq-toggle.is-open {
-  border-color: rgba(201, 177, 138, 0.30);
+  border-color: rgba(217, 185, 138, 0.3);
+
   background:
     radial-gradient(
       circle at 24% 0%,
-      rgba(201, 177, 138, 0.08),
+      rgba(217, 185, 138, 0.08),
       transparent 48%
     ),
     linear-gradient(
@@ -479,7 +524,7 @@
   align-items: center;
   justify-content: center;
 
-  color: rgba(201, 177, 138, 0.68);
+  color: rgba(217, 185, 138, 0.68);
   flex-shrink: 0;
 }
 
@@ -496,8 +541,10 @@
 
 .floating-faq-toggle-text {
   display: inline-block;
+
   font-size: 0.74rem;
   letter-spacing: 0.2em;
+
   transform: translateX(1px);
 }
 
@@ -508,30 +555,46 @@
 .floating-faq-toggle:focus-visible,
 .floating-faq-link:focus-visible,
 .floating-faq-close:focus-visible {
-  outline: 1px solid rgba(201, 177, 138, 0.42);
+  outline: 1px solid rgba(217, 185, 138, 0.42);
   outline-offset: 2px;
 }
 
 /* ------------------------------------------------------------
-   Mobile
+   Mobile Bottom Sheet
 ------------------------------------------------------------ */
 @media (max-width: 767px) {
   .floating-faq-wrap {
-    right: 12px;
-    bottom: calc(16px + env(safe-area-inset-bottom));
+    left: 10px;
+    right: 10px;
+    bottom: calc(14px + env(safe-area-inset-bottom));
+
+    align-items: stretch;
   }
 
   .floating-faq-panel {
-    width: min(344px, calc(100vw - 20px));
+    width: 100%;
+
+    max-height: calc(100vh - 88px);
+    max-height: calc(100svh - 88px);
+
     margin-bottom: 10px;
+
+    transform-origin: bottom center;
   }
 
   .floating-faq-panel-inner {
+    max-height: inherit;
     border-radius: 18px;
   }
 
   .floating-faq-head {
-    padding: 15px 15px 11px;
+    padding: 14px 15px 11px;
+  }
+
+  .floating-faq-label {
+    margin-bottom: 5px;
+    font-size: 0.58rem;
+    letter-spacing: 0.22em;
   }
 
   .floating-faq-title {
@@ -540,21 +603,33 @@
 
   .floating-faq-subtitle {
     font-size: 0.68rem;
+    line-height: 1.55;
+  }
+
+  .floating-faq-close {
+    width: 28px;
+    height: 28px;
+  }
+
+  .floating-faq-close span {
+    left: 7px;
+    top: 13px;
   }
 
   .floating-faq-question {
-    min-height: 54px;
-    padding: 13px 15px;
+    min-height: 52px;
+    padding: 12px 15px;
   }
 
   .floating-faq-question-text {
-    font-size: 0.82rem;
-    line-height: 1.68;
+    font-size: 0.8rem;
+    line-height: 1.66;
   }
 
   .floating-faq-answer {
     padding: 0 15px 0;
-    font-size: 0.77rem;
+
+    font-size: 0.76rem;
     line-height: 1.82;
   }
 
@@ -563,20 +638,24 @@
   }
 
   .floating-faq-footer {
-    padding: 14px 15px 16px;
+    padding: 13px 15px 15px;
   }
 
   .floating-faq-note {
-    font-size: 0.70rem;
-    line-height: 1.75;
+    margin-bottom: 10px;
+
+    font-size: 0.68rem;
+    line-height: 1.72;
   }
 
   .floating-faq-link {
     min-height: 38px;
-    font-size: 0.72rem;
+    font-size: 0.7rem;
   }
 
   .floating-faq-toggle {
+    align-self: flex-end;
+
     min-width: 68px;
     height: 54px;
     padding: 0 15px 0 14px;
@@ -590,18 +669,20 @@
   }
 
   .floating-faq-toggle-text {
-    font-size: 0.70rem;
+    font-size: 0.7rem;
     letter-spacing: 0.18em;
   }
 }
 
 @media (max-width: 360px) {
-  .floating-faq-panel {
-    width: calc(100vw - 16px);
+  .floating-faq-wrap {
+    left: 8px;
+    right: 8px;
   }
 
-  .floating-faq-wrap {
-    right: 8px;
+  .floating-faq-panel {
+    max-height: calc(100vh - 84px);
+    max-height: calc(100svh - 84px);
   }
 }
 

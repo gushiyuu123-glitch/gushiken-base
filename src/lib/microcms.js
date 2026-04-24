@@ -1,49 +1,67 @@
+// src/lib/microcms.js
 // ===============================
-// microCMS API Client（完全版）
+// microCMS API Client
 // ===============================
 import axios from "axios";
 
-// --- 環境変数 ---
 const API_KEY = import.meta.env.VITE_MICROCMS_API_KEY;
 const SERVICE_DOMAIN = import.meta.env.VITE_MICROCMS_SERVICE_DOMAIN;
 
-if (!API_KEY || !SERVICE_DOMAIN) {
+const hasMicroCmsEnv = Boolean(API_KEY && SERVICE_DOMAIN);
+
+if (!hasMicroCmsEnv) {
   console.warn("❗ microCMS の環境変数が設定されていません");
 }
 
-// --- Axios クライアント ---
 export const client = axios.create({
-  baseURL: `https://${SERVICE_DOMAIN}.microcms.io/api/v1`,
+  baseURL: hasMicroCmsEnv
+    ? `https://${SERVICE_DOMAIN}.microcms.io/api/v1`
+    : "",
   headers: {
-    "X-MICROCMS-API-KEY": API_KEY,
+    "X-MICROCMS-API-KEY": API_KEY || "",
   },
   timeout: 8000,
 });
 
+function assertMicroCmsEnv() {
+  if (!hasMicroCmsEnv) {
+    throw new Error("microCMS の環境変数が設定されていません");
+  }
+}
+
 // ===================================
-// ★ NEWS：一覧取得（limit / offset）
+// NEWS：一覧取得
 // ===================================
 export async function getNewsList({ limit = 10, offset = 0 } = {}) {
+  assertMicroCmsEnv();
+
   try {
     const res = await client.get("/news", {
       params: {
         limit,
         offset,
-        orders: "-publishedAt", // 新しい順
+        orders: "-publishedAt",
       },
     });
 
-    return res.data;
+    return {
+      contents: Array.isArray(res.data?.contents) ? res.data.contents : [],
+      totalCount: res.data?.totalCount ?? 0,
+      limit: res.data?.limit ?? limit,
+      offset: res.data?.offset ?? offset,
+    };
   } catch (err) {
     console.error("❌ NEWS一覧取得エラー:", err);
-    return { contents: [] };
+    throw err;
   }
 }
 
 // ===================================
-// ★ NEWS：詳細取得
+// NEWS：詳細取得
 // ===================================
 export async function getNewsDetail(id) {
+  assertMicroCmsEnv();
+
   if (!id) {
     throw new Error("getNewsDetail に ID がありません");
   }
