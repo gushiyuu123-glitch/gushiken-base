@@ -592,8 +592,7 @@
   .mobileNav,
   .mobileNavItem,
   .mobileNavArrow,
-  .mobileClose,
-  .mobileNavDot {
+  .mobileClose{
     animation: none !important;
     transition: none !important;
   }
@@ -601,5 +600,15 @@
   .mobileNavItem {
     opacity: 1 !important;
     transform: none !important;
+  }
+}
+@media (max-width: 360px) {
+  .navLogoMain {
+    font-size: 0.66rem;
+    letter-spacing: 0.15em;
+  }
+
+  .navLogo {
+    gap: 0.52rem;
   }
 }

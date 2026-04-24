@@ -272,7 +272,7 @@ export default function Nav() {
 
   return (
     <>
-      {/* Local motion utility */}
+      {/* Local motion / logo mask utility */}
       <style>{`
         .gd-nav-sharp {
           position: relative;
@@ -284,18 +284,19 @@ export default function Nav() {
           will-change: opacity, transform, filter, clip-path;
         }
 
-        .gd-nav-sharp-line {
+        .gd-nav-sheen {
           position: absolute;
           left: -10%;
           top: 50%;
+          z-index: 0;
           width: 42%;
           height: 1px;
           pointer-events: none;
           background: linear-gradient(
             90deg,
             rgba(255,255,255,0),
-            rgba(255,255,255,0.48),
-            rgba(217,185,138,0.34),
+            rgba(255,255,255,0.46),
+            rgba(217,185,138,0.32),
             rgba(255,255,255,0)
           );
           opacity: 0;
@@ -305,6 +306,7 @@ export default function Nav() {
         }
 
         .gd-nav-logo-seal {
+          position: relative;
           display: grid;
           place-items: center;
           width: 34px;
@@ -312,16 +314,61 @@ export default function Nav() {
           flex-shrink: 0;
         }
 
-        .gd-nav-logo-image {
-          display: block;
+        .gd-nav-logo-mask {
           width: 100%;
           height: 100%;
-          object-fit: contain;
+          display: block;
+
+          background:
+            linear-gradient(
+              145deg,
+              rgba(225, 216, 196, 0.92) 0%,
+              rgba(196, 177, 143, 0.90) 24%,
+              rgba(149, 126, 91, 0.88) 50%,
+              rgba(218, 207, 186, 0.92) 73%,
+              rgba(130, 109, 79, 0.88) 100%
+            );
+
+          -webkit-mask: var(--logo-url) center / contain no-repeat;
+          mask: var(--logo-url) center / contain no-repeat;
+
           filter:
-            drop-shadow(0 0 10px rgba(217,185,138,0.10))
-            drop-shadow(0 0 18px rgba(217,185,138,0.035));
-          user-select: none;
+            drop-shadow(0 0 0.5px rgba(255,255,255,0.08))
+            drop-shadow(0 2px 8px rgba(0,0,0,0.24))
+            drop-shadow(0 0 16px rgba(217,185,138,0.035));
+
+          opacity: 0.92;
+
+          transition:
+            opacity 0.4s ease,
+            filter 0.4s ease,
+            transform 0.4s ease;
+        }
+
+        .gd-nav-logo-seal::after {
+          content: "";
+          position: absolute;
+          inset: -5px;
+          border-radius: 9999px;
           pointer-events: none;
+          background:
+            radial-gradient(
+              circle at 50% 50%,
+              rgba(217,185,138,0.08),
+              rgba(217,185,138,0.025) 38%,
+              transparent 70%
+            );
+          opacity: 0.48;
+          filter: blur(0.2px);
+        }
+
+        .gd-nav-logo-seal:hover .gd-nav-logo-mask {
+          opacity: 1;
+          transform: translateY(-0.5px);
+          filter:
+            drop-shadow(0 0 0.5px rgba(255,255,255,0.12))
+            drop-shadow(0 3px 10px rgba(0,0,0,0.28))
+            drop-shadow(0 0 18px rgba(217,185,138,0.055));
         }
 
         @keyframes gdNavSharpIn {
@@ -334,7 +381,7 @@ export default function Nav() {
 
           68% {
             opacity: 1;
-            filter: brightness(1.08);
+            filter: brightness(1.06);
           }
 
           100% {
@@ -352,7 +399,7 @@ export default function Nav() {
           }
 
           24% {
-            opacity: 0.74;
+            opacity: 0.72;
           }
 
           100% {
@@ -367,14 +414,14 @@ export default function Nav() {
             height: 30px;
           }
 
-          .gd-nav-sharp-line {
+          .gd-nav-sheen {
             display: none;
           }
         }
 
         @media (prefers-reduced-motion: reduce) {
           .gd-nav-sharp,
-          .gd-nav-sharp-line {
+          .gd-nav-sheen {
             animation: none !important;
             opacity: 1 !important;
             transform: none !important;
@@ -401,13 +448,11 @@ export default function Nav() {
               aria-hidden="true"
               style={{ "--nav-delay": "0.04s" }}
             >
-              <img
-                src={LOGO_SRC}
-                alt=""
-                className="gd-nav-logo-image"
-                draggable="false"
+              <span
+                className="gd-nav-logo-mask"
+                style={{ "--logo-url": `url(${LOGO_SRC})` }}
               />
-              <span className="gd-nav-sharp-line" aria-hidden="true" />
+              <span className="gd-nav-sheen" aria-hidden="true" />
             </span>
 
             <span className={styles.navLogoText}>
@@ -416,7 +461,7 @@ export default function Nav() {
                 style={{ "--nav-delay": "0.10s" }}
               >
                 GUSHIKEN DESIGN
-                <span className="gd-nav-sharp-line" aria-hidden="true" />
+                <span className="gd-nav-sheen" aria-hidden="true" />
               </span>
 
               <span
@@ -424,7 +469,7 @@ export default function Nav() {
                 style={{ "--nav-delay": "0.16s" }}
               >
                 Web Design / Okinawa
-                <span className="gd-nav-sharp-line" aria-hidden="true" />
+                <span className="gd-nav-sheen" aria-hidden="true" />
               </span>
             </span>
           </a>
@@ -447,8 +492,8 @@ export default function Nav() {
                   `}
                   style={{ "--nav-delay": `${0.24 + index * 0.07}s` }}
                 >
-                  {item.label}
-                  <span className="gd-nav-sharp-line" aria-hidden="true" />
+                  <span className="relative z-[1]">{item.label}</span>
+                  <span className="gd-nav-sheen" aria-hidden="true" />
                 </a>
               );
             })}
@@ -523,7 +568,6 @@ export default function Nav() {
                   style={{ "--i": i }}
                 >
                   <span className={styles.mobileNavLeft}>
-                   
                     <span className={styles.mobileNavText}>{item.label}</span>
                   </span>
 

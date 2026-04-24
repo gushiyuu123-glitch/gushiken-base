@@ -19,9 +19,6 @@ const ACCENT_GLOW = "rgba(217,185,138,0.075)";
 const WHITE = "rgba(255,255,255,0.92)";
 const WHITE_DIM = "rgba(255,255,255,0.36)";
 
-const SUBACCENT = "rgba(220,226,235,0.78)";
-const SUBACCENT_DIM = "rgba(220,226,235,0.22)";
-
 /* =========================
    Lists
 ========================= */
@@ -30,14 +27,14 @@ const HOME_ITEMS = [
   { href: "#about", label: "ABOUT" },
   { href: "#philosophy", label: "POLICY" },
   { href: "#price", label: "PRICE" },
-  { href: "#contact", label: "CONTACT" },
+  { href: "#contact", label: "CONTACT", emphasis: true },
 ];
 
 const GLOBAL_ITEMS = [
   { to: "/works", label: "WORKS" },
   { to: "/price", label: "PRICE" },
   { to: "/news", label: "NEWS" },
-  { to: "/contact", label: "CONTACT" },
+  { to: "/contact", label: "CONTACT", emphasis: true },
 ];
 
 /* =========================
@@ -285,7 +282,6 @@ export default function NavGlobal({ mode }) {
 
   const renderPcHomeLink = (item, index) => {
     const active = activeHash === item.href;
-    const isContact = item.label === "CONTACT";
 
     return (
       <a
@@ -300,19 +296,18 @@ export default function NavGlobal({ mode }) {
           letterSpacing: "0.22em",
           color: active
             ? WHITE
-            : isContact
+            : item.emphasis
               ? "rgba(217,185,138,0.72)"
               : "rgba(255,255,255,0.50)",
           paddingTop: "6px",
           position: "relative",
         }}
       >
-        {active && <ActiveDot />}
-
-        <span className="transition-colors duration-300 group-hover:text-white/92">
+        <span className="relative z-[1] transition-colors duration-300 group-hover:text-white/92">
           {item.label}
         </span>
 
+        <span className="gd-nav-sheen" aria-hidden="true" />
         <NavUnderline active={active} />
       </a>
     );
@@ -320,7 +315,6 @@ export default function NavGlobal({ mode }) {
 
   const renderPcGlobalLink = (item, index) => {
     const active = pathname === item.to;
-    const isContact = item.label === "CONTACT";
 
     return (
       <Link
@@ -334,19 +328,18 @@ export default function NavGlobal({ mode }) {
           letterSpacing: "0.22em",
           color: active
             ? WHITE
-            : isContact
+            : item.emphasis
               ? "rgba(217,185,138,0.72)"
               : "rgba(255,255,255,0.50)",
           paddingTop: "6px",
           position: "relative",
         }}
       >
-        {active && <ActiveDot />}
-
-        <span className="transition-colors duration-300 group-hover:text-white/92">
+        <span className="relative z-[1] transition-colors duration-300 group-hover:text-white/92">
           {item.label}
         </span>
 
+        <span className="gd-nav-sheen" aria-hidden="true" />
         <NavUnderline active={active} />
       </Link>
     );
@@ -356,7 +349,6 @@ export default function NavGlobal({ mode }) {
 
   const ui = (
     <>
-      {/* Local nav utility styles */}
       <style>{`
         html.scroll-lock,
         body.scroll-lock {
@@ -365,7 +357,6 @@ export default function NavGlobal({ mode }) {
         }
 
         .gd-nav-sharp {
-          position: relative;
           opacity: 0;
           transform: translate3d(-10px, 0, 0) scale(0.985);
           filter: brightness(0.9);
@@ -374,28 +365,29 @@ export default function NavGlobal({ mode }) {
           will-change: opacity, transform, filter, clip-path;
         }
 
-        .gd-nav-sharp::before {
-          content: "";
+        .gd-nav-sheen {
           position: absolute;
-          left: -8%;
+          left: -10%;
           top: 50%;
-          width: 38%;
+          z-index: 0;
+          width: 42%;
           height: 1px;
           pointer-events: none;
           background: linear-gradient(
             90deg,
             rgba(255,255,255,0),
-            rgba(255,255,255,0.48),
-            rgba(217,185,138,0.34),
+            rgba(255,255,255,0.46),
+            rgba(217,185,138,0.32),
             rgba(255,255,255,0)
           );
           opacity: 0;
-          transform: translate3d(-18px, -50%, 0) scaleX(0.26);
+          transform: translate3d(-18px, -50%, 0) scaleX(0.25);
           transform-origin: left center;
-          animation: gdNavSheen 0.56s cubic-bezier(.22,.56,.18,1) calc(var(--nav-delay, 0s) + 0.16s) forwards;
+          animation: gdNavSheen 0.56s cubic-bezier(.22,.56,.18,1) calc(var(--nav-delay, 0s) + 0.15s) forwards;
         }
 
         .gd-nav-logo-seal {
+          position: relative;
           display: grid;
           place-items: center;
           width: 34px;
@@ -403,16 +395,61 @@ export default function NavGlobal({ mode }) {
           flex-shrink: 0;
         }
 
-        .gd-nav-logo-image {
-          display: block;
+        .gd-nav-logo-mask {
           width: 100%;
           height: 100%;
-          object-fit: contain;
+          display: block;
+
+          background:
+            linear-gradient(
+              145deg,
+              rgba(225, 216, 196, 0.92) 0%,
+              rgba(196, 177, 143, 0.90) 24%,
+              rgba(149, 126, 91, 0.88) 50%,
+              rgba(218, 207, 186, 0.92) 73%,
+              rgba(130, 109, 79, 0.88) 100%
+            );
+
+          -webkit-mask: var(--logo-url) center / contain no-repeat;
+          mask: var(--logo-url) center / contain no-repeat;
+
           filter:
-            drop-shadow(0 0 10px rgba(217,185,138,0.10))
-            drop-shadow(0 0 18px rgba(217,185,138,0.035));
-          user-select: none;
+            drop-shadow(0 0 0.5px rgba(255,255,255,0.08))
+            drop-shadow(0 2px 8px rgba(0,0,0,0.24))
+            drop-shadow(0 0 16px rgba(217,185,138,0.035));
+
+          opacity: 0.92;
+
+          transition:
+            opacity 0.4s ease,
+            filter 0.4s ease,
+            transform 0.4s ease;
+        }
+
+        .gd-nav-logo-seal::after {
+          content: "";
+          position: absolute;
+          inset: -5px;
+          border-radius: 9999px;
           pointer-events: none;
+          background:
+            radial-gradient(
+              circle at 50% 50%,
+              rgba(217,185,138,0.08),
+              rgba(217,185,138,0.025) 38%,
+              transparent 70%
+            );
+          opacity: 0.48;
+          filter: blur(0.2px);
+        }
+
+        .gd-nav-logo-seal:hover .gd-nav-logo-mask {
+          opacity: 1;
+          transform: translateY(-0.5px);
+          filter:
+            drop-shadow(0 0 0.5px rgba(255,255,255,0.12))
+            drop-shadow(0 3px 10px rgba(0,0,0,0.28))
+            drop-shadow(0 0 18px rgba(217,185,138,0.055));
         }
 
         .gd-nav-mobile-link {
@@ -434,7 +471,7 @@ export default function NavGlobal({ mode }) {
 
           68% {
             opacity: 1;
-            filter: brightness(1.08);
+            filter: brightness(1.06);
           }
 
           100% {
@@ -448,11 +485,11 @@ export default function NavGlobal({ mode }) {
         @keyframes gdNavSheen {
           0% {
             opacity: 0;
-            transform: translate3d(-18px, -50%, 0) scaleX(0.26);
+            transform: translate3d(-18px, -50%, 0) scaleX(0.25);
           }
 
           24% {
-            opacity: 0.74;
+            opacity: 0.72;
           }
 
           100% {
@@ -474,14 +511,14 @@ export default function NavGlobal({ mode }) {
             height: 30px;
           }
 
-          .gd-nav-sharp::before {
+          .gd-nav-sheen {
             display: none;
           }
         }
 
         @media (prefers-reduced-motion: reduce) {
           .gd-nav-sharp,
-          .gd-nav-sharp::before,
+          .gd-nav-sheen,
           .gd-nav-mobile-link {
             animation: none !important;
             opacity: 1 !important;
@@ -497,7 +534,7 @@ export default function NavGlobal({ mode }) {
         className="fixed left-0 top-0 z-[9998] w-full transition-all duration-500"
         style={{
           height: NAV_HEIGHT,
-          background: scrolled ? "rgba(6,6,6,0.82)" : "rgba(0,0,0,0.10)",
+          background: scrolled ? "rgba(6,6,6,0.84)" : "rgba(0,0,0,0.10)",
           backdropFilter: scrolled
             ? "blur(18px) saturate(130%)"
             : "blur(10px) saturate(115%)",
@@ -508,7 +545,7 @@ export default function NavGlobal({ mode }) {
             ? "1px solid rgba(255,255,255,0.09)"
             : "1px solid rgba(255,255,255,0.045)",
           boxShadow: scrolled
-            ? `0 1px 0 ${ACCENT_SOFT}, 0 12px 42px rgba(0,0,0,0.26)`
+            ? `0 1px 0 ${ACCENT_SOFT}, 0 12px 42px rgba(0,0,0,0.28)`
             : "none",
         }}
       >
@@ -518,7 +555,7 @@ export default function NavGlobal({ mode }) {
             to="/"
             translate="no"
             onClick={() => open && closeMenu()}
-            className="group flex items-center gap-3 text-white/94 no-underline transition-opacity duration-300 hover:opacity-82
+            className="group flex items-center gap-3 text-white/94 no-underline transition-opacity duration-300 hover:opacity-86
                        focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#d9b98a]/40 focus-visible:ring-offset-2 focus-visible:ring-offset-black focus-visible:rounded"
             aria-label="GUSHIKEN DESIGN Home"
           >
@@ -527,41 +564,41 @@ export default function NavGlobal({ mode }) {
               aria-hidden="true"
               style={{ "--nav-delay": "0.04s" }}
             >
-              <img
-                src={LOGO_SRC}
-                alt=""
-                className="gd-nav-logo-image"
-                draggable="false"
+              <span
+                className="gd-nav-logo-mask"
+                style={{ "--logo-url": `url(${LOGO_SRC})` }}
               />
+              <span className="gd-nav-sheen" aria-hidden="true" />
             </span>
 
             <span className="flex flex-col gap-[0.14rem] leading-none">
               <span
-                className="gd-nav-sharp"
+                className="gd-nav-sharp relative inline-block"
                 style={{
                   "--nav-delay": "0.10s",
-                  display: "inline-block",
                   fontSize: "0.78rem",
                   fontWeight: 300,
                   letterSpacing: "0.24em",
-                  color: "rgba(255,255,255,0.92)",
+                  color: "rgba(255,255,255,0.90)",
                 }}
               >
                 GUSHIKEN DESIGN
+                <span className="gd-nav-sheen" aria-hidden="true" />
               </span>
 
               <span
-                className="gd-nav-sharp hidden sm:block"
+                className="gd-nav-sharp relative hidden sm:inline-block"
                 style={{
                   "--nav-delay": "0.16s",
                   fontFamily: "'Cormorant Garamond', Georgia, serif",
                   fontSize: "0.7rem",
                   fontWeight: 300,
                   letterSpacing: "0.2em",
-                  color: "rgba(255,255,255,0.34)",
+                  color: "rgba(201,190,169,0.58)",
                 }}
               >
                 Web Design / Okinawa
+                <span className="gd-nav-sheen" aria-hidden="true" />
               </span>
             </span>
           </Link>
@@ -592,8 +629,8 @@ export default function NavGlobal({ mode }) {
                   marginLeft: i === 2 && !open ? "auto" : 0,
                   background:
                     i === 1
-                      ? "rgba(217,185,138,0.70)"
-                      : "rgba(255,255,255,0.82)",
+                      ? "rgba(201,190,169,0.68)"
+                      : "rgba(255,255,255,0.78)",
                 }}
                 className={`h-px rounded transition-all duration-[420ms]
                   ${i === 0 && open ? "translate-y-[9.5px] rotate-45" : ""}
@@ -631,7 +668,7 @@ export default function NavGlobal({ mode }) {
           ${open ? "gd-nav-panel-open translate-y-0 opacity-100" : "pointer-events-none -translate-y-2 opacity-0"}`}
         style={{
           background:
-            "linear-gradient(180deg, rgba(12,12,12,0.985), rgba(7,7,7,0.965))",
+            "radial-gradient(circle at 14% 0%, rgba(217,185,138,0.055), transparent 32%), linear-gradient(180deg, rgba(12,12,12,0.985), rgba(7,7,7,0.965))",
           border: "1px solid rgba(255,255,255,0.085)",
           borderTop: `1px solid ${ACCENT_DIM}`,
           boxShadow: `
@@ -699,6 +736,7 @@ export default function NavGlobal({ mode }) {
             {isHome
               ? homeLinks.map((item, i) => {
                   const active = activeHash === item.href;
+
                   return (
                     <a
                       key={item.href}
@@ -714,7 +752,11 @@ export default function NavGlobal({ mode }) {
                           i < homeLinks.length - 1
                             ? "1px solid rgba(255,255,255,0.055)"
                             : "none",
-                        color: active ? ACCENT : "rgba(255,255,255,0.74)",
+                        color: active
+                          ? ACCENT
+                          : item.emphasis
+                            ? "rgba(217,185,138,0.72)"
+                            : "rgba(255,255,255,0.74)",
                       }}
                     >
                       <MobileLinkInner label={item.label} active={active} />
@@ -723,6 +765,7 @@ export default function NavGlobal({ mode }) {
                 })
               : globalLinks.map((item, i) => {
                   const active = pathname === item.to;
+
                   return (
                     <Link
                       key={item.to}
@@ -740,7 +783,11 @@ export default function NavGlobal({ mode }) {
                           i < globalLinks.length - 1
                             ? "1px solid rgba(255,255,255,0.055)"
                             : "none",
-                        color: active ? ACCENT : "rgba(255,255,255,0.74)",
+                        color: active
+                          ? ACCENT
+                          : item.emphasis
+                            ? "rgba(217,185,138,0.72)"
+                            : "rgba(255,255,255,0.74)",
                       }}
                     >
                       <MobileLinkInner label={item.label} active={active} />
@@ -773,26 +820,6 @@ export default function NavGlobal({ mode }) {
   return createPortal(ui, document.body);
 }
 
-function ActiveDot() {
-  return (
-    <span
-      aria-hidden="true"
-      style={{
-        position: "absolute",
-        top: 0,
-        left: "50%",
-        transform: "translateX(-50%)",
-        width: 3,
-        height: 3,
-        borderRadius: "50%",
-        background: SUBACCENT,
-        boxShadow: `0 0 0 0.5px ${SUBACCENT_DIM}, 0 0 12px ${ACCENT_GLOW}`,
-        opacity: 0.68,
-      }}
-    />
-  );
-}
-
 function NavUnderline({ active }) {
   return (
     <>
@@ -801,16 +828,16 @@ function NavUnderline({ active }) {
         className="pointer-events-none absolute bottom-0 left-0 h-px transition-all duration-500"
         style={{
           width: active ? "100%" : "0%",
-          opacity: active ? 0.78 : 0,
-          background: `linear-gradient(to right, transparent, ${ACCENT}, rgba(255,255,255,0.20), transparent)`,
+          opacity: active ? 0.76 : 0,
+          background: `linear-gradient(to right, transparent, ${ACCENT}, rgba(255,255,255,0.18), transparent)`,
         }}
       />
 
       <span
         aria-hidden="true"
-        className="pointer-events-none absolute bottom-0 left-0 h-px w-0 opacity-0 transition-all duration-500 group-hover:w-full group-hover:opacity-55"
+        className="pointer-events-none absolute bottom-0 left-0 h-px w-0 opacity-0 transition-all duration-500 group-hover:w-full group-hover:opacity-50"
         style={{
-          background: `linear-gradient(to right, transparent, ${ACCENT}, rgba(255,255,255,0.18), transparent)`,
+          background: `linear-gradient(to right, transparent, ${ACCENT}, rgba(255,255,255,0.16), transparent)`,
         }}
       />
     </>
@@ -820,28 +847,14 @@ function NavUnderline({ active }) {
 function MobileLinkInner({ label, active }) {
   return (
     <>
-      <span className="flex items-center gap-3">
-        <span
-          aria-hidden="true"
-          style={{
-            width: active ? 4 : 3,
-            height: active ? 4 : 3,
-            borderRadius: "50%",
-            background: active ? ACCENT : "rgba(255,255,255,0.22)",
-            boxShadow: active ? `0 0 14px ${ACCENT_GLOW}` : "none",
-            transition: "all 0.3s ease",
-          }}
-        />
-
-        <span
-          style={{
-            fontSize: "0.9rem",
-            fontWeight: 300,
-            letterSpacing: "0.14em",
-          }}
-        >
-          {label}
-        </span>
+      <span
+        style={{
+          fontSize: "0.9rem",
+          fontWeight: 300,
+          letterSpacing: "0.14em",
+        }}
+      >
+        {label}
       </span>
 
       <span
