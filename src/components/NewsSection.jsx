@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { getNewsList } from "../lib/microcms";
 import SectionSvgTitle from "./SectionSvgTitle";
@@ -8,6 +8,14 @@ export default function NewsSection() {
   const [news, setNews] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
+
+  const mountedRef = useRef(false);
+  const requestIdRef = useRef(0);
+  const newsRef = useRef([]);
+
+  useEffect(() => {
+    newsRef.current = news;
+  }, [news]);
 
   const formatDate = useMemo(() => {
     const fmt = new Intl.DateTimeFormat("ja-JP", {
@@ -26,35 +34,80 @@ export default function NewsSection() {
     };
   }, []);
 
-  useEffect(() => {
-    let mounted = true;
+  const fetchNews = useCallback(async ({ silent = false } = {}) => {
+    const requestId = requestIdRef.current + 1;
+    requestIdRef.current = requestId;
 
-    async function fetchNews() {
-      try {
+    try {
+      // 既にNEWSがある状態での復帰再取得では、画面をチラつかせない
+      if (!silent || newsRef.current.length === 0) {
         setLoading(true);
-
-        const res = await getNewsList({ limit: 3 });
-        if (!mounted) return;
-
-        const items = Array.isArray(res?.contents) ? res.contents : [];
-
-        setNews(items);
-        setError(false);
-      } catch {
-        if (!mounted) return;
-        setError(true);
-      } finally {
-        if (!mounted) return;
-        setLoading(false);
       }
+
+      setError(false);
+
+      const res = await getNewsList({ limit: 3 });
+
+      if (!mountedRef.current) return;
+      if (requestId !== requestIdRef.current) return;
+
+      const items = Array.isArray(res?.contents) ? res.contents : [];
+
+      setNews(items);
+      setError(false);
+    } catch (err) {
+      console.error("❌ NEWS表示エラー:", err);
+
+      if (!mountedRef.current) return;
+      if (requestId !== requestIdRef.current) return;
+
+      // 既に表示済みNEWSがあるなら、復帰時の一時失敗で消さない
+      if (newsRef.current.length === 0) {
+        setNews([]);
+        setError(true);
+      }
+    } finally {
+      if (!mountedRef.current) return;
+      if (requestId !== requestIdRef.current) return;
+
+      setLoading(false);
     }
+  }, []);
+
+  useEffect(() => {
+    mountedRef.current = true;
 
     fetchNews();
 
     return () => {
-      mounted = false;
+      mountedRef.current = false;
     };
-  }, []);
+  }, [fetchNews]);
+
+  // PWA / ホーム画面追加アプリ対策
+  // アプリ復帰時にNEWSを再取得する
+  useEffect(() => {
+    const handleVisible = () => {
+      if (document.visibilityState !== "visible") return;
+
+      fetchNews({ silent: true });
+    };
+
+    const handlePageShow = (event) => {
+      // bfcache復帰時だけ再取得
+      if (!event.persisted) return;
+
+      fetchNews({ silent: true });
+    };
+
+    document.addEventListener("visibilitychange", handleVisible);
+    window.addEventListener("pageshow", handlePageShow);
+
+    return () => {
+      document.removeEventListener("visibilitychange", handleVisible);
+      window.removeEventListener("pageshow", handlePageShow);
+    };
+  }, [fetchNews]);
 
   const hasNews = news.length > 0;
 
@@ -135,12 +188,12 @@ export default function NewsSection() {
         </div>
 
         {!loading && !error && hasNews && (
-<div className={styles.moreWrap}>
-  <Link to="/news" className={styles.more}>
-    <span>もっと見る</span>
-    <span aria-hidden="true">→</span>
-  </Link>
-</div>
+          <div className={styles.moreWrap}>
+            <Link to="/news" className={styles.more}>
+              <span>もっと見る</span>
+              <span aria-hidden="true">→</span>
+            </Link>
+          </div>
         )}
       </div>
     </section>
