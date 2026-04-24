@@ -4,7 +4,7 @@
 // =====================================================
 
 const CACHE_PREFIX = "gushiken-design-";
-const CACHE_STAMP = "v20260424-favicon-v3";
+const CACHE_STAMP = "v20260424184548";
 const CACHE_NAME = `${CACHE_PREFIX}${CACHE_STAMP}`;
 
 const STATIC_ASSETS = [
