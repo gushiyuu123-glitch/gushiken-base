@@ -1,6 +1,6 @@
 /* ======================================================
-   GUSHIKEN DESIGN — Navigation Final Edition
-   Black Frame · GD Mark · Quiet Luxury · Mobile Refined
+   GUSHIKEN DESIGN — Navigation Final V3
+   Logo PNG · Sharp Reveal · Black Frame · Quiet Luxury
 ====================================================== */
 
 :root {
@@ -33,6 +33,26 @@
     backdrop-filter 0.5s ease;
 }
 
+.navRoot::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(
+      circle at 18% 0%,
+      rgba(217, 185, 138, 0.055),
+      transparent 34%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.025),
+      transparent 64%
+    );
+  opacity: 0.72;
+  z-index: -1;
+}
+
 .navRoot::after {
   content: "";
   position: absolute;
@@ -41,12 +61,13 @@
   pointer-events: none;
   background: linear-gradient(
     90deg,
-    transparent,
-    rgba(217, 185, 138, 0.14),
-    rgba(255, 255, 255, 0.06),
-    transparent
+    transparent 0%,
+    rgba(217, 185, 138, 0.13) 24%,
+    rgba(255, 255, 255, 0.07) 50%,
+    rgba(217, 185, 138, 0.10) 76%,
+    transparent 100%
   );
-  opacity: 0.64;
+  opacity: 0.68;
 }
 
 .navIdle {
@@ -58,13 +79,13 @@
 }
 
 .navActive {
-  background: rgba(6, 6, 6, 0.82);
+  background: rgba(6, 6, 6, 0.84);
   backdrop-filter: blur(18px) saturate(130%);
   -webkit-backdrop-filter: blur(18px) saturate(130%);
   border-bottom: 1px solid rgba(255, 255, 255, 0.09);
   box-shadow:
     0 1px 0 rgba(217, 185, 138, 0.06),
-    0 12px 42px rgba(0, 0, 0, 0.26);
+    0 12px 42px rgba(0, 0, 0, 0.28);
 }
 
 /* ─── Inner ──────────────────────────────────────── */
@@ -85,63 +106,48 @@
   gap: 0.78rem;
   color: var(--nav-white);
   text-decoration: none;
-  transition: opacity 0.35s ease, transform 0.35s ease;
+  transition:
+    opacity 0.35s ease,
+    transform 0.35s ease;
 }
 
 .navLogo:hover {
-  opacity: 0.78;
+  opacity: 0.84;
 }
 
+/* 旧GD文字マーク用。JSX側では使わないが、事故防止で残す */
 .navLogoMark {
-  position: relative;
-  display: grid;
-  place-items: center;
-  width: 28px;
-  height: 28px;
-  border-radius: 9999px;
-  border: 1px solid rgba(217, 185, 138, 0.22);
-  background:
-    radial-gradient(circle at 50% 20%, rgba(217, 185, 138, 0.12), transparent 56%),
-    rgba(255, 255, 255, 0.025);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.06),
-    0 0 18px rgba(217, 185, 138, 0.035);
-  color: rgba(255, 255, 255, 0.84);
-  font-family: "Cormorant Garamond", Georgia, serif;
-  font-size: 0.72rem;
-  font-weight: 400;
-  letter-spacing: 0.04em;
-  flex-shrink: 0;
+  display: none;
 }
 
-.navLogoMark::after {
-  content: "";
-  position: absolute;
-  inset: 5px;
-  border-radius: inherit;
-  border: 1px solid rgba(255, 255, 255, 0.045);
-}
-
+/* PNGロゴ横のテキスト */
 .navLogoText {
   display: flex;
   flex-direction: column;
   gap: 0.16rem;
   line-height: 1;
+  min-width: 0;
 }
 
 .navLogoMain {
+  position: relative;
+  display: inline-block;
   font-size: 0.78rem;
   font-weight: 300;
   letter-spacing: 0.24em;
   color: rgba(255, 255, 255, 0.92);
+  white-space: nowrap;
 }
 
 .navLogoSub {
+  position: relative;
+  display: inline-block;
   font-family: "Cormorant Garamond", Georgia, serif;
   font-size: 0.7rem;
   font-weight: 300;
   letter-spacing: 0.2em;
   color: rgba(255, 255, 255, 0.34);
+  white-space: nowrap;
 }
 
 /* ─── PC Nav ─────────────────────────────────────── */
@@ -153,13 +159,16 @@
 
 .navItem {
   position: relative;
+  display: inline-block;
   padding: 6px 2px 12px;
   font-size: 0.74rem;
   font-weight: 300;
   letter-spacing: 0.22em;
   color: rgba(255, 255, 255, 0.50);
   text-decoration: none;
-  transition: color 0.35s ease;
+  transition:
+    color 0.35s ease,
+    opacity 0.35s ease;
 }
 
 .navItemEmphasis {
@@ -174,7 +183,7 @@
   width: 0%;
   height: 1px;
   background: linear-gradient(
-    to right,
+    90deg,
     transparent,
     var(--nav-gold),
     rgba(255, 255, 255, 0.20),
@@ -204,21 +213,6 @@
   opacity: 0.78;
 }
 
-.navItemActive::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 50%;
-  width: 3px;
-  height: 3px;
-  border-radius: 9999px;
-  background: var(--nav-silver);
-  opacity: 0.68;
-  transform: translateX(-50%);
-  box-shadow:
-    0 0 0 0.5px var(--nav-silver-dim),
-    0 0 12px var(--nav-gold-glow);
-}
 
 /* ─── Hamburger ──────────────────────────────────── */
 .hamburger {
@@ -240,13 +234,7 @@
   }
 
   .navLogo {
-    gap: 0.68rem;
-  }
-
-  .navLogoMark {
-    width: 27px;
-    height: 27px;
-    font-size: 0.68rem;
+    gap: 0.64rem;
   }
 
   .navLogoMain {
@@ -342,7 +330,16 @@
     border-radius: 22px;
 
     background:
-      linear-gradient(180deg, rgba(12, 12, 12, 0.985), rgba(7, 7, 7, 0.965));
+      radial-gradient(
+        circle at 14% 0%,
+        rgba(217, 185, 138, 0.055),
+        transparent 32%
+      ),
+      linear-gradient(
+        180deg,
+        rgba(12, 12, 12, 0.985),
+        rgba(7, 7, 7, 0.965)
+      );
 
     box-shadow:
       0 0 0 0.5px var(--nav-gold-glow),
@@ -458,12 +455,14 @@
     opacity: 0;
     transform: translate3d(0, 7px, 0);
 
-    animation: mobileNavItemIn 0.62s cubic-bezier(0.22, 0.56, 0.18, 1) forwards;
-    animation-delay: calc(0.04s + var(--i) * 0.055s);
-
     transition:
       color 0.3s ease,
       transform 0.3s ease;
+  }
+
+  .mobileOpen .mobileNavItem {
+    animation: mobileNavItemIn 0.62s cubic-bezier(0.22, 0.56, 0.18, 1) forwards;
+    animation-delay: calc(0.04s + var(--i) * 0.055s);
   }
 
   .mobileNavItem:last-child {
@@ -481,17 +480,7 @@
     gap: 0.75rem;
   }
 
-  .mobileNavDot {
-    width: 3px;
-    height: 3px;
-    border-radius: 9999px;
-    background: rgba(255, 255, 255, 0.22);
-    transition:
-      width 0.3s ease,
-      height 0.3s ease,
-      background 0.3s ease,
-      box-shadow 0.3s ease;
-  }
+
 
   .mobileNavText {
     font-size: 0.9rem;
@@ -516,12 +505,6 @@
     color: var(--nav-gold);
   }
 
-  .mobileNavItemActive .mobileNavDot {
-    width: 4px;
-    height: 4px;
-    background: var(--nav-gold);
-    box-shadow: 0 0 14px var(--nav-gold-glow);
-  }
 
   .mobileNavItemActive .mobileNavArrow {
     color: rgba(217, 185, 138, 0.58);

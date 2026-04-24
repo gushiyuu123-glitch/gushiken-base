@@ -1,6 +1,8 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import styles from "./Nav.module.css";
 
+const LOGO_SRC = "/logo-gd.png";
+
 const navItems = [
   { href: "#works", label: "WORKS" },
   { href: "#about", label: "ABOUT" },
@@ -270,6 +272,118 @@ export default function Nav() {
 
   return (
     <>
+      {/* Local motion utility */}
+      <style>{`
+        .gd-nav-sharp {
+          position: relative;
+          opacity: 0;
+          transform: translate3d(-10px, 0, 0) scale(0.985);
+          filter: brightness(0.9);
+          clip-path: inset(0 100% 0 0);
+          animation: gdNavSharpIn 0.72s cubic-bezier(.22,.56,.18,1) var(--nav-delay, 0s) forwards;
+          will-change: opacity, transform, filter, clip-path;
+        }
+
+        .gd-nav-sharp-line {
+          position: absolute;
+          left: -10%;
+          top: 50%;
+          width: 42%;
+          height: 1px;
+          pointer-events: none;
+          background: linear-gradient(
+            90deg,
+            rgba(255,255,255,0),
+            rgba(255,255,255,0.48),
+            rgba(217,185,138,0.34),
+            rgba(255,255,255,0)
+          );
+          opacity: 0;
+          transform: translate3d(-18px, -50%, 0) scaleX(0.25);
+          transform-origin: left center;
+          animation: gdNavSheen 0.56s cubic-bezier(.22,.56,.18,1) calc(var(--nav-delay, 0s) + 0.15s) forwards;
+        }
+
+        .gd-nav-logo-seal {
+          display: grid;
+          place-items: center;
+          width: 34px;
+          height: 34px;
+          flex-shrink: 0;
+        }
+
+        .gd-nav-logo-image {
+          display: block;
+          width: 100%;
+          height: 100%;
+          object-fit: contain;
+          filter:
+            drop-shadow(0 0 10px rgba(217,185,138,0.10))
+            drop-shadow(0 0 18px rgba(217,185,138,0.035));
+          user-select: none;
+          pointer-events: none;
+        }
+
+        @keyframes gdNavSharpIn {
+          0% {
+            opacity: 0;
+            transform: translate3d(-10px, 0, 0) scale(0.985);
+            filter: brightness(0.88);
+            clip-path: inset(0 100% 0 0);
+          }
+
+          68% {
+            opacity: 1;
+            filter: brightness(1.08);
+          }
+
+          100% {
+            opacity: 1;
+            transform: translate3d(0, 0, 0) scale(1);
+            filter: brightness(1);
+            clip-path: inset(0 0 0 0);
+          }
+        }
+
+        @keyframes gdNavSheen {
+          0% {
+            opacity: 0;
+            transform: translate3d(-18px, -50%, 0) scaleX(0.25);
+          }
+
+          24% {
+            opacity: 0.74;
+          }
+
+          100% {
+            opacity: 0;
+            transform: translate3d(92px, -50%, 0) scaleX(1);
+          }
+        }
+
+        @media (max-width: 767px) {
+          .gd-nav-logo-seal {
+            width: 30px;
+            height: 30px;
+          }
+
+          .gd-nav-sharp-line {
+            display: none;
+          }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+          .gd-nav-sharp,
+          .gd-nav-sharp-line {
+            animation: none !important;
+            opacity: 1 !important;
+            transform: none !important;
+            filter: none !important;
+            clip-path: none !important;
+          }
+        }
+      `}</style>
+
       <nav
         className={`${styles.navRoot} ${scrolled ? styles.navActive : styles.navIdle}`}
         aria-label="Primary navigation"
@@ -282,18 +396,41 @@ export default function Nav() {
             onClick={() => open && closeMenu()}
             aria-label="GUSHIKEN DESIGN ホームへ"
           >
-            <span className={styles.navLogoMark} aria-hidden="true">
-              GD
+            <span
+              className="gd-nav-sharp gd-nav-logo-seal"
+              aria-hidden="true"
+              style={{ "--nav-delay": "0.04s" }}
+            >
+              <img
+                src={LOGO_SRC}
+                alt=""
+                className="gd-nav-logo-image"
+                draggable="false"
+              />
+              <span className="gd-nav-sharp-line" aria-hidden="true" />
             </span>
 
             <span className={styles.navLogoText}>
-              <span className={styles.navLogoMain}>GUSHIKEN DESIGN</span>
-              <span className={styles.navLogoSub}>Web Design / Okinawa</span>
+              <span
+                className={`${styles.navLogoMain} gd-nav-sharp`}
+                style={{ "--nav-delay": "0.10s" }}
+              >
+                GUSHIKEN DESIGN
+                <span className="gd-nav-sharp-line" aria-hidden="true" />
+              </span>
+
+              <span
+                className={`${styles.navLogoSub} gd-nav-sharp`}
+                style={{ "--nav-delay": "0.16s" }}
+              >
+                Web Design / Okinawa
+                <span className="gd-nav-sharp-line" aria-hidden="true" />
+              </span>
             </span>
           </a>
 
           <div className={styles.navPc}>
-            {pcLinks.map((item) => {
+            {pcLinks.map((item, index) => {
               const active = activeHash === item.href;
 
               return (
@@ -306,9 +443,12 @@ export default function Nav() {
                     ${styles.navItem}
                     ${active ? styles.navItemActive : ""}
                     ${item.emphasis ? styles.navItemEmphasis : ""}
+                    gd-nav-sharp
                   `}
+                  style={{ "--nav-delay": `${0.24 + index * 0.07}s` }}
                 >
                   {item.label}
+                  <span className="gd-nav-sharp-line" aria-hidden="true" />
                 </a>
               );
             })}
@@ -383,7 +523,7 @@ export default function Nav() {
                   style={{ "--i": i }}
                 >
                   <span className={styles.mobileNavLeft}>
-                    <span className={styles.mobileNavDot} aria-hidden="true" />
+                   
                     <span className={styles.mobileNavText}>{item.label}</span>
                   </span>
 

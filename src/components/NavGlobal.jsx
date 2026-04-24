@@ -9,14 +9,14 @@ import { createPortal } from "react-dom";
 const NAV_HEIGHT = 68;
 const SCROLL_OFFSET = NAV_HEIGHT + 12;
 
+const LOGO_SRC = "/logo-gd.png";
+
 const ACCENT = "#d9b98a";
 const ACCENT_SOFT = "rgba(217,185,138,0.18)";
 const ACCENT_DIM = "rgba(217,185,138,0.24)";
-const ACCENT_BORDER = "rgba(217,185,138,0.34)";
 const ACCENT_GLOW = "rgba(217,185,138,0.075)";
 
 const WHITE = "rgba(255,255,255,0.92)";
-const WHITE_MID = "rgba(255,255,255,0.58)";
 const WHITE_DIM = "rgba(255,255,255,0.36)";
 
 const SUBACCENT = "rgba(220,226,235,0.78)";
@@ -283,7 +283,7 @@ export default function NavGlobal({ mode }) {
   const homeLinks = useMemo(() => HOME_ITEMS, []);
   const globalLinks = useMemo(() => GLOBAL_ITEMS, []);
 
-  const renderPcHomeLink = (item) => {
+  const renderPcHomeLink = (item, index) => {
     const active = activeHash === item.href;
     const isContact = item.label === "CONTACT";
 
@@ -292,12 +292,17 @@ export default function NavGlobal({ mode }) {
         key={item.href}
         href={item.href}
         onClick={handleAnchorClick(item.href)}
-        className="group relative pb-3 no-underline transition-colors duration-300 focus-visible:outline-none focus-visible:rounded"
+        className="gd-nav-sharp group relative pb-3 no-underline transition-colors duration-300 focus-visible:outline-none focus-visible:rounded"
         style={{
+          "--nav-delay": `${0.24 + index * 0.07}s`,
           fontSize: "0.74rem",
           fontWeight: 300,
           letterSpacing: "0.22em",
-          color: active ? WHITE : isContact ? "rgba(217,185,138,0.72)" : "rgba(255,255,255,0.50)",
+          color: active
+            ? WHITE
+            : isContact
+              ? "rgba(217,185,138,0.72)"
+              : "rgba(255,255,255,0.50)",
           paddingTop: "6px",
           position: "relative",
         }}
@@ -313,7 +318,7 @@ export default function NavGlobal({ mode }) {
     );
   };
 
-  const renderPcGlobalLink = (item) => {
+  const renderPcGlobalLink = (item, index) => {
     const active = pathname === item.to;
     const isContact = item.label === "CONTACT";
 
@@ -321,12 +326,17 @@ export default function NavGlobal({ mode }) {
       <Link
         key={item.to}
         to={item.to}
-        className="group relative pb-3 no-underline transition-colors duration-300 focus-visible:outline-none focus-visible:rounded"
+        className="gd-nav-sharp group relative pb-3 no-underline transition-colors duration-300 focus-visible:outline-none focus-visible:rounded"
         style={{
+          "--nav-delay": `${0.24 + index * 0.07}s`,
           fontSize: "0.74rem",
           fontWeight: 300,
           letterSpacing: "0.22em",
-          color: active ? WHITE : isContact ? "rgba(217,185,138,0.72)" : "rgba(255,255,255,0.50)",
+          color: active
+            ? WHITE
+            : isContact
+              ? "rgba(217,185,138,0.72)"
+              : "rgba(255,255,255,0.50)",
           paddingTop: "6px",
           position: "relative",
         }}
@@ -342,6 +352,8 @@ export default function NavGlobal({ mode }) {
     );
   };
 
+  if (!mounted) return null;
+
   const ui = (
     <>
       {/* Local nav utility styles */}
@@ -352,34 +364,55 @@ export default function NavGlobal({ mode }) {
           overscroll-behavior: none;
         }
 
-        .gd-nav-logo-mark {
+        .gd-nav-sharp {
           position: relative;
+          opacity: 0;
+          transform: translate3d(-10px, 0, 0) scale(0.985);
+          filter: brightness(0.9);
+          clip-path: inset(0 100% 0 0);
+          animation: gdNavSharpIn 0.72s cubic-bezier(.22,.56,.18,1) var(--nav-delay, 0s) forwards;
+          will-change: opacity, transform, filter, clip-path;
+        }
+
+        .gd-nav-sharp::before {
+          content: "";
+          position: absolute;
+          left: -8%;
+          top: 50%;
+          width: 38%;
+          height: 1px;
+          pointer-events: none;
+          background: linear-gradient(
+            90deg,
+            rgba(255,255,255,0),
+            rgba(255,255,255,0.48),
+            rgba(217,185,138,0.34),
+            rgba(255,255,255,0)
+          );
+          opacity: 0;
+          transform: translate3d(-18px, -50%, 0) scaleX(0.26);
+          transform-origin: left center;
+          animation: gdNavSheen 0.56s cubic-bezier(.22,.56,.18,1) calc(var(--nav-delay, 0s) + 0.16s) forwards;
+        }
+
+        .gd-nav-logo-seal {
           display: grid;
           place-items: center;
-          width: 28px;
-          height: 28px;
-          border-radius: 9999px;
-          border: 1px solid rgba(217,185,138,0.22);
-          background:
-            radial-gradient(circle at 50% 20%, rgba(217,185,138,0.12), transparent 56%),
-            rgba(255,255,255,0.025);
-          box-shadow:
-            inset 0 1px 0 rgba(255,255,255,0.06),
-            0 0 18px rgba(217,185,138,0.035);
-          color: rgba(255,255,255,0.84);
-          font-family: "Cormorant Garamond", Georgia, serif;
-          font-size: 0.72rem;
-          font-weight: 400;
-          letter-spacing: 0.04em;
+          width: 34px;
+          height: 34px;
           flex-shrink: 0;
         }
 
-        .gd-nav-logo-mark::after {
-          content: "";
-          position: absolute;
-          inset: 5px;
-          border-radius: 9999px;
-          border: 1px solid rgba(255,255,255,0.045);
+        .gd-nav-logo-image {
+          display: block;
+          width: 100%;
+          height: 100%;
+          object-fit: contain;
+          filter:
+            drop-shadow(0 0 10px rgba(217,185,138,0.10))
+            drop-shadow(0 0 18px rgba(217,185,138,0.035));
+          user-select: none;
+          pointer-events: none;
         }
 
         .gd-nav-mobile-link {
@@ -391,6 +424,43 @@ export default function NavGlobal({ mode }) {
           animation: gdNavMobileIn 0.62s cubic-bezier(.22,.56,.18,1) forwards;
         }
 
+        @keyframes gdNavSharpIn {
+          0% {
+            opacity: 0;
+            transform: translate3d(-10px, 0, 0) scale(0.985);
+            filter: brightness(0.88);
+            clip-path: inset(0 100% 0 0);
+          }
+
+          68% {
+            opacity: 1;
+            filter: brightness(1.08);
+          }
+
+          100% {
+            opacity: 1;
+            transform: translate3d(0, 0, 0) scale(1);
+            filter: brightness(1);
+            clip-path: inset(0 0 0 0);
+          }
+        }
+
+        @keyframes gdNavSheen {
+          0% {
+            opacity: 0;
+            transform: translate3d(-18px, -50%, 0) scaleX(0.26);
+          }
+
+          24% {
+            opacity: 0.74;
+          }
+
+          100% {
+            opacity: 0;
+            transform: translate3d(92px, -50%, 0) scaleX(1);
+          }
+        }
+
         @keyframes gdNavMobileIn {
           to {
             opacity: 1;
@@ -398,11 +468,26 @@ export default function NavGlobal({ mode }) {
           }
         }
 
+        @media (max-width: 767px) {
+          .gd-nav-logo-seal {
+            width: 30px;
+            height: 30px;
+          }
+
+          .gd-nav-sharp::before {
+            display: none;
+          }
+        }
+
         @media (prefers-reduced-motion: reduce) {
+          .gd-nav-sharp,
+          .gd-nav-sharp::before,
           .gd-nav-mobile-link {
             animation: none !important;
             opacity: 1 !important;
             transform: none !important;
+            filter: none !important;
+            clip-path: none !important;
           }
         }
       `}</style>
@@ -433,16 +518,29 @@ export default function NavGlobal({ mode }) {
             to="/"
             translate="no"
             onClick={() => open && closeMenu()}
-            className="group flex items-center gap-3 text-white/94 no-underline transition-opacity duration-300 hover:opacity-78
+            className="group flex items-center gap-3 text-white/94 no-underline transition-opacity duration-300 hover:opacity-82
                        focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#d9b98a]/40 focus-visible:ring-offset-2 focus-visible:ring-offset-black focus-visible:rounded"
+            aria-label="GUSHIKEN DESIGN Home"
           >
-            <span className="gd-nav-logo-mark" aria-hidden="true">
-              GD
+            <span
+              className="gd-nav-sharp gd-nav-logo-seal"
+              aria-hidden="true"
+              style={{ "--nav-delay": "0.04s" }}
+            >
+              <img
+                src={LOGO_SRC}
+                alt=""
+                className="gd-nav-logo-image"
+                draggable="false"
+              />
             </span>
 
             <span className="flex flex-col gap-[0.14rem] leading-none">
               <span
+                className="gd-nav-sharp"
                 style={{
+                  "--nav-delay": "0.10s",
+                  display: "inline-block",
                   fontSize: "0.78rem",
                   fontWeight: 300,
                   letterSpacing: "0.24em",
@@ -453,8 +551,9 @@ export default function NavGlobal({ mode }) {
               </span>
 
               <span
-                className="hidden sm:block"
+                className="gd-nav-sharp hidden sm:block"
                 style={{
+                  "--nav-delay": "0.16s",
                   fontFamily: "'Cormorant Garamond', Georgia, serif",
                   fontSize: "0.7rem",
                   fontWeight: 300,
@@ -671,8 +770,6 @@ export default function NavGlobal({ mode }) {
     </>
   );
 
-  if (!mounted) return null;
-
   return createPortal(ui, document.body);
 }
 
@@ -735,6 +832,7 @@ function MobileLinkInner({ label, active }) {
             transition: "all 0.3s ease",
           }}
         />
+
         <span
           style={{
             fontSize: "0.9rem",
