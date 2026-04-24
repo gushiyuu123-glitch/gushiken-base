@@ -1,7 +1,4 @@
 // src/lib/microcms.js
-// ===============================
-// microCMS API Client
-// ===============================
 import axios from "axios";
 
 const API_KEY = import.meta.env.VITE_MICROCMS_API_KEY;
@@ -29,9 +26,6 @@ function assertMicroCmsEnv() {
   }
 }
 
-// ===================================
-// NEWS：一覧取得
-// ===================================
 export async function getNewsList({ limit = 10, offset = 0 } = {}) {
   assertMicroCmsEnv();
 
@@ -56,9 +50,6 @@ export async function getNewsList({ limit = 10, offset = 0 } = {}) {
   }
 }
 
-// ===================================
-// NEWS：詳細取得
-// ===================================
 export async function getNewsDetail(id) {
   assertMicroCmsEnv();
 
