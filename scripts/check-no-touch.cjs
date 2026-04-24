@@ -12,10 +12,11 @@ const forbiddenPatterns = [
   /^src\/components\//i,
   /^src\/pages\//i,
   /^src\/layouts\//i,
+  /^src\/sections\//i,
   /^public\/.*\.html$/i,
+  /^public\/.*\.css$/i,
   /^index\.html$/i,
 ];
-
 function checkList(files) {
   const bad = files.filter((f) => forbiddenPatterns.some((p) => p.test(f)));
   return bad;

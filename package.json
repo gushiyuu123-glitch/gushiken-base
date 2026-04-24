@@ -1,15 +1,15 @@
 {
- "name": "gushiken-base",
+  "name": "gushiken-base",
   "private": true,
   "version": "0.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "prebuild": "node scripts/bump-sw-stamp.cjs",
-    "build": "node scripts/generate-sitemap.cjs && vite build",
+    "prebuild": "node scripts/bump-sw-stamp.cjs && node scripts/generate-sitemap.js",
+    "build": "vite build",
     "bump-sw": "node scripts/bump-sw-stamp.cjs",
+    "generate-sitemap": "node scripts/generate-sitemap.js",
     "check-no-touch": "node scripts/check-no-touch.cjs",
-    "generate-sitemap": "node scripts/generate-sitemap.cjs",
     "lint": "eslint .",
     "preview": "vite preview",
     "prepare": "husky install"
