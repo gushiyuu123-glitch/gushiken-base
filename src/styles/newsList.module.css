@@ -331,6 +331,9 @@
   line-height: 1.65;
   letter-spacing: 0.045em;
 
+  overflow-wrap: anywhere;
+  word-break: break-word;
+
   transition: color 0.35s ease;
 }
 
@@ -411,23 +414,46 @@
     margin-left: 0.75rem;
   }
 
+  /*
+    SPは明確にエリア指定。
+    画像あり：
+      01 | image image
+         | meta  arrow
+
+    画像なし：
+      01 | meta  arrow
+  */
   .item {
     grid-template-columns: 2.2rem minmax(0, 1fr) auto;
+    grid-template-areas:
+      "num thumb thumb"
+      ".   meta  arrow";
+
     gap: 0.85rem;
+    align-items: start;
 
     min-height: auto;
     padding: 1.25rem 0;
+
+    transform: none;
+  }
+
+  .item:hover,
+  .item:focus-visible {
+    transform: none;
   }
 
   .itemNumber {
+    grid-area: num;
     align-self: start;
+
     padding-top: 0.15rem;
+
     font-size: 1.2rem;
   }
 
   .thumbWrap {
-    grid-column: 2 / -1;
-    grid-row: 1;
+    grid-area: thumb;
 
     width: 100%;
     height: auto;
@@ -435,12 +461,15 @@
   }
 
   .meta {
-    grid-column: 2 / 3;
+    grid-area: meta;
+    min-width: 0;
   }
 
   .arrow {
-    grid-column: 3 / 4;
+    grid-area: arrow;
     align-self: center;
+
+    font-size: 0.82rem;
   }
 
   .date {
@@ -448,15 +477,51 @@
   }
 
   .itemTitle {
+    display: block;
+    min-width: 0;
+    max-width: 100%;
+
     font-size: 0.94rem;
     line-height: 1.65;
     letter-spacing: 0.035em;
+
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
+
+  /*
+    eyecatch がない記事にも対応。
+    thumb が存在しない場合は、余白行を作らず
+    num / meta / arrow を同じ行に並べる。
+  */
+  .item:not(:has(.thumbWrap)) {
+    grid-template-areas: "num meta arrow";
+    align-items: center;
+  }
+
+  .item:not(:has(.thumbWrap)) .itemNumber,
+  .item:not(:has(.thumbWrap)) .arrow {
+    align-self: center;
   }
 }
 
 @media (max-width: 390px) {
   .inner {
     width: calc(100% - 1.5rem);
+  }
+
+  .item {
+    grid-template-columns: 2rem minmax(0, 1fr) auto;
+    gap: 0.7rem;
+  }
+
+  .itemNumber {
+    font-size: 1.08rem;
+  }
+
+  .itemTitle {
+    font-size: 0.88rem;
+    line-height: 1.64;
   }
 }
 

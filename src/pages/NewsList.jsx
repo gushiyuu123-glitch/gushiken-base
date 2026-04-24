@@ -10,7 +10,7 @@ export default function NewsList() {
   const [error, setError] = useState(false);
 
   const formatDate = useMemo(() => {
-    const fmt = new Intl.DateTimeFormat("ja-JP", {
+    const formatter = new Intl.DateTimeFormat("ja-JP", {
       year: "numeric",
       month: "2-digit",
       day: "2-digit",
@@ -22,7 +22,7 @@ export default function NewsList() {
       const date = new Date(dateStr);
       if (Number.isNaN(date.getTime())) return "";
 
-      return fmt.format(date);
+      return formatter.format(date);
     };
   }, []);
 
@@ -34,14 +34,13 @@ export default function NewsList() {
     async function fetchNews() {
       try {
         setLoading(true);
+        setError(false);
 
         const res = await getNewsList({ limit: 50 });
         if (!mounted) return;
 
         const items = Array.isArray(res?.contents) ? res.contents : [];
-
         setNews(items);
-        setError(false);
       } catch {
         if (!mounted) return;
         setError(true);
@@ -85,71 +84,79 @@ export default function NewsList() {
           </p>
         </header>
 
-        {loading && (
-          <p className={styles.stateText} aria-live="polite">
-            読み込み中…
-          </p>
-        )}
-
-        {error && !loading && (
-          <div className={styles.stateBox} role="alert">
-            <p className={styles.error}>
-              お知らせを読み込めませんでした。
+        <div className={styles.panel}>
+          {loading && (
+            <p className={styles.stateText} aria-live="polite">
+              読み込み中…
             </p>
-            <Link to="/" className={styles.backLink}>
-              HOMEへ戻る
-            </Link>
-          </div>
-        )}
+          )}
 
-        {!loading && !error && !hasNews && (
-          <p className={styles.stateText} aria-live="polite">
-            現在、お知らせはありません。
-          </p>
-        )}
+          {error && !loading && (
+            <div className={styles.stateBox} role="alert">
+              <p className={styles.error}>
+                お知らせを読み込めませんでした。
+              </p>
 
-        {!loading && !error && hasNews && (
-          <div className={styles.list}>
-            {news.map((item, index) => {
-              const date = item.publishedAt || item.createdAt || null;
+              <Link to="/" className={styles.backLink}>
+                HOMEへ戻る
+              </Link>
+            </div>
+          )}
 
-              return (
-                <Link
-                  to={`/news/${item.id}`}
-                  key={item.id}
-                  className={styles.item}
-                  aria-label={`お知らせ: ${item.title}`}
-                >
-                  <span className={styles.itemNumber} aria-hidden="true">
-                    {String(index + 1).padStart(2, "0")}
-                  </span>
+          {!loading && !error && !hasNews && (
+            <p className={styles.stateText} aria-live="polite">
+              現在、お知らせはありません。
+            </p>
+          )}
 
-                  {item.eyecatch?.url && (
-                    <div className={styles.thumbWrap}>
-                      <img
-                        src={item.eyecatch.url}
-                        className={styles.thumb}
-                        alt=""
-                        loading="lazy"
-                        decoding="async"
-                        draggable="false"
-                      />
+          {!loading && !error && hasNews && (
+            <div className={styles.list}>
+              {news.map((item, index) => {
+                const date =
+                  item.publishedAt || item.createdAt || item.updatedAt || null;
+
+                const hasThumb = Boolean(item.eyecatch?.url);
+
+                return (
+                  <Link
+                    to={`/news/${item.id}`}
+                    key={item.id}
+                    className={`${styles.item} ${
+                      hasThumb ? styles.withThumb : ""
+                    }`}
+                    aria-label={`お知らせ: ${item.title}`}
+                  >
+                    <span className={styles.number} aria-hidden="true">
+                      {String(index + 1).padStart(2, "0")}
+                    </span>
+
+                    {hasThumb && (
+                      <div className={styles.thumbWrap}>
+                        <img
+                          src={item.eyecatch.url}
+                          className={styles.thumb}
+                          alt=""
+                          loading="lazy"
+                          decoding="async"
+                          draggable="false"
+                        />
+                      </div>
+                    )}
+
+                    <div className={styles.meta}>
+                      <p className={styles.date}>{formatDate(date)}</p>
+                      <h2 className={styles.itemTitle}>{item.title}</h2>
                     </div>
-                  )}
 
-                  <div className={styles.meta}>
-                    <p className={styles.date}>{formatDate(date)}</p>
-                    <h2 className={styles.itemTitle}>{item.title}</h2>
-                  </div>
-
-                  <span className={styles.arrow} aria-hidden="true">
-                    →
-                  </span>
-                </Link>
-              );
-            })}
-          </div>
-        )}
+                    <span className={styles.arrow} aria-hidden="true">
+                      →
+                    </span>
+                  </Link>
+                );
+              })}
+            </div>
+          )}
+        </div>
       </div>
     </section>
   );
