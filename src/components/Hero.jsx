@@ -3,6 +3,50 @@ import React, { useState } from "react";
 import heroRoom from "../assets/hero-room.png";
 import styles from "./Hero.module.css";
 
+function HeroTitleSvg() {
+  return (
+    <svg
+      className={styles.heroTitleSvg}
+      viewBox="0 0 760 250"
+      aria-hidden="true"
+      focusable="false"
+    >
+      <defs>
+        <linearGradient
+          id="heroTitleStrokePc"
+          x1="0%"
+          y1="0%"
+          x2="100%"
+          y2="0%"
+        >
+          <stop offset="0%" stopColor="rgba(255,255,255,0.58)" />
+          <stop offset="48%" stopColor="rgba(255,255,255,0.96)" />
+          <stop offset="100%" stopColor="rgba(217,185,138,0.72)" />
+        </linearGradient>
+      </defs>
+
+      <text
+        x="0"
+        y="82"
+        className={`${styles.heroSvgText} ${styles.heroSvgText1}`}
+        stroke="url(#heroTitleStrokePc)"
+      >
+        GUSHIKEN
+      </text>
+
+      <text
+        x="0"
+        y="178"
+        className={`${styles.heroSvgText} ${styles.heroSvgText2}`}
+        stroke="url(#heroTitleStrokePc)"
+      >
+        DESIGN
+      </text>
+
+    </svg>
+  );
+}
+
 export default function Hero() {
   const [imgLoaded, setImgLoaded] = useState(false);
 
@@ -45,7 +89,7 @@ export default function Hero() {
         className="
           pointer-events-none absolute inset-x-0 top-0 z-[1]
           h-[116px] md:h-[128px]
-          bg-[linear-gradient(180deg,rgba(6,6,6,0.48)_0%,rgba(6,6,6,0.24)_42%,transparent_100%)]
+          bg-[linear-gradient(180deg,rgba(6,6,6,0.50)_0%,rgba(6,6,6,0.24)_42%,transparent_100%)]
         "
       />
 
@@ -54,7 +98,7 @@ export default function Hero() {
         aria-hidden="true"
         className="
           pointer-events-none absolute inset-0 z-[1]
-          bg-[linear-gradient(180deg,rgba(0,0,0,0.08)_0%,rgba(0,0,0,0.05)_30%,rgba(0,0,0,0.18)_72%,rgba(0,0,0,0.38)_100%)]
+          bg-[linear-gradient(180deg,rgba(0,0,0,0.08)_0%,rgba(0,0,0,0.05)_30%,rgba(0,0,0,0.20)_72%,rgba(0,0,0,0.42)_100%)]
         "
       />
 
@@ -63,9 +107,9 @@ export default function Hero() {
         aria-hidden="true"
         className="
           pointer-events-none absolute inset-y-0 left-0 z-[1]
-          w-[72%]
-          md:w-[58%]
-          bg-[linear-gradient(90deg,rgba(0,0,0,0.34)_0%,rgba(0,0,0,0.16)_40%,transparent_100%)]
+          w-[74%]
+          md:w-[60%]
+          bg-[linear-gradient(90deg,rgba(0,0,0,0.42)_0%,rgba(0,0,0,0.18)_42%,transparent_100%)]
         "
       />
 
@@ -75,7 +119,7 @@ export default function Hero() {
         className="
           pointer-events-none absolute inset-y-0 left-0 z-[1]
           w-[34%]
-          bg-[linear-gradient(90deg,rgba(0,0,0,0.16)_0%,transparent_100%)]
+          bg-[linear-gradient(90deg,rgba(0,0,0,0.18)_0%,transparent_100%)]
         "
       />
 
@@ -85,7 +129,7 @@ export default function Hero() {
         className="
           pointer-events-none absolute right-[15.5%] top-[21%] z-[1]
           hidden h-[50%] w-px lg:block
-          bg-[linear-gradient(180deg,transparent_0%,rgba(255,255,255,0.10)_18%,rgba(255,255,255,0.06)_78%,transparent_100%)]
+          bg-[linear-gradient(180deg,transparent_0%,rgba(217,185,138,0.12)_18%,rgba(255,255,255,0.06)_78%,transparent_100%)]
         "
       />
 
@@ -94,8 +138,8 @@ export default function Hero() {
         aria-hidden="true"
         className="
           pointer-events-none absolute inset-0 z-[1]
-          [box-shadow:inset_0_0_120px_rgba(0,0,0,0.16)]
-          md:[box-shadow:inset_0_0_160px_rgba(0,0,0,0.18)]
+          [box-shadow:inset_0_0_120px_rgba(0,0,0,0.18)]
+          md:[box-shadow:inset_0_0_170px_rgba(0,0,0,0.20)]
         "
       />
 
@@ -113,13 +157,13 @@ export default function Hero() {
       <div
         className="
           absolute left-6 right-6 bottom-[3.1rem] z-[2]
-          max-w-[650px]
+          max-w-[670px]
           sm:left-7 sm:right-8
           md:left-16 md:bottom-24
           lg:left-20 lg:bottom-28
         "
       >
-        {/* LABEL（見られ方：印象設計） */}
+        {/* LABEL */}
         <div className={`${styles.heroFade} ${styles.heroFade1}`}>
           <p
             className="
@@ -130,7 +174,7 @@ export default function Hero() {
               md:mb-6
             "
           >
-            OKINAWA / IMPRESSION DESIGN
+            OKINAWA / WEB DESIGN / IMPRESSION
           </p>
         </div>
 
@@ -140,7 +184,7 @@ export default function Hero() {
             className="
               mb-4
               text-[0.86rem] font-light leading-[1.7]
-              tracking-[0.12em] text-white/82
+              tracking-[0.12em] text-white/84
               sm:text-[0.92rem]
               md:mb-5 md:text-[1rem]
             "
@@ -149,21 +193,18 @@ export default function Hero() {
           </p>
         </div>
 
-        {/* TITLE */}
+        {/* TITLE / SVG SIGNATURE */}
         <h1
           className={`
             ${styles.heroFade} ${styles.heroFade3}
+            ${styles.heroTitleWrap}
             mb-5
-            text-[2.18rem] font-light leading-[1.03]
-            tracking-[0.2em] text-white
-            sm:text-[2.5rem]
-            md:mb-7 md:pl-[6px] md:text-[4.05rem]
-            lg:text-[4.55rem]
+            md:mb-7 md:pl-[6px]
           `}
+          aria-label="GUSHIKEN DESIGN"
         >
-          GUSHIKEN
-          <br />
-          DESIGN
+          <span className="sr-only">GUSHIKEN DESIGN</span>
+          <HeroTitleSvg />
         </h1>
 
         {/* DIVIDER */}
@@ -171,8 +212,8 @@ export default function Hero() {
           className={`
             ${styles.heroFade} ${styles.heroFade4}
             mb-6 h-px w-[72px]
-            bg-white/44
-            md:mb-8 md:ml-[6px] md:w-[80px]
+            bg-[linear-gradient(90deg,rgba(255,255,255,0.52),rgba(217,185,138,0.46),rgba(255,255,255,0))]
+            md:mb-8 md:ml-[6px] md:w-[86px]
           `}
         />
 
@@ -180,45 +221,45 @@ export default function Hero() {
         <div className={`${styles.heroFade} ${styles.heroFade5} md:ml-[18px]`}>
           <div
             className="
-              max-w-[30rem]
+              max-w-[31rem]
               text-[0.92rem] leading-[2]
               tracking-[0.015em] text-white/84
               sm:text-[0.96rem]
               md:text-[1.04rem] md:leading-[2.08]
             "
           >
-            {/* ✅ SEO/安心（小さく残す） */}
             <p
               className="
                 mb-3
-                text-[0.76rem] tracking-[0.12em]
+                text-[0.76rem] leading-[1.7]
+                tracking-[0.12em]
                 text-white/56
                 md:text-[0.84rem]
               "
             >
-              沖縄のWeb制作・Webデザイン｜印象設計
+              沖縄のWeb制作・Webデザイン｜美容・店舗・EC
             </p>
 
-            <p className="mb-2">店舗・サロン・サービスの価値を、</p>
-            <p>上品に、伝わりやすく整えるサイト制作</p>
+            <p className="mb-2">余白、写真、言葉、導線まで整え、</p>
+            <p>価値が自然に伝わるWebサイトへ。</p>
 
             <p
               className="
                 mt-5
                 text-[0.82em] leading-[1.9]
-                tracking-[0.08em] text-white/54
+                tracking-[0.08em] text-white/56
               "
             >
-              見やすさと高級感を両立し、
+              見やすく、迷わず、安っぽくならない。
               <br className="hidden sm:block" />
               <span className="sm:hidden"> </span>
-              信頼感のある印象へ整えます。
+              信頼感のある第一印象を設計します。
             </p>
           </div>
         </div>
       </div>
 
-      {/* SCROLL INDICATOR (Quiet metal line) */}
+      {/* SCROLL INDICATOR */}
       <div
         aria-hidden="true"
         className={`

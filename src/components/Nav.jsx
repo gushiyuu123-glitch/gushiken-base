@@ -2,18 +2,18 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import styles from "./Nav.module.css";
 
 const navItems = [
-  { href: "#works",      label: "WORKS" },
-  { href: "#about",      label: "ABOUT" },
+  { href: "#works", label: "WORKS" },
+  { href: "#about", label: "ABOUT" },
   { href: "#philosophy", label: "POLICY" },
-  { href: "#price",      label: "PRICE" },
-  { href: "#contact",    label: "CONTACT" },
+  { href: "#price", label: "PRICE" },
+  { href: "#contact", label: "CONTACT", emphasis: true },
 ];
 
 const NAV_HEIGHT = 68;
 const SCROLL_OFFSET = NAV_HEIGHT + 12;
 
 /* =========================================================
-   Body Scroll Lock (robust)
+   Body Scroll Lock
 ========================================================= */
 function useBodyScrollLock(locked) {
   const scrollYRef = useRef(0);
@@ -26,6 +26,7 @@ function useBodyScrollLock(locked) {
     const docEl = document.documentElement;
 
     scrollYRef.current = window.scrollY || window.pageYOffset || 0;
+
     prevRef.current = {
       overflow: body.style.overflow,
       position: body.style.position,
@@ -65,7 +66,7 @@ function useBodyScrollLock(locked) {
 }
 
 /* =========================================================
-   Smooth scroll to section with fixed-header offset
+   Smooth scroll to section
 ========================================================= */
 function scrollToHash(hash) {
   if (!hash?.startsWith("#")) return;
@@ -93,27 +94,34 @@ export default function Nav() {
   const firstLinkRef = useRef(null);
   const buttonRef = useRef(null);
   const pendingHashRef = useRef(null);
+  const panelRef = useRef(null);
 
   useBodyScrollLock(open);
 
-  /* ── Scroll → solid background (lightweight) ── */
+  /* ── Scroll → solid background ── */
   useEffect(() => {
     let raf = 0;
+
     const onScroll = () => {
       cancelAnimationFrame(raf);
-      raf = requestAnimationFrame(() => setScrolled(window.scrollY > 12));
+      raf = requestAnimationFrame(() => {
+        setScrolled(window.scrollY > 12);
+      });
     };
+
     window.addEventListener("scroll", onScroll, { passive: true });
     onScroll();
+
     return () => {
       cancelAnimationFrame(raf);
       window.removeEventListener("scroll", onScroll);
     };
   }, []);
 
-  /* ── Close menu automatically when viewport becomes desktop ── */
+  /* ── Close menu when desktop ── */
   useEffect(() => {
     const mq = window.matchMedia("(min-width: 768px)");
+
     const closeIfDesktop = () => {
       if (mq.matches) setOpen(false);
     };
@@ -129,19 +137,21 @@ export default function Nav() {
     };
   }, []);
 
-  /* ── Sync activeHash with back/forward & manual hash edits ── */
+  /* ── Sync activeHash ── */
   useEffect(() => {
     const sync = () => setActiveHash(window.location.hash || "");
     sync();
+
     window.addEventListener("hashchange", sync);
     window.addEventListener("popstate", sync);
+
     return () => {
       window.removeEventListener("hashchange", sync);
       window.removeEventListener("popstate", sync);
     };
   }, []);
 
-  /* ── IntersectionObserver (stable pick + retry for late-render sections) ── */
+  /* ── IntersectionObserver active follow ── */
   useEffect(() => {
     let observer = null;
     let timer = null;
@@ -159,16 +169,15 @@ export default function Nav() {
         return;
       }
 
-      const thresholds = [0, 0.15, 0.3, 0.45, 0.6, 0.8, 1];
-
       observer = new IntersectionObserver(
         (entries) => {
-          const visible = entries.filter((e) => e.isIntersecting);
+          const visible = entries.filter((entry) => entry.isIntersecting);
           if (!visible.length) return;
 
           visible.sort((a, b) => {
-            const r = (b.intersectionRatio || 0) - (a.intersectionRatio || 0);
-            if (r) return r;
+            const ratio = (b.intersectionRatio || 0) - (a.intersectionRatio || 0);
+            if (ratio) return ratio;
+
             return (
               Math.abs(a.boundingClientRect.top) -
               Math.abs(b.boundingClientRect.top)
@@ -181,7 +190,10 @@ export default function Nav() {
           const next = `#${id}`;
           setActiveHash((prev) => (prev === next ? prev : next));
         },
-        { rootMargin: "-35% 0px -55% 0px", threshold: thresholds }
+        {
+          rootMargin: "-35% 0px -55% 0px",
+          threshold: [0, 0.15, 0.3, 0.45, 0.6, 0.8, 1],
+        }
       );
 
       targets.forEach((el) => observer.observe(el));
@@ -198,12 +210,15 @@ export default function Nav() {
   /* ── Esc close ── */
   useEffect(() => {
     if (!open) return;
+
     const onKey = (e) => {
       if (e.key === "Escape") {
+        e.preventDefault();
         setOpen(false);
         setTimeout(() => buttonRef.current?.focus(), 0);
       }
     };
+
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   }, [open]);
@@ -211,18 +226,23 @@ export default function Nav() {
   /* ── Focus first link on open ── */
   useEffect(() => {
     if (!open) return;
-    const t = setTimeout(() => firstLinkRef.current?.focus(), 80);
+
+    const t = setTimeout(() => firstLinkRef.current?.focus(), 90);
     return () => clearTimeout(t);
   }, [open]);
 
-  /* ── If a hash was clicked while open: close → unlock → then scroll ── */
+  /* ── Close → then scroll ── */
   useEffect(() => {
     if (open) return;
+
     const pending = pendingHashRef.current;
     if (!pending) return;
 
     pendingHashRef.current = null;
-    requestAnimationFrame(() => scrollToHash(pending));
+
+    requestAnimationFrame(() => {
+      scrollToHash(pending);
+    });
   }, [open]);
 
   const closeMenu = useCallback(() => setOpen(false), []);
@@ -231,8 +251,8 @@ export default function Nav() {
   const handleAnchorClick = useCallback(
     (href) => (e) => {
       if (!href?.startsWith("#")) return;
-      e.preventDefault();
 
+      e.preventDefault();
       setActiveHash((prev) => (prev === href ? prev : href));
 
       if (open) {
@@ -252,6 +272,7 @@ export default function Nav() {
     <>
       <nav
         className={`${styles.navRoot} ${scrolled ? styles.navActive : styles.navIdle}`}
+        aria-label="Primary navigation"
       >
         <div className={styles.navInner}>
           <a
@@ -259,23 +280,33 @@ export default function Nav() {
             className={styles.navLogo}
             translate="no"
             onClick={() => open && closeMenu()}
+            aria-label="GUSHIKEN DESIGN ホームへ"
           >
-            GUSHIKEN DESIGN
-            <span className={styles.navLogoRule} aria-hidden="true" />
-            <span className={styles.navLogoBrand} aria-hidden="true">
-              Web Design
+            <span className={styles.navLogoMark} aria-hidden="true">
+              GD
+            </span>
+
+            <span className={styles.navLogoText}>
+              <span className={styles.navLogoMain}>GUSHIKEN DESIGN</span>
+              <span className={styles.navLogoSub}>Web Design / Okinawa</span>
             </span>
           </a>
 
           <div className={styles.navPc}>
             {pcLinks.map((item) => {
               const active = activeHash === item.href;
+
               return (
                 <a
                   key={item.href}
                   href={item.href}
                   onClick={handleAnchorClick(item.href)}
-                  className={`${styles.navItem} ${active ? styles.navItemActive : ""}`}
+                  aria-current={active ? "location" : undefined}
+                  className={`
+                    ${styles.navItem}
+                    ${active ? styles.navItemActive : ""}
+                    ${item.emphasis ? styles.navItemEmphasis : ""}
+                  `}
                 >
                   {item.label}
                 </a>
@@ -306,6 +337,7 @@ export default function Nav() {
       />
 
       <div
+        ref={panelRef}
         id="mobile-navigation"
         className={`${styles.mobileNav} ${open ? styles.mobileOpen : ""}`}
         role="dialog"
@@ -319,7 +351,10 @@ export default function Nav() {
             <button
               type="button"
               className={styles.mobileClose}
-              onClick={closeMenu}
+              onClick={() => {
+                setOpen(false);
+                setTimeout(() => buttonRef.current?.focus(), 0);
+              }}
               aria-label="Close navigation"
               tabIndex={open ? 0 : -1}
             >
@@ -331,6 +366,7 @@ export default function Nav() {
           <div className={styles.mobileNavLinks}>
             {navItems.map((item, i) => {
               const active = activeHash === item.href;
+
               return (
                 <a
                   key={item.href}
@@ -338,9 +374,19 @@ export default function Nav() {
                   ref={i === 0 ? firstLinkRef : null}
                   onClick={handleAnchorClick(item.href)}
                   tabIndex={open ? 0 : -1}
-                  className={`${styles.mobileNavItem} ${active ? styles.mobileNavItemActive : ""}`}
+                  aria-current={active ? "location" : undefined}
+                  className={`
+                    ${styles.mobileNavItem}
+                    ${active ? styles.mobileNavItemActive : ""}
+                    ${item.emphasis ? styles.mobileNavItemEmphasis : ""}
+                  `}
+                  style={{ "--i": i }}
                 >
-                  <span className={styles.mobileNavText}>{item.label}</span>
+                  <span className={styles.mobileNavLeft}>
+                    <span className={styles.mobileNavDot} aria-hidden="true" />
+                    <span className={styles.mobileNavText}>{item.label}</span>
+                  </span>
+
                   <span className={styles.mobileNavArrow}>→</span>
                 </a>
               );
@@ -348,7 +394,9 @@ export default function Nav() {
           </div>
 
           <div className={styles.mobileNavFooter}>
-            <p className={styles.mobileNavNote}>Quiet structure.&ensp;Clear direction.</p>
+            <p className={styles.mobileNavNote}>
+              Structure, atmosphere, and trust.
+            </p>
           </div>
         </div>
       </div>

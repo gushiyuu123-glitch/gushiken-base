@@ -1,3 +1,4 @@
+// src/components/NavGlobal.jsx
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { createPortal } from "react-dom";
@@ -8,13 +9,18 @@ import { createPortal } from "react-dom";
 const NAV_HEIGHT = 68;
 const SCROLL_OFFSET = NAV_HEIGHT + 12;
 
-const ACCENT = "#d9b98a"; // gold
-const ACCENT_DIM = "rgba(217,185,138,0.22)";
-const ACCENT_BORDER = "rgba(217,185,138,0.32)";
-const ACCENT_GLOW = "rgba(217,185,138,0.06)";
+const ACCENT = "#d9b98a";
+const ACCENT_SOFT = "rgba(217,185,138,0.18)";
+const ACCENT_DIM = "rgba(217,185,138,0.24)";
+const ACCENT_BORDER = "rgba(217,185,138,0.34)";
+const ACCENT_GLOW = "rgba(217,185,138,0.075)";
 
-const SUBACCENT = "rgba(220, 226, 235, 0.78)"; // silver dot
-const SUBACCENT_DIM = "rgba(220, 226, 235, 0.22)";
+const WHITE = "rgba(255,255,255,0.92)";
+const WHITE_MID = "rgba(255,255,255,0.58)";
+const WHITE_DIM = "rgba(255,255,255,0.36)";
+
+const SUBACCENT = "rgba(220,226,235,0.78)";
+const SUBACCENT_DIM = "rgba(220,226,235,0.22)";
 
 /* =========================
    Lists
@@ -39,16 +45,19 @@ const GLOBAL_ITEMS = [
 ========================= */
 function scrollToHash(hash) {
   if (!hash?.startsWith("#")) return;
+
   const el = document.querySelector(hash);
   if (!el) return;
 
   const top =
     el.getBoundingClientRect().top + (window.scrollY || 0) - SCROLL_OFFSET;
+
   const safeTop = Math.max(0, Math.round(top));
 
   if (window.location.hash !== hash) {
     window.history.pushState(null, "", hash);
   }
+
   window.scrollTo({ top: safeTop, behavior: "smooth" });
 }
 
@@ -56,10 +65,9 @@ export default function NavGlobal({ mode }) {
   const { pathname } = useLocation();
   const isHome = mode ? mode === "home" : pathname === "/";
 
+  const [mounted, setMounted] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
-
-  // home active
   const [activeHash, setActiveHash] = useState("");
 
   const buttonRef = useRef(null);
@@ -67,36 +75,45 @@ export default function NavGlobal({ mode }) {
   const panelRef = useRef(null);
   const pendingHashRef = useRef(null);
 
-  /* ── Scroll → solid（RAF） ── */
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  /* ── Scroll → solid ── */
   useEffect(() => {
     let raf = 0;
+
     const onScroll = () => {
       cancelAnimationFrame(raf);
-      raf = requestAnimationFrame(() => setScrolled(window.scrollY > 12));
+      raf = requestAnimationFrame(() => {
+        setScrolled(window.scrollY > 12);
+      });
     };
+
     window.addEventListener("scroll", onScroll, { passive: true });
     onScroll();
+
     return () => {
       cancelAnimationFrame(raf);
       window.removeEventListener("scroll", onScroll);
     };
   }, []);
 
-  /* ── Route change → close + failsafe unlock ── */
+  /* ── Route change → close + unlock ── */
   useEffect(() => {
     setOpen(false);
-
-    // まれな残骸対策（念のため）
     document.documentElement.classList.remove("scroll-lock");
     document.body.classList.remove("scroll-lock");
   }, [pathname]);
 
-  /* ── Close menu automatically when viewport becomes desktop ── */
+  /* ── Close when desktop ── */
   useEffect(() => {
     const mq = window.matchMedia("(min-width: 768px)");
+
     const closeIfDesktop = () => {
       if (mq.matches) setOpen(false);
     };
+
     closeIfDesktop();
 
     if (mq.addEventListener) mq.addEventListener("change", closeIfDesktop);
@@ -108,19 +125,19 @@ export default function NavGlobal({ mode }) {
     };
   }, []);
 
-  /* ── Scroll lock (NO body fixed) ── */
+  /* ── Scroll lock ── */
   useEffect(() => {
     if (!open) return;
 
     const html = document.documentElement;
     const body = document.body;
+
     html.classList.add("scroll-lock");
     body.classList.add("scroll-lock");
 
     const panel = panelRef.current;
 
     const preventOutside = (e) => {
-      // panel内のスクロールは許可
       if (panel && panel.contains(e.target)) return;
       e.preventDefault();
     };
@@ -134,9 +151,10 @@ export default function NavGlobal({ mode }) {
     };
   }, [open]);
 
-  /* ── Esc close + focus return ── */
+  /* ── Esc close ── */
   useEffect(() => {
     if (!open) return;
+
     const onKey = (e) => {
       if (e.key === "Escape") {
         e.preventDefault();
@@ -144,6 +162,7 @@ export default function NavGlobal({ mode }) {
         setTimeout(() => buttonRef.current?.focus(), 0);
       }
     };
+
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   }, [open]);
@@ -151,25 +170,28 @@ export default function NavGlobal({ mode }) {
   /* ── Focus first link on open ── */
   useEffect(() => {
     if (!open) return;
+
     const t = setTimeout(() => firstLinkRef.current?.focus(), 80);
     return () => clearTimeout(t);
   }, [open]);
 
-  /* ── Home: hash sync ── */
+  /* ── Home hash sync ── */
   useEffect(() => {
     if (!isHome) return;
 
     const sync = () => setActiveHash(window.location.hash || "");
     sync();
+
     window.addEventListener("hashchange", sync);
     window.addEventListener("popstate", sync);
+
     return () => {
       window.removeEventListener("hashchange", sync);
       window.removeEventListener("popstate", sync);
     };
   }, [isHome]);
 
-  /* ── Home: IntersectionObserver active follow ── */
+  /* ── Home IntersectionObserver active follow ── */
   useEffect(() => {
     if (!isHome) return;
 
@@ -180,7 +202,7 @@ export default function NavGlobal({ mode }) {
 
     const setup = () => {
       const targets = HOME_ITEMS
-        .map((i) => document.querySelector(i.href))
+        .map((item) => document.querySelector(item.href))
         .filter(Boolean);
 
       if (!targets.length) {
@@ -189,16 +211,15 @@ export default function NavGlobal({ mode }) {
         return;
       }
 
-      const thresholds = [0, 0.15, 0.3, 0.45, 0.6, 0.8, 1];
-
       observer = new IntersectionObserver(
         (entries) => {
-          const visible = entries.filter((e) => e.isIntersecting);
+          const visible = entries.filter((entry) => entry.isIntersecting);
           if (!visible.length) return;
 
           visible.sort((a, b) => {
-            const r = (b.intersectionRatio || 0) - (a.intersectionRatio || 0);
-            if (r) return r;
+            const ratio = (b.intersectionRatio || 0) - (a.intersectionRatio || 0);
+            if (ratio) return ratio;
+
             return (
               Math.abs(a.boundingClientRect.top) -
               Math.abs(b.boundingClientRect.top)
@@ -211,7 +232,10 @@ export default function NavGlobal({ mode }) {
           const next = `#${id}`;
           setActiveHash((prev) => (prev === next ? prev : next));
         },
-        { rootMargin: "-35% 0px -55% 0px", threshold: thresholds }
+        {
+          rootMargin: "-35% 0px -55% 0px",
+          threshold: [0, 0.15, 0.3, 0.45, 0.6, 0.8, 1],
+        }
       );
 
       targets.forEach((el) => observer.observe(el));
@@ -225,9 +249,10 @@ export default function NavGlobal({ mode }) {
     };
   }, [isHome]);
 
-  /* ── If a hash was clicked while open: close → then scroll ── */
+  /* ── Close → then scroll ── */
   useEffect(() => {
     if (open) return;
+
     const pending = pendingHashRef.current;
     if (!pending) return;
 
@@ -236,36 +261,158 @@ export default function NavGlobal({ mode }) {
   }, [open]);
 
   const closeMenu = useCallback(() => setOpen(false), []);
-  const toggleMenu = useCallback(() => setOpen((v) => !v), []);
+  const toggleMenu = useCallback(() => setOpen((value) => !value), []);
 
-const handleAnchorClick = useCallback(
-  (href) => (e) => {
-    e.preventDefault();
-    setActiveHash((prev) => (prev === href ? prev : href));
+  const handleAnchorClick = useCallback(
+    (href) => (e) => {
+      e.preventDefault();
 
-    // ✅ SP menu open時は close → then scroll（既存ロジックを活かす）
-    if (open) {
-      pendingHashRef.current = href;
-      setOpen(false);
-      return;
-    }
+      setActiveHash((prev) => (prev === href ? prev : href));
 
-    scrollToHash(href);
-  },
-  [open]
-);
+      if (open) {
+        pendingHashRef.current = href;
+        setOpen(false);
+        return;
+      }
+
+      scrollToHash(href);
+    },
+    [open]
+  );
 
   const homeLinks = useMemo(() => HOME_ITEMS, []);
   const globalLinks = useMemo(() => GLOBAL_ITEMS, []);
 
+  const renderPcHomeLink = (item) => {
+    const active = activeHash === item.href;
+    const isContact = item.label === "CONTACT";
+
+    return (
+      <a
+        key={item.href}
+        href={item.href}
+        onClick={handleAnchorClick(item.href)}
+        className="group relative pb-3 no-underline transition-colors duration-300 focus-visible:outline-none focus-visible:rounded"
+        style={{
+          fontSize: "0.74rem",
+          fontWeight: 300,
+          letterSpacing: "0.22em",
+          color: active ? WHITE : isContact ? "rgba(217,185,138,0.72)" : "rgba(255,255,255,0.50)",
+          paddingTop: "6px",
+          position: "relative",
+        }}
+      >
+        {active && <ActiveDot />}
+
+        <span className="transition-colors duration-300 group-hover:text-white/92">
+          {item.label}
+        </span>
+
+        <NavUnderline active={active} />
+      </a>
+    );
+  };
+
+  const renderPcGlobalLink = (item) => {
+    const active = pathname === item.to;
+    const isContact = item.label === "CONTACT";
+
+    return (
+      <Link
+        key={item.to}
+        to={item.to}
+        className="group relative pb-3 no-underline transition-colors duration-300 focus-visible:outline-none focus-visible:rounded"
+        style={{
+          fontSize: "0.74rem",
+          fontWeight: 300,
+          letterSpacing: "0.22em",
+          color: active ? WHITE : isContact ? "rgba(217,185,138,0.72)" : "rgba(255,255,255,0.50)",
+          paddingTop: "6px",
+          position: "relative",
+        }}
+      >
+        {active && <ActiveDot />}
+
+        <span className="transition-colors duration-300 group-hover:text-white/92">
+          {item.label}
+        </span>
+
+        <NavUnderline active={active} />
+      </Link>
+    );
+  };
+
   const ui = (
     <>
+      {/* Local nav utility styles */}
+      <style>{`
+        html.scroll-lock,
+        body.scroll-lock {
+          overflow: hidden;
+          overscroll-behavior: none;
+        }
+
+        .gd-nav-logo-mark {
+          position: relative;
+          display: grid;
+          place-items: center;
+          width: 28px;
+          height: 28px;
+          border-radius: 9999px;
+          border: 1px solid rgba(217,185,138,0.22);
+          background:
+            radial-gradient(circle at 50% 20%, rgba(217,185,138,0.12), transparent 56%),
+            rgba(255,255,255,0.025);
+          box-shadow:
+            inset 0 1px 0 rgba(255,255,255,0.06),
+            0 0 18px rgba(217,185,138,0.035);
+          color: rgba(255,255,255,0.84);
+          font-family: "Cormorant Garamond", Georgia, serif;
+          font-size: 0.72rem;
+          font-weight: 400;
+          letter-spacing: 0.04em;
+          flex-shrink: 0;
+        }
+
+        .gd-nav-logo-mark::after {
+          content: "";
+          position: absolute;
+          inset: 5px;
+          border-radius: 9999px;
+          border: 1px solid rgba(255,255,255,0.045);
+        }
+
+        .gd-nav-mobile-link {
+          transform: translate3d(0, 6px, 0);
+          opacity: 0;
+        }
+
+        .gd-nav-panel-open .gd-nav-mobile-link {
+          animation: gdNavMobileIn 0.62s cubic-bezier(.22,.56,.18,1) forwards;
+        }
+
+        @keyframes gdNavMobileIn {
+          to {
+            opacity: 1;
+            transform: translate3d(0, 0, 0);
+          }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+          .gd-nav-mobile-link {
+            animation: none !important;
+            opacity: 1 !important;
+            transform: none !important;
+          }
+        }
+      `}</style>
+
       {/* NAV BAR */}
       <nav
         className="fixed left-0 top-0 z-[9998] w-full transition-all duration-500"
         style={{
           height: NAV_HEIGHT,
-          background: scrolled ? "rgba(6,6,6,0.80)" : "rgba(0,0,0,0.12)",
+          background: scrolled ? "rgba(6,6,6,0.82)" : "rgba(0,0,0,0.10)",
           backdropFilter: scrolled
             ? "blur(18px) saturate(130%)"
             : "blur(10px) saturate(115%)",
@@ -274,173 +421,57 @@ const handleAnchorClick = useCallback(
             : "blur(10px) saturate(115%)",
           borderBottom: scrolled
             ? "1px solid rgba(255,255,255,0.09)"
-            : "1px solid rgba(255,255,255,0.05)",
+            : "1px solid rgba(255,255,255,0.045)",
           boxShadow: scrolled
-            ? `0 1px 0 ${ACCENT_DIM}, 0 12px 40px rgba(0,0,0,0.22)`
+            ? `0 1px 0 ${ACCENT_SOFT}, 0 12px 42px rgba(0,0,0,0.26)`
             : "none",
         }}
       >
-        <div className="mx-auto flex h-full max-w-6xl items-center justify-between px-8">
+        <div className="mx-auto flex h-full max-w-6xl items-center justify-between px-6 sm:px-8">
           {/* Logo */}
           <Link
             to="/"
             translate="no"
             onClick={() => open && closeMenu()}
-            className="flex items-center gap-3 text-white/94 no-underline transition-opacity duration-300 hover:opacity-70
+            className="group flex items-center gap-3 text-white/94 no-underline transition-opacity duration-300 hover:opacity-78
                        focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#d9b98a]/40 focus-visible:ring-offset-2 focus-visible:ring-offset-black focus-visible:rounded"
-            style={{
-              fontSize: "0.88rem",
-              fontWeight: 300,
-              letterSpacing: "0.26em",
-            }}
           >
-            GUSHIKEN DESIGN
-            <span
-              aria-hidden="true"
-              style={{
-                display: "block",
-                width: 1,
-                height: 12,
-                background: ACCENT_BORDER,
-                flexShrink: 0,
-              }}
-            />
-            <span
-              aria-hidden="true"
-              style={{
-                fontFamily: "'Cormorant Garamond', Georgia, serif",
-                fontSize: "0.76rem",
-                fontWeight: 300,
-                letterSpacing: "0.2em",
-                color: "rgba(255,255,255,0.38)",
-              }}
-            >
-              Web Design
+            <span className="gd-nav-logo-mark" aria-hidden="true">
+              GD
+            </span>
+
+            <span className="flex flex-col gap-[0.14rem] leading-none">
+              <span
+                style={{
+                  fontSize: "0.78rem",
+                  fontWeight: 300,
+                  letterSpacing: "0.24em",
+                  color: "rgba(255,255,255,0.92)",
+                }}
+              >
+                GUSHIKEN DESIGN
+              </span>
+
+              <span
+                className="hidden sm:block"
+                style={{
+                  fontFamily: "'Cormorant Garamond', Georgia, serif",
+                  fontSize: "0.7rem",
+                  fontWeight: 300,
+                  letterSpacing: "0.2em",
+                  color: "rgba(255,255,255,0.34)",
+                }}
+              >
+                Web Design / Okinawa
+              </span>
             </span>
           </Link>
 
           {/* PC Links */}
-          <div className="hidden items-center gap-11 md:flex">
+          <div className="hidden items-center gap-10 md:flex">
             {isHome
-              ? homeLinks.map((item) => {
-                  const active = activeHash === item.href;
-                  return (
-                    <a
-                      key={item.href}
-                      href={item.href}
-                      onClick={handleAnchorClick(item.href)}
-                      className="group relative pb-3 no-underline transition-colors duration-300 focus-visible:outline-none focus-visible:rounded"
-                      style={{
-                        fontSize: "0.76rem",
-                        fontWeight: 300,
-                        letterSpacing: "0.22em",
-                        color: active
-                          ? "rgba(255,255,255,0.94)"
-                          : "rgba(255,255,255,0.5)",
-                        paddingTop: "6px",
-                        position: "relative",
-                      }}
-                    >
-                      {active && (
-                        <span
-                          aria-hidden="true"
-                          style={{
-                            position: "absolute",
-                            top: 0,
-                            left: "50%",
-                            transform: "translateX(-50%)",
-                            width: 3,
-                            height: 3,
-                            borderRadius: "50%",
-                            background: SUBACCENT,
-                            boxShadow: `0 0 0 0.5px ${SUBACCENT_DIM}`,
-                            opacity: 0.55,
-                          }}
-                        />
-                      )}
-
-                      <span className="transition-colors duration-300 group-hover:text-white/92">
-                        {item.label}
-                      </span>
-
-                      <span
-                        aria-hidden="true"
-                        className="pointer-events-none absolute bottom-0 left-0 h-px transition-all duration-500"
-                        style={{
-                          width: active ? "100%" : "0%",
-                          opacity: active ? 0.75 : 0,
-                          background: `linear-gradient(to right, transparent, ${ACCENT}, transparent)`,
-                        }}
-                      />
-                      <span
-                        aria-hidden="true"
-                        className="pointer-events-none absolute bottom-0 left-0 h-px w-0 opacity-0 transition-all duration-500 group-hover:w-full group-hover:opacity-50"
-                        style={{
-                          background: `linear-gradient(to right, transparent, ${ACCENT}, transparent)`,
-                        }}
-                      />
-                    </a>
-                  );
-                })
-              : globalLinks.map((item) => {
-                  const active = pathname === item.to;
-                  return (
-                    <Link
-                      key={item.to}
-                      to={item.to}
-                      className="group relative pb-3 no-underline transition-colors duration-300 focus-visible:outline-none focus-visible:rounded"
-                      style={{
-                        fontSize: "0.76rem",
-                        fontWeight: 300,
-                        letterSpacing: "0.22em",
-                        color: active
-                          ? "rgba(255,255,255,0.94)"
-                          : "rgba(255,255,255,0.5)",
-                        paddingTop: "6px",
-                        position: "relative",
-                      }}
-                    >
-                      {active && (
-                        <span
-                          aria-hidden="true"
-                          style={{
-                            position: "absolute",
-                            top: 0,
-                            left: "50%",
-                            transform: "translateX(-50%)",
-                            width: 3,
-                            height: 3,
-                            borderRadius: "50%",
-                            background: SUBACCENT,
-                            boxShadow: `0 0 0 0.5px ${SUBACCENT_DIM}`,
-                            opacity: 0.55,
-                          }}
-                        />
-                      )}
-
-                      <span className="transition-colors duration-300 group-hover:text-white/92">
-                        {item.label}
-                      </span>
-
-                      <span
-                        aria-hidden="true"
-                        className="pointer-events-none absolute bottom-0 left-0 h-px transition-all duration-500"
-                        style={{
-                          width: active ? "100%" : "0%",
-                          opacity: active ? 0.75 : 0,
-                          background: `linear-gradient(to right, transparent, ${ACCENT}, transparent)`,
-                        }}
-                      />
-                      <span
-                        aria-hidden="true"
-                        className="pointer-events-none absolute bottom-0 left-0 h-px w-0 opacity-0 transition-all duration-500 group-hover:w-full group-hover:opacity-50"
-                        style={{
-                          background: `linear-gradient(to right, transparent, ${ACCENT}, transparent)`,
-                        }}
-                      />
-                    </Link>
-                  );
-                })}
+              ? homeLinks.map(renderPcHomeLink)
+              : globalLinks.map(renderPcGlobalLink)}
           </div>
 
           {/* Hamburger */}
@@ -451,20 +482,24 @@ const handleAnchorClick = useCallback(
             aria-expanded={open}
             aria-controls="global-mobile-navigation"
             onClick={toggleMenu}
-            className="relative z-[10000] flex h-[18px] w-[26px] flex-col justify-between md:hidden
+            className="relative z-[10000] flex h-[20px] w-[28px] flex-col justify-between md:hidden
                        focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#d9b98a]/40 focus-visible:ring-offset-4 focus-visible:ring-offset-black"
           >
             {[0, 1, 2].map((i) => (
               <span
                 key={i}
                 style={{
-                  width: i === 2 && !open ? "60%" : "100%",
+                  width: i === 2 && !open ? "58%" : "100%",
                   marginLeft: i === 2 && !open ? "auto" : 0,
+                  background:
+                    i === 1
+                      ? "rgba(217,185,138,0.70)"
+                      : "rgba(255,255,255,0.82)",
                 }}
-                className={`h-px rounded bg-white/85 transition-all duration-[400ms]
-                  ${i === 0 && open ? "translate-y-[8.5px] rotate-45" : ""}
+                className={`h-px rounded transition-all duration-[420ms]
+                  ${i === 0 && open ? "translate-y-[9.5px] rotate-45" : ""}
                   ${i === 1 && open ? "opacity-0" : ""}
-                  ${i === 2 && open ? "-translate-y-[8.5px] -rotate-45 !w-full !ml-0" : ""}
+                  ${i === 2 && open ? "-translate-y-[9.5px] -rotate-45 !w-full !ml-0" : ""}
                 `}
               />
             ))}
@@ -474,12 +509,12 @@ const handleAnchorClick = useCallback(
 
       {/* MOBILE OVERLAY */}
       <div
-        className={`fixed inset-0 z-[9996] transition-all duration-[350ms] md:hidden
+        className={`fixed inset-0 z-[9996] transition-all duration-[360ms] md:hidden
           ${open ? "opacity-100" : "pointer-events-none opacity-0"}`}
         style={{
-          background: "rgba(0,0,0,0.32)",
-          backdropFilter: "blur(5px)",
-          WebkitBackdropFilter: "blur(5px)",
+          background: "rgba(0,0,0,0.42)",
+          backdropFilter: "blur(6px)",
+          WebkitBackdropFilter: "blur(6px)",
           overscrollBehavior: "contain",
         }}
         onClick={closeMenu}
@@ -491,17 +526,22 @@ const handleAnchorClick = useCallback(
         ref={panelRef}
         id="global-mobile-navigation"
         className={`fixed left-[14px] right-[14px] top-[84px] z-[9997]
-          max-h-[calc(100svh-108px)] max-w-[400px] mx-auto
-          overflow-y-auto rounded-[20px]
-          transition-all duration-[350ms] md:hidden
-          ${open ? "translate-y-0 opacity-100" : "pointer-events-none -translate-y-2 opacity-0"}`}
+          mx-auto max-h-[calc(100svh-108px)] max-w-[404px]
+          overflow-y-auto rounded-[22px]
+          transition-all duration-[360ms] md:hidden
+          ${open ? "gd-nav-panel-open translate-y-0 opacity-100" : "pointer-events-none -translate-y-2 opacity-0"}`}
         style={{
-          background: "rgba(10,10,10,0.96)",
-          border: `1px solid rgba(255,255,255,0.09)`,
+          background:
+            "linear-gradient(180deg, rgba(12,12,12,0.985), rgba(7,7,7,0.965))",
+          border: "1px solid rgba(255,255,255,0.085)",
           borderTop: `1px solid ${ACCENT_DIM}`,
-          boxShadow: `0 0 0 0.5px ${ACCENT_GLOW}, 0 24px 60px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.04)`,
-          backdropFilter: "blur(14px)",
-          WebkitBackdropFilter: "blur(14px)",
+          boxShadow: `
+            0 0 0 0.5px ${ACCENT_GLOW},
+            0 24px 70px rgba(0,0,0,0.54),
+            inset 0 1px 0 rgba(255,255,255,0.045)
+          `,
+          backdropFilter: "blur(16px) saturate(125%)",
+          WebkitBackdropFilter: "blur(16px) saturate(125%)",
           overscrollBehavior: "contain",
           WebkitOverflowScrolling: "touch",
         }}
@@ -509,27 +549,27 @@ const handleAnchorClick = useCallback(
         aria-modal="true"
         aria-hidden={!open}
       >
-        <div className="flex flex-col px-5 pb-[1.4rem] pt-[1.1rem]">
+        <div className="flex flex-col px-5 pb-[1.35rem] pt-[1.1rem]">
           <div
-            className="mb-3 flex items-center justify-between pb-[0.8rem]"
+            className="mb-3 flex items-center justify-between pb-[0.85rem]"
             style={{ borderBottom: "1px solid rgba(255,255,255,0.06)" }}
           >
             <p
               className="m-0 flex items-center gap-[0.55rem]"
               style={{
-                fontSize: "0.65rem",
+                fontSize: "0.64rem",
                 letterSpacing: "0.28em",
-                color: "rgba(255,255,255,0.36)",
+                color: WHITE_DIM,
               }}
             >
               <span
                 aria-hidden="true"
                 style={{
                   display: "block",
-                  width: 14,
+                  width: 16,
                   height: 1,
-                  background: ACCENT,
-                  opacity: 0.55,
+                  background: `linear-gradient(90deg, ${ACCENT}, rgba(255,255,255,0.18))`,
+                  opacity: 0.62,
                   flexShrink: 0,
                 }}
               />
@@ -546,7 +586,10 @@ const handleAnchorClick = useCallback(
               tabIndex={open ? 0 : -1}
               className="relative h-8 w-8 rounded-full transition duration-300 hover:bg-white/5
                          focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#d9b98a]/40"
-              style={{ border: "1px solid rgba(255,255,255,0.08)" }}
+              style={{
+                border: "1px solid rgba(255,255,255,0.08)",
+                background: "rgba(255,255,255,0.018)",
+              }}
             >
               <span className="absolute left-[9px] top-[15px] h-px w-[14px] rotate-45 rounded bg-white/62" />
               <span className="absolute left-[9px] top-[15px] h-px w-[14px] -rotate-45 rounded bg-white/62" />
@@ -564,28 +607,18 @@ const handleAnchorClick = useCallback(
                       ref={i === 0 ? firstLinkRef : null}
                       tabIndex={open ? 0 : -1}
                       onClick={handleAnchorClick(item.href)}
-                      className="group flex items-center justify-between py-[15px] no-underline transition-[transform,color] duration-300
+                      className="gd-nav-mobile-link group flex items-center justify-between py-[15px] no-underline transition-[transform,color] duration-300
                                  focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#d9b98a]/40 focus-visible:rounded"
                       style={{
+                        animationDelay: `${0.04 + i * 0.055}s`,
                         borderBottom:
                           i < homeLinks.length - 1
                             ? "1px solid rgba(255,255,255,0.055)"
                             : "none",
-                        color: active ? ACCENT : "rgba(255,255,255,0.72)",
+                        color: active ? ACCENT : "rgba(255,255,255,0.74)",
                       }}
                     >
-                      <span style={{ fontSize: "0.9rem", fontWeight: 300, letterSpacing: "0.14em" }}>
-                        {item.label}
-                      </span>
-                      <span
-                        className={`text-[0.75rem] transition-[transform,color] duration-300 ${
-                          active
-                            ? "text-[rgba(217,185,138,0.55)]"
-                            : "text-white/28 group-hover:translate-x-[2px] group-hover:text-white/48"
-                        }`}
-                      >
-                        →
-                      </span>
+                      <MobileLinkInner label={item.label} active={active} />
                     </a>
                   );
                 })
@@ -598,49 +631,39 @@ const handleAnchorClick = useCallback(
                       ref={i === 0 ? firstLinkRef : null}
                       tabIndex={open ? 0 : -1}
                       onClick={() => setOpen(false)}
-                      className={`group flex items-center justify-between py-[15px] no-underline
+                      className={`gd-nav-mobile-link group flex items-center justify-between py-[15px] no-underline
                                   transition-[transform,color] duration-300
                                   focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#d9b98a]/40 focus-visible:rounded
                                   ${active ? "" : "hover:translate-x-[3px] hover:text-white/95"}`}
                       style={{
+                        animationDelay: `${0.04 + i * 0.055}s`,
                         borderBottom:
                           i < globalLinks.length - 1
                             ? "1px solid rgba(255,255,255,0.055)"
                             : "none",
-                        color: active ? ACCENT : "rgba(255,255,255,0.72)",
+                        color: active ? ACCENT : "rgba(255,255,255,0.74)",
                       }}
                     >
-                      <span style={{ fontSize: "0.9rem", fontWeight: 300, letterSpacing: "0.14em" }}>
-                        {item.label}
-                      </span>
-                      <span
-                        className={`text-[0.75rem] transition-[transform,color] duration-300 ${
-                          active
-                            ? "text-[rgba(217,185,138,0.55)]"
-                            : "text-white/28 group-hover:translate-x-[2px] group-hover:text-white/48"
-                        }`}
-                      >
-                        →
-                      </span>
+                      <MobileLinkInner label={item.label} active={active} />
                     </Link>
                   );
                 })}
           </div>
 
           <div
-            className="mt-4 pt-[0.9rem]"
+            className="mt-4 pt-[0.95rem]"
             style={{ borderTop: "1px solid rgba(255,255,255,0.055)" }}
           >
             <p
               style={{
                 margin: 0,
-                fontSize: "0.68rem",
+                fontSize: "0.67rem",
                 lineHeight: 1.8,
                 letterSpacing: "0.1em",
-                color: "rgba(255,255,255,0.22)",
+                color: "rgba(255,255,255,0.24)",
               }}
             >
-              Quiet structure.&ensp;Clear direction.
+              Structure, atmosphere, and trust.
             </p>
           </div>
         </div>
@@ -648,5 +671,90 @@ const handleAnchorClick = useCallback(
     </>
   );
 
+  if (!mounted) return null;
+
   return createPortal(ui, document.body);
+}
+
+function ActiveDot() {
+  return (
+    <span
+      aria-hidden="true"
+      style={{
+        position: "absolute",
+        top: 0,
+        left: "50%",
+        transform: "translateX(-50%)",
+        width: 3,
+        height: 3,
+        borderRadius: "50%",
+        background: SUBACCENT,
+        boxShadow: `0 0 0 0.5px ${SUBACCENT_DIM}, 0 0 12px ${ACCENT_GLOW}`,
+        opacity: 0.68,
+      }}
+    />
+  );
+}
+
+function NavUnderline({ active }) {
+  return (
+    <>
+      <span
+        aria-hidden="true"
+        className="pointer-events-none absolute bottom-0 left-0 h-px transition-all duration-500"
+        style={{
+          width: active ? "100%" : "0%",
+          opacity: active ? 0.78 : 0,
+          background: `linear-gradient(to right, transparent, ${ACCENT}, rgba(255,255,255,0.20), transparent)`,
+        }}
+      />
+
+      <span
+        aria-hidden="true"
+        className="pointer-events-none absolute bottom-0 left-0 h-px w-0 opacity-0 transition-all duration-500 group-hover:w-full group-hover:opacity-55"
+        style={{
+          background: `linear-gradient(to right, transparent, ${ACCENT}, rgba(255,255,255,0.18), transparent)`,
+        }}
+      />
+    </>
+  );
+}
+
+function MobileLinkInner({ label, active }) {
+  return (
+    <>
+      <span className="flex items-center gap-3">
+        <span
+          aria-hidden="true"
+          style={{
+            width: active ? 4 : 3,
+            height: active ? 4 : 3,
+            borderRadius: "50%",
+            background: active ? ACCENT : "rgba(255,255,255,0.22)",
+            boxShadow: active ? `0 0 14px ${ACCENT_GLOW}` : "none",
+            transition: "all 0.3s ease",
+          }}
+        />
+        <span
+          style={{
+            fontSize: "0.9rem",
+            fontWeight: 300,
+            letterSpacing: "0.14em",
+          }}
+        >
+          {label}
+        </span>
+      </span>
+
+      <span
+        className={`text-[0.75rem] transition-[transform,color] duration-300 ${
+          active
+            ? "text-[rgba(217,185,138,0.58)]"
+            : "text-white/28 group-hover:translate-x-[2px] group-hover:text-white/50"
+        }`}
+      >
+        →
+      </span>
+    </>
+  );
 }
