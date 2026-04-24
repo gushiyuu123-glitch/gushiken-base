@@ -459,15 +459,16 @@ export default function FloatingShareButton({
         {notice || "\u00a0"}
       </div>
 
-      <div
-        ref={panelRef}
-        className={`fsb-panel${isOpen ? "" : " closed"}`}
-        role="dialog"
-        aria-modal="false"
-        aria-label="Share this page"
-        aria-hidden={!isOpen}
-        inert={isOpen ? undefined : ""}
-      >
+  <div
+  id="floating-share-panel"
+  ref={panelRef}
+  className={`fsb-panel${isOpen ? "" : " closed"}`}
+  role="dialog"
+  aria-modal="false"
+  aria-label="Share this page"
+  aria-hidden={!isOpen}
+  {...(!isOpen ? { inert: true } : {})}
+>
         <div className="fsb-header">
           <div>
             <p className="fsb-header-eyebrow">SHARE THIS PAGE</p>
