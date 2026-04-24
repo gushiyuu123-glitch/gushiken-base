@@ -582,6 +582,7 @@
 
 /* -------------------------------------------------------
    Style Cards
+   2カラム維持 / 視線は上から下へ
 ------------------------------------------------------- */
 .about-style-block {
   margin-bottom: 5rem;
@@ -590,11 +591,21 @@
 .about-style-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
+  grid-template-rows: repeat(2, auto);
+
+  /*
+    重要：
+    通常の 01→02 / 03→04 ではなく、
+    01↓02 / 03↓04 の配置にする。
+  */
+  grid-auto-flow: column;
+
   gap: 0.95rem;
 }
 
 .about-style-card {
   position: relative;
+
   display: grid;
   grid-template-columns: auto 1fr;
   gap: 1rem;
@@ -603,10 +614,40 @@
 
   border: 1px solid rgba(255, 255, 255, 0.065);
   border-top-color: rgba(220, 226, 235, 0.12);
+
   background: rgba(255, 255, 255, 0.012);
+
+  overflow: hidden;
+}
+
+.about-style-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+
+  pointer-events: none;
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(201, 177, 138, 0.035),
+      transparent 34%
+    );
+
+  opacity: 0;
+
+  transition: opacity 0.42s ease;
+}
+
+.about-style-block.is-in .about-style-card::before {
+  opacity: 1;
+  transition-delay: calc(0.12s + (var(--style-index) * 0.1s));
 }
 
 .about-style-number {
+  position: relative;
+  z-index: 1;
+
   color: rgba(201, 177, 138, 0.58);
   font-family: "Cormorant Garamond", serif;
   font-size: 1.1rem;
@@ -615,6 +656,9 @@
 }
 
 .about-style-title {
+  position: relative;
+  z-index: 1;
+
   margin: 0 0 0.3rem;
 
   color: rgba(255, 255, 255, 0.9);
@@ -625,6 +669,9 @@
 }
 
 .about-style-text {
+  position: relative;
+  z-index: 1;
+
   margin: 0;
 
   color: rgba(255, 255, 255, 0.55);
@@ -633,6 +680,80 @@
   letter-spacing: 0.04em;
 }
 
+/* -------------------------------------------------------
+   Style Cards Reveal
+   DESIGN APPROACH → 01 → 02 → 03 → 04
+------------------------------------------------------- */
+.about-style-reveal {
+  opacity: 0;
+  transform: translate3d(0, 12px, 0) scale(0.997);
+
+  transition:
+    opacity 0.66s var(--ease-silent, cubic-bezier(.22,.56,.18,1)),
+    transform 0.66s var(--ease-silent, cubic-bezier(.22,.56,.18,1));
+
+  will-change: opacity, transform;
+}
+
+/* ブロックが見えたら発火 */
+.about-style-block.is-in .about-style-reveal {
+  opacity: 1;
+  transform: translate3d(0, 0, 0) scale(1);
+}
+
+/* ラベルは先に */
+.about-style-block.is-in .about-style-label {
+  transition-delay: 0s;
+}
+
+/*
+  01 → 02 → 03 → 04
+  速め。横に飛ばず、縦に流れる。
+*/
+.about-style-block.is-in .about-style-card {
+  transition-delay: calc(0.08s + (var(--style-index) * 0.105s));
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .about-style-grid {
+    grid-template-columns: 1fr;
+    grid-template-rows: none;
+    grid-auto-flow: row;
+  }
+
+  .about-style-card {
+    gap: 0.85rem;
+    padding: 1.05rem 1rem;
+  }
+
+  .about-style-number {
+    font-size: 1.05rem;
+  }
+
+  .about-style-title {
+    font-size: 0.92rem;
+  }
+
+  .about-style-text {
+    font-size: 0.78rem;
+    line-height: 1.8;
+  }
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  .about-style-reveal {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+
+  .about-style-card::before {
+    opacity: 1 !important;
+    transition: none !important;
+  }
+}
 /* -------------------------------------------------------
    Site Tone
 ------------------------------------------------------- */

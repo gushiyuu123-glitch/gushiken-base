@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import SectionSvgTitle from "../components/SectionSvgTitle";
 import "./philosophy.css";
 
@@ -78,16 +78,55 @@ function PrincipleVisual({ type }) {
 }
 
 function VisualPrinciples() {
+  const rootRef = useRef(null);
+
+  useEffect(() => {
+    const root = rootRef.current;
+    if (!root) return undefined;
+
+    const reveal = () => {
+      root.classList.add("is-in");
+    };
+
+    if (typeof IntersectionObserver === "undefined") {
+      reveal();
+      return undefined;
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry?.isIntersecting) return;
+
+        reveal();
+        observer.disconnect();
+      },
+      {
+        threshold: 0.16,
+        rootMargin: "0px 0px -8% 0px",
+      }
+    );
+
+    observer.observe(root);
+
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <div className="philo-principles aq-fade delay-6">
+    <div ref={rootRef} className="philo-principles">
       <div className="philo-principles-inner">
         <div className="vp-axis" aria-hidden="true" />
 
-        <p className="philo-principles-label">DESIGN IN PRACTICE</p>
+        <p className="philo-principles-label philo-principle-reveal">
+          DESIGN IN PRACTICE
+        </p>
 
         <div className="philo-principles-list">
-          {PRINCIPLES.map((item) => (
-            <article key={item.number} className="vp-item">
+          {PRINCIPLES.map((item, index) => (
+            <article
+              key={item.number}
+              className="vp-item philo-principle-reveal"
+              style={{ "--vp-index": index }}
+            >
               <span className="vp-num" aria-hidden="true">
                 {item.number}
               </span>

@@ -502,3 +502,59 @@
     animation: none !important;
   }
 }
+/* -------------------------------------------------------
+   Visual Principles Reveal
+   DESIGN IN PRACTICE → 01 → 02 → 03
+------------------------------------------------------- */
+.philo-principle-reveal {
+  opacity: 0;
+  transform: translate3d(0, 12px, 0) scale(0.997);
+
+  transition:
+    opacity 0.62s var(--ease-silent, cubic-bezier(.22,.56,.18,1)),
+    transform 0.62s var(--ease-silent, cubic-bezier(.22,.56,.18,1));
+
+  will-change: opacity, transform;
+}
+
+/* 発火 */
+.philo-principles.is-in .philo-principle-reveal {
+  opacity: 1;
+  transform: translate3d(0, 0, 0) scale(1);
+}
+
+/* ラベルはすぐ */
+.philo-principles.is-in .philo-principles-label {
+  transition-delay: 0s;
+}
+
+/* 01 → 02 → 03：遅すぎないテンポ */
+.philo-principles.is-in .vp-item {
+  transition-delay: calc(0.08s + (var(--vp-index) * 0.105s));
+}
+
+/* 軸線も少しだけ後から立つ */
+.philo-principles .vp-axis {
+  opacity: 0;
+  transform: scaleY(0.94);
+  transform-origin: top;
+
+  transition:
+    opacity 0.58s var(--ease-silent, cubic-bezier(.22,.56,.18,1)),
+    transform 0.58s var(--ease-silent, cubic-bezier(.22,.56,.18,1));
+}
+
+.philo-principles.is-in .vp-axis {
+  opacity: 1;
+  transform: scaleY(1);
+  transition-delay: 0.02s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .philo-principle-reveal,
+  .philo-principles .vp-axis {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}
