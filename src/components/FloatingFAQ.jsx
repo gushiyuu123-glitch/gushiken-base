@@ -5,6 +5,7 @@ import "./floating-faq.css";
 
 function getFocusable(container) {
   if (!container) return [];
+
   const selectors = [
     'a[href]:not([tabindex="-1"])',
     'button:not([disabled]):not([tabindex="-1"])',
@@ -13,6 +14,7 @@ function getFocusable(container) {
     'select:not([disabled]):not([tabindex="-1"])',
     '[tabindex]:not([tabindex="-1"])',
   ];
+
   return Array.from(container.querySelectorAll(selectors.join(","))).filter(
     (el) => !el.hasAttribute("inert")
   );
@@ -26,6 +28,7 @@ export default function FloatingFAQ() {
   const panelRef = useRef(null);
   const toggleButtonRef = useRef(null);
   const firstQuestionRef = useRef(null);
+
   const location = useLocation();
 
   const closePanel = () => {
@@ -44,82 +47,97 @@ export default function FloatingFAQ() {
   // ルート変更時に閉じる
   useEffect(() => {
     closePanel();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location.pathname]);
 
-  // 外側クリックで閉じる（pointerdown一本化 + capture で取りこぼし防止）
+  // 外側クリックで閉じる
   useEffect(() => {
     if (!isOpen) return;
 
     const handler = (event) => {
       const wrap = wrapRef.current;
       if (!wrap) return;
-      if (!wrap.contains(event.target)) closePanel();
+
+      if (!wrap.contains(event.target)) {
+        closePanel();
+      }
     };
 
     document.addEventListener("pointerdown", handler, { capture: true });
-    return () => document.removeEventListener("pointerdown", handler, { capture: true });
+
+    return () => {
+      document.removeEventListener("pointerdown", handler, { capture: true });
+    };
   }, [isOpen]);
 
-  // Esc で閉じる
+  // Escで閉じる
   useEffect(() => {
     if (!isOpen) return;
 
     const handleKeyDown = (event) => {
-      if (event.key === "Escape") {
-        closePanel();
-        toggleButtonRef.current?.focus();
-      }
+      if (event.key !== "Escape") return;
+
+      event.preventDefault();
+      closePanel();
+      toggleButtonRef.current?.focus();
     };
 
     window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
   }, [isOpen]);
 
-  // 開いたら最初の質問へ（フォーカスの事故防止で rAF）
+  // 開いたら最初の質問へ
   useEffect(() => {
     if (!isOpen) return;
+
     const raf = requestAnimationFrame(() => {
       firstQuestionRef.current?.focus();
     });
+
     return () => cancelAnimationFrame(raf);
   }, [isOpen]);
 
-  // フォーカストラップ（最低限）
+  // フォーカストラップ
   useEffect(() => {
     if (!isOpen) return;
 
     const panel = panelRef.current;
     if (!panel) return;
 
-    const onKeyDown = (e) => {
-      if (e.key !== "Tab") return;
+    const onKeyDown = (event) => {
+      if (event.key !== "Tab") return;
 
       const focusables = getFocusable(panel);
-      if (focusables.length === 0) return;
+      if (!focusables.length) return;
 
       const first = focusables[0];
       const last = focusables[focusables.length - 1];
 
-      if (e.shiftKey && document.activeElement === first) {
-        e.preventDefault();
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
         last.focus();
-      } else if (!e.shiftKey && document.activeElement === last) {
-        e.preventDefault();
+      }
+
+      if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
         first.focus();
       }
     };
 
     panel.addEventListener("keydown", onKeyDown);
-    return () => panel.removeEventListener("keydown", onKeyDown);
+
+    return () => {
+      panel.removeEventListener("keydown", onKeyDown);
+    };
   }, [isOpen]);
 
   const panelProps = useMemo(() => {
-    // inert は閉じている時にフォーカス/クリックをブロックするため（aria-hidden だけより安全）
     return {
       "data-open": isOpen ? "true" : "false",
       inert: isOpen ? undefined : "",
-      "aria-hidden": !isOpen,
+      "aria-hidden": isOpen ? "false" : "true",
     };
   }, [isOpen]);
 
@@ -136,12 +154,17 @@ export default function FloatingFAQ() {
       >
         <div className="floating-faq-panel-inner">
           <div className="floating-faq-head">
-            <p className="floating-faq-label">FAQ</p>
+            <p className="floating-faq-label">FAQ / SUPPORT</p>
 
             <div className="floating-faq-head-row">
-              <p id="floating-faq-title" className="floating-faq-title">
-                よくあるご質問
-              </p>
+              <div>
+                <p id="floating-faq-title" className="floating-faq-title">
+                  よくあるご質問
+                </p>
+                <p className="floating-faq-subtitle">
+                  ご依頼前の不安を、静かに整理します。
+                </p>
+              </div>
 
               <button
                 type="button"
@@ -152,7 +175,8 @@ export default function FloatingFAQ() {
                 }}
                 aria-label="FAQを閉じる"
               >
-                ×
+                <span aria-hidden="true" />
+                <span aria-hidden="true" />
               </button>
             </div>
           </div>
@@ -175,9 +199,13 @@ export default function FloatingFAQ() {
                     aria-controls={`faq-answer-${index}`}
                     id={`faq-question-${index}`}
                   >
-                    <span>{item.question}</span>
+                    <span className="floating-faq-question-text">
+                      {item.question}
+                    </span>
+
                     <span className="floating-faq-icon" aria-hidden="true">
-                      {expanded ? "−" : "+"}
+                      <span />
+                      <span />
                     </span>
                   </button>
 
@@ -187,7 +215,9 @@ export default function FloatingFAQ() {
                     role="region"
                     aria-labelledby={`faq-question-${index}`}
                   >
-                    <p className="floating-faq-answer">{item.answer}</p>
+                    <div className="floating-faq-answer-inner">
+                      <p className="floating-faq-answer">{item.answer}</p>
+                    </div>
                   </div>
                 </div>
               );
@@ -199,8 +229,13 @@ export default function FloatingFAQ() {
               掲載していない内容は、お問い合わせフォームよりご相談ください。
             </p>
 
-            <Link to="/contact" className="floating-faq-link" onClick={closePanel}>
-              お問い合わせへ
+            <Link
+              to="/contact"
+              className="floating-faq-link"
+              onClick={closePanel}
+            >
+              <span>お問い合わせへ</span>
+              <span aria-hidden="true">→</span>
             </Link>
           </div>
         </div>
@@ -217,7 +252,11 @@ export default function FloatingFAQ() {
         aria-label={isOpen ? "FAQを閉じる" : "FAQを開く"}
       >
         <span className="floating-faq-toggle-icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24" className="floating-faq-toggle-svg" fill="none">
+          <svg
+            viewBox="0 0 24 24"
+            className="floating-faq-toggle-svg"
+            fill="none"
+          >
             <circle cx="12" cy="12" r="8.5" />
             <path d="M9.9 9.2a2.35 2.35 0 0 1 4.2 1.45c0 1.55-1.6 2.02-2.1 2.75-.22.32-.28.62-.28 1.1" />
             <circle cx="12" cy="17.1" r="0.7" fill="currentColor" stroke="none" />

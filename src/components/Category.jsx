@@ -23,7 +23,7 @@ export default function Category({
 
   const hasNew = itemsRaw.some((item) => item?.isNew === true);
 
-  // SPカード幅：最小限の調整だけ残す（過剰な個別最適化は避ける）
+  // SPカード幅：展示感のため、カテゴリ別の幅差だけ少し残す
   const widthMap = {
     [normalize("PICK UP")]: "w-[88%]",
     [normalize("BEAUTY / SALON")]: "w-[94%]",
@@ -32,6 +32,7 @@ export default function Category({
     [normalize("EC / BRAND DESIGN")]: "w-[82%]",
     [normalize("ART / CREATIVE")]: "w-[96%]",
   };
+
   const cardWidth = widthMap[key] || "w-[88%]";
 
   return (
@@ -39,19 +40,38 @@ export default function Category({
       aria-labelledby={headingId}
       className={`
         relative w-full
-        ${accent ? "rounded-[12px] bg-white/[0.02] px-5 py-6 md:px-6 md:py-7" : ""}
+        ${
+          accent
+            ? `
+              border-y border-white/[0.065]
+              bg-white/[0.012]
+              px-0 py-8 md:px-0 md:py-10
+            `
+            : ""
+        }
       `}
     >
       {/* HEADER */}
       <div className="relative mb-12">
-        {/* line：gold / silver 統一 */}
         <div
           className={`
             mb-6 h-px
             ${
               accent
-                ? "w-20 bg-gradient-to-r from-[rgba(217,185,138,0.42)] to-[rgba(217,185,138,0.06)]"
-                : "w-12 bg-gradient-to-r from-[rgba(220,226,235,0.22)] to-[rgba(255,255,255,0.05)]"
+                ? `
+                  w-20
+                  bg-gradient-to-r
+                  from-[rgba(201,177,138,0.58)]
+                  via-[rgba(255,255,255,0.12)]
+                  to-transparent
+                `
+                : `
+                  w-12
+                  bg-gradient-to-r
+                  from-[rgba(220,226,235,0.26)]
+                  via-[rgba(255,255,255,0.08)]
+                  to-transparent
+                `
             }
           `}
         />
@@ -60,8 +80,12 @@ export default function Category({
           <h2
             id={headingId}
             className={`
-              font-light tracking-[0.22em] text-white
-              ${accent ? "text-[1.14rem]" : "text-[1.02rem] md:text-[1.12rem]"}
+              font-light text-white
+              ${
+                accent
+                  ? "text-[1.14rem] tracking-[0.24em]"
+                  : "text-[1.02rem] tracking-[0.22em] md:text-[1.12rem]"
+              }
             `}
           >
             {title}
@@ -71,9 +95,11 @@ export default function Category({
             <span
               className="
                 inline-flex items-center justify-center
-                rounded-sm border border-[rgba(220,226,235,0.18)]
-                bg-white/[0.035] px-2 py-[2px]
-                text-[0.60rem] tracking-[0.18em] text-white/70
+                border border-[rgba(201,177,138,0.26)]
+                bg-[rgba(201,177,138,0.045)]
+                px-2 py-[2px]
+                text-[0.60rem] tracking-[0.18em]
+                text-[rgba(238,226,204,0.80)]
               "
             >
               NEW
@@ -85,7 +111,11 @@ export default function Category({
           <p
             className={`
               mt-2 leading-relaxed tracking-[0.14em]
-              ${accent ? "text-[0.84rem] text-white/56" : "text-[0.78rem] text-white/38"}
+              ${
+                accent
+                  ? "text-[0.84rem] text-white/56"
+                  : "text-[0.78rem] text-white/38"
+              }
             `}
           >
             {subtitle}
@@ -109,10 +139,9 @@ export default function Category({
             "
             style={{
               WebkitOverflowScrolling: "touch",
-              // ✅ pan-y をやめる：横スワイプを殺さない
-              // ✅ pan-x のみ許可（縦スクロールはページ側に委ねる）
               touchAction: "pan-x",
             }}
+            aria-label={`${title} の作品一覧`}
           >
             {items.map((child, index) => (
               <div
@@ -132,9 +161,22 @@ export default function Category({
 
       {/* PC GRID */}
       {accent ? (
-        <div className="hidden grid-cols-2 gap-x-12 gap-y-16 sm:grid">{items}</div>
+        <div
+          className="
+            hidden grid-cols-2 gap-x-12 gap-y-16 sm:grid
+          "
+        >
+          {items}
+        </div>
       ) : (
-        <div className="hidden grid-cols-2 gap-x-12 gap-y-16 sm:grid xl:grid-cols-3">{items}</div>
+        <div
+          className="
+            hidden grid-cols-2 gap-x-12 gap-y-16
+            sm:grid xl:grid-cols-3
+          "
+        >
+          {items}
+        </div>
       )}
     </section>
   );

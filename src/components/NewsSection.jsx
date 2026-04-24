@@ -1,7 +1,8 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { getNewsList } from "../lib/microcms";
-import styles from "../styles/newsSection.module.css";
 import { Link } from "react-router-dom";
+import { getNewsList } from "../lib/microcms";
+import SectionSvgTitle from "./SectionSvgTitle";
+import styles from "../styles/newsSection.module.css";
 
 export default function NewsSection() {
   const [news, setNews] = useState([]);
@@ -14,23 +15,29 @@ export default function NewsSection() {
       month: "2-digit",
       day: "2-digit",
     });
+
     return (dateStr) => {
       if (!dateStr) return "";
-      const d = new Date(dateStr);
-      if (Number.isNaN(d.getTime())) return "";
-      return fmt.format(d);
+
+      const date = new Date(dateStr);
+      if (Number.isNaN(date.getTime())) return "";
+
+      return fmt.format(date);
     };
   }, []);
 
   useEffect(() => {
     let mounted = true;
 
-    (async () => {
+    async function fetchNews() {
       try {
+        setLoading(true);
+
         const res = await getNewsList({ limit: 3 });
         if (!mounted) return;
 
         const items = Array.isArray(res?.contents) ? res.contents : [];
+
         setNews(items);
         setError(false);
       } catch {
@@ -40,7 +47,9 @@ export default function NewsSection() {
         if (!mounted) return;
         setLoading(false);
       }
-    })();
+    }
+
+    fetchNews();
 
     return () => {
       mounted = false;
@@ -55,61 +64,85 @@ export default function NewsSection() {
       aria-labelledby="news-heading"
       aria-busy={loading ? "true" : "false"}
     >
-      <header className={`${styles.header} aq-fade delay-1`}>
-        <p className={styles.kicker}>NEWS</p>
-        <h2 id="news-heading" className={styles.title}>
-          お知らせ
-        </h2>
+      <div className={styles.inner}>
+        <div className={styles.sideLine} aria-hidden="true" />
 
-        {/* ✅ “静かに”は使わない */}
-        <p className={styles.lead}>制作の更新やお知らせをまとめています。</p>
-      </header>
+        <header className={`${styles.header} aq-fade delay-1`}>
+          <SectionSvgTitle
+            title="NEWS"
+            sub="UPDATE / JOURNAL"
+            className={styles.svgTitle}
+          />
 
-      {loading && (
-        <p className={styles.loading} aria-live="polite">
-          読み込み中…
-        </p>
-      )}
+          <h2 id="news-heading" className={styles.hiddenHeading}>
+            お知らせ
+          </h2>
 
-      {error && !loading && (
-        <p className={styles.error} aria-live="assertive">
-          お知らせを読み込めませんでした
-        </p>
-      )}
+          <p className={styles.lead}>
+            制作の更新やお知らせをまとめています。
+          </p>
+        </header>
 
-      {!loading && !error && !hasNews && (
-        <p className={styles.empty} aria-live="polite">
-          現在、お知らせはありません。
-        </p>
-      )}
+        <div className={`${styles.panel} aq-fade delay-2`}>
+          {loading && (
+            <p className={styles.stateText} aria-live="polite">
+              読み込み中…
+            </p>
+          )}
 
-      {!loading && !error && hasNews && (
-        <div className={styles.list}>
-          {news.map((item) => {
-            const date = item.publishedAt || item.createdAt || null;
+          {error && !loading && (
+            <p className={styles.stateText} aria-live="assertive">
+              お知らせを読み込めませんでした。
+            </p>
+          )}
 
-            return (
-              <Link
-                to={`/news/${item.id}`}
-                key={item.id}
-                className={styles.item}
-                aria-label={`お知らせ: ${item.title}`}
-              >
-                <p className={styles.date}>{formatDate(date)}</p>
-                <h3 className={styles.itemTitle}>{item.title}</h3>
-              </Link>
-            );
-          })}
+          {!loading && !error && !hasNews && (
+            <p className={styles.stateText} aria-live="polite">
+              現在、お知らせはありません。
+            </p>
+          )}
+
+          {!loading && !error && hasNews && (
+            <div className={styles.list}>
+              {news.map((item, index) => {
+                const date = item.publishedAt || item.createdAt || null;
+
+                return (
+                  <Link
+                    to={`/news/${item.id}`}
+                    key={item.id}
+                    className={styles.item}
+                    aria-label={`お知らせ: ${item.title}`}
+                    style={{ "--item-index": index }}
+                  >
+                    <span className={styles.itemMeta}>
+                      <span className={styles.date}>{formatDate(date)}</span>
+                      <span className={styles.number} aria-hidden="true">
+                        {String(index + 1).padStart(2, "0")}
+                      </span>
+                    </span>
+
+                    <h3 className={styles.itemTitle}>{item.title}</h3>
+
+                    <span className={styles.arrow} aria-hidden="true">
+                      →
+                    </span>
+                  </Link>
+                );
+              })}
+            </div>
+          )}
         </div>
-      )}
 
-      {!loading && !error && hasNews && (
-        <div className={styles.moreWrap}>
-          <Link to="/news" className={styles.more}>
-            もっと見る
-          </Link>
-        </div>
-      )}
+        {!loading && !error && hasNews && (
+<div className={styles.moreWrap}>
+  <Link to="/news" className={styles.more}>
+    <span>もっと見る</span>
+    <span aria-hidden="true">→</span>
+  </Link>
+</div>
+        )}
+      </div>
     </section>
   );
 }

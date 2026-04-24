@@ -1,243 +1,504 @@
 /* =======================================================
-   PHILOSOPHY — v6
-   Deep Black / Soft White / Accent Gold / Subaccent Silver
+   PHILOSOPHY — GUSHIKEN DESIGN OS
+   Policy Section / Trust Flow / Quiet Principle
+   Black Frame × Champagne Gold × Silver Line
 ======================================================= */
 
-.philo-section{
+.philo-section {
   position: relative;
   overflow: hidden;
-  padding: 12vh 0 12vh;
-  background: linear-gradient(180deg,#0a0a0a 0%,#0b0b0b 22%,#090909 60%,#0a0a0a 100%);
+
+  padding: 13vh 0 13vh;
+
+  background:
+    radial-gradient(
+      circle at 16% 0%,
+      rgba(201, 177, 138, 0.04),
+      transparent 30%
+    ),
+    linear-gradient(
+      180deg,
+      #0a0a0a 0%,
+      var(--main, #0b0b0b) 26%,
+      #090909 62%,
+      #0a0a0a 100%
+    );
 }
 
-/* 微細な空気粒子 */
-.philo-section::before{
-  content:"";
-  position:absolute;
-  inset:0;
-  pointer-events:none;
-  background: linear-gradient(
-    180deg,
-    rgba(255,255,255,0.018) 0%,
-    transparent 16%,
-    transparent 82%,
-    rgba(255,255,255,0.012) 100%
+.philo-section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.018) 0%,
+      transparent 16%,
+      transparent 82%,
+      rgba(255, 255, 255, 0.012) 100%
+    );
+
+  opacity: 0.9;
+}
+
+.philo-section::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+
+  background-image: radial-gradient(
+    rgba(255, 255, 255, 0.16) 0.42px,
+    transparent 0.42px
   );
-  opacity:0.9;
-}
-
-.philo-section::after{
-  content:"";
-  position:absolute;
-  inset:0;
-  pointer-events:none;
-  background-image: radial-gradient(rgba(255,255,255,0.20) 0.42px, transparent 0.42px);
   background-size: 4px 4px;
-  opacity:0.022;
+  opacity: 0.018;
 }
 
-.philo-noise{ display:none; }
+.philo-container {
+  position: relative;
+  z-index: 1;
 
-/* 小ラベル */
-.philo-kicker{
-  margin: 0 0 1.3rem;
-  padding-left: 0.95rem;
-  color: rgba(255,255,255,0.25);
-  font-size: 0.70rem;
+  width: min(88vw, 980px);
+  margin: 0 auto;
+}
+
+/* -------------------------------------------------------
+   Side line
+------------------------------------------------------- */
+.philo-side-line {
+  position: absolute;
+  left: 0;
+  top: 2.2rem;
+
+  width: 1px;
+  height: calc(100% - 4.4rem);
+
+  background: linear-gradient(
+    to bottom,
+    rgba(201, 177, 138, 0.42),
+    rgba(220, 226, 235, 0.12),
+    rgba(255, 255, 255, 0.055)
+  );
+
+  pointer-events: none;
+  opacity: 0.9;
+}
+
+/* -------------------------------------------------------
+   Header
+------------------------------------------------------- */
+.philo-header {
+  position: relative;
+  padding-left: 1rem;
+  margin-bottom: 4rem;
+}
+
+.philo-svg-title {
+  max-width: 100%;
+}
+
+.philo-svg-title .section-svg {
+  width: min(100%, 780px);
+}
+
+.philo-sub {
+  margin: 1.05rem 0 0;
+
+  color: rgba(255, 255, 255, 0.42);
+  font-size: 0.82rem;
+  line-height: 1;
   letter-spacing: 0.14em;
+}
+
+/* -------------------------------------------------------
+   Copy
+------------------------------------------------------- */
+.philo-copy,
+.philo-lead,
+.philo-body,
+.philo-last,
+.philo-principles {
+  padding-left: 1rem;
+}
+
+.philo-lead {
+  margin: 0 0 2.35rem;
+
+  color: rgba(255, 255, 255, 0.88);
+  font-size: 1rem;
+  line-height: 2.15;
+  letter-spacing: 0.045em;
+}
+
+.philo-lead span,
+.philo-body span,
+.philo-last span {
+  color: rgba(255, 255, 255, 0.95);
+}
+
+.philo-body {
+  margin: 0 0 3.1rem;
+
+  color: rgba(255, 255, 255, 0.64);
+  font-size: 0.96rem;
+  line-height: 2.12;
+  letter-spacing: 0.04em;
+}
+
+.philo-last {
+  margin: 4.8rem 0 0;
+
+  color: rgba(255, 255, 255, 0.78);
+  font-size: 1rem;
+  font-weight: 300;
+  line-height: 2.08;
+  letter-spacing: 0.035em;
+}
+
+.philo-last em {
+  display: inline-block;
+  margin-top: 0.2rem;
+
+  color: rgba(255, 255, 255, 0.64);
+  font-style: normal;
+}
+
+/* -------------------------------------------------------
+   Visual Principles
+------------------------------------------------------- */
+.philo-principles {
+  margin: 4.2rem 0 0;
+}
+
+.philo-principles-inner {
+  position: relative;
+
+  padding: 0.2rem 0 0.2rem 2rem;
+}
+
+.philo-principles-label {
+  margin: 0 0 2.2rem;
+
+  color: rgba(201, 177, 138, 0.56);
+  font-size: 0.66rem;
+  line-height: 1;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+}
+
+.philo-principles-list {
+  display: grid;
+  gap: 2.5rem;
+}
+
+.vp-axis {
+  position: absolute;
+  left: 10px;
+  top: 2.2rem;
+  bottom: 0.4rem;
+
+  width: 1px;
+
+  background: linear-gradient(
+    to bottom,
+    rgba(201, 177, 138, 0.22),
+    rgba(220, 226, 235, 0.10) 60%,
+    transparent
+  );
+
+  pointer-events: none;
+}
+
+.vp-item {
+  position: relative;
+
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 1.1rem;
+}
+
+.vp-num {
+  width: 2.4rem;
+
+  color: rgba(255, 255, 255, 0.08);
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: 2.8rem;
+  font-weight: 300;
+  line-height: 0.86;
+  letter-spacing: 0.04em;
   user-select: none;
 }
 
-/* LEFT LINE（silver基調＋上端にgold） */
-.philo-gold-line{
-  position:absolute;
-  left:0;
-  top:2.15rem;
-  width:1px;
-  height:calc(100% - 4.3rem);
+.vp-content {
+  min-width: 0;
+}
+
+.vp-heading {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 0.9rem;
+
+  margin-bottom: 0.9rem;
+}
+
+.vp-heading h3 {
+  margin: 0;
+
+  color: rgba(255, 255, 255, 0.86);
+  font-size: 1.48rem;
+  font-weight: 300;
+  line-height: 1.3;
+  letter-spacing: 0.14em;
+}
+
+.vp-heading p {
+  margin: 0;
+
+  color: rgba(201, 177, 138, 0.38);
+  font-size: 0.62rem;
+  line-height: 1;
+  letter-spacing: 0.2em;
+}
+
+/* visual common */
+.vp-visual {
+  margin-bottom: 0.9rem;
+}
+
+/* clarity */
+.vp-visual--clarity {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.vp-line {
+  height: 1.5px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.vp-line--strong {
+  width: 100%;
+  background: rgba(220, 226, 235, 0.42);
+}
+
+.vp-line--mid {
+  width: 76%;
+  background: rgba(220, 226, 235, 0.16);
+}
+
+.vp-line--thin {
+  width: 50%;
+  background: rgba(220, 226, 235, 0.08);
+}
+
+/* atmosphere */
+.vp-visual--atmosphere {
+  display: flex;
+  align-items: stretch;
+  gap: 10px;
+}
+
+.vp-goldbar {
+  width: 3px;
+  border-radius: 999px;
+  background: rgba(201, 177, 138, 0.82);
+}
+
+.vp-lines {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.vp-goldline {
+  height: 1px;
+  border-radius: 999px;
+  background: rgba(201, 177, 138, 0.12);
+}
+
+.vp-goldline--strong {
+  width: 100%;
+  background: rgba(201, 177, 138, 0.34);
+}
+
+.vp-goldline--mid {
+  width: 68%;
+  background: rgba(201, 177, 138, 0.16);
+}
+
+.vp-goldline--thin {
+  width: 44%;
+  background: rgba(201, 177, 138, 0.08);
+}
+
+/* flow */
+.vp-visual--flow {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+}
+
+.vp-visual--flow span {
+  height: 1.5px;
+  border-radius: 999px;
   background: linear-gradient(
-    to bottom,
-    rgba(217,185,138,0.34),
-    rgba(220,226,235,0.12),
-    rgba(255,255,255,0.06)
+    90deg,
+    rgba(201, 177, 138, 0.28),
+    rgba(220, 226, 235, 0.12)
   );
-  pointer-events:none;
-  opacity:0.92;
 }
 
-/* TITLE */
-.philo-title{
-  margin:0 0 0.75rem;
-  padding-left:0.95rem;
-  color:rgba(255,255,255,0.96);
-  font-size:2.3rem;
-  font-weight:300;
-  line-height:1.04;
-  letter-spacing:0.18em;
+.vp-text {
+  margin: 0;
+
+  color: rgba(255, 255, 255, 0.36);
+  font-size: 0.72rem;
+  line-height: 1.9;
+  letter-spacing: 0.12em;
 }
 
-.philo-sub{
-  margin:0 0 2.2rem;
-  padding-left:0.95rem;
-  color:rgba(255,255,255,0.60);
-  font-size:0.90rem;
-  letter-spacing:0.12em;
+/* -------------------------------------------------------
+   Fade safety
+------------------------------------------------------- */
+.philo-section .aq-fade {
+  filter: none !important;
+  backdrop-filter: none !important;
 }
 
-/* LEAD / BODY */
-.philo-lead,
-.philo-body,
-.philo-last{
-  padding-left:0.95rem;
-}
-
-.philo-lead{
-  margin-bottom:2.35rem;
-  color:rgba(255,255,255,0.90);
-  font-size:1.02rem;
-  line-height:2.04;
-  letter-spacing:0.04em;
-}
-
-.philo-body{
-  margin-bottom:2.4rem;
-  color:rgba(255,255,255,0.68);
-  font-size:0.97rem;
-  line-height:2.02;
-  letter-spacing:0.035em;
-}
-
-/* VisualPrinciples helpers */
-.vp-axis{
-  position:absolute;
-  left:10px;
-  top:34px;
-  bottom:14px;
-  width:1px;
-  background: linear-gradient(
-    to bottom,
-    rgba(220,226,235,0.18),
-    rgba(220,226,235,0.06) 68%,
-    transparent
-  );
-  pointer-events:none;
-}
-
-.vp-num{
-  position:absolute;
-  left:-6px;
-  top:2px;
-  font-size:2.8rem;
-  font-weight:200;
-  letter-spacing:0.06em;
-  user-select:none;
-  color: rgba(255,255,255,0.055);
-  line-height:1;
-}
-
-@media (min-width: 640px){
-  .vp-num{ font-size:3rem; }
-}
-
-.vp-line{
-  height:1.5px;
-  border-radius:1px;
-  background: rgba(255,255,255,0.16);
-}
-.vp-line--strong{ background: rgba(255,255,255,0.48); }
-.vp-line--mid{ background: rgba(255,255,255,0.16); }
-.vp-line--thin{ background: rgba(255,255,255,0.08); }
-
-.vp-goldbar{
-  width:3px;
-  border-radius:1px;
-  background: rgba(217,185,138,0.88);
-}
-
-.vp-goldline{
-  height:1px;
-  border-radius:1px;
-  background: rgba(217,185,138,0.16);
-}
-.vp-goldline--strong{ background: rgba(217,185,138,0.34); }
-.vp-goldline--mid{ background: rgba(217,185,138,0.16); }
-.vp-goldline--thin{ background: rgba(217,185,138,0.08); }
-
-/* LAST */
-.philo-last{
-  margin-top:3rem;
-  color:rgba(255,255,255,0.84);
-  font-size:1.03rem;
-  line-height:2;
-  letter-spacing:0.035em;
-}
-
-/* AQ-FADE SAFETY（blurだけ無効化。フェード本体はCoreに任せる） */
-.philo-section .aq-fade{
-  filter:none !important;
-  backdrop-filter:none !important;
-}
-
-/* JSXの space-y を自然に整える */
-.philo-section .space-y-5 > * + *{ margin-top:0 !important; }
-.philo-section .space-y-5{ display:grid; gap:1.45rem; }
-
-/* MOBILE */
-@media (max-width: 768px){
-  .philo-section{ padding:10vh 0 10vh; }
-
-  .philo-gold-line{
-    top:1.6rem;
-    height:calc(100% - 3.2rem);
-    opacity:0.82;
+/* -------------------------------------------------------
+   Mobile
+------------------------------------------------------- */
+@media (max-width: 768px) {
+  .philo-section {
+    padding: 11vh 0 11vh;
   }
 
-  .philo-kicker,
-  .philo-title,
-  .philo-sub,
+  .philo-container {
+    width: calc(100% - 2rem);
+  }
+
+  .philo-side-line {
+    top: 1.6rem;
+    height: calc(100% - 3.2rem);
+    opacity: 0.78;
+  }
+
+  .philo-header,
+  .philo-copy,
   .philo-lead,
   .philo-body,
-  .philo-last{
-    padding-left:0.72rem;
+  .philo-last,
+  .philo-principles {
+    padding-left: 0.75rem;
   }
 
-  .philo-title{
-    margin-bottom:0.6rem;
-    font-size:1.95rem;
-    letter-spacing:0.16em;
+  .philo-header {
+    margin-bottom: 3rem;
   }
 
-  .philo-sub{
-    margin-bottom:1.9rem;
-    font-size:0.86rem;
+  .philo-svg-title .section-svg {
+    width: min(100%, 560px);
   }
 
-  .philo-lead{
-    margin-bottom:2rem;
-    font-size:0.95rem;
-    line-height:2;
+  .philo-sub {
+    font-size: 0.75rem;
   }
 
-  .philo-body{
-    margin-bottom:2.05rem;
-    font-size:0.92rem;
-    line-height:1.96;
+  .philo-lead {
+    margin-bottom: 2rem;
+    font-size: 0.94rem;
+    line-height: 2.05;
+    letter-spacing: 0.035em;
   }
 
-  .philo-last{
-    margin-top:2.35rem;
-    font-size:0.96rem;
-    line-height:1.94;
+  .philo-body {
+    margin-bottom: 2.8rem;
+    font-size: 0.9rem;
+    line-height: 2;
   }
 
-  .philo-section .space-y-5{ gap:1.25rem; }
+  .philo-principles {
+    margin-top: 3.6rem;
+  }
+
+  .philo-principles-inner {
+    padding-left: 1.55rem;
+  }
+
+  .philo-principles-label {
+    margin-bottom: 1.9rem;
+    font-size: 0.62rem;
+    letter-spacing: 0.22em;
+  }
+
+  .philo-principles-list {
+    gap: 2.2rem;
+  }
+
+  .vp-axis {
+    left: 7px;
+  }
+
+  .vp-item {
+    gap: 0.75rem;
+  }
+
+  .vp-num {
+    width: 2rem;
+    font-size: 2.25rem;
+  }
+
+  .vp-heading {
+    gap: 0.65rem;
+  }
+
+  .vp-heading h3 {
+    font-size: 1.28rem;
+    letter-spacing: 0.12em;
+  }
+
+  .vp-heading p {
+    font-size: 0.56rem;
+  }
+
+  .vp-text {
+    font-size: 0.68rem;
+    line-height: 1.85;
+    letter-spacing: 0.1em;
+  }
+
+  .philo-last {
+    margin-top: 4rem;
+    font-size: 0.94rem;
+    line-height: 2;
+  }
 }
 
-@media (prefers-reduced-motion: reduce){
+@media (max-width: 390px) {
+  .philo-container {
+    width: calc(100% - 1.5rem);
+  }
+
+  .vp-heading h3 {
+    font-size: 1.18rem;
+  }
+}
+
+/* -------------------------------------------------------
+   Reduced Motion
+------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
   .philo-section *,
   .philo-section *::before,
-  .philo-section *::after{
-    transition:none !important;
-    animation:none !important;
+  .philo-section *::after {
+    transition: none !important;
+    animation: none !important;
   }
 }

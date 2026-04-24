@@ -1,6 +1,7 @@
 /* =====================================================
-   CONTACT
-   Quiet Black × Calm CTA × Final Section
+   CONTACT — GUSHIKEN DESIGN OS
+   Final Gate / Quiet CTA / Request Entrance
+   Black Frame × Champagne Gold × Silver Line
 ===================================================== */
 
 /* ----------------------------------------------
@@ -9,20 +10,26 @@
 .contact-section {
   position: relative;
   overflow: hidden;
-  background:
-    linear-gradient(
-      180deg,
-      #0a0a0a 0%,
-      #0b0b0b 22%,
-      #090909 60%,
-      #0a0a0a 100%
-    );
+
   min-height: 88svh;
-  padding: clamp(80px, 12vh, 130px) 0;
+  padding: 13vh 0 12vh;
 
   display: flex;
   align-items: center;
-  justify-content: center;
+
+  background:
+    radial-gradient(
+      circle at 16% 0%,
+      rgba(201, 177, 138, 0.04),
+      transparent 30%
+    ),
+    linear-gradient(
+      180deg,
+      #0a0a0a 0%,
+      var(--main, #0b0b0b) 26%,
+      #090909 62%,
+      #0a0a0a 100%
+    );
 }
 
 .contact-section::before {
@@ -30,14 +37,16 @@
   position: absolute;
   inset: 0;
   pointer-events: none;
+
   background:
     linear-gradient(
       180deg,
-      rgba(255,255,255,0.018) 0%,
+      rgba(255, 255, 255, 0.018) 0%,
       transparent 16%,
       transparent 82%,
-      rgba(255,255,255,0.012) 100%
+      rgba(255, 255, 255, 0.012) 100%
     );
+
   opacity: 0.9;
 }
 
@@ -46,12 +55,13 @@
   position: absolute;
   inset: 0;
   pointer-events: none;
+
   background-image: radial-gradient(
-    rgba(255,255,255,0.20) 0.42px,
+    rgba(255, 255, 255, 0.16) 0.42px,
     transparent 0.42px
   );
   background-size: 4px 4px;
-  opacity: 0.022;
+  opacity: 0.018;
 }
 
 /* ----------------------------------------------
@@ -60,64 +70,226 @@
 .contact-container {
   position: relative;
   z-index: 1;
-  width: min(100%, 720px);
-  margin: 0 auto;
-  padding: 0 clamp(28px, 5vw, 72px);
-}
 
-.contact-content {
-  text-align: center;
+  width: min(88vw, 980px);
+  margin: 0 auto;
 }
 
 /* ----------------------------------------------
-   Center Line（gold → silver）
+   Side Line
 ---------------------------------------------- */
-.contact-gold-line {
+.contact-side-line {
   position: absolute;
-  left: 50%;
-  top: 0.8rem;
-  transform: translateX(-50%);
+  left: 0;
+  top: 2.2rem;
+
   width: 1px;
-  height: calc(100% - 1.6rem);
+  height: calc(100% - 4.4rem);
+
   background: linear-gradient(
     to bottom,
-    rgba(217,185,138,0.28),
-    rgba(220,226,235,0.12),
-    rgba(255,255,255,0.06)
+    rgba(201, 177, 138, 0.42),
+    rgba(220, 226, 235, 0.12),
+    rgba(255, 255, 255, 0.055)
   );
-  opacity: 0.72;
+
   pointer-events: none;
+  opacity: 0.9;
 }
 
 /* ----------------------------------------------
-   Title
+   Header
 ---------------------------------------------- */
-.contact-title {
-  margin: 0 0 clamp(26px, 4vh, 40px);
-  color: rgba(255,255,255,0.97);
-  font-size: clamp(2rem, 3vw, 2.6rem);
-  font-weight: 300;
+.contact-header {
+  position: relative;
+
+  padding-left: 1rem;
+  margin-bottom: 3.8rem;
+}
+
+.contact-svg-title {
+  max-width: 100%;
+}
+
+.contact-svg-title .section-svg {
+  width: min(100%, 840px);
+}
+
+.contact-section-title {
+  margin: 1.05rem 0 0;
+
+  color: rgba(255, 255, 255, 0.42);
+  font-size: 0.82rem;
   line-height: 1;
-  letter-spacing: 0.22em;
+  letter-spacing: 0.14em;
 }
 
 /* ----------------------------------------------
-   Lead / Sub Lead
+   Intro
 ---------------------------------------------- */
+.contact-intro {
+  padding-left: 1rem;
+}
+
 .contact-lead {
-  margin: 0 0 1.2rem;
-  color: rgba(255,255,255,0.90);
+  margin: 0 0 1.5rem;
+
+  color: rgba(255, 255, 255, 0.86);
   font-size: 1rem;
-  line-height: 1.95;
-  letter-spacing: 0.035em;
+  line-height: 2.05;
+  letter-spacing: 0.045em;
+}
+
+.contact-lead span {
+  color: rgba(255, 255, 255, 0.96);
 }
 
 .contact-lead-sub {
-  margin: 0 0 2.2rem;
-  color: rgba(255,255,255,0.66);
-  font-size: 0.92rem;
-  line-height: 1.92;
-  letter-spacing: 0.03em;
+  max-width: 720px;
+  margin: 0 0 3.1rem;
+
+  color: rgba(255, 255, 255, 0.62);
+  font-size: 0.94rem;
+  line-height: 2;
+  letter-spacing: 0.035em;
+}
+
+/* ----------------------------------------------
+   Contact Visual
+---------------------------------------------- */
+.contact-visual {
+  position: relative;
+
+  margin: 0 0 3.2rem;
+  padding: 1.45rem 1.35rem 1.25rem;
+
+  border: 1px solid rgba(255, 255, 255, 0.075);
+  border-top-color: rgba(201, 177, 138, 0.16);
+
+  background:
+    radial-gradient(
+      circle at 16% 0%,
+      rgba(201, 177, 138, 0.045),
+      transparent 36%
+    ),
+    rgba(255, 255, 255, 0.012);
+
+  box-shadow:
+    0 0 0 0.5px rgba(201, 177, 138, 0.025),
+    0 18px 48px rgba(0, 0, 0, 0.22);
+}
+
+.contact-visual::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+
+  background-image: radial-gradient(
+    rgba(255, 255, 255, 0.13) 0.42px,
+    transparent 0.42px
+  );
+  background-size: 4px 4px;
+  opacity: 0.016;
+}
+
+.contact-visual-label {
+  position: relative;
+  z-index: 1;
+
+  margin: 0 0 1.2rem;
+
+  color: rgba(201, 177, 138, 0.56);
+  font-size: 0.66rem;
+  line-height: 1;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+}
+
+/* ----------------------------------------------
+   Starter List
+---------------------------------------------- */
+.contact-starter-list {
+  position: relative;
+  z-index: 1;
+
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.contact-starter-row {
+  display: grid;
+  grid-template-columns: 2.5rem 1fr auto;
+  align-items: center;
+  gap: 1rem;
+
+  min-height: 52px;
+  padding: 0 1rem;
+
+  border-bottom: 1px solid rgba(255, 255, 255, 0.052);
+}
+
+.contact-starter-row:last-child {
+  border-bottom: none;
+}
+
+.contact-starter-index {
+  color: rgba(201, 177, 138, 0.38);
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: 1.1rem;
+  line-height: 1;
+  letter-spacing: 0.04em;
+}
+
+.contact-starter-row p {
+  margin: 0;
+
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 0.78rem;
+  line-height: 1.7;
+  letter-spacing: 0.1em;
+}
+
+.contact-starter-check {
+  color: rgba(220, 226, 235, 0.44);
+  font-size: 0.72rem;
+  line-height: 1;
+  letter-spacing: 0.08em;
+}
+
+/* ----------------------------------------------
+   Visual Note
+---------------------------------------------- */
+.contact-visual-note {
+  position: relative;
+  z-index: 1;
+
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+
+  margin-top: 1.15rem;
+}
+
+.contact-visual-note span {
+  flex: 1;
+  height: 1px;
+
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.075),
+    transparent
+  );
+}
+
+.contact-visual-note p {
+  margin: 0;
+
+  color: rgba(255, 255, 255, 0.34);
+  font-size: 0.68rem;
+  line-height: 1;
+  letter-spacing: 0.14em;
+  white-space: nowrap;
 }
 
 /* ----------------------------------------------
@@ -125,61 +297,62 @@
 ---------------------------------------------- */
 .contact-actions {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  gap: 1.1rem;
-  margin-bottom: 2.2rem;
+  justify-content: center;
+
+  margin: 0 0 2.2rem;
 }
 
 .contact-btn {
+  position: relative;
+  overflow: hidden;
+
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-width: 220px;
-  min-height: 52px;
-  padding: 0 1.7rem;
+  gap: 0.55rem;
 
-  border: 1px solid rgba(255,255,255,0.14);
+  min-height: 48px;
+  padding: 0 1.55rem;
+
+  border: 1px solid rgba(201, 177, 138, 0.24);
   border-radius: 999px;
+
   background:
     linear-gradient(
       180deg,
-      rgba(255,255,255,0.026) 0%,
-      rgba(255,255,255,0.012) 100%
+      rgba(201, 177, 138, 0.045),
+      rgba(255, 255, 255, 0.01)
     );
 
-  color: rgba(255,255,255,0.84);
-  font-size: 0.78rem;
-  letter-spacing: 0.16em;
+  color: rgba(255, 255, 255, 0.84);
+  font-size: 0.76rem;
+  line-height: 1;
+  letter-spacing: 0.14em;
   text-decoration: none;
   white-space: nowrap;
 
   box-shadow:
-    0 14px 36px rgba(0,0,0,0.22),
-    inset 0 1px 0 rgba(255,255,255,0.035);
+    0 14px 36px rgba(0, 0, 0, 0.22),
+    inset 0 1px 0 rgba(255, 255, 255, 0.035);
 
   transition:
-    transform 0.7s cubic-bezier(.22,.56,.18,1),
-    border-color 0.42s ease,
-    color 0.42s ease,
-    background 0.42s ease,
-    box-shadow 0.42s ease;
+    transform 0.35s var(--ease-silent, cubic-bezier(.22,.56,.18,1)),
+    border-color 0.35s ease,
+    background 0.35s ease,
+    color 0.35s ease,
+    box-shadow 0.35s ease;
 }
 
 .contact-btn:hover,
 .contact-btn:focus-visible {
   transform: translateY(-2px);
-  border-color: rgba(255,255,255,0.2);
-  color: rgba(255,255,255,0.96);
-  background:
-    linear-gradient(
-      180deg,
-      rgba(255,255,255,0.038) 0%,
-      rgba(255,255,255,0.014) 100%
-    );
+  border-color: rgba(201, 177, 138, 0.38);
+  background: rgba(201, 177, 138, 0.07);
+  color: rgba(255, 255, 255, 0.96);
   box-shadow:
-    0 18px 48px rgba(0,0,0,0.28),
-    inset 0 1px 0 rgba(255,255,255,0.045);
+    0 18px 48px rgba(0, 0, 0, 0.3),
+    0 0 0 0.5px rgba(201, 177, 138, 0.06);
   outline: none;
 }
 
@@ -187,8 +360,11 @@
    Footer
 ---------------------------------------------- */
 .contact-footer {
-  margin: 0;
-  color: rgba(255,255,255,0.36);
+  max-width: 720px;
+  margin: 0 auto;
+
+  text-align: center;
+  color: rgba(255, 255, 255, 0.4);
   font-size: 0.74rem;
   line-height: 1.9;
   letter-spacing: 0.04em;
@@ -208,56 +384,118 @@
 @media (max-width: 768px) {
   .contact-section {
     min-height: auto;
-    padding: 10vh 0;
+    padding: 11vh 0 10vh;
   }
 
   .contact-container {
-    width: 100%;
-    padding: 0 1.25rem;
+    width: calc(100% - 2rem);
   }
 
-  .contact-gold-line {
-    top: 0.3rem;
-    height: calc(100% - 0.6rem);
-    opacity: 0.76;
+  .contact-side-line {
+    top: 1.6rem;
+    height: calc(100% - 3.2rem);
+    opacity: 0.78;
   }
 
-  .contact-title {
-    margin-bottom: 1.8rem;
-    font-size: 1.95rem;
-    letter-spacing: 0.16em;
+  .contact-header,
+  .contact-intro {
+    padding-left: 0.75rem;
+  }
+
+  .contact-header {
+    margin-bottom: 3rem;
+  }
+
+  .contact-svg-title .section-svg {
+    width: min(100%, 560px);
+  }
+
+  .contact-section-title {
+    font-size: 0.74rem;
+    letter-spacing: 0.12em;
   }
 
   .contact-lead {
-    font-size: 0.95rem;
-    line-height: 1.92;
+    margin-bottom: 1.35rem;
+    font-size: 0.94rem;
+    line-height: 2;
   }
 
   .contact-lead-sub {
-    margin-bottom: 2rem;
+    margin-bottom: 2.5rem;
     font-size: 0.88rem;
-    line-height: 1.9;
+    line-height: 1.95;
+  }
+
+  .contact-visual {
+    padding: 1.25rem 1rem 1.15rem;
+    margin-bottom: 2.8rem;
+  }
+
+  .contact-visual-label {
+    font-size: 0.62rem;
+    letter-spacing: 0.22em;
+  }
+
+  .contact-starter-row {
+    grid-template-columns: 2.1rem 1fr auto;
+    gap: 0.75rem;
+    min-height: 50px;
+    padding: 0 0.85rem;
+  }
+
+  .contact-starter-index {
+    font-size: 1rem;
+  }
+
+  .contact-starter-row p {
+    font-size: 0.72rem;
+    line-height: 1.65;
+    letter-spacing: 0.075em;
+  }
+
+  .contact-visual-note {
+    gap: 0.55rem;
+  }
+
+  .contact-visual-note p {
+    font-size: 0.62rem;
+    letter-spacing: 0.1em;
   }
 
   .contact-actions {
-    align-items: center;
+    margin-bottom: 2rem;
   }
 
   .contact-btn {
-    width: fit-content;
-    min-width: 176px;
     min-height: 42px;
-    padding: 0 1rem;
-    font-size: 0.72rem;
+    padding: 0 1.1rem;
+    font-size: 0.7rem;
     letter-spacing: 0.08em;
   }
 
   .contact-footer {
+    max-width: 21rem;
     font-size: 0.72rem;
     line-height: 1.86;
   }
 }
 
+@media (max-width: 390px) {
+  .contact-container {
+    width: calc(100% - 1.5rem);
+  }
+
+  .contact-visual-note p {
+    white-space: normal;
+    text-align: center;
+    line-height: 1.6;
+  }
+}
+
+/* ----------------------------------------------
+   Reduced Motion
+---------------------------------------------- */
 @media (prefers-reduced-motion: reduce) {
   .contact-section *,
   .contact-section *::before,

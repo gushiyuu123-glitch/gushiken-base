@@ -1,144 +1,221 @@
 import React, { useEffect, useRef } from "react";
+import { Link } from "react-router-dom";
 import "./footer.css";
+
+const LOGO_SRC = "/logo-gd.png";
+
+const MENU_LINKS = [
+  { label: "WORKS", href: "/#works" },
+  { label: "ABOUT", href: "/#about" },
+  { label: "POLICY", href: "/#philosophy" },
+  { label: "PRICE", href: "/#price" },
+  { label: "CONTACT", href: "/#contact" },
+];
+
+const PROJECT_LINKS = [
+  {
+    label: "Quiet AI Image Library",
+    href: "https://quiet-ai.gushikendesign.com/",
+  },
+  {
+    label: "Minimal Website Templates",
+    href: "https://atelierquiet.gushikendesign.com/",
+  },
+];
+
+const LEGAL_LINKS = [
+  { label: "特商法表記", to: "/legal" },
+  { label: "利用規約", to: "/terms" },
+  { label: "返金規約", to: "/refund" },
+  { label: "PRIVACY", to: "/privacy" },
+];
 
 export default function Footer() {
   const sectionRef = useRef(null);
 
   useEffect(() => {
     const el = sectionRef.current;
-    if (!el) return;
+    if (!el) return undefined;
 
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (!entry.isIntersecting) return;
+        if (!entry?.isIntersecting) return;
+
         el.classList.add("aq-show");
         observer.disconnect();
       },
-      { threshold: 0.16 }
+      {
+        threshold: 0.16,
+        rootMargin: "0px 0px -8% 0px",
+      }
     );
 
     observer.observe(el);
+
     return () => observer.disconnect();
   }, []);
-
+function InstagramIcon() {
   return (
-    <footer ref={sectionRef} className="footer-section bg-[#0b0b0b]">
-      {/* ── トップアクセントライン（SILVER） ── */}
+    <svg
+      viewBox="0 0 24 24"
+      aria-hidden="true"
+      className="footer-sns-icon"
+    >
+      <rect x="3.25" y="3.25" width="17.5" height="17.5" rx="5.2" />
+      <circle cx="12" cy="12" r="4.15" />
+      <circle cx="17.2" cy="6.9" r="1.05" className="footer-sns-dot" />
+    </svg>
+  );
+}
+
+function NoteIcon() {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      aria-hidden="true"
+      className="footer-sns-icon footer-sns-icon--note"
+    >
+      {/* noteっぽい、やわらかい紙面感 */}
+      <rect x="3.2" y="4.1" width="17.6" height="15.8" rx="3.2" />
+      <path d="M7.2 15.8V8.2l2.1 0 3.8 5.1V8.2h2v7.6H13l-3.8-5.1v5.1z" />
+      <path d="M6.6 18.3h10.8" className="footer-sns-note-line" />
+    </svg>
+  );
+}
+  return (
+    <footer
+      ref={sectionRef}
+      className="footer-section"
+      aria-label="サイトフッター"
+    >
       <div className="footer-top-line" aria-hidden="true" />
 
-      <div className="max-w-6xl mx-auto px-6 pt-14 sm:pt-16 pb-10">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
-          {/* ── ブランド ── */}
-          <div>
-            {/* ✅ ドット削除：ラインのみ（上質シルバー） */}
-            <div className="footer-brand-mark" aria-hidden="true" />
+      <div className="footer-ambient" aria-hidden="true" />
 
-            <h3
-              className="text-white text-xl tracking-[0.18em] font-light mb-[6px]"
-              translate="no"
-            >
-              GUSHIKEN DESIGN
-            </h3>
+      <div className="footer-container">
+        <div className="footer-grid">
+          {/* BRAND */}
+          <section className="footer-brand" aria-label="GUSHIKEN DESIGN">
+            <Link to="/" className="footer-logo-link" aria-label="GUSHIKEN DESIGN ホームへ">
+              <span className="footer-logo-frame" aria-hidden="true">
+                <img
+                  src={LOGO_SRC}
+                  alt=""
+                  className="footer-logo"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </span>
 
-            <p className="text-white/35 text-[0.72rem] tracking-[0.12em] mb-5">
-              Okinawa, Japan
-            </p>
+              <span className="footer-brand-text">
+                <span className="footer-brand-name" translate="no">
+                  GUSHIKEN DESIGN
+                </span>
+                <span className="footer-brand-place" translate="no">
+                  Web Design / Okinawa
+                </span>
+              </span>
+            </Link>
 
-            <p className="text-white/28 text-[0.78rem] leading-[1.9] tracking-[0.04em] max-w-[18rem] mb-5">
+            <p className="footer-brand-copy">
               沖縄を拠点に、
               <br />
               伝わり方まで整えるWeb制作を行っています。
             </p>
 
-            <a href="/layer0" className="footer-lab transition block">
+            <Link to="/layer0" className="footer-lab">
               HIDDEN LABORATORY
-            </a>
-          </div>
+            </Link>
+          </section>
 
-          {/* ── ナビ ── */}
-          <nav className="flex flex-col gap-3">
+          {/* MENU */}
+          <nav className="footer-nav" aria-label="フッターメニュー">
             <p className="footer-col-label">MENU</p>
-            <a href="/#works" className="footer-link">WORKS</a>
-            <a href="/#about" className="footer-link">ABOUT</a>
-            <a href="/#philosophy" className="footer-link">POLICY</a>
-            <a href="/#price" className="footer-link">PRICE</a>
-            <a href="/#contact" className="footer-link">CONTACT</a>
+
+            <div className="footer-link-list">
+              {MENU_LINKS.map((item) => (
+                <a key={item.label} href={item.href} className="footer-link">
+                  {item.label}
+                </a>
+              ))}
+            </div>
           </nav>
 
-          {/* ── プロジェクト + SNS + 法務 ── */}
-          <div className="flex flex-col gap-5 text-sm tracking-[0.12em]">
-            <div className="flex flex-col gap-[10px]">
+          {/* PROJECTS / SOCIAL / LEGAL */}
+          <section className="footer-side" aria-label="関連リンク">
+            <div className="footer-projects">
               <p className="footer-col-label">EXPERIMENTAL PROJECTS</p>
-              <a
-                href="https://quiet-ai.gushikendesign.com/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="footer-project-link"
-                translate="no"
-              >
-                Quiet AI Image Library
-              </a>
-              <a
-                href="https://atelierquiet.gushikendesign.com/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="footer-project-link"
-                translate="no"
-              >
-                Minimal Website Templates
-              </a>
+
+              <div className="footer-project-list">
+                {PROJECT_LINKS.map((item) => (
+                  <a
+                    key={item.label}
+                    href={item.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="footer-project-link"
+                    translate="no"
+                  >
+                    {item.label}
+                  </a>
+                ))}
+              </div>
             </div>
 
             <div className="footer-divider" aria-hidden="true" />
 
-            <div className="flex items-center gap-6">
-              <a
-                href="https://www.instagram.com/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="footer-sns"
-                translate="no"
-              >
-                Instagram
-              </a>
-              <a
-                href="https://note.com/noahgushi123"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="footer-sns"
-                translate="no"
-              >
-                note
-              </a>
-            </div>
+<div className="footer-sns-row" aria-label="SNSリンク">
+  <a
+    href="https://www.instagram.com/"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="footer-sns footer-sns--with-icon"
+    translate="no"
+  >
+    <span className="footer-sns-icon-wrap" aria-hidden="true">
+      <InstagramIcon />
+    </span>
+    <span className="footer-sns-label">Instagram</span>
+  </a>
+
+  <a
+    href="https://note.com/noahgushi123"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="footer-sns footer-sns--with-icon"
+    translate="no"
+  >
+    <span className="footer-sns-icon-wrap" aria-hidden="true">
+      <NoteIcon />
+    </span>
+    <span className="footer-sns-label">note</span>
+  </a>
+</div>
 
             <div className="footer-divider" aria-hidden="true" />
 
-            <div className="flex flex-col gap-[6px] text-xs tracking-[0.14em]">
-              <a href="/legal" className="footer-legal">特商法表記</a>
-              <a href="/terms" className="footer-legal">利用規約</a>
-              <a href="/refund" className="footer-legal">返金規約</a>
-              <a href="/privacy" className="footer-legal">PRIVACY</a>
-            </div>
-          </div>
+            <nav className="footer-legal-list" aria-label="法務リンク">
+              {LEGAL_LINKS.map((item) => (
+                <Link key={item.to} to={item.to} className="footer-legal">
+                  {item.label}
+                </Link>
+              ))}
+            </nav>
+          </section>
         </div>
 
-        {/* ── ボトム ── */}
-        <div className="footer-bottom mt-12 pt-6">
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-            <p className="footer-guide-text">
-              このサイトのデザインや文章は、
-              <span className="text-white/32">紹介・引用の範囲であれば歓迎しています。</span>
-              <br />
-              <span className="text-white/18">
-                無断転載・複製・再配布・商用利用はご遠慮ください。
-              </span>
-            </p>
+        {/* BOTTOM */}
+        <div className="footer-bottom">
+          <p className="footer-guide-text">
+            このサイトのデザインや文章は、
+            <span>紹介・引用の範囲であれば歓迎しています。</span>
+            <br />
+            <em>無断転載・複製・再配布・商用利用はご遠慮ください。</em>
+          </p>
 
-            <p className="footer-copyright whitespace-nowrap" translate="no">
-              © 2025 GUSHIKEN DESIGN
-            </p>
-          </div>
+          <p className="footer-copyright" translate="no">
+            © 2025 GUSHIKEN DESIGN
+          </p>
         </div>
       </div>
     </footer>

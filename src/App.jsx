@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
 
 import Nav from "./components/Nav";
@@ -66,6 +66,12 @@ import NewsDetail from "./pages/NewsDetail";
 // Experiments
 import Layer0 from "./pages/Layer0";
 
+/* ============================================================================
+   Layout
+   - HOME only: Nav
+   - Lower pages: NavGlobal
+=========================================================================== */
+
 function Layout() {
   const { pathname } = useLocation();
   const isHome = pathname === "/";
@@ -78,9 +84,13 @@ function Layout() {
 
       <main id="page-root">
         <Routes>
+          {/* Home */}
           <Route path="/" element={<Home />} />
 
+          {/* Works Index */}
           <Route path="/works" element={<WorksList />} />
+
+          {/* Works Detail Pages */}
           <Route path="/works/noir-lux" element={<NoirLux />} />
           <Route path="/works/resonance" element={<Resonance />} />
           <Route path="/works/still" element={<Still />} />
@@ -98,7 +108,10 @@ function Layout() {
           <Route path="/works/ActiveDays" element={<ActiveDays />} />
           <Route path="/works/FineOkinawa" element={<FineOkinawa />} />
           <Route path="/works/RyukaIntro" element={<RyukaIntro />} />
-          <Route path="/works/OkinawaLightResortHotel" element={<OkinawaLightResortHotel />} />
+          <Route
+            path="/works/OkinawaLightResortHotel"
+            element={<OkinawaLightResortHotel />}
+          />
           <Route path="/works/HorizonBlanc" element={<HorizonBlanc />} />
           <Route path="/works/TheCalmOkinawa" element={<TheCalmOkinawa />} />
           <Route path="/works/FlowOfTea" element={<FlowOfTea />} />
@@ -119,8 +132,11 @@ function Layout() {
           <Route path="/works/KisuiRoom" element={<KisuiRoom />} />
           <Route path="/works/OriginRoom" element={<OriginRoom />} />
           <Route path="/works/NoahRoom" element={<NoahRoom />} />
+
+          {/* Dynamic Works Detail */}
           <Route path="/works/:slug" element={<WorkDetail />} />
 
+          {/* Business Pages */}
           <Route path="/price" element={<PriceDetail />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/terms" element={<Terms />} />
@@ -128,9 +144,11 @@ function Layout() {
           <Route path="/legal" element={<Legal />} />
           <Route path="/privacy" element={<Privacy />} />
 
+          {/* News */}
           <Route path="/news" element={<NewsList />} />
           <Route path="/news/:id" element={<NewsDetail />} />
 
+          {/* Experiments */}
           <Route path="/layer0" element={<Layer0 />} />
         </Routes>
       </main>
@@ -140,19 +158,42 @@ function Layout() {
   );
 }
 
+/* ============================================================================
+   App
+   - Routing wrapper
+   - aq-fade observer only
+   - Ambient Glow / SW / FOUC are handled in main.jsx
+=========================================================================== */
+
 export default function App() {
   const location = useLocation();
   const observerRef = useRef(null);
+  const rafRef = useRef(0);
+  const timerRef = useRef(0);
 
   useEffect(() => {
-    const setupFade = () => {
+    const prefersReducedMotion = window.matchMedia?.(
+      "(prefers-reduced-motion: reduce)"
+    )?.matches;
+
+    const cleanupObserver = () => {
       if (observerRef.current) {
         observerRef.current.disconnect();
         observerRef.current = null;
       }
+    };
+
+    const setupFade = () => {
+      cleanupObserver();
 
       const els = Array.from(document.querySelectorAll(".aq-fade"));
+
       if (!els.length) return;
+
+      if (prefersReducedMotion || !("IntersectionObserver" in window)) {
+        els.forEach((el) => el.classList.add("aq-show"));
+        return;
+      }
 
       els.forEach((el) => {
         el.classList.remove("aq-show");
@@ -178,43 +219,22 @@ export default function App() {
       observerRef.current = io;
     };
 
-    const raf = requestAnimationFrame(setupFade);
+    /*
+      requestAnimationFrame:
+      - ルート切替直後のDOM反映後に監視を張る
+
+      setTimeout:
+      - microCMS / 条件描画 / 画像ロード後に遅れて出る .aq-fade の保険
+    */
+    rafRef.current = requestAnimationFrame(setupFade);
+    timerRef.current = window.setTimeout(setupFade, 120);
 
     return () => {
-      cancelAnimationFrame(raf);
-      if (observerRef.current) {
-        observerRef.current.disconnect();
-        observerRef.current = null;
-      }
+      cancelAnimationFrame(rafRef.current);
+      window.clearTimeout(timerRef.current);
+      cleanupObserver();
     };
-  }, [location.pathname]);
-
-  useEffect(() => {
-    const sentinel = document.createElement("div");
-    sentinel.setAttribute("aria-hidden", "true");
-    sentinel.style.position = "absolute";
-    sentinel.style.top = "120vh";
-    sentinel.style.width = "1px";
-    sentinel.style.height = "1px";
-    sentinel.style.pointerEvents = "none";
-    document.body.appendChild(sentinel);
-
-    const glowObserver = new IntersectionObserver(
-      ([entry]) => {
-        if (!entry.isIntersecting) return;
-        document.body.classList.add("scrolled");
-        glowObserver.disconnect();
-      },
-      { threshold: 0.01 }
-    );
-
-    glowObserver.observe(sentinel);
-
-    return () => {
-      glowObserver.disconnect();
-      sentinel.remove();
-    };
-  }, []);
+  }, [location.pathname, location.search]);
 
   return <Layout />;
 }

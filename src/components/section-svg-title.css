@@ -1,0 +1,231 @@
+/* ============================================================
+   SectionSvgTitle v2
+   Quiet Monument / Letter by Letter Flow
+============================================================ */
+
+.section-svg-title {
+  position: relative;
+  width: 100%;
+}
+
+/* --------------------------------
+   kicker
+-------------------------------- */
+.section-svg-kicker {
+  position: relative;
+  margin: 0 0 1.15rem;
+  padding-top: 1.2rem;
+
+  color: rgba(217, 185, 138, 0.72);
+  font-size: 0.68rem;
+  line-height: 1;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+}
+
+.section-svg-kicker::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  width: 78px;
+  height: 1px;
+
+  background: linear-gradient(
+    90deg,
+    rgba(217, 185, 138, 0.72),
+    rgba(220, 226, 235, 0.16),
+    transparent
+  );
+}
+
+/* --------------------------------
+   row
+-------------------------------- */
+.section-svg-row {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1.5rem;
+}
+
+.section-svg-main {
+  min-width: 0;
+  flex: 1 1 auto;
+}
+
+.section-svg-heading {
+  margin: 0;
+  line-height: 1;
+}
+
+.section-svg-sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+}
+
+/* --------------------------------
+   svg
+-------------------------------- */
+.section-svg {
+  display: block;
+  width: min(100%, 920px);
+  height: auto;
+  overflow: visible;
+}
+
+.section-svg-text {
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: 132px;
+  font-weight: 300;
+  letter-spacing: 0.14em;
+}
+
+/* 1文字ずつ */
+.section-svg-char {
+  fill: rgba(255, 255, 255, 0.94);
+  stroke: rgba(220, 226, 235, 0.16);
+  stroke-width: 0.5;
+
+  opacity: 0;
+  transform: translate3d(0, 22px, 0) scale(0.985);
+  transform-origin: center bottom;
+  will-change: opacity, transform, fill;
+}
+
+/* aq-show時に順番に発火 */
+.aq-show .section-svg-char,
+.section-svg-title.aq-show .section-svg-char {
+  animation: sectionCharIn 0.9s cubic-bezier(.22,.56,.18,1) forwards;
+  animation-delay: calc(var(--char-index) * 0.055s);
+}
+
+/* count */
+.section-svg-count {
+  flex: 0 0 auto;
+  margin: 0 0 0.55rem;
+
+  color: rgba(255, 255, 255, 0.16);
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: clamp(2.6rem, 5vw, 5rem);
+  font-weight: 300;
+  line-height: 0.92;
+  letter-spacing: 0.04em;
+}
+
+/* line */
+.section-svg-line {
+  display: block;
+  width: 0;
+  height: 1px;
+  margin-top: 1.15rem;
+
+  background: linear-gradient(
+    90deg,
+    rgba(217, 185, 138, 0.72),
+    rgba(220, 226, 235, 0.12),
+    transparent
+  );
+
+  opacity: 0;
+}
+
+.aq-show .section-svg-line,
+.section-svg-title.aq-show .section-svg-line {
+  animation: sectionLineIn 0.95s cubic-bezier(.22,.56,.18,1) 0.42s forwards;
+}
+
+/* --------------------------------
+   keyframes
+-------------------------------- */
+@keyframes sectionCharIn {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 22px, 0) scale(0.985);
+    fill: rgba(255, 255, 255, 0.18);
+  }
+  65% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+    fill: rgba(255, 255, 255, 0.94);
+  }
+}
+
+@keyframes sectionLineIn {
+  0% {
+    width: 0;
+    opacity: 0;
+  }
+  100% {
+    width: 92px;
+    opacity: 1;
+  }
+}
+
+/* --------------------------------
+   mobile
+-------------------------------- */
+@media (max-width: 768px) {
+  .section-svg-kicker {
+    margin-bottom: 0.95rem;
+    padding-top: 1rem;
+    font-size: 0.6rem;
+    letter-spacing: 0.24em;
+  }
+
+  .section-svg-kicker::before {
+    width: 56px;
+  }
+
+  .section-svg-row {
+    gap: 0.8rem;
+    align-items: flex-end;
+  }
+
+  .section-svg {
+    width: min(100%, 560px);
+  }
+
+  .section-svg-text {
+    font-size: 116px;
+    letter-spacing: 0.1em;
+  }
+
+  .section-svg-count {
+    margin-bottom: 0.22rem;
+    font-size: 2rem;
+  }
+
+  .section-svg-line {
+    margin-top: 0.9rem;
+  }
+}
+
+/* --------------------------------
+   reduced motion
+-------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  .section-svg-char,
+  .section-svg-line {
+    animation: none !important;
+  }
+
+  .section-svg-char {
+    opacity: 1 !important;
+    transform: none !important;
+    fill: rgba(255, 255, 255, 0.94);
+  }
+
+  .section-svg-line {
+    width: 92px !important;
+    opacity: 1 !important;
+  }
+}

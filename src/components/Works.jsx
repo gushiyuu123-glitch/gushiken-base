@@ -1,22 +1,57 @@
 // src/pages/Works.jsx
 import React, { useEffect, useRef } from "react";
+import { Link } from "react-router-dom";
+import SectionSvgTitle from "../components/SectionSvgTitle";
 import "./works.css";
+
+const FEATURED_WORKS = [
+  {
+    title: "VELMONT",
+    meta: "Luxury Auto / Trust × Precision",
+    href: "https://velmont-virid.vercel.app/",
+    image: "/works/velmonte2.webp",
+    alt: "VELMONT｜高級車ショールームサイト制作（信頼感・高級感・導線設計）",
+    label: "VELMONT のサイトを見る",
+    size: "large",
+  },
+  {
+    title: "ROSE VEIL",
+    meta: "Fragrance EC / Luxury × Visual Air",
+    href: "https://rose-veil.vercel.app/",
+    image: "/assets/roseveil2.webp",
+    alt: "ROSE VEIL｜香り系ブランドのECサイト制作（上品・空気感・EC導線）",
+    label: "ROSE VEIL のサイトを見る",
+    size: "medium",
+  },
+  {
+    title: "LÜMIN",
+    meta: "Audio EC / Minimal × Precision",
+    href: "https://lumin-audio.vercel.app/",
+    image: "/assets/lomin.webp",
+    alt: "LÜMIN｜イヤホン・オーディオ製品のECサイト制作（ミニマル・高品質・精密感）",
+    label: "LÜMIN のサイトを見る",
+    size: "small",
+  },
+];
 
 export default function Works() {
   const worksRef = useRef(null);
 
   useEffect(() => {
     const root = worksRef.current;
-    if (!root) return;
+    if (!root) return undefined;
 
-    const cards = root.querySelectorAll(".work-card");
+    const cards = Array.from(root.querySelectorAll(".work-card"));
     const cleanups = [];
 
-    // ── img-loaded（金フレーム表示用）──────────────────────────
     cards.forEach((card) => {
       const img = card.querySelector("img");
       if (!img) return;
-      const markLoaded = () => card.classList.add("img-loaded");
+
+      const markLoaded = () => {
+        card.classList.add("img-loaded");
+      };
+
       if (img.complete) {
         markLoaded();
       } else {
@@ -25,158 +60,109 @@ export default function Works() {
       }
     });
 
-    // ── カード連鎖フェードイン ─────────────────────────────────
-    const [card1, card2, card3] = cards;
-    if (!card1) return () => cleanups.forEach((c) => c());
+    if (!cards.length) {
+      return () => cleanups.forEach((cleanup) => cleanup());
+    }
 
-    if (card2) card2.style.transitionDelay = "280ms";
-    if (card3) card3.style.transitionDelay = "520ms";
+    cards.forEach((card, index) => {
+      card.style.setProperty("--card-delay", `${index * 160}ms`);
+    });
 
     const observer = new IntersectionObserver(
-      (entries) => {
-        if (!entries[0].isIntersecting) return;
+      ([entry]) => {
+        if (!entry?.isIntersecting) return;
+
+        cards.forEach((card) => {
+          card.classList.add("is-visible");
+        });
+
         observer.disconnect();
-        [card1, card2, card3].forEach((card) => card?.classList.add("aq-show"));
       },
-      { threshold: 0.12 }
+      {
+        threshold: 0.16,
+        rootMargin: "0px 0px -12% 0px",
+      }
     );
 
-    observer.observe(card1);
+    observer.observe(cards[0]);
+
     cleanups.push(() => observer.disconnect());
 
-    return () => cleanups.forEach((c) => c());
+    return () => {
+      cleanups.forEach((cleanup) => cleanup());
+    };
   }, []);
 
   return (
-    <section
-      id="works"
-      ref={worksRef}
-      className="
-        aq-fade aq-root
-        pt-[12vh] pb-[12vh]
-        md:pt-[16vh] md:pb-[16vh]
-      "
-    >
+    <section id="works" ref={worksRef} className="works-section">
       <div className="works-container">
-        {/* =====================
-            HEADER
-        ===================== */}
-        <div className="works-header aq-fade delay-1">
-          <h2 className="works-title" translate="no">
-            WORKS
-          </h2>
+        {/* HEADER */}
+   <div className="works-header aq-fade">
+  <SectionSvgTitle
+    title="WORKS"
+    sub="SELECTED WORKS"
+    count="03"
+  />
 
-          <p className="works-sub">SELECTED WORKS</p>
-
-          {/* ✅ 文章だけ最適化（欲張り感を削る / カテゴリ列挙を削る） */}
-          <p
-            className="
-              mt-3
-              max-w-[500px]
-              text-[0.75rem]
-              leading-relaxed
-              tracking-[0.14em]
-              text-white/60
-            "
-          >
-       見え方を整える制作をしています。
-<br className="hidden md:block" />
-制作例をまとめました。
-          </p>
-        </div>
-
-        {/* =====================
-            GRID
-        ===================== */}
+  <p className="works-lead">
+    最初に、代表作だけを置く。
+    <br className="hidden md:block" />
+    印象・構造・導線まで整えた制作例です。
+  </p>
+</div>
+        {/* GRID */}
         <div className="works-grid-wrapper">
-          {/* Swipe hint */}
           <div className="works-swipe-hint aq-fade delay-2 md:hidden">
             <span>SWIPE</span>
             <span className="arrow">→</span>
           </div>
 
-          <div className="works-grid">
-            {/* 1 → VELMONT（BIG）★ 監視の起点 */}
-            <a
-              href="https://velmont-virid.vercel.app/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="work-card aq-fade"
-              aria-label="VELMONT のサイトを見る"
-            >
-              <img
-                src="/works/velmonte2.webp"
-                alt="VELMONT｜高級車ショールームサイト制作（信頼感×高級感×導線設計）"
-                loading="lazy"
-                decoding="async"
-              />
-              <div className="work-text">
-                <h3>VELMONT</h3>
-                <p>Luxury Auto / Trust × Precision</p>
-              </div>
-            </a>
+          <div className="works-grid" aria-label="代表制作実績">
+            {FEATURED_WORKS.map((work, index) => (
+              <a
+                key={work.title}
+                href={work.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`work-card work-card-reveal work-card-${work.size}`}
+                aria-label={work.label}
+              >
+                <span className="work-image-wrap" aria-hidden="true">
+                  <img
+                    src={work.image}
+                    alt=""
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </span>
 
-            {/* 2 → ROSE VEIL（+220ms） */}
-            <a
-              href="https://rose-veil.vercel.app/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="work-card aq-fade"
-              aria-label="ROSE VEIL のサイトを見る"
-            >
-              <img
-                src="/assets/roseveil2.webp"
-                alt="ROSE VEIL｜香り系ブランドのECサイト制作（上品×空気感）"
-                loading="lazy"
-                decoding="async"
-              />
-              <div className="work-text">
-                <h3>ROSE VEIL</h3>
-                <p>Fragrance EC / Luxury × Visual Air</p>
-              </div>
-            </a>
+                <span className="work-veil" aria-hidden="true" />
 
-            {/* 3 → LÜMIN（+440ms） */}
-            <a
-              href="https://lumin-audio.vercel.app/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="work-card aq-fade"
-              aria-label="LÜMIN のサイトを見る"
-            >
-              <img
-                src="/assets/lomin.webp"
-                alt="LÜMIN｜イヤホン・オーディオ製品のECサイト制作（ミニマル×高品質）"
-                loading="lazy"
-                decoding="async"
-              />
-              <div className="work-text">
-                <h3>LÜMIN</h3>
-                <p>Audio EC / Minimal × Precision</p>
-              </div>
-            </a>
+                <span className="work-text">
+                  <span className="work-number" aria-hidden="true">
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+
+                  <span className="work-copy">
+                    <span className="work-name">{work.title}</span>
+                    <span className="work-meta">{work.meta}</span>
+                  </span>
+                </span>
+
+                <span className="work-line" aria-hidden="true" />
+              </a>
+            ))}
           </div>
         </div>
 
-        {/* =====================
-            VIEW ALL
-        ===================== */}
+        {/* VIEW ALL */}
         <div className="works-viewall aq-fade delay-6">
-          <a href="/works" className="viewall-btn">
-            VIEW ALL WORKS
-          </a>
+          <Link to="/works" className="viewall-btn">
+            <span>VIEW ALL WORKS</span>
+            <span aria-hidden="true">→</span>
+          </Link>
 
-          <p
-            className="
-              mt-3
-              select-none
-              text-[0.55rem]
-              tracking-[0.32em]
-              text-white/30
-            "
-          >
-            制作例（抜粋）
-          </p>
+          <p className="works-viewall-note">制作例（抜粋）</p>
         </div>
       </div>
     </section>

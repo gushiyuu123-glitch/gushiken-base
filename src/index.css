@@ -1,7 +1,7 @@
 /* ============================================================
-   GUSHIKEN DESIGN Core Index v6
-   Main(Black) × Assort(White) × Accent(Gold) × Subaccent(Silver)
-   統一トークン + 事故耐性版
+   GUSHIKEN DESIGN Core Index v7
+   Black Frame × Champagne Gold × Silver Line × Silent Motion
+   統一トークン + 事故耐性 + 全ページ共通OS
 ============================================================ */
 
 @tailwind base;
@@ -12,27 +12,37 @@
    ROOT TOKENS
 ------------------------------------------------------------ */
 :root {
-  /* ===== New Naming ===== */
+  /* ===== Core / Main ===== */
   --main: #0b0b0b;
+  --main-deep: #070707;
   --main-soft: rgba(15, 15, 15, 0.92);
+  --main-panel: rgba(12, 12, 12, 0.965);
 
-  --assort: rgba(255, 255, 255, 0.85);
-  --assort-muted: rgba(255, 255, 255, 0.6);
+  /* ===== Assort / White ===== */
+  --assort: rgba(255, 255, 255, 0.86);
+  --assort-soft: rgba(238, 234, 224, 0.86);
+  --assort-muted: rgba(255, 255, 255, 0.60);
   --assort-faint: rgba(255, 255, 255, 0.38);
-  --assort-line: rgba(255, 255, 255, 0.14);
-  --assort-line-faint: rgba(255, 255, 255, 0.08);
+  --assort-ghost: rgba(255, 255, 255, 0.22);
+  --assort-line: rgba(255, 255, 255, 0.12);
+  --assort-line-faint: rgba(255, 255, 255, 0.075);
 
-  --accent: #d9b98a;
-  --accent-dim: rgba(217, 185, 138, 0.22);
-  --accent-border: rgba(217, 185, 138, 0.32);
-  --accent-glow: rgba(217, 185, 138, 0.06);
+  /* ===== Accent / Champagne Gold ===== */
+  --accent: #c9b18a;
+  --accent-bright: #d9c29a;
+  --accent-deep: #8f7650;
+  --accent-dim: rgba(201, 177, 138, 0.24);
+  --accent-soft: rgba(201, 177, 138, 0.14);
+  --accent-border: rgba(201, 177, 138, 0.32);
+  --accent-glow: rgba(201, 177, 138, 0.075);
 
+  /* ===== Subaccent / Silver ===== */
   --subaccent: rgba(220, 226, 235, 0.78);
   --subaccent-dim: rgba(220, 226, 235, 0.22);
   --subaccent-border: rgba(220, 226, 235, 0.32);
   --subaccent-glow: rgba(220, 226, 235, 0.06);
 
-  /* ===== Legacy (keep existing code working) ===== */
+  /* ===== Legacy / Keep Existing Code Working ===== */
   --black-900: var(--main);
   --black-880: rgba(10, 10, 10, 0.98);
   --black-850: rgba(12, 12, 12, 0.95);
@@ -42,49 +52,80 @@
   --white-950: #fafafa;
   --white-900: rgba(255, 255, 255, 0.95);
   --white-800: rgba(255, 255, 255, 0.82);
-  --white-700: rgba(255, 255, 255, 0.7);
-  --white-600: rgba(255, 255, 255, 0.6);
-  --white-500: rgba(255, 255, 255, 0.5);
-  --white-400: rgba(255, 255, 255, 0.4);
-  --white-300: rgba(255, 255, 255, 0.3);
-  --white-200: rgba(255, 255, 255, 0.2);
-  --white-100: rgba(255, 255, 255, 0.1);
+  --white-700: rgba(255, 255, 255, 0.70);
+  --white-600: rgba(255, 255, 255, 0.60);
+  --white-500: rgba(255, 255, 255, 0.50);
+  --white-400: rgba(255, 255, 255, 0.40);
+  --white-300: rgba(255, 255, 255, 0.30);
+  --white-200: rgba(255, 255, 255, 0.20);
+  --white-100: rgba(255, 255, 255, 0.10);
 
-  /* Accent soft (legacy) */
-  --accent-soft: var(--assort-line);
+  /* 旧ゴールド。強く使いすぎない */
+  --gold: #d9b98a;
+  --gold-muted: var(--accent);
+
+  /* 旧クラス互換 */
   --accent-faint: var(--assort-line-faint);
-
-  /* nav silver (legacy) */
   --nav-silver: var(--subaccent);
 
-  /* Motion */
+  /* ===== Motion ===== */
   --ease-silent: cubic-bezier(.22, .56, .18, 1);
-  --fade-time: 1.02s;
-  --fade-distance: 16px;
-  --fade-scale: 0.996;
+  --ease-sharp: cubic-bezier(.22, .61, .36, 1);
+  --ease-settle: cubic-bezier(.22, .1, .28, 1);
 
-  /* Glow */
-  --glow-white: rgba(255, 255, 255, 0.10);
+  --fade-time: 1.05s;
+  --fade-distance: 18px;
+  --fade-scale: 0.995;
+
+  /* ===== Glow / Shadow ===== */
+  --glow-white: rgba(255, 255, 255, 0.08);
+  --glow-gold: var(--accent-glow);
   --glow-silver: var(--subaccent-glow);
-  --glow-soft: rgba(255, 255, 255, 0.05);
+  --glow-soft: rgba(255, 255, 255, 0.045);
 
-  /* Shadow */
   --shadow-soft: 0 14px 36px rgba(0, 0, 0, 0.22);
   --shadow-medium: 0 18px 48px rgba(0, 0, 0, 0.28);
   --shadow-deep: 0 24px 64px rgba(0, 0, 0, 0.34);
+  --shadow-heavy: 0 24px 70px rgba(0, 0, 0, 0.54);
+
+  /* ===== Lines ===== */
+  --line-gold: linear-gradient(
+    90deg,
+    transparent,
+    rgba(201, 177, 138, 0.70),
+    rgba(255, 255, 255, 0.18),
+    transparent
+  );
+
+  --line-silver: linear-gradient(
+    90deg,
+    transparent,
+    rgba(220, 226, 235, 0.70),
+    transparent
+  );
+
+  --metal-champagne: linear-gradient(
+    145deg,
+    rgba(225, 216, 196, 0.92) 0%,
+    rgba(196, 177, 143, 0.90) 24%,
+    rgba(149, 126, 91, 0.88) 50%,
+    rgba(218, 207, 186, 0.92) 73%,
+    rgba(130, 109, 79, 0.88) 100%
+  );
 }
 
 /* ------------------------------------------------------------
-   GLOBAL
+   GLOBAL BASE
 ------------------------------------------------------------ */
 html {
   background: var(--main);
   scroll-behavior: smooth;
-  scroll-padding-top: 84px; /* fixed nav offset */
+  scroll-padding-top: 84px;
   color-scheme: dark;
 }
 
 body {
+  margin: 0;
   background: var(--main);
   color: var(--assort);
   overflow-x: hidden;
@@ -92,11 +133,15 @@ body {
   text-rendering: optimizeLegibility;
 }
 
-/* ✅ 黒画面停止を潰す（showが付かなくても一定時間後に表示） */
+::selection {
+  color: rgba(10, 10, 10, 0.96);
+  background: rgba(201, 177, 138, 0.78);
+}
+
 #root {
   min-height: 100vh;
   opacity: 0;
-  transition: opacity 0.55s ease;
+  transition: opacity 0.55s var(--ease-settle);
   animation: rootFailsafe 0s linear 1.6s forwards;
 }
 
@@ -105,7 +150,9 @@ body {
 }
 
 @keyframes rootFailsafe {
-  to { opacity: 1; }
+  to {
+    opacity: 1;
+  }
 }
 
 img,
@@ -117,28 +164,63 @@ svg {
   max-width: 100%;
 }
 
-a { color: inherit; }
-button, input, select, textarea { font: inherit; }
+a {
+  color: inherit;
+}
 
-.no-scrollbar::-webkit-scrollbar { display: none; }
-.no-scrollbar { scrollbar-width: none; }
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+button {
+  color: inherit;
+}
+
+:focus-visible {
+  outline: 1px solid rgba(201, 177, 138, 0.42);
+  outline-offset: 3px;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  scrollbar-width: none;
+}
 
 /* ------------------------------------------------------------
-   1) Silent Fade
+   SCROLL LOCK
+------------------------------------------------------------ */
+html.scroll-lock,
+body.scroll-lock {
+  overflow: hidden;
+  height: 100%;
+  overscroll-behavior: none;
+}
+
+/* ------------------------------------------------------------
+   1) Silent Fade / AQ Fade
+   blurは禁止。像が静かに整うだけ。
 ------------------------------------------------------------ */
 .aq-fade {
   opacity: 0;
-  transform: translateY(var(--fade-distance)) scale(var(--fade-scale));
+  transform: translate3d(0, var(--fade-distance), 0) scale(var(--fade-scale));
   transition:
     opacity var(--fade-time) var(--ease-silent),
     transform var(--fade-time) var(--ease-silent);
   filter: none !important;
   backdrop-filter: none !important;
+  will-change: opacity, transform;
+  backface-visibility: hidden;
 }
 
 .aq-show {
   opacity: 1 !important;
-  transform: translateY(0) scale(1) !important;
+  transform: translate3d(0, 0, 0) scale(1) !important;
   filter: none !important;
   backdrop-filter: none !important;
 }
@@ -152,7 +234,7 @@ button, input, select, textarea { font: inherit; }
 .delay-6 { transition-delay: 0.50s; }
 .delay-7 { transition-delay: 0.58s; }
 
-/* blur完全禁止 */
+/* blur強制禁止 */
 [class*="fade"],
 [class*="Fade"],
 .animate-fadeUp {
@@ -161,7 +243,125 @@ button, input, select, textarea { font: inherit; }
 }
 
 /* ------------------------------------------------------------
-   2) Ambient Glow
+   2) Sharp Reveal
+   Nav / ロゴ / 小さな導線用
+------------------------------------------------------------ */
+.gd-sharp {
+  opacity: 0;
+  transform: translate3d(-10px, 0, 0) scale(0.985);
+  filter: brightness(0.9);
+  clip-path: inset(0 100% 0 0);
+  animation: gdSharpIn 0.72s var(--ease-silent) var(--sharp-delay, 0s) forwards;
+  will-change: opacity, transform, filter, clip-path;
+}
+
+@keyframes gdSharpIn {
+  0% {
+    opacity: 0;
+    transform: translate3d(-10px, 0, 0) scale(0.985);
+    filter: brightness(0.88);
+    clip-path: inset(0 100% 0 0);
+  }
+
+  68% {
+    opacity: 1;
+    filter: brightness(1.06);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+    filter: brightness(1);
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+.gd-sheen {
+  position: absolute;
+  left: -10%;
+  top: 50%;
+  width: 42%;
+  height: 1px;
+  pointer-events: none;
+  background: linear-gradient(
+    90deg,
+    rgba(255,255,255,0),
+    rgba(255,255,255,0.46),
+    rgba(201,177,138,0.32),
+    rgba(255,255,255,0)
+  );
+  opacity: 0;
+  transform: translate3d(-18px, -50%, 0) scaleX(0.25);
+  transform-origin: left center;
+  animation: gdSheen 0.56s var(--ease-silent) var(--sheen-delay, 0.15s) forwards;
+}
+
+@keyframes gdSheen {
+  0% {
+    opacity: 0;
+    transform: translate3d(-18px, -50%, 0) scaleX(0.25);
+  }
+
+  24% {
+    opacity: 0.72;
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate3d(92px, -50%, 0) scaleX(1);
+  }
+}
+
+/* ------------------------------------------------------------
+   3) Common Surface / Panel
+------------------------------------------------------------ */
+.gd-panel {
+  background:
+    radial-gradient(
+      circle at 14% 0%,
+      rgba(201, 177, 138, 0.055),
+      transparent 32%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(12, 12, 12, 0.985),
+      rgba(7, 7, 7, 0.965)
+    );
+  border: 1px solid rgba(255, 255, 255, 0.085);
+  border-top: 1px solid var(--accent-dim);
+  box-shadow:
+    0 0 0 0.5px var(--accent-glow),
+    var(--shadow-heavy),
+    inset 0 1px 0 rgba(255, 255, 255, 0.045);
+}
+
+.gd-hairline {
+  height: 1px;
+  background: var(--line-gold);
+}
+
+.gd-silver-line {
+  height: 1px;
+  background: var(--line-silver);
+}
+
+.gd-caption {
+  font-size: 0.72rem;
+  line-height: 1.7;
+  letter-spacing: 0.12em;
+  color: var(--assort-faint);
+}
+
+.gd-kicker {
+  font-size: 0.68rem;
+  line-height: 1;
+  letter-spacing: 0.28em;
+  color: var(--assort-faint);
+  text-transform: uppercase;
+}
+
+/* ------------------------------------------------------------
+   4) Ambient Glow
 ------------------------------------------------------------ */
 .ambient-glow {
   position: relative;
@@ -175,7 +375,7 @@ button, input, select, textarea { font: inherit; }
   position: absolute;
   border-radius: 9999px;
   filter: blur(120px);
-  opacity: 0.04;
+  opacity: 0.035;
   pointer-events: none;
 }
 
@@ -192,7 +392,7 @@ button, input, select, textarea { font: inherit; }
   right: -10%;
   width: 300px;
   height: 300px;
-  background: var(--glow-silver);
+  background: var(--glow-gold);
 }
 
 body.scrolled .ambient-glow {
@@ -201,12 +401,12 @@ body.scrolled .ambient-glow {
 
 body.scrolled .ambient-glow::before,
 body.scrolled .ambient-glow::after {
-  opacity: 0.1;
+  opacity: 0.085;
   filter: blur(140px);
 }
 
 /* ------------------------------------------------------------
-   3) Elevated Card Motion
+   5) Elevated Card Motion
 ------------------------------------------------------------ */
 .elevated-card {
   position: relative;
@@ -215,7 +415,7 @@ body.scrolled .ambient-glow::after {
     box-shadow 0.45s ease,
     border-color 0.45s ease,
     background 0.45s ease;
-  box-shadow: 0 0 0 rgba(255,255,255,0);
+  box-shadow: 0 0 0 rgba(255, 255, 255, 0);
 }
 
 .elevated-card:hover {
@@ -231,7 +431,7 @@ body.scrolled .ambient-glow::after {
   inset: 0;
   background: radial-gradient(
     circle at 22% 18%,
-    rgba(255,255,255,0.06),
+    rgba(255, 255, 255, 0.055),
     transparent 70%
   );
   opacity: 0;
@@ -240,7 +440,7 @@ body.scrolled .ambient-glow::after {
 }
 
 .elevated-card:hover .soft-frame-glow::before {
-  opacity: 0.18;
+  opacity: 0.16;
 }
 
 .card-image {
@@ -279,7 +479,7 @@ body.scrolled .ambient-glow::after {
   inset: 0;
   background: radial-gradient(
     circle at 22% 18%,
-    rgba(255,255,255,0.06),
+    rgba(255,255,255,0.055),
     transparent 70%
   );
   opacity: 0;
@@ -288,7 +488,7 @@ body.scrolled .ambient-glow::after {
 }
 
 .dior-card:hover .dior-frame-glow::before {
-  opacity: 0.18;
+  opacity: 0.16;
 }
 
 .dior-img {
@@ -304,14 +504,14 @@ body.scrolled .ambient-glow::after {
 }
 
 /* ------------------------------------------------------------
-   4) Surface Grain
+   6) Surface Grain
 ------------------------------------------------------------ */
 .surface-grain,
 .dior-grain {
   position: absolute;
   inset: 0;
   background-image: radial-gradient(
-    rgba(255,255,255,0.18) 0.42px,
+    rgba(255,255,255,0.16) 0.42px,
     transparent 0.42px
   );
   background-size: 4px 4px;
@@ -321,7 +521,7 @@ body.scrolled .ambient-glow::after {
 }
 
 /* ------------------------------------------------------------
-   5) Horizontal Rail
+   7) Horizontal Rail
 ------------------------------------------------------------ */
 .works-rail {
   scroll-snap-type: x mandatory;
@@ -339,17 +539,18 @@ body.scrolled .ambient-glow::after {
 
 .works-rail:active .works-card {
   transform: translateY(-1px) scale(0.99);
-  box-shadow: 0 10px 28px rgba(0,0,0,0.26);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.26);
 }
 
 .works-rail:not(:active) .works-card {
   transform: translateY(0) scale(1);
-  box-shadow: 0 6px 18px rgba(0,0,0,0.22);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.22);
 }
 
-.works-card:hover { opacity: 1; }
+.works-card:hover {
+  opacity: 1;
+}
 
-/* Rail内ではフェード無効 */
 .works-rail .aq-fade,
 .works-rail [class*="aq-"] {
   opacity: 1 !important;
@@ -358,32 +559,49 @@ body.scrolled .ambient-glow::after {
 }
 
 /* ------------------------------------------------------------
-   6) Scroll Hint
+   8) Scroll Hint
 ------------------------------------------------------------ */
 .scroll-hint {
   width: 1px;
-  height: 22px;
+  height: 24px;
+  border-radius: 9999px;
   background: linear-gradient(
     180deg,
-    rgba(255,255,255,0),
-    rgba(255,255,255,0.52),
-    rgba(255,255,255,0)
+    rgba(220, 226, 235, 0),
+    rgba(220, 226, 235, 0.34),
+    rgba(201, 177, 138, 0.26),
+    rgba(220, 226, 235, 0)
   );
-  border-radius: 9999px;
-  animation: scrollPulse 2.4s ease-in-out infinite;
+  box-shadow:
+    0 0 0 0.5px rgba(220, 226, 235, 0.08),
+    0 0 16px rgba(201, 177, 138, 0.035);
+  animation: scrollPulse 2.8s ease-in-out infinite;
 }
 
 @keyframes scrollPulse {
-  0% { opacity: 0; transform: translateY(-6px); }
-  40% { opacity: 0.58; transform: translateY(0); }
-  100% { opacity: 0; transform: translateY(8px); }
+  0% {
+    opacity: 0.16;
+    transform: translateY(-5px) scaleY(0.96);
+  }
+
+  45% {
+    opacity: 0.42;
+    transform: translateY(0) scaleY(1);
+  }
+
+  100% {
+    opacity: 0.16;
+    transform: translateY(7px) scaleY(0.96);
+  }
 }
 
 /* ------------------------------------------------------------
-   7) Reduced Motion
+   9) Reduced Motion
 ------------------------------------------------------------ */
 @media (prefers-reduced-motion: reduce) {
-  html { scroll-behavior: auto; }
+  html {
+    scroll-behavior: auto;
+  }
 
   #root {
     transition: none !important;
@@ -393,6 +611,8 @@ body.scrolled .ambient-glow::after {
 
   .aq-fade,
   .aq-show,
+  .gd-sharp,
+  .gd-sheen,
   .ambient-glow,
   .ambient-glow::before,
   .ambient-glow::after,
@@ -410,12 +630,8 @@ body.scrolled .ambient-glow::after {
   }
 
   .aq-fade,
-  .aq-show {
+  .aq-show,
+  .gd-sharp {
     opacity: 1 !important;
   }
-}
-html.scroll-lock,
-body.scroll-lock{
-  overflow: hidden;
-  height: 100%;
 }
