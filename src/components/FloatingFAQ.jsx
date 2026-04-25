@@ -1,6 +1,8 @@
+// src/components/FloatingFAQ.jsx
 import React, {
   useCallback,
   useEffect,
+  useLayoutEffect,
   useMemo,
   useRef,
   useState,
@@ -22,8 +24,41 @@ function getFocusable(container) {
   ];
 
   return Array.from(container.querySelectorAll(selectors.join(","))).filter(
-    (el) => !el.hasAttribute("inert")
+    (el) => {
+      if (el.closest("[inert]")) return false;
+      if (el.closest('[aria-hidden="true"]')) return false;
+      return el.getClientRects().length > 0;
+    }
   );
+}
+
+function restoreScrollInstant(scrollY, scrollX = 0) {
+  if (typeof window === "undefined") return;
+
+  window.scrollTo({
+    top: scrollY,
+    left: scrollX,
+    behavior: "auto",
+  });
+}
+
+function focusWithoutScroll(el) {
+  if (!el || typeof el.focus !== "function") return;
+
+  if (typeof window === "undefined") {
+    el.focus();
+    return;
+  }
+
+  const x = window.scrollX || document.documentElement.scrollLeft || 0;
+  const y = window.scrollY || document.documentElement.scrollTop || 0;
+
+  try {
+    el.focus({ preventScroll: true });
+  } catch {
+    el.focus();
+    restoreScrollInstant(y, x);
+  }
 }
 
 export default function FloatingFAQ() {
@@ -55,45 +90,67 @@ export default function FloatingFAQ() {
     closePanel();
   }, [location.pathname, closePanel]);
 
-  // スマホでFAQを開いた時、背景スクロールを止める
-  useEffect(() => {
+  // スマホでFAQを開いた時、背景スクロールを固定する
+  useLayoutEffect(() => {
     if (!isOpen) return undefined;
-    if (typeof window === "undefined") return undefined;
+    if (typeof window === "undefined" || typeof document === "undefined") {
+      return undefined;
+    }
 
     const isMobile = window.matchMedia("(max-width: 767px)").matches;
     if (!isMobile) return undefined;
 
-    const scrollY = window.scrollY || document.documentElement.scrollTop || 0;
+    const html = document.documentElement;
+    const body = document.body;
 
-    const previousHtmlOverflow = document.documentElement.style.overflow;
+    const scrollY = window.scrollY || html.scrollTop || 0;
+    const scrollX = window.scrollX || html.scrollLeft || 0;
 
-    const previousBodyPosition = document.body.style.position;
-    const previousBodyTop = document.body.style.top;
-    const previousBodyLeft = document.body.style.left;
-    const previousBodyRight = document.body.style.right;
-    const previousBodyWidth = document.body.style.width;
-    const previousBodyOverflow = document.body.style.overflow;
+    const previousHtmlOverflow = html.style.overflow;
+    const previousHtmlScrollBehavior = html.style.scrollBehavior;
 
-    document.documentElement.style.overflow = "hidden";
+    const previousBodyPosition = body.style.position;
+    const previousBodyTop = body.style.top;
+    const previousBodyLeft = body.style.left;
+    const previousBodyRight = body.style.right;
+    const previousBodyWidth = body.style.width;
+    const previousBodyOverflow = body.style.overflow;
+    const previousBodyScrollBehavior = body.style.scrollBehavior;
 
-    document.body.style.position = "fixed";
-    document.body.style.top = `-${scrollY}px`;
-    document.body.style.left = "0";
-    document.body.style.right = "0";
-    document.body.style.width = "100%";
-    document.body.style.overflow = "hidden";
+    // scroll-behavior: smooth が復帰時に効くと、
+    // 上から高速で戻るように見えるため一時的に無効化
+    html.style.scrollBehavior = "auto";
+    body.style.scrollBehavior = "auto";
+
+    html.style.overflow = "hidden";
+
+    body.style.position = "fixed";
+    body.style.top = `-${scrollY}px`;
+    body.style.left = `-${scrollX}px`;
+    body.style.right = "0";
+    body.style.width = "100%";
+    body.style.overflow = "hidden";
 
     return () => {
-      document.documentElement.style.overflow = previousHtmlOverflow;
+      // 復帰中だけ smooth を確実に切る
+      html.style.scrollBehavior = "auto";
+      body.style.scrollBehavior = "auto";
 
-      document.body.style.position = previousBodyPosition;
-      document.body.style.top = previousBodyTop;
-      document.body.style.left = previousBodyLeft;
-      document.body.style.right = previousBodyRight;
-      document.body.style.width = previousBodyWidth;
-      document.body.style.overflow = previousBodyOverflow;
+      html.style.overflow = previousHtmlOverflow;
 
-      window.scrollTo(0, scrollY);
+      body.style.position = previousBodyPosition;
+      body.style.top = previousBodyTop;
+      body.style.left = previousBodyLeft;
+      body.style.right = previousBodyRight;
+      body.style.width = previousBodyWidth;
+      body.style.overflow = previousBodyOverflow;
+
+      restoreScrollInstant(scrollY, scrollX);
+
+      requestAnimationFrame(() => {
+        html.style.scrollBehavior = previousHtmlScrollBehavior;
+        body.style.scrollBehavior = previousBodyScrollBehavior;
+      });
     };
   }, [isOpen]);
 
@@ -126,7 +183,7 @@ export default function FloatingFAQ() {
 
       event.preventDefault();
       closePanel();
-      toggleButtonRef.current?.focus();
+      focusWithoutScroll(toggleButtonRef.current);
     };
 
     window.addEventListener("keydown", handleKeyDown);
@@ -136,12 +193,12 @@ export default function FloatingFAQ() {
     };
   }, [isOpen, closePanel]);
 
-  // 開いたら最初の質問へ
+  // 開いたら最初の質問へ。ただしスクロールは動かさない
   useEffect(() => {
     if (!isOpen) return undefined;
 
     const raf = requestAnimationFrame(() => {
-      firstQuestionRef.current?.focus();
+      focusWithoutScroll(firstQuestionRef.current);
     });
 
     return () => cancelAnimationFrame(raf);
@@ -165,12 +222,12 @@ export default function FloatingFAQ() {
 
       if (event.shiftKey && document.activeElement === first) {
         event.preventDefault();
-        last.focus();
+        focusWithoutScroll(last);
       }
 
       if (!event.shiftKey && document.activeElement === last) {
         event.preventDefault();
-        first.focus();
+        focusWithoutScroll(first);
       }
     };
 
@@ -181,13 +238,13 @@ export default function FloatingFAQ() {
     };
   }, [isOpen]);
 
-const panelProps = useMemo(() => {
-  return {
-    "data-open": isOpen ? "true" : "false",
-    "aria-hidden": isOpen ? "false" : "true",
-    ...(!isOpen ? { inert: true } : {}),
-  };
-}, [isOpen]);
+  const panelProps = useMemo(() => {
+    return {
+      "data-open": isOpen ? "true" : "false",
+      "aria-hidden": isOpen ? "false" : "true",
+      ...(!isOpen ? { inert: "" } : {}),
+    };
+  }, [isOpen]);
 
   return (
     <div ref={wrapRef} className="floating-faq-wrap">
@@ -219,7 +276,7 @@ const panelProps = useMemo(() => {
                 className="floating-faq-close"
                 onClick={() => {
                   closePanel();
-                  toggleButtonRef.current?.focus();
+                  focusWithoutScroll(toggleButtonRef.current);
                 }}
                 aria-label="FAQを閉じる"
               >
