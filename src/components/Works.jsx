@@ -156,14 +156,15 @@ export default function Works() {
         </div>
 
         {/* VIEW ALL */}
-        <div className="works-viewall aq-fade delay-6">
-          <Link to="/works" className="viewall-btn">
-            <span>VIEW ALL WORKS</span>
-            <span aria-hidden="true">→</span>
-          </Link>
+{/* VIEW ALL */}
+<div className="works-viewall aq-fade delay-3">
+  <Link to="/works" className="viewall-btn">
+    <span>VIEW ALL WORKS</span>
+    <span aria-hidden="true">→</span>
+  </Link>
 
-          <p className="works-viewall-note">制作例（抜粋）</p>
-        </div>
+  <p className="works-viewall-note">制作例（抜粋）</p>
+</div>
       </div>
     </section>
   );
