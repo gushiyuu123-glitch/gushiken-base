@@ -49,6 +49,7 @@ function PrincipleVisual({ type }) {
     return (
       <div className="vp-visual vp-visual--atmosphere" aria-hidden="true">
         <span className="vp-goldbar" />
+
         <div className="vp-lines">
           <span className="vp-goldline vp-goldline--strong" />
           <span className="vp-goldline vp-goldline--mid" />
@@ -78,41 +79,8 @@ function PrincipleVisual({ type }) {
 }
 
 function VisualPrinciples() {
-  const rootRef = useRef(null);
-
-  useEffect(() => {
-    const root = rootRef.current;
-    if (!root) return undefined;
-
-    const reveal = () => {
-      root.classList.add("is-in");
-    };
-
-    if (typeof IntersectionObserver === "undefined") {
-      reveal();
-      return undefined;
-    }
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (!entry?.isIntersecting) return;
-
-        reveal();
-        observer.disconnect();
-      },
-      {
-        threshold: 0.16,
-        rootMargin: "0px 0px -8% 0px",
-      }
-    );
-
-    observer.observe(root);
-
-    return () => observer.disconnect();
-  }, []);
-
   return (
-    <div ref={rootRef} className="philo-principles">
+    <div className="philo-principles">
       <div className="philo-principles-inner">
         <div className="vp-axis" aria-hidden="true" />
 
@@ -150,13 +118,54 @@ function VisualPrinciples() {
 }
 
 export default function Philosophy() {
-  return (
-    <section id="philosophy" className="philo-section aq-root">
-      <div className="philo-container">
-        <div className="philo-side-line aq-fade delay-1" aria-hidden="true" />
+  const sectionRef = useRef(null);
 
-        {/* HEADER */}
-        <header className="philo-header aq-fade delay-1">
+  useEffect(() => {
+    const root = sectionRef.current;
+    if (!root) return undefined;
+
+    const targets = Array.from(
+      root.querySelectorAll(".philo-flow, .philo-principles")
+    );
+
+    const reveal = (target) => {
+      target.classList.add("is-in");
+    };
+
+    if (typeof IntersectionObserver === "undefined") {
+      targets.forEach(reveal);
+      return undefined;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+
+          reveal(entry.target);
+          observer.unobserve(entry.target);
+        });
+      },
+      {
+        threshold: 0.12,
+        rootMargin: "0px 0px -8% 0px",
+      }
+    );
+
+    targets.forEach((target) => observer.observe(target));
+
+    return () => observer.disconnect();
+  }, []);
+
+  return (
+    <section id="philosophy" ref={sectionRef} className="philo-section">
+      <div className="philo-container">
+        <div
+          className="philo-side-line philo-flow philo-flow-line philo-flow-1"
+          aria-hidden="true"
+        />
+
+        <header className="philo-header philo-flow philo-flow-1">
           <SectionSvgTitle
             title="POLICY"
             sub="DESIGN POLICY"
@@ -166,9 +175,8 @@ export default function Philosophy() {
           <p className="philo-sub">制作で大切にしていること</p>
         </header>
 
-        {/* BODY */}
         <div className="philo-copy">
-          <p className="philo-lead aq-fade delay-2">
+          <p className="philo-lead philo-flow philo-flow-2">
             良いWebサイトは、派手さだけで選ばれません。
             <br />
             <span>
@@ -178,20 +186,24 @@ export default function Philosophy() {
             その土台があってこそ、写真や言葉の雰囲気が自然に届くと考えています。
           </p>
 
-          <p className="philo-body aq-fade delay-3">
+          <p className="philo-body philo-flow philo-flow-3">
             Webサイトを見る人は、最初からじっくり読んでくれるとは限りません。
             <br />
             だからこそ、情報の順序・余白・文字量・写真の見え方を整え、
-            <span>何をしているのか、誰に向いているのか</span>が自然に伝わる状態を目指します。
+            <span>何をしているのか、誰に向いているのか</span>
+            が自然に伝わる状態を目指します。
             <br />
             <br />
             見た目をきれいにするだけではなく、読み手の不安を減らし、
-            <span>信頼と問い合わせにつながる流れ</span>まで整えることを大切にしています。
+            <span>信頼と問い合わせにつながる流れ</span>
+            まで整えることを大切にしています。
           </p>
 
-          <VisualPrinciples />
+          <div className="philo-flow philo-flow-4">
+            <VisualPrinciples />
+          </div>
 
-          <p className="philo-last aq-fade delay-8">
+          <p className="philo-last philo-flow philo-flow-5">
             <span>
               見やすさと印象の両方を整え、
               <br />

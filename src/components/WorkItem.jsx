@@ -35,20 +35,17 @@ export default function WorkItem({
       {...(isExternal
         ? { href: link, target: "_blank", rel: "noopener noreferrer" }
         : { to: link })}
-      className="
-        work-list-card aq-fade
-        group relative block
+ className="
+  work-list-card aq-fade work-rise
+  group relative block
         overflow-hidden
         border border-white/[0.075]
         border-t-[rgba(201,177,138,0.16)]
         bg-[rgba(8,8,8,0.96)]
         text-white no-underline
         shadow-[0_18px_48px_rgba(0,0,0,0.34)]
-        transform-gpu
-        transition-[transform,border-color,box-shadow,background-color]
         duration-[520ms]
         ease-[cubic-bezier(0.22,0.56,0.18,1)]
-        hover:-translate-y-[3px]
         hover:border-[rgba(201,177,138,0.28)]
         hover:shadow-[0_26px_70px_rgba(0,0,0,0.46)]
       "

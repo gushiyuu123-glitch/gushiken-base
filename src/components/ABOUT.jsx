@@ -258,47 +258,81 @@ function CertificateModal({ item, onClose }) {
 
 export default function About() {
   const [activeCertificate, setActiveCertificate] = useState(null);
+  const sectionRef = useRef(null);
   const styleBlockRef = useRef(null);
 
   useEffect(() => {
-    const root = styleBlockRef.current;
+    const root = sectionRef.current;
+    const styleBlock = styleBlockRef.current;
+
     if (!root) return undefined;
 
-    const reveal = () => {
-      root.classList.add("is-in");
+    const revealTargets = Array.from(
+      root.querySelectorAll(".about-flow, .qcard-flow, .site-flow")
+    );
+
+    const reveal = (target) => {
+      target.classList.add("is-in");
     };
 
     if (typeof IntersectionObserver === "undefined") {
-      reveal();
+      revealTargets.forEach(reveal);
+      if (styleBlock) styleBlock.classList.add("is-in");
       return undefined;
     }
 
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (!entry?.isIntersecting) return;
+    const flowObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
 
-        reveal();
-        observer.disconnect();
+          reveal(entry.target);
+          flowObserver.unobserve(entry.target);
+        });
       },
       {
-        threshold: 0.18,
-        rootMargin: "0px 0px -10% 0px",
+        threshold: 0.12,
+        rootMargin: "0px 0px -8% 0px",
       }
     );
 
-    observer.observe(root);
+    revealTargets.forEach((target) => flowObserver.observe(target));
 
-    return () => observer.disconnect();
+    let styleObserver;
+
+    if (styleBlock) {
+      styleObserver = new IntersectionObserver(
+        ([entry]) => {
+          if (!entry?.isIntersecting) return;
+
+          styleBlock.classList.add("is-in");
+          styleObserver.disconnect();
+        },
+        {
+          threshold: 0.18,
+          rootMargin: "0px 0px -10% 0px",
+        }
+      );
+
+      styleObserver.observe(styleBlock);
+    }
+
+    return () => {
+      flowObserver.disconnect();
+      if (styleObserver) styleObserver.disconnect();
+    };
   }, []);
 
   return (
     <>
-      <section id="about" className="about-section aq-fade">
+      <section id="about" ref={sectionRef} className="about-section">
         <div className="about-container">
-          <div className="about-side-line aq-fade delay-1" aria-hidden="true" />
+          <div
+            className="about-side-line about-flow about-flow-line about-flow-1"
+            aria-hidden="true"
+          />
 
-          {/* HEADER */}
-          <header className="about-header aq-fade delay-1">
+          <header className="about-header about-flow about-flow-1">
             <SectionSvgTitle
               title="ABOUT"
               sub="ABOUT / CREATOR"
@@ -308,9 +342,8 @@ export default function About() {
             <p className="about-sub">制作者について</p>
           </header>
 
-          {/* LEAD */}
           <div className="about-intro">
-            <p className="about-lead aq-fade delay-2">
+            <p className="about-lead about-flow about-flow-2">
               上品に見えるのに、読みやすい。
               <br />
               <span>印象が整うWebサイト</span>を作りたい方へ。
@@ -318,7 +351,7 @@ export default function About() {
               デザインと情報の両方を整えながら、公開まで一貫して制作しています。
             </p>
 
-            <p className="about-body aq-fade delay-3">
+            <p className="about-body about-flow about-flow-3">
               大切にしているのは、<span>必要な情報が迷わず入ること</span>。
               <br />
               写真・色・余白・文字のバランスを整え、見え方に一貫性を作ります。
@@ -327,8 +360,7 @@ export default function About() {
             </p>
           </div>
 
-          {/* NAME / ROLE */}
-          <div className="about-profile aq-fade delay-4">
+          <div className="about-profile about-flow about-flow-4">
             <h3 className="about-name" translate="no">
               Gushiken Yuto
             </h3>
@@ -352,8 +384,7 @@ export default function About() {
             </a>
           </div>
 
-          {/* QUALIFICATIONS */}
-          <div className="qualifications-block aq-fade delay-5">
+          <div className="qualifications-block about-flow about-flow-5">
             <p className="qualifications-label">QUALIFICATIONS</p>
 
             <p className="qualifications-intro">
@@ -364,7 +395,11 @@ export default function About() {
 
             <div className="qualifications-grid">
               {QUALIFICATIONS.map((item, index) => (
-                <div key={item.id} className={`aq-fade delay-${5 + index}`}>
+                <div
+                  key={item.id}
+                  className="qcard-flow"
+                  style={{ "--q-index": index }}
+                >
                   <QualificationCard
                     item={item}
                     onOpen={(selected) => setActiveCertificate(selected)}
@@ -374,7 +409,6 @@ export default function About() {
             </div>
           </div>
 
-          {/* STYLE */}
           <div ref={styleBlockRef} className="about-style-block">
             <p className="about-style-label about-style-reveal">
               DESIGN APPROACH
@@ -400,26 +434,31 @@ export default function About() {
             </div>
           </div>
 
-          {/* SITE TONE */}
-          <div className="site-tone-block aq-fade delay-7">
-            <p className="site-tone-label">SITE TONE</p>
+          <div className="site-tone-block about-flow about-flow-7">
+            <p className="site-tone-label site-flow" style={{ "--site-index": 0 }}>
+              SITE TONE
+            </p>
 
-            <p className="site-tone-text">
+            <p className="site-tone-text site-flow" style={{ "--site-index": 1 }}>
               掲載しているサイトでは、
               <br />
               余白と読みやすさを優先し、見え方の一貫性を大切にしています。
             </p>
 
             <div className="site-swatch-grid">
-              {SWATCHES.map(({ bg, label }) => (
-                <div key={label} className="site-swatch-item">
+              {SWATCHES.map(({ bg, label }, index) => (
+                <div
+                  key={label}
+                  className="site-swatch-item site-flow"
+                  style={{ "--site-index": index + 2 }}
+                >
                   <div className="site-swatch" style={{ background: bg }} />
                   <p>{label}</p>
                 </div>
               ))}
             </div>
 
-            <div className="site-tone-meta">
+            <div className="site-tone-meta site-flow" style={{ "--site-index": 7 }}>
               <div>
                 <p className="site-tone-meta-label">FONT</p>
                 <p className="site-tone-meta-main">Aa Bb</p>
@@ -449,8 +488,7 @@ export default function About() {
             </div>
           </div>
 
-          {/* LAST */}
-          <p className="about-last aq-fade delay-8">
+          <p className="about-last about-flow about-flow-8">
             あなたのサービスの魅力を、
             <span>見やすく、上品に伝わるWebサイト</span>として形にします。
           </p>

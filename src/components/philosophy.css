@@ -68,6 +68,7 @@
 /* -------------------------------------------------------
    Side line
 ------------------------------------------------------- */
+
 .philo-side-line {
   position: absolute;
   left: 0;
@@ -84,12 +85,12 @@
   );
 
   pointer-events: none;
-  opacity: 0.9;
 }
 
 /* -------------------------------------------------------
    Header
 ------------------------------------------------------- */
+
 .philo-header {
   position: relative;
   padding-left: 1rem;
@@ -116,6 +117,7 @@
 /* -------------------------------------------------------
    Copy
 ------------------------------------------------------- */
+
 .philo-copy,
 .philo-lead,
 .philo-body,
@@ -169,6 +171,7 @@
 /* -------------------------------------------------------
    Visual Principles
 ------------------------------------------------------- */
+
 .philo-principles {
   margin: 4.2rem 0 0;
 }
@@ -205,7 +208,7 @@
   background: linear-gradient(
     to bottom,
     rgba(201, 177, 138, 0.22),
-    rgba(220, 226, 235, 0.10) 60%,
+    rgba(220, 226, 235, 0.1) 60%,
     transparent
   );
 
@@ -265,11 +268,13 @@
 }
 
 /* visual common */
+
 .vp-visual {
   margin-bottom: 0.9rem;
 }
 
 /* clarity */
+
 .vp-visual--clarity {
   display: flex;
   flex-direction: column;
@@ -298,6 +303,7 @@
 }
 
 /* atmosphere */
+
 .vp-visual--atmosphere {
   display: flex;
   align-items: stretch;
@@ -339,6 +345,7 @@
 }
 
 /* flow */
+
 .vp-visual--flow {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -365,16 +372,130 @@
 }
 
 /* -------------------------------------------------------
-   Fade safety
+   Philosophy Flow Reveal
+   POLICY → Lead → Body → Principles → Last
 ------------------------------------------------------- */
-.philo-section .aq-fade {
-  filter: none !important;
-  backdrop-filter: none !important;
+
+.philo-flow {
+  opacity: 0;
+  transform: translate3d(0, 24px, 0) scale(0.996);
+  filter: brightness(0.92);
+  will-change: opacity, transform, filter;
+
+  transition:
+    opacity 820ms cubic-bezier(0.16, 0.72, 0.16, 1),
+    transform 940ms cubic-bezier(0.16, 0.72, 0.16, 1),
+    filter 940ms cubic-bezier(0.16, 0.72, 0.16, 1);
+}
+
+.philo-flow.is-in {
+  opacity: 1;
+  transform: translate3d(0, 0, 0) scale(1);
+  filter: brightness(1);
+}
+
+.philo-flow-line {
+  opacity: 0;
+  transform: scaleY(0.72);
+  transform-origin: top;
+  filter: none;
+
+  transition:
+    opacity 880ms cubic-bezier(0.16, 0.72, 0.16, 1),
+    transform 1040ms cubic-bezier(0.16, 0.72, 0.16, 1);
+}
+
+.philo-flow-line.is-in {
+  opacity: 0.88;
+  transform: scaleY(1);
+}
+
+.philo-flow-1 {
+  transition-delay: 40ms;
+}
+
+.philo-flow-2 {
+  transition-delay: 90ms;
+}
+
+.philo-flow-3 {
+  transition-delay: 145ms;
+}
+
+.philo-flow-4 {
+  transition-delay: 200ms;
+}
+
+.philo-flow-5 {
+  transition-delay: 255ms;
+}
+
+/* -------------------------------------------------------
+   Visual Principles Reveal
+   DESIGN IN PRACTICE → 01 → 02 → 03
+------------------------------------------------------- */
+
+.philo-principles {
+  opacity: 0;
+  transform: translate3d(0, 18px, 0) scale(0.996);
+  filter: brightness(0.92);
+  will-change: opacity, transform, filter;
+
+  transition:
+    opacity 760ms cubic-bezier(0.16, 0.72, 0.16, 1),
+    transform 880ms cubic-bezier(0.16, 0.72, 0.16, 1),
+    filter 880ms cubic-bezier(0.16, 0.72, 0.16, 1);
+}
+
+.philo-principles.is-in {
+  opacity: 1;
+  transform: translate3d(0, 0, 0) scale(1);
+  filter: brightness(1);
+}
+
+.philo-principle-reveal {
+  opacity: 0;
+  transform: translate3d(0, 16px, 0) scale(0.997);
+  will-change: opacity, transform;
+
+  transition:
+    opacity 680ms cubic-bezier(0.16, 0.72, 0.16, 1),
+    transform 780ms cubic-bezier(0.16, 0.72, 0.16, 1);
+}
+
+.philo-principles.is-in .philo-principle-reveal {
+  opacity: 1;
+  transform: translate3d(0, 0, 0) scale(1);
+}
+
+.philo-principles.is-in .philo-principles-label {
+  transition-delay: 40ms;
+}
+
+.philo-principles.is-in .vp-item {
+  transition-delay: calc(140ms + (var(--vp-index) * 115ms));
+}
+
+.philo-principles .vp-axis {
+  opacity: 0;
+  transform: scaleY(0.76);
+  transform-origin: top;
+
+  transition:
+    opacity 680ms cubic-bezier(0.16, 0.72, 0.16, 1),
+    transform 840ms cubic-bezier(0.16, 0.72, 0.16, 1);
+}
+
+.philo-principles.is-in .vp-axis {
+  opacity: 1;
+  transform: scaleY(1);
+  transition-delay: 90ms;
 }
 
 /* -------------------------------------------------------
    Mobile
 ------------------------------------------------------- */
+
 @media (max-width: 768px) {
   .philo-section {
     padding: 11vh 0 11vh;
@@ -387,7 +508,6 @@
   .philo-side-line {
     top: 1.6rem;
     height: calc(100% - 3.2rem);
-    opacity: 0.78;
   }
 
   .philo-header,
@@ -479,6 +599,14 @@
     font-size: 0.94rem;
     line-height: 2;
   }
+
+  .philo-flow {
+    transform: translate3d(0, 20px, 0) scale(0.997);
+  }
+
+  .philo-principle-reveal {
+    transform: translate3d(0, 14px, 0) scale(0.997);
+  }
 }
 
 @media (max-width: 390px) {
@@ -494,6 +622,7 @@
 /* -------------------------------------------------------
    Reduced Motion
 ------------------------------------------------------- */
+
 @media (prefers-reduced-motion: reduce) {
   .philo-section *,
   .philo-section *::before,
@@ -501,60 +630,13 @@
     transition: none !important;
     animation: none !important;
   }
-}
-/* -------------------------------------------------------
-   Visual Principles Reveal
-   DESIGN IN PRACTICE → 01 → 02 → 03
-------------------------------------------------------- */
-.philo-principle-reveal {
-  opacity: 0;
-  transform: translate3d(0, 12px, 0) scale(0.997);
 
-  transition:
-    opacity 0.62s var(--ease-silent, cubic-bezier(.22,.56,.18,1)),
-    transform 0.62s var(--ease-silent, cubic-bezier(.22,.56,.18,1));
-
-  will-change: opacity, transform;
-}
-
-/* 発火 */
-.philo-principles.is-in .philo-principle-reveal {
-  opacity: 1;
-  transform: translate3d(0, 0, 0) scale(1);
-}
-
-/* ラベルはすぐ */
-.philo-principles.is-in .philo-principles-label {
-  transition-delay: 0s;
-}
-
-/* 01 → 02 → 03：遅すぎないテンポ */
-.philo-principles.is-in .vp-item {
-  transition-delay: calc(0.08s + (var(--vp-index) * 0.105s));
-}
-
-/* 軸線も少しだけ後から立つ */
-.philo-principles .vp-axis {
-  opacity: 0;
-  transform: scaleY(0.94);
-  transform-origin: top;
-
-  transition:
-    opacity 0.58s var(--ease-silent, cubic-bezier(.22,.56,.18,1)),
-    transform 0.58s var(--ease-silent, cubic-bezier(.22,.56,.18,1));
-}
-
-.philo-principles.is-in .vp-axis {
-  opacity: 1;
-  transform: scaleY(1);
-  transition-delay: 0.02s;
-}
-
-@media (prefers-reduced-motion: reduce) {
+  .philo-flow,
+  .philo-principles,
   .philo-principle-reveal,
   .philo-principles .vp-axis {
     opacity: 1 !important;
     transform: none !important;
-    transition: none !important;
+    filter: none !important;
   }
 }

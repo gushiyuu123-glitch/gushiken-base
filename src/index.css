@@ -635,3 +635,42 @@ body.scrolled .ambient-glow::after {
     opacity: 1 !important;
   }
 }
+/* ===============================
+   WORKS LIST CARD REVEAL
+================================ */
+
+.work-list-card.work-rise {
+  opacity: 0;
+  transform: translate3d(0, 28px, 0) scale(0.985);
+  filter: brightness(0.86) saturate(0.9);
+  will-change: opacity, transform, filter;
+
+  transition:
+    opacity 860ms cubic-bezier(0.16, 0.72, 0.16, 1),
+    transform 960ms cubic-bezier(0.16, 0.72, 0.16, 1),
+    filter 960ms cubic-bezier(0.16, 0.72, 0.16, 1),
+    border-color 520ms cubic-bezier(0.22, 0.56, 0.18, 1),
+    box-shadow 520ms cubic-bezier(0.22, 0.56, 0.18, 1),
+    background-color 520ms cubic-bezier(0.22, 0.56, 0.18, 1);
+
+  transition-delay: var(--work-rise-delay, 0ms);
+}
+
+.work-list-card.work-rise.aq-show {
+  opacity: 1;
+  transform: translate3d(0, 0, 0) scale(1);
+  filter: brightness(1) saturate(1);
+}
+
+.work-list-card.work-rise.aq-show:hover {
+  transform: translate3d(0, -3px, 0) scale(1.006);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .work-list-card.work-rise {
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+    transition: none !important;
+  }
+}

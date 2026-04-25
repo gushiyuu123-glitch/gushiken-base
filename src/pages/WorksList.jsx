@@ -60,13 +60,19 @@ export default function WorksList() {
     const root = rootRef.current;
     if (!root) return;
 
-    const items = root.querySelectorAll(".aq-fade");
-    if (!items.length) return;
+const items = root.querySelectorAll(".aq-fade");
+if (!items.length) return;
 
-    items.forEach((el) => {
-      el.classList.remove("aq-show");
-    });
+items.forEach((el) => {
+  el.classList.remove("aq-show");
+});
 
+const cards = root.querySelectorAll(".work-list-card");
+
+cards.forEach((card, index) => {
+  const delay = Math.min(index % 9, 8) * 70;
+  card.style.setProperty("--work-rise-delay", `${delay}ms`);
+});
     const io = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
