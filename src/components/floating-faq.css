@@ -413,20 +413,19 @@
   }
 
   .floating-faq-panel {
-    left: 0;
-    right: 0;
-    bottom: 0;
+    left: 50%;
+    right: auto;
+    top: 50%;
+    bottom: auto;
 
-    width: 100%;
-    max-height: min(78svh, 620px);
+    width: min(92vw, 430px);
+    max-height: min(74svh, 620px);
 
-    border-right: 0;
-    border-left: 0;
-    border-bottom: 0;
-    border-radius: 26px 26px 0 0;
+    border: 1px solid rgba(255, 244, 216, 0.16);
+    border-radius: 26px;
 
-    transform: translate3d(0, 104%, 0);
-    transform-origin: center bottom;
+    transform: translate3d(-50%, -46%, 0) scale(0.965);
+    transform-origin: center center;
 
     transition:
       opacity 0.28s ease,
@@ -435,7 +434,8 @@
   }
 
   .floating-faq-panel.is-open {
-    transform: translate3d(0, 0, 0);
+    transform: translate3d(-50%, -50%, 0) scale(1);
+
     transition:
       opacity 0.28s ease,
       transform 0.34s cubic-bezier(0.22, 1, 0.36, 1),
@@ -443,8 +443,8 @@
   }
 
   .floating-faq-panel-inner {
-    max-height: min(78svh, 620px);
-    padding: 24px 20px calc(24px + env(safe-area-inset-bottom));
+    max-height: min(74svh, 620px);
+    padding: 24px 20px;
   }
 
   .floating-faq-head {
