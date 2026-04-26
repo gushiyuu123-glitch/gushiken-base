@@ -1,240 +1,405 @@
-import React from "react";
+// src/pages/OriginRoom.jsx
+import React, { useEffect, useRef } from "react";
+
+const originKeys = [
+  {
+    id: "01",
+    label: "感性",
+    en: "SENSE",
+    text: "言葉や理屈になる前に、空気・質感・違和感を受け取る入口。",
+  },
+  {
+    id: "02",
+    label: "直感",
+    en: "INTUITION",
+    text: "まだ説明しきれないズレや気配を、判断の手前で掴む入口。",
+  },
+  {
+    id: "03",
+    label: "革命",
+    en: "REVOLUTION",
+    text: "既存の延長に留まらず、進みながら選択肢を更新する入口。",
+  },
+  {
+    id: "04",
+    label: "心理",
+    en: "PSYCHOLOGY",
+    text: "人の反応や思考の流れを、感情ではなく構造として読む入口。",
+  },
+  {
+    id: "05",
+    label: "構造",
+    en: "STRUCTURE",
+    text: "要素がどう関係し、全体がどう成立しているかを見る入口。",
+  },
+  {
+    id: "06",
+    label: "本質",
+    en: "ESSENCE",
+    text: "原因を辿り、最後に残る核を確かめる入口。",
+  },
+];
 
 export default function OriginRoom() {
+  const rootRef = useRef(null);
+
+  useEffect(() => {
+    const root = rootRef.current;
+    if (!root) return;
+
+    const targets = root.querySelectorAll(".origin-pre-reveal");
+
+    const reduceMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
+
+    if (reduceMotion) {
+      targets.forEach((target) => target.classList.add("is-visible"));
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+
+          entry.target.classList.add("is-visible");
+          observer.unobserve(entry.target);
+        });
+      },
+      {
+        threshold: 0.14,
+        rootMargin: "0px 0px -8% 0px",
+      }
+    );
+
+    targets.forEach((target) => observer.observe(target));
+
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <section className="relative w-full min-h-screen overflow-hidden bg-[#060708] text-white">
-      {/* ======================================================
-          BACKGROUND
-      ====================================================== */}
+    <main
+      ref={rootRef}
+      className="relative w-full overflow-x-hidden bg-[#050607] text-white"
+    >
+      <style>{`
+        .origin-pre-reveal {
+          opacity: 0;
+          transform: translateY(24px);
+          filter: blur(0.18px);
+          transition:
+            opacity 0.72s cubic-bezier(0.22, 0.1, 0.25, 1),
+            transform 0.72s cubic-bezier(0.22, 0.1, 0.25, 1),
+            filter 0.72s cubic-bezier(0.22, 0.1, 0.25, 1);
+          will-change: opacity, transform, filter;
+        }
+
+        .origin-pre-reveal.is-visible {
+          opacity: 1;
+          transform: translateY(0);
+          filter: blur(0);
+        }
+
+        .origin-pre-card {
+          position: relative;
+          overflow: hidden;
+        }
+
+        .origin-pre-card::before {
+          content: "";
+          position: absolute;
+          inset: 0;
+          background:
+            radial-gradient(
+              circle at 50% 0%,
+              rgba(220, 228, 255, 0.08),
+              transparent 58%
+            );
+          opacity: 0;
+          transition: opacity 0.5s ease;
+          pointer-events: none;
+        }
+
+        .origin-pre-card:hover::before {
+          opacity: 1;
+        }
+
+        .origin-pre-card::after {
+          content: "";
+          position: absolute;
+          left: 24px;
+          right: 24px;
+          bottom: 0;
+          height: 1px;
+          background: linear-gradient(
+            to right,
+            transparent,
+            rgba(255,255,255,0.18),
+            transparent
+          );
+          opacity: 0.4;
+        }
+
+        .origin-pre-grain {
+          background-image:
+            radial-gradient(rgba(255,255,255,0.035) 1px, transparent 1px);
+          background-size: 3px 3px;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+          .origin-pre-reveal {
+            transition: none !important;
+          }
+        }
+      `}</style>
+
+      {/* BACKGROUND */}
       <div
         aria-hidden
-        className="absolute inset-0 pointer-events-none"
+        className="pointer-events-none absolute inset-0"
         style={{
           background:
-            "radial-gradient(circle at 50% 20%, rgba(255,255,255,0.045), rgba(6,7,8,1) 74%)",
+            "radial-gradient(circle at 50% 18%, rgba(210,220,255,0.07), rgba(5,6,7,1) 72%)",
         }}
       />
 
-      {/* fine noise */}
       <div
         aria-hidden
-        className="absolute inset-0 opacity-[0.035] mix-blend-soft-light"
-        style={{
-          backgroundImage: "url('/textures/grain-soft.png')",
-          backgroundSize: "cover",
-        }}
+        className="origin-pre-grain pointer-events-none absolute inset-0 opacity-[0.035] mix-blend-screen"
       />
 
-      {/* soft diagonal veil */}
       <div
         aria-hidden
-        className="absolute inset-0 opacity-[0.045] mix-blend-screen"
+        className="pointer-events-none absolute inset-0 opacity-[0.055] mix-blend-screen"
         style={{
           background:
-            "linear-gradient(135deg, rgba(160,180,255,0.08), rgba(0,0,0,0) 42%)",
+            "linear-gradient(135deg, rgba(160,180,255,0.12), rgba(0,0,0,0) 44%)",
         }}
       />
 
-      {/* center slit */}
       <div
         aria-hidden
-        className="absolute left-1/2 top-0 h-full w-[1px] -translate-x-1/2 opacity-[0.14] mix-blend-screen"
+        className="pointer-events-none absolute left-1/2 top-0 h-full w-[1px] -translate-x-1/2 opacity-[0.12] mix-blend-screen"
         style={{
           background:
-            "linear-gradient(180deg, rgba(210,220,255,0.28), rgba(0,0,0,0) 82%)",
+            "linear-gradient(180deg, rgba(230,235,255,0.34), rgba(255,255,255,0.04) 38%, rgba(0,0,0,0) 86%)",
         }}
       />
 
-      {/* ======================================================
-          HERO
-      ====================================================== */}
-      <div className="relative z-10 mx-auto max-w-[980px] px-8 pt-[220px] pb-[180px]">
-        <p className="aq-fade mb-7 text-[11px] tracking-[0.30em] text-white/38">
-          HUMAN STRUCTURE / INSIGHT / SILENCE
-        </p>
+      {/* HERO */}
+      <section className="relative z-10 min-h-[100svh] px-7 pt-[190px] pb-[150px] md:px-8 md:pt-[220px] md:pb-[180px]">
+        <div className="mx-auto max-w-[980px]">
+          <p className="origin-pre-reveal mb-7 text-[10px] tracking-[0.34em] text-white/36 md:text-[11px]">
+            BEFORE ENTERING ORIGIN
+          </p>
 
-        <h1 className="aq-fade mb-10 font-serif text-[42px] leading-[1.28] tracking-[0.12em] text-white/92 md:text-[48px]">
-          ORIGIN ROOM
-        </h1>
+          <h1 className="origin-pre-reveal mb-10 font-serif text-[40px] leading-[1.18] tracking-[0.13em] text-white/92 md:text-[56px]">
+            ORIGIN
+            <br />
+            ANTEROOM
+          </h1>
 
-        <div className="aq-fade relative max-w-[680px]">
-          <div className="absolute inset-0 bg-[#cfd8ff] opacity-[0.06] blur-[24px]" />
+          <div className="origin-pre-reveal relative max-w-[720px]">
+            <div className="absolute inset-0 bg-[#d9e0ff] opacity-[0.055] blur-[28px]" />
 
-          <div className="relative border border-white/10 bg-white/[0.045] p-8 backdrop-blur-[1.4px] shadow-[inset_0_0_22px_rgba(200,210,255,0.05)] md:p-10">
-            <p className="text-[15px] leading-[2.05] text-white/72">
-              ここは、才能や表現の奥にある
+            <div className="relative border border-white/10 bg-white/[0.04] p-7 shadow-[inset_0_0_24px_rgba(210,220,255,0.05)] backdrop-blur-[1.2px] md:p-10">
+              <p className="text-[14px] leading-[2.15] text-white/72 md:text-[15px] md:leading-[2.2]">
+                ここは、ORIGIN に入る前の前室。
+                <br />
+                人物を紹介する場所ではなく、
+                <br />
+                それぞれの部屋を、視点として受け取るための場所。
+              </p>
+            </div>
+          </div>
+
+          <p className="origin-pre-reveal mt-12 max-w-[620px] text-[13px] leading-[2.2] text-white/45 md:text-[14px]">
+            名前ではなく、入口として読む。
+            <br />
+            言葉ではなく、焦点を合わせる。
+            <br />
+            ここから先の部屋は、そのために並んでいる。
+          </p>
+        </div>
+      </section>
+
+      {/* PREMISE */}
+      <section className="relative z-10 border-t border-white/10">
+        <div className="mx-auto grid max-w-[980px] gap-14 px-7 py-[140px] md:grid-cols-[0.9fr_1.1fr] md:px-8 md:py-[160px]">
+          <div>
+            <p className="origin-pre-reveal mb-4 text-[10px] tracking-[0.3em] text-white/34 md:text-[11px]">
+              PREMISE
+            </p>
+
+            <h2 className="origin-pre-reveal text-[23px] leading-[1.7] tracking-[0.14em] text-white/90 md:text-[26px]">
+              名前ではなく、
               <br />
-              「見えない構造」を静かに読み解く部屋。
+              視点として読む。
+            </h2>
+
+            <div className="origin-pre-reveal mt-8 h-[1px] w-[74px] bg-white/18" />
+          </div>
+
+          <div className="origin-pre-reveal max-w-[680px] text-[14px] leading-[2.28] text-white/62 md:text-[15px]">
+            <p>
+              ここに並ぶ人物は、答えではない。
               <br />
-              人の感性、思考、行動の背後にある法則を、
+              それぞれが、世界をどう受け取り、
               <br />
-              光と影のように並べながら見つめていく。
+              どう判断し、どう形にしたのか。
+            </p>
+
+            <p className="mt-8 text-white/76">
+              ORIGIN では、その視点だけを取り出し、
+              <br />
+              ひとつの部屋として置いている。
             </p>
           </div>
         </div>
-      </div>
+      </section>
 
-      {/* ======================================================
-          CORE PHILOSOPHY
-      ====================================================== */}
-      <div className="relative z-10 border-t border-white/10">
-        <div className="mx-auto max-w-[980px] px-8 py-[150px]">
-          <p className="aq-fade mb-4 text-[11px] tracking-[0.26em] text-white/34">
-            CORE PHILOSOPHY
+      {/* NAME / VIEWPOINT */}
+      <section className="relative z-10 border-t border-white/10">
+        <div className="mx-auto max-w-[980px] px-7 py-[145px] md:px-8 md:py-[165px]">
+          <p className="origin-pre-reveal mb-4 text-[10px] tracking-[0.3em] text-white/34 md:text-[11px]">
+            NAME / VIEWPOINT
           </p>
 
-          <h2 className="aq-fade mb-5 text-[24px] tracking-[0.14em] text-white/90">
-            核心思想
+          <h2 className="origin-pre-reveal mb-5 text-[23px] leading-[1.7] tracking-[0.14em] text-white/90 md:text-[25px]">
+            名前は、入口になる。
           </h2>
 
-          <div className="aq-fade mb-14 h-[1px] w-[72px] bg-white/18" />
+          <div className="origin-pre-reveal mb-16 h-[1px] w-[74px] bg-white/18" />
 
-          <div className="grid gap-14 md:grid-cols-[1.1fr_0.9fr] md:items-start">
-            <p className="aq-fade max-w-[680px] text-[15px] leading-[2.25] text-white/62">
-              ORIGIN は、優れた表現や才能をただ並べる場所ではなく、
-              <br />
-              その奥で働いている「共通する構造」を掘り出す試みです。
-              <br />
-              <br />
-              光は、見えている意識。
-              <br />
-              影は、まだ言葉になっていない感覚や無意識。
-              <br />
-              この二つを並べて見ることで、
-              <span className="text-white/82">人の洞察がどう生まれるか</span>
-              をたどっていきます。
-              <br />
-              <br />
-              世界の見え方は、何を見るかだけでなく、
-              <br />
-              何を見落としているかでも変わっていく。
-            </p>
-
-            <div className="aq-fade border border-white/10 bg-white/[0.035] p-7 backdrop-blur-[1.2px]">
-              <p className="mb-4 text-[11px] tracking-[0.22em] text-white/35">
-                KEYWORDS
+          <div className="grid gap-8 md:grid-cols-2">
+            <div className="origin-pre-reveal border border-white/10 bg-white/[0.035] p-7 shadow-[inset_0_0_20px_rgba(255,255,255,0.035)] backdrop-blur-[1.2px] md:p-8">
+              <p className="mb-5 text-[10px] tracking-[0.26em] text-white/35 md:text-[11px]">
+                NAME
               </p>
 
-              <ul className="space-y-4 text-[14px] leading-[1.95] text-white/64">
-                <li>
-                  <span className="mr-3 text-white/32">01</span>
-                  意識と無意識
-                </li>
-                <li>
-                  <span className="mr-3 text-white/32">02</span>
-                  感性と構造
-                </li>
-                <li>
-                  <span className="mr-3 text-white/32">03</span>
-                  見えるものと見えないもの
-                </li>
-                <li>
-                  <span className="mr-3 text-white/32">04</span>
-                  洞察が生まれる配置
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* ======================================================
-          LIGHT & SHADOW
-      ====================================================== */}
-      <div className="relative z-10 border-t border-white/10">
-        <div className="mx-auto max-w-[980px] px-8 py-[160px]">
-          <p className="aq-fade mb-4 text-[11px] tracking-[0.26em] text-white/34">
-            LIGHT & SHADOW
-          </p>
-
-          <h2 className="aq-fade mb-5 text-[24px] tracking-[0.14em] text-white/90">
-            光と影の展示
-          </h2>
-
-          <div className="aq-fade mb-16 h-[1px] w-[72px] bg-white/18" />
-
-          <div className="aq-fade grid gap-8 md:grid-cols-2">
-            <div className="border border-white/10 bg-white/[0.04] p-8 backdrop-blur-[1.2px] shadow-[inset_0_0_20px_rgba(255,255,255,0.04)]">
-              <p className="mb-5 text-[11px] tracking-[0.24em] text-white/35">
-                LIGHT
-              </p>
-              <p className="text-[14px] leading-[2.15] text-white/74">
-                光は、意識して見ているもの。
+              <p className="text-[14px] leading-[2.15] text-white/72">
+                名前は、情報を整理するための目印。
                 <br />
-                言葉にできる判断や、焦点の合った視点。
+                経歴や評価を並べるためではなく、
                 <br />
-                何を選び、何を見ようとしているかが現れる領域。
+                その人が持っていた角度へ入るために置いている。
               </p>
             </div>
 
-            <div className="border border-white/10 bg-white/[0.04] p-8 backdrop-blur-[1.2px] shadow-[inset_0_0_20px_rgba(255,255,255,0.04)]">
-              <p className="mb-5 text-[11px] tracking-[0.24em] text-white/35">
-                SHADOW
+            <div className="origin-pre-reveal border border-white/10 bg-white/[0.035] p-7 shadow-[inset_0_0_20px_rgba(255,255,255,0.035)] backdrop-blur-[1.2px] md:p-8">
+              <p className="mb-5 text-[10px] tracking-[0.26em] text-white/35 md:text-[11px]">
+                VIEWPOINT
               </p>
-              <p className="text-[14px] leading-[2.15] text-white/74">
-                影は、まだ気づいていない流れや癖。
+
+              <p className="text-[14px] leading-[2.15] text-white/72">
+                見る角度が変わると、
                 <br />
-                無意識の偏りや、言葉になる前の感覚。
+                同じものでも意味の置かれ方が変わる。
                 <br />
-                本質の手前で揺れているものが潜む領域。
+                その違いを、部屋ごとに体験していく。
               </p>
             </div>
           </div>
 
-          <div className="aq-fade mt-10 border border-white/10 bg-white/[0.03] p-9 backdrop-blur-[1.4px] md:p-10">
-            <p className="text-[14px] leading-[2.3] text-white/72">
-              ORIGIN では、この二つがどこで重なり、
+          <div className="origin-pre-reveal mt-10 border border-white/10 bg-white/[0.025] p-8 backdrop-blur-[1.2px] md:p-10">
+            <p className="text-[14px] leading-[2.35] text-white/66">
+              この前室では、知識を増やすより先に、
               <br />
-              どこでズレるのかを静かに見ていきます。
+              どの角度から見るかを整える。
               <br />
-              表現、思考、感性の奥にある
-              <br />
-              「構造の呼吸」を、そのまま展示するための部屋です。
+              その準備ができると、次の部屋の見え方が少し変わる。
             </p>
           </div>
         </div>
-      </div>
+      </section>
 
-      {/* ======================================================
-          EXIT
-      ====================================================== */}
-      <div className="relative z-10 border-t border-white/10">
-        <div className="mx-auto max-w-[860px] px-8 py-[200px] text-center">
-          <p className="aq-fade mx-auto mb-14 max-w-[560px] text-[14px] leading-[2.5] text-white/54">
-            光を見るだけでは、構造は見えない。
+      {/* ENTRANCES */}
+      <section className="relative z-10 border-t border-white/10">
+        <div className="mx-auto max-w-[1080px] px-7 py-[150px] md:px-8 md:py-[175px]">
+          <div className="mx-auto mb-16 max-w-[760px] text-center">
+            <p className="origin-pre-reveal mb-5 text-[10px] tracking-[0.32em] text-white/34 md:text-[11px]">
+              ENTRANCES
+            </p>
+
+            <h2 className="origin-pre-reveal text-[23px] leading-[1.8] tracking-[0.14em] text-white/90 md:text-[26px]">
+              ここに並ぶのは、
+              <br />
+              人物の説明ではない。
+            </h2>
+
+            <p className="origin-pre-reveal mt-8 text-[14px] leading-[2.25] text-white/54">
+              名前をきっかけに、視点へ入る。
+              <br />
+              それぞれの部屋は、考え方を体験するための小さな入口。
+            </p>
+          </div>
+
+          <div className="grid gap-5 md:grid-cols-3">
+            {originKeys.map((item) => (
+              <div
+                key={item.id}
+                className="origin-pre-reveal origin-pre-card border border-white/10 bg-white/[0.032] p-7 backdrop-blur-[1.2px] transition duration-500 hover:border-white/16 hover:bg-white/[0.045] md:min-h-[240px]"
+              >
+                <div className="relative z-10">
+                  <div className="mb-8 flex items-center justify-between">
+                    <p className="text-[11px] tracking-[0.22em] text-white/30">
+                      {item.id}
+                    </p>
+
+                    <p className="text-[10px] tracking-[0.24em] text-white/24">
+                      {item.en}
+                    </p>
+                  </div>
+
+                  <h3 className="mb-5 text-[23px] font-light tracking-[0.24em] text-white/88">
+                    {item.label}
+                  </h3>
+
+                  <p className="text-[13px] leading-[2.05] text-white/56">
+                    {item.text}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* EXIT TO ORIGIN */}
+      <section className="relative z-10 border-t border-white/10">
+        <div className="mx-auto max-w-[860px] px-7 py-[190px] text-center md:px-8 md:py-[215px]">
+          <p className="origin-pre-reveal mx-auto mb-14 max-w-[560px] text-[14px] leading-[2.55] text-white/54">
+            準備ができたら、
             <br />
-            影を見るだけでも、本質には届かない。
+            ORIGIN へ進む。
             <br />
             <br />
-            そのあいだにあるものを、
+            部屋ごとに、世界の受け取り方を
             <br />
-            静かに見つめるための部屋。
-            <br />
-            <br />— ORIGIN ROOM
+            少しずつ切り替えていく。
           </p>
 
-          <div className="aq-fade mb-10">
+          <div className="origin-pre-reveal mb-10">
             <a
               href="https://origin-gray.vercel.app/"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-3 border border-white/14 bg-white/[0.035] px-6 py-3 text-[12px] tracking-[0.18em] text-white/76 transition-all duration-300 hover:bg-white/[0.06] hover:text-white"
+              className="inline-flex items-center gap-3 border border-white/14 bg-white/[0.035] px-7 py-3.5 text-[12px] tracking-[0.2em] text-white/76 transition-all duration-300 hover:border-white/24 hover:bg-white/[0.065] hover:text-white"
             >
-              VISIT ORIGIN
+              ENTER ORIGIN
               <span className="text-white/36">↗</span>
             </a>
           </div>
 
-          <div>
-            <a
-              href="/works"
-              className="aq-fade inline-block text-[12px] tracking-[0.20em] text-white/56 transition-colors hover:text-white/88"
-            >
-              ← WORKS へ戻る
-            </a>
-          </div>
+          <a
+            href="/works"
+            className="origin-pre-reveal inline-block text-[12px] tracking-[0.2em] text-white/48 transition-colors duration-300 hover:text-white/82"
+          >
+            ← WORKS へ戻る
+          </a>
         </div>
-      </div>
-    </section>
+      </section>
+    </main>
   );
 }
