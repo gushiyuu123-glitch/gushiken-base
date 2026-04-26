@@ -108,8 +108,8 @@ export default function WorkItem({
          * ちらっと見えただけでは出さない。
          * ただし遅すぎもしない、自然な発火位置。
          */
-        threshold: isMobile ? 0.18 : 0.22,
-        rootMargin: isMobile ? "0px 0px -10% 0px" : "0px 0px -14% 0px",
+    threshold: isMobile ? 0.06 : 0.22,
+    rootMargin: isMobile ? "0px 0px 12% 0px" : "0px 0px -14% 0px",
       }
     );
 
