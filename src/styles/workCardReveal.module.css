@@ -22,7 +22,7 @@
   filter: blur(0);
 }
 
-/* image load */
+/* image load classは残すが、表示制御には使わない */
 .imageLoaded .image {
   opacity: 0.96;
 }
@@ -54,7 +54,9 @@
   height: 100%;
   width: 100%;
   object-fit: cover;
-  opacity: 0;
+
+  /* ここが重要：opacity 0 にしない */
+  opacity: 0.96;
 
   filter: brightness(0.86) saturate(0.92) contrast(1.04);
   transform: scale(1.008);
@@ -147,7 +149,9 @@
   }
 
   .image {
+    opacity: 0.96;
     transform: scale(1.004);
+
     transition:
       opacity 780ms cubic-bezier(0.18, 0.72, 0.18, 1),
       transform 980ms cubic-bezier(0.16, 0.78, 0.16, 1),
