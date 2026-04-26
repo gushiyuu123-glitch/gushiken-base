@@ -3,7 +3,6 @@ import React, { useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import SectionSvgTitle from "../components/SectionSvgTitle";
 import "./works.css";
-
 const FEATURED_WORKS = [
   {
     title: "VELMONT",
@@ -15,21 +14,21 @@ const FEATURED_WORKS = [
     size: "large",
   },
   {
+    title: "NEXUS",
+    meta: "Corporate IT / Trust × Workflow Design",
+    href: "https://nexus-integration-partners.vercel.app/",
+    image: "/works/nexus.webp",
+    alt: "NEXUS Integration Partners｜業務システム導入企業のコーポレートサイト制作（情報設計・信頼感・スマートフォン最適化）",
+    label: "NEXUS Integration Partners のサイトを見る",
+    size: "medium",
+  },
+  {
     title: "ROSE VEIL",
     meta: "Fragrance EC / Luxury × Visual Air",
     href: "https://rose-veil.vercel.app/",
     image: "/assets/roseveil2.webp",
     alt: "ROSE VEIL｜香り系ブランドのECサイト制作（上品・空気感・EC導線）",
     label: "ROSE VEIL のサイトを見る",
-    size: "medium",
-  },
-  {
-    title: "LÜMIN",
-    meta: "Audio EC / Minimal × Precision",
-    href: "https://lumin-audio.vercel.app/",
-    image: "/assets/lomin.webp",
-    alt: "LÜMIN｜イヤホン・オーディオ製品のECサイト制作（ミニマル・高品質・精密感）",
-    label: "LÜMIN のサイトを見る",
     size: "small",
   },
 ];

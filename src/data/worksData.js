@@ -7,7 +7,7 @@ export const worksData = [
 
 {
   category: "PICK UP",
-  subtitle: "世界観の“核”を示す代表作",
+subtitle: "世界観と設計力の“核”を示す代表作",
   accent: true,
   items: [
         {
@@ -53,6 +53,49 @@ export const worksData = [
         ogImage: "https://gushikendesign.com/ogp/velmont.png"
       }
     },
+    {
+  title: "NEXUS Integration Partners",
+  slug: "NexusIntegrationRoom",
+  desc: "信頼 × 情報整理 × 接続設計。業務システム導入・データ連携・業務フロー設計を、読みやすく相談しやすいコーポレートサイトとして構築した作品。",
+  link: "https://nexus-integration-partners.vercel.app/",
+  img: "/works/nexus.webp",
+  isNew: true,
+  createdAt: "2026-04-26",
+  tags: [
+    "NEW",
+    "PICKUP",
+    "Corporate",
+    "System Integration",
+    "Workflow",
+    "Trust",
+    "IT",
+    "UI/UX",
+    "Information Design",
+    "PC/SP 完全分離"
+  ],
+
+  detail: {
+    concept:
+      "業務システム導入・データ連携・業務フロー設計という伝わりにくい領域を、信頼感・情報整理・導線設計でわかりやすく再構成したコーポレートサイト。派手さではなく、読み手の不安を減らしながら、サービス理解から相談まで自然に進める流れを重視した。PCではワイドな迫力と企業感を出し、SPでは情報の読みやすさと一体感を優先して設計している。",
+    tech: [
+      "React",
+      "Vite",
+      "Tailwind",
+      "GSAP",
+      "IntersectionObserver",
+      "PC/SP 完全分離"
+    ]
+  },
+
+  seo: {
+    title: "NEXUS Integration Partners｜信頼感と情報整理を設計したコーポレートサイト｜GUSHIKEN DESIGN",
+    description:
+      "NEXUS Integration Partnersは、業務システム導入・データ連携・業務フロー設計を支援する企業サイト。信頼感、情報整理、導線設計を軸に、読み手が理解しやすく相談しやすいコーポレートサイトとして構築した制作例。",
+    keywords:
+      "コーポレートサイト制作, 業務システム導入, データ連携, 業務フロー設計, IT企業サイト, 信頼感デザイン, 情報設計, React, Tailwind, GUSHIKEN DESIGN",
+    ogImage: "https://gushikendesign.com/ogp/nexus-integration.png"
+  }
+},
  {
   title: "CRESTED GECKO — Specialty Gecko Site",
   slug: "CrestedGeckoRoom",
@@ -236,25 +279,6 @@ export const worksData = [
         keywords:
           "ジュエリーEC, オブジェ, ミニマル, 物質デザイン, 陰影美, 世界観EC, 高級ブランドサイト",
         ogImage: "https://gushikendesign.com/ogp/axis.png"
-      }
-    },
-    {
-      title: "WHITE × DARK CACAO",
-      slug: "WhiteDarkCacao",
-      desc: "白 × カカオ × 静寂。高級食品ECの決定版。",
-      link: "https://white-dark-cacao.vercel.app",
-      img: "/works/white-dark-cacao.webp",
-      isNew: true,
-      createdAt: "2026-01-19",
-      tags: ["PICKUP", "NEW","Food", "EC", "White"],
-
-      seo: {
-        title: "WHITE × DARK CACAO｜白×カカオ×静寂の高級食品EC",
-        description:
-          "WHITE × DARK CACAO は白とカカオの“静かな甘さ”をUIへ抽象化した高級食品EC。余白・光・濃度のレイヤーで構築された世界観が、食品ブランドの信頼性と上質感を最大化する。",
-        keywords:
-          "食品EC, カカオ, 高級チョコ, ミニマルEC, 世界観デザイン, 白デザイン, 沖縄 Webデザイナー",
-        ogImage: "https://gushikendesign.com/ogp/white-dark-cacao.png"
       }
     },
 
