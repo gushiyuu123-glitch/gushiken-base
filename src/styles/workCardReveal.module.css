@@ -1,0 +1,179 @@
+/* src/styles/workCardReveal.module.css */
+
+.card {
+  opacity: 0;
+  transform: translate3d(0, 32px, 0) scale(0.99);
+  filter: blur(0.16px);
+
+  transition:
+    opacity 1080ms cubic-bezier(0.18, 0.72, 0.18, 1),
+    transform 1240ms cubic-bezier(0.16, 0.78, 0.16, 1),
+    filter 980ms cubic-bezier(0.18, 0.72, 0.18, 1),
+    border-color 520ms ease,
+    box-shadow 620ms ease;
+
+  transition-delay: var(--work-reveal-delay, 0ms);
+  will-change: opacity, transform, filter;
+}
+
+.isVisible {
+  opacity: 1;
+  transform: translate3d(0, 0, 0) scale(1);
+  filter: blur(0);
+}
+
+/* image load */
+.imageLoaded .image {
+  opacity: 0.96;
+}
+
+/* hover light */
+.hoverLight {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  opacity: 0;
+
+  transition: opacity 780ms cubic-bezier(0.18, 0.72, 0.18, 1);
+
+  background:
+    radial-gradient(
+      circle at 22% 0%,
+      rgba(201, 177, 138, 0.055),
+      transparent 48%
+    );
+}
+
+.card:hover .hoverLight {
+  opacity: 1;
+}
+
+/* image */
+.image {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  opacity: 0;
+
+  filter: brightness(0.86) saturate(0.92) contrast(1.04);
+  transform: scale(1.008);
+
+  transition:
+    opacity 920ms cubic-bezier(0.18, 0.72, 0.18, 1),
+    transform 1280ms cubic-bezier(0.16, 0.78, 0.16, 1),
+    filter 980ms cubic-bezier(0.18, 0.72, 0.18, 1);
+}
+
+.card:hover .image {
+  opacity: 1;
+  filter: brightness(0.96) saturate(0.96) contrast(1.04);
+  transform: scale(1.032);
+}
+
+/* NEW badge */
+.newBadge {
+  position: absolute;
+  left: 0.75rem;
+  top: 0.75rem;
+  z-index: 30;
+
+  border: 1px solid rgba(201, 177, 138, 0.26);
+  background: rgba(0, 0, 0, 0.35);
+
+  padding: 3px 0.75rem;
+
+  font-size: 10px;
+  font-weight: 300;
+  letter-spacing: 0.28em;
+  color: rgba(238, 226, 204, 0.92);
+
+  backdrop-filter: blur(1px);
+  animation: newBreathe 3.4s ease-in-out infinite;
+}
+
+.arrow {
+  display: inline-block;
+  transition: transform 440ms cubic-bezier(0.18, 0.72, 0.18, 1);
+}
+
+.card:hover .arrow {
+  transform: translateX(3px);
+}
+
+@keyframes newBreathe {
+  0% {
+    opacity: 0.62;
+    box-shadow: 0 0 4px rgba(201, 177, 138, 0.08);
+  }
+
+  50% {
+    opacity: 1;
+    box-shadow: 0 0 10px rgba(201, 177, 138, 0.15);
+  }
+
+  100% {
+    opacity: 0.62;
+    box-shadow: 0 0 4px rgba(201, 177, 138, 0.08);
+  }
+}
+
+/* tablet：2カラム想定。遅延を軽くする */
+@media (max-width: 1023px) {
+  .card {
+    transition-delay: var(--work-reveal-delay-tablet, 0ms);
+  }
+}
+
+/* smartphone：1カラムなので遅延は不要。流れだけで見せる */
+@media (max-width: 767px) {
+  .card {
+    transform: translate3d(0, 26px, 0) scale(0.992);
+
+    transition:
+      opacity 980ms cubic-bezier(0.18, 0.72, 0.18, 1),
+      transform 1120ms cubic-bezier(0.16, 0.78, 0.16, 1),
+      filter 900ms cubic-bezier(0.18, 0.72, 0.18, 1),
+      border-color 520ms ease,
+      box-shadow 620ms ease;
+
+    transition-delay: var(--work-reveal-delay-mobile, 0ms);
+  }
+
+  .isVisible {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+
+  .image {
+    transform: scale(1.006);
+  }
+
+  .card:hover .image {
+    transform: scale(1.018);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card {
+    opacity: 1;
+    transform: none;
+    filter: none;
+    transition: none;
+  }
+
+  .image,
+  .hoverLight,
+  .arrow {
+    transition: none;
+  }
+
+  .image {
+    opacity: 1;
+    transform: none;
+    filter: none;
+  }
+
+  .newBadge {
+    animation: none;
+  }
+}

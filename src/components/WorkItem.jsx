@@ -1,6 +1,22 @@
 // src/components/WorkItem.jsx
-import React from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "react-router-dom";
+import revealStyles from "../styles/workCardReveal.module.css";
+
+const DAY_MS = 86_400_000;
+
+function isExternalLink(link = "") {
+  return (
+    /^https?:\/\//.test(link) ||
+    link.startsWith("mailto:") ||
+    link.startsWith("tel:")
+  );
+}
+
+function toSafeIndex(value) {
+  const n = Number(value);
+  return Number.isFinite(n) ? Math.max(0, n) : 0;
+}
 
 export default function WorkItem({
   title = "",
@@ -9,48 +25,137 @@ export default function WorkItem({
   img = "",
   tags = [],
   createdAt = null,
+  revealIndex = 0,
 }) {
-  const isExternal =
-    /^https?:\/\//.test(link) ||
-    link.startsWith("mailto:") ||
-    link.startsWith("tel:");
+  const cardRef = useRef(null);
 
-  const Tag = isExternal ? "a" : Link;
+  const [visible, setVisible] = useState(false);
+  const [imageLoaded, setImageLoaded] = useState(!img);
 
-  let isNew = false;
+  const external = isExternalLink(link);
+  const Tag = external ? "a" : Link;
 
-  if (createdAt) {
+  const isNew = useMemo(() => {
+    if (tags.includes("NEW")) return true;
+    if (!createdAt) return false;
+
     const created = new Date(createdAt).getTime();
+    if (Number.isNaN(created)) return false;
 
-    if (!Number.isNaN(created)) {
-      const diff = (Date.now() - created) / 86_400_000;
-      if (diff <= 30) isNew = true;
+    const diffDays = (Date.now() - created) / DAY_MS;
+    return diffDays <= 30;
+  }, [tags, createdAt]);
+
+  /**
+   * 重要：
+   * revealIndexを全体通しで遅延させると、
+   * 3段目・4段目が「遅いカード」に見える。
+   *
+   * だからPCは列ごとにズラし、段ではリセットする。
+   * SPは1カラムなので遅延なし。
+   */
+  const revealDelay = useMemo(() => {
+    const index = toSafeIndex(revealIndex);
+
+    return {
+      desktop: (index % 3) * 150,
+      tablet: (index % 2) * 130,
+      mobile: 0,
+    };
+  }, [revealIndex]);
+
+  useEffect(() => {
+    setImageLoaded(!img);
+  }, [img]);
+
+  useEffect(() => {
+    const el = cardRef.current;
+    if (!el) return undefined;
+
+    if (typeof window === "undefined" || typeof document === "undefined") {
+      setVisible(true);
+      return undefined;
     }
-  }
 
-  if (tags.includes("NEW")) isNew = true;
+    const reduceMotion = window.matchMedia?.(
+      "(prefers-reduced-motion: reduce)"
+    )?.matches;
+
+    if (reduceMotion || !("IntersectionObserver" in window)) {
+      setVisible(true);
+      return undefined;
+    }
+
+    const isMobile = window.matchMedia?.("(max-width: 767px)")?.matches;
+
+    let rafId = 0;
+    let done = false;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (done || !entry?.isIntersecting) return;
+
+        done = true;
+
+        rafId = window.requestAnimationFrame(() => {
+          setVisible(true);
+        });
+
+        observer.disconnect();
+      },
+      {
+        /**
+         * ちらっと見えただけでは出さない。
+         * ただし遅すぎもしない、自然な発火位置。
+         */
+        threshold: isMobile ? 0.18 : 0.22,
+        rootMargin: isMobile ? "0px 0px -10% 0px" : "0px 0px -14% 0px",
+      }
+    );
+
+    observer.observe(el);
+
+    return () => {
+      window.cancelAnimationFrame(rafId);
+      observer.disconnect();
+    };
+  }, []);
+
+  const commonProps = external
+    ? {
+        href: link,
+        target: "_blank",
+        rel: "noopener noreferrer",
+      }
+    : {
+        to: link,
+      };
 
   return (
     <Tag
-      {...(isExternal
-        ? { href: link, target: "_blank", rel: "noopener noreferrer" }
-        : { to: link })}
- className="
-  work-list-card aq-fade work-rise
-  group relative block
+      ref={cardRef}
+      {...commonProps}
+      style={{
+        "--work-reveal-delay": `${revealDelay.desktop}ms`,
+        "--work-reveal-delay-tablet": `${revealDelay.tablet}ms`,
+        "--work-reveal-delay-mobile": `${revealDelay.mobile}ms`,
+      }}
+      className={`
+        ${revealStyles.card}
+        ${visible ? revealStyles.isVisible : ""}
+        ${imageLoaded ? revealStyles.imageLoaded : ""}
+        group relative block
         overflow-hidden
         border border-white/[0.075]
         border-t-[rgba(201,177,138,0.16)]
         bg-[rgba(8,8,8,0.96)]
         text-white no-underline
         shadow-[0_18px_48px_rgba(0,0,0,0.34)]
-        duration-[520ms]
-        ease-[cubic-bezier(0.22,0.56,0.18,1)]
         hover:border-[rgba(201,177,138,0.28)]
         hover:shadow-[0_26px_70px_rgba(0,0,0,0.46)]
-      "
+      `}
+      aria-label={title ? `${title} の作品詳細へ` : "作品詳細へ"}
     >
-      {/* subtle champagne line */}
       <span
         aria-hidden="true"
         className="
@@ -63,7 +168,6 @@ export default function WorkItem({
         }}
       />
 
-      {/* surface grain */}
       <span
         aria-hidden="true"
         className="
@@ -78,57 +182,31 @@ export default function WorkItem({
         }}
       />
 
-      {/* soft hover glow */}
-      <span
-        aria-hidden="true"
-        className="
-          pointer-events-none absolute inset-0 z-10
-          opacity-0
-          transition-opacity duration-[520ms]
-          ease-[cubic-bezier(0.22,0.56,0.18,1)]
-          group-hover:opacity-100
-        "
-        style={{
-          background:
-            "radial-gradient(circle at 22% 0%, rgba(201,177,138,0.06), transparent 46%)",
-        }}
-      />
+      <span aria-hidden="true" className={revealStyles.hoverLight} />
 
-      {/* IMAGE */}
       <div className="relative w-full aspect-[16/9] overflow-hidden md:aspect-[16/10]">
-        {isNew && (
-          <span
-            className="
-              absolute left-3 top-3 z-30
-              border border-[rgba(201,177,138,0.26)]
-              bg-black/35 px-3 py-[3px]
-              text-[10px] font-light uppercase tracking-[0.28em]
-              text-[rgba(238,226,204,0.92)]
-              backdrop-blur-[1px]
-              animate-new-breathe
-            "
-          >
-            NEW
-          </span>
-        )}
+        {isNew && <span className={revealStyles.newBadge}>NEW</span>}
 
-        <img
-          src={img}
-          alt={title}
-          loading="lazy"
-          decoding="async"
-          className="
-            h-full w-full object-cover
-            brightness-[0.86] saturate-[0.92] contrast-[1.04]
-            scale-[1.006]
-            transition-[transform,filter]
-            duration-[760ms]
-            ease-[cubic-bezier(0.22,0.56,0.18,1)]
-            group-hover:brightness-[0.96]
-            group-hover:saturate-[0.96]
-            group-hover:scale-[1.035]
-          "
-        />
+        {img ? (
+          <img
+            src={img}
+            alt={title}
+            loading="lazy"
+            decoding="async"
+            draggable="false"
+            onLoad={() => setImageLoaded(true)}
+            onError={() => setImageLoaded(true)}
+            className={revealStyles.image}
+          />
+        ) : (
+          <div
+            aria-hidden="true"
+            className="
+              h-full w-full
+              bg-[linear-gradient(135deg,rgba(255,255,255,0.06),rgba(255,255,255,0.015))]
+            "
+          />
+        )}
 
         <span
           aria-hidden="true"
@@ -140,7 +218,6 @@ export default function WorkItem({
         />
       </div>
 
-      {/* TEXT */}
       <div className="relative z-20 p-5 pb-6 md:p-7 md:pb-9">
         <h3
           className="
@@ -153,65 +230,35 @@ export default function WorkItem({
           {title}
         </h3>
 
-        <p
-          className="
-            mb-4 max-w-[360px]
-            whitespace-pre-line text-[0.8rem]
-            leading-[1.78] text-white/54
-            md:mb-6 md:text-[0.85rem] md:leading-[1.9]
-          "
-        >
-          {desc}
-        </p>
+        {desc && (
+          <p
+            className="
+              mb-4 max-w-[360px]
+              whitespace-pre-line text-[0.8rem]
+              leading-[1.78] text-white/54
+              md:mb-6 md:text-[0.85rem] md:leading-[1.9]
+            "
+          >
+            {desc}
+          </p>
+        )}
 
         <span
           className="
             inline-flex items-center gap-2
             text-[0.68rem] tracking-[0.18em]
             text-[rgba(201,177,138,0.62)]
-            transition-colors duration-[280ms] ease-out
+            transition-colors duration-[360ms] ease-out
             group-hover:text-[rgba(238,226,204,0.92)]
             md:text-[0.74rem] md:tracking-[0.24em]
           "
         >
           <span>作品詳細へ</span>
-          <span
-            className="
-              transition-transform duration-[300ms] ease-out
-              group-hover:translate-x-[3px]
-            "
-          >
+          <span className={revealStyles.arrow} aria-hidden="true">
             →
           </span>
         </span>
       </div>
-
-      <style>{`
-        @keyframes new-breathe {
-          0% {
-            opacity: 0.62;
-            box-shadow: 0 0 4px rgba(201,177,138,0.08);
-          }
-          50% {
-            opacity: 1;
-            box-shadow: 0 0 10px rgba(201,177,138,0.15);
-          }
-          100% {
-            opacity: 0.62;
-            box-shadow: 0 0 4px rgba(201,177,138,0.08);
-          }
-        }
-
-        .animate-new-breathe {
-          animation: new-breathe 2.8s ease-in-out infinite;
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-          .animate-new-breathe {
-            animation: none !important;
-          }
-        }
-      `}</style>
     </Tag>
   );
 }

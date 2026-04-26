@@ -1,4 +1,10 @@
-import React, { useEffect, useMemo, useRef, useState, useCallback } from "react";
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import Category from "../components/Category";
 import WorkItem from "../components/WorkItem";
 import CategoryTabs from "../components/CategoryTabs";
@@ -10,31 +16,33 @@ export default function WorksList() {
   const [activeCategory, setActiveCategory] = useState("ALL");
 
   const normalize = (str = "") =>
-    str.replace(/\s+/g, "").replace(/／/g, "/").toLowerCase();
+    String(str).replace(/\s+/g, "").replace(/／/g, "/").toLowerCase();
 
-  const isNewItem = (item) => {
-    if (!item.createdAt) return false;
+  const isNewItem = useCallback((item) => {
+    if (!item?.createdAt) return false;
 
     const created = new Date(item.createdAt).getTime();
     if (Number.isNaN(created)) return false;
 
     return (Date.now() - created) / 86_400_000 <= 30;
-  };
+  }, []);
 
   const enrichedData = useMemo(
     () =>
       worksData.map((block) => ({
         ...block,
-        items: block.items.map((item) => ({
-          ...item,
-          isNew: item.isNew || isNewItem(item),
-        })),
+        items: Array.isArray(block.items)
+          ? block.items.map((item) => ({
+              ...item,
+              isNew: Boolean(item.isNew || isNewItem(item)),
+            }))
+          : [],
       })),
-    []
+    [isNewItem]
   );
 
   const categoryList = useMemo(
-    () => ["ALL", "NEW", ...enrichedData.map((b) => b.category)],
+    () => ["ALL", "NEW", ...enrichedData.map((block) => block.category)],
     [enrichedData]
   );
 
@@ -46,60 +54,95 @@ export default function WorksList() {
         {
           category: "NEW",
           subtitle: "最新作 — Newly Published Works",
-          items: enrichedData.flatMap((b) => b.items.filter((i) => i.isNew)),
+          items: enrichedData.flatMap((block) =>
+            block.items.filter((item) => item.isNew)
+          ),
         },
       ];
     }
 
     return enrichedData.filter(
-      (b) => normalize(b.category) === normalize(activeCategory)
+      (block) => normalize(block.category) === normalize(activeCategory)
     );
   }, [activeCategory, enrichedData]);
 
+  // TOP / TABS など、初回だけ出す静的フェード
   useEffect(() => {
     const root = rootRef.current;
-    if (!root) return;
+    if (!root) return undefined;
 
-const items = root.querySelectorAll(".aq-fade");
-if (!items.length) return;
+    const targets = Array.from(root.querySelectorAll('[data-reveal="static"]'));
+    if (!targets.length) return undefined;
 
-items.forEach((el) => {
-  el.classList.remove("aq-show");
-});
+    if (!("IntersectionObserver" in window)) {
+      targets.forEach((el) => el.classList.add("aq-show"));
+      return undefined;
+    }
 
-const cards = root.querySelectorAll(".work-list-card");
-
-cards.forEach((card, index) => {
-  const delay = Math.min(index % 9, 8) * 70;
-  card.style.setProperty("--work-rise-delay", `${delay}ms`);
-});
-    const io = new IntersectionObserver(
+    const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("aq-show");
-            io.unobserve(entry.target);
-          }
+          if (!entry.isIntersecting) return;
+
+          entry.target.classList.add("aq-show");
+          observer.unobserve(entry.target);
         });
       },
       {
-        threshold: 0.14,
+        threshold: 0.12,
         rootMargin: "0px 0px -6% 0px",
       }
     );
 
-    items.forEach((el) => io.observe(el));
+    targets.forEach((el) => observer.observe(el));
 
-    return () => io.disconnect();
-  }, [activeCategory]);
+    return () => observer.disconnect();
+  }, []);
+
+  // 作品カードだけ、カテゴリ変更時に綺麗に再フェード
+  useEffect(() => {
+    const root = rootRef.current;
+    if (!root) return undefined;
+
+    const cards = Array.from(root.querySelectorAll('[data-reveal="work"]'));
+    if (!cards.length) return undefined;
+
+    cards.forEach((card) => {
+      card.classList.remove("aq-show");
+    });
+
+    if (!("IntersectionObserver" in window)) {
+      cards.forEach((card) => card.classList.add("aq-show"));
+      return undefined;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+
+          entry.target.classList.add("aq-show");
+          observer.unobserve(entry.target);
+        });
+      },
+      {
+        threshold: 0.12,
+        rootMargin: "0px 0px -8% 0px",
+      }
+    );
+
+    cards.forEach((card) => observer.observe(card));
+
+    return () => observer.disconnect();
+  }, [activeCategory, filteredData]);
 
   const handleChangeCategory = useCallback((cat) => {
     setActiveCategory(cat);
 
-    if (!rootRef.current) return;
+    const root = rootRef.current;
+    if (!root) return;
 
-    const top =
-      rootRef.current.getBoundingClientRect().top + window.scrollY - 40;
+    const top = root.getBoundingClientRect().top + window.scrollY - 40;
 
     window.scrollTo({
       top,
@@ -113,7 +156,7 @@ cards.forEach((card, index) => {
 
       <div ref={rootRef} className="mx-auto max-w-6xl lg:max-w-7xl">
         {/* ================= TOP ================= */}
-        <div className="aq-fade delay-1 mb-24 md:mb-28">
+        <div data-reveal="static" className="aq-fade delay-1 mb-24 md:mb-28">
           <div className="mb-6 h-px w-12 bg-gradient-to-r from-white/20 to-white/5" />
 
           <p className="mb-3 text-[0.74rem] tracking-[0.30em] text-white/30">
@@ -131,10 +174,13 @@ cards.forEach((card, index) => {
           </p>
         </div>
 
-        <div className="aq-fade delay-2 mb-16 h-px w-16 bg-white/12" />
+        <div
+          data-reveal="static"
+          className="aq-fade delay-2 mb-16 h-px w-16 bg-white/12"
+        />
 
         {/* ================= TABS ================= */}
-        <div className="aq-fade delay-2 overflow-x-hidden">
+        <div data-reveal="static" className="aq-fade delay-2 overflow-x-hidden">
           <CategoryTabs
             activeCategory={activeCategory}
             setActiveCategory={handleChangeCategory}
@@ -151,23 +197,9 @@ cards.forEach((card, index) => {
 
             const showCategoryNewBadge = !hideNewBadgeForItems;
 
-            const delayClass =
-              blockIndex % 5 === 0
-                ? "delay-1"
-                : blockIndex % 5 === 1
-                ? "delay-2"
-                : blockIndex % 5 === 2
-                ? "delay-3"
-                : blockIndex % 5 === 3
-                ? "delay-4"
-                : "delay-5";
-
             return (
-              <div
-                key={`${block.category}-${blockIndex}`}
-                className={`aq-fade ${delayClass}`}
-              >
-                {block.items.some((i) => i.isOrigin) && (
+              <div key={`${block.category}-${blockIndex}`}>
+                {block.items.some((item) => item.isOrigin) && (
                   <div className="mb-20 text-center md:mb-24">
                     <p className="mb-5 text-[0.7rem] tracking-[0.42em] text-white/40">
                       — ORIGIN —
@@ -191,13 +223,14 @@ cards.forEach((card, index) => {
                 >
                   {block.items.map((item, itemIndex) => (
                     <WorkItem
-                      key={`${block.category}-${blockIndex}-${itemIndex}`}
+                      key={item.slug || `${block.category}-${itemIndex}`}
                       title={item.title}
                       desc={item.desc}
                       link={`/works/${item.slug}`}
                       img={item.img}
                       tags={item.tags}
                       createdAt={!item.isOrigin ? item.createdAt : null}
+                      revealIndex={itemIndex}
                     />
                   ))}
                 </Category>
