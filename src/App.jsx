@@ -4,7 +4,7 @@ import { Routes, Route, useLocation } from "react-router-dom";
 
 import NavGlobal from "./components/NavGlobal";
 import Footer from "./components/FOOTER";
-import ScrollToTop from "./components/ScrollToTop";
+import ScrollManager from "./components/ScrollManager";
 
 // Pages
 import Home from "./pages/Home";
@@ -76,7 +76,7 @@ function Layout() {
 
   return (
     <>
-      <ScrollToTop />
+      <ScrollManager />
 
    <NavGlobal />
 

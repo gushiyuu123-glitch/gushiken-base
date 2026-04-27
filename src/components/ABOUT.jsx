@@ -185,17 +185,29 @@ function QualificationCard({ item, onOpen }) {
     </div>
   );
 }
-
 function CertificateModal({ item, onClose }) {
+  const scrollYRef = useRef(0);
+
   useEffect(() => {
     if (!item) return undefined;
 
-    const handleKeyDown = (event) => {
-      if (event.key === "Escape") onClose();
-    };
-
     const html = document.documentElement;
     const body = document.body;
+
+    const handleKeyDown = (event) => {
+      if (event.key === "Escape") {
+        event.preventDefault();
+        onClose();
+      }
+    };
+
+    // 開いた瞬間の位置を保存
+    scrollYRef.current =
+      window.scrollY ||
+      window.pageYOffset ||
+      document.documentElement.scrollTop ||
+      document.body.scrollTop ||
+      0;
 
     html.classList.add("scroll-lock");
     body.classList.add("scroll-lock");
@@ -203,9 +215,30 @@ function CertificateModal({ item, onClose }) {
     document.addEventListener("keydown", handleKeyDown);
 
     return () => {
+      const y = scrollYRef.current;
+
       document.removeEventListener("keydown", handleKeyDown);
+
       html.classList.remove("scroll-lock");
       body.classList.remove("scroll-lock");
+
+      // 解除直後に即戻す
+      window.scrollTo(0, y);
+      document.documentElement.scrollTop = y;
+      document.body.scrollTop = y;
+
+      // 描画ズレ保険
+      requestAnimationFrame(() => {
+        window.scrollTo(0, y);
+        document.documentElement.scrollTop = y;
+        document.body.scrollTop = y;
+      });
+
+      window.setTimeout(() => {
+        window.scrollTo(0, y);
+        document.documentElement.scrollTop = y;
+        document.body.scrollTop = y;
+      }, 60);
     };
   }, [item, onClose]);
 
