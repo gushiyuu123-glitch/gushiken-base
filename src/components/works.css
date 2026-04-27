@@ -70,6 +70,28 @@
 }
 
 /* ------------------------------------------------------------
+   Reveal Base
+------------------------------------------------------------ */
+.works-section .aq-fade {
+  opacity: 0;
+  transform: translate3d(0, 26px, 0);
+  filter: blur(0.12px);
+
+  transition:
+    opacity 1080ms cubic-bezier(0.22, 0.72, 0.18, 1),
+    transform 1240ms cubic-bezier(0.16, 1, 0.24, 1),
+    filter 980ms cubic-bezier(0.22, 0.72, 0.18, 1);
+
+  will-change: opacity, transform, filter;
+}
+
+.works-section .aq-fade.is-visible {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+  filter: blur(0);
+}
+
+/* ------------------------------------------------------------
    Header
 ------------------------------------------------------------ */
 .works-header {
@@ -154,9 +176,6 @@
 
 /* ------------------------------------------------------------
    PC Grid
-   左：VELMONT大
-   右上：ROSE VEIL
-   右下：LÜMIN
 ------------------------------------------------------------ */
 .works-grid {
   display: grid;
@@ -203,38 +222,53 @@
     0 24px 70px rgba(0, 0, 0, 0.34);
 
   isolation: isolate;
+  transform-origin: center bottom;
+  backface-visibility: hidden;
 
   transition:
-    transform 0.75s var(--ease-silent, cubic-bezier(.22,.56,.18,1)),
-    border-color 0.45s ease,
-    box-shadow 0.55s ease;
+    transform 720ms cubic-bezier(0.18, 0.72, 0.18, 1),
+    border-color 520ms ease,
+    box-shadow 680ms ease;
 }
 
 .work-card-reveal {
   opacity: 0;
-  transform: translate3d(0, 22px, 0) scale(0.995);
+  transform: translate3d(0, 42px, 0) scale(0.985);
+  filter: blur(0.18px);
+
+  transition:
+    opacity 1180ms cubic-bezier(0.22, 0.72, 0.18, 1),
+    transform 1420ms cubic-bezier(0.16, 1, 0.24, 1),
+    filter 1080ms cubic-bezier(0.22, 0.72, 0.18, 1),
+    border-color 520ms ease,
+    box-shadow 680ms ease;
+
+  will-change: opacity, transform, filter;
 }
 
 .work-card-reveal.is-visible {
   opacity: 1;
   transform: translate3d(0, 0, 0) scale(1);
-
-  transition:
-    opacity 1.05s var(--ease-silent, cubic-bezier(.22,.56,.18,1)) var(--card-delay, 0ms),
-    transform 1.05s var(--ease-silent, cubic-bezier(.22,.56,.18,1)) var(--card-delay, 0ms),
-    border-color 0.45s ease,
-    box-shadow 0.55s ease;
+  filter: blur(0);
 }
 
 .work-card:hover {
-  transform: translate3d(0, -4px, 0) scale(1.008);
+  transform: translate3d(0, -3px, 0) scale(1.004);
   border-color: rgba(201, 177, 138, 0.28);
+
   box-shadow:
     0 0 0 0.5px rgba(201, 177, 138, 0.07),
     0 30px 86px rgba(0, 0, 0, 0.44);
+
+  transition:
+    transform 720ms cubic-bezier(0.18, 0.72, 0.18, 1),
+    border-color 520ms ease,
+    box-shadow 680ms ease;
 }
 
-/* Image */
+/* ------------------------------------------------------------
+   Image
+------------------------------------------------------------ */
 .work-image-wrap {
   position: absolute;
   inset: 0;
@@ -249,20 +283,30 @@
   object-fit: cover;
   object-position: center;
 
+  opacity: 0.92;
   filter: brightness(0.82) saturate(0.9) contrast(1.04);
-  transform: scale(1.012);
+  transform: scale(1.014);
 
   transition:
-    transform 1.3s var(--ease-silent, cubic-bezier(.22,.56,.18,1)),
-    filter 0.9s ease;
+    opacity 1080ms cubic-bezier(0.22, 0.72, 0.18, 1),
+    transform 1520ms cubic-bezier(0.16, 1, 0.24, 1),
+    filter 1120ms cubic-bezier(0.22, 0.72, 0.18, 1);
+
+  will-change: opacity, transform, filter;
+}
+
+.work-card.img-loaded .work-image-wrap img {
+  opacity: 1;
 }
 
 .work-card:hover .work-image-wrap img {
-  transform: scale(1.055);
+  transform: scale(1.034);
   filter: brightness(0.9) saturate(0.94) contrast(1.05);
 }
 
-/* Veil */
+/* ------------------------------------------------------------
+   Veil
+------------------------------------------------------------ */
 .work-veil {
   position: absolute;
   inset: 0;
@@ -294,8 +338,8 @@
   opacity: 0;
 
   transition:
-    opacity 0.9s ease,
-    border-color 0.9s ease;
+    opacity 980ms cubic-bezier(0.22, 0.72, 0.18, 1),
+    border-color 980ms cubic-bezier(0.22, 0.72, 0.18, 1);
 }
 
 .work-card.img-loaded::before {
@@ -308,7 +352,9 @@
   border-color: rgba(201, 177, 138, 0.26);
 }
 
-/* Text */
+/* ------------------------------------------------------------
+   Text
+------------------------------------------------------------ */
 .work-text {
   position: absolute;
   left: 0;
@@ -359,7 +405,6 @@
   letter-spacing: 0.12em;
 }
 
-/* Small cards */
 .work-card:nth-child(2) .work-name,
 .work-card:nth-child(3) .work-name {
   font-size: clamp(1.3rem, 1.8vw, 1.7rem);
@@ -370,7 +415,9 @@
   font-size: 0.68rem;
 }
 
-/* Bottom line */
+/* ------------------------------------------------------------
+   Bottom Line
+------------------------------------------------------------ */
 .work-line {
   position: absolute;
   left: clamp(1.2rem, 2vw, 1.75rem);
@@ -390,8 +437,8 @@
   opacity: 0;
 
   transition:
-    width 0.8s var(--ease-silent, cubic-bezier(.22,.56,.18,1)),
-    opacity 0.8s ease;
+    width 880ms cubic-bezier(0.18, 0.72, 0.18, 1),
+    opacity 880ms ease;
 }
 
 .work-card:hover .work-line {
@@ -437,11 +484,11 @@
   text-decoration: none;
 
   transition:
-    transform 0.35s var(--ease-silent, cubic-bezier(.22,.56,.18,1)),
-    border-color 0.35s ease,
-    background 0.35s ease,
-    color 0.35s ease,
-    box-shadow 0.35s ease;
+    transform 420ms cubic-bezier(0.18, 0.72, 0.18, 1),
+    border-color 420ms ease,
+    background 420ms ease,
+    color 420ms ease,
+    box-shadow 420ms ease;
 }
 
 .viewall-btn::before {
@@ -457,7 +504,7 @@
   );
 
   opacity: 0;
-  transition: opacity 0.45s ease;
+  transition: opacity 520ms ease;
 }
 
 .viewall-btn:hover {
@@ -465,6 +512,7 @@
   border-color: rgba(201, 177, 138, 0.42);
   background: rgba(201, 177, 138, 0.07);
   color: rgba(255, 255, 255, 0.96);
+
   box-shadow:
     0 14px 36px rgba(0, 0, 0, 0.30),
     0 0 0 0.5px rgba(201, 177, 138, 0.07);
@@ -581,6 +629,23 @@
     margin-right: 0;
   }
 
+  .work-card-reveal {
+    transform: translate3d(0, 28px, 0) scale(0.992);
+    filter: blur(0.1px);
+
+    transition:
+      opacity 920ms cubic-bezier(0.22, 0.72, 0.18, 1),
+      transform 1080ms cubic-bezier(0.16, 1, 0.24, 1),
+      filter 860ms cubic-bezier(0.22, 0.72, 0.18, 1),
+      border-color 520ms ease,
+      box-shadow 620ms ease;
+  }
+
+  .work-card-reveal.is-visible {
+    transform: translate3d(0, 0, 0) scale(1);
+    filter: blur(0);
+  }
+
   .work-card:hover {
     transform: none;
   }
@@ -591,7 +656,7 @@
 
   .work-image-wrap img,
   .work-card:hover .work-image-wrap img {
-    transform: scale(1.02);
+    transform: scale(1.012);
   }
 
   .work-text {
@@ -636,6 +701,14 @@
     letter-spacing: 0.24em;
 
     pointer-events: none;
+  }
+
+  .works-swipe-hint:not(.is-visible) {
+    opacity: 0 !important;
+    animation: none !important;
+  }
+
+  .works-swipe-hint.is-visible {
     animation: swipePulse 2.8s ease-in-out infinite;
   }
 
@@ -695,6 +768,7 @@
    Reduced Motion
 ------------------------------------------------------------ */
 @media (prefers-reduced-motion: reduce) {
+  .works-section .aq-fade,
   .work-card,
   .work-card-reveal,
   .work-image-wrap img,
@@ -706,12 +780,22 @@
     transition: none !important;
     animation: none !important;
     transform: none !important;
+    filter: none !important;
   }
 
+  .works-section .aq-fade,
   .work-card-reveal {
     opacity: 1 !important;
   }
+
+  .work-image-wrap img {
+    opacity: 1 !important;
+  }
 }
+
+/* ------------------------------------------------------------
+   SVG Title Safety
+------------------------------------------------------------ */
 .works-svg-title {
   max-width: 100%;
 }

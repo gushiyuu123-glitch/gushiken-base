@@ -1,5 +1,5 @@
 /* ============================================================
-   GUSHIKEN DESIGN Core Index v7
+   GUSHIKEN DESIGN Core Index v8
    Black Frame × Champagne Gold × Silver Line × Silent Motion
    統一トークン + 事故耐性 + 全ページ共通OS
 ============================================================ */
@@ -69,13 +69,16 @@
   --nav-silver: var(--subaccent);
 
   /* ===== Motion ===== */
-  --ease-silent: cubic-bezier(.22, .56, .18, 1);
-  --ease-sharp: cubic-bezier(.22, .61, .36, 1);
-  --ease-settle: cubic-bezier(.22, .1, .28, 1);
+  --ease-silent: cubic-bezier(0.22, 0.72, 0.18, 1);
+  --ease-float: cubic-bezier(0.16, 1, 0.24, 1);
+  --ease-sharp: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --ease-settle: cubic-bezier(0.22, 0.1, 0.28, 1);
 
-  --fade-time: 1.05s;
-  --fade-distance: 18px;
-  --fade-scale: 0.995;
+  --fade-time: 1.08s;
+  --fade-transform-time: 1.22s;
+  --fade-distance: 22px;
+  --fade-scale: 0.992;
+  --fade-blur: 0px;
 
   /* ===== Glow / Shadow ===== */
   --glow-white: rgba(255, 255, 255, 0.08);
@@ -204,39 +207,50 @@ body.scroll-lock {
 
 /* ------------------------------------------------------------
    1) Silent Fade / AQ Fade
-   blurは禁止。像が静かに整うだけ。
+   基本はblurなし。必要なページだけ --aq-blur で極薄指定。
 ------------------------------------------------------------ */
 .aq-fade {
+  --aq-y: var(--fade-distance);
+  --aq-scale: var(--fade-scale);
+  --aq-blur: var(--fade-blur);
+  --aq-delay: 0s;
+  --aq-opacity-time: var(--fade-time);
+  --aq-transform-time: var(--fade-transform-time);
+
   opacity: 0;
-  transform: translate3d(0, var(--fade-distance), 0) scale(var(--fade-scale));
+  transform: translate3d(0, var(--aq-y), 0) scale(var(--aq-scale));
+  filter: blur(var(--aq-blur));
+  backdrop-filter: none;
+
   transition:
-    opacity var(--fade-time) var(--ease-silent),
-    transform var(--fade-time) var(--ease-silent);
-  filter: none !important;
-  backdrop-filter: none !important;
-  will-change: opacity, transform;
+    opacity var(--aq-opacity-time) var(--ease-silent),
+    transform var(--aq-transform-time) var(--ease-float),
+    filter var(--aq-opacity-time) var(--ease-silent);
+
+  transition-delay: var(--aq-delay);
+  will-change: opacity, transform, filter;
   backface-visibility: hidden;
 }
 
-.aq-show {
+.aq-show,
+.aq-fade.is-visible {
   opacity: 1 !important;
   transform: translate3d(0, 0, 0) scale(1) !important;
-  filter: none !important;
+  filter: blur(0) !important;
   backdrop-filter: none !important;
 }
 
 /* Delay tokens */
-.delay-1 { transition-delay: 0.10s; }
-.delay-2 { transition-delay: 0.18s; }
-.delay-3 { transition-delay: 0.26s; }
-.delay-4 { transition-delay: 0.34s; }
-.delay-5 { transition-delay: 0.42s; }
-.delay-6 { transition-delay: 0.50s; }
-.delay-7 { transition-delay: 0.58s; }
+.aq-fade.delay-1 { --aq-delay: 0.10s; }
+.aq-fade.delay-2 { --aq-delay: 0.18s; }
+.aq-fade.delay-3 { --aq-delay: 0.26s; }
+.aq-fade.delay-4 { --aq-delay: 0.34s; }
+.aq-fade.delay-5 { --aq-delay: 0.42s; }
+.aq-fade.delay-6 { --aq-delay: 0.50s; }
+.aq-fade.delay-7 { --aq-delay: 0.58s; }
 
-/* blur強制禁止 */
-[class*="fade"],
-[class*="Fade"],
+/* blur強制禁止 — [class*="fade"] は外して個別指定に */
+.gd-no-blur,
 .animate-fadeUp {
   filter: none !important;
   backdrop-filter: none !important;
@@ -611,6 +625,7 @@ body.scrolled .ambient-glow::after {
 
   .aq-fade,
   .aq-show,
+  .aq-fade.is-visible,
   .gd-sharp,
   .gd-sheen,
   .ambient-glow,
@@ -631,39 +646,42 @@ body.scrolled .ambient-glow::after {
 
   .aq-fade,
   .aq-show,
+  .aq-fade.is-visible,
   .gd-sharp {
     opacity: 1 !important;
   }
 }
-/* ===============================
-   WORKS LIST CARD REVEAL
-================================ */
 
+/* ============================================================
+   WORKS LIST CARD REVEAL
+============================================================ */
 .work-list-card.work-rise {
   opacity: 0;
-  transform: translate3d(0, 28px, 0) scale(0.985);
-  filter: brightness(0.86) saturate(0.9);
+  transform: translate3d(0, 32px, 0) scale(0.99);
+  filter: brightness(0.88) saturate(0.92) blur(0.08px);
   will-change: opacity, transform, filter;
 
   transition:
-    opacity 860ms cubic-bezier(0.16, 0.72, 0.16, 1),
-    transform 960ms cubic-bezier(0.16, 0.72, 0.16, 1),
-    filter 960ms cubic-bezier(0.16, 0.72, 0.16, 1),
+    opacity 980ms cubic-bezier(0.22, 0.72, 0.18, 1),
+    transform 1180ms cubic-bezier(0.16, 1, 0.24, 1),
+    filter 980ms cubic-bezier(0.22, 0.72, 0.18, 1),
     border-color 520ms cubic-bezier(0.22, 0.56, 0.18, 1),
-    box-shadow 520ms cubic-bezier(0.22, 0.56, 0.18, 1),
+    box-shadow 620ms cubic-bezier(0.22, 0.56, 0.18, 1),
     background-color 520ms cubic-bezier(0.22, 0.56, 0.18, 1);
 
   transition-delay: var(--work-rise-delay, 0ms);
 }
 
-.work-list-card.work-rise.aq-show {
+.work-list-card.work-rise.aq-show,
+.work-list-card.work-rise.is-visible {
   opacity: 1;
   transform: translate3d(0, 0, 0) scale(1);
-  filter: brightness(1) saturate(1);
+  filter: brightness(1) saturate(1) blur(0);
 }
 
-.work-list-card.work-rise.aq-show:hover {
-  transform: translate3d(0, -3px, 0) scale(1.006);
+.work-list-card.work-rise.aq-show:hover,
+.work-list-card.work-rise.is-visible:hover {
+  transform: translate3d(0, -3px, 0) scale(1.004);
 }
 
 @media (prefers-reduced-motion: reduce) {

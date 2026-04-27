@@ -3,6 +3,7 @@ import React, { useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import SectionSvgTitle from "../components/SectionSvgTitle";
 import "./works.css";
+
 const FEATURED_WORKS = [
   {
     title: "VELMONT",
@@ -33,6 +34,11 @@ const FEATURED_WORKS = [
   },
 ];
 
+function getSafeDelay(value) {
+  const n = Number(value);
+  return Number.isFinite(n) ? Math.max(0, n) : 0;
+}
+
 export default function Works() {
   const worksRef = useRef(null);
 
@@ -40,6 +46,7 @@ export default function Works() {
     const root = worksRef.current;
     if (!root) return undefined;
 
+    const revealItems = Array.from(root.querySelectorAll("[data-reveal]"));
     const cards = Array.from(root.querySelectorAll(".work-card"));
     const cleanups = [];
 
@@ -55,36 +62,59 @@ export default function Works() {
         markLoaded();
       } else {
         img.addEventListener("load", markLoaded, { once: true });
-        cleanups.push(() => img.removeEventListener("load", markLoaded));
+        img.addEventListener("error", markLoaded, { once: true });
+
+        cleanups.push(() => {
+          img.removeEventListener("load", markLoaded);
+          img.removeEventListener("error", markLoaded);
+        });
       }
     });
 
-    if (!cards.length) {
+    if (!revealItems.length) {
       return () => cleanups.forEach((cleanup) => cleanup());
     }
 
-    cards.forEach((card, index) => {
-      card.style.setProperty("--card-delay", `${index * 160}ms`);
-    });
+    if (typeof window === "undefined" || !("IntersectionObserver" in window)) {
+      revealItems.forEach((item) => item.classList.add("is-visible"));
+      return () => cleanups.forEach((cleanup) => cleanup());
+    }
+
+    const reduceMotion = window.matchMedia?.(
+      "(prefers-reduced-motion: reduce)"
+    )?.matches;
+
+    if (reduceMotion) {
+      revealItems.forEach((item) => item.classList.add("is-visible"));
+      return () => cleanups.forEach((cleanup) => cleanup());
+    }
+
+    const isMobile = window.matchMedia?.("(max-width: 768px)")?.matches;
 
     const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (!entry?.isIntersecting) return;
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry?.isIntersecting) return;
 
-        cards.forEach((card) => {
-          card.classList.add("is-visible");
+          const item = entry.target;
+          observer.unobserve(item);
+
+          const delay = getSafeDelay(item.dataset.revealDelay);
+
+          const timerId = window.setTimeout(() => {
+            item.classList.add("is-visible");
+          }, delay);
+
+          cleanups.push(() => window.clearTimeout(timerId));
         });
-
-        observer.disconnect();
       },
       {
-        threshold: 0.16,
-        rootMargin: "0px 0px -12% 0px",
+        threshold: isMobile ? 0.05 : 0.14,
+        rootMargin: isMobile ? "0px 0px 14% 0px" : "0px 0px -6% 0px",
       }
     );
 
-    observer.observe(cards[0]);
-
+    revealItems.forEach((item) => observer.observe(item));
     cleanups.push(() => observer.disconnect());
 
     return () => {
@@ -96,22 +126,31 @@ export default function Works() {
     <section id="works" ref={worksRef} className="works-section">
       <div className="works-container">
         {/* HEADER */}
-   <div className="works-header aq-fade">
-  <SectionSvgTitle
-    title="WORKS"
-    sub="SELECTED WORKS"
-    count="03"
-  />
+        <div
+          className="works-header aq-fade"
+          data-reveal
+          data-reveal-delay="0"
+        >
+          <SectionSvgTitle
+            title="WORKS"
+            sub="SELECTED WORKS"
+            count="03"
+          />
 
-  <p className="works-lead">
-    最初に、代表作だけを置く。
-    <br className="hidden md:block" />
-    印象・構造・導線まで整えた制作例です。
-  </p>
-</div>
+          <p className="works-lead">
+            最初に、代表作だけを置く。
+            <br className="hidden md:block" />
+            印象・構造・導線まで整えた制作例です。
+          </p>
+        </div>
+
         {/* GRID */}
         <div className="works-grid-wrapper">
-          <div className="works-swipe-hint aq-fade delay-2 md:hidden">
+          <div
+            className="works-swipe-hint aq-fade delay-2 md:hidden"
+            data-reveal
+            data-reveal-delay="160"
+          >
             <span>SWIPE</span>
             <span className="arrow">→</span>
           </div>
@@ -125,6 +164,8 @@ export default function Works() {
                 rel="noopener noreferrer"
                 className={`work-card work-card-reveal work-card-${work.size}`}
                 aria-label={work.label}
+                data-reveal
+              data-reveal-delay={String([0, 80, 100][index] ?? 0)}
               >
                 <span className="work-image-wrap" aria-hidden="true">
                   <img
@@ -132,6 +173,7 @@ export default function Works() {
                     alt=""
                     loading="lazy"
                     decoding="async"
+                    draggable="false"
                   />
                 </span>
 
@@ -155,15 +197,18 @@ export default function Works() {
         </div>
 
         {/* VIEW ALL */}
-{/* VIEW ALL */}
-<div className="works-viewall aq-fade delay-3">
-  <Link to="/works" className="viewall-btn">
-    <span>VIEW ALL WORKS</span>
-    <span aria-hidden="true">→</span>
-  </Link>
+        <div
+          className="works-viewall aq-fade"
+          data-reveal
+          data-reveal-delay="360"
+        >
+          <Link to="/works" className="viewall-btn">
+            <span>VIEW ALL WORKS</span>
+            <span aria-hidden="true">→</span>
+          </Link>
 
-  <p className="works-viewall-note">制作例（抜粋）</p>
-</div>
+          <p className="works-viewall-note">制作例（抜粋）</p>
+        </div>
       </div>
     </section>
   );
