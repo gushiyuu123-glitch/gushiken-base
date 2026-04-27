@@ -4,11 +4,14 @@ import { getNewsList } from "../lib/microcms";
 import SectionSvgTitle from "./SectionSvgTitle";
 import styles from "../styles/newsSection.module.css";
 
+const cx = (...classes) => classes.filter(Boolean).join(" ");
+
 export default function NewsSection() {
   const [news, setNews] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
 
+  const sectionRef = useRef(null);
   const mountedRef = useRef(false);
   const requestIdRef = useRef(0);
   const newsRef = useRef([]);
@@ -18,19 +21,19 @@ export default function NewsSection() {
   }, [news]);
 
   const formatDate = useMemo(() => {
-    const fmt = new Intl.DateTimeFormat("ja-JP", {
+    const formatter = new Intl.DateTimeFormat("ja-JP", {
       year: "numeric",
       month: "2-digit",
       day: "2-digit",
     });
 
     return (dateStr) => {
-      if (!dateStr) return "";
+      if (!dateStr) return "UPDATE";
 
       const date = new Date(dateStr);
-      if (Number.isNaN(date.getTime())) return "";
+      if (Number.isNaN(date.getTime())) return "UPDATE";
 
-      return fmt.format(date);
+      return formatter.format(date);
     };
   }, []);
 
@@ -39,7 +42,6 @@ export default function NewsSection() {
     requestIdRef.current = requestId;
 
     try {
-      // 既にNEWSがある状態での復帰再取得では、画面をチラつかせない
       if (!silent || newsRef.current.length === 0) {
         setLoading(true);
       }
@@ -61,7 +63,6 @@ export default function NewsSection() {
       if (!mountedRef.current) return;
       if (requestId !== requestIdRef.current) return;
 
-      // 既に表示済みNEWSがあるなら、復帰時の一時失敗で消さない
       if (newsRef.current.length === 0) {
         setNews([]);
         setError(true);
@@ -84,19 +85,14 @@ export default function NewsSection() {
     };
   }, [fetchNews]);
 
-  // PWA / ホーム画面追加アプリ対策
-  // アプリ復帰時にNEWSを再取得する
   useEffect(() => {
     const handleVisible = () => {
       if (document.visibilityState !== "visible") return;
-
       fetchNews({ silent: true });
     };
 
     const handlePageShow = (event) => {
-      // bfcache復帰時だけ再取得
       if (!event.persisted) return;
-
       fetchNews({ silent: true });
     };
 
@@ -109,18 +105,61 @@ export default function NewsSection() {
     };
   }, [fetchNews]);
 
+  useEffect(() => {
+    const root = sectionRef.current;
+    if (!root) return undefined;
+
+    const targets = Array.from(root.querySelectorAll("[data-news-reveal]"));
+
+    const reveal = (target) => {
+      target.classList.add(styles.isIn);
+    };
+
+    if (typeof IntersectionObserver === "undefined") {
+      targets.forEach(reveal);
+      return undefined;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+
+          reveal(entry.target);
+          observer.unobserve(entry.target);
+        });
+      },
+      {
+        threshold: 0.14,
+        rootMargin: "0px 0px -8% 0px",
+      }
+    );
+
+    targets.forEach((target) => observer.observe(target));
+
+    return () => observer.disconnect();
+  }, [loading, error, news.length]);
+
   const hasNews = news.length > 0;
 
   return (
     <section
-      className={`${styles.wrapper} aq-fade`}
+      ref={sectionRef}
+      className={styles.wrapper}
       aria-labelledby="news-heading"
       aria-busy={loading ? "true" : "false"}
     >
       <div className={styles.inner}>
-        <div className={styles.sideLine} aria-hidden="true" />
+        <div
+          className={cx(styles.sideLine, styles.reveal, styles.lineReveal)}
+          data-news-reveal
+          aria-hidden="true"
+        />
 
-        <header className={`${styles.header} aq-fade delay-1`}>
+        <header
+          className={cx(styles.header, styles.reveal, styles.reveal1)}
+          data-news-reveal
+        >
           <SectionSvgTitle
             title="NEWS"
             sub="UPDATE / JOURNAL"
@@ -132,50 +171,63 @@ export default function NewsSection() {
           </h2>
 
           <p className={styles.lead}>
-            制作の更新やお知らせをまとめています。
+            制作の更新や、お知らせをまとめています。
           </p>
         </header>
 
-        <div className={`${styles.panel} aq-fade delay-2`}>
+        <div
+          className={cx(styles.panel, styles.reveal, styles.reveal2)}
+          data-news-reveal
+        >
           {loading && (
-            <p className={styles.stateText} aria-live="polite">
-              読み込み中…
-            </p>
+            <div className={styles.stateBox} aria-live="polite">
+              <span className={styles.stateMark} aria-hidden="true" />
+              <p className={styles.stateText}>読み込み中…</p>
+            </div>
           )}
 
           {error && !loading && (
-            <p className={styles.stateText} aria-live="assertive">
-              お知らせを読み込めませんでした。
-            </p>
+            <div className={styles.stateBox} aria-live="assertive">
+              <span className={cx(styles.stateMark, styles.stateMarkError)} aria-hidden="true" />
+              <p className={styles.stateText}>
+                お知らせを読み込めませんでした。
+              </p>
+            </div>
           )}
 
           {!loading && !error && !hasNews && (
-            <p className={styles.stateText} aria-live="polite">
-              現在、お知らせはありません。
-            </p>
+            <div className={styles.stateBox} aria-live="polite">
+              <span className={styles.stateMark} aria-hidden="true" />
+              <p className={styles.stateText}>
+                現在、お知らせはありません。
+              </p>
+            </div>
           )}
 
           {!loading && !error && hasNews && (
             <div className={styles.list}>
               {news.map((item, index) => {
                 const date = item.publishedAt || item.createdAt || null;
+                const title = item.title || "無題のお知らせ";
 
                 return (
                   <Link
                     to={`/news/${item.id}`}
                     key={item.id}
-                    className={styles.item}
-                    aria-label={`お知らせ: ${item.title}`}
+                    className={cx(styles.item, styles.itemReveal)}
+                    aria-label={`お知らせ: ${title}`}
                     style={{ "--item-index": index }}
+                    data-news-reveal
                   >
                     <span className={styles.itemMeta}>
                       <span className={styles.date}>{formatDate(date)}</span>
+
                       <span className={styles.number} aria-hidden="true">
                         {String(index + 1).padStart(2, "0")}
                       </span>
                     </span>
 
-                    <h3 className={styles.itemTitle}>{item.title}</h3>
+                    <h3 className={styles.itemTitle}>{title}</h3>
 
                     <span className={styles.arrow} aria-hidden="true">
                       →
@@ -188,7 +240,10 @@ export default function NewsSection() {
         </div>
 
         {!loading && !error && hasNews && (
-          <div className={styles.moreWrap}>
+          <div
+            className={cx(styles.moreWrap, styles.reveal, styles.reveal3)}
+            data-news-reveal
+          >
             <Link to="/news" className={styles.more}>
               <span>もっと見る</span>
               <span aria-hidden="true">→</span>

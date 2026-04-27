@@ -235,6 +235,7 @@ function CertificateModal({ item, onClose }) {
             type="button"
             className="certificate-modal__close"
             onClick={onClose}
+            aria-label="証明画像を閉じる"
           >
             CLOSE
           </button>
@@ -268,7 +269,7 @@ export default function About() {
     if (!root) return undefined;
 
     const revealTargets = Array.from(
-      root.querySelectorAll(".about-flow, .qcard-flow, .site-flow")
+      root.querySelectorAll(".about-flow, .qcard-flow")
     );
 
     const reveal = (target) => {
@@ -388,9 +389,9 @@ export default function About() {
             <p className="qualifications-label">QUALIFICATIONS</p>
 
             <p className="qualifications-intro">
-              制作の土台として、
+              制作の信頼性を高めるため、
               <br />
-              資格取得と学習も継続しています。
+              基礎学習と資格取得も継続しています。
             </p>
 
             <div className="qualifications-grid">
@@ -488,10 +489,13 @@ export default function About() {
             </div>
           </div>
 
-          <p className="about-last about-flow about-flow-8">
-            あなたのサービスの魅力を、
-            <span>見やすく、上品に伝わるWebサイト</span>として形にします。
-          </p>
+          <div className="about-last about-flow about-flow-8">
+            <p>
+              あなたのサービスの魅力を、
+              <span>見やすく、上品に伝わるWebサイト</span>として形にします。
+            </p>
+
+          </div>
         </div>
       </section>
 

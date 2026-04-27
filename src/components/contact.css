@@ -7,6 +7,7 @@
 /* ----------------------------------------------
    Section
 ---------------------------------------------- */
+
 .contact-section {
   position: relative;
   overflow: hidden;
@@ -67,6 +68,7 @@
 /* ----------------------------------------------
    Container
 ---------------------------------------------- */
+
 .contact-container {
   position: relative;
   z-index: 1;
@@ -78,6 +80,7 @@
 /* ----------------------------------------------
    Side Line
 ---------------------------------------------- */
+
 .contact-side-line {
   position: absolute;
   left: 0;
@@ -94,12 +97,12 @@
   );
 
   pointer-events: none;
-  opacity: 0.9;
 }
 
 /* ----------------------------------------------
    Header
 ---------------------------------------------- */
+
 .contact-header {
   position: relative;
 
@@ -124,9 +127,20 @@
   letter-spacing: 0.14em;
 }
 
+.contact-hidden-heading {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+}
+
 /* ----------------------------------------------
    Intro
 ---------------------------------------------- */
+
 .contact-intro {
   padding-left: 1rem;
 }
@@ -157,6 +171,7 @@
 /* ----------------------------------------------
    Contact Visual
 ---------------------------------------------- */
+
 .contact-visual {
   position: relative;
 
@@ -177,6 +192,8 @@
   box-shadow:
     0 0 0 0.5px rgba(201, 177, 138, 0.025),
     0 18px 48px rgba(0, 0, 0, 0.22);
+
+  overflow: hidden;
 }
 
 .contact-visual::before {
@@ -191,6 +208,33 @@
   );
   background-size: 4px 4px;
   opacity: 0.016;
+}
+
+.contact-visual::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      rgba(201, 177, 138, 0.025),
+      transparent
+    );
+
+  opacity: 0;
+  transform: translateX(-18%);
+
+  transition:
+    opacity 960ms cubic-bezier(0.16, 0.72, 0.16, 1),
+    transform 1200ms cubic-bezier(0.16, 0.72, 0.16, 1);
+}
+
+.contact-visual.is-in::after {
+  opacity: 1;
+  transform: translateX(0);
 }
 
 .contact-visual-label {
@@ -209,6 +253,7 @@
 /* ----------------------------------------------
    Starter List
 ---------------------------------------------- */
+
 .contact-starter-list {
   position: relative;
   z-index: 1;
@@ -226,10 +271,31 @@
   padding: 0 1rem;
 
   border-bottom: 1px solid rgba(255, 255, 255, 0.052);
+
+  opacity: 0;
+  transform: translate3d(0, 10px, 0);
+  filter: brightness(0.95);
+
+  transition:
+    opacity 720ms cubic-bezier(0.16, 0.72, 0.16, 1),
+    transform 860ms cubic-bezier(0.16, 0.72, 0.16, 1),
+    filter 860ms cubic-bezier(0.16, 0.72, 0.16, 1),
+    background 360ms ease;
+}
+
+.contact-visual.is-in .contact-starter-row {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+  filter: brightness(1);
+  transition-delay: calc(160ms + (var(--starter-index) * 70ms));
 }
 
 .contact-starter-row:last-child {
   border-bottom: none;
+}
+
+.contact-starter-row:hover {
+  background: rgba(255, 255, 255, 0.018);
 }
 
 .contact-starter-index {
@@ -259,6 +325,7 @@
 /* ----------------------------------------------
    Visual Note
 ---------------------------------------------- */
+
 .contact-visual-note {
   position: relative;
   z-index: 1;
@@ -268,6 +335,19 @@
   gap: 0.9rem;
 
   margin-top: 1.15rem;
+
+  opacity: 0;
+  transform: translate3d(0, 8px, 0);
+
+  transition:
+    opacity 760ms cubic-bezier(0.16, 0.72, 0.16, 1),
+    transform 860ms cubic-bezier(0.16, 0.72, 0.16, 1);
+}
+
+.contact-visual.is-in .contact-visual-note {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+  transition-delay: 560ms;
 }
 
 .contact-visual-note span {
@@ -295,6 +375,7 @@
 /* ----------------------------------------------
    Actions
 ---------------------------------------------- */
+
 .contact-actions {
   display: flex;
   align-items: center;
@@ -344,6 +425,29 @@
     box-shadow 0.35s ease;
 }
 
+.contact-btn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.055),
+      transparent
+    );
+
+  opacity: 0;
+  transform: translateX(-48%);
+
+  transition:
+    opacity 420ms ease,
+    transform 620ms cubic-bezier(0.18, 0.72, 0.18, 1);
+
+  pointer-events: none;
+}
+
 .contact-btn:hover,
 .contact-btn:focus-visible {
   transform: translateY(-2px);
@@ -356,9 +460,16 @@
   outline: none;
 }
 
+.contact-btn:hover::before,
+.contact-btn:focus-visible::before {
+  opacity: 1;
+  transform: translateX(48%);
+}
+
 /* ----------------------------------------------
    Footer
 ---------------------------------------------- */
+
 .contact-footer {
   max-width: 720px;
   margin: 0 auto;
@@ -371,20 +482,77 @@
 }
 
 /* ----------------------------------------------
-   AQ FADE
+   Reveal
 ---------------------------------------------- */
-.contact-section .aq-fade {
-  filter: none !important;
-  backdrop-filter: none !important;
+
+.contact-reveal {
+  opacity: 0;
+  transform: translate3d(0, 18px, 0) scale(0.998);
+  filter: brightness(0.94) blur(0.1px);
+  will-change: opacity, transform, filter;
+  backface-visibility: hidden;
+
+  transition:
+    opacity 920ms cubic-bezier(0.16, 0.72, 0.16, 1),
+    transform 1080ms cubic-bezier(0.16, 0.72, 0.16, 1),
+    filter 1040ms cubic-bezier(0.16, 0.72, 0.16, 1);
+}
+
+.contact-reveal.is-in {
+  opacity: 1;
+  transform: translate3d(0, 0, 0) scale(1);
+  filter: brightness(1) blur(0);
+}
+
+.contact-line-reveal {
+  opacity: 0;
+  transform: scaleY(0.72);
+  transform-origin: top;
+  filter: none;
+
+  transition:
+    opacity 860ms cubic-bezier(0.16, 0.72, 0.16, 1),
+    transform 1040ms cubic-bezier(0.16, 0.72, 0.16, 1);
+}
+
+.contact-line-reveal.is-in {
+  opacity: 0.86;
+  transform: scaleY(1);
+}
+
+.contact-reveal-1 {
+  transition-delay: 40ms;
+}
+
+.contact-reveal-2 {
+  transition-delay: 90ms;
+}
+
+.contact-reveal-3 {
+  transition-delay: 135ms;
+}
+
+.contact-reveal-4 {
+  transition-delay: 80ms;
+}
+
+.contact-reveal-5 {
+  transition-delay: 90ms;
+}
+
+.contact-reveal-6 {
+  transition-delay: 110ms;
 }
 
 /* ----------------------------------------------
    Mobile
 ---------------------------------------------- */
+
 @media (max-width: 768px) {
   .contact-section {
     min-height: auto;
     padding: 11vh 0 10vh;
+    display: block;
   }
 
   .contact-container {
@@ -394,7 +562,6 @@
   .contact-side-line {
     top: 1.6rem;
     height: calc(100% - 3.2rem);
-    opacity: 0.78;
   }
 
   .contact-header,
@@ -479,6 +646,19 @@
     font-size: 0.72rem;
     line-height: 1.86;
   }
+
+  .contact-reveal {
+    transform: translate3d(0, 15px, 0) scale(0.998);
+    filter: brightness(0.95) blur(0.08px);
+  }
+
+  .contact-starter-row {
+    transform: translate3d(0, 8px, 0);
+  }
+
+  .contact-visual.is-in .contact-starter-row {
+    transition-delay: calc(120ms + (var(--starter-index) * 58ms));
+  }
 }
 
 @media (max-width: 390px) {
@@ -496,11 +676,21 @@
 /* ----------------------------------------------
    Reduced Motion
 ---------------------------------------------- */
+
 @media (prefers-reduced-motion: reduce) {
   .contact-section *,
   .contact-section *::before,
   .contact-section *::after {
     transition: none !important;
     animation: none !important;
+  }
+
+  .contact-reveal,
+  .contact-line-reveal,
+  .contact-starter-row,
+  .contact-visual-note {
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
   }
 }

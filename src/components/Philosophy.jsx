@@ -177,7 +177,7 @@ export default function Philosophy() {
 
         <div className="philo-copy">
           <p className="philo-lead philo-flow philo-flow-2">
-            良いWebサイトは、派手さだけで選ばれません。
+            良いWebサイトは、見た目の印象だけでは決まりません。
             <br />
             <span>
               見やすく、伝わりやすく、安心して相談できること。
@@ -199,9 +199,7 @@ export default function Philosophy() {
             まで整えることを大切にしています。
           </p>
 
-          <div className="philo-flow philo-flow-4">
-            <VisualPrinciples />
-          </div>
+          <VisualPrinciples />
 
           <p className="philo-last philo-flow philo-flow-5">
             <span>

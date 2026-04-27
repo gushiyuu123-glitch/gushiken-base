@@ -116,14 +116,18 @@
 
 /* -------------------------------------------------------
    Copy
+   paddingは親だけに入れる。二重余白を防ぐ。
 ------------------------------------------------------- */
 
-.philo-copy,
+.philo-copy {
+  padding-left: 1rem;
+}
+
 .philo-lead,
 .philo-body,
 .philo-last,
 .philo-principles {
-  padding-left: 1rem;
+  padding-left: 0;
 }
 
 .philo-lead {
@@ -318,6 +322,7 @@
 
 .vp-lines {
   flex: 1;
+
   display: flex;
   flex-direction: column;
   gap: 5px;
@@ -378,20 +383,21 @@
 
 .philo-flow {
   opacity: 0;
-  transform: translate3d(0, 24px, 0) scale(0.996);
-  filter: brightness(0.92);
+  transform: translate3d(0, 18px, 0) scale(0.998);
+  filter: brightness(0.94) blur(0.12px);
   will-change: opacity, transform, filter;
+  backface-visibility: hidden;
 
   transition:
-    opacity 820ms cubic-bezier(0.16, 0.72, 0.16, 1),
-    transform 940ms cubic-bezier(0.16, 0.72, 0.16, 1),
-    filter 940ms cubic-bezier(0.16, 0.72, 0.16, 1);
+    opacity 960ms cubic-bezier(0.16, 0.72, 0.16, 1),
+    transform 1120ms cubic-bezier(0.16, 0.72, 0.16, 1),
+    filter 1080ms cubic-bezier(0.16, 0.72, 0.16, 1);
 }
 
 .philo-flow.is-in {
   opacity: 1;
   transform: translate3d(0, 0, 0) scale(1);
-  filter: brightness(1);
+  filter: brightness(1) blur(0);
 }
 
 .philo-flow-line {
@@ -422,12 +428,8 @@
   transition-delay: 145ms;
 }
 
-.philo-flow-4 {
-  transition-delay: 200ms;
-}
-
 .philo-flow-5 {
-  transition-delay: 255ms;
+  transition-delay: 180ms;
 }
 
 /* -------------------------------------------------------
@@ -437,35 +439,39 @@
 
 .philo-principles {
   opacity: 0;
-  transform: translate3d(0, 18px, 0) scale(0.996);
-  filter: brightness(0.92);
+  transform: translate3d(0, 18px, 0) scale(0.998);
+  filter: brightness(0.94) blur(0.12px);
   will-change: opacity, transform, filter;
+  backface-visibility: hidden;
 
   transition:
-    opacity 760ms cubic-bezier(0.16, 0.72, 0.16, 1),
-    transform 880ms cubic-bezier(0.16, 0.72, 0.16, 1),
-    filter 880ms cubic-bezier(0.16, 0.72, 0.16, 1);
+    opacity 960ms cubic-bezier(0.16, 0.72, 0.16, 1),
+    transform 1120ms cubic-bezier(0.16, 0.72, 0.16, 1),
+    filter 1080ms cubic-bezier(0.16, 0.72, 0.16, 1);
 }
 
 .philo-principles.is-in {
   opacity: 1;
   transform: translate3d(0, 0, 0) scale(1);
-  filter: brightness(1);
+  filter: brightness(1) blur(0);
 }
 
 .philo-principle-reveal {
   opacity: 0;
-  transform: translate3d(0, 16px, 0) scale(0.997);
-  will-change: opacity, transform;
+  transform: translate3d(0, 14px, 0) scale(0.998);
+  filter: brightness(0.96) blur(0.08px);
+  will-change: opacity, transform, filter;
 
   transition:
-    opacity 680ms cubic-bezier(0.16, 0.72, 0.16, 1),
-    transform 780ms cubic-bezier(0.16, 0.72, 0.16, 1);
+    opacity 760ms cubic-bezier(0.16, 0.72, 0.16, 1),
+    transform 920ms cubic-bezier(0.16, 0.72, 0.16, 1),
+    filter 900ms cubic-bezier(0.16, 0.72, 0.16, 1);
 }
 
 .philo-principles.is-in .philo-principle-reveal {
   opacity: 1;
   transform: translate3d(0, 0, 0) scale(1);
+  filter: brightness(1) blur(0);
 }
 
 .philo-principles.is-in .philo-principles-label {
@@ -473,7 +479,7 @@
 }
 
 .philo-principles.is-in .vp-item {
-  transition-delay: calc(140ms + (var(--vp-index) * 115ms));
+  transition-delay: calc(140ms + (var(--vp-index) * 105ms));
 }
 
 .philo-principles .vp-axis {
@@ -482,8 +488,8 @@
   transform-origin: top;
 
   transition:
-    opacity 680ms cubic-bezier(0.16, 0.72, 0.16, 1),
-    transform 840ms cubic-bezier(0.16, 0.72, 0.16, 1);
+    opacity 760ms cubic-bezier(0.16, 0.72, 0.16, 1),
+    transform 960ms cubic-bezier(0.16, 0.72, 0.16, 1);
 }
 
 .philo-principles.is-in .vp-axis {
@@ -511,12 +517,15 @@
   }
 
   .philo-header,
-  .philo-copy,
+  .philo-copy {
+    padding-left: 0.75rem;
+  }
+
   .philo-lead,
   .philo-body,
   .philo-last,
   .philo-principles {
-    padding-left: 0.75rem;
+    padding-left: 0;
   }
 
   .philo-header {
@@ -600,12 +609,15 @@
     line-height: 2;
   }
 
-  .philo-flow {
-    transform: translate3d(0, 20px, 0) scale(0.997);
+  .philo-flow,
+  .philo-principles {
+    transform: translate3d(0, 16px, 0) scale(0.998);
+    filter: brightness(0.95) blur(0.08px);
   }
 
   .philo-principle-reveal {
-    transform: translate3d(0, 14px, 0) scale(0.997);
+    transform: translate3d(0, 12px, 0) scale(0.998);
+    filter: brightness(0.96) blur(0.06px);
   }
 }
 

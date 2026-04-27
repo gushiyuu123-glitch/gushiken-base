@@ -11,12 +11,12 @@ const FLOW = [
 ];
 
 const INCLUDES = [
-  { label: "オリジナルデザイン", state: "含む", full: true },
-  { label: "スマホ対応", state: "含む", full: true },
-  { label: "写真の軽い補正", state: "含む", full: true },
-  { label: "公開初期設定", state: "含む", full: true },
-  { label: "ドメイン接続サポート", state: "含む", full: true },
-  { label: "運用・保守", state: "任意", full: false },
+  { label: "オリジナルデザイン", state: "含む", optional: false },
+  { label: "スマホ対応", state: "含む", optional: false },
+  { label: "写真の軽い補正", state: "含む", optional: false },
+  { label: "公開初期設定", state: "含む", optional: false },
+  { label: "ドメイン接続サポート", state: "含む", optional: false },
+  { label: "運用・保守", state: "任意", optional: true },
 ];
 
 const PLANS = [
@@ -56,7 +56,7 @@ const PLANS = [
     jp: "印象重視サイト",
     price: "¥240,000〜",
     desc:
-      "写真・色・余白まで整えながら、全体の見え方を揃えて信頼感をつくるプランです。雰囲気や印象を大切にしたいブランド・店舗に向いています。",
+      "写真・色・余白のトーンまで整えながら、ブランドやお店の印象を一つに揃えるプランです。雰囲気や世界観を大切にし、信頼感まで伝えたい方に向いています。",
     includes: [
       "印象設計",
       "複数ページ対応",
@@ -70,7 +70,7 @@ const PLANS = [
 
 function PriceVisual() {
   return (
-    <div className="price-visual aq-fade delay-4">
+    <div className="price-visual price-reveal price-reveal-4">
       <div className="price-flow">
         <p className="price-visual-label">制作の流れ</p>
 
@@ -84,6 +84,7 @@ function PriceVisual() {
               <div
                 key={item.num}
                 className={`price-flow-item ${active ? "is-final" : ""}`}
+                style={{ "--flow-index": index }}
               >
                 <span className="price-flow-dot" />
                 <p className="price-flow-num">{item.num}</p>
@@ -101,16 +102,19 @@ function PriceVisual() {
         <p className="price-visual-label">全プラン共通</p>
 
         <div className="price-includes-list">
-          {INCLUDES.map((item) => (
+          {INCLUDES.map((item, index) => (
             <div
               key={item.label}
-              className={`price-include-row ${item.full ? "is-full" : "is-option"}`}
+              className={`price-include-row ${
+                item.optional ? "is-option" : "is-included"
+              }`}
+              style={{ "--include-index": index }}
             >
-              <span className="price-include-label">{item.label}</span>
-
-              <span className="price-include-bar" aria-hidden="true">
-                <span />
+              <span className="price-include-check" aria-hidden="true">
+                {item.optional ? "＋" : "✓"}
               </span>
+
+              <span className="price-include-label">{item.label}</span>
 
               <span className="price-include-state">{item.state}</span>
             </div>
@@ -129,9 +133,15 @@ const PriceCard = React.memo(function PriceCard({
   price,
   includes = [],
   featured = false,
+  revealIndex = 0,
 }) {
   return (
-    <article className={`price-card ${featured ? "price-card-featured" : ""}`}>
+    <article
+      className={`price-card price-card-reveal ${
+        featured ? "price-card-featured" : ""
+      }`}
+      style={{ "--price-card-index": revealIndex }}
+    >
       <span className="price-card-line" aria-hidden="true" />
 
       <div className="price-card-head">
@@ -167,12 +177,13 @@ const PriceCard = React.memo(function PriceCard({
 
 function MaintenancePlan() {
   return (
-    <div className="special-plan aq-fade delay-6">
+    <div className="special-plan price-reveal price-reveal-6">
       <article className="price-card price-card-special">
         <span className="price-card-line" aria-hidden="true" />
 
         <div className="price-card-head">
           <p className="price-card-label">PLAN 04</p>
+
           <span className="price-card-badge price-card-badge-muted">
             OPTIONAL
           </span>
@@ -197,58 +208,70 @@ export default function Price() {
   const sectionRef = useRef(null);
 
   useEffect(() => {
-    const el = sectionRef.current;
-    if (!el) return undefined;
+    const root = sectionRef.current;
+    if (!root) return undefined;
 
-    const io = new IntersectionObserver(
-      ([entry]) => {
-        if (!entry?.isIntersecting) return;
+    const targets = Array.from(
+      root.querySelectorAll(".price-reveal, .price-card-reveal")
+    );
 
-        el.classList.add("aq-show");
-        el.querySelectorAll(".aq-fade").forEach((item) => {
-          item.classList.add("aq-show");
+    const reveal = (target) => {
+      target.classList.add("is-in");
+    };
+
+    if (typeof IntersectionObserver === "undefined") {
+      targets.forEach(reveal);
+      return undefined;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+
+          reveal(entry.target);
+          observer.unobserve(entry.target);
         });
-
-        io.unobserve(el);
       },
       {
-        threshold: 0.18,
-        rootMargin: "0px 0px -10% 0px",
+        threshold: 0.12,
+        rootMargin: "0px 0px -8% 0px",
       }
     );
 
-    io.observe(el);
+    targets.forEach((target) => observer.observe(target));
 
-    return () => io.disconnect();
+    return () => observer.disconnect();
   }, []);
 
   return (
-    <section id="price" ref={sectionRef} className="price-section aq-fade">
+    <section id="price" ref={sectionRef} className="price-section">
       <div className="price-container">
-        <div className="price-side-line" aria-hidden="true" />
+        <div
+          className="price-side-line price-reveal price-line-reveal price-reveal-1"
+          aria-hidden="true"
+        />
 
-        {/* HEADER */}
-        <header className="price-header aq-fade delay-1">
-<SectionSvgTitle
-  title="PRICE"
-  sub="PLANS / ESTIMATE"
-  className="price-svg-title"
-/>
+        <header className="price-header price-reveal price-reveal-1">
+          <SectionSvgTitle
+            title="PRICE"
+            sub="PLANS / ESTIMATE"
+            className="price-svg-title"
+          />
 
-       <p className="price-section-title">
-  料金プラン / 制作プラン + 任意の運用サポート
-</p>
+          <p className="price-section-title">
+            料金プラン / 制作プラン + 任意の運用サポート
+          </p>
         </header>
 
-        {/* LEAD */}
         <div className="price-intro">
-          <p className="price-philosophy aq-fade delay-2">
+          <p className="price-philosophy price-reveal price-reveal-2">
             料金の目安と進め方を、
             <br />
             初めての方にも分かりやすくご案内しています。
           </p>
 
-          <p className="price-lead aq-fade delay-3">
+          <p className="price-lead price-reveal price-reveal-3">
             ご相談前に、
             <strong>「総額」「制作範囲」「公開までの流れ」</strong>
             を事前にご確認いただけます。
@@ -261,17 +284,15 @@ export default function Price() {
 
         <PriceVisual />
 
-        {/* PLAN 01〜03 */}
-        <div className="price-grid top-plans aq-fade delay-5">
-          {PLANS.map((plan) => (
-            <PriceCard key={plan.label} {...plan} />
+        <div className="price-grid top-plans">
+          {PLANS.map((plan, index) => (
+            <PriceCard key={plan.label} {...plan} revealIndex={index} />
           ))}
         </div>
 
         <MaintenancePlan />
 
-        {/* NOTE */}
-        <p className="price-note aq-fade delay-7">
+        <p className="price-note price-reveal price-reveal-7">
           ドメイン代・サーバー代は実費です。
           <br />
           公開に必要な初期設定や接続サポートは、料金内で対応します。
@@ -279,7 +300,7 @@ export default function Price() {
           内容の追加や変更がある場合は、事前にご相談のうえで調整します。
         </p>
 
-        <div className="price-cta aq-fade delay-8">
+        <div className="price-cta price-reveal price-reveal-8">
           <Link to="/price" className="price-btn">
             <span>料金の詳細を見る</span>
             <span aria-hidden="true">→</span>

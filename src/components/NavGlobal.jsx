@@ -1,27 +1,12 @@
-// src/components/NavGlobal.jsx
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { createPortal } from "react-dom";
+import styles from "./Nav.module.css";
 
-/* =========================
-   Tokens
-========================= */
 const NAV_HEIGHT = 68;
 const SCROLL_OFFSET = NAV_HEIGHT + 12;
-
 const LOGO_SRC = "/logo-gd.png";
 
-const ACCENT = "#d9b98a";
-const ACCENT_SOFT = "rgba(217,185,138,0.18)";
-const ACCENT_DIM = "rgba(217,185,138,0.24)";
-const ACCENT_GLOW = "rgba(217,185,138,0.075)";
-
-const WHITE = "rgba(255,255,255,0.92)";
-const WHITE_DIM = "rgba(255,255,255,0.36)";
-
-/* =========================
-   Lists
-========================= */
 const HOME_ITEMS = [
   { href: "#works", label: "WORKS" },
   { href: "#about", label: "ABOUT" },
@@ -37,9 +22,10 @@ const GLOBAL_ITEMS = [
   { to: "/contact", label: "CONTACT", emphasis: true },
 ];
 
-/* =========================
-   helpers
-========================= */
+function cx(...classes) {
+  return classes.filter(Boolean).join(" ");
+}
+
 function scrollToHash(hash) {
   if (!hash?.startsWith("#")) return;
 
@@ -55,7 +41,10 @@ function scrollToHash(hash) {
     window.history.pushState(null, "", hash);
   }
 
-  window.scrollTo({ top: safeTop, behavior: "smooth" });
+  window.scrollTo({
+    top: safeTop,
+    behavior: "smooth",
+  });
 }
 
 export default function NavGlobal({ mode }) {
@@ -72,16 +61,19 @@ export default function NavGlobal({ mode }) {
   const panelRef = useRef(null);
   const pendingHashRef = useRef(null);
 
+  const homeLinks = useMemo(() => HOME_ITEMS, []);
+  const globalLinks = useMemo(() => GLOBAL_ITEMS, []);
+
   useEffect(() => {
     setMounted(true);
   }, []);
 
-  /* ── Scroll → solid ── */
   useEffect(() => {
     let raf = 0;
 
     const onScroll = () => {
       cancelAnimationFrame(raf);
+
       raf = requestAnimationFrame(() => {
         setScrolled(window.scrollY > 12);
       });
@@ -96,14 +88,12 @@ export default function NavGlobal({ mode }) {
     };
   }, []);
 
-  /* ── Route change → close + unlock ── */
   useEffect(() => {
     setOpen(false);
     document.documentElement.classList.remove("scroll-lock");
     document.body.classList.remove("scroll-lock");
   }, [pathname]);
 
-  /* ── Close when desktop ── */
   useEffect(() => {
     const mq = window.matchMedia("(min-width: 768px)");
 
@@ -113,18 +103,23 @@ export default function NavGlobal({ mode }) {
 
     closeIfDesktop();
 
-    if (mq.addEventListener) mq.addEventListener("change", closeIfDesktop);
-    else mq.addListener(closeIfDesktop);
+    if (mq.addEventListener) {
+      mq.addEventListener("change", closeIfDesktop);
+    } else {
+      mq.addListener(closeIfDesktop);
+    }
 
     return () => {
-      if (mq.removeEventListener) mq.removeEventListener("change", closeIfDesktop);
-      else mq.removeListener(closeIfDesktop);
+      if (mq.removeEventListener) {
+        mq.removeEventListener("change", closeIfDesktop);
+      } else {
+        mq.removeListener(closeIfDesktop);
+      }
     };
   }, []);
 
-  /* ── Scroll lock ── */
   useEffect(() => {
-    if (!open) return;
+    if (!open) return undefined;
 
     const html = document.documentElement;
     const body = document.body;
@@ -134,63 +129,73 @@ export default function NavGlobal({ mode }) {
 
     const panel = panelRef.current;
 
-    const preventOutside = (e) => {
+    const preventOutsideTouch = (e) => {
       if (panel && panel.contains(e.target)) return;
       e.preventDefault();
     };
 
-    document.addEventListener("touchmove", preventOutside, { passive: false });
+    document.addEventListener("touchmove", preventOutsideTouch, {
+      passive: false,
+    });
 
     return () => {
-      document.removeEventListener("touchmove", preventOutside);
+      document.removeEventListener("touchmove", preventOutsideTouch);
       html.classList.remove("scroll-lock");
       body.classList.remove("scroll-lock");
     };
   }, [open]);
 
-  /* ── Esc close ── */
   useEffect(() => {
-    if (!open) return;
+    if (!open) return undefined;
 
     const onKey = (e) => {
-      if (e.key === "Escape") {
-        e.preventDefault();
-        setOpen(false);
-        setTimeout(() => buttonRef.current?.focus(), 0);
-      }
+      if (e.key !== "Escape") return;
+
+      e.preventDefault();
+      setOpen(false);
+
+      window.setTimeout(() => {
+        buttonRef.current?.focus();
+      }, 0);
     };
 
     window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, [open]);
-
-  /* ── Focus first link on open ── */
-  useEffect(() => {
-    if (!open) return;
-
-    const t = setTimeout(() => firstLinkRef.current?.focus(), 80);
-    return () => clearTimeout(t);
-  }, [open]);
-
-  /* ── Home hash sync ── */
-  useEffect(() => {
-    if (!isHome) return;
-
-    const sync = () => setActiveHash(window.location.hash || "");
-    sync();
-
-    window.addEventListener("hashchange", sync);
-    window.addEventListener("popstate", sync);
 
     return () => {
-      window.removeEventListener("hashchange", sync);
-      window.removeEventListener("popstate", sync);
+      window.removeEventListener("keydown", onKey);
+    };
+  }, [open]);
+
+  useEffect(() => {
+    if (!open) return undefined;
+
+    const timer = window.setTimeout(() => {
+      firstLinkRef.current?.focus();
+    }, 80);
+
+    return () => window.clearTimeout(timer);
+  }, [open]);
+
+  useEffect(() => {
+    if (!isHome) return undefined;
+
+    const syncHash = () => {
+      setActiveHash(window.location.hash || "");
+    };
+
+    syncHash();
+
+    window.addEventListener("hashchange", syncHash);
+    window.addEventListener("popstate", syncHash);
+
+    return () => {
+      window.removeEventListener("hashchange", syncHash);
+      window.removeEventListener("popstate", syncHash);
     };
   }, [isHome]);
 
-  /* ── Home IntersectionObserver active follow ── */
   useEffect(() => {
-    if (!isHome) return;
+    if (!isHome) return undefined;
 
     let observer = null;
     let timer = null;
@@ -198,13 +203,17 @@ export default function NavGlobal({ mode }) {
     const MAX_TRIES = 8;
 
     const setup = () => {
-      const targets = HOME_ITEMS
-        .map((item) => document.querySelector(item.href))
-        .filter(Boolean);
+      const targets = HOME_ITEMS.map((item) =>
+        document.querySelector(item.href)
+      ).filter(Boolean);
 
       if (!targets.length) {
         tries += 1;
-        if (tries <= MAX_TRIES) timer = window.setTimeout(setup, 180);
+
+        if (tries <= MAX_TRIES) {
+          timer = window.setTimeout(setup, 180);
+        }
+
         return;
       }
 
@@ -214,7 +223,9 @@ export default function NavGlobal({ mode }) {
           if (!visible.length) return;
 
           visible.sort((a, b) => {
-            const ratio = (b.intersectionRatio || 0) - (a.intersectionRatio || 0);
+            const ratio =
+              (b.intersectionRatio || 0) - (a.intersectionRatio || 0);
+
             if (ratio) return ratio;
 
             return (
@@ -227,6 +238,7 @@ export default function NavGlobal({ mode }) {
           if (!id) return;
 
           const next = `#${id}`;
+
           setActiveHash((prev) => (prev === next ? prev : next));
         },
         {
@@ -246,7 +258,6 @@ export default function NavGlobal({ mode }) {
     };
   }, [isHome]);
 
-  /* ── Close → then scroll ── */
   useEffect(() => {
     if (open) return;
 
@@ -254,11 +265,19 @@ export default function NavGlobal({ mode }) {
     if (!pending) return;
 
     pendingHashRef.current = null;
-    requestAnimationFrame(() => scrollToHash(pending));
+
+    requestAnimationFrame(() => {
+      scrollToHash(pending);
+    });
   }, [open]);
 
-  const closeMenu = useCallback(() => setOpen(false), []);
-  const toggleMenu = useCallback(() => setOpen((value) => !value), []);
+  const closeMenu = useCallback(() => {
+    setOpen(false);
+  }, []);
+
+  const toggleMenu = useCallback(() => {
+    setOpen((value) => !value);
+  }, []);
 
   const handleAnchorClick = useCallback(
     (href) => (e) => {
@@ -277,9 +296,6 @@ export default function NavGlobal({ mode }) {
     [open]
   );
 
-  const homeLinks = useMemo(() => HOME_ITEMS, []);
-  const globalLinks = useMemo(() => GLOBAL_ITEMS, []);
-
   const renderPcHomeLink = (item, index) => {
     const active = activeHash === item.href;
 
@@ -288,27 +304,16 @@ export default function NavGlobal({ mode }) {
         key={item.href}
         href={item.href}
         onClick={handleAnchorClick(item.href)}
-        className="gd-nav-sharp group relative pb-3 no-underline transition-colors duration-300 focus-visible:outline-none focus-visible:rounded"
-        style={{
-          "--nav-delay": `${0.24 + index * 0.07}s`,
-          fontSize: "0.74rem",
-          fontWeight: 300,
-          letterSpacing: "0.22em",
-          color: active
-            ? WHITE
-            : item.emphasis
-              ? "rgba(217,185,138,0.72)"
-              : "rgba(255,255,255,0.50)",
-          paddingTop: "6px",
-          position: "relative",
-        }}
+        className={cx(
+          styles.navItem,
+          styles.sharpIn,
+          active && styles.navItemActive,
+          item.emphasis && styles.navItemEmphasis
+        )}
+        style={{ "--nav-delay": `${0.24 + index * 0.07}s` }}
       >
-        <span className="relative z-[1] transition-colors duration-300 group-hover:text-white/92">
-          {item.label}
-        </span>
-
-        <span className="gd-nav-sheen" aria-hidden="true" />
-        <NavUnderline active={active} />
+        <span className={styles.navItemText}>{item.label}</span>
+        <span className={styles.navSheen} aria-hidden="true" />
       </a>
     );
   };
@@ -320,27 +325,16 @@ export default function NavGlobal({ mode }) {
       <Link
         key={item.to}
         to={item.to}
-        className="gd-nav-sharp group relative pb-3 no-underline transition-colors duration-300 focus-visible:outline-none focus-visible:rounded"
-        style={{
-          "--nav-delay": `${0.24 + index * 0.07}s`,
-          fontSize: "0.74rem",
-          fontWeight: 300,
-          letterSpacing: "0.22em",
-          color: active
-            ? WHITE
-            : item.emphasis
-              ? "rgba(217,185,138,0.72)"
-              : "rgba(255,255,255,0.50)",
-          paddingTop: "6px",
-          position: "relative",
-        }}
+        className={cx(
+          styles.navItem,
+          styles.sharpIn,
+          active && styles.navItemActive,
+          item.emphasis && styles.navItemEmphasis
+        )}
+        style={{ "--nav-delay": `${0.24 + index * 0.07}s` }}
       >
-        <span className="relative z-[1] transition-colors duration-300 group-hover:text-white/92">
-          {item.label}
-        </span>
-
-        <span className="gd-nav-sheen" aria-hidden="true" />
-        <NavUnderline active={active} />
+        <span className={styles.navItemText}>{item.label}</span>
+        <span className={styles.navSheen} aria-hidden="true" />
       </Link>
     );
   };
@@ -349,268 +343,60 @@ export default function NavGlobal({ mode }) {
 
   const ui = (
     <>
-      <style>{`
-        html.scroll-lock,
-        body.scroll-lock {
-          overflow: hidden;
-          overscroll-behavior: none;
-        }
-
-        .gd-nav-sharp {
-          opacity: 0;
-          transform: translate3d(-10px, 0, 0) scale(0.985);
-          filter: brightness(0.9);
-          clip-path: inset(0 100% 0 0);
-          animation: gdNavSharpIn 0.72s cubic-bezier(.22,.56,.18,1) var(--nav-delay, 0s) forwards;
-          will-change: opacity, transform, filter, clip-path;
-        }
-
-        .gd-nav-sheen {
-          position: absolute;
-          left: -10%;
-          top: 50%;
-          z-index: 0;
-          width: 42%;
-          height: 1px;
-          pointer-events: none;
-          background: linear-gradient(
-            90deg,
-            rgba(255,255,255,0),
-            rgba(255,255,255,0.46),
-            rgba(217,185,138,0.32),
-            rgba(255,255,255,0)
-          );
-          opacity: 0;
-          transform: translate3d(-18px, -50%, 0) scaleX(0.25);
-          transform-origin: left center;
-          animation: gdNavSheen 0.56s cubic-bezier(.22,.56,.18,1) calc(var(--nav-delay, 0s) + 0.15s) forwards;
-        }
-
-        .gd-nav-logo-seal {
-          position: relative;
-          display: grid;
-          place-items: center;
-          width: 34px;
-          height: 34px;
-          flex-shrink: 0;
-        }
-
-        .gd-nav-logo-mask {
-          width: 100%;
-          height: 100%;
-          display: block;
-
-          background:
-            linear-gradient(
-              145deg,
-              rgba(225, 216, 196, 0.92) 0%,
-              rgba(196, 177, 143, 0.90) 24%,
-              rgba(149, 126, 91, 0.88) 50%,
-              rgba(218, 207, 186, 0.92) 73%,
-              rgba(130, 109, 79, 0.88) 100%
-            );
-
-          -webkit-mask: var(--logo-url) center / contain no-repeat;
-          mask: var(--logo-url) center / contain no-repeat;
-
-          filter:
-            drop-shadow(0 0 0.5px rgba(255,255,255,0.08))
-            drop-shadow(0 2px 8px rgba(0,0,0,0.24))
-            drop-shadow(0 0 16px rgba(217,185,138,0.035));
-
-          opacity: 0.92;
-
-          transition:
-            opacity 0.4s ease,
-            filter 0.4s ease,
-            transform 0.4s ease;
-        }
-
-        .gd-nav-logo-seal::after {
-          content: "";
-          position: absolute;
-          inset: -5px;
-          border-radius: 9999px;
-          pointer-events: none;
-          background:
-            radial-gradient(
-              circle at 50% 50%,
-              rgba(217,185,138,0.08),
-              rgba(217,185,138,0.025) 38%,
-              transparent 70%
-            );
-          opacity: 0.48;
-          filter: blur(0.2px);
-        }
-
-        .gd-nav-logo-seal:hover .gd-nav-logo-mask {
-          opacity: 1;
-          transform: translateY(-0.5px);
-          filter:
-            drop-shadow(0 0 0.5px rgba(255,255,255,0.12))
-            drop-shadow(0 3px 10px rgba(0,0,0,0.28))
-            drop-shadow(0 0 18px rgba(217,185,138,0.055));
-        }
-
-        .gd-nav-mobile-link {
-          transform: translate3d(0, 6px, 0);
-          opacity: 0;
-        }
-
-        .gd-nav-panel-open .gd-nav-mobile-link {
-          animation: gdNavMobileIn 0.62s cubic-bezier(.22,.56,.18,1) forwards;
-        }
-
-        @keyframes gdNavSharpIn {
-          0% {
-            opacity: 0;
-            transform: translate3d(-10px, 0, 0) scale(0.985);
-            filter: brightness(0.88);
-            clip-path: inset(0 100% 0 0);
-          }
-
-          68% {
-            opacity: 1;
-            filter: brightness(1.06);
-          }
-
-          100% {
-            opacity: 1;
-            transform: translate3d(0, 0, 0) scale(1);
-            filter: brightness(1);
-            clip-path: inset(0 0 0 0);
-          }
-        }
-
-        @keyframes gdNavSheen {
-          0% {
-            opacity: 0;
-            transform: translate3d(-18px, -50%, 0) scaleX(0.25);
-          }
-
-          24% {
-            opacity: 0.72;
-          }
-
-          100% {
-            opacity: 0;
-            transform: translate3d(92px, -50%, 0) scaleX(1);
-          }
-        }
-
-        @keyframes gdNavMobileIn {
-          to {
-            opacity: 1;
-            transform: translate3d(0, 0, 0);
-          }
-        }
-
-        @media (max-width: 767px) {
-          .gd-nav-logo-seal {
-            width: 30px;
-            height: 30px;
-          }
-
-          .gd-nav-sheen {
-            display: none;
-          }
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-          .gd-nav-sharp,
-          .gd-nav-sheen,
-          .gd-nav-mobile-link {
-            animation: none !important;
-            opacity: 1 !important;
-            transform: none !important;
-            filter: none !important;
-            clip-path: none !important;
-          }
-        }
-      `}</style>
-
-      {/* NAV BAR */}
       <nav
-        className="fixed left-0 top-0 z-[9998] w-full transition-all duration-500"
-        style={{
-          height: NAV_HEIGHT,
-          background: scrolled ? "rgba(6,6,6,0.84)" : "rgba(0,0,0,0.10)",
-          backdropFilter: scrolled
-            ? "blur(18px) saturate(130%)"
-            : "blur(10px) saturate(115%)",
-          WebkitBackdropFilter: scrolled
-            ? "blur(18px) saturate(130%)"
-            : "blur(10px) saturate(115%)",
-          borderBottom: scrolled
-            ? "1px solid rgba(255,255,255,0.09)"
-            : "1px solid rgba(255,255,255,0.045)",
-          boxShadow: scrolled
-            ? `0 1px 0 ${ACCENT_SOFT}, 0 12px 42px rgba(0,0,0,0.28)`
-            : "none",
-        }}
+        className={cx(
+          styles.navRoot,
+          scrolled ? styles.navActive : styles.navIdle
+        )}
+        aria-label="Global Navigation"
       >
-        <div className="mx-auto flex h-full max-w-6xl items-center justify-between px-6 sm:px-8">
-          {/* Logo */}
+        <div className={styles.navInner}>
           <Link
             to="/"
             translate="no"
-            onClick={() => open && closeMenu()}
-            className="group flex items-center gap-3 text-white/94 no-underline transition-opacity duration-300 hover:opacity-86
-                       focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#d9b98a]/40 focus-visible:ring-offset-2 focus-visible:ring-offset-black focus-visible:rounded"
+            onClick={() => {
+              if (open) closeMenu();
+            }}
+            className={styles.navLogo}
             aria-label="GUSHIKEN DESIGN Home"
           >
             <span
-              className="gd-nav-sharp gd-nav-logo-seal"
+              className={cx(styles.navLogoSeal, styles.sharpIn)}
               aria-hidden="true"
-              style={{ "--nav-delay": "0.04s" }}
+              style={{
+                "--nav-delay": "0.04s",
+                "--logo-url": `url(${LOGO_SRC})`,
+              }}
             >
-              <span
-                className="gd-nav-logo-mask"
-                style={{ "--logo-url": `url(${LOGO_SRC})` }}
-              />
-              <span className="gd-nav-sheen" aria-hidden="true" />
+              <span className={styles.navLogoMask} />
+              <span className={styles.navSheen} aria-hidden="true" />
             </span>
 
-            <span className="flex flex-col gap-[0.14rem] leading-none">
+            <span className={styles.navLogoText}>
               <span
-                className="gd-nav-sharp relative inline-block"
-                style={{
-                  "--nav-delay": "0.10s",
-                  fontSize: "0.78rem",
-                  fontWeight: 300,
-                  letterSpacing: "0.24em",
-                  color: "rgba(255,255,255,0.90)",
-                }}
+                className={cx(styles.navLogoMain, styles.sharpIn)}
+                style={{ "--nav-delay": "0.1s" }}
               >
                 GUSHIKEN DESIGN
-                <span className="gd-nav-sheen" aria-hidden="true" />
+                <span className={styles.navSheen} aria-hidden="true" />
               </span>
 
               <span
-                className="gd-nav-sharp relative hidden sm:inline-block"
-                style={{
-                  "--nav-delay": "0.16s",
-                  fontFamily: "'Cormorant Garamond', Georgia, serif",
-                  fontSize: "0.7rem",
-                  fontWeight: 300,
-                  letterSpacing: "0.2em",
-                  color: "rgba(201,190,169,0.58)",
-                }}
+                className={cx(styles.navLogoSub, styles.sharpIn)}
+                style={{ "--nav-delay": "0.16s" }}
               >
                 Web Design / Okinawa
-                <span className="gd-nav-sheen" aria-hidden="true" />
+                <span className={styles.navSheen} aria-hidden="true" />
               </span>
             </span>
           </Link>
 
-          {/* PC Links */}
-          <div className="hidden items-center gap-10 md:flex">
+          <div className={styles.navPc}>
             {isHome
               ? homeLinks.map(renderPcHomeLink)
               : globalLinks.map(renderPcGlobalLink)}
           </div>
 
-          {/* Hamburger */}
           <button
             ref={buttonRef}
             type="button"
@@ -618,197 +404,101 @@ export default function NavGlobal({ mode }) {
             aria-expanded={open}
             aria-controls="global-mobile-navigation"
             onClick={toggleMenu}
-            className="relative z-[10000] flex h-[20px] w-[28px] flex-col justify-between md:hidden
-                       focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#d9b98a]/40 focus-visible:ring-offset-4 focus-visible:ring-offset-black"
+            className={cx(styles.hamburger, open && styles.hamburgerOpen)}
           >
-            {[0, 1, 2].map((i) => (
-              <span
-                key={i}
-                style={{
-                  width: i === 2 && !open ? "58%" : "100%",
-                  marginLeft: i === 2 && !open ? "auto" : 0,
-                  background:
-                    i === 1
-                      ? "rgba(201,190,169,0.68)"
-                      : "rgba(255,255,255,0.78)",
-                }}
-                className={`h-px rounded transition-all duration-[420ms]
-                  ${i === 0 && open ? "translate-y-[9.5px] rotate-45" : ""}
-                  ${i === 1 && open ? "opacity-0" : ""}
-                  ${i === 2 && open ? "-translate-y-[9.5px] -rotate-45 !w-full !ml-0" : ""}
-                `}
-              />
-            ))}
+            <span />
+            <span />
+            <span />
           </button>
         </div>
       </nav>
 
-      {/* MOBILE OVERLAY */}
       <div
-        className={`fixed inset-0 z-[9996] transition-all duration-[360ms] md:hidden
-          ${open ? "opacity-100" : "pointer-events-none opacity-0"}`}
-        style={{
-          background: "rgba(0,0,0,0.42)",
-          backdropFilter: "blur(6px)",
-          WebkitBackdropFilter: "blur(6px)",
-          overscrollBehavior: "contain",
-        }}
+        className={cx(
+          styles.mobileOverlay,
+          open && styles.mobileOverlayOpen
+        )}
         onClick={closeMenu}
-        aria-hidden={!open}
+        aria-hidden="true"
       />
 
-      {/* MOBILE PANEL */}
       <div
         ref={panelRef}
         id="global-mobile-navigation"
-        className={`fixed left-[14px] right-[14px] top-[84px] z-[9997]
-          mx-auto max-h-[calc(100svh-108px)] max-w-[404px]
-          overflow-y-auto rounded-[22px]
-          transition-all duration-[360ms] md:hidden
-          ${open ? "gd-nav-panel-open translate-y-0 opacity-100" : "pointer-events-none -translate-y-2 opacity-0"}`}
-        style={{
-          background:
-            "radial-gradient(circle at 14% 0%, rgba(217,185,138,0.055), transparent 32%), linear-gradient(180deg, rgba(12,12,12,0.985), rgba(7,7,7,0.965))",
-          border: "1px solid rgba(255,255,255,0.085)",
-          borderTop: `1px solid ${ACCENT_DIM}`,
-          boxShadow: `
-            0 0 0 0.5px ${ACCENT_GLOW},
-            0 24px 70px rgba(0,0,0,0.54),
-            inset 0 1px 0 rgba(255,255,255,0.045)
-          `,
-          backdropFilter: "blur(16px) saturate(125%)",
-          WebkitBackdropFilter: "blur(16px) saturate(125%)",
-          overscrollBehavior: "contain",
-          WebkitOverflowScrolling: "touch",
-        }}
+        className={cx(styles.mobileNav, open && styles.mobileOpen)}
         role="dialog"
         aria-modal="true"
         aria-hidden={!open}
       >
-        <div className="flex flex-col px-5 pb-[1.35rem] pt-[1.1rem]">
-          <div
-            className="mb-3 flex items-center justify-between pb-[0.85rem]"
-            style={{ borderBottom: "1px solid rgba(255,255,255,0.06)" }}
-          >
-            <p
-              className="m-0 flex items-center gap-[0.55rem]"
-              style={{
-                fontSize: "0.64rem",
-                letterSpacing: "0.28em",
-                color: WHITE_DIM,
-              }}
-            >
-              <span
-                aria-hidden="true"
-                style={{
-                  display: "block",
-                  width: 16,
-                  height: 1,
-                  background: `linear-gradient(90deg, ${ACCENT}, rgba(255,255,255,0.18))`,
-                  opacity: 0.62,
-                  flexShrink: 0,
-                }}
-              />
-              MENU
-            </p>
+        <div className={styles.mobileNavInner}>
+          <div className={styles.mobileNavTop}>
+            <p className={styles.mobileNavLabel}>MENU</p>
 
             <button
               type="button"
               onClick={() => {
                 setOpen(false);
-                setTimeout(() => buttonRef.current?.focus(), 0);
+                window.setTimeout(() => {
+                  buttonRef.current?.focus();
+                }, 0);
               }}
               aria-label="Close navigation"
               tabIndex={open ? 0 : -1}
-              className="relative h-8 w-8 rounded-full transition duration-300 hover:bg-white/5
-                         focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#d9b98a]/40"
-              style={{
-                border: "1px solid rgba(255,255,255,0.08)",
-                background: "rgba(255,255,255,0.018)",
-              }}
+              className={styles.mobileClose}
             >
-              <span className="absolute left-[9px] top-[15px] h-px w-[14px] rotate-45 rounded bg-white/62" />
-              <span className="absolute left-[9px] top-[15px] h-px w-[14px] -rotate-45 rounded bg-white/62" />
+              <span />
+              <span />
             </button>
           </div>
 
-          <div className="flex flex-col">
+          <div className={styles.mobileNavLinks}>
             {isHome
-              ? homeLinks.map((item, i) => {
+              ? homeLinks.map((item, index) => {
                   const active = activeHash === item.href;
 
                   return (
                     <a
                       key={item.href}
                       href={item.href}
-                      ref={i === 0 ? firstLinkRef : null}
+                      ref={index === 0 ? firstLinkRef : null}
                       tabIndex={open ? 0 : -1}
                       onClick={handleAnchorClick(item.href)}
-                      className="gd-nav-mobile-link group flex items-center justify-between py-[15px] no-underline transition-[transform,color] duration-300
-                                 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#d9b98a]/40 focus-visible:rounded"
-                      style={{
-                        animationDelay: `${0.04 + i * 0.055}s`,
-                        borderBottom:
-                          i < homeLinks.length - 1
-                            ? "1px solid rgba(255,255,255,0.055)"
-                            : "none",
-                        color: active
-                          ? ACCENT
-                          : item.emphasis
-                            ? "rgba(217,185,138,0.72)"
-                            : "rgba(255,255,255,0.74)",
-                      }}
+                      className={cx(
+                        styles.mobileNavItem,
+                        active && styles.mobileNavItemActive,
+                        item.emphasis && styles.mobileNavItemEmphasis
+                      )}
+                      style={{ "--i": index }}
                     >
-                      <MobileLinkInner label={item.label} active={active} />
+                      <MobileLinkInner label={item.label} />
                     </a>
                   );
                 })
-              : globalLinks.map((item, i) => {
+              : globalLinks.map((item, index) => {
                   const active = pathname === item.to;
 
                   return (
                     <Link
                       key={item.to}
                       to={item.to}
-                      ref={i === 0 ? firstLinkRef : null}
+                      ref={index === 0 ? firstLinkRef : null}
                       tabIndex={open ? 0 : -1}
                       onClick={() => setOpen(false)}
-                      className={`gd-nav-mobile-link group flex items-center justify-between py-[15px] no-underline
-                                  transition-[transform,color] duration-300
-                                  focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#d9b98a]/40 focus-visible:rounded
-                                  ${active ? "" : "hover:translate-x-[3px] hover:text-white/95"}`}
-                      style={{
-                        animationDelay: `${0.04 + i * 0.055}s`,
-                        borderBottom:
-                          i < globalLinks.length - 1
-                            ? "1px solid rgba(255,255,255,0.055)"
-                            : "none",
-                        color: active
-                          ? ACCENT
-                          : item.emphasis
-                            ? "rgba(217,185,138,0.72)"
-                            : "rgba(255,255,255,0.74)",
-                      }}
+                      className={cx(
+                        styles.mobileNavItem,
+                        active && styles.mobileNavItemActive,
+                        item.emphasis && styles.mobileNavItemEmphasis
+                      )}
+                      style={{ "--i": index }}
                     >
-                      <MobileLinkInner label={item.label} active={active} />
+                      <MobileLinkInner label={item.label} />
                     </Link>
                   );
                 })}
           </div>
 
-          <div
-            className="mt-4 pt-[0.95rem]"
-            style={{ borderTop: "1px solid rgba(255,255,255,0.055)" }}
-          >
-            <p
-              style={{
-                margin: 0,
-                fontSize: "0.67rem",
-                lineHeight: 1.8,
-                letterSpacing: "0.1em",
-                color: "rgba(255,255,255,0.24)",
-              }}
-            >
+          <div className={styles.mobileNavFooter}>
+            <p className={styles.mobileNavNote}>
               Structure, atmosphere, and trust.
             </p>
           </div>
@@ -820,50 +510,11 @@ export default function NavGlobal({ mode }) {
   return createPortal(ui, document.body);
 }
 
-function NavUnderline({ active }) {
+function MobileLinkInner({ label }) {
   return (
     <>
-      <span
-        aria-hidden="true"
-        className="pointer-events-none absolute bottom-0 left-0 h-px transition-all duration-500"
-        style={{
-          width: active ? "100%" : "0%",
-          opacity: active ? 0.76 : 0,
-          background: `linear-gradient(to right, transparent, ${ACCENT}, rgba(255,255,255,0.18), transparent)`,
-        }}
-      />
-
-      <span
-        aria-hidden="true"
-        className="pointer-events-none absolute bottom-0 left-0 h-px w-0 opacity-0 transition-all duration-500 group-hover:w-full group-hover:opacity-50"
-        style={{
-          background: `linear-gradient(to right, transparent, ${ACCENT}, rgba(255,255,255,0.16), transparent)`,
-        }}
-      />
-    </>
-  );
-}
-
-function MobileLinkInner({ label, active }) {
-  return (
-    <>
-      <span
-        style={{
-          fontSize: "0.9rem",
-          fontWeight: 300,
-          letterSpacing: "0.14em",
-        }}
-      >
-        {label}
-      </span>
-
-      <span
-        className={`text-[0.75rem] transition-[transform,color] duration-300 ${
-          active
-            ? "text-[rgba(217,185,138,0.58)]"
-            : "text-white/28 group-hover:translate-x-[2px] group-hover:text-white/50"
-        }`}
-      >
+      <span className={styles.mobileNavText}>{label}</span>
+      <span className={styles.mobileNavArrow} aria-hidden="true">
         →
       </span>
     </>

@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
 
-import Nav from "./components/Nav";
+
 import NavGlobal from "./components/NavGlobal";
 import Footer from "./components/FOOTER";
 import ScrollToTop from "./components/ScrollToTop";
@@ -73,14 +73,12 @@ import Layer0 from "./pages/Layer0";
 =========================================================================== */
 
 function Layout() {
-  const { pathname } = useLocation();
-  const isHome = pathname === "/";
 
   return (
     <>
       <ScrollToTop />
 
-      {isHome ? <Nav /> : <NavGlobal />}
+   <NavGlobal />
 
       <main id="page-root">
         <Routes>
