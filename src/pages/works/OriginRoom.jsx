@@ -38,6 +38,12 @@ const originKeys = [
     en: "ESSENCE",
     text: "原因を辿り、最後に残る核を確かめる入口。",
   },
+  {
+    id: "07",
+    label: "因果",
+    en: "CAUSALITY",
+    text: "結果の手前にある原因・地形・順番を読み、起こるべき反応を整える入口。",
+  },
 ];
 
 export default function OriginRoom() {
@@ -363,6 +369,14 @@ export default function OriginRoom() {
               </div>
             ))}
           </div>
+
+          <p className="origin-pre-reveal mx-auto mt-14 max-w-[720px] text-center text-[13px] leading-[2.25] text-white/42">
+            感性で受け取り、直感で違和感を掴む。
+            <br />
+            革命で前提を動かし、心理で反応を読む。
+            <br />
+            構造で世界を組み、本質で核へ潜り、因果で結果の手前を整える。
+          </p>
         </div>
       </section>
 
