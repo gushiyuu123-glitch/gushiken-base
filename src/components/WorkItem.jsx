@@ -47,19 +47,18 @@ export default function WorkItem({
   }, [tags, createdAt]);
 
   /**
-   * 重要：
-   * revealIndexを全体通しで遅延させると、
-   * 3段目・4段目が「遅いカード」に見える。
+   * PCは列ごとに軽くズラす。
+   * ただしCSS側を“ふわっ”寄りに長くしているので、
+   * JS側のdelayは少し短めにして重さを出しすぎない。
    *
-   * だからPCは列ごとにズラし、段ではリセットする。
    * SPは1カラムなので遅延なし。
    */
   const revealDelay = useMemo(() => {
     const index = toSafeIndex(revealIndex);
 
     return {
-      desktop: (index % 3) * 150,
-      tablet: (index % 2) * 130,
+      desktop: (index % 3) * 120,
+      tablet: (index % 2) * 100,
       mobile: 0,
     };
   }, [revealIndex]);
@@ -105,11 +104,12 @@ export default function WorkItem({
       },
       {
         /**
-         * ちらっと見えただけでは出さない。
-         * ただし遅すぎもしない、自然な発火位置。
+         * CSS側のtransitionが長めなので、
+         * 少し早めに発火させて「出てきた瞬間」ではなく
+         * 「空気に浮かび上がってくる」感じにする。
          */
-    threshold: isMobile ? 0.06 : 0.22,
-    rootMargin: isMobile ? "0px 0px 12% 0px" : "0px 0px -14% 0px",
+        threshold: isMobile ? 0.04 : 0.14,
+        rootMargin: isMobile ? "0px 0px 16% 0px" : "0px 0px -6% 0px",
       }
     );
 
@@ -248,7 +248,7 @@ export default function WorkItem({
             inline-flex items-center gap-2
             text-[0.68rem] tracking-[0.18em]
             text-[rgba(201,177,138,0.62)]
-            transition-colors duration-[360ms] ease-out
+            transition-colors duration-[420ms] ease-out
             group-hover:text-[rgba(238,226,204,0.92)]
             md:text-[0.74rem] md:tracking-[0.24em]
           "
