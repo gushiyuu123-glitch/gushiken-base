@@ -6,30 +6,33 @@ import "./works.css";
 
 const FEATURED_WORKS = [
   {
+    title: "UMIKAJI",
+    meta: "Awamori Brand / Okinawa × Gift Value",
+    href: "https://umikaji-awamori.vercel.app/",
+    imagePc: "/works/umikaji-pc.webp",
+    imageSp: "/works/umikaji-sp.webp",
+    alt: "UMIKAJI AWAMORI｜泡盛ブランドサイト制作（沖縄・贈り物・高級感・世界観設計）",
+    label: "UMIKAJI AWAMORI のサイトを見る",
+    size: "large",
+  },
+  {
     title: "VELMONT",
     meta: "Luxury Auto / Trust × Precision",
     href: "https://velmont-virid.vercel.app/",
-    image: "/works/velmonte2.webp",
+    imagePc: "/works/velmonte2.webp",
+    imageSp: "/works/velmonte2-sp.webp",
     alt: "VELMONT｜高級車ショールームサイト制作（信頼感・高級感・導線設計）",
     label: "VELMONT のサイトを見る",
-    size: "large",
+    size: "medium",
   },
   {
     title: "NEXUS",
     meta: "Corporate IT / Trust × Workflow Design",
     href: "https://nexus-integration-partners.vercel.app/",
-    image: "/works/nexus.webp",
+    imagePc: "/works/nexus.webp",
+    imageSp: "/works/nexus-sp.webp",
     alt: "NEXUS Integration Partners｜業務システム導入企業のコーポレートサイト制作（情報設計・信頼感・スマートフォン最適化）",
     label: "NEXUS Integration Partners のサイトを見る",
-    size: "medium",
-  },
-  {
-    title: "ROSE VEIL",
-    meta: "Fragrance EC / Luxury × Visual Air",
-    href: "https://rose-veil.vercel.app/",
-    image: "/assets/roseveil2.webp",
-    alt: "ROSE VEIL｜香り系ブランドのECサイト制作（上品・空気感・EC導線）",
-    label: "ROSE VEIL のサイトを見る",
     size: "small",
   },
 ];
@@ -131,11 +134,7 @@ export default function Works() {
           data-reveal
           data-reveal-delay="0"
         >
-          <SectionSvgTitle
-            title="WORKS"
-            sub="SELECTED WORKS"
-            count="03"
-          />
+          <SectionSvgTitle title="WORKS" sub="SELECTED WORKS" count="03" />
 
           <p className="works-lead">
             最初に、代表作だけを置く。
@@ -165,16 +164,23 @@ export default function Works() {
                 className={`work-card work-card-reveal work-card-${work.size}`}
                 aria-label={work.label}
                 data-reveal
-              data-reveal-delay={String([0, 80, 100][index] ?? 0)}
+                data-reveal-delay={String([0, 80, 120][index] ?? 0)}
               >
                 <span className="work-image-wrap" aria-hidden="true">
-                  <img
-                    src={work.image}
-                    alt=""
-                    loading="lazy"
-                    decoding="async"
-                    draggable="false"
-                  />
+                  <picture>
+                    <source
+                      media="(max-width: 767px)"
+                      srcSet={work.imageSp || work.imagePc}
+                    />
+                    <img
+                      src={work.imagePc}
+                      alt=""
+                      loading={index === 0 ? "eager" : "lazy"}
+                      fetchPriority={index === 0 ? "high" : "auto"}
+                      decoding="async"
+                      draggable="false"
+                    />
+                  </picture>
                 </span>
 
                 <span className="work-veil" aria-hidden="true" />

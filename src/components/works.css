@@ -799,3 +799,22 @@
 .works-svg-title {
   max-width: 100%;
 }
+.work-image-wrap picture {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.work-image-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: var(--work-object-position-pc, center center);
+  display: block;
+}
+
+@media (max-width: 767px) {
+  .work-image-wrap img {
+    object-position: var(--work-object-position-sp, center center);
+  }
+}
