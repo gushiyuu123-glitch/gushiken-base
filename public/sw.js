@@ -4,7 +4,7 @@
 // =====================================================
 
 const CACHE_PREFIX = "gushiken-design-";
-const CACHE_STAMP = "v20260425-pwa-safe-01";
+const CACHE_STAMP = "v20260429210748";
 const CACHE_NAME = `${CACHE_PREFIX}${CACHE_STAMP}`;
 
 const STATIC_ASSETS = [
