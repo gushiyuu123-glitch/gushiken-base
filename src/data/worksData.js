@@ -10,6 +10,49 @@ export const worksData = [
 subtitle: "世界観と設計力の“核”を示す代表作",
   accent: true,
   items: [
+    {
+  title: "UMIKAJI — Okinawa Awamori Brand",
+  slug: "UmikajiRoom",
+  desc: "沖縄 × 海風 × 泡盛。伝統を、静かな高級感と余白で再構築したブランドサイト。",
+  link: "https://umikaji-awamori.vercel.app/",
+  img: "/works/umikaji-pc.webp",
+  isNew: true,
+  createdAt: "2026-04-29",
+  tags: [
+    "NEW",
+    "PICKUP",
+    "Okinawa",
+    "Awamori",
+    "Branding",
+    "Product",
+    "Luxury",
+    "Japanese",
+    "UI/UX",
+    "PC/SP 完全分離"
+  ],
+
+  detail: {
+    concept:
+      "沖縄の泡盛を、土産物的な見せ方ではなく“静かな余韻を持つブランド”として再構築した作品。海風、黒麹、硝子、夜の気配を軸に、商品写真・余白・タイポグラフィ・スクロール演出を一体化。伝統感を残しながら、現代的で上質なブランド体験として成立させることを目指した。",
+    tech: [
+      "React",
+      "Vite",
+      "CSS Modules",
+      "GSAP",
+      "IntersectionObserver",
+      "PC/SP 完全分離"
+    ]
+  },
+
+  seo: {
+    title: "UMIKAJI｜沖縄の泡盛を上質に見せるブランドサイト｜GUSHIKEN DESIGN",
+    description:
+      "UMIKAJIは、沖縄の泡盛を静かな高級感と余白で再構築したブランドサイト。海風、黒麹、硝子、夜の気配を軸に、商品写真・タイポグラフィ・導線を統合した制作例。",
+    keywords:
+      "泡盛サイト, 沖縄ブランドサイト, 商品LP, 酒ブランドデザイン, 高級感デザイン, 沖縄 Web制作, React, GUSHIKEN DESIGN",
+    ogImage: "https://gushikendesign.com/ogp/umikaji.png"
+  }
+},
         {
       title: "VELMONT — Luxury Auto Showroom",
       slug: "VelmontRoom",
