@@ -238,13 +238,13 @@ export default function FloatingFAQ() {
     };
   }, [isOpen]);
 
-  const panelProps = useMemo(() => {
-    return {
-      "data-open": isOpen ? "true" : "false",
-      "aria-hidden": isOpen ? "false" : "true",
-      ...(!isOpen ? { inert: "" } : {}),
-    };
-  }, [isOpen]);
+const panelProps = useMemo(() => {
+  return {
+    "data-open": isOpen ? "true" : "false",
+    "aria-hidden": !isOpen,
+    ...(!isOpen ? { inert: true } : {}),
+  };
+}, [isOpen]);
 
   return (
     <div ref={wrapRef} className="floating-faq-wrap">
