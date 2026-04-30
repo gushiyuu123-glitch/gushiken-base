@@ -15,7 +15,7 @@ subtitle: "世界観と設計力の“核”を示す代表作",
   slug: "UmikajiRoom",
   desc: "沖縄 × 海風 × 泡盛。伝統を、静かな高級感と余白で再構築したブランドサイト。",
   link: "https://umikaji-awamori.vercel.app/",
-  img: "/works/umikaji-pc.webp",
+  img: "/works/umikaji-pc2.webp",
   isNew: true,
   createdAt: "2026-04-29",
   tags: [
