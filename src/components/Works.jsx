@@ -9,7 +9,7 @@ const FEATURED_WORKS = [
     title: "UMIKAJI",
     meta: "Awamori Brand / Okinawa × Gift Value",
     href: "https://umikaji-awamori.vercel.app/",
-    imagePc: "/works/umikaji-pc.webp",
+    imagePc: "/works/umikaji-pc2.webp",
     imageSp: "/works/umikaji-sp.webp",
     alt: "UMIKAJI AWAMORI｜泡盛ブランドサイト制作（沖縄・贈り物・高級感・世界観設計）",
     label: "UMIKAJI AWAMORI のサイトを見る",
