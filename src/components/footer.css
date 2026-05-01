@@ -905,3 +905,35 @@ display: none;
     filter: none !important;
   }
 }
+/* Footer brand name -> SVG mark (mask paint) */
+.footer-brand-name {
+  display: block;
+  line-height: 1;
+}
+
+/* “GushikenDesign.svg” を色付きで描画（色は currentColor ＝既存の文字色） */
+.footer-brand-name-mark {
+  display: block;
+
+  /* サイズはまずこれで “だいたい合う” → 必要なら width だけ微調整 */
+ width: clamp(136px, 15vw, 196px);
+  aspect-ratio: 961 / 296;
+
+  background: currentColor;
+  opacity: 0.92;
+
+  -webkit-mask: url("/typography/GushikenDesign.svg") left center / contain
+    no-repeat;
+  mask: url("/typography/GushikenDesign.svg") left center / contain no-repeat;
+
+  transform: translate3d(0, 1px, 0);
+
+  filter:
+    drop-shadow(0 0 10px rgba(255, 255, 255, 0.02))
+    drop-shadow(0 0 14px rgba(217, 185, 138, 0.04));
+}
+@media (max-width: 480px) {
+  .footer-brand-name-mark {
+    width: 156px;
+  }
+}

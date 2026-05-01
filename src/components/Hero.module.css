@@ -49,173 +49,41 @@
 .heroFade5 { animation-delay: 0.44s; }
 
 /* ------------------------------------------------------------
-   SVG Title Signature
-   - GUSHIKEN DESIGN を “刻印・署名・金属線” として起こす
+   Title (IMG SVG)
+   - でかい＆浮く を潰す調整版
 ------------------------------------------------------------ */
 .heroTitleWrap {
   position: relative;
-  width: min(88vw, 632px);
+  width: clamp(320px, 42vw, 520px); /* 632pxは止める */
   line-height: 1;
   isolation: isolate;
 }
 
-/* 署名の背後に、ほぼ見えない金の余韻 */
-.heroTitleWrap::before {
-  content: "";
-  position: absolute;
-  left: -3%;
-  top: 46%;
-  z-index: -1;
-  width: 72%;
-  height: 1px;
-  background: linear-gradient(
-    90deg,
-    rgba(217, 185, 138, 0),
-    rgba(217, 185, 138, 0.20),
-    rgba(255, 255, 255, 0.08),
-    rgba(217, 185, 138, 0)
-  );
-  opacity: 0;
-  transform: scaleX(0.45);
-  transform-origin: left center;
-  animation: heroTitleAura 1.4s cubic-bezier(.22,.56,.18,1) 0.82s forwards;
-}
-
-/* 一瞬だけ走る細い光 */
+/* 旧署名の光線は“浮き”の原因になりやすいので一旦OFF */
+.heroTitleWrap::before,
 .heroTitleWrap::after {
-  content: "";
-  position: absolute;
-  left: -4%;
-  top: 33%;
-  z-index: 2;
-  width: 34%;
-  height: 1px;
-  background: linear-gradient(
-    90deg,
-    rgba(255,255,255,0),
-    rgba(255,255,255,0.58),
-    rgba(217,185,138,0.42),
-    rgba(255,255,255,0)
-  );
-  opacity: 0;
-  transform: translateX(-42px) scaleX(0.24);
-  transform-origin: left center;
-  filter: drop-shadow(0 0 10px rgba(217,185,138,0.12));
-  animation: heroTitleFlash 0.82s cubic-bezier(.22,.56,.18,1) 0.92s forwards;
-  pointer-events: none;
+  display: none;
 }
 
-.heroTitleSvg {
+.heroTitleImg {
   display: block;
   width: 100%;
   height: auto;
-  overflow: visible;
-}
 
-.heroSvgText {
-  font-family: "Cormorant Garamond", serif;
-  font-size: 76px;
-  font-weight: 300;
-  letter-spacing: 0.205em;
+  /* SVGが黒塗りなら白インク化（白SVGなら invert を外す） */
+  filter: invert(1) brightness(1.04) saturate(0.9);
 
-  fill: rgba(255, 255, 255, 0);
-  stroke-width: 0.74;
-  stroke-linecap: round;
-  stroke-linejoin: round;
+  /* “前に出る”のを沈める */
+  opacity: 0.76;
+  transform: translate3d(0, 7px, 0) scale(0.92);
+  transform-origin: left center;
 
-  stroke-dasharray: 940;
-  stroke-dashoffset: 940;
-
-  filter:
-    drop-shadow(0 0 8px rgba(255, 255, 255, 0.04))
-    drop-shadow(0 0 18px rgba(217, 185, 138, 0.045));
-
-  will-change: stroke-dashoffset, fill, stroke, filter;
-  backface-visibility: hidden;
-  text-rendering: geometricPrecision;
-
-  animation:
-    heroSvgDraw 1.18s cubic-bezier(0.22, 0.1, 0.28, 1) forwards,
-    heroSvgFill 0.92s cubic-bezier(0.22, 0.1, 0.28, 1) forwards,
-    heroSvgSettle 1.8s cubic-bezier(.22,.56,.18,1) forwards;
-}
-
-.heroSvgText1 {
-  animation-delay: 0.04s, 0.84s, 1.16s;
-}
-
-.heroSvgText2 {
-  animation-delay: 0.18s, 1.00s, 1.28s;
-}
-
-@keyframes heroSvgFill {
-  0% {
-    fill: rgba(255, 255, 255, 0);
-  }
-
-  100% {
-    fill: rgba(255, 255, 255, 0.92);
-    stroke: rgba(255, 255, 255, 0.18);
-  }
-}
-
-@keyframes heroSvgSettle {
-  0% {
-    filter:
-      drop-shadow(0 0 10px rgba(255, 255, 255, 0.06))
-      drop-shadow(0 0 22px rgba(217, 185, 138, 0.08));
-  }
-
-  100% {
-    filter:
-      drop-shadow(0 0 4px rgba(255, 255, 255, 0.018))
-      drop-shadow(0 0 12px rgba(217, 185, 138, 0.028));
-  }
-}
-
-@keyframes heroSvgLineDraw {
-  0% {
-    stroke-dashoffset: 94;
-    opacity: 0.25;
-  }
-
-  100% {
-    stroke-dashoffset: 0;
-    opacity: 1;
-  }
-}
-
-@keyframes heroTitleAura {
-  0% {
-    opacity: 0;
-    transform: scaleX(0.45);
-  }
-
-  100% {
-    opacity: 1;
-    transform: scaleX(1);
-  }
-}
-
-@keyframes heroTitleFlash {
-  0% {
-    opacity: 0;
-    transform: translateX(-42px) scaleX(0.24);
-  }
-
-  24% {
-    opacity: 0.85;
-  }
-
-  100% {
-    opacity: 0;
-    transform: translateX(260px) scaleX(1);
-  }
+  /* blendは切る（浮きやすい） */
+  mix-blend-mode: normal;
 }
 
 /* ------------------------------------------------------------
    Scroll indicator (quiet metal line)
-   - “銀の線1本” をさらに金属寄りに
 ------------------------------------------------------------ */
 .heroScrollLine {
   width: 1px;
@@ -226,7 +94,7 @@
     180deg,
     rgba(220,226,235,0) 0%,
     rgba(220,226,235,0.28) 24%,
-    var(--subaccent, var(--hero-silver)) 50%,
+    var(--hero-silver) 50%,
     rgba(217,185,138,0.24) 68%,
     rgba(220,226,235,0) 100%
   );
@@ -252,17 +120,9 @@
    Keyframes
 ------------------------------------------------------------ */
 @keyframes heroStill {
-  0% {
-    transform: scale(1.008) translate3d(0, 0, 0);
-  }
-
-  50% {
-    transform: scale(1.015) translate3d(-1px, 3px, 0);
-  }
-
-  100% {
-    transform: scale(1.008) translate3d(0, 0, 0);
-  }
+  0%   { transform: scale(1.008) translate3d(0, 0, 0); }
+  50%  { transform: scale(1.015) translate3d(-1px, 3px, 0); }
+  100% { transform: scale(1.008) translate3d(0, 0, 0); }
 }
 
 @keyframes heroImageReveal {
@@ -271,7 +131,6 @@
     transform: scale(1.026) translate3d(0, 9px, 0);
     filter: brightness(0.81) saturate(0.86) contrast(1.025);
   }
-
   100% {
     opacity: 1;
     transform: scale(1.008) translate3d(0, 0, 0);
@@ -280,15 +139,8 @@
 }
 
 @keyframes heroReveal {
-  0% {
-    opacity: 0;
-    transform: translate3d(0, 18px, 0) scale(0.995);
-  }
-
-  100% {
-    opacity: 1;
-    transform: translate3d(0, 0, 0) scale(1);
-  }
+  0% { opacity: 0; transform: translate3d(0, 18px, 0) scale(0.995); }
+  100% { opacity: 1; transform: translate3d(0, 0, 0) scale(1); }
 }
 
 /* ------------------------------------------------------------
@@ -302,33 +154,12 @@
   }
 
   .heroTitleWrap {
-    width: min(92vw, 390px);
+    width: min(86vw, 360px);
   }
 
-  .heroTitleWrap::before {
-    width: 80%;
-    top: 48%;
-  }
-
-  .heroTitleWrap::after {
-    top: 34%;
-    width: 42%;
-  }
-
-  .heroSvgText {
-    font-size: 78px;
-    letter-spacing: 0.17em;
-    stroke-width: 0.82;
-    stroke-dasharray: 960;
-    stroke-dashoffset: 960;
-  }
-
-  .heroSvgText1 {
-    animation-delay: 0.04s, 0.78s, 1.12s;
-  }
-
-  .heroSvgText2 {
-    animation-delay: 0.16s, 0.92s, 1.24s;
+  .heroTitleImg {
+    opacity: 0.72;
+    transform: translate3d(0, 6px, 0) scale(0.94);
   }
 
   @keyframes heroImageRevealSp {
@@ -337,7 +168,6 @@
       transform: scale(1.018) translate3d(0, 6px, 0);
       filter: brightness(0.82) saturate(0.86) contrast(1.02);
     }
-
     100% {
       opacity: 1;
       transform: scale(1.006) translate3d(0, 0, 0);
@@ -353,11 +183,7 @@
   .heroImage,
   .heroImageReveal,
   .heroFade,
-  .heroSvgText,
-  .heroSvgLine,
-  .heroScrollLine,
-  .heroTitleWrap::before,
-  .heroTitleWrap::after {
+  .heroScrollLine {
     animation: none !important;
   }
 
@@ -372,19 +198,288 @@
     transform: none !important;
     opacity: 1 !important;
   }
+}
+/* 置き換え：Title mask */
+.heroTitleMask {
+  position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: 961 / 296;
 
-  .heroSvgText {
-    fill: rgba(255, 255, 255, 0.92) !important;
-    stroke: rgba(255, 255, 255, 0.18) !important;
-    stroke-dashoffset: 0 !important;
+  background: var(--hero-gold);
+  opacity: 0; /* ← 最初は消す */
+
+  transform: translate3d(0, 7px, 0) scale(0.92);
+  transform-origin: left center;
+  will-change: transform, opacity, clip-path, filter;
+
+  -webkit-mask: url("/typography/GushikenDesign.svg") left center / contain no-repeat;
+  mask: url("/typography/GushikenDesign.svg") left center / contain no-repeat;
+
+  /* “書かれる”用 */
+  clip-path: inset(0 100% 0 0);
+  filter: blur(0.14px); /* ごく薄。嫌なら0.08まで */
+}
+
+/* h1自体のheroFade3に合わせて発火 */
+.heroFade3 .heroTitleMask {
+  animation: titleInkWipe 1.18s cubic-bezier(.22,.56,.18,1) 0.12s both;
+}
+
+/* うっすいハイライトが走る（1回だけ） */
+.heroTitleMask::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+
+  background: rgba(255,255,255,0.22);
+  opacity: 0;
+
+  -webkit-mask: url("/typography/GushikenDesign.svg") left center / contain no-repeat;
+  mask: url("/typography/GushikenDesign.svg") left center / contain no-repeat;
+
+  /* 走る帯を作る */
+  clip-path: inset(0 100% 0 0);
+  filter: blur(0.12px);
+  mix-blend-mode: screen;
+  pointer-events: none;
+}
+
+.heroFade3 .heroTitleMask::after {
+  animation: titleSheen 0.95s cubic-bezier(.22,.56,.18,1) 0.30s both;
+}
+
+@keyframes titleInkWipe {
+  0% {
+    opacity: 0;
+    clip-path: inset(0 100% 0 0);
+    transform: translate3d(0, 8px, 0) scale(0.92);
+    filter: blur(0.14px);
+  }
+  60% {
+    opacity: 0.78;
+    clip-path: inset(0 0 0 0);
+    filter: blur(0.10px);
+  }
+  100% {
+    opacity: 0.78;
+    clip-path: inset(0 0 0 0);
+    transform: translate3d(0, 7px, 0) scale(0.92);
+    filter: blur(0);
+  }
+}
+
+@keyframes titleSheen {
+  0%   { opacity: 0;   clip-path: inset(0 100% 0 0); }
+  20%  { opacity: 0.22; }
+  100% { opacity: 0;   clip-path: inset(0 0 0 0); }
+}
+
+/* reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  .heroFade3 .heroTitleMask,
+  .heroFade3 .heroTitleMask::after {
+    animation: none !important;
+  }
+  .heroTitleMask {
+    opacity: 0.78;
+    clip-path: inset(0 0 0 0);
+    filter: none;
+  }
+}
+/* ------------------------------------------------------------
+   Title (STRONGEST VERSION)
+   SVG mask + ink reveal + sheen + quiet settle
+------------------------------------------------------------ */
+.heroTitleWrap {
+  position: relative;
+  width: clamp(320px, 42vw, 520px);
+  line-height: 1;
+  isolation: isolate;
+}
+
+/* 前の旧演出は消す */
+.heroTitleWrap::before,
+.heroTitleWrap::after {
+  display: none;
+}
+
+/* 本体 */
+.heroTitleMask {
+  --title-opacity: 0.82;
+  --title-scale-start: 0.947;
+  --title-scale-end: 0.92;
+  --title-y-start: 11px;
+  --title-y-end: 7px;
+
+  position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: 961 / 296;
+
+  background: var(--hero-gold);
+  opacity: 0;
+
+  transform: translate3d(0, var(--title-y-start), 0) scale(var(--title-scale-start));
+  transform-origin: left center;
+
+  -webkit-mask: url("/typography/GushikenDesign.svg") left center / contain no-repeat;
+  mask: url("/typography/GushikenDesign.svg") left center / contain no-repeat;
+
+  clip-path: inset(0 100% 0 0);
+
+  will-change: transform, opacity, clip-path, filter;
+  filter:
+    blur(0.14px)
+    drop-shadow(0 0 8px rgba(217,185,138,0.05))
+    drop-shadow(0 0 16px rgba(255,255,255,0.025));
+}
+
+/* インクの下地が左→右に入る */
+.heroFade3 .heroTitleMask {
+  animation:
+    titleInkReveal 1.18s cubic-bezier(.22,.56,.18,1) 0.02s both,
+    titleSettle 1.55s cubic-bezier(.18,.62,.2,1) 1.18s both;
+}
+
+/* 白い細ハイライトが一瞬走る */
+.heroTitleMask::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+
+  background: linear-gradient(
+    90deg,
+    rgba(255,255,255,0) 0%,
+    rgba(255,255,255,0.06) 18%,
+    rgba(255,255,255,0.24) 42%,
+    rgba(255,255,255,0.08) 68%,
+    rgba(255,255,255,0) 100%
+  );
+
+  -webkit-mask: url("/typography/GushikenDesign.svg") left center / contain no-repeat;
+  mask: url("/typography/GushikenDesign.svg") left center / contain no-repeat;
+
+  transform: translate3d(-112%, 0, 0);
+  mix-blend-mode: screen;
+  pointer-events: none;
+  will-change: transform, opacity;
+}
+
+.heroFade3 .heroTitleMask::before {
+  animation: titleSheenSweep 0.96s cubic-bezier(.22,.56,.18,1) 0.28s both;
+}
+
+/* ごく薄い余韻の光膜 */
+.heroTitleMask::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+
+  background: rgba(255,255,255,0.16);
+
+  -webkit-mask: url("/typography/GushikenDesign.svg") left center / contain no-repeat;
+  mask: url("/typography/GushikenDesign.svg") left center / contain no-repeat;
+
+  clip-path: inset(0 100% 0 0);
+  filter: blur(0.18px);
+  mix-blend-mode: screen;
+  pointer-events: none;
+  will-change: opacity, clip-path, filter;
+}
+
+.heroFade3 .heroTitleMask::after {
+  animation: titleInkGlow 1.06s cubic-bezier(.22,.56,.18,1) 0.18s both;
+}
+
+/* ------------------------------------------------------------
+   Title keyframes
+------------------------------------------------------------ */
+@keyframes titleInkReveal {
+  0% {
+    opacity: 0;
+    clip-path: inset(0 100% 0 0);
+    transform: translate3d(0, var(--title-y-start), 0) scale(var(--title-scale-start));
+    filter:
+      blur(0.14px)
+      drop-shadow(0 0 6px rgba(217,185,138,0.04))
+      drop-shadow(0 0 10px rgba(255,255,255,0.018));
   }
 
-  .heroSvgLine {
-    stroke-dashoffset: 0 !important;
+  18% {
+    opacity: 0.18;
   }
 
-  .heroTitleWrap::before,
-  .heroTitleWrap::after {
-    opacity: 0 !important;
+  62% {
+    opacity: var(--title-opacity);
+    clip-path: inset(0 0 0 0);
+    filter:
+      blur(0.08px)
+      drop-shadow(0 0 10px rgba(217,185,138,0.055))
+      drop-shadow(0 0 16px rgba(255,255,255,0.024));
+  }
+
+  100% {
+    opacity: var(--title-opacity);
+    clip-path: inset(0 0 0 0);
+    transform: translate3d(0, var(--title-y-end), 0) scale(var(--title-scale-end));
+    filter:
+      blur(0)
+      drop-shadow(0 0 8px rgba(217,185,138,0.05))
+      drop-shadow(0 0 14px rgba(255,255,255,0.02));
+  }
+}
+
+@keyframes titleSheenSweep {
+  0% {
+    opacity: 0;
+    transform: translate3d(-112%, 0, 0);
+  }
+
+  18% {
+    opacity: 0.18;
+  }
+
+  45% {
+    opacity: 0.32;
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate3d(112%, 0, 0);
+  }
+}
+
+@keyframes titleInkGlow {
+  0% {
+    opacity: 0;
+    clip-path: inset(0 100% 0 0);
+    filter: blur(0.2px);
+  }
+
+  35% {
+    opacity: 0.14;
+  }
+
+  100% {
+    opacity: 0;
+    clip-path: inset(0 0 0 0);
+    filter: blur(0);
+  }
+}
+
+@keyframes titleSettle {
+  0% {
+    transform: translate3d(0, calc(var(--title-y-end) + 1px), 0) scale(var(--title-scale-end));
+  }
+
+  55% {
+    transform: translate3d(0, var(--title-y-end), 0) scale(calc(var(--title-scale-end) + 0.004));
+  }
+
+  100% {
+    transform: translate3d(0, var(--title-y-end), 0) scale(var(--title-scale-end));
   }
 }

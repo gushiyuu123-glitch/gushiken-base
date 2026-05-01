@@ -5,45 +5,15 @@ import styles from "./Hero.module.css";
 
 function HeroTitleSvg() {
   return (
-    <svg
-      className={styles.heroTitleSvg}
-      viewBox="0 0 760 250"
+    <img
+      className={styles.heroTitleImg}
+      src="/typography/GushikenDesign.svg"
+      alt=""
       aria-hidden="true"
-      focusable="false"
-    >
-      <defs>
-        <linearGradient
-          id="heroTitleStrokePc"
-          x1="0%"
-          y1="0%"
-          x2="100%"
-          y2="0%"
-        >
-          <stop offset="0%" stopColor="rgba(255,255,255,0.58)" />
-          <stop offset="48%" stopColor="rgba(255,255,255,0.96)" />
-          <stop offset="100%" stopColor="rgba(217,185,138,0.72)" />
-        </linearGradient>
-      </defs>
-
-      <text
-        x="0"
-        y="82"
-        className={`${styles.heroSvgText} ${styles.heroSvgText1}`}
-        stroke="url(#heroTitleStrokePc)"
-      >
-        GUSHIKEN
-      </text>
-
-      <text
-        x="0"
-        y="178"
-        className={`${styles.heroSvgText} ${styles.heroSvgText2}`}
-        stroke="url(#heroTitleStrokePc)"
-      >
-        DESIGN
-      </text>
-
-    </svg>
+      draggable="false"
+      loading="eager"
+      decoding="async"
+    />
   );
 }
 
