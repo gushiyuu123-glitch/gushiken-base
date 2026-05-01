@@ -683,6 +683,59 @@ subtitle: "世界観と設計力の“核”を示す代表作",
   category: "HOTEL",
   subtitle: "沖縄の光と空気を UI に抽象化したホテルデザイン",
   items: [
+        /* ==========================================================
+        VILA CORAL — Okinawa Private Villa
+    ========================================================== */
+    {
+      title: "VILA CORAL — Okinawa Private Villa",
+      slug: "VilaCoral",
+
+      desc: "珊瑚の白 × 海風 × 静けさ。\n沖縄のヴィラ滞在を上質に見せるリゾートサイト。",
+      link: "https://vila-coral-okinawa.vercel.app/",
+      img: "/works/vilacoral.webp",
+
+      isNew: true,
+      createdAt: "2026-05-01",
+
+      tags: [
+        "NEW",
+        "沖縄",
+        "Villa",
+        "Private Stay",
+        "Coral",
+        "Sea",
+        "静寂",
+        "余白",
+        "Luxury",
+        "Branding",
+        "GSAP",
+        "PC/SP 分離"
+      ],
+
+      detail: {
+        concept:
+          "沖縄の珊瑚、白砂、海風の気配を“静かなヴィラ滞在”として再構成したリゾートサイト。派手な南国感ではなく、光・余白・写真の重心で上質な滞在イメージをつくり、予約前の期待感まで設計した。",
+        tech: [
+          "React",
+          "Vite",
+          "CSS Modules",
+          "GSAP",
+          "IntersectionObserver",
+          "PC/SP 完全分離"
+        ]
+      },
+
+      seo: {
+        title:
+          "VILA CORAL｜沖縄の静かなヴィラ滞在を描くリゾートサイト｜GUSHIKEN DESIGN",
+        description:
+          "VILA CORAL は、沖縄の珊瑚・白砂・海風を静かなヴィラ滞在として再構成したリゾートサイト。派手な南国感ではなく、光・余白・写真の重心で上質な滞在体験を表現したデザイン。",
+        keywords:
+          "沖縄ヴィラサイト, リゾートサイト, 高級ヴィラ, 宿泊施設ホームページ, 沖縄 ホテルデザイン, 余白デザイン, GUSHIKEN DESIGN",
+        ogImage:
+          "https://gushikendesign.com/ogp/vilacoral.png"
+      }
+    },
     /* ==========================================================
         Blue Shore Hotel — Luxury Okinawa
     ========================================================== */
