@@ -26,8 +26,8 @@ export default function Hero() {
         ${styles.heroRoot}
         relative w-full overflow-hidden
         bg-[#0a0a0a]
-        h-[92vh] min-h-[680px]
-        md:h-screen md:min-h-[760px]
+        h-[92svh] min-h-[680px]
+        md:h-[100svh] md:min-h-[760px]
       `}
       data-loaded={imgLoaded ? "true" : "false"}
       aria-label="GUSHIKEN DESIGN ヒーローセクション"
@@ -50,6 +50,7 @@ export default function Hero() {
           fetchPriority="high"
           draggable="false"
           onLoad={() => setImgLoaded(true)}
+          onError={() => setImgLoaded(true)}
         />
       </div>
 
@@ -59,7 +60,7 @@ export default function Hero() {
         className="
           pointer-events-none absolute inset-x-0 top-0 z-[1]
           h-[116px] md:h-[128px]
-          bg-[linear-gradient(180deg,rgba(6,6,6,0.50)_0%,rgba(6,6,6,0.24)_42%,transparent_100%)]
+          bg-[linear-gradient(180deg,rgba(6,6,6,0.52)_0%,rgba(6,6,6,0.26)_42%,transparent_100%)]
         "
       />
 
@@ -68,7 +69,7 @@ export default function Hero() {
         aria-hidden="true"
         className="
           pointer-events-none absolute inset-0 z-[1]
-          bg-[linear-gradient(180deg,rgba(0,0,0,0.08)_0%,rgba(0,0,0,0.05)_30%,rgba(0,0,0,0.20)_72%,rgba(0,0,0,0.42)_100%)]
+          bg-[linear-gradient(180deg,rgba(0,0,0,0.10)_0%,rgba(0,0,0,0.06)_30%,rgba(0,0,0,0.22)_72%,rgba(0,0,0,0.44)_100%)]
         "
       />
 
@@ -77,9 +78,9 @@ export default function Hero() {
         aria-hidden="true"
         className="
           pointer-events-none absolute inset-y-0 left-0 z-[1]
-          w-[74%]
-          md:w-[60%]
-          bg-[linear-gradient(90deg,rgba(0,0,0,0.42)_0%,rgba(0,0,0,0.18)_42%,transparent_100%)]
+          w-[80%]
+          md:w-[64%]
+          bg-[linear-gradient(90deg,rgba(0,0,0,0.60)_0%,rgba(0,0,0,0.26)_42%,transparent_100%)]
         "
       />
 
@@ -88,8 +89,8 @@ export default function Hero() {
         aria-hidden="true"
         className="
           pointer-events-none absolute inset-y-0 left-0 z-[1]
-          w-[34%]
-          bg-[linear-gradient(90deg,rgba(0,0,0,0.18)_0%,transparent_100%)]
+          w-[42%]
+          bg-[linear-gradient(90deg,rgba(0,0,0,0.16)_0%,transparent_100%)]
         "
       />
 
@@ -99,7 +100,7 @@ export default function Hero() {
         className="
           pointer-events-none absolute right-[15.5%] top-[21%] z-[1]
           hidden h-[50%] w-px lg:block
-          bg-[linear-gradient(180deg,transparent_0%,rgba(217,185,138,0.12)_18%,rgba(255,255,255,0.06)_78%,transparent_100%)]
+          bg-[linear-gradient(180deg,transparent_0%,rgba(255,255,255,0.10)_18%,rgba(255,255,255,0.05)_78%,transparent_100%)]
         "
       />
 
@@ -117,8 +118,8 @@ export default function Hero() {
       <div
         aria-hidden="true"
         className="
-          pointer-events-none absolute inset-0 z-[1] opacity-[0.035]
-          [background-image:radial-gradient(rgba(255,255,255,0.42)_0.42px,transparent_0.42px)]
+          pointer-events-none absolute inset-0 z-[1] opacity-[0.03]
+          [background-image:radial-gradient(rgba(255,255,255,0.40)_0.42px,transparent_0.42px)]
           [background-size:4px_4px]
         "
       />
@@ -127,7 +128,7 @@ export default function Hero() {
       <div
         className="
           absolute left-6 right-6 bottom-[3.1rem] z-[2]
-          max-w-[670px]
+          max-w-[640px]
           sm:left-7 sm:right-8
           md:left-16 md:bottom-24
           lg:left-20 lg:bottom-28
@@ -139,7 +140,7 @@ export default function Hero() {
             className="
               mb-4
               text-[0.68rem] leading-none
-              tracking-[0.28em] text-white/50
+              tracking-[0.28em] text-white/56
               sm:text-[0.72rem]
               md:mb-6
             "
@@ -154,7 +155,7 @@ export default function Hero() {
             className="
               mb-4
               text-[0.86rem] font-light leading-[1.7]
-              tracking-[0.12em] text-white/84
+              tracking-[0.12em] text-white/90
               sm:text-[0.92rem]
               md:mb-5 md:text-[1rem]
             "
@@ -163,13 +164,13 @@ export default function Hero() {
           </p>
         </div>
 
-        {/* TITLE / SVG SIGNATURE */}
+        {/* TITLE (LOGO ONLY SMOOTH WIPE) */}
         <h1
           className={`
-            ${styles.heroFade} ${styles.heroFade3}
+            ${styles.heroLogoReveal}
             ${styles.heroTitleWrap}
             mb-5
-            md:mb-7 md:pl-[6px]
+            md:mb-6 md:pl-[4px]
           `}
           aria-label="GUSHIKEN DESIGN"
         >
@@ -182,20 +183,20 @@ export default function Hero() {
           className={`
             ${styles.heroFade} ${styles.heroFade4}
             mb-6 h-px w-[72px]
-            bg-[linear-gradient(90deg,rgba(255,255,255,0.52),rgba(217,185,138,0.46),rgba(255,255,255,0))]
-            md:mb-8 md:ml-[6px] md:w-[86px]
+            bg-[linear-gradient(90deg,rgba(255,255,255,0.58),rgba(255,255,255,0.24),rgba(255,255,255,0))]
+            md:mb-8 md:ml-[4px] md:w-[84px]
           `}
         />
 
         {/* BODY */}
-        <div className={`${styles.heroFade} ${styles.heroFade5} md:ml-[18px]`}>
+        <div className={`${styles.heroFade} ${styles.heroFade5} md:ml-[14px]`}>
           <div
             className="
               max-w-[31rem]
-              text-[0.92rem] leading-[2]
-              tracking-[0.015em] text-white/84
-              sm:text-[0.96rem]
-              md:text-[1.04rem] md:leading-[2.08]
+              text-[0.94rem] leading-[2]
+              tracking-[0.015em] text-white/90
+              sm:text-[0.98rem]
+              md:text-[1.05rem] md:leading-[2.08]
             "
           >
             <p
@@ -203,7 +204,7 @@ export default function Hero() {
                 mb-3
                 text-[0.76rem] leading-[1.7]
                 tracking-[0.12em]
-                text-white/56
+                text-white/62
                 md:text-[0.84rem]
               "
             >
@@ -217,7 +218,7 @@ export default function Hero() {
               className="
                 mt-5
                 text-[0.82em] leading-[1.9]
-                tracking-[0.08em] text-white/56
+                tracking-[0.08em] text-white/62
               "
             >
               見やすく、迷わず、安っぽくならない。

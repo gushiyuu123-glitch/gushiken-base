@@ -1,40 +1,17 @@
 import React, { useState } from "react";
 import heroSP from "../assets/hero-sp33.png";
 
-function HeroSPTitleSvg() {
+function HeroSPTitleSignature() {
   return (
-    <svg
-      className="hero-sp-title-svg"
-      viewBox="0 0 720 210"
+    <img
+      className="hero-sp-title-img"
+      src="/typography/GushikenDesign.svg"
+      alt=""
       aria-hidden="true"
-      focusable="false"
-    >
-      <defs>
-        <linearGradient id="heroSpTitleStroke" x1="0%" y1="0%" x2="100%" y2="0%">
-          <stop offset="0%" stopColor="rgba(255,255,255,0.54)" />
-          <stop offset="48%" stopColor="rgba(255,255,255,0.98)" />
-          <stop offset="100%" stopColor="rgba(217,185,138,0.74)" />
-        </linearGradient>
-      </defs>
-
-      <text
-        x="0"
-        y="76"
-        className="hero-sp-svg-text hero-sp-svg-text-1"
-        stroke="url(#heroSpTitleStroke)"
-      >
-        GUSHIKEN
-      </text>
-
-      <text
-        x="0"
-        y="166"
-        className="hero-sp-svg-text hero-sp-svg-text-2"
-        stroke="url(#heroSpTitleStroke)"
-      >
-        DESIGN
-      </text>
-    </svg>
+      draggable="false"
+      loading="eager"
+      decoding="async"
+    />
   );
 }
 
@@ -67,6 +44,7 @@ export default function HeroSP() {
           fetchPriority="high"
           draggable="false"
           onLoad={() => setImgLoaded(true)}
+          onError={() => setImgLoaded(true)}
         />
       </div>
 
@@ -167,13 +145,10 @@ export default function HeroSP() {
             </p>
           </div>
 
-          {/* TITLE / SVG SIGNATURE */}
-          <h1
-            className="hero-sp-fade hero-sp-fade-3 hero-sp-title-wrap mb-5"
-            aria-label="GUSHIKEN DESIGN"
-          >
+          {/* TITLE (PC版ロゴ演出を移植) */}
+          <h1 className="hero-sp-logoReveal hero-sp-title-wrap mb-5" aria-label="GUSHIKEN DESIGN">
             <span className="sr-only">GUSHIKEN DESIGN</span>
-            <HeroSPTitleSvg />
+            <HeroSPTitleSignature />
           </h1>
 
           {/* DIVIDER */}
@@ -286,6 +261,7 @@ export default function HeroSP() {
           transform: scale(1);
         }
 
+        /* ========== text fades ========== */
         .hero-sp-fade{
           opacity: 0;
           transform: translate3d(0, 14px, 0) scale(0.995);
@@ -296,170 +272,147 @@ export default function HeroSP() {
 
         .hero-sp-fade-1{ animation-delay: 0.16s; }
         .hero-sp-fade-2{ animation-delay: 0.26s; }
-        .hero-sp-fade-3{ animation-delay: 0.36s; }
         .hero-sp-fade-4{ animation-delay: 0.50s; }
         .hero-sp-fade-5{ animation-delay: 0.62s; }
 
         @keyframes heroSPReveal{
-          to{
-            opacity: 1;
-            transform: translate3d(0,0,0) scale(1);
-          }
+          to{ opacity: 1; transform: translate3d(0,0,0) scale(1); }
         }
 
         /* =========================
-           SVG Title Signature
-           - SP版 GUSHIKEN DESIGN
+           TITLE (PC版ロゴ演出を移植)
+           - 左端は常に不透明
+           - 右端だけ羽根
+           - 最終118%で羽根を画面外へ逃がす
         ========================= */
         .hero-sp-title-wrap{
           position: relative;
-          width: min(88vw, 323px);
+          width: min(84vw, 304px);
           line-height: 1;
           isolation: isolate;
         }
+        .hero-sp-title-wrap::before,
+        .hero-sp-title-wrap::after{ display:none; }
 
-        .hero-sp-title-wrap::before{
-          content: "";
-          position: absolute;
-          left: -4%;
-          top: 47%;
-          z-index: -1;
-          width: 82%;
-          height: 1px;
-          background: linear-gradient(
-            90deg,
-            rgba(217,185,138,0),
-            rgba(217,185,138,0.18),
-            rgba(255,255,255,0.08),
-            rgba(217,185,138,0)
-          );
+        .hero-sp-logoReveal{
           opacity: 0;
-          transform: scaleX(0.46);
-          transform-origin: left center;
-          animation: heroSpTitleAura 1.35s cubic-bezier(.22,.56,.18,1) 0.86s forwards;
-        }
-
-        .hero-sp-title-wrap::after{
-          content: "";
-          position: absolute;
-          left: -5%;
-          top: 33%;
-          z-index: 2;
-          width: 44%;
-          height: 1px;
-          background: linear-gradient(
-            90deg,
-            rgba(255,255,255,0),
-            rgba(255,255,255,0.56),
-            rgba(217,185,138,0.42),
-            rgba(255,255,255,0)
-          );
-          opacity: 0;
-          transform: translateX(-36px) scaleX(0.25);
-          transform-origin: left center;
-          filter: drop-shadow(0 0 10px rgba(217,185,138,0.12));
-          animation: heroSpTitleFlash 0.76s cubic-bezier(.22,.56,.18,1) 0.96s forwards;
-          pointer-events: none;
-        }
-
-        .hero-sp-title-svg{
-          display: block;
-          width: 100%;
-          height: auto;
-          overflow: visible;
-        }
-
-        .hero-sp-svg-text{
-          font-family: "Cormorant Garamond", serif;
-          font-size: 76px;
-          font-weight: 300;
-          letter-spacing: 0.172em;
-
-          fill: rgba(255,255,255,0);
-          stroke-width: 0.84;
-          stroke-linecap: round;
-          stroke-linejoin: round;
-
-          stroke-dasharray: 960;
-          stroke-dashoffset: 960;
-
-          filter:
-            drop-shadow(0 0 8px rgba(255,255,255,0.04))
-            drop-shadow(0 0 18px rgba(217,185,138,0.052));
-
-          animation:
-            heroSpSvgDraw 1.1s cubic-bezier(0.22,0.1,0.28,1) forwards,
-            heroSpSvgFill 0.84s cubic-bezier(0.22,0.1,0.28,1) forwards,
-            heroSpSvgSettle 1.6s cubic-bezier(.22,.56,.18,1) forwards;
-
-          will-change: stroke-dashoffset, fill, stroke, filter;
+          transform: translate3d(0, 10px, 0) scale(0.976);
+          animation: heroSpLogoReveal 1.18s cubic-bezier(.22,.56,.18,1) 0.32s both;
+          will-change: transform, opacity;
           backface-visibility: hidden;
-          text-rendering: geometricPrecision;
         }
 
-        .hero-sp-svg-text-1{
-          animation-delay: 0.04s, 0.78s, 1.10s;
+        .hero-sp-title-img{
+          display:block;
+          width:100%;
+          height:auto;
+
+          opacity: 0.78;
+          filter:
+            invert(1)
+            brightness(1.05)
+            saturate(0)
+            contrast(1.03)
+            blur(0.14px)
+            drop-shadow(0 2px 12px rgba(0,0,0,0.20));
+
+          transform: translateZ(0);
+          backface-visibility: hidden;
+          will-change: filter, opacity, -webkit-mask-size, mask-size, clip-path;
+
+          /* 左は常に不透明 / 右だけ羽根 */
+          -webkit-mask-image: linear-gradient(
+            90deg,
+            rgba(0,0,0,1) 0%,
+            rgba(0,0,0,1) 86%,
+            rgba(0,0,0,0) 100%
+          );
+          mask-image: linear-gradient(
+            90deg,
+            rgba(0,0,0,1) 0%,
+            rgba(0,0,0,1) 86%,
+            rgba(0,0,0,0) 100%
+          );
+
+          -webkit-mask-repeat:no-repeat;
+          mask-repeat:no-repeat;
+          -webkit-mask-position:left center;
+          mask-position:left center;
+          -webkit-mask-size: 0% 100%;
+          mask-size: 0% 100%;
         }
 
-        .hero-sp-svg-text-2{
-          animation-delay: 0.16s, 0.94s, 1.22s;
+        .hero-sp-logoReveal .hero-sp-title-img{
+          animation:
+            heroSpLogoWipe 1.22s cubic-bezier(.22,.56,.18,1) 0.38s both,
+            heroSpLogoFocus 1.22s cubic-bezier(.18,.62,.2,1) 0.38s both;
         }
 
-        @keyframes heroSpSvgDraw{
-          to{
-            stroke-dashoffset: 0;
+        @supports not (mask-image: linear-gradient(#000,#000)){
+          .hero-sp-title-img{ clip-path: inset(0 100% 0 0); }
+          .hero-sp-logoReveal .hero-sp-title-img{
+            animation:
+              heroSpLogoClip 1.22s cubic-bezier(.22,.56,.18,1) 0.38s both,
+              heroSpLogoFocus 1.22s cubic-bezier(.18,.62,.2,1) 0.38s both;
           }
         }
 
-        @keyframes heroSpSvgFill{
-          to{
-            fill: rgba(255,255,255,0.93);
-            stroke: rgba(255,255,255,0.18);
-          }
+        @keyframes heroSpLogoReveal{
+          0%{ opacity:0; transform: translate3d(0,10px,0) scale(0.976); }
+          100%{ opacity:1; transform: translate3d(0,0,0) scale(1); }
         }
 
-        @keyframes heroSpSvgSettle{
+        /* ← ここが “118%で逃がす” */
+        @keyframes heroSpLogoWipe{
+          0%{ -webkit-mask-size: 0% 100%; mask-size: 0% 100%; }
+          100%{ -webkit-mask-size: 118% 100%; mask-size: 118% 100%; }
+        }
+
+        @keyframes heroSpLogoClip{
+          0%{ clip-path: inset(0 100% 0 0); }
+          100%{ clip-path: inset(0 0 0 0); }
+        }
+
+        @keyframes heroSpLogoFocus{
           0%{
+            opacity: 0.12;
             filter:
-              drop-shadow(0 0 10px rgba(255,255,255,0.06))
-              drop-shadow(0 0 22px rgba(217,185,138,0.08));
+              invert(1)
+              brightness(1.03)
+              saturate(0)
+              contrast(1.02)
+              blur(0.20px)
+              drop-shadow(0 2px 10px rgba(0,0,0,0.16));
           }
-
-          100%{
+          55%{
+            opacity: 0.68;
             filter:
-              drop-shadow(0 0 4px rgba(255,255,255,0.018))
-              drop-shadow(0 0 12px rgba(217,185,138,0.03));
+              invert(1)
+              brightness(1.05)
+              saturate(0)
+              contrast(1.03)
+              blur(0.08px)
+              drop-shadow(0 2px 12px rgba(0,0,0,0.20));
           }
-        }
-
-        @keyframes heroSpTitleAura{
-          0%{
-            opacity: 0;
-            transform: scaleX(0.46);
-          }
-
           100%{
-            opacity: 1;
-            transform: scaleX(1);
-          }
-        }
-
-        @keyframes heroSpTitleFlash{
-          0%{
-            opacity: 0;
-            transform: translateX(-36px) scaleX(0.25);
-          }
-
-          24%{
             opacity: 0.78;
-          }
-
-          100%{
-            opacity: 0;
-            transform: translateX(170px) scaleX(1);
+            filter:
+              invert(1)
+              brightness(1.05)
+              saturate(0)
+              contrast(1.03)
+              blur(0)
+              drop-shadow(0 2px 12px rgba(0,0,0,0.20));
           }
         }
 
+        /* ========== divider(1.03)
+              blur(0)
+              drop-shadow(0 2px 12px rgba(0,0,0,0.20));
+          }
+        }
+
+        /* / scroll hint ========== */
         .hero-sp-divider{
           height: 1px;
           width: 58px;
@@ -481,7 +434,7 @@ export default function HeroSP() {
             to bottom,
             rgba(220,226,235,0),
             rgba(220,226,235,0.30),
-            var(--subaccent, rgba(220,226,235,0.48)),
+            rgba(220,226,235,0.48),
             rgba(217,185,138,0.22),
             rgba(220,226,235,0)
           );
@@ -500,25 +453,11 @@ export default function HeroSP() {
         }
 
         @media (max-width: 390px){
-          .hero-sp-title-wrap{
-            width: min(88vw, 306px);
-          }
-
-          .hero-sp-svg-text{
-            font-size: 74px;
-            letter-spacing: 0.155em;
-          }
+          .hero-sp-title-wrap{ width: min(88vw, 306px); }
         }
 
         @media (max-width: 370px){
-          .hero-sp-title-wrap{
-            width: min(88vw, 292px);
-          }
-
-          .hero-sp-svg-text{
-            font-size: 72px;
-            letter-spacing: 0.142em;
-          }
+          .hero-sp-title-wrap{ width: min(88vw, 292px); }
         }
 
         @media (prefers-reduced-motion: reduce){
@@ -527,9 +466,8 @@ export default function HeroSP() {
           .hero-sp-image-bloom,
           .hero-sp-fade,
           .scroll-hint-sp,
-          .hero-sp-svg-text,
-          .hero-sp-title-wrap::before,
-          .hero-sp-title-wrap::after{
+          .hero-sp-logoReveal,
+          .hero-sp-logoReveal .hero-sp-title-img{
             animation: none !important;
             transition: none !important;
           }
@@ -541,24 +479,27 @@ export default function HeroSP() {
           }
 
           .hero-sp-image-veil,
-          .hero-sp-image-bloom{
-            opacity: 0 !important;
-          }
+          .hero-sp-image-bloom{ opacity: 0 !important; }
 
-          .hero-sp-fade{
+          .hero-sp-fade{ opacity: 1 !important; transform: none !important; }
+
+          .hero-sp-logoReveal{
             opacity: 1 !important;
             transform: none !important;
           }
 
-          .hero-sp-svg-text{
-            fill: rgba(255,255,255,0.93) !important;
-            stroke: rgba(255,255,255,0.18) !important;
-            stroke-dashoffset: 0 !important;
-          }
+          .hero-sp-title-img{
+            -webkit-mask-size: 118% 100% !important;
+            mask-size: 118% 100% !important;
+            clip-path: inset(0 0 0 0) !important;
 
-          .hero-sp-title-wrap::before,
-          .hero-sp-title-wrap::after{
-            opacity: 0 !important;
+            opacity: 0.78 !important;
+            filter:
+              invert(1)
+              brightness(1.05)
+              saturate(0)
+              contrast(1.03)
+              drop-shadow(0 2px 12px rgba(0,0,0,0.20)) !important;
           }
         }
       `}</style>
