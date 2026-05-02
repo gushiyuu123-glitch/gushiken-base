@@ -71,36 +71,43 @@
 }
 
 /* SVG IMG */
+/* SVG IMG（optimized） */
 .heroTitleImg {
   display: block;
   width: 100%;
   height: auto;
 
+  /* ほんのちょい上下の空気 */
+  margin-block: 8px; /* 6〜10pxで好み */
+
   /* 元SVGが黒前提。白SVGなら invert(1) を外してOK */
-  opacity: 0.78;
+  opacity: 0.86; /* 0.82〜0.90推奨（今より“少しだけ濃い”寄せ） */
   filter:
     invert(1)
-    brightness(1.05)
+    brightness(1.04)
     saturate(0)
-    contrast(1.03)
-    blur(0.14px)
-    drop-shadow(0 2px 12px rgba(0,0,0,0.20));
+    contrast(1.06)
+    /* 背景からの分離（黒影） */
+    drop-shadow(0 2px 14px rgba(0, 0, 0, 0.22))
+    /* エッジの生存（白の微細ハイライト） */
+    drop-shadow(0 0 0.45px rgba(255, 255, 255, 0.10));
 
+  /* ちらつき/滲み対策 */
   transform: translateZ(0);
   backface-visibility: hidden;
-  mix-blend-mode: normal;
+  -webkit-font-smoothing: antialiased;
 
   /* “羽根つき”マスク（境界がカクつきにくい） */
   -webkit-mask-image: linear-gradient(
     90deg,
     rgba(0,0,0,1) 0%,
-    rgba(0,0,0,1) 86%,
+    rgba(0,0,0,1) 84%,
     rgba(0,0,0,0) 100%
   );
   mask-image: linear-gradient(
     90deg,
     rgba(0,0,0,1) 0%,
-    rgba(0,0,0,1) 86%,
+    rgba(0,0,0,1) 84%,
     rgba(0,0,0,0) 100%
   );
 
@@ -109,9 +116,11 @@
   -webkit-mask-position: left center;
   mask-position: left center;
 
-  /* 初期は0で隠す */
+  /* 初期は0で隠す（この値をアニメーションで 100% に） */
   -webkit-mask-size: 0% 100%;
   mask-size: 0% 100%;
+
+  will-change: opacity, transform, filter, -webkit-mask-size, mask-size;
 }
 
 /* ロゴが出る時だけ：滑らかワイプ + 像が整う */

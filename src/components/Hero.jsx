@@ -7,7 +7,7 @@ function HeroTitleSvg() {
   return (
     <img
       className={styles.heroTitleImg}
-      src="/typography/Gushiken Design2.svg"
+      src="/typography/Gushiken Design222.svg"
       alt=""
       aria-hidden="true"
       draggable="false"

@@ -5,7 +5,7 @@ function HeroSPTitleSignature() {
   return (
     <img
       className="hero-sp-title-img"
-      src="/typography/Gushiken Design2.svg"
+      src="/typography/Gushiken Design222.svg"
       alt=""
       aria-hidden="true"
       draggable="false"
@@ -278,70 +278,100 @@ export default function HeroSP() {
         @keyframes heroSPReveal{
           to{ opacity: 1; transform: translate3d(0,0,0) scale(1); }
         }
+/* =========================
+   TITLE (SP)
+   - 左端は常に不透明
+   - 右端だけ羽根
+   - 最終 118% で羽根を画面外へ逃がす
+========================= */
+.hero-sp-title-wrap{
+  position: relative;
+  width: min(84vw, 304px);
+  line-height: 1;
+  isolation: isolate;
 
-        /* =========================
-           TITLE (PC版ロゴ演出を移植)
-           - 左端は常に不透明
-           - 右端だけ羽根
-           - 最終118%で羽根を画面外へ逃がす
-        ========================= */
-        .hero-sp-title-wrap{
-          position: relative;
-          width: min(84vw, 304px);
-          line-height: 1;
-          isolation: isolate;
-        }
-        .hero-sp-title-wrap::before,
-        .hero-sp-title-wrap::after{ display:none; }
+  /* ほんのちょい上下余白（好みで 6〜12px） */
+  padding-block: 8px;
+}
 
-        .hero-sp-logoReveal{
-          opacity: 0;
-          transform: translate3d(0, 10px, 0) scale(0.976);
-          animation: heroSpLogoReveal 1.18s cubic-bezier(.22,.56,.18,1) 0.32s both;
-          will-change: transform, opacity;
-          backface-visibility: hidden;
-        }
+.hero-sp-title-wrap::before,
+.hero-sp-title-wrap::after{ display:none; }
 
-        .hero-sp-title-img{
-          display:block;
-          width:100%;
-          height:auto;
+.hero-sp-logoReveal{
+  opacity: 0;
+  transform: translate3d(0, 10px, 0) scale(0.976);
+  animation: heroSpLogoReveal 1.18s cubic-bezier(.22,.56,.18,1) 0.32s both;
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+}
 
-          opacity: 0.78;
-          filter:
-            invert(1)
-            brightness(1.05)
-            saturate(0)
-            contrast(1.03)
-            blur(0.14px)
-            drop-shadow(0 2px 12px rgba(0,0,0,0.20));
+.hero-sp-title-img{
+  display:block;
+  width:100%;
+  height:auto;
 
-          transform: translateZ(0);
-          backface-visibility: hidden;
-          will-change: filter, opacity, -webkit-mask-size, mask-size, clip-path;
+  /* 「見えるのに、うるさくない」ライン */
+  opacity: 0.86;
 
-          /* 左は常に不透明 / 右だけ羽根 */
-          -webkit-mask-image: linear-gradient(
-            90deg,
-            rgba(0,0,0,1) 0%,
-            rgba(0,0,0,1) 86%,
-            rgba(0,0,0,0) 100%
-          );
-          mask-image: linear-gradient(
-            90deg,
-            rgba(0,0,0,1) 0%,
-            rgba(0,0,0,1) 86%,
-            rgba(0,0,0,0) 100%
-          );
+  /* 元SVGが黒前提。白SVGなら invert(1) を外してOK */
+  filter:
+    invert(1)
+    brightness(1.04)
+    saturate(0)
+    contrast(1.06)
+    /* 背景からの分離 */
+    drop-shadow(0 2px 14px rgba(0,0,0,0.22))
+    /* エッジの生存（0.4〜0.6pxの微ハイライト） */
+    drop-shadow(0 0 0.45px rgba(255,255,255,0.10));
 
-          -webkit-mask-repeat:no-repeat;
-          mask-repeat:no-repeat;
-          -webkit-mask-position:left center;
-          mask-position:left center;
-          -webkit-mask-size: 0% 100%;
-          mask-size: 0% 100%;
-        }
+  transform: translate3d(0,0,0);
+  backface-visibility: hidden;
 
+  /* maskアニメが主役なので、will-changeは絞る */
+  will-change: -webkit-mask-size, mask-size, opacity;
+
+  /* 左は常に不透明 / 右だけ羽根（羽根を少し早めに開始） */
+  -webkit-mask-image: linear-gradient(
+    90deg,
+    rgba(0,0,0,1) 0%,
+    rgba(0,0,0,1) 84%,
+    rgba(0,0,0,0) 100%
+  );
+  mask-image: linear-gradient(
+    90deg,
+    rgba(0,0,0,1) 0%,
+    rgba(0,0,0,1) 84%,
+    rgba(0,0,0,0) 100%
+  );
+
+  -webkit-mask-repeat:no-repeat;
+  mask-repeat:no-repeat;
+  -webkit-mask-position:left center;
+  mask-position:left center;
+
+  /* 初期は0で隠す → 最終 118% */
+  -webkit-mask-size: 0% 100%;
+  mask-size: 0% 100%;
+
+  /* マスクだけ別アニメで走らせる（PCの思想移植） */
+  animation: heroSpTitleMask 1.18s cubic-bezier(.22,.56,.18,1) 0.32s both;
+}
+
+@keyframes heroSpTitleMask{
+  0%   { -webkit-mask-size: 0% 100%;  mask-size: 0% 100%; }
+  100% { -webkit-mask-size: 118% 100%; mask-size: 118% 100%; }
+}
+
+/* reduced-motion */
+@media (prefers-reduced-motion: reduce){
+  .hero-sp-logoReveal{ animation: none; opacity: 1; transform: none; }
+  .hero-sp-title-img{
+    animation: none;
+    -webkit-mask-size: 118% 100%;
+    mask-size: 118% 100%;
+    opacity: 0.88;
+  }
+}
         .hero-sp-logoReveal .hero-sp-title-img{
           animation:
             heroSpLogoWipe 1.22s cubic-bezier(.22,.56,.18,1) 0.38s both,
