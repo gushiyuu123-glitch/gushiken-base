@@ -70,34 +70,34 @@
   backface-visibility: hidden;
 }
 
-/* SVG IMG */
-/* SVG IMG（optimized） */
+/* SVG IMG（optimized / slightly softer） */
 .heroTitleImg {
   display: block;
   width: 100%;
   height: auto;
 
-  /* ほんのちょい上下の空気 */
-  margin-block: 8px; /* 6〜10pxで好み */
+  margin-block: 8px;
+  margin-top: 12px; /* +4px（控えめなら 10px） */
 
-  /* 元SVGが黒前提。白SVGなら invert(1) を外してOK */
-  opacity: 0.86; /* 0.82〜0.90推奨（今より“少しだけ濃い”寄せ） */
+  /* 0.86 → 0.82（ほんの少しだけ薄く） */
+  opacity: 0.82;
+
   filter:
     invert(1)
-    brightness(1.04)
+    /* 1.04 → 1.03（白の主張をほんの少しだけ抑える） */
+    brightness(1.03)
     saturate(0)
-    contrast(1.06)
-    /* 背景からの分離（黒影） */
-    drop-shadow(0 2px 14px rgba(0, 0, 0, 0.22))
-    /* エッジの生存（白の微細ハイライト） */
-    drop-shadow(0 0 0.45px rgba(255, 255, 255, 0.10));
+    /* 1.06 → 1.04（輪郭の硬さを少し緩める） */
+    contrast(1.04)
+    /* 0.22 → 0.18（黒影の圧を少し抜く） */
+    drop-shadow(0 2px 14px rgba(0, 0, 0, 0.18))
+    /* 0.10 → 0.08（白ハイライトを控えめに） */
+    drop-shadow(0 0 0.45px rgba(255, 255, 255, 0.08));
 
-  /* ちらつき/滲み対策 */
   transform: translateZ(0);
   backface-visibility: hidden;
   -webkit-font-smoothing: antialiased;
 
-  /* “羽根つき”マスク（境界がカクつきにくい） */
   -webkit-mask-image: linear-gradient(
     90deg,
     rgba(0,0,0,1) 0%,
@@ -116,13 +116,12 @@
   -webkit-mask-position: left center;
   mask-position: left center;
 
-  /* 初期は0で隠す（この値をアニメーションで 100% に） */
   -webkit-mask-size: 0% 100%;
   mask-size: 0% 100%;
 
-  will-change: opacity, transform, filter, -webkit-mask-size, mask-size;
+  /* maskアニメ主役なら、ここは絞ってもOK */
+  will-change: -webkit-mask-size, mask-size, opacity;
 }
-
 /* ロゴが出る時だけ：滑らかワイプ + 像が整う */
 .heroLogoReveal .heroTitleImg {
   animation:

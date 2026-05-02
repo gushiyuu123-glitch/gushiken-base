@@ -290,8 +290,8 @@ export default function HeroSP() {
   line-height: 1;
   isolation: isolate;
 
-  /* ほんのちょい上下余白（好みで 6〜12px） */
   padding-block: 8px;
+  padding-top: 10px; /* +2px */
 }
 
 .hero-sp-title-wrap::before,
@@ -310,27 +310,22 @@ export default function HeroSP() {
   width:100%;
   height:auto;
 
-  /* 「見えるのに、うるさくない」ライン */
-  opacity: 0.86;
+  /* 0.80 → 0.76（ほんの少しだけ薄く） */
+  opacity: 0.74; /* 0.76 → 0.74 */
 
-  /* 元SVGが黒前提。白SVGなら invert(1) を外してOK */
   filter:
     invert(1)
-    brightness(1.04)
+    brightness(1.03)
     saturate(0)
-    contrast(1.06)
-    /* 背景からの分離 */
-    drop-shadow(0 2px 14px rgba(0,0,0,0.22))
-    /* エッジの生存（0.4〜0.6pxの微ハイライト） */
-    drop-shadow(0 0 0.45px rgba(255,255,255,0.10));
+    contrast(1.04)
+    drop-shadow(0 2px 14px rgba(0,0,0,0.16)) /* 0.18 → 0.16 */
+    drop-shadow(0 0 0.45px rgba(255,255,255,0.07)); /* 0.08 → 0.07 */
 
   transform: translate3d(0,0,0);
   backface-visibility: hidden;
 
-  /* maskアニメが主役なので、will-changeは絞る */
   will-change: -webkit-mask-size, mask-size, opacity;
 
-  /* 左は常に不透明 / 右だけ羽根（羽根を少し早めに開始） */
   -webkit-mask-image: linear-gradient(
     90deg,
     rgba(0,0,0,1) 0%,
@@ -349,11 +344,9 @@ export default function HeroSP() {
   -webkit-mask-position:left center;
   mask-position:left center;
 
-  /* 初期は0で隠す → 最終 118% */
   -webkit-mask-size: 0% 100%;
   mask-size: 0% 100%;
 
-  /* マスクだけ別アニメで走らせる（PCの思想移植） */
   animation: heroSpTitleMask 1.18s cubic-bezier(.22,.56,.18,1) 0.32s both;
 }
 
@@ -403,39 +396,39 @@ export default function HeroSP() {
           100%{ clip-path: inset(0 0 0 0); }
         }
 
-        @keyframes heroSpLogoFocus{
-          0%{
-            opacity: 0.12;
-            filter:
-              invert(1)
-              brightness(1.03)
-              saturate(0)
-              contrast(1.02)
-              blur(0.20px)
-              drop-shadow(0 2px 10px rgba(0,0,0,0.16));
-          }
-          55%{
-            opacity: 0.68;
-            filter:
-              invert(1)
-              brightness(1.05)
-              saturate(0)
-              contrast(1.03)
-              blur(0.08px)
-              drop-shadow(0 2px 12px rgba(0,0,0,0.20));
-          }
-          100%{
-            opacity: 0.78;
-            filter:
-              invert(1)
-              brightness(1.05)
-              saturate(0)
-              contrast(1.03)
-              blur(0)
-              drop-shadow(0 2px 12px rgba(0,0,0,0.20));
-          }
-        }
-
+/* ③ “最終到達”を薄める（ここが体感いちばん効く） */
+@keyframes heroSpLogoFocus{
+  0%{
+    opacity: 0.12;
+    filter:
+      invert(1)
+      brightness(1.03)
+      saturate(0)
+      contrast(1.02)
+      blur(0.20px)
+      drop-shadow(0 2px 10px rgba(0,0,0,0.16));
+  }
+  55%{
+    opacity: 0.64; /* 0.68 → 0.64 */
+    filter:
+      invert(1)
+      brightness(1.04) /* 1.05 → 1.04 */
+      saturate(0)
+      contrast(1.02)  /* 1.03 → 1.02 */
+      blur(0.08px)
+      drop-shadow(0 2px 12px rgba(0,0,0,0.18)); /* 0.20 → 0.18 */
+  }
+  100%{
+    opacity: 0.74; /* 0.78 → 0.74 */
+    filter:
+      invert(1)
+      brightness(1.04)
+      saturate(0)
+      contrast(1.02)
+      blur(0)
+      drop-shadow(0 2px 12px rgba(0,0,0,0.18));
+  }
+}
         /* ========== divider(1.03)
               blur(0)
               drop-shadow(0 2px 12px rgba(0,0,0,0.20));
