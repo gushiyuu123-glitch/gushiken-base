@@ -131,10 +131,18 @@ export default function Footer() {
 
               <span className="footer-brand-text">
              
- <span className="footer-brand-name" translate="no">
+<span className="footer-brand-name" translate="no">
   <span className="sr-only">GUSHIKEN DESIGN</span>
-  <span className="footer-brand-name-mark" aria-hidden="true" />
- </span>
+  <img
+    src="/typography/GushikenDesign.svg"
+    alt=""
+    aria-hidden="true"
+    className="footer-brand-name-svg"
+    loading="lazy"
+    decoding="async"
+    draggable="false"
+  />
+</span>
                 <span className="footer-brand-place" translate="no">
                   Web Design / Okinawa
                 </span>
