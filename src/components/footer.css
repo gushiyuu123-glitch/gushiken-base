@@ -239,7 +239,7 @@ display: none;
   display: block;
   width: 100%;
   height: auto;
-
+  padding-bottom: 5px;
   opacity: 0.78;
   filter:
     invert(1)

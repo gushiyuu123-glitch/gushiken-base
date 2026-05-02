@@ -134,7 +134,7 @@ export default function Footer() {
 <span className="footer-brand-name" translate="no">
   <span className="sr-only">GUSHIKEN DESIGN</span>
   <img
-    src="/typography/GushikenDesign.svg"
+    src="/typography/Gushiken Design22.svg"
     alt=""
     aria-hidden="true"
     className="footer-brand-name-svg"

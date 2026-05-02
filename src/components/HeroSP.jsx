@@ -5,7 +5,7 @@ function HeroSPTitleSignature() {
   return (
     <img
       className="hero-sp-title-img"
-      src="/typography/GushikenDesign.svg"
+      src="/typography/Gushiken Design2.svg"
       alt=""
       aria-hidden="true"
       draggable="false"
