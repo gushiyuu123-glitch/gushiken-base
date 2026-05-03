@@ -4,8 +4,8 @@
   --hero-silver: rgba(220, 226, 235, 0.55);
 
   /* CTA：控えめすぎ→静かに読めるへ */
- --hero-cta-color: rgba(255, 255, 255, 0.70);
-   --hero-cta-border: rgba(255, 255, 255, 0.17);
+  --hero-cta-color: rgba(255, 255, 255, 0.70);
+  --hero-cta-border: rgba(255, 255, 255, 0.17);
 }
 
 /* ------------------------------------------------------------
@@ -141,7 +141,6 @@
   border-bottom: 1px solid var(--hero-cta-border);
   color: var(--hero-cta-color);
 
-  /* ← ここを強化 */
   font-size: 0.78rem;
   letter-spacing: 0.18em;
 

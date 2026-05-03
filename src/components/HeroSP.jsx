@@ -57,7 +57,6 @@ export default function HeroSP() {
         <div className={styles.max}>
           <div className={styles.headGroup}>
             <div className={`${styles.fade} ${styles.fade1}`}>
-              {/* “何屋”じゃなく“空気”にする（和文メタと被らせない） */}
               <p className={styles.label}>QUIET / ORDER / IMPRESSION</p>
             </div>
 
@@ -65,7 +64,6 @@ export default function HeroSP() {
               <p className={styles.hook}>整えることで、価値は伝わる。</p>
             </div>
 
-            {/* ここから全部 “同じ塊” */}
             <div className={styles.copyBlock}>
               <div className={`${styles.fade} ${styles.fade4} ${styles.divider}`} />
 
@@ -74,17 +72,22 @@ export default function HeroSP() {
                   <span className={styles.copyMeta}>
                     沖縄のWeb制作・Webデザイン｜美容・店舗・EC
                   </span>
+
                   <span className={styles.copyText}>
-                    余白、写真、言葉、導線まで整え、<br></br>価値が自然に伝わるWebサイトへ。
+                    <span className={styles.em}>余白</span>、写真、言葉、導線まで整え、<br></br>
+                    価値が自然に伝わるWebサイトへ。
                   </span>
                 </p>
               </div>
             </div>
           </div>
 
-          {/* 下：script体 */}
+          {/* SIGNATURE */}
           <div className={styles.bodyGroup}>
-            <h1 className={`${styles.logoWrap} ${styles.logoPad}`} aria-label="GUSHIKEN DESIGN">
+            <h1
+              className={`${styles.logoWrap} ${styles.logoPad}`}
+              aria-label="GUSHIKEN DESIGN"
+            >
               <span className={styles.srOnly}>GUSHIKEN DESIGN</span>
               <HeroSPTitleSignature />
             </h1>

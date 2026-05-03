@@ -1,4 +1,3 @@
-// src/sections/Hero.jsx
 import React, { useState } from "react";
 import heroRoom from "../assets/hero-room.png";
 import styles from "./Hero.module.css";
@@ -139,7 +138,7 @@ export default function Hero() {
       <div
         className="
           absolute left-6 right-6 bottom-[3.1rem] z-[2]
-          max-w-[640px]
+          max-w-[680px]
           sm:left-7 sm:right-8
           md:left-16 md:bottom-24
           lg:left-20 lg:bottom-28
@@ -151,7 +150,7 @@ export default function Hero() {
             className="
               mb-4
               text-[0.68rem] leading-none
-              tracking-[0.28em] text-white/56
+              tracking-[0.28em] text-white/42
               sm:text-[0.72rem]
               md:mb-6
             "
@@ -160,26 +159,24 @@ export default function Hero() {
           </p>
         </div>
 
-        {/* HOOK（核：静かに強く） */}
+        {/* HOOK（主役） */}
         <div className={`${styles.heroFade} ${styles.heroFade2} md:pl-[14px]`}>
           <p
             className="
               mb-4
-              font-normal leading-[1.6]
-              tracking-[0.09em]
-              text-[clamp(1.08rem,1.18vw,1.28rem)]
-             text-white/93
-
-              sm:text-[clamp(1.12rem,1.14vw,1.32rem)]
+              font-medium leading-[1.58]
+              tracking-[0.10em]
+              text-[clamp(1.24rem,1.32vw,1.52rem)]
+              text-white/96
               md:mb-5
-             [text-shadow:0_1px_18px_rgba(0,0,0,0.38)]
+              [text-shadow:0_1px_18px_rgba(0,0,0,0.38)]
             "
           >
             整えることで、価値は伝わる。
           </p>
         </div>
 
-        {/* TITLE（spine=14px） */}
+        {/* TITLE */}
         <h1
           className={`
             ${styles.heroLogoReveal}
@@ -193,48 +190,57 @@ export default function Hero() {
           <HeroTitleSvg />
         </h1>
 
-        {/* DIVIDER（支点：spine=14px） */}
+        {/* DIVIDER */}
         <div
           className={`
             ${styles.heroFade} ${styles.heroFade4}
             mb-6 h-px w-[72px]
-            bg-[linear-gradient(90deg,rgba(255,255,255,0.58),rgba(255,255,255,0.24),rgba(255,255,255,0))]
-            md:mb-8 md:ml-[14px] md:w-[84px]
+            bg-[linear-gradient(90deg,rgba(255,255,255,0.46),rgba(255,255,255,0.18),rgba(255,255,255,0))]
+            md:mb-8 md:ml-[14px] md:w-[92px]
           `}
         />
 
-        {/* BODY（読める主役へ：サイズ↑／行間は締める） */}
+        {/* BODY（階層化） */}
         <div className={`${styles.heroFade} ${styles.heroFade5} md:ml-[14px]`}>
-          <div
-            className="
-              max-w-[31rem]
-              text-[0.98rem] leading-[1.92]
-              tracking-[0.015em] text-white/90
-              [text-shadow:0_1px_16px_rgba(0,0,0,0.36)]
-              sm:text-[1.02rem]
-              md:text-[1.14rem] md:leading-[1.96]
-            "
-          >
+          <div className="[text-shadow:0_1px_16px_rgba(0,0,0,0.36)]">
+            {/* meta：背景情報 */}
             <p
               className="
                 mb-3
-                text-[0.79rem] leading-[1.7]
-                tracking-[0.12em]
-                text-white/68
-                md:text-[0.92rem]
+                text-[0.80rem] leading-[1.7]
+                tracking-[0.14em]
+                text-white/54
+                md:text-[0.94rem]
               "
             >
               沖縄のWeb制作・Webデザイン｜美容・店舗・EC
             </p>
 
-            <p className="mb-2">余白、写真、言葉、導線まで整え、</p>
-            <p>価値が自然に伝わるWebサイトへ。</p>
+            {/* 本文：準主役（PC空間に合わせて少し上げる） */}
+            <div
+              className="
+                max-w-[34rem]
+                text-[clamp(1.02rem,1.06vw,1.22rem)]
+                leading-[1.92]
+                tracking-[0.015em]
+                text-white/86
+                md:leading-[1.96]
+              "
+            >
+              <p className="mb-2">
+                <span className="text-white/92 font-medium">余白</span>、写真、言葉、導線まで整え、
+              </p>
+              <p>価値が自然に伝わるWebサイトへ。</p>
+            </div>
 
+            {/* 補足：さらに背景（いち段落下げる） */}
             <p
               className="
-                mt-5
-                text-[0.86em] leading-[1.85]
-                tracking-[0.07em] text-white/62
+                mt-6
+                text-[0.90rem] leading-[1.9]
+                tracking-[0.07em]
+                text-white/50
+                md:text-[0.98rem]
               "
             >
               見やすく、迷わず、安っぽくならない。
@@ -245,7 +251,7 @@ export default function Hero() {
           </div>
         </div>
 
-        {/* CTA（静かに。押さない。だが読める） */}
+        {/* CTA */}
         <div className={`${styles.heroFade} ${styles.heroFade6} md:ml-[14px]`}>
           <a href="#contact" className={styles.heroCta}>
             <span>制作を相談する</span>
