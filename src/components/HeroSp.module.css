@@ -12,45 +12,33 @@
   --fx: 56%;
   --fy: 45%;
 
-  /* position */
-  --shift-head: -146px; /* 上の塊 */
-  --shift-body: 34px;   /* 署名 */
-
-  /* === hierarchy colors === */
-  --c-label: rgba(255, 255, 255, 0.32); /* 背景情報（最薄） */
-  --c-meta: rgba(255, 255, 255, 0.46);  /* 背景情報 */
-  --c-copy: rgba(255, 255, 255, 0.86);  /* 準主役 */
-  --c-hook: rgba(255, 255, 255, 0.96);  /* 主役 */
-  --c-em: rgba(255, 255, 255, 0.94);    /* 強調語 */
+  /* =========================
+     POSITION (重要：ここを滑らかに)
+     =========================
+     min と max は “端末差の暴れ” を抑えるガードレール。
+     preferred に svh を入れて「高さに合わせて自然に動く」ようにする。
+  */
+--shift-head: clamp(-260px, calc(-24svh - 80px), -190px);
+/* 署名だけ少し下へ */
+--shift-body: clamp(28px, calc(4.2svh - 10px), 48px);
 }
 
 @media (min-width: 768px) {
-  .root {
-    display: none; /* SP only */
-  }
+  .root { display: none; } /* SP only */
 }
 
+/* 画像の見せ方だけ調整（テキスト位置には影響なし） */
 @media (max-width: 390px) {
-  .root {
-    --fx: 56%;
-    --fy: 43%;
-  }
+  .root { --fx: 56%; --fy: 43%; }
 }
-
 @media (max-width: 370px) {
-  .root {
-    --fx: 57%;
-    --fy: 41%;
-  }
+  .root { --fx: 57%; --fy: 41%; }
 }
 
 /* ----------------------------
    background
 ---------------------------- */
-.bg {
-  position: absolute;
-  inset: 0;
-}
+.bg { position: absolute; inset: 0; }
 
 .image {
   width: 100%;
@@ -96,9 +84,7 @@
   will-change: opacity;
 }
 
-.root[data-loaded="true"] .imageVeil {
-  opacity: 0;
-}
+.root[data-loaded="true"] .imageVeil { opacity: 0; }
 
 .imageBloom {
   position: absolute;
@@ -226,22 +212,18 @@
 .textBlock {
   position: absolute;
   inset: auto 0 0 0;
-  bottom: clamp(5.8rem, 11.8svh, 8.0rem);
+
+  /* bottomも滑らかに（端末差を吸収） */
+  bottom: clamp(8.2rem, 18svh, 12.0rem);
+
   z-index: 2;
   padding: 0 24px;
 }
 
-.max {
-  max-width: 20.4rem;
-}
+.max { max-width: 20.4rem; }
 
-.headGroup {
-  transform: translate3d(0, var(--shift-head), 0);
-}
-
-.bodyGroup {
-  transform: translate3d(0, var(--shift-body), 0);
-}
+.headGroup { transform: translate3d(0, var(--shift-head), 0); }
+.bodyGroup { transform: translate3d(0, var(--shift-body), 0); }
 
 .logoPad {
   padding-left: 7px;
@@ -258,7 +240,6 @@
   will-change: transform, opacity;
   backface-visibility: hidden;
 }
-
 .fade1 { animation-delay: 0.16s; }
 .fade2 { animation-delay: 0.26s; }
 .fade4 { animation-delay: 0.50s; }
@@ -269,7 +250,7 @@
 }
 
 /* ----------------------------
-   hierarchy typography
+   typography (keep your hierarchy)
 ---------------------------- */
 .label {
   margin: 0 0 10px 0;
@@ -277,7 +258,7 @@
   line-height: 1;
   letter-spacing: 0.26em;
   text-transform: uppercase;
-  color: var(--c-label);
+  color: rgba(255,255,255,0.32);
 }
 
 .hookPad { padding-left: 2px; }
@@ -285,16 +266,15 @@
 .hook {
   margin: 0 0 12px 0;
   font-size: clamp(1.06rem, 4.0vw, 1.20rem);
-  font-weight: 520;                 /* 主役感 */
+  font-weight: 520;
   line-height: 1.58;
   letter-spacing: 0.075em;
-  color: var(--c-hook);
+  color: rgba(255,255,255,0.96);
   text-shadow:
     0 1px 22px rgba(0, 0, 0, 0.46),
     0 0 0.45px rgba(255, 255, 255, 0.10);
 }
 
-/* copy block */
 .copyBlock { margin-top: 10px; }
 
 .divider {
@@ -316,11 +296,11 @@
 
 .copy {
   margin: 0;
-  max-width: 16.9rem;              /* 折り返しを綺麗に（重要） */
+  max-width: 16.9rem;
   font-size: 0.92rem;
   line-height: 1.86;
   letter-spacing: 0.01em;
-  color: var(--c-copy);
+  color: rgba(255,255,255,0.86);
 }
 
 .copyMeta {
@@ -329,18 +309,16 @@
   font-size: 0.70rem;
   line-height: 1.65;
   letter-spacing: 0.12em;
-  color: var(--c-meta);
+  color: rgba(255,255,255,0.46);
+
+  white-space: nowrap;      /* ← 追加 */
+  overflow: hidden;         /* ← 追加（はみ出し事故防止） */
+  text-overflow: ellipsis;  /* ← 追加（長い時は…） */
 }
 
-.copyText {
-  display: block;
-  color: var(--c-copy);
-}
+.copyText { display: block; color: rgba(255,255,255,0.86); }
 
-.em {
-  font-weight: 650;
-  color: var(--c-em);
-}
+.em { font-weight: 650; color: rgba(255,255,255,0.94); }
 
 /* ----------------------------
    logo (keep)
@@ -364,7 +342,6 @@
 @media (max-width: 390px) {
   .logoWrap { width: min(86vw, 300px); }
 }
-
 @media (max-width: 370px) {
   .logoWrap { width: min(88vw, 292px); }
 }
@@ -423,17 +400,14 @@
   0% { opacity: 0; transform: translate3d(0, 10px, 0) scale(0.976); }
   100% { opacity: 1; transform: translate3d(0, 0, 0) scale(1); }
 }
-
 @keyframes heroSpTitleMask {
   0% { -webkit-mask-size: 0% 100%; mask-size: 0% 100%; }
   100% { -webkit-mask-size: 118% 100%; mask-size: 118% 100%; }
 }
-
 @keyframes heroSpLogoWipe {
   0% { -webkit-mask-size: 0% 100%; mask-size: 0% 100%; }
   100% { -webkit-mask-size: 118% 100%; mask-size: 118% 100%; }
 }
-
 @keyframes heroSpLogoFocus {
   0% {
     opacity: 0.12;
@@ -476,7 +450,6 @@
   z-index: 2;
   pointer-events: none;
 }
-
 .scrollHint {
   width: 1px;
   height: 27px;
@@ -494,7 +467,6 @@
     0 0 16px rgba(217, 185, 138, 0.035);
   animation: scrollPulseSP 3.2s ease-in-out infinite;
 }
-
 @keyframes scrollPulseSP {
   0% { opacity: 0.14; transform: scaleY(0.96); }
   50% { opacity: 0.34; transform: scaleY(1); }
@@ -526,14 +498,8 @@
     transition: none !important;
   }
 
-  .image {
-    opacity: 1 !important;
-    transform: none !important;
-  }
-
-  .imageVeil,
-  .imageBloom { opacity: 0 !important; }
-
+  .image { opacity: 1 !important; transform: none !important; }
+  .imageVeil, .imageBloom { opacity: 0 !important; }
   .fade { opacity: 1 !important; transform: none !important; }
   .logoWrap { opacity: 1 !important; transform: none !important; }
 
