@@ -25,7 +25,6 @@ export default function HeroSP() {
       aria-label="GUSHIKEN DESIGN スマートフォン ヒーローセクション"
       data-loaded={imgLoaded ? "true" : "false"}
     >
-      {/* BACKGROUND */}
       <div className={styles.bg}>
         <img
           src={heroSP}
@@ -40,7 +39,6 @@ export default function HeroSP() {
         />
       </div>
 
-      {/* FX LAYERS */}
       <div className={styles.imageVeil} aria-hidden="true" />
       <div className={styles.imageBloom} aria-hidden="true" />
 
@@ -52,7 +50,6 @@ export default function HeroSP() {
       <div className={styles.edgeVignette} aria-hidden="true" />
       <div className={styles.filmNoise} aria-hidden="true" />
 
-      {/* TEXT BLOCK */}
       <div className={styles.textBlock}>
         <div className={styles.max}>
           <div className={styles.headGroup}>
@@ -66,7 +63,6 @@ export default function HeroSP() {
 
             <div className={styles.copyBlock}>
               <div className={`${styles.fade} ${styles.fade4} ${styles.divider}`} />
-
               <div className={`${styles.fade} ${styles.fade5} ${styles.bodyPad}`}>
                 <p className={styles.copy}>
                   <span className={styles.copyMeta}>
@@ -83,9 +79,7 @@ export default function HeroSP() {
             </div>
           </div>
 
-          {/* SIGNATURE */}
           <div className={styles.bodyGroup}>
-            {/* 位置はこのラッパーが担当（transformが上書きされない） */}
             <div className={styles.signatureShift}>
               <h1 className={styles.logoWrap} aria-label="GUSHIKEN DESIGN">
                 <span className={styles.srOnly}>GUSHIKEN DESIGN</span>
@@ -96,7 +90,6 @@ export default function HeroSP() {
         </div>
       </div>
 
-      {/* SCROLL HINT */}
       <div className={styles.scrollHintWrap} aria-hidden="true">
         <div className={styles.scrollHint} />
       </div>

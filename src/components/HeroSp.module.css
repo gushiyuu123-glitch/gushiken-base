@@ -11,11 +11,9 @@
   --fx: 56%;
   --fy: 45%;
 
-  /* ✅ セリフをもっと上へ（強め） */
-  --shift-head: clamp(-320px, calc(-25svh - 82px), -240px);
+--shift-head: clamp(-340px, calc(-18svh - 96px), -276px);
 
-  /* ✅ script位置（ここを動かせば必ず動く） */
-  --shift-sign: clamp(8px, calc(1.0svh + 2px), 14px);
+--shift-sign: clamp(0px, calc(0.35svh + 0px), 6px);
 
   --c-label: rgba(255, 255, 255, 0.32);
   --c-meta: rgba(255, 255, 255, 0.46);
@@ -53,6 +51,7 @@
   backface-visibility: hidden;
   transform-origin: center center;
 }
+
 .root[data-loaded="true"] .image {
   opacity: 1;
   transform: translate3d(0, 0, 0) scale(1);
@@ -111,23 +110,14 @@
   padding-left:24px;
   padding-right:24px;
 
-  /* ここは触らず（床は安定させる） */
-  padding-bottom: calc(env(safe-area-inset-bottom, 0px) + clamp(68px, 9.6svh, 108px));
+  /* ✅ レンジを狭めて “端末差で揺れない床” にする */
+  padding-bottom: calc(env(safe-area-inset-bottom, 0px) + clamp(76px, 8.4svh, 96px));
 }
 
 .max{ max-width:20.4rem; }
 
-/* ✅ セリフ塊を上へ */
 .headGroup{ transform: translate3d(0, var(--shift-head), 0); }
-
-/* ✅ scriptの位置はこのラッパーで制御（logoWrapのtransformアニメと干渉しない） */
-.signatureShift{
-  transform: translate3d(0, var(--shift-sign), 0);
-}
-
-.bodyGroup{
-  /* 何もしなくてOK（床の上で自然に並ぶ） */
-}
+.signatureShift{ transform: translate3d(0, var(--shift-sign), 0); }
 
 /* reveal */
 .fade{
@@ -213,6 +203,7 @@
 @media (max-width:390px){ .logoWrap{ width:min(86vw, 300px); } }
 @media (max-width:370px){ .logoWrap{ width:min(88vw, 292px); } }
 
+/* wipe */
 .titleImg{
   display:block;
   width:100%;
@@ -294,5 +285,20 @@
     -webkit-mask-size:118% 100% !important;
     mask-size:118% 100% !important;
     opacity:.78 !important;
+  }
+}
+/* iPhone SE / 小型端末：もっともっと下げる */
+@media (max-width: 375px), (max-height: 700px) {
+  .root {
+    /* 下げる：マイナスを弱める（-340系 → -240系へ） */
+    --shift-head: clamp(-252px, calc(-12svh - 44px), -204px);
+
+    /* 署名も少し下へ（必要なら） */
+    --shift-sign: clamp(6px, calc(0.9svh + 2px), 14px);
+  }
+
+  /* 床を下げる：padding-bottom を小さくして “沈ませる” */
+  .textBlock {
+    padding-bottom: calc(env(safe-area-inset-bottom, 0px) + clamp(40px, 5.6svh, 60px));
   }
 }
