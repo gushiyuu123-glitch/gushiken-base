@@ -74,7 +74,8 @@ export default function HeroSP() {
                   </span>
 
                   <span className={styles.copyText}>
-                    <span className={styles.em}>余白</span>、写真、言葉、導線まで整え、<br></br>
+                    <span className={styles.em}>余白</span>、写真、言葉、導線まで整え、
+                    <br />
                     価値が自然に伝わるWebサイトへ。
                   </span>
                 </p>
@@ -84,13 +85,13 @@ export default function HeroSP() {
 
           {/* SIGNATURE */}
           <div className={styles.bodyGroup}>
-            <h1
-              className={`${styles.logoWrap} ${styles.logoPad}`}
-              aria-label="GUSHIKEN DESIGN"
-            >
-              <span className={styles.srOnly}>GUSHIKEN DESIGN</span>
-              <HeroSPTitleSignature />
-            </h1>
+            {/* 位置はこのラッパーが担当（transformが上書きされない） */}
+            <div className={styles.signatureShift}>
+              <h1 className={styles.logoWrap} aria-label="GUSHIKEN DESIGN">
+                <span className={styles.srOnly}>GUSHIKEN DESIGN</span>
+                <HeroSPTitleSignature />
+              </h1>
+            </div>
           </div>
         </div>
       </div>
