@@ -53,6 +53,28 @@ subtitle: "世界観と設計力の“核”を示す代表作",
     ogImage: "https://gushikendesign.com/ogp/umikaji.png"
   }
 },
+  {
+    title: "HALO — Home Projector Experience",
+    slug: "HaloRoom",
+    desc: "夜の部屋を、スクリーンに変える。触って伝わる体験として組み上げたプロジェクターサイト。",
+    link: "https://halo-one-iota.vercel.app/",
+    img: "/works/halo-pc.webp",
+    isNew: true,
+    createdAt: "2026-05-03",
+    tags: ["NEW", "PICKUP", "Projector", "Night", "Cinematic", "UI/UX", "GSAP", "Mobile"],
+    detail: {
+      concept:
+        "プロジェクターを“スペック”ではなく、夜の過ごし方として提示する作品。スクロールと写真の重心、言葉の密度を揃えて、ページ全体を一つの体験として成立させた。",
+      tech: ["React", "Vite", "CSS Modules", "GSAP", "ScrollTrigger", "IntersectionObserver"],
+    },
+    seo: {
+      title: "HALO｜プロジェクターサイト制作｜GUSHIKEN DESIGN",
+      description:
+        "HALOは、夜の過ごし方を体験として設計したプロジェクターサイト。世界観と選びやすさを両立した制作例。",
+      keywords: "プロジェクター LP, ブランドサイト, UI/UX, GSAP, React, GUSHIKEN DESIGN",
+      ogImage: "https://gushikendesign.com/ogp/halo.png",
+    },
+  },
         {
       title: "VELMONT — Luxury Auto Showroom",
       slug: "VelmontRoom",
@@ -96,6 +118,7 @@ subtitle: "世界観と設計力の“核”を示す代表作",
         ogImage: "https://gushikendesign.com/ogp/velmont.png"
       }
     },
+    
     {
   title: "NEXUS Integration Partners",
   slug: "NexusIntegrationRoom",

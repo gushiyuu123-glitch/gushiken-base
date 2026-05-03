@@ -16,6 +16,16 @@ const FEATURED_WORKS = [
     size: "large",
   },
   {
+    title: "HALO",
+    meta: "Home Projector / Night × Cinematic Room",
+    href: "https://halo-one-iota.vercel.app/",
+    imagePc: "/works/halo-pc.webp",
+    imageSp: "/works/halo-sp.webp",
+    alt: "HALO｜ホームプロジェクターのブランドサイト制作（夜の世界観・体験設計・スマホ最適化）",
+    label: "HALO のサイトを見る",
+    size: "medium",
+  },
+  {
     title: "VELMONT",
     meta: "Luxury Auto / Trust × Precision",
     href: "https://velmont-virid.vercel.app/",
@@ -23,16 +33,6 @@ const FEATURED_WORKS = [
     imageSp: "/works/velmonte2-sp.webp",
     alt: "VELMONT｜高級車ショールームサイト制作（信頼感・高級感・導線設計）",
     label: "VELMONT のサイトを見る",
-    size: "medium",
-  },
-  {
-    title: "NEXUS",
-    meta: "Corporate IT / Trust × Workflow Design",
-    href: "https://nexus-integration-partners.vercel.app/",
-    imagePc: "/works/nexus.webp",
-    imageSp: "/works/nexus-sp.webp",
-    alt: "NEXUS Integration Partners｜業務システム導入企業のコーポレートサイト制作（情報設計・信頼感・スマートフォン最適化）",
-    label: "NEXUS Integration Partners のサイトを見る",
     size: "small",
   },
 ];
