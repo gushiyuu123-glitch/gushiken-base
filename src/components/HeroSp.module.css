@@ -170,6 +170,7 @@
   letter-spacing:.01em;
   color: var(--c-copy);
 }
+/* 通常：nowrapのままでOK */
 .copyMeta{
   display:block;
   margin-bottom:9px;
@@ -180,6 +181,15 @@
   white-space:nowrap;
   overflow:hidden;
   text-overflow:ellipsis;
+}
+
+/* ✅ SEだけ：折り返し許可（…を消す） */
+@media (max-width: 375px), (max-height: 700px){
+  .copyMeta{
+    white-space: normal;
+    overflow: visible;
+    text-overflow: clip;
+  }
 }
 .copyText{ display:block; color: var(--c-copy); }
 .em{ font-weight:650; color: var(--c-em); }
