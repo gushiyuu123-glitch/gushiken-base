@@ -2,6 +2,10 @@
 
 .heroRoot {
   --hero-silver: rgba(220, 226, 235, 0.55);
+
+  /* CTA：控えめすぎ→静かに読めるへ */
+ --hero-cta-color: rgba(255, 255, 255, 0.70);
+   --hero-cta-border: rgba(255, 255, 255, 0.17);
 }
 
 /* ------------------------------------------------------------
@@ -11,7 +15,7 @@
   opacity: 0;
   transform: scale(1.022) translate3d(0, 8px, 0);
   filter: brightness(0.82) saturate(0.88) contrast(1.025);
-  will-change: transform, opacity, filter;
+  will-change: transform, opacity;
   backface-visibility: hidden;
   transform-origin: center center;
 }
@@ -40,6 +44,7 @@
 .heroFade2 { animation-delay: 0.16s; }
 .heroFade4 { animation-delay: 0.34s; }
 .heroFade5 { animation-delay: 0.44s; }
+.heroFade6 { animation-delay: 0.58s; }
 
 /* ------------------------------------------------------------
    Title wrap
@@ -52,15 +57,8 @@
   isolation: isolate;
 }
 
-.heroTitleWrap::before,
-.heroTitleWrap::after {
-  display: none;
-}
-
 /* ------------------------------------------------------------
-   Logo only reveal (SMOOTH)
-   - steps() を廃止
-   - マスク先端に“羽根”をつけて境界のチラつきも抑える
+   Logo reveal (SMOOTH wipe)
 ------------------------------------------------------------ */
 .heroLogoReveal {
   opacity: 0;
@@ -70,28 +68,22 @@
   backface-visibility: hidden;
 }
 
-/* SVG IMG（optimized / slightly softer） */
 .heroTitleImg {
   display: block;
   width: 100%;
   height: auto;
 
   margin-block: 8px;
-  margin-top: 12px; /* +4px（控えめなら 10px） */
+  margin-top: 12px;
 
-  /* 0.86 → 0.82（ほんの少しだけ薄く） */
   opacity: 0.82;
 
   filter:
     invert(1)
-    /* 1.04 → 1.03（白の主張をほんの少しだけ抑える） */
     brightness(1.03)
     saturate(0)
-    /* 1.06 → 1.04（輪郭の硬さを少し緩める） */
     contrast(1.04)
-    /* 0.22 → 0.18（黒影の圧を少し抜く） */
     drop-shadow(0 2px 14px rgba(0, 0, 0, 0.18))
-    /* 0.10 → 0.08（白ハイライトを控えめに） */
     drop-shadow(0 0 0.45px rgba(255, 255, 255, 0.08));
 
   transform: translateZ(0);
@@ -119,17 +111,15 @@
   -webkit-mask-size: 0% 100%;
   mask-size: 0% 100%;
 
-  /* maskアニメ主役なら、ここは絞ってもOK */
-  will-change: -webkit-mask-size, mask-size, opacity;
+  will-change: -webkit-mask-size, mask-size, opacity, filter;
 }
-/* ロゴが出る時だけ：滑らかワイプ + 像が整う */
+
 .heroLogoReveal .heroTitleImg {
   animation:
     logoWipe 1.22s cubic-bezier(.22,.56,.18,1) 0.30s both,
     logoFocus 1.22s cubic-bezier(.18,.62,.2,1) 0.30s both;
 }
 
-/* maskが効かない環境用フォールバック（clip-pathも滑らかに） */
 @supports not (mask-image: linear-gradient(#000, #000)) {
   .heroTitleImg { clip-path: inset(0 100% 0 0); }
   .heroLogoReveal .heroTitleImg {
@@ -140,8 +130,78 @@
 }
 
 /* ------------------------------------------------------------
-   Scroll indicator
+   CTA (quiet but readable)
 ------------------------------------------------------------ */
+.heroCta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.62rem;
+  margin-top: 1.55rem;
+  padding: 0.58rem 0;
+  border-bottom: 1px solid var(--hero-cta-border);
+  color: var(--hero-cta-color);
+
+  /* ← ここを強化 */
+  font-size: 0.78rem;
+  letter-spacing: 0.18em;
+
+  text-decoration: none;
+  text-transform: uppercase;
+
+  transition:
+    color 0.42s ease,
+    border-color 0.42s ease,
+    opacity 0.42s ease;
+  cursor: pointer;
+
+  text-shadow: 0 1px 16px rgba(0, 0, 0, 0.52);
+}
+
+.heroCtaArrow {
+  flex-shrink: 0;
+  transition: transform 0.42s ease, opacity 0.42s ease;
+  opacity: 0.88;
+}
+
+.heroCta:hover {
+  color: rgba(255, 255, 255, 0.92);
+  border-bottom-color: rgba(255, 255, 255, 0.36);
+}
+
+.heroCta:hover .heroCtaArrow {
+  transform: translateX(3px);
+  opacity: 0.95;
+}
+
+.heroCta:focus-visible {
+  outline: 1px solid rgba(255, 255, 255, 0.42);
+  outline-offset: 7px;
+  border-radius: 2px;
+}
+
+/* ------------------------------------------------------------
+   Scroll indicator (button)
+------------------------------------------------------------ */
+.heroScrollButton {
+  background: none;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.9;
+  transition: opacity 0.34s ease;
+}
+
+.heroScrollButton:hover { opacity: 1; }
+
+.heroScrollButton:focus-visible {
+  outline: 1px solid rgba(255, 255, 255, 0.32);
+  outline-offset: 8px;
+  border-radius: 9999px;
+}
+
 .heroScrollLine {
   width: 1px;
   height: 32px;
@@ -163,7 +223,7 @@
     0 0 18px rgba(220,226,235,0.045);
 
   animation: scrollLineBreath 4.8s ease-in-out 1.2s infinite;
-  will-change: opacity;
+  will-change: opacity, transform;
 }
 
 /* ------------------------------------------------------------
@@ -195,7 +255,7 @@
 }
 
 @keyframes heroReveal {
-  0% { opacity: 0; transform: translate3d(0, 18px, 0) scale(0.995); }
+  0%   { opacity: 0; transform: translate3d(0, 18px, 0) scale(0.995); }
   100% { opacity: 1; transform: translate3d(0, 0, 0) scale(1); }
 }
 
@@ -204,19 +264,16 @@
   100% { opacity: 1; transform: translate3d(0, 0, 0) scale(1); }
 }
 
-/* 滑らかワイプ（mask-size） */
 @keyframes logoWipe {
   0%   { -webkit-mask-size: 0% 100%; mask-size: 0% 100%; }
   100% { -webkit-mask-size: 118% 100%; mask-size: 118% 100%; }
 }
 
-/* フォールバック（clip-path） */
 @keyframes logoClipWipe {
   0%   { clip-path: inset(0 100% 0 0); }
   100% { clip-path: inset(0 0 0 0); }
 }
 
-/* 像が整う（blurがなめらかに抜ける） */
 @keyframes logoFocus {
   0% {
     opacity: 0.12;
@@ -254,29 +311,29 @@
    SP tuning
 ------------------------------------------------------------ */
 @media (max-width: 768px) {
-  .heroRoot[data-loaded="true"] .heroImageReveal {
-    animation:
-      heroImageRevealSp 1.08s cubic-bezier(.22,.56,.18,1) 0s both,
-      heroStill 22s ease-in-out 1.08s infinite;
-  }
-
   .heroTitleWrap { width: min(82vw, 344px); }
 
   .heroLogoReveal { transform: translate3d(0, 9px, 0) scale(0.982); }
 
   .heroTitleImg { opacity: 0.74; }
 
-  @keyframes heroImageRevealSp {
-    0% {
-      opacity: 0;
-      transform: scale(1.016) translate3d(0, 6px, 0);
-      filter: brightness(0.83) saturate(0.87) contrast(1.02);
-    }
-    100% {
-      opacity: 1;
-      transform: scale(1.004) translate3d(0, 0, 0);
-      filter: brightness(0.89) saturate(0.89) contrast(1.028);
-    }
+  .heroRoot[data-loaded="true"] .heroImageReveal {
+    animation:
+      heroImageRevealSp 1.08s cubic-bezier(.22,.56,.18,1) 0s both,
+      heroStill 22s ease-in-out 1.08s infinite;
+  }
+}
+
+@keyframes heroImageRevealSp {
+  0% {
+    opacity: 0;
+    transform: scale(1.016) translate3d(0, 6px, 0);
+    filter: brightness(0.83) saturate(0.87) contrast(1.02);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1.004) translate3d(0, 0, 0);
+    filter: brightness(0.89) saturate(0.89) contrast(1.028);
   }
 }
 
@@ -315,5 +372,11 @@
       saturate(0)
       contrast(1.03)
       drop-shadow(0 2px 12px rgba(0,0,0,0.20)) !important;
+  }
+
+  .heroCta,
+  .heroCtaArrow,
+  .heroScrollButton {
+    transition: none !important;
   }
 }

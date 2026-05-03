@@ -1,11 +1,11 @@
+// src/components/NavGlobal.jsx
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { createPortal } from "react-dom";
 import styles from "./Nav.module.css";
 
-const NAV_HEIGHT = 68;
-const SCROLL_OFFSET = NAV_HEIGHT + 12;
 const LOGO_SRC = "/logo-gd.png";
+const FALLBACK_NAV_HEIGHT = 68;
 
 const HOME_ITEMS = [
   { href: "#works", label: "WORKS" },
@@ -26,15 +26,76 @@ function cx(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-function scrollToHash(hash) {
+function prefersReducedMotion() {
+  return (
+    typeof window !== "undefined" &&
+    window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches
+  );
+}
+
+/* =========================================================
+   Body Scroll Lock (fixed body)
+========================================================= */
+function useBodyScrollLock(locked) {
+  const scrollYRef = useRef(0);
+  const prevRef = useRef(null);
+
+  useEffect(() => {
+    if (!locked) return;
+
+    const body = document.body;
+    const docEl = document.documentElement;
+
+    scrollYRef.current = window.scrollY || window.pageYOffset || 0;
+
+    prevRef.current = {
+      overflow: body.style.overflow,
+      position: body.style.position,
+      top: body.style.top,
+      left: body.style.left,
+      right: body.style.right,
+      width: body.style.width,
+      paddingRight: body.style.paddingRight,
+    };
+
+    const scrollbarW = Math.max(0, window.innerWidth - docEl.clientWidth);
+
+    body.style.overflow = "hidden";
+    body.style.position = "fixed";
+    body.style.top = `-${scrollYRef.current}px`;
+    body.style.left = "0";
+    body.style.right = "0";
+    body.style.width = "100%";
+    if (scrollbarW) body.style.paddingRight = `${scrollbarW}px`;
+
+    return () => {
+      const prev = prevRef.current;
+      if (!prev) return;
+
+      body.style.overflow = prev.overflow;
+      body.style.position = prev.position;
+      body.style.top = prev.top;
+      body.style.left = prev.left;
+      body.style.right = prev.right;
+      body.style.width = prev.width;
+      body.style.paddingRight = prev.paddingRight;
+
+      window.scrollTo(0, scrollYRef.current);
+      prevRef.current = null;
+    };
+  }, [locked]);
+}
+
+/* =========================================================
+   Scroll to hash with dynamic offset
+========================================================= */
+function scrollToHash(hash, offsetPx) {
   if (!hash?.startsWith("#")) return;
 
   const el = document.querySelector(hash);
   if (!el) return;
 
-  const top =
-    el.getBoundingClientRect().top + (window.scrollY || 0) - SCROLL_OFFSET;
-
+  const top = el.getBoundingClientRect().top + (window.scrollY || 0) - offsetPx;
   const safeTop = Math.max(0, Math.round(top));
 
   if (window.location.hash !== hash) {
@@ -43,7 +104,7 @@ function scrollToHash(hash) {
 
   window.scrollTo({
     top: safeTop,
-    behavior: "smooth",
+    behavior: prefersReducedMotion() ? "auto" : "smooth",
   });
 }
 
@@ -56,133 +117,86 @@ export default function NavGlobal({ mode }) {
   const [open, setOpen] = useState(false);
   const [activeHash, setActiveHash] = useState("");
 
+  const navRef = useRef(null);
   const buttonRef = useRef(null);
   const firstLinkRef = useRef(null);
   const panelRef = useRef(null);
   const pendingHashRef = useRef(null);
 
+  const [navH, setNavH] = useState(FALLBACK_NAV_HEIGHT);
+  const scrollOffset = navH + 12;
+
   const homeLinks = useMemo(() => HOME_ITEMS, []);
   const globalLinks = useMemo(() => GLOBAL_ITEMS, []);
 
+  useBodyScrollLock(open);
+
+  useEffect(() => setMounted(true), []);
+
+  /* ── measure nav height (real offset) ── */
   useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  useEffect(() => {
-    let raf = 0;
-
-    const onScroll = () => {
-      cancelAnimationFrame(raf);
-
-      raf = requestAnimationFrame(() => {
-        setScrolled(window.scrollY > 12);
-      });
+    const measure = () => {
+      const h = navRef.current?.getBoundingClientRect?.().height;
+      if (!h) return;
+      const rounded = Math.round(h);
+      setNavH((prev) => (prev === rounded ? prev : rounded));
     };
 
+    measure();
+
+    let raf = 0;
+    const onResize = () => {
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(measure);
+    };
+
+    window.addEventListener("resize", onResize);
+    return () => {
+      cancelAnimationFrame(raf);
+      window.removeEventListener("resize", onResize);
+    };
+  }, []);
+
+  /* ── scroll → background state ── */
+  useEffect(() => {
+    let raf = 0;
+    const onScroll = () => {
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(() => setScrolled(window.scrollY > 12));
+    };
     window.addEventListener("scroll", onScroll, { passive: true });
     onScroll();
-
     return () => {
       cancelAnimationFrame(raf);
       window.removeEventListener("scroll", onScroll);
     };
   }, []);
 
+  /* ── route change closes menu ── */
   useEffect(() => {
     setOpen(false);
-    document.documentElement.classList.remove("scroll-lock");
-    document.body.classList.remove("scroll-lock");
   }, [pathname]);
 
+  /* ── close if desktop ── */
   useEffect(() => {
     const mq = window.matchMedia("(min-width: 768px)");
-
     const closeIfDesktop = () => {
       if (mq.matches) setOpen(false);
     };
-
     closeIfDesktop();
-
-    if (mq.addEventListener) {
-      mq.addEventListener("change", closeIfDesktop);
-    } else {
-      mq.addListener(closeIfDesktop);
-    }
-
+    if (mq.addEventListener) mq.addEventListener("change", closeIfDesktop);
+    else mq.addListener(closeIfDesktop);
     return () => {
-      if (mq.removeEventListener) {
-        mq.removeEventListener("change", closeIfDesktop);
-      } else {
-        mq.removeListener(closeIfDesktop);
-      }
+      if (mq.removeEventListener) mq.removeEventListener("change", closeIfDesktop);
+      else mq.removeListener(closeIfDesktop);
     };
   }, []);
 
+  /* ── sync activeHash only on home ── */
   useEffect(() => {
-    if (!open) return undefined;
+    if (!isHome) return;
 
-    const html = document.documentElement;
-    const body = document.body;
-
-    html.classList.add("scroll-lock");
-    body.classList.add("scroll-lock");
-
-    const panel = panelRef.current;
-
-    const preventOutsideTouch = (e) => {
-      if (panel && panel.contains(e.target)) return;
-      e.preventDefault();
-    };
-
-    document.addEventListener("touchmove", preventOutsideTouch, {
-      passive: false,
-    });
-
-    return () => {
-      document.removeEventListener("touchmove", preventOutsideTouch);
-      html.classList.remove("scroll-lock");
-      body.classList.remove("scroll-lock");
-    };
-  }, [open]);
-
-  useEffect(() => {
-    if (!open) return undefined;
-
-    const onKey = (e) => {
-      if (e.key !== "Escape") return;
-
-      e.preventDefault();
-      setOpen(false);
-
-      window.setTimeout(() => {
-        buttonRef.current?.focus();
-      }, 0);
-    };
-
-    window.addEventListener("keydown", onKey);
-
-    return () => {
-      window.removeEventListener("keydown", onKey);
-    };
-  }, [open]);
-
-  useEffect(() => {
-    if (!open) return undefined;
-
-    const timer = window.setTimeout(() => {
-      firstLinkRef.current?.focus();
-    }, 80);
-
-    return () => window.clearTimeout(timer);
-  }, [open]);
-
-  useEffect(() => {
-    if (!isHome) return undefined;
-
-    const syncHash = () => {
-      setActiveHash(window.location.hash || "");
-    };
-
+    const syncHash = () => setActiveHash(window.location.hash || "");
     syncHash();
 
     window.addEventListener("hashchange", syncHash);
@@ -194,8 +208,9 @@ export default function NavGlobal({ mode }) {
     };
   }, [isHome]);
 
+  /* ── IntersectionObserver active follow (home) ── */
   useEffect(() => {
-    if (!isHome) return undefined;
+    if (!isHome) return;
 
     let observer = null;
     let timer = null;
@@ -203,17 +218,11 @@ export default function NavGlobal({ mode }) {
     const MAX_TRIES = 8;
 
     const setup = () => {
-      const targets = HOME_ITEMS.map((item) =>
-        document.querySelector(item.href)
-      ).filter(Boolean);
+      const targets = HOME_ITEMS.map((item) => document.querySelector(item.href)).filter(Boolean);
 
       if (!targets.length) {
         tries += 1;
-
-        if (tries <= MAX_TRIES) {
-          timer = window.setTimeout(setup, 180);
-        }
-
+        if (tries <= MAX_TRIES) timer = window.setTimeout(setup, 180);
         return;
       }
 
@@ -223,22 +232,15 @@ export default function NavGlobal({ mode }) {
           if (!visible.length) return;
 
           visible.sort((a, b) => {
-            const ratio =
-              (b.intersectionRatio || 0) - (a.intersectionRatio || 0);
-
+            const ratio = (b.intersectionRatio || 0) - (a.intersectionRatio || 0);
             if (ratio) return ratio;
-
-            return (
-              Math.abs(a.boundingClientRect.top) -
-              Math.abs(b.boundingClientRect.top)
-            );
+            return Math.abs(a.boundingClientRect.top) - Math.abs(b.boundingClientRect.top);
           });
 
           const id = visible[0]?.target?.id;
           if (!id) return;
 
           const next = `#${id}`;
-
           setActiveHash((prev) => (prev === next ? prev : next));
         },
         {
@@ -258,29 +260,43 @@ export default function NavGlobal({ mode }) {
     };
   }, [isHome]);
 
+  /* ── esc close ── */
   useEffect(() => {
-    if (open) return;
+    if (!open) return;
 
-    const pending = pendingHashRef.current;
-    if (!pending) return;
+    const onKey = (e) => {
+      if (e.key !== "Escape") return;
+      e.preventDefault();
+      setOpen(false);
+      window.setTimeout(() => buttonRef.current?.focus(), 0);
+    };
 
-    pendingHashRef.current = null;
-
-    requestAnimationFrame(() => {
-      scrollToHash(pending);
-    });
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
   }, [open]);
 
-  const closeMenu = useCallback(() => {
-    setOpen(false);
-  }, []);
+  /* ── focus first link on open ── */
+  useEffect(() => {
+    if (!open) return;
+    const t = window.setTimeout(() => firstLinkRef.current?.focus(), 90);
+    return () => window.clearTimeout(t);
+  }, [open]);
 
-  const toggleMenu = useCallback(() => {
-    setOpen((value) => !value);
-  }, []);
+  /* ── close → then scroll (home anchor) ── */
+  useEffect(() => {
+    if (open) return;
+    const pending = pendingHashRef.current;
+    if (!pending) return;
+    pendingHashRef.current = null;
+    requestAnimationFrame(() => scrollToHash(pending, scrollOffset));
+  }, [open, scrollOffset]);
+
+  const closeMenu = useCallback(() => setOpen(false), []);
+  const toggleMenu = useCallback(() => setOpen((v) => !v), []);
 
   const handleAnchorClick = useCallback(
     (href) => (e) => {
+      if (!href?.startsWith("#")) return;
       e.preventDefault();
 
       setActiveHash((prev) => (prev === href ? prev : href));
@@ -291,72 +307,25 @@ export default function NavGlobal({ mode }) {
         return;
       }
 
-      scrollToHash(href);
+      scrollToHash(href, scrollOffset);
     },
-    [open]
+    [open, scrollOffset]
   );
-
-  const renderPcHomeLink = (item, index) => {
-    const active = activeHash === item.href;
-
-    return (
-      <a
-        key={item.href}
-        href={item.href}
-        onClick={handleAnchorClick(item.href)}
-        className={cx(
-          styles.navItem,
-          styles.sharpIn,
-          active && styles.navItemActive,
-          item.emphasis && styles.navItemEmphasis
-        )}
-        style={{ "--nav-delay": `${0.24 + index * 0.07}s` }}
-      >
-        <span className={styles.navItemText}>{item.label}</span>
-        <span className={styles.navSheen} aria-hidden="true" />
-      </a>
-    );
-  };
-
-  const renderPcGlobalLink = (item, index) => {
-    const active = pathname === item.to;
-
-    return (
-      <Link
-        key={item.to}
-        to={item.to}
-        className={cx(
-          styles.navItem,
-          styles.sharpIn,
-          active && styles.navItemActive,
-          item.emphasis && styles.navItemEmphasis
-        )}
-        style={{ "--nav-delay": `${0.24 + index * 0.07}s` }}
-      >
-        <span className={styles.navItemText}>{item.label}</span>
-        <span className={styles.navSheen} aria-hidden="true" />
-      </Link>
-    );
-  };
 
   if (!mounted) return null;
 
   const ui = (
     <>
       <nav
-        className={cx(
-          styles.navRoot,
-          scrolled ? styles.navActive : styles.navIdle
-        )}
+        ref={navRef}
+        className={cx(styles.navRoot, scrolled ? styles.navActive : styles.navIdle)}
         aria-label="Global Navigation"
       >
         <div className={styles.navInner}>
           <Link
             to="/"
             translate="no"
-            onClick={() => {
-              if (open) closeMenu();
-            }}
+            onClick={() => { if (open) closeMenu(); }}
             className={styles.navLogo}
             aria-label="GUSHIKEN DESIGN Home"
           >
@@ -375,7 +344,7 @@ export default function NavGlobal({ mode }) {
             <span className={styles.navLogoText}>
               <span
                 className={cx(styles.navLogoMain, styles.sharpIn)}
-                style={{ "--nav-delay": "0.1s" }}
+                style={{ "--nav-delay": "0.10s" }}
               >
                 GUSHIKEN DESIGN
                 <span className={styles.navSheen} aria-hidden="true" />
@@ -393,8 +362,41 @@ export default function NavGlobal({ mode }) {
 
           <div className={styles.navPc}>
             {isHome
-              ? homeLinks.map(renderPcHomeLink)
-              : globalLinks.map(renderPcGlobalLink)}
+              ? homeLinks.map((item, index) => {
+                  const active = activeHash === item.href;
+                  return (
+                    <a
+                      key={item.href}
+                      href={item.href}
+                      onClick={handleAnchorClick(item.href)}
+                      aria-current={active ? "location" : undefined}
+                      data-active={active ? "true" : "false"}
+                      data-emphasis={item.emphasis ? "true" : "false"}
+                      className={cx(styles.navItem, styles.sharpIn, active && styles.navItemActive)}
+                      style={{ "--nav-delay": `${0.24 + index * 0.07}s` }}
+                    >
+                      <span className={styles.navItemText}>{item.label}</span>
+                      <span className={styles.navSheen} aria-hidden="true" />
+                    </a>
+                  );
+                })
+              : globalLinks.map((item, index) => {
+                  const active = pathname === item.to;
+                  return (
+                    <Link
+                      key={item.to}
+                      to={item.to}
+                      aria-current={active ? "page" : undefined}
+                      data-active={active ? "true" : "false"}
+                      data-emphasis={item.emphasis ? "true" : "false"}
+                      className={cx(styles.navItem, styles.sharpIn, active && styles.navItemActive)}
+                      style={{ "--nav-delay": `${0.24 + index * 0.07}s` }}
+                    >
+                      <span className={styles.navItemText}>{item.label}</span>
+                      <span className={styles.navSheen} aria-hidden="true" />
+                    </Link>
+                  );
+                })}
           </div>
 
           <button
@@ -414,10 +416,7 @@ export default function NavGlobal({ mode }) {
       </nav>
 
       <div
-        className={cx(
-          styles.mobileOverlay,
-          open && styles.mobileOverlayOpen
-        )}
+        className={cx(styles.mobileOverlay, open && styles.mobileOverlayOpen)}
         onClick={closeMenu}
         aria-hidden="true"
       />
@@ -429,6 +428,7 @@ export default function NavGlobal({ mode }) {
         role="dialog"
         aria-modal="true"
         aria-hidden={!open}
+        aria-label="Navigation menu"
       >
         <div className={styles.mobileNavInner}>
           <div className={styles.mobileNavTop}>
@@ -438,9 +438,7 @@ export default function NavGlobal({ mode }) {
               type="button"
               onClick={() => {
                 setOpen(false);
-                window.setTimeout(() => {
-                  buttonRef.current?.focus();
-                }, 0);
+                window.setTimeout(() => buttonRef.current?.focus(), 0);
               }}
               aria-label="Close navigation"
               tabIndex={open ? 0 : -1}
@@ -455,7 +453,6 @@ export default function NavGlobal({ mode }) {
             {isHome
               ? homeLinks.map((item, index) => {
                   const active = activeHash === item.href;
-
                   return (
                     <a
                       key={item.href}
@@ -463,20 +460,19 @@ export default function NavGlobal({ mode }) {
                       ref={index === 0 ? firstLinkRef : null}
                       tabIndex={open ? 0 : -1}
                       onClick={handleAnchorClick(item.href)}
-                      className={cx(
-                        styles.mobileNavItem,
-                        active && styles.mobileNavItemActive,
-                        item.emphasis && styles.mobileNavItemEmphasis
-                      )}
+                      aria-current={active ? "location" : undefined}
+                      data-active={active ? "true" : "false"}
+                      data-emphasis={item.emphasis ? "true" : "false"}
+                      className={cx(styles.mobileNavItem, active && styles.mobileNavItemActive)}
                       style={{ "--i": index }}
                     >
-                      <MobileLinkInner label={item.label} />
+                      <span className={styles.mobileNavText}>{item.label}</span>
+                      <span className={styles.mobileNavArrow} aria-hidden="true">→</span>
                     </a>
                   );
                 })
               : globalLinks.map((item, index) => {
                   const active = pathname === item.to;
-
                   return (
                     <Link
                       key={item.to}
@@ -484,23 +480,21 @@ export default function NavGlobal({ mode }) {
                       ref={index === 0 ? firstLinkRef : null}
                       tabIndex={open ? 0 : -1}
                       onClick={() => setOpen(false)}
-                      className={cx(
-                        styles.mobileNavItem,
-                        active && styles.mobileNavItemActive,
-                        item.emphasis && styles.mobileNavItemEmphasis
-                      )}
+                      aria-current={active ? "page" : undefined}
+                      data-active={active ? "true" : "false"}
+                      data-emphasis={item.emphasis ? "true" : "false"}
+                      className={cx(styles.mobileNavItem, active && styles.mobileNavItemActive)}
                       style={{ "--i": index }}
                     >
-                      <MobileLinkInner label={item.label} />
+                      <span className={styles.mobileNavText}>{item.label}</span>
+                      <span className={styles.mobileNavArrow} aria-hidden="true">→</span>
                     </Link>
                   );
                 })}
           </div>
 
           <div className={styles.mobileNavFooter}>
-            <p className={styles.mobileNavNote}>
-              Structure, atmosphere, and trust.
-            </p>
+            <p className={styles.mobileNavNote}>Structure, atmosphere, and trust.</p>
           </div>
         </div>
       </div>
@@ -508,15 +502,4 @@ export default function NavGlobal({ mode }) {
   );
 
   return createPortal(ui, document.body);
-}
-
-function MobileLinkInner({ label }) {
-  return (
-    <>
-      <span className={styles.mobileNavText}>{label}</span>
-      <span className={styles.mobileNavArrow} aria-hidden="true">
-        →
-      </span>
-    </>
-  );
 }

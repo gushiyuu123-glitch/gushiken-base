@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import heroSP from "../assets/hero-sp33.png";
+// ↑ 裕人ルールに寄せるなら、これを public に置いて
+//    src="/images/hero-sp33.png" に変えるのが一番事故らない（任意）
 
 function HeroSPTitleSignature() {
   return (
@@ -104,8 +106,8 @@ export default function HeroSP() {
         aria-hidden="true"
         className="
           pointer-events-none absolute inset-x-0 bottom-0 z-[1]
-          h-[290px]
-          bg-[linear-gradient(180deg,transparent_0%,rgba(0,0,0,0.12)_24%,rgba(0,0,0,0.50)_100%)]
+          h-[340px]
+          bg-[linear-gradient(180deg,transparent_0%,rgba(0,0,0,0.10)_18%,rgba(0,0,0,0.56)_100%)]
         "
       />
 
@@ -129,24 +131,24 @@ export default function HeroSP() {
       />
 
       {/* TEXT BLOCK */}
-      <div className="absolute inset-x-0 bottom-[clamp(3.8rem,7.8svh,5.2rem)] z-[2] px-6">
+      <div className="absolute inset-x-0 bottom-[clamp(5.2rem,10.8svh,6.9rem)] z-[2] px-6">
         <div className="max-w-[20.4rem]">
           {/* LABEL */}
           <div className="hero-sp-fade hero-sp-fade-1">
-            <p className="mb-2.5 text-[0.61rem] leading-none tracking-[0.25em] text-white/50 uppercase">
+            <p className="mb-2 text-[0.61rem] leading-none tracking-[0.25em] text-white/50 uppercase">
               OKINAWA / WEB DESIGN / IMPRESSION
             </p>
           </div>
 
-          {/* HOOK */}
+          {/* HOOK（PCの“核が埋もれない”思想をSPにも） */}
           <div className="hero-sp-fade hero-sp-fade-2 pl-[2px]">
-            <p className="mb-3 text-[0.88rem] font-light leading-[1.68] tracking-[0.07em] text-white/86">
+            <p className="hero-sp-hook mb-4 text-[clamp(1.04rem,3.9vw,1.16rem)] font-normal leading-[1.58] tracking-[0.07em] text-white/94">
               整えることで、価値は伝わる。
             </p>
           </div>
 
-          {/* TITLE (PC版ロゴ演出を移植) */}
-          <h1 className="hero-sp-logoReveal hero-sp-title-wrap mb-5" aria-label="GUSHIKEN DESIGN">
+          {/* TITLE */}
+          <h1 className="hero-sp-logoReveal hero-sp-title-wrap mb-4" aria-label="GUSHIKEN DESIGN">
             <span className="sr-only">GUSHIKEN DESIGN</span>
             <HeroSPTitleSignature />
           </h1>
@@ -154,35 +156,26 @@ export default function HeroSP() {
           {/* DIVIDER */}
           <div className="hero-sp-fade hero-sp-fade-4 hero-sp-divider mb-4" />
 
-          {/* BODY */}
+          {/* BODY（SPは例Aのまま：密度を増やさない） */}
           <div className="hero-sp-fade hero-sp-fade-5 pl-[7px]">
             <div className="max-w-[18rem] text-[0.92rem] leading-[1.84] tracking-[0.01em] text-white/90">
               <p className="mb-2 text-[0.725rem] leading-[1.65] tracking-[0.10em] text-white/58">
-                沖縄のWeb制作・Webデザイン｜美容・店舗・EC
+                沖縄のWeb制作・Webデザイン
               </p>
 
               <p className="mb-1.5">余白、写真、言葉、導線まで。</p>
               <p>価値が自然に伝わるWebサイトへ。</p>
-
-              <p className="mt-3 text-[0.755rem] leading-[1.78] tracking-[0.07em] text-white/66">
-                見やすく、迷わず、安っぽくならない。
-                <br />
-                信頼感のある第一印象を設計します。
-              </p>
             </div>
           </div>
         </div>
       </div>
 
-      {/* SCROLL HINT */}
+      {/* SCROLL HINT（SPは装飾でOK） */}
       <div className="pointer-events-none absolute bottom-5 left-1/2 z-[2] -translate-x-1/2">
         <div className="scroll-hint-sp" />
       </div>
 
       <style>{`
-        /* =========================
-           核：SPで“切れ方”を制御する重心
-        ========================= */
         .hero-sp-root{
           --fx: 56%;
           --fy: 45%;
@@ -206,7 +199,10 @@ export default function HeroSP() {
             opacity 1.42s cubic-bezier(0.18,0.62,0.2,1),
             transform 2.08s cubic-bezier(0.22,0.1,0.28,1),
             filter 1.6s cubic-bezier(0.22,0.1,0.28,1);
-          will-change: transform, opacity, filter;
+
+          /* filter は will-change に入れない（PC側と同じ思想） */
+          will-change: transform, opacity;
+
           backface-visibility: hidden;
           transform-origin: center center;
         }
@@ -229,9 +225,7 @@ export default function HeroSP() {
           will-change: opacity;
         }
 
-        .hero-sp-root[data-loaded="true"] .hero-sp-image-veil{
-          opacity: 0;
-        }
+        .hero-sp-root[data-loaded="true"] .hero-sp-image-veil{ opacity: 0; }
 
         .hero-sp-image-bloom{
           opacity: 0;
@@ -261,7 +255,12 @@ export default function HeroSP() {
           transform: scale(1);
         }
 
-        /* ========== text fades ========== */
+        .hero-sp-hook{
+          text-shadow:
+            0 1px 22px rgba(0,0,0,0.46),
+            0 0 0.45px rgba(255,255,255,0.10);
+        }
+
         .hero-sp-fade{
           opacity: 0;
           transform: translate3d(0, 14px, 0) scale(0.995);
@@ -278,106 +277,76 @@ export default function HeroSP() {
         @keyframes heroSPReveal{
           to{ opacity: 1; transform: translate3d(0,0,0) scale(1); }
         }
-/* =========================
-   TITLE (SP)
-   - 左端は常に不透明
-   - 右端だけ羽根
-   - 最終 118% で羽根を画面外へ逃がす
-========================= */
-.hero-sp-title-wrap{
-  position: relative;
-  width: min(84vw, 304px);
-  line-height: 1;
-  isolation: isolate;
 
-  padding-block: 8px;
-  padding-top: 10px; /* +2px */
-}
+        .hero-sp-title-wrap{
+          position: relative;
+          width: min(84vw, 304px);
+          line-height: 1;
+          isolation: isolate;
+          padding-block: 8px;
+          padding-top: 10px;
+        }
 
-.hero-sp-title-wrap::before,
-.hero-sp-title-wrap::after{ display:none; }
+        .hero-sp-title-wrap::before,
+        .hero-sp-title-wrap::after{ display:none; }
 
-.hero-sp-logoReveal{
-  opacity: 0;
-  transform: translate3d(0, 10px, 0) scale(0.976);
-  animation: heroSpLogoReveal 1.18s cubic-bezier(.22,.56,.18,1) 0.32s both;
-  will-change: transform, opacity;
-  backface-visibility: hidden;
-}
+        .hero-sp-logoReveal{
+          opacity: 0;
+          transform: translate3d(0, 10px, 0) scale(0.976);
+          animation: heroSpLogoReveal 1.18s cubic-bezier(.22,.56,.18,1) 0.32s both;
+          will-change: transform, opacity;
+          backface-visibility: hidden;
+        }
 
-.hero-sp-title-img{
-  display:block;
-  width:100%;
-  height:auto;
+        .hero-sp-title-img{
+          display:block;
+          width:100%;
+          height:auto;
+          opacity: 0.74;
+          filter:
+            invert(1)
+            brightness(1.03)
+            saturate(0)
+            contrast(1.04)
+            drop-shadow(0 2px 14px rgba(0,0,0,0.16))
+            drop-shadow(0 0 0.45px rgba(255,255,255,0.07));
+          transform: translate3d(0,0,0);
+          backface-visibility: hidden;
+          will-change: -webkit-mask-size, mask-size, opacity;
 
-  /* 0.80 → 0.76（ほんの少しだけ薄く） */
-  opacity: 0.74; /* 0.76 → 0.74 */
+          -webkit-mask-image: linear-gradient(
+            90deg,
+            rgba(0,0,0,1) 0%,
+            rgba(0,0,0,1) 84%,
+            rgba(0,0,0,0) 100%
+          );
+          mask-image: linear-gradient(
+            90deg,
+            rgba(0,0,0,1) 0%,
+            rgba(0,0,0,1) 84%,
+            rgba(0,0,0,0) 100%
+          );
 
-  filter:
-    invert(1)
-    brightness(1.03)
-    saturate(0)
-    contrast(1.04)
-    drop-shadow(0 2px 14px rgba(0,0,0,0.16)) /* 0.18 → 0.16 */
-    drop-shadow(0 0 0.45px rgba(255,255,255,0.07)); /* 0.08 → 0.07 */
+          -webkit-mask-repeat:no-repeat;
+          mask-repeat:no-repeat;
+          -webkit-mask-position:left center;
+          mask-position:left center;
 
-  transform: translate3d(0,0,0);
-  backface-visibility: hidden;
+          -webkit-mask-size: 0% 100%;
+          mask-size: 0% 100%;
 
-  will-change: -webkit-mask-size, mask-size, opacity;
+          animation: heroSpTitleMask 1.18s cubic-bezier(.22,.56,.18,1) 0.32s both;
+        }
 
-  -webkit-mask-image: linear-gradient(
-    90deg,
-    rgba(0,0,0,1) 0%,
-    rgba(0,0,0,1) 84%,
-    rgba(0,0,0,0) 100%
-  );
-  mask-image: linear-gradient(
-    90deg,
-    rgba(0,0,0,1) 0%,
-    rgba(0,0,0,1) 84%,
-    rgba(0,0,0,0) 100%
-  );
+        @keyframes heroSpTitleMask{
+          0%   { -webkit-mask-size: 0% 100%;  mask-size: 0% 100%; }
+          100% { -webkit-mask-size: 118% 100%; mask-size: 118% 100%; }
+        }
 
-  -webkit-mask-repeat:no-repeat;
-  mask-repeat:no-repeat;
-  -webkit-mask-position:left center;
-  mask-position:left center;
-
-  -webkit-mask-size: 0% 100%;
-  mask-size: 0% 100%;
-
-  animation: heroSpTitleMask 1.18s cubic-bezier(.22,.56,.18,1) 0.32s both;
-}
-
-@keyframes heroSpTitleMask{
-  0%   { -webkit-mask-size: 0% 100%;  mask-size: 0% 100%; }
-  100% { -webkit-mask-size: 118% 100%; mask-size: 118% 100%; }
-}
-
-/* reduced-motion */
-@media (prefers-reduced-motion: reduce){
-  .hero-sp-logoReveal{ animation: none; opacity: 1; transform: none; }
-  .hero-sp-title-img{
-    animation: none;
-    -webkit-mask-size: 118% 100%;
-    mask-size: 118% 100%;
-    opacity: 0.88;
-  }
-}
         .hero-sp-logoReveal .hero-sp-title-img{
           animation:
             heroSpLogoWipe 1.22s cubic-bezier(.22,.56,.18,1) 0.38s both,
             heroSpLogoFocus 1.22s cubic-bezier(.18,.62,.2,1) 0.38s both;
-        }
-
-        @supports not (mask-image: linear-gradient(#000,#000)){
-          .hero-sp-title-img{ clip-path: inset(0 100% 0 0); }
-          .hero-sp-logoReveal .hero-sp-title-img{
-            animation:
-              heroSpLogoClip 1.22s cubic-bezier(.22,.56,.18,1) 0.38s both,
-              heroSpLogoFocus 1.22s cubic-bezier(.18,.62,.2,1) 0.38s both;
-          }
         }
 
         @keyframes heroSpLogoReveal{
@@ -385,64 +354,52 @@ export default function HeroSP() {
           100%{ opacity:1; transform: translate3d(0,0,0) scale(1); }
         }
 
-        /* ← ここが “118%で逃がす” */
         @keyframes heroSpLogoWipe{
           0%{ -webkit-mask-size: 0% 100%; mask-size: 0% 100%; }
           100%{ -webkit-mask-size: 118% 100%; mask-size: 118% 100%; }
         }
 
-        @keyframes heroSpLogoClip{
-          0%{ clip-path: inset(0 100% 0 0); }
-          100%{ clip-path: inset(0 0 0 0); }
-        }
-
-/* ③ “最終到達”を薄める（ここが体感いちばん効く） */
-@keyframes heroSpLogoFocus{
-  0%{
-    opacity: 0.12;
-    filter:
-      invert(1)
-      brightness(1.03)
-      saturate(0)
-      contrast(1.02)
-      blur(0.20px)
-      drop-shadow(0 2px 10px rgba(0,0,0,0.16));
-  }
-  55%{
-    opacity: 0.64; /* 0.68 → 0.64 */
-    filter:
-      invert(1)
-      brightness(1.04) /* 1.05 → 1.04 */
-      saturate(0)
-      contrast(1.02)  /* 1.03 → 1.02 */
-      blur(0.08px)
-      drop-shadow(0 2px 12px rgba(0,0,0,0.18)); /* 0.20 → 0.18 */
-  }
-  100%{
-    opacity: 0.74; /* 0.78 → 0.74 */
-    filter:
-      invert(1)
-      brightness(1.04)
-      saturate(0)
-      contrast(1.02)
-      blur(0)
-      drop-shadow(0 2px 12px rgba(0,0,0,0.18));
-  }
-}
-        /* ========== divider(1.03)
+        @keyframes heroSpLogoFocus{
+          0%{
+            opacity: 0.12;
+            filter:
+              invert(1)
+              brightness(1.03)
+              saturate(0)
+              contrast(1.02)
+              blur(0.20px)
+              drop-shadow(0 2px 10px rgba(0,0,0,0.16));
+          }
+          55%{
+            opacity: 0.64;
+            filter:
+              invert(1)
+              brightness(1.04)
+              saturate(0)
+              contrast(1.02)
+              blur(0.08px)
+              drop-shadow(0 2px 12px rgba(0,0,0,0.18));
+          }
+          100%{
+            opacity: 0.74;
+            filter:
+              invert(1)
+              brightness(1.04)
+              saturate(0)
+              contrast(1.02)
               blur(0)
-              drop-shadow(0 2px 12px rgba(0,0,0,0.20));
+              drop-shadow(0 2px 12px rgba(0,0,0,0.18));
           }
         }
 
-        /* / scroll hint ========== */
         .hero-sp-divider{
           height: 1px;
-          width: 58px;
+          width: 46px;
+          margin-left: 7px;
           background: linear-gradient(
             90deg,
             rgba(255,255,255,0.56),
-            rgba(217,185,138,0.48),
+            rgba(217,185,138,0.42),
             rgba(255,255,255,0)
           );
           box-shadow:
@@ -476,7 +433,7 @@ export default function HeroSP() {
         }
 
         @media (max-width: 390px){
-          .hero-sp-title-wrap{ width: min(88vw, 306px); }
+          .hero-sp-title-wrap{ width: min(86vw, 300px); }
         }
 
         @media (max-width: 370px){
@@ -514,8 +471,6 @@ export default function HeroSP() {
           .hero-sp-title-img{
             -webkit-mask-size: 118% 100% !important;
             mask-size: 118% 100% !important;
-            clip-path: inset(0 0 0 0) !important;
-
             opacity: 0.78 !important;
             filter:
               invert(1)

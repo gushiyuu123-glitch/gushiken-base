@@ -20,6 +20,17 @@ function HeroTitleSvg() {
 export default function Hero() {
   const [imgLoaded, setImgLoaded] = useState(false);
 
+  const handleScrollDown = () => {
+    const reduce =
+      typeof window !== "undefined" &&
+      window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches;
+
+    window.scrollBy({
+      top: window.innerHeight,
+      behavior: reduce ? "auto" : "smooth",
+    });
+  };
+
   return (
     <section
       className={`
@@ -149,28 +160,32 @@ export default function Hero() {
           </p>
         </div>
 
-        {/* HOOK */}
-        <div className={`${styles.heroFade} ${styles.heroFade2} md:pl-[10px]`}>
+        {/* HOOK（核：静かに強く） */}
+        <div className={`${styles.heroFade} ${styles.heroFade2} md:pl-[14px]`}>
           <p
             className="
               mb-4
-              text-[0.86rem] font-light leading-[1.7]
-              tracking-[0.12em] text-white/90
-              sm:text-[0.92rem]
-              md:mb-5 md:text-[1rem]
+              font-normal leading-[1.6]
+              tracking-[0.09em]
+              text-[clamp(1.08rem,1.18vw,1.28rem)]
+             text-white/93
+
+              sm:text-[clamp(1.12rem,1.14vw,1.32rem)]
+              md:mb-5
+             [text-shadow:0_1px_18px_rgba(0,0,0,0.38)]
             "
           >
             整えることで、価値は伝わる。
           </p>
         </div>
 
-        {/* TITLE (LOGO ONLY SMOOTH WIPE) */}
+        {/* TITLE（spine=14px） */}
         <h1
           className={`
             ${styles.heroLogoReveal}
             ${styles.heroTitleWrap}
             mb-5
-            md:mb-6 md:pl-[4px]
+            md:mb-6 md:pl-[14px]
           `}
           aria-label="GUSHIKEN DESIGN"
         >
@@ -178,34 +193,35 @@ export default function Hero() {
           <HeroTitleSvg />
         </h1>
 
-        {/* DIVIDER */}
+        {/* DIVIDER（支点：spine=14px） */}
         <div
           className={`
             ${styles.heroFade} ${styles.heroFade4}
             mb-6 h-px w-[72px]
             bg-[linear-gradient(90deg,rgba(255,255,255,0.58),rgba(255,255,255,0.24),rgba(255,255,255,0))]
-            md:mb-8 md:ml-[4px] md:w-[84px]
+            md:mb-8 md:ml-[14px] md:w-[84px]
           `}
         />
 
-        {/* BODY */}
+        {/* BODY（読める主役へ：サイズ↑／行間は締める） */}
         <div className={`${styles.heroFade} ${styles.heroFade5} md:ml-[14px]`}>
           <div
             className="
               max-w-[31rem]
-              text-[0.94rem] leading-[2]
+              text-[0.98rem] leading-[1.92]
               tracking-[0.015em] text-white/90
-              sm:text-[0.98rem]
-              md:text-[1.05rem] md:leading-[2.08]
+              [text-shadow:0_1px_16px_rgba(0,0,0,0.36)]
+              sm:text-[1.02rem]
+              md:text-[1.14rem] md:leading-[1.96]
             "
           >
             <p
               className="
                 mb-3
-                text-[0.76rem] leading-[1.7]
+                text-[0.79rem] leading-[1.7]
                 tracking-[0.12em]
-                text-white/62
-                md:text-[0.84rem]
+                text-white/68
+                md:text-[0.92rem]
               "
             >
               沖縄のWeb制作・Webデザイン｜美容・店舗・EC
@@ -217,8 +233,8 @@ export default function Hero() {
             <p
               className="
                 mt-5
-                text-[0.82em] leading-[1.9]
-                tracking-[0.08em] text-white/62
+                text-[0.86em] leading-[1.85]
+                tracking-[0.07em] text-white/62
               "
             >
               見やすく、迷わず、安っぽくならない。
@@ -228,19 +244,45 @@ export default function Hero() {
             </p>
           </div>
         </div>
+
+        {/* CTA（静かに。押さない。だが読める） */}
+        <div className={`${styles.heroFade} ${styles.heroFade6} md:ml-[14px]`}>
+          <a href="#contact" className={styles.heroCta}>
+            <span>制作を相談する</span>
+            <svg
+              width="15"
+              height="10"
+              viewBox="0 0 15 10"
+              fill="none"
+              aria-hidden="true"
+              className={styles.heroCtaArrow}
+            >
+              <path
+                d="M9 1L14 5M14 5L9 9M14 5H1"
+                stroke="currentColor"
+                strokeWidth="0.9"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </a>
+        </div>
       </div>
 
       {/* SCROLL INDICATOR */}
-      <div
-        aria-hidden="true"
+      <button
+        type="button"
         className={`
           ${styles.heroFade} ${styles.heroFade5}
+          ${styles.heroScrollButton}
           absolute bottom-7 left-1/2 z-[2]
           -translate-x-1/2
         `}
+        onClick={handleScrollDown}
+        aria-label="Scroll down"
       >
         <div className={styles.heroScrollLine} />
-      </div>
+      </button>
 
       {/* BOTTOM BREATH */}
       <div
