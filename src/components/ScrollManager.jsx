@@ -35,7 +35,6 @@ function getCurrentScrollPosition(fallback = { x: 0, y: 0 }) {
   const body = document.body;
   const lenis = getLenis();
 
-  // Lenis を使っている場合の現在値
   if (lenis && typeof lenis.scroll === "number") {
     return {
       x: window.scrollX || fallback.x || 0,
@@ -43,10 +42,8 @@ function getCurrentScrollPosition(fallback = { x: 0, y: 0 }) {
     };
   }
 
-  // body fixed 型 scroll-lock 対策
   if (body.style.position === "fixed" && body.style.top) {
     const fixedY = Math.abs(parseInt(body.style.top, 10));
-
     if (Number.isFinite(fixedY)) {
       return {
         x: fallback.x || 0,
@@ -70,16 +67,13 @@ function savePosition(location, position) {
   if (!location || !position) return;
 
   const positions = getPositions();
-
   positions[getEntryKey(location)] = position;
   positions[getRouteKey(location)] = position;
-
   setPositions(positions);
 }
 
 function getSavedPosition(location) {
   const positions = getPositions();
-
   return (
     positions[getEntryKey(location)] ||
     positions[getRouteKey(location)] ||
@@ -95,7 +89,6 @@ function forceScrollTo(position) {
   const root = getScrollRoot();
   const lenis = getLenis();
 
-  // CSS smooth の影響を一時的に切る
   const html = document.documentElement;
   const body = document.body;
 
@@ -113,12 +106,7 @@ function forceScrollTo(position) {
     });
   }
 
-  window.scrollTo({
-    left: x,
-    top: y,
-    behavior: "auto",
-  });
-
+  window.scrollTo({ left: x, top: y, behavior: "auto" });
   root.scrollTop = y;
   html.scrollTop = y;
   body.scrollTop = y;
@@ -129,7 +117,6 @@ function forceScrollTo(position) {
 
 function getMaxScrollY() {
   const root = getScrollRoot();
-
   return Math.max(
     0,
     root.scrollHeight - window.innerHeight,
@@ -144,46 +131,29 @@ function restorePosition(location) {
 
   const targetY = position.y || 0;
 
-  /**
-   * ページ高さがまだ足りない場合がある。
-   * 画像・フォント・遅延描画で高さが伸びるまで何度か戻す。
-   */
   const apply = () => {
     const maxY = getMaxScrollY();
     const safeY = Math.min(targetY, maxY);
-
-    forceScrollTo({
-      x: position.x || 0,
-      y: safeY,
-    });
+    forceScrollTo({ x: position.x || 0, y: safeY });
   };
 
   apply();
-
   requestAnimationFrame(apply);
 
-  const timers = [40, 90, 160, 280, 460, 700, 1000].map((delay) =>
+  // 7本 → 3本に削減。ResizeObserverが主な補正役なので十分。
+  const timers = [60, 200, 500].map((delay) =>
     window.setTimeout(apply, delay)
   );
 
-  // 画像読み込み後にも再補正
-  const handleLoad = () => {
-    apply();
-  };
-
+  const handleLoad = () => { apply(); };
   window.addEventListener("load", handleLoad, { once: true });
 
-  // レイアウト高さが変わった時にも短時間だけ追従
   let resizeObserver;
   let stopObserverTimer;
 
   if ("ResizeObserver" in window) {
-    resizeObserver = new ResizeObserver(() => {
-      apply();
-    });
-
+    resizeObserver = new ResizeObserver(() => { apply(); });
     resizeObserver.observe(document.body);
-
     stopObserverTimer = window.setTimeout(() => {
       resizeObserver?.disconnect();
     }, 1100);
@@ -199,16 +169,9 @@ function restorePosition(location) {
 
 function scrollToTop() {
   const top = { x: 0, y: 0 };
-
   forceScrollTo(top);
-
-  requestAnimationFrame(() => {
-    forceScrollTo(top);
-  });
-
-  window.setTimeout(() => {
-    forceScrollTo(top);
-  }, 80);
+  requestAnimationFrame(() => { forceScrollTo(top); });
+  window.setTimeout(() => { forceScrollTo(top); }, 80);
 }
 
 function scrollToHash(hash) {
@@ -216,14 +179,9 @@ function scrollToHash(hash) {
 
   const id = decodeURIComponent(hash.slice(1));
   const target = document.getElementById(id);
-
   if (!target) return false;
 
-  target.scrollIntoView({
-    behavior: "auto",
-    block: "start",
-  });
-
+  target.scrollIntoView({ behavior: "auto", block: "start" });
   return true;
 }
 
@@ -237,14 +195,10 @@ export default function ScrollManager() {
   const restoreCleanupRef = useRef(null);
   const isProgrammaticScrollRef = useRef(false);
 
-  /**
-   * ブラウザ標準の復元を止める
-   */
   useEffect(() => {
     if ("scrollRestoration" in window.history) {
       window.history.scrollRestoration = "manual";
     }
-
     return () => {
       if ("scrollRestoration" in window.history) {
         window.history.scrollRestoration = "auto";
@@ -252,41 +206,29 @@ export default function ScrollManager() {
     };
   }, []);
 
-  /**
-   * 現在の location を ref に保持
-   */
   useEffect(() => {
     locationRef.current = location;
   }, [location]);
 
-  /**
-   * スクロール位置を常時保存
-   * 離れる瞬間だけに頼らない。
-   */
   useEffect(() => {
     let ticking = false;
 
     const saveCurrent = () => {
       if (isProgrammaticScrollRef.current) return;
-
       latestScrollRef.current = getCurrentScrollPosition(latestScrollRef.current);
       savePosition(locationRef.current, latestScrollRef.current);
     };
 
     const handleScroll = () => {
       if (ticking) return;
-
       ticking = true;
-
       requestAnimationFrame(() => {
         ticking = false;
         saveCurrent();
       });
     };
 
-    const handleBeforeLeave = () => {
-      saveCurrent();
-    };
+    const handleBeforeLeave = () => { saveCurrent(); };
 
     saveCurrent();
 
@@ -294,14 +236,11 @@ export default function ScrollManager() {
     window.addEventListener("resize", handleScroll);
     window.addEventListener("pagehide", handleBeforeLeave);
     window.addEventListener("beforeunload", handleBeforeLeave);
-
-    // Linkクリック前に保存しておく
     document.addEventListener("click", handleBeforeLeave, true);
     window.addEventListener("popstate", handleBeforeLeave, true);
 
     return () => {
       saveCurrent();
-
       window.removeEventListener("scroll", handleScroll);
       window.removeEventListener("resize", handleScroll);
       window.removeEventListener("pagehide", handleBeforeLeave);
@@ -311,16 +250,11 @@ export default function ScrollManager() {
     };
   }, []);
 
-  /**
-   * スクロール制御本体
-   * useLayoutEffect で描画前に戻す。
-   */
   useLayoutEffect(() => {
     restoreCleanupRef.current?.();
     restoreCleanupRef.current = null;
 
     const previousLocation = previousLocationRef.current;
-
     const isSamePathname = previousLocation.pathname === location.pathname;
     const hasHash = location.hash && location.hash.length > 1;
 
@@ -330,75 +264,48 @@ export default function ScrollManager() {
 
     isProgrammaticScrollRef.current = true;
 
-    // 1. hash があるならアンカー優先
     if (hasHash) {
       const moved = scrollToHash(location.hash);
-
       if (!moved) {
         const hashTimer = window.setTimeout(() => {
           scrollToHash(location.hash);
         }, 120);
-
-        restoreCleanupRef.current = () => {
-          clearTimeout(hashTimer);
-        };
+        restoreCleanupRef.current = () => { clearTimeout(hashTimer); };
       }
-
-      window.setTimeout(() => {
-        isProgrammaticScrollRef.current = false;
-      }, 180);
-
+      window.setTimeout(() => { isProgrammaticScrollRef.current = false; }, 180);
       updatePreviousLocation();
       return;
     }
 
-    // 2. ブラウザバック / 進むなら元位置へ
     if (navigationType === "POP") {
       const cleanup = restorePosition(location);
-
       if (!cleanup && !getSavedPosition(location) && !isSamePathname) {
         scrollToTop();
       }
-
       if (typeof cleanup === "function") {
         restoreCleanupRef.current = cleanup;
       }
-
-      window.setTimeout(() => {
-        isProgrammaticScrollRef.current = false;
-      }, 1200);
-
+      window.setTimeout(() => { isProgrammaticScrollRef.current = false; }, 1200);
       updatePreviousLocation();
       return;
     }
 
-    // 3. 同じページ内の URL 変化は維持
     if (isSamePathname) {
       const current = getCurrentScrollPosition(latestScrollRef.current);
       latestScrollRef.current = current;
       savePosition(location, current);
-
-      window.setTimeout(() => {
-        isProgrammaticScrollRef.current = false;
-      }, 180);
-
+      window.setTimeout(() => { isProgrammaticScrollRef.current = false; }, 180);
       updatePreviousLocation();
       return;
     }
 
-    // 4. 通常の別ページ遷移はトップ
     scrollToTop();
-
-    window.setTimeout(() => {
-      isProgrammaticScrollRef.current = false;
-    }, 220);
-
+    window.setTimeout(() => { isProgrammaticScrollRef.current = false; }, 220);
     updatePreviousLocation();
 
     return () => {
       restoreCleanupRef.current?.();
       restoreCleanupRef.current = null;
-
       const current = getCurrentScrollPosition(latestScrollRef.current);
       latestScrollRef.current = current;
       savePosition(location, current);
