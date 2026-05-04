@@ -1801,6 +1801,30 @@ subtitle: "世界観と設計力の“核”を示す代表作",
     ogImage: "https://gushikendesign.com/ogp/noah.png"
   }
 },
+{
+  title: "GLASS ROOM — Shards & Words",
+  slug: "GlassRoom",
+  desc: "ガラスを割ると、言葉が返る。深夜のための小さな実験。",
+  link: "https://glass-room-livid.vercel.app/",
+  img: "/works/glass-room.webp",
+  isNew: true,
+  createdAt: "2026-05-04",
+  tags: ["EXPERIMENTAL", "Interactive", "Words", "Glass", "Night"],
+
+  detail: {
+    concept:
+      "名言の羅列ではなく、言葉が“像として結ばれる瞬間”だけを残すための実験作品。",
+    tech: ["React", "Vite", "Canvas", "IntersectionObserver"],
+  },
+
+  seo: {
+    title: "GLASS ROOM｜ガラスを割ると、言葉が返る｜GUSHIKEN DESIGN",
+    description:
+      "GLASS ROOMは、ガラスを割ると“言葉が返る”実験的な体験作品。深夜に一人で触ってみてください。",
+    keywords: "インタラクティブアート, Web体験, 名言, ガラス, React, Vite",
+    ogImage: "https://gushikendesign.com/ogp/glass-room.png",
+  },
+},
       {
       title: "Re:Camp — Outdoor Gear Studio",
       slug: "ReCamp",
