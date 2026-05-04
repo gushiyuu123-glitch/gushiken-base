@@ -28,7 +28,7 @@ export default function HeroSP() {
       <div className={styles.bg}>
         <img
           src={heroSP}
-          alt="沖縄のWeb制作・Webデザイン｜GUSHIKEN DESIGN"
+          alt="沖縄の上質なWebデザイン・ホームページ制作｜GUSHIKEN DESIGN"
           className={styles.image}
           loading="eager"
           decoding="async"
@@ -58,22 +58,28 @@ export default function HeroSP() {
             </div>
 
             <div className={`${styles.fade} ${styles.fade2} ${styles.hookPad}`}>
-              <p className={styles.hook}>整えることで、価値は伝わる。</p>
+              {/* ✅ 軸 */}
+              <p className={styles.hook}>空気から、設計する。</p>
             </div>
 
             <div className={styles.copyBlock}>
               <div className={`${styles.fade} ${styles.fade4} ${styles.divider}`} />
               <div className={`${styles.fade} ${styles.fade5} ${styles.bodyPad}`}>
                 <p className={styles.copy}>
+                  {/* ✅ meta：品よく、でも具体 */}
                   <span className={styles.copyMeta}>
-                    沖縄のWeb制作・Webデザイン｜美容・店舗・EC
+                    沖縄の上質なWebデザイン・ホームページ制作
                   </span>
 
-                  <span className={styles.copyText}>
-                    <span className={styles.em}>余白</span>、写真、言葉、導線まで整え、
-                    <br />
-                    価値が自然に伝わるWebサイトへ。
-                  </span>
+                  {/* ✅ 本文：Claude/ChatGPTの軸をSPへ */}
+       <span className={styles.copyText}>
+  商品・空間・サービスの印象を上質に伝えるWebデザイン。
+  <br /><br></br>
+  写真、<span className={styles.em}>余白</span>、言葉、導線まで整え、{" "}
+  <span className={styles.noBreak}>
+    安っぽく見せず、価値が自然に伝わるWebサイトへ。
+  </span>
+</span>
                 </p>
               </div>
             </div>

@@ -46,7 +46,7 @@ export default function Hero() {
       <div className="absolute inset-0">
         <img
           src={heroRoom}
-          alt="沖縄のWeb制作・Webデザイン｜GUSHIKEN DESIGN"
+          alt="沖縄の上質なWebデザイン・ホームページ制作｜GUSHIKEN DESIGN"
           className={`
             ${styles.heroImage}
             ${styles.heroImageReveal}
@@ -149,30 +149,30 @@ export default function Hero() {
           <p
             className="
               mb-4
-              text-[0.68rem] leading-none
-              tracking-[0.28em] text-white/42
-              sm:text-[0.72rem]
+              text-[0.64rem] leading-none
+              tracking-[0.22em] text-white/38
+              sm:text-[0.68rem]
               md:mb-6
             "
           >
-            OKINAWA / WEB DESIGN / IMPRESSION
+            Okinawa / Web Design / Impression
           </p>
         </div>
 
-        {/* HOOK（主役） */}
+        {/* HOOK */}
         <div className={`${styles.heroFade} ${styles.heroFade2} md:pl-[14px]`}>
           <p
             className="
               mb-4
-              font-medium leading-[1.58]
-              tracking-[0.10em]
-              text-[clamp(1.24rem,1.32vw,1.52rem)]
-              text-white/96
+              font-normal leading-[1.58]
+              tracking-[0.08em]
+              text-[clamp(1.12rem,1.12vw,1.34rem)]
+              text-white/90
               md:mb-5
-              [text-shadow:0_1px_18px_rgba(0,0,0,0.38)]
+              [text-shadow:0_1px_16px_rgba(0,0,0,0.34)]
             "
           >
-            整えることで、価値は伝わる。
+            空気から、設計する。
           </p>
         </div>
 
@@ -195,55 +195,58 @@ export default function Hero() {
           className={`
             ${styles.heroFade} ${styles.heroFade4}
             mb-6 h-px w-[72px]
-            bg-[linear-gradient(90deg,rgba(255,255,255,0.46),rgba(255,255,255,0.18),rgba(255,255,255,0))]
+            bg-[linear-gradient(90deg,rgba(255,255,255,0.42),rgba(255,255,255,0.16),rgba(255,255,255,0))]
             md:mb-8 md:ml-[14px] md:w-[92px]
           `}
         />
 
-        {/* BODY（階層化） */}
+        {/* BODY */}
         <div className={`${styles.heroFade} ${styles.heroFade5} md:ml-[14px]`}>
-          <div className="[text-shadow:0_1px_16px_rgba(0,0,0,0.36)]">
-            {/* meta：背景情報 */}
+          <div className="[text-shadow:0_1px_14px_rgba(0,0,0,0.34)]">
+            {/* meta */}
             <p
               className="
                 mb-3
-                text-[0.80rem] leading-[1.7]
-                tracking-[0.14em]
-                text-white/54
-                md:text-[0.94rem]
+                text-[0.76rem] leading-[1.7]
+                tracking-[0.11em]
+                text-white/46
+                md:text-[0.90rem]
               "
             >
-              沖縄のWeb制作・Webデザイン｜美容・店舗・EC
+              沖縄の上質なWebデザイン・ホームページ制作
             </p>
 
-            {/* 本文：準主役（PC空間に合わせて少し上げる） */}
+            {/* main */}
             <div
               className="
-                max-w-[34rem]
-                text-[clamp(1.02rem,1.06vw,1.22rem)]
-                leading-[1.92]
-                tracking-[0.015em]
-                text-white/86
-                md:leading-[1.96]
+                max-w-[36rem]
+                text-[clamp(0.96rem,1.00vw,1.14rem)]
+                leading-[1.86]
+                tracking-[0.012em]
+                text-white/82
+                md:leading-[1.90]
               "
             >
               <p className="mb-2">
-                <span className="text-white/92 font-medium">余白</span>、写真、言葉、導線まで整え、
+                商品・空間・サービスの印象を上質に伝えるWebデザイン。
               </p>
-              <p>価値が自然に伝わるWebサイトへ。</p>
+              <p className="mb-2">
+                写真、<span className="text-white/86 font-normal">余白</span>、言葉、導線まで整え、
+              </p>
+              <p>安っぽく見せず、価値が自然に伝わるWebサイトへ。</p>
             </div>
 
-            {/* 補足：さらに背景（いち段落下げる） */}
+            {/* sub */}
             <p
               className="
                 mt-6
-                text-[0.90rem] leading-[1.9]
-                tracking-[0.07em]
-                text-white/50
-                md:text-[0.98rem]
+                text-[0.88rem] leading-[1.86]
+                tracking-[0.06em]
+                text-white/46
+                md:text-[0.94rem]
               "
             >
-              見やすく、迷わず、安っぽくならない。
+              見やすく、迷わず、判断しやすい。
               <br className="hidden sm:block" />
               <span className="sm:hidden"> </span>
               信頼感のある第一印象を設計します。

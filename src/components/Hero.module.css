@@ -1,55 +1,73 @@
 /* src/sections/Hero.module.css */
 
-.heroRoot {
+/* ============================================================
+   HERO — minimal tuning
+   - tempo: closer to 0.62〜0.68s
+   - blur: ultra thin only
+   - CTA: text-only, no uppercase, quieter
+============================================================ */
+
+.heroRoot{
   --hero-silver: rgba(220, 226, 235, 0.55);
 
-  /* CTA：控えめすぎ→静かに読めるへ */
-  --hero-cta-color: rgba(255, 255, 255, 0.70);
-  --hero-cta-border: rgba(255, 255, 255, 0.17);
+  /* timings */
+  --t-img: 1.02s;
+  --t-text: 0.64s;
+  --t-logo: 0.84s;
+
+  --ease: cubic-bezier(.22,.56,.18,1);
+  --ease-soft: cubic-bezier(.18,.62,.20,1);
+
+  /* CTA */
+  --hero-cta-color: rgba(255,255,255,0.64);
+  --hero-cta-border: rgba(255,255,255,0.14);
+  --hero-cta-hover: rgba(255,255,255,0.86);
+  --hero-cta-border-hover: rgba(255,255,255,0.28);
 }
 
 /* ------------------------------------------------------------
    Image
 ------------------------------------------------------------ */
-.heroImage {
+.heroImage{
   opacity: 0;
-  transform: scale(1.022) translate3d(0, 8px, 0);
+  transform: scale(1.018) translate3d(0, 7px, 0);
   filter: brightness(0.82) saturate(0.88) contrast(1.025);
-  will-change: transform, opacity;
+  will-change: transform, opacity, filter;
   backface-visibility: hidden;
   transform-origin: center center;
 }
 
-.heroImageReveal {}
+.heroImageReveal{}
 
-.heroRoot[data-loaded="true"] .heroImageReveal {
+.heroRoot[data-loaded="true"] .heroImageReveal{
   opacity: 1;
   animation:
-    heroImageReveal 1.18s cubic-bezier(.22,.56,.18,1) 0s both,
-    heroStill 22s ease-in-out 1.18s infinite;
+    heroImageReveal var(--t-img) var(--ease) 0s both,
+    heroStill 22s ease-in-out var(--t-img) infinite;
 }
 
 /* ------------------------------------------------------------
    Text reveal
 ------------------------------------------------------------ */
-.heroFade {
+.heroFade{
   opacity: 0;
   transform: translate3d(0, 18px, 0) scale(0.995);
-  animation: heroReveal 1.05s cubic-bezier(.22,.56,.18,1) forwards;
-  will-change: transform, opacity;
+  filter: blur(0.12px);
+  animation: heroReveal var(--t-text) var(--ease) forwards;
+  will-change: transform, opacity, filter;
   backface-visibility: hidden;
 }
 
-.heroFade1 { animation-delay: 0.08s; }
-.heroFade2 { animation-delay: 0.16s; }
-.heroFade4 { animation-delay: 0.34s; }
-.heroFade5 { animation-delay: 0.44s; }
-.heroFade6 { animation-delay: 0.58s; }
+.heroFade1{ animation-delay: 0.06s; }
+.heroFade2{ animation-delay: 0.12s; }
+.heroFade4{ animation-delay: 0.22s; }
+.heroFade5{ animation-delay: 0.30s; }
+.heroFade6{ animation-delay: 0.40s; }
 
 /* ------------------------------------------------------------
-   Title wrap
+   Title
 ------------------------------------------------------------ */
-.heroTitleWrap {
+.heroTitleWrap{
   position: relative;
   width: clamp(284px, 34.5vw, 444px);
   max-width: 100%;
@@ -57,18 +75,15 @@
   isolation: isolate;
 }
 
-/* ------------------------------------------------------------
-   Logo reveal (SMOOTH wipe)
------------------------------------------------------------- */
-.heroLogoReveal {
+.heroLogoReveal{
   opacity: 0;
-  transform: translate3d(0, 10px, 0) scale(0.976);
-  animation: heroLogoReveal 1.18s cubic-bezier(.22,.56,.18,1) 0.24s both;
+  transform: translate3d(0, 10px, 0) scale(0.982);
+  animation: heroLogoReveal var(--t-logo) var(--ease) 0.16s both;
   will-change: transform, opacity;
   backface-visibility: hidden;
 }
 
-.heroTitleImg {
+.heroTitleImg{
   display: block;
   width: 100%;
   height: auto;
@@ -76,15 +91,15 @@
   margin-block: 8px;
   margin-top: 12px;
 
-  opacity: 0.82;
+  opacity: 0.78;
 
   filter:
     invert(1)
-    brightness(1.03)
+    brightness(1.04)
     saturate(0)
     contrast(1.04)
-    drop-shadow(0 2px 14px rgba(0, 0, 0, 0.18))
-    drop-shadow(0 0 0.45px rgba(255, 255, 255, 0.08));
+    drop-shadow(0 2px 12px rgba(0,0,0,0.18))
+    drop-shadow(0 0 0.45px rgba(255,255,255,0.06));
 
   transform: translateZ(0);
   backface-visibility: hidden;
@@ -102,106 +117,113 @@
     rgba(0,0,0,1) 84%,
     rgba(0,0,0,0) 100%
   );
-
   -webkit-mask-repeat: no-repeat;
   mask-repeat: no-repeat;
   -webkit-mask-position: left center;
   mask-position: left center;
-
   -webkit-mask-size: 0% 100%;
   mask-size: 0% 100%;
 
   will-change: -webkit-mask-size, mask-size, opacity, filter;
 }
 
-.heroLogoReveal .heroTitleImg {
+.heroLogoReveal .heroTitleImg{
   animation:
-    logoWipe 1.22s cubic-bezier(.22,.56,.18,1) 0.30s both,
-    logoFocus 1.22s cubic-bezier(.18,.62,.2,1) 0.30s both;
+    logoWipe 0.96s var(--ease) 0.20s both,
+    logoFocus 0.96s var(--ease-soft) 0.20s both;
 }
 
 @supports not (mask-image: linear-gradient(#000, #000)) {
   .heroTitleImg { clip-path: inset(0 100% 0 0); }
-  .heroLogoReveal .heroTitleImg {
+  .heroLogoReveal .heroTitleImg{
     animation:
-      logoClipWipe 1.22s cubic-bezier(.22,.56,.18,1) 0.30s both,
-      logoFocus 1.22s cubic-bezier(.18,.62,.2,1) 0.30s both;
+      logoClipWipe 0.96s var(--ease) 0.20s both,
+      logoFocus 0.96s var(--ease-soft) 0.20s both;
   }
 }
 
 /* ------------------------------------------------------------
-   CTA (quiet but readable)
+   CTA (minimal)
 ------------------------------------------------------------ */
-.heroCta {
+.heroCta{
   display: inline-flex;
   align-items: center;
   gap: 0.62rem;
-  margin-top: 1.55rem;
-  padding: 0.58rem 0;
+
+  margin-top: 1.45rem;
+  padding: 0.56rem 0;
+
   border-bottom: 1px solid var(--hero-cta-border);
   color: var(--hero-cta-color);
 
   font-size: 0.78rem;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.11em;
 
   text-decoration: none;
-  text-transform: uppercase;
+  text-transform: none;
 
   transition:
-    color 0.42s ease,
-    border-color 0.42s ease,
-    opacity 0.42s ease;
+    color 0.38s ease,
+    border-color 0.38s ease,
+    transform 0.38s ease,
+    opacity 0.38s ease;
+
   cursor: pointer;
-
-  text-shadow: 0 1px 16px rgba(0, 0, 0, 0.52);
+  text-shadow: 0 1px 14px rgba(0,0,0,0.46);
 }
 
-.heroCtaArrow {
+.heroCtaArrow{
   flex-shrink: 0;
-  transition: transform 0.42s ease, opacity 0.42s ease;
-  opacity: 0.88;
+  transition: transform 0.38s ease, opacity 0.38s ease;
+  opacity: 0.86;
 }
 
-.heroCta:hover {
-  color: rgba(255, 255, 255, 0.92);
-  border-bottom-color: rgba(255, 255, 255, 0.36);
+.heroCta:hover{
+  color: var(--hero-cta-hover);
+  border-bottom-color: var(--hero-cta-border-hover);
 }
 
-.heroCta:hover .heroCtaArrow {
-  transform: translateX(3px);
-  opacity: 0.95;
+.heroCta:hover .heroCtaArrow{
+  transform: translateX(2px);
+  opacity: 0.92;
 }
 
-.heroCta:focus-visible {
-  outline: 1px solid rgba(255, 255, 255, 0.42);
+.heroCta:active{
+  transform: translateY(1px);
+}
+
+.heroCta:focus-visible{
+  outline: 1px solid rgba(255,255,255,0.36);
   outline-offset: 7px;
-  border-radius: 2px;
+  border-radius: 4px;
 }
 
 /* ------------------------------------------------------------
-   Scroll indicator (button)
+   Scroll indicator
 ------------------------------------------------------------ */
-.heroScrollButton {
+.heroScrollButton{
   background: none;
   border: none;
   padding: 10px;
   cursor: pointer;
+
   display: flex;
   align-items: center;
   justify-content: center;
-  opacity: 0.9;
+
+  opacity: 0.86;
   transition: opacity 0.34s ease;
 }
 
-.heroScrollButton:hover { opacity: 1; }
+.heroScrollButton:hover{ opacity: 1; }
 
-.heroScrollButton:focus-visible {
-  outline: 1px solid rgba(255, 255, 255, 0.32);
+.heroScrollButton:focus-visible{
+  outline: 1px solid rgba(255,255,255,0.30);
   outline-offset: 8px;
   border-radius: 9999px;
 }
 
-.heroScrollLine {
+.heroScrollLine{
   width: 1px;
   height: 32px;
   border-radius: 9999px;
@@ -209,92 +231,100 @@
   background: linear-gradient(
     180deg,
     rgba(220,226,235,0) 0%,
-    rgba(220,226,235,0.24) 24%,
+    rgba(220,226,235,0.22) 24%,
     var(--hero-silver) 50%,
-    rgba(255,255,255,0.18) 68%,
+    rgba(255,255,255,0.16) 68%,
     rgba(220,226,235,0) 100%
   );
 
-  opacity: 0.28;
+  opacity: 0.24;
 
   box-shadow:
-    0 0 0 0.5px rgba(220,226,235,0.08),
-    0 0 18px rgba(220,226,235,0.045);
+    0 0 0 0.5px rgba(220,226,235,0.07),
+    0 0 16px rgba(220,226,235,0.04);
 
-  animation: scrollLineBreath 4.8s ease-in-out 1.2s infinite;
+  animation: scrollLineBreath 4.8s ease-in-out 1.0s infinite;
   will-change: opacity, transform;
 }
 
 /* ------------------------------------------------------------
    Keyframes
 ------------------------------------------------------------ */
-@keyframes scrollLineBreath {
-  0%   { opacity: 0.20; transform: scaleY(0.96); }
-  50%  { opacity: 0.34; transform: scaleY(1); }
-  100% { opacity: 0.20; transform: scaleY(0.96); }
+@keyframes scrollLineBreath{
+  0%   { opacity: 0.18; transform: scaleY(0.96); }
+  50%  { opacity: 0.30; transform: scaleY(1); }
+  100% { opacity: 0.18; transform: scaleY(0.96); }
 }
 
-@keyframes heroStill {
+@keyframes heroStill{
   0%   { transform: scale(1.006) translate3d(0, 0, 0); }
   50%  { transform: scale(1.012) translate3d(-1px, 3px, 0); }
   100% { transform: scale(1.006) translate3d(0, 0, 0); }
 }
 
-@keyframes heroImageReveal {
-  0% {
+@keyframes heroImageReveal{
+  0%{
     opacity: 0;
-    transform: scale(1.022) translate3d(0, 8px, 0);
+    transform: scale(1.018) translate3d(0, 7px, 0);
     filter: brightness(0.82) saturate(0.88) contrast(1.025);
   }
-  100% {
+  100%{
     opacity: 1;
     transform: scale(1.006) translate3d(0, 0, 0);
     filter: brightness(0.90) saturate(0.90) contrast(1.03);
   }
 }
 
-@keyframes heroReveal {
-  0%   { opacity: 0; transform: translate3d(0, 18px, 0) scale(0.995); }
+@keyframes heroReveal{
+  0%{
+    opacity: 0;
+    transform: translate3d(0, 18px, 0) scale(0.995);
+    filter: blur(0.12px);
+  }
+  100%{
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+    filter: blur(0);
+  }
+}
+
+@keyframes heroLogoReveal{
+  0%   { opacity: 0; transform: translate3d(0, 10px, 0) scale(0.982); }
   100% { opacity: 1; transform: translate3d(0, 0, 0) scale(1); }
 }
 
-@keyframes heroLogoReveal {
-  0%   { opacity: 0; transform: translate3d(0, 10px, 0) scale(0.976); }
-  100% { opacity: 1; transform: translate3d(0, 0, 0) scale(1); }
-}
-
-@keyframes logoWipe {
+@keyframes logoWipe{
   0%   { -webkit-mask-size: 0% 100%; mask-size: 0% 100%; }
   100% { -webkit-mask-size: 118% 100%; mask-size: 118% 100%; }
 }
 
-@keyframes logoClipWipe {
+@keyframes logoClipWipe{
   0%   { clip-path: inset(0 100% 0 0); }
   100% { clip-path: inset(0 0 0 0); }
 }
 
-@keyframes logoFocus {
-  0% {
-    opacity: 0.12;
+@keyframes logoFocus{
+  0%{
+    opacity: 0.10;
     filter:
       invert(1)
       brightness(1.03)
       saturate(0)
       contrast(1.02)
-      blur(0.20px)
+      blur(0.18px)
       drop-shadow(0 2px 10px rgba(0,0,0,0.16));
   }
-  55% {
-    opacity: 0.68;
+  55%{
+    opacity: 0.62;
     filter:
       invert(1)
       brightness(1.05)
       saturate(0)
       contrast(1.03)
-      blur(0.08px)
+      blur(0.06px)
       drop-shadow(0 2px 12px rgba(0,0,0,0.20));
   }
-  100% {
+  100%{
     opacity: 0.78;
     filter:
       invert(1)
@@ -309,27 +339,25 @@
 /* ------------------------------------------------------------
    SP tuning
 ------------------------------------------------------------ */
-@media (max-width: 768px) {
-  .heroTitleWrap { width: min(82vw, 344px); }
+@media (max-width: 768px){
+  .heroTitleWrap{ width: min(82vw, 344px); }
+  .heroLogoReveal{ transform: translate3d(0, 9px, 0) scale(0.986); }
+  .heroTitleImg{ opacity: 0.72; }
 
-  .heroLogoReveal { transform: translate3d(0, 9px, 0) scale(0.982); }
-
-  .heroTitleImg { opacity: 0.74; }
-
-  .heroRoot[data-loaded="true"] .heroImageReveal {
+  .heroRoot[data-loaded="true"] .heroImageReveal{
     animation:
-      heroImageRevealSp 1.08s cubic-bezier(.22,.56,.18,1) 0s both,
-      heroStill 22s ease-in-out 1.08s infinite;
+      heroImageRevealSp 0.94s var(--ease) 0s both,
+      heroStill 22s ease-in-out 0.94s infinite;
   }
 }
 
-@keyframes heroImageRevealSp {
-  0% {
+@keyframes heroImageRevealSp{
+  0%{
     opacity: 0;
-    transform: scale(1.016) translate3d(0, 6px, 0);
+    transform: scale(1.014) translate3d(0, 6px, 0);
     filter: brightness(0.83) saturate(0.87) contrast(1.02);
   }
-  100% {
+  100%{
     opacity: 1;
     transform: scale(1.004) translate3d(0, 0, 0);
     filter: brightness(0.89) saturate(0.89) contrast(1.028);
@@ -339,32 +367,36 @@
 /* ------------------------------------------------------------
    Reduced motion
 ------------------------------------------------------------ */
-@media (prefers-reduced-motion: reduce) {
+@media (prefers-reduced-motion: reduce){
   .heroImage,
   .heroImageReveal,
   .heroFade,
   .heroScrollLine,
   .heroLogoReveal,
-  .heroLogoReveal .heroTitleImg {
+  .heroLogoReveal .heroTitleImg{
     animation: none !important;
   }
 
   .heroImage,
-  .heroImageReveal {
+  .heroImageReveal{
     transform: none !important;
     opacity: 1 !important;
     filter: brightness(0.90) saturate(0.90) contrast(1.03) !important;
   }
 
-  .heroFade { transform: none !important; opacity: 1 !important; }
+  .heroFade{
+    transform: none !important;
+    opacity: 1 !important;
+    filter: none !important;
+  }
 
-  .heroLogoReveal { opacity: 1 !important; transform: none !important; }
+  .heroLogoReveal{ opacity: 1 !important; transform: none !important; }
 
-  .heroTitleImg {
+  .heroTitleImg{
     -webkit-mask-size: 100% 100% !important;
     mask-size: 100% 100% !important;
     clip-path: inset(0 0 0 0) !important;
-    opacity: 0.78 !important;
+    opacity: 0.76 !important;
     filter:
       invert(1)
       brightness(1.05)
@@ -375,7 +407,7 @@
 
   .heroCta,
   .heroCtaArrow,
-  .heroScrollButton {
+  .heroScrollButton{
     transition: none !important;
   }
 }
