@@ -20,7 +20,7 @@
   --fy: 45%;
 
   /* ✅ gap を詰める：headを少し下げ、signを少し上げる */
---shift-head: clamp(-340px, calc(-18svh - 64px), -208px);
+--shift-head: clamp(-340px, calc(-18svh - 40px), -176px);
 --shift-sign: clamp(-18px, calc(-1.05svh - 6px), -10px);
 
   /* tones (calmer) */
@@ -30,6 +30,7 @@
   --c-hook: rgba(255, 255, 255, 0.90);
   --c-em: rgba(255, 255, 255, 0.88);
 }
+
 .noBreak{
   white-space: nowrap;
   display: inline-block;
@@ -379,5 +380,11 @@
 
   .textBlock {
     padding-bottom: calc(env(safe-area-inset-bottom, 0px) + clamp(40px, 5.6svh, 60px));
+  }
+}
+@media (max-width: 375px), (max-height: 700px) {
+  .root{
+    --shift-head: clamp(-184px, calc(-9.2svh - 6px), -140px);
+    --shift-sign: clamp(4px, calc(0.7svh + 2px), 12px);
   }
 }
