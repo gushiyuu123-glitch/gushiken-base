@@ -7,32 +7,32 @@ import "./works.css";
 const FEATURED_WORKS = [
   {
     title: "UMIKAJI",
-    meta: "Awamori Brand / Okinawa × Gift Value",
+    meta: "Awamori Brand / Okinawa",
     href: "https://umikaji-awamori.vercel.app/",
     imagePc: "/works/umikaji-pc2.webp",
     imageSp: "/works/umikaji-sp.webp",
     alt: "UMIKAJI AWAMORI｜泡盛ブランドサイト制作（沖縄・贈り物・高級感・世界観設計）",
-    label: "UMIKAJI AWAMORI のサイトを見る",
+    label: "UMIKAJI AWAMORI を開く",
     size: "large",
   },
   {
     title: "HALO",
-    meta: "Home Projector / Night × Cinematic Room",
+    meta: "Home Projector / Night",
     href: "https://halo-one-iota.vercel.app/",
     imagePc: "/works/halo-pc.webp",
     imageSp: "/works/halo-sp.webp",
     alt: "HALO｜ホームプロジェクターのブランドサイト制作（夜の世界観・体験設計・スマホ最適化）",
-    label: "HALO のサイトを見る",
+    label: "HALO を開く",
     size: "medium",
   },
   {
     title: "VELMONT",
-    meta: "Luxury Auto / Trust × Precision",
+    meta: "Luxury Auto / Trust",
     href: "https://velmont-virid.vercel.app/",
     imagePc: "/works/velmonte2.webp",
     imageSp: "/works/velmonte2-sp.webp",
     alt: "VELMONT｜高級車ショールームサイト制作（信頼感・高級感・導線設計）",
-    label: "VELMONT のサイトを見る",
+    label: "VELMONT を開く",
     size: "small",
   },
 ];
@@ -137,9 +137,9 @@ export default function Works() {
           <SectionSvgTitle title="WORKS" sub="SELECTED WORKS" count="03" />
 
           <p className="works-lead">
-            最初に、代表作だけを置く。
+            まずは、代表作から。
             <br className="hidden md:block" />
-            印象・構造・導線まで整えた制作例です。
+            印象と導線まで、一貫して設計した制作例です。
           </p>
         </div>
 
@@ -154,7 +154,7 @@ export default function Works() {
             <span className="arrow">→</span>
           </div>
 
-          <div className="works-grid" aria-label="代表制作実績">
+          <div className="works-grid" aria-label="代表作（抜粋）">
             {FEATURED_WORKS.map((work, index) => (
               <a
                 key={work.title}
@@ -208,12 +208,12 @@ export default function Works() {
           data-reveal
           data-reveal-delay="360"
         >
-          <Link to="/works" className="viewall-btn">
+          <Link to="/works" className="viewall-btn" aria-label="制作例を一覧で見る">
             <span>VIEW ALL WORKS</span>
             <span aria-hidden="true">→</span>
           </Link>
 
-          <p className="works-viewall-note">制作例（抜粋）</p>
+          <p className="works-viewall-note">作品一覧</p>
         </div>
       </div>
     </section>

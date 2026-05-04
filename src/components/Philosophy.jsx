@@ -18,14 +18,14 @@ const PRINCIPLES = [
   },
   {
     number: "02",
-    title: "印象づくり",
+    title: "印象",
     en: "ATMOSPHERE",
     type: "atmosphere",
     text: (
       <>
         写真・色・余白の温度を合わせ、
         <br />
-        サービスの魅力が伝わる空気へ。
+        魅力が静かに伝わる空気へ。
       </>
     ),
   },
@@ -176,27 +176,26 @@ export default function Philosophy() {
         </header>
 
         <div className="philo-copy">
+          {/* ✅ 新軸：印象を上質に伝える（でも押し売りしない） */}
           <p className="philo-lead philo-flow philo-flow-2">
-            良いWebサイトは、見た目の印象だけでは決まりません。
+            商品・空間・サービスの印象を、
             <br />
-            <span>
-              見やすく、伝わりやすく、安心して相談できること。
-            </span>
+            <span>上質に、きちんと伝える</span>ために。
             <br />
-            その土台があってこそ、写真や言葉の雰囲気が自然に届くと考えています。
+            まずは、見やすさと安心感の土台から設計します。
           </p>
 
           <p className="philo-body philo-flow philo-flow-3">
-            Webサイトを見る人は、最初からじっくり読んでくれるとは限りません。
+            Webサイトは、最初から丁寧に読まれるとは限りません。
             <br />
             だからこそ、情報の順序・余白・文字量・写真の見え方を整え、
             <span>何をしているのか、誰に向いているのか</span>
             が自然に伝わる状態を目指します。
             <br />
             <br />
-            見た目をきれいにするだけではなく、読み手の不安を減らし、
-            <span>信頼と問い合わせにつながる流れ</span>
-            まで整えることを大切にしています。
+            見た目だけで終わらせず、読み手の不安を減らし、
+            <span>問い合わせにつながる流れ</span>
+            まで設計することを大切にしています。
           </p>
 
           <VisualPrinciples />
@@ -205,7 +204,7 @@ export default function Philosophy() {
             <span>
               見やすさと印象の両方を整え、
               <br />
-              魅力がきちんと伝わるサイトを。
+              魅力が自然に伝わるサイトを。
             </span>
             <br />
             <em>

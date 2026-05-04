@@ -1,3 +1,4 @@
+// src/pages/About.jsx
 import React, { useEffect, useRef, useState } from "react";
 import SectionSvgTitle from "../components/SectionSvgTitle";
 import "./about.css";
@@ -29,12 +30,12 @@ const QUALIFICATIONS = [
 
 const STYLE_ITEMS = [
   {
-    title: "伝わる順序を整える",
+    title: "伝わる順序を設計する",
     text: "必要な情報が自然に入るよう、見せる順序と区切りを整えます。",
   },
   {
-    title: "見え方をそろえる",
-    text: "写真や色のトーンを合わせ、全体の印象を一つにまとめます。",
+    title: "見え方のトーンを揃える",
+    text: "写真や色の温度を合わせ、全体の印象をひとつにまとめます。",
   },
   {
     title: "迷いを減らす",
@@ -74,30 +75,9 @@ function CrownIcon({ className = "" }) {
         strokeLinecap="round"
         fill="none"
       />
-      <rect
-        x="18.2"
-        y="2"
-        width="3.6"
-        height="3.6"
-        transform="rotate(45 20 3.8)"
-        strokeWidth="0.85"
-      />
-      <rect
-        x="2.2"
-        y="8"
-        width="3.6"
-        height="3.6"
-        transform="rotate(45 4 9.8)"
-        strokeWidth="0.85"
-      />
-      <rect
-        x="34.2"
-        y="8"
-        width="3.6"
-        height="3.6"
-        transform="rotate(45 36 9.8)"
-        strokeWidth="0.85"
-      />
+      <rect x="18.2" y="2" width="3.6" height="3.6" transform="rotate(45 20 3.8)" strokeWidth="0.85" />
+      <rect x="2.2" y="8" width="3.6" height="3.6" transform="rotate(45 4 9.8)" strokeWidth="0.85" />
+      <rect x="34.2" y="8" width="3.6" height="3.6" transform="rotate(45 36 9.8)" strokeWidth="0.85" />
     </svg>
   );
 }
@@ -136,7 +116,6 @@ function QualificationCard({ item, onOpen }) {
       tabIndex={clickable ? 0 : undefined}
       onKeyDown={(event) => {
         if (!clickable) return;
-
         if (event.key === "Enter" || event.key === " ") {
           event.preventDefault();
           handleOpen();
@@ -152,7 +131,6 @@ function QualificationCard({ item, onOpen }) {
 
       <div className="qcard__body">
         <p className="qcard__status">{item.status}</p>
-
         <h4 className="qcard__title">{item.title}</h4>
 
         <p className="qcard__org">
@@ -185,14 +163,19 @@ function QualificationCard({ item, onOpen }) {
     </div>
   );
 }
+
 function CertificateModal({ item, onClose }) {
   const scrollYRef = useRef(0);
+  const lastActiveRef = useRef(null);
 
   useEffect(() => {
     if (!item) return undefined;
 
     const html = document.documentElement;
     const body = document.body;
+
+    // 開く前のフォーカスを保存（閉じたら戻す）
+    lastActiveRef.current = document.activeElement;
 
     const handleKeyDown = (event) => {
       if (event.key === "Escape") {
@@ -211,7 +194,6 @@ function CertificateModal({ item, onClose }) {
 
     html.classList.add("scroll-lock");
     body.classList.add("scroll-lock");
-
     document.addEventListener("keydown", handleKeyDown);
 
     return () => {
@@ -222,12 +204,11 @@ function CertificateModal({ item, onClose }) {
       html.classList.remove("scroll-lock");
       body.classList.remove("scroll-lock");
 
-      // 解除直後に即戻す
+      // 解除直後に即戻す（iOS保険込み）
       window.scrollTo(0, y);
       document.documentElement.scrollTop = y;
       document.body.scrollTop = y;
 
-      // 描画ズレ保険
       requestAnimationFrame(() => {
         window.scrollTo(0, y);
         document.documentElement.scrollTop = y;
@@ -239,6 +220,11 @@ function CertificateModal({ item, onClose }) {
         document.documentElement.scrollTop = y;
         document.body.scrollTop = y;
       }, 60);
+
+      // フォーカス復帰
+      const el = lastActiveRef.current;
+      if (el && typeof el.focus === "function") el.focus();
+      lastActiveRef.current = null;
     };
   }, [item, onClose]);
 
@@ -292,6 +278,7 @@ function CertificateModal({ item, onClose }) {
 
 export default function About() {
   const [activeCertificate, setActiveCertificate] = useState(null);
+
   const sectionRef = useRef(null);
   const styleBlockRef = useRef(null);
 
@@ -301,59 +288,71 @@ export default function About() {
 
     if (!root) return undefined;
 
+    // flow reveal（site-tone-blockは別Observer）
     const revealTargets = Array.from(
       root.querySelectorAll(".about-flow, .qcard-flow")
-    );
+    ).filter((el) => !el.classList.contains("site-tone-block"));
+
+    const siteToneBlock = root.querySelector(".site-tone-block");
 
     const reveal = (target) => {
       target.classList.add("is-in");
     };
 
+    // IOなし環境
     if (typeof IntersectionObserver === "undefined") {
       revealTargets.forEach(reveal);
       if (styleBlock) styleBlock.classList.add("is-in");
+      if (siteToneBlock) siteToneBlock.classList.add("is-in");
       return undefined;
     }
 
+    // flow observer
     const flowObserver = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (!entry.isIntersecting) return;
-
           reveal(entry.target);
           flowObserver.unobserve(entry.target);
         });
       },
-      {
-        threshold: 0.12,
-        rootMargin: "0px 0px -8% 0px",
-      }
+      { threshold: 0.12, rootMargin: "0px 0px -8% 0px" }
     );
 
     revealTargets.forEach((target) => flowObserver.observe(target));
 
+    // style observer
     let styleObserver;
-
     if (styleBlock) {
       styleObserver = new IntersectionObserver(
         ([entry]) => {
           if (!entry?.isIntersecting) return;
-
           styleBlock.classList.add("is-in");
           styleObserver.disconnect();
         },
-        {
-          threshold: 0.18,
-          rootMargin: "0px 0px -10% 0px",
-        }
+        { threshold: 0.18, rootMargin: "0px 0px -10% 0px" }
       );
-
       styleObserver.observe(styleBlock);
+    }
+
+    // site tone observer（ここが本命）
+    let siteToneObserver;
+    if (siteToneBlock) {
+      siteToneObserver = new IntersectionObserver(
+        ([entry]) => {
+          if (!entry?.isIntersecting) return;
+          siteToneBlock.classList.add("is-in");
+          siteToneObserver.disconnect();
+        },
+        { threshold: 0.14, rootMargin: "0px 0px -10% 0px" }
+      );
+      siteToneObserver.observe(siteToneBlock);
     }
 
     return () => {
       flowObserver.disconnect();
       if (styleObserver) styleObserver.disconnect();
+      if (siteToneObserver) siteToneObserver.disconnect();
     };
   }, []);
 
@@ -372,25 +371,25 @@ export default function About() {
               sub="ABOUT / CREATOR"
               className="about-svg-title"
             />
-
             <p className="about-sub">制作者について</p>
           </header>
 
           <div className="about-intro">
+            {/* ✅ 新軸：印象を上質に伝える */}
             <p className="about-lead about-flow about-flow-2">
-              上品に見えるのに、読みやすい。
+              上質に見えて、読みやすい。
               <br />
-              <span>印象が整うWebサイト</span>を作りたい方へ。
+              <span>商品・空間・サービスの印象</span>が、きちんと伝わるWebサイトへ。
               <br />
-              デザインと情報の両方を整えながら、公開まで一貫して制作しています。
+              デザインと導線を一貫して設計し、公開まで丁寧に制作しています。
             </p>
 
             <p className="about-body about-flow about-flow-3">
               大切にしているのは、<span>必要な情報が迷わず入ること</span>。
               <br />
-              写真・色・余白・文字のバランスを整え、見え方に一貫性を作ります。
+              写真・色・余白・言葉のトーンを揃え、印象をひとつにします。
               <br />
-              見た目だけで終わらせず、<span>読み手が判断しやすい流れ</span>まで整えます。
+              見た目だけで終わらせず、<span>読み手が判断しやすい流れ</span>まで設計します。
             </p>
           </div>
 
@@ -399,13 +398,14 @@ export default function About() {
               Gushiken Yuto
             </h3>
 
-            <p className="about-role">Impression Design / Web Design</p>
+            {/* ✅ 肩書きは“盛る”より機能名で整える */}
+            <p className="about-role">Web Design / Art Direction</p>
 
             <p className="about-text">
               沖縄を拠点に、Web制作・Webデザインを行っています。
               <br />
-              デザインから実装まで一貫して対応し、<span>見え方と使いやすさ</span>
-              を整えながら、公開まで丁寧に進めます。
+              デザインから実装まで一貫して対応し、
+              <span>印象と使いやすさ</span>を両立しながら公開まで進めます。
             </p>
 
             <a
@@ -444,9 +444,7 @@ export default function About() {
           </div>
 
           <div ref={styleBlockRef} className="about-style-block">
-            <p className="about-style-label about-style-reveal">
-              DESIGN APPROACH
-            </p>
+            <p className="about-style-label about-style-reveal">DESIGN APPROACH</p>
 
             <div className="about-style-grid">
               {STYLE_ITEMS.map((item, index) => (
@@ -468,6 +466,7 @@ export default function About() {
             </div>
           </div>
 
+          {/* SITE TONE */}
           <div className="site-tone-block about-flow about-flow-7">
             <p className="site-tone-label site-flow" style={{ "--site-index": 0 }}>
               SITE TONE
@@ -522,12 +521,12 @@ export default function About() {
             </div>
           </div>
 
+          {/* ✅ 最後の一文も“上質”に統一 */}
           <div className="about-last about-flow about-flow-8">
             <p>
               あなたのサービスの魅力を、
-              <span>見やすく、上品に伝わるWebサイト</span>として形にします。
+              <span>見やすく、上質に伝わるWebサイト</span>として形にします。
             </p>
-
           </div>
         </div>
       </section>

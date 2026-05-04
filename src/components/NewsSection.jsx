@@ -16,6 +16,9 @@ export default function NewsSection() {
   const requestIdRef = useRef(0);
   const newsRef = useRef([]);
 
+  // ✅ reveal observer を 1回だけ作るために保持
+  const revealObserverRef = useRef(null);
+
   useEffect(() => {
     newsRef.current = news;
   }, [news]);
@@ -29,10 +32,8 @@ export default function NewsSection() {
 
     return (dateStr) => {
       if (!dateStr) return "UPDATE";
-
       const date = new Date(dateStr);
       if (Number.isNaN(date.getTime())) return "UPDATE";
-
       return formatter.format(date);
     };
   }, []);
@@ -42,10 +43,7 @@ export default function NewsSection() {
     requestIdRef.current = requestId;
 
     try {
-      if (!silent || newsRef.current.length === 0) {
-        setLoading(true);
-      }
-
+      if (!silent || newsRef.current.length === 0) setLoading(true);
       setError(false);
 
       const res = await getNewsList({ limit: 3 });
@@ -54,7 +52,6 @@ export default function NewsSection() {
       if (requestId !== requestIdRef.current) return;
 
       const items = Array.isArray(res?.contents) ? res.contents : [];
-
       setNews(items);
       setError(false);
     } catch (err) {
@@ -71,15 +68,15 @@ export default function NewsSection() {
       if (!mountedRef.current) return;
       if (requestId !== requestIdRef.current) return;
 
-      setLoading(false);
+      // ✅ silent時は loading を触らない（無音化）
+      if (!silent) setLoading(false);
+      if (silent && newsRef.current.length === 0) setLoading(false);
     }
   }, []);
 
   useEffect(() => {
     mountedRef.current = true;
-
     fetchNews();
-
     return () => {
       mountedRef.current = false;
     };
@@ -105,40 +102,59 @@ export default function NewsSection() {
     };
   }, [fetchNews]);
 
+  // ✅ reveal observer：作成は1回、news更新後に observe だけ追加
   useEffect(() => {
     const root = sectionRef.current;
     if (!root) return undefined;
-
-    const targets = Array.from(root.querySelectorAll("[data-news-reveal]"));
 
     const reveal = (target) => {
       target.classList.add(styles.isIn);
     };
 
+    // IOなし環境
     if (typeof IntersectionObserver === "undefined") {
-      targets.forEach(reveal);
+      Array.from(root.querySelectorAll("[data-news-reveal]")).forEach(reveal);
       return undefined;
     }
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (!entry.isIntersecting) return;
+    // 1回だけ作る
+    if (!revealObserverRef.current) {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (!entry.isIntersecting) return;
+            reveal(entry.target);
+            observer.unobserve(entry.target);
+          });
+        },
+        {
+          threshold: 0.14,
+          rootMargin: "0px 0px -8% 0px",
+        }
+      );
 
-          reveal(entry.target);
-          observer.unobserve(entry.target);
-        });
-      },
-      {
-        threshold: 0.14,
-        rootMargin: "0px 0px -8% 0px",
+      revealObserverRef.current = observer;
+    }
+
+    // newsの増減に応じて、未revealの要素だけ observe
+    const observer = revealObserverRef.current;
+    const targets = Array.from(root.querySelectorAll("[data-news-reveal]"));
+    targets.forEach((t) => {
+      if (!t.classList.contains(styles.isIn)) observer.observe(t);
+    });
+
+    return () => undefined;
+  }, [news.length, loading, error]);
+
+  // unmount cleanup
+  useEffect(() => {
+    return () => {
+      if (revealObserverRef.current) {
+        revealObserverRef.current.disconnect();
+        revealObserverRef.current = null;
       }
-    );
-
-    targets.forEach((target) => observer.observe(target));
-
-    return () => observer.disconnect();
-  }, [loading, error, news.length]);
+    };
+  }, []);
 
   const hasNews = news.length > 0;
 
@@ -156,29 +172,16 @@ export default function NewsSection() {
           aria-hidden="true"
         />
 
-        <header
-          className={cx(styles.header, styles.reveal, styles.reveal1)}
-          data-news-reveal
-        >
-          <SectionSvgTitle
-            title="NEWS"
-            sub="UPDATE / JOURNAL"
-            className={styles.svgTitle}
-          />
-
-          <h2 id="news-heading" className={styles.hiddenHeading}>
-            お知らせ
-          </h2>
+        <header className={cx(styles.header, styles.reveal, styles.reveal1)} data-news-reveal>
+          <SectionSvgTitle title="NEWS" sub="UPDATE / JOURNAL" className={styles.svgTitle} />
+          <h2 id="news-heading" className={styles.hiddenHeading}>お知らせ</h2>
 
           <p className={styles.lead}>
-            制作の更新や、お知らせをまとめています。
+            制作の更新や、設計の記録をまとめています。
           </p>
         </header>
 
-        <div
-          className={cx(styles.panel, styles.reveal, styles.reveal2)}
-          data-news-reveal
-        >
+        <div className={cx(styles.panel, styles.reveal, styles.reveal2)} data-news-reveal>
           {loading && (
             <div className={styles.stateBox} aria-live="polite">
               <span className={styles.stateMark} aria-hidden="true" />
@@ -189,18 +192,14 @@ export default function NewsSection() {
           {error && !loading && (
             <div className={styles.stateBox} aria-live="assertive">
               <span className={cx(styles.stateMark, styles.stateMarkError)} aria-hidden="true" />
-              <p className={styles.stateText}>
-                お知らせを読み込めませんでした。
-              </p>
+              <p className={styles.stateText}>お知らせを読み込めませんでした。</p>
             </div>
           )}
 
           {!loading && !error && !hasNews && (
             <div className={styles.stateBox} aria-live="polite">
               <span className={styles.stateMark} aria-hidden="true" />
-              <p className={styles.stateText}>
-                現在、お知らせはありません。
-              </p>
+              <p className={styles.stateText}>現在、お知らせはありません。</p>
             </div>
           )}
 
@@ -221,7 +220,6 @@ export default function NewsSection() {
                   >
                     <span className={styles.itemMeta}>
                       <span className={styles.date}>{formatDate(date)}</span>
-
                       <span className={styles.number} aria-hidden="true">
                         {String(index + 1).padStart(2, "0")}
                       </span>
@@ -229,9 +227,7 @@ export default function NewsSection() {
 
                     <h3 className={styles.itemTitle}>{title}</h3>
 
-                    <span className={styles.arrow} aria-hidden="true">
-                      →
-                    </span>
+                    <span className={styles.arrow} aria-hidden="true">→</span>
                   </Link>
                 );
               })}
@@ -240,10 +236,7 @@ export default function NewsSection() {
         </div>
 
         {!loading && !error && hasNews && (
-          <div
-            className={cx(styles.moreWrap, styles.reveal, styles.reveal3)}
-            data-news-reveal
-          >
+          <div className={cx(styles.moreWrap, styles.reveal, styles.reveal3)} data-news-reveal>
             <Link to="/news" className={styles.more}>
               <span>もっと見る</span>
               <span aria-hidden="true">→</span>

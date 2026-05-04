@@ -20,7 +20,7 @@
   --fy: 45%;
 
   /* ✅ gap を詰める：headを少し下げ、signを少し上げる */
---shift-head: clamp(-340px, calc(-18svh - 40px), -176px);
+--shift-head: clamp(-340px, calc(-18svh - 48px), -184px);
 --shift-sign: clamp(-18px, calc(-1.05svh - 6px), -10px);
 
   /* tones (calmer) */

@@ -4,6 +4,10 @@ import "./footer.css";
 
 const LOGO_SRC = "/logo-gd.png";
 
+// TODO: あとで自分のURLに差し替え
+const INSTAGRAM_URL = "https://www.instagram.com/";
+const NOTE_URL = "https://note.com/noahgushi123";
+
 const MENU_LINKS = [
   { label: "WORKS", href: "/#works" },
   { label: "ABOUT", href: "/#about" },
@@ -13,14 +17,8 @@ const MENU_LINKS = [
 ];
 
 const PROJECT_LINKS = [
-  {
-    label: "Quiet AI Image Library",
-    href: "https://quiet-ai.gushikendesign.com/",
-  },
-  {
-    label: "Minimal Website Templates",
-    href: "https://atelierquiet.gushikendesign.com/",
-  },
+  { label: "Quiet AI Image Library", href: "https://quiet-ai.gushikendesign.com/" },
+  { label: "Minimal Website Templates", href: "https://atelierquiet.gushikendesign.com/" },
 ];
 
 const LEGAL_LINKS = [
@@ -62,10 +60,7 @@ export default function Footer() {
     if (!root) return undefined;
 
     const targets = Array.from(root.querySelectorAll("[data-footer-reveal]"));
-
-    const reveal = (target) => {
-      target.classList.add("is-in");
-    };
+    const reveal = (el) => el.classList.add("is-in");
 
     if (typeof IntersectionObserver === "undefined") {
       targets.forEach(reveal);
@@ -76,35 +71,24 @@ export default function Footer() {
       (entries) => {
         entries.forEach((entry) => {
           if (!entry.isIntersecting) return;
-
           reveal(entry.target);
           observer.unobserve(entry.target);
         });
       },
-      {
-        threshold: 0.12,
-        rootMargin: "0px 0px -6% 0px",
-      }
+      { threshold: 0.12, rootMargin: "0px 0px -6% 0px" }
     );
 
-    targets.forEach((target) => observer.observe(target));
-
+    targets.forEach((t) => observer.observe(t));
     return () => observer.disconnect();
   }, []);
 
   return (
-    <footer
-      ref={sectionRef}
-      className="footer-section"
-      aria-label="サイトフッター"
-    >
+    <footer ref={sectionRef} className="footer-section" aria-label="サイトフッター">
       <div
         className="footer-top-line footer-reveal footer-line-reveal"
         data-footer-reveal
         aria-hidden="true"
       />
-
-
 
       <div className="footer-container">
         <div className="footer-grid">
@@ -114,45 +98,36 @@ export default function Footer() {
             data-footer-reveal
             aria-label="GUSHIKEN DESIGN"
           >
-            <Link
-              to="/"
-              className="footer-logo-link"
-              aria-label="GUSHIKEN DESIGN ホームへ"
-            >
+            <Link to="/" className="footer-logo-link" aria-label="GUSHIKEN DESIGN ホームへ">
               <span className="footer-logo-frame" aria-hidden="true">
-                <img
-                  src={LOGO_SRC}
-                  alt=""
-                  className="footer-logo"
-                  loading="lazy"
-                  decoding="async"
-                />
+                <img src={LOGO_SRC} alt="" className="footer-logo" loading="lazy" decoding="async" />
               </span>
 
               <span className="footer-brand-text">
-             
-<span className="footer-brand-name" translate="no">
-  <span className="sr-only">GUSHIKEN DESIGN</span>
-  <img
-    src="/typography/Gushiken Design22.svg"
-    alt=""
-    aria-hidden="true"
-    className="footer-brand-name-svg"
-    loading="lazy"
-    decoding="async"
-    draggable="false"
-  />
-</span>
+                <span className="footer-brand-name" translate="no">
+                  <span className="sr-only">GUSHIKEN DESIGN</span>
+                  <img
+                    src="/typography/Gushiken Design22.svg"
+                    alt=""
+                    aria-hidden="true"
+                    className="footer-brand-name-svg"
+                    loading="lazy"
+                    decoding="async"
+                    draggable="false"
+                  />
+                </span>
+
                 <span className="footer-brand-place" translate="no">
                   Web Design / Okinawa
                 </span>
               </span>
             </Link>
 
+            {/* ✅ Heroの新軸に合わせる（「整える」連呼を避ける） */}
             <p className="footer-brand-copy">
               沖縄を拠点に、
               <br />
-              伝わり方まで整えるWeb制作を行っています。
+              空気から設計するWeb制作を行っています。
             </p>
 
             <Link to="/layer0" className="footer-lab">
@@ -212,7 +187,7 @@ export default function Footer() {
 
             <div className="footer-sns-row" aria-label="SNSリンク">
               <a
-                href="https://www.instagram.com/"
+                href={INSTAGRAM_URL}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="footer-sns footer-sns--with-icon"
@@ -227,7 +202,7 @@ export default function Footer() {
               </a>
 
               <a
-                href="https://note.com/noahgushi123"
+                href={NOTE_URL}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="footer-sns footer-sns--with-icon"
@@ -260,10 +235,7 @@ export default function Footer() {
         </div>
 
         {/* BOTTOM */}
-        <div
-          className="footer-bottom footer-reveal footer-reveal-4"
-          data-footer-reveal
-        >
+        <div className="footer-bottom footer-reveal footer-reveal-4" data-footer-reveal>
           <p className="footer-guide-text">
             このサイトのデザインや文章は、
             <span>紹介・引用の範囲であれば歓迎しています。</span>

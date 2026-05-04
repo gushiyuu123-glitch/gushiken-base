@@ -4,10 +4,6 @@
    Black Frame × Champagne Gold × Silver Line
 ===================================================== */
 
-/* ----------------------------------------------
-   Section
----------------------------------------------- */
-
 .contact-section {
   position: relative;
   overflow: hidden;
@@ -19,18 +15,8 @@
   align-items: center;
 
   background:
-    radial-gradient(
-      circle at 16% 0%,
-      rgba(201, 177, 138, 0.04),
-      transparent 30%
-    ),
-    linear-gradient(
-      180deg,
-      #0a0a0a 0%,
-      var(--main, #0b0b0b) 26%,
-      #090909 62%,
-      #0a0a0a 100%
-    );
+    radial-gradient(circle at 16% 0%, rgba(201, 177, 138, 0.035), transparent 30%),
+    linear-gradient(180deg, #0a0a0a 0%, var(--main, #0b0b0b) 26%, #090909 62%, #0a0a0a 100%);
 }
 
 .contact-section::before {
@@ -39,14 +25,13 @@
   inset: 0;
   pointer-events: none;
 
-  background:
-    linear-gradient(
-      180deg,
-      rgba(255, 255, 255, 0.018) 0%,
-      transparent 16%,
-      transparent 82%,
-      rgba(255, 255, 255, 0.012) 100%
-    );
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.016) 0%,
+    transparent 16%,
+    transparent 82%,
+    rgba(255, 255, 255, 0.010) 100%
+  );
 
   opacity: 0.9;
 }
@@ -57,35 +42,24 @@
   inset: 0;
   pointer-events: none;
 
-  background-image: radial-gradient(
-    rgba(255, 255, 255, 0.16) 0.42px,
-    transparent 0.42px
-  );
+  background-image: radial-gradient(rgba(255, 255, 255, 0.16) 0.42px, transparent 0.42px);
   background-size: 4px 4px;
-  opacity: 0.018;
+  opacity: 0.012; /* ← 少しだけミニマル */
 }
 
-/* ----------------------------------------------
-   Container
----------------------------------------------- */
-
+/* Container */
 .contact-container {
   position: relative;
   z-index: 1;
-
   width: min(88vw, 980px);
   margin: 0 auto;
 }
 
-/* ----------------------------------------------
-   Side Line
----------------------------------------------- */
-
+/* Side Line */
 .contact-side-line {
   position: absolute;
   left: 0;
   top: 2.2rem;
-
   width: 1px;
   height: calc(100% - 4.4rem);
 
@@ -99,28 +73,18 @@
   pointer-events: none;
 }
 
-/* ----------------------------------------------
-   Header
----------------------------------------------- */
-
+/* Header */
 .contact-header {
   position: relative;
-
   padding-left: 1rem;
   margin-bottom: 3.8rem;
 }
 
-.contact-svg-title {
-  max-width: 100%;
-}
-
-.contact-svg-title .section-svg {
-  width: min(100%, 840px);
-}
+.contact-svg-title { max-width: 100%; }
+.contact-svg-title .section-svg { width: min(100%, 840px); }
 
 .contact-section-title {
   margin: 1.05rem 0 0;
-
   color: rgba(255, 255, 255, 0.42);
   font-size: 0.82rem;
   line-height: 1;
@@ -132,66 +96,48 @@
   width: 1px;
   height: 1px;
   overflow: hidden;
-
   clip: rect(0, 0, 0, 0);
   white-space: nowrap;
 }
 
-/* ----------------------------------------------
-   Intro
----------------------------------------------- */
-
-.contact-intro {
-  padding-left: 1rem;
-}
+/* Intro */
+.contact-intro { padding-left: 1rem; }
 
 .contact-lead {
   margin: 0 0 1.5rem;
-
   color: rgba(255, 255, 255, 0.86);
   font-size: 1rem;
   line-height: 2.05;
   letter-spacing: 0.045em;
 }
 
-.contact-lead span {
-  color: rgba(255, 255, 255, 0.96);
-}
+.contact-lead span { color: rgba(255, 255, 255, 0.96); }
 
 .contact-lead-sub {
   max-width: 720px;
   margin: 0 0 3.1rem;
-
   color: rgba(255, 255, 255, 0.62);
   font-size: 0.94rem;
   line-height: 2;
   letter-spacing: 0.035em;
 }
 
-/* ----------------------------------------------
-   Contact Visual
----------------------------------------------- */
-
+/* Contact Visual */
 .contact-visual {
   position: relative;
-
   margin: 0 0 3.2rem;
   padding: 1.45rem 1.35rem 1.25rem;
 
-  border: 1px solid rgba(255, 255, 255, 0.075);
-  border-top-color: rgba(201, 177, 138, 0.16);
+  border: 1px solid rgba(255, 255, 255, 0.070);
+  border-top-color: rgba(201, 177, 138, 0.14);
 
   background:
-    radial-gradient(
-      circle at 16% 0%,
-      rgba(201, 177, 138, 0.045),
-      transparent 36%
-    ),
-    rgba(255, 255, 255, 0.012);
+    radial-gradient(circle at 16% 0%, rgba(201, 177, 138, 0.040), transparent 36%),
+    rgba(255, 255, 255, 0.010);
 
   box-shadow:
-    0 0 0 0.5px rgba(201, 177, 138, 0.025),
-    0 18px 48px rgba(0, 0, 0, 0.22);
+    0 0 0 0.5px rgba(201, 177, 138, 0.020),
+    0 12px 32px rgba(0, 0, 0, 0.18); /* ← 影を軽く */
 
   overflow: hidden;
 }
@@ -202,12 +148,9 @@
   inset: 0;
   pointer-events: none;
 
-  background-image: radial-gradient(
-    rgba(255, 255, 255, 0.13) 0.42px,
-    transparent 0.42px
-  );
+  background-image: radial-gradient(rgba(255, 255, 255, 0.13) 0.42px, transparent 0.42px);
   background-size: 4px 4px;
-  opacity: 0.016;
+  opacity: 0.010; /* ← ドットを薄く */
 }
 
 .contact-visual::after {
@@ -216,14 +159,7 @@
   inset: 0;
   pointer-events: none;
 
-  background:
-    linear-gradient(
-      90deg,
-      transparent,
-      rgba(201, 177, 138, 0.025),
-      transparent
-    );
-
+  background: linear-gradient(90deg, transparent, rgba(201, 177, 138, 0.022), transparent);
   opacity: 0;
   transform: translateX(-18%);
 
@@ -240,7 +176,6 @@
 .contact-visual-label {
   position: relative;
   z-index: 1;
-
   margin: 0 0 1.2rem;
 
   color: rgba(201, 177, 138, 0.56);
@@ -250,15 +185,11 @@
   text-transform: uppercase;
 }
 
-/* ----------------------------------------------
-   Starter List
----------------------------------------------- */
-
+/* Starter List */
 .contact-starter-list {
   position: relative;
   z-index: 1;
-
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.055);
 }
 
 .contact-starter-row {
@@ -270,11 +201,11 @@
   min-height: 52px;
   padding: 0 1rem;
 
-  border-bottom: 1px solid rgba(255, 255, 255, 0.052);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.048);
 
   opacity: 0;
-  transform: translate3d(0, 10px, 0);
-  filter: brightness(0.95);
+  transform: translate3d(0, 8px, 0); /* ← 10px→8px */
+  filter: brightness(0.96);
 
   transition:
     opacity 720ms cubic-bezier(0.16, 0.72, 0.16, 1),
@@ -290,13 +221,8 @@
   transition-delay: calc(160ms + (var(--starter-index) * 70ms));
 }
 
-.contact-starter-row:last-child {
-  border-bottom: none;
-}
-
-.contact-starter-row:hover {
-  background: rgba(255, 255, 255, 0.018);
-}
+.contact-starter-row:last-child { border-bottom: none; }
+.contact-starter-row:hover { background: rgba(255, 255, 255, 0.016); }
 
 .contact-starter-index {
   color: rgba(201, 177, 138, 0.38);
@@ -308,11 +234,10 @@
 
 .contact-starter-row p {
   margin: 0;
-
-  color: rgba(255, 255, 255, 0.5);
+  color: rgba(255, 255, 255, 0.56); /* ← 少し読みやすく */
   font-size: 0.78rem;
   line-height: 1.7;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.095em;
 }
 
 .contact-starter-check {
@@ -322,10 +247,7 @@
   letter-spacing: 0.08em;
 }
 
-/* ----------------------------------------------
-   Visual Note
----------------------------------------------- */
-
+/* Visual Note */
 .contact-visual-note {
   position: relative;
   z-index: 1;
@@ -337,7 +259,7 @@
   margin-top: 1.15rem;
 
   opacity: 0;
-  transform: translate3d(0, 8px, 0);
+  transform: translate3d(0, 6px, 0); /* ← 8px→6px */
 
   transition:
     opacity 760ms cubic-bezier(0.16, 0.72, 0.16, 1),
@@ -353,18 +275,11 @@
 .contact-visual-note span {
   flex: 1;
   height: 1px;
-
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(255, 255, 255, 0.075),
-    transparent
-  );
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.075), transparent);
 }
 
 .contact-visual-note p {
   margin: 0;
-
   color: rgba(255, 255, 255, 0.34);
   font-size: 0.68rem;
   line-height: 1;
@@ -372,15 +287,11 @@
   white-space: nowrap;
 }
 
-/* ----------------------------------------------
-   Actions
----------------------------------------------- */
-
+/* Actions */
 .contact-actions {
   display: flex;
   align-items: center;
   justify-content: center;
-
   margin: 0 0 2.2rem;
 }
 
@@ -399,14 +310,9 @@
   border: 1px solid rgba(201, 177, 138, 0.24);
   border-radius: 999px;
 
-  background:
-    linear-gradient(
-      180deg,
-      rgba(201, 177, 138, 0.045),
-      rgba(255, 255, 255, 0.01)
-    );
-
+  background: linear-gradient(180deg, rgba(201, 177, 138, 0.040), rgba(255, 255, 255, 0.01));
   color: rgba(255, 255, 255, 0.84);
+
   font-size: 0.76rem;
   line-height: 1;
   letter-spacing: 0.14em;
@@ -414,8 +320,8 @@
   white-space: nowrap;
 
   box-shadow:
-    0 14px 36px rgba(0, 0, 0, 0.22),
-    inset 0 1px 0 rgba(255, 255, 255, 0.035);
+    0 12px 28px rgba(0, 0, 0, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.032);
 
   transition:
     transform 0.35s var(--ease-silent, cubic-bezier(.22,.56,.18,1)),
@@ -430,13 +336,7 @@
   position: absolute;
   inset: 0;
 
-  background:
-    linear-gradient(
-      90deg,
-      transparent,
-      rgba(255, 255, 255, 0.055),
-      transparent
-    );
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.050), transparent);
 
   opacity: 0;
   transform: translateX(-48%);
@@ -450,13 +350,15 @@
 
 .contact-btn:hover,
 .contact-btn:focus-visible {
-  transform: translateY(-2px);
+  transform: translateY(-1px); /* ← -2px→-1px */
   border-color: rgba(201, 177, 138, 0.38);
-  background: rgba(201, 177, 138, 0.07);
+  background: rgba(201, 177, 138, 0.065);
   color: rgba(255, 255, 255, 0.96);
+
   box-shadow:
-    0 18px 48px rgba(0, 0, 0, 0.3),
-    0 0 0 0.5px rgba(201, 177, 138, 0.06);
+    0 16px 40px rgba(0, 0, 0, 0.26),
+    0 0 0 0.5px rgba(201, 177, 138, 0.055);
+
   outline: none;
 }
 
@@ -466,10 +368,12 @@
   transform: translateX(48%);
 }
 
-/* ----------------------------------------------
-   Footer
----------------------------------------------- */
+/* タッチ端末で「hover浮き」を抑制 */
+@media (hover: none) and (pointer: coarse) {
+  .contact-btn:hover { transform: none; }
+}
 
+/* Footer */
 .contact-footer {
   max-width: 720px;
   margin: 0 auto;
@@ -481,10 +385,7 @@
   letter-spacing: 0.04em;
 }
 
-/* ----------------------------------------------
-   Reveal
----------------------------------------------- */
-
+/* Reveal */
 .contact-reveal {
   opacity: 0;
   transform: translate3d(0, 18px, 0) scale(0.998);
@@ -520,34 +421,14 @@
   transform: scaleY(1);
 }
 
-.contact-reveal-1 {
-  transition-delay: 40ms;
-}
+.contact-reveal-1 { transition-delay: 40ms; }
+.contact-reveal-2 { transition-delay: 90ms; }
+.contact-reveal-3 { transition-delay: 135ms; }
+.contact-reveal-4 { transition-delay: 80ms; }
+.contact-reveal-5 { transition-delay: 90ms; }
+.contact-reveal-6 { transition-delay: 110ms; }
 
-.contact-reveal-2 {
-  transition-delay: 90ms;
-}
-
-.contact-reveal-3 {
-  transition-delay: 135ms;
-}
-
-.contact-reveal-4 {
-  transition-delay: 80ms;
-}
-
-.contact-reveal-5 {
-  transition-delay: 90ms;
-}
-
-.contact-reveal-6 {
-  transition-delay: 110ms;
-}
-
-/* ----------------------------------------------
-   Mobile
----------------------------------------------- */
-
+/* Mobile */
 @media (max-width: 768px) {
   .contact-section {
     min-height: auto;
@@ -555,9 +436,7 @@
     display: block;
   }
 
-  .contact-container {
-    width: calc(100% - 2rem);
-  }
+  .contact-container { width: calc(100% - 2rem); }
 
   .contact-side-line {
     top: 1.6rem;
@@ -565,17 +444,10 @@
   }
 
   .contact-header,
-  .contact-intro {
-    padding-left: 0.75rem;
-  }
+  .contact-intro { padding-left: 0.75rem; }
 
-  .contact-header {
-    margin-bottom: 3rem;
-  }
-
-  .contact-svg-title .section-svg {
-    width: min(100%, 560px);
-  }
+  .contact-header { margin-bottom: 3rem; }
+  .contact-svg-title .section-svg { width: min(100%, 560px); }
 
   .contact-section-title {
     font-size: 0.74rem;
@@ -609,11 +481,10 @@
     gap: 0.75rem;
     min-height: 50px;
     padding: 0 0.85rem;
+    transform: translate3d(0, 6px, 0); /* ← 8px→6px */
   }
 
-  .contact-starter-index {
-    font-size: 1rem;
-  }
+  .contact-starter-index { font-size: 1rem; }
 
   .contact-starter-row p {
     font-size: 0.72rem;
@@ -621,18 +492,14 @@
     letter-spacing: 0.075em;
   }
 
-  .contact-visual-note {
-    gap: 0.55rem;
-  }
+  .contact-visual-note { gap: 0.55rem; }
 
   .contact-visual-note p {
     font-size: 0.62rem;
     letter-spacing: 0.1em;
   }
 
-  .contact-actions {
-    margin-bottom: 2rem;
-  }
+  .contact-actions { margin-bottom: 2rem; }
 
   .contact-btn {
     min-height: 42px;
@@ -652,19 +519,13 @@
     filter: brightness(0.95) blur(0.08px);
   }
 
-  .contact-starter-row {
-    transform: translate3d(0, 8px, 0);
-  }
-
   .contact-visual.is-in .contact-starter-row {
     transition-delay: calc(120ms + (var(--starter-index) * 58ms));
   }
 }
 
 @media (max-width: 390px) {
-  .contact-container {
-    width: calc(100% - 1.5rem);
-  }
+  .contact-container { width: calc(100% - 1.5rem); }
 
   .contact-visual-note p {
     white-space: normal;
@@ -673,10 +534,7 @@
   }
 }
 
-/* ----------------------------------------------
-   Reduced Motion
----------------------------------------------- */
-
+/* Reduced Motion */
 @media (prefers-reduced-motion: reduce) {
   .contact-section *,
   .contact-section *::before,

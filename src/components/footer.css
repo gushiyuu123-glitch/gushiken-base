@@ -1,31 +1,21 @@
 /* =========================================================
    FOOTER — GUSHIKEN DESIGN OS
-   Final Signature / Quiet Ending / Black Frame
-   Champagne Gold × Silver Line × Logo Seal
+   Quiet Ending / Black Frame
 ========================================================= */
 
-/* ---------------------------------------------
-   Section
---------------------------------------------- */
-
 .footer-section {
+  --footer-main: var(--main, #0b0b0b);
+  --footer-gold: rgba(201, 177, 138, 0.42);
+  --footer-gold-soft: rgba(201, 177, 138, 0.26);
+  --footer-silver: rgba(220, 226, 235, 0.12);
+
   position: relative;
   overflow: hidden;
-
   padding: 0;
 
   background:
-    radial-gradient(
-      circle at 18% 0%,
-      rgba(201, 177, 138, 0.034),
-      transparent 34%
-    ),
-    linear-gradient(
-      180deg,
-      #090909 0%,
-      var(--main, #0b0b0b) 38%,
-      #070707 100%
-    );
+    radial-gradient(circle at 18% 0%, rgba(201, 177, 138, 0.032), transparent 34%),
+    linear-gradient(180deg, #090909 0%, var(--footer-main) 42%, #070707 100%);
 
   color: rgba(255, 255, 255, 0.86);
 }
@@ -35,17 +25,15 @@
   position: absolute;
   inset: 0;
   pointer-events: none;
-
   background:
     linear-gradient(
       180deg,
-      rgba(255, 255, 255, 0.014) 0%,
+      rgba(255, 255, 255, 0.012) 0%,
       transparent 22%,
       transparent 82%,
       rgba(255, 255, 255, 0.008) 100%
     );
-
-  opacity: 0.9;
+  opacity: 0.92;
 }
 
 .footer-section::after {
@@ -53,23 +41,18 @@
   position: absolute;
   inset: 0;
   pointer-events: none;
-
-  background-image: radial-gradient(
-    rgba(255, 255, 255, 0.13) 0.42px,
-    transparent 0.42px
-  );
+  background-image: radial-gradient(rgba(255, 255, 255, 0.13) 0.42px, transparent 0.42px);
   background-size: 4px 4px;
   opacity: 0.014;
 }
 
 /* ---------------------------------------------
-   Top Line / Ambient
+   Top Line
 --------------------------------------------- */
 
 .footer-top-line {
   position: relative;
   z-index: 1;
-
   height: 1px;
 
   background: linear-gradient(
@@ -85,8 +68,6 @@
     0 0 22px rgba(220, 226, 235, 0.045),
     0 0 32px rgba(201, 177, 138, 0.04);
 }
-
-
 
 /* ---------------------------------------------
    Container / Layout
@@ -120,7 +101,6 @@
   display: inline-flex;
   align-items: center;
   gap: 0.9rem;
-
   margin-bottom: 1.35rem;
 
   color: inherit;
@@ -129,14 +109,12 @@
 
 .footer-logo-frame {
   position: relative;
-
   display: inline-flex;
   align-items: center;
   justify-content: center;
 
   width: 42px;
   height: 42px;
-
   flex: 0 0 auto;
 }
 
@@ -144,40 +122,9 @@
   content: "";
   position: absolute;
   inset: -5px;
-
   border: 1px solid rgba(201, 177, 138, 0.06);
   border-radius: 999px;
-
-  background:
-    radial-gradient(
-      circle at 50% 0%,
-      rgba(201, 177, 138, 0.09),
-      transparent 58%
-    );
-
-   background: transparent;
   opacity: 0.72;
-}
-
-.footer-logo-frame::after {
-  content: "";
-  position: absolute;
-  inset: -9px;
-
-  border-radius: 999px;
-  background: rgba(201, 177, 138, 0.035);
-  filter: blur(12px);
-  opacity: 0;
-display: none;
-  transition:
-    opacity 520ms ease,
-    transform 620ms cubic-bezier(0.18, 0.72, 0.18, 1);
-}
-
-.footer-logo-link:hover .footer-logo-frame::after,
-.footer-logo-link:focus-visible .footer-logo-frame::after {
-  opacity: 1;
-  transform: scale(1.04);
 }
 
 .footer-logo {
@@ -188,14 +135,10 @@ display: none;
   height: 34px;
   object-fit: contain;
 
-  opacity: 0.84;
-  filter:
-    saturate(0.76)
-    brightness(0.96)
-    contrast(0.96);
+  opacity: 0.82;
+  filter: saturate(0.76) brightness(0.96) contrast(0.96);
 
   transform: translateZ(0);
-
   transition:
     opacity 420ms ease,
     filter 420ms ease,
@@ -204,11 +147,8 @@ display: none;
 
 .footer-logo-link:hover .footer-logo,
 .footer-logo-link:focus-visible .footer-logo {
-  opacity: 0.98;
-  filter:
-    saturate(0.88)
-    brightness(1.04)
-    contrast(1);
+  opacity: 0.96;
+  filter: saturate(0.88) brightness(1.04) contrast(1);
   transform: translateY(-1px);
 }
 
@@ -219,19 +159,11 @@ display: none;
   min-width: 0;
 }
 
-/* ---------------------------------------------
-   Footer wordmark SVG
-   - Heroと同じ系統のワイプ
-   - 左端は常に不透明
-   - 右だけ羽根
-   - 最後118%で逃がす
-   - サイズはほんの少しだけ小さく
---------------------------------------------- */
-
+/* wordmark wipe（著名っぽく：薄め・余韻） */
 .footer-brand-name {
   display: block;
   line-height: 1;
-  width: clamp(128px, 14vw, 186px); /* ← 少しだけ縮小 */
+  width: clamp(128px, 14vw, 186px);
   max-width: 100%;
 }
 
@@ -240,20 +172,22 @@ display: none;
   width: 100%;
   height: auto;
   padding-bottom: 5px;
-  opacity: 0.78;
+
+  /* ✅ 少し薄くして“署名感” */
+  opacity: 0.72;
+
   filter:
     invert(1)
-    brightness(1.05)
+    brightness(1.04)
     saturate(0)
-    contrast(1.03)
-    blur(0.14px)
+    contrast(1.02)
+    blur(0.12px)
     drop-shadow(0 2px 12px rgba(0, 0, 0, 0.20));
 
   transform: translate3d(0, 1px, 0);
   backface-visibility: hidden;
   will-change: filter, opacity, -webkit-mask-size, mask-size, clip-path;
 
-  /* 左は常に見せる / 右だけ羽根 */
   -webkit-mask-image: linear-gradient(
     90deg,
     rgba(0, 0, 0, 1) 0%,
@@ -275,19 +209,16 @@ display: none;
   mask-size: 0% 100%;
 }
 
-/* Footer brand が見えた時だけロゴを個別に演出 */
 .footer-brand.is-in .footer-brand-name-svg {
   animation:
     footerLogoWipe 1.12s cubic-bezier(.22,.56,.18,1) 0.12s both,
     footerLogoFocus 1.12s cubic-bezier(.18,.62,.2,1) 0.12s both;
 }
 
-/* mask非対応フォールバック */
 @supports not (mask-image: linear-gradient(#000, #000)) {
   .footer-brand-name-svg {
     clip-path: inset(0 100% 0 0);
   }
-
   .footer-brand.is-in .footer-brand-name-svg {
     animation:
       footerLogoClip 1.12s cubic-bezier(.22,.56,.18,1) 0.12s both,
@@ -296,82 +227,37 @@ display: none;
 }
 
 @keyframes footerLogoWipe {
-  0% {
-    -webkit-mask-size: 0% 100%;
-    mask-size: 0% 100%;
-  }
-  100% {
-    -webkit-mask-size: 118% 100%;
-    mask-size: 118% 100%;
-  }
+  0% { -webkit-mask-size: 0% 100%; mask-size: 0% 100%; }
+  100% { -webkit-mask-size: 118% 100%; mask-size: 118% 100%; }
 }
-
 @keyframes footerLogoClip {
   0% { clip-path: inset(0 100% 0 0); }
   100% { clip-path: inset(0 0 0 0); }
 }
-
 @keyframes footerLogoFocus {
   0% {
-    opacity: 0.12;
+    opacity: 0.10;
     filter:
-      invert(1)
-      brightness(1.03)
-      saturate(0)
-      contrast(1.02)
-      blur(0.20px)
-      drop-shadow(0 2px 10px rgba(0, 0, 0, 0.16));
+      invert(1) brightness(1.03) saturate(0) contrast(1.02)
+      blur(0.18px)
+      drop-shadow(0 2px 10px rgba(0,0,0,0.16));
   }
   55% {
-    opacity: 0.68;
+    opacity: 0.60;
     filter:
-      invert(1)
-      brightness(1.05)
-      saturate(0)
-      contrast(1.03)
-      blur(0.08px)
-      drop-shadow(0 2px 12px rgba(0, 0, 0, 0.20));
+      invert(1) brightness(1.04) saturate(0) contrast(1.02)
+      blur(0.06px)
+      drop-shadow(0 2px 12px rgba(0,0,0,0.20));
   }
   100% {
-    opacity: 0.78;
+    opacity: 0.72;
     filter:
-      invert(1)
-      brightness(1.05)
-      saturate(0)
-      contrast(1.03)
+      invert(1) brightness(1.04) saturate(0) contrast(1.02)
       blur(0)
-      drop-shadow(0 2px 12px rgba(0, 0, 0, 0.20));
+      drop-shadow(0 2px 12px rgba(0,0,0,0.20));
   }
 }
 
-@media (max-width: 480px) {
-  .footer-brand-name {
-    width: 148px; /* 前より少しだけ小さく */
-  }
-}
-
-@media (max-width: 390px) {
-  .footer-brand-name {
-    width: 142px;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .footer-brand-name-svg {
-    animation: none !important;
-    -webkit-mask-size: 118% 100% !important;
-    mask-size: 118% 100% !important;
-    clip-path: inset(0 0 0 0) !important;
-
-    opacity: 0.78 !important;
-    filter:
-      invert(1)
-      brightness(1.05)
-      saturate(0)
-      contrast(1.03)
-      drop-shadow(0 2px 12px rgba(0, 0, 0, 0.20)) !important;
-  }
-}
 .footer-brand-place {
   color: rgba(255, 255, 255, 0.34);
   font-size: 0.66rem;
@@ -391,7 +277,6 @@ display: none;
 
 .footer-lab {
   position: relative;
-
   display: inline-flex;
 
   color: rgba(201, 177, 138, 0.34);
@@ -415,13 +300,7 @@ display: none;
   width: 62%;
   height: 1px;
 
-  background: linear-gradient(
-    90deg,
-    rgba(201, 177, 138, 0.42),
-    rgba(220, 226, 235, 0.12),
-    transparent
-  );
-
+  background: linear-gradient(90deg, rgba(201, 177, 138, 0.42), rgba(220, 226, 235, 0.12), transparent);
   opacity: 0.62;
 
   transition:
@@ -443,12 +322,11 @@ display: none;
 }
 
 /* ---------------------------------------------
-   Labels
+   Labels / Links
 --------------------------------------------- */
 
 .footer-col-label {
   margin: 0 0 1.25rem;
-
   color: rgba(201, 177, 138, 0.38);
   font-size: 0.58rem;
   line-height: 1;
@@ -456,11 +334,8 @@ display: none;
   text-transform: uppercase;
 }
 
-/* ---------------------------------------------
-   Menu Links
---------------------------------------------- */
-
-.footer-nav {
+.footer-nav,
+.footer-side {
   min-width: 0;
 }
 
@@ -480,7 +355,6 @@ display: none;
 
 .footer-link {
   position: relative;
-
   display: inline-flex;
 
   color: rgba(255, 255, 255, 0.52);
@@ -501,13 +375,7 @@ display: none;
 
   width: 0;
   height: 1px;
-
-  background: linear-gradient(
-    90deg,
-    rgba(201, 177, 138, 0.52),
-    rgba(220, 226, 235, 0.18)
-  );
-
+  background: linear-gradient(90deg, rgba(201, 177, 138, 0.52), rgba(220, 226, 235, 0.18));
   transition: width 420ms cubic-bezier(0.18, 0.72, 0.18, 1);
 }
 
@@ -528,8 +396,6 @@ display: none;
 --------------------------------------------- */
 
 .footer-side {
-  min-width: 0;
-
   display: flex;
   flex-direction: column;
   gap: 1.25rem;
@@ -543,7 +409,6 @@ display: none;
 
 .footer-project-link {
   position: relative;
-
   display: inline-flex;
   width: fit-content;
 
@@ -565,7 +430,6 @@ display: none;
 
   width: 0;
   height: 1px;
-
   background: rgba(201, 177, 138, 0.28);
 
   transition: width 380ms cubic-bezier(0.18, 0.72, 0.18, 1);
@@ -584,26 +448,15 @@ display: none;
 }
 
 /* ---------------------------------------------
-   Dividers
+   Dividers / SNS / Legal
 --------------------------------------------- */
 
 .footer-divider {
   width: 100%;
   height: 1px;
-
-  background: linear-gradient(
-    90deg,
-    rgba(255, 255, 255, 0.035),
-    rgba(220, 226, 235, 0.1),
-    rgba(255, 255, 255, 0.035)
-  );
-
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.035), rgba(220, 226, 235, 0.1), rgba(255, 255, 255, 0.035));
   opacity: 0.72;
 }
-
-/* ---------------------------------------------
-   SNS / Legal
---------------------------------------------- */
 
 .footer-sns-row {
   display: flex;
@@ -614,7 +467,6 @@ display: none;
 
 .footer-sns {
   position: relative;
-
   color: rgba(255, 255, 255, 0.48);
   font-size: 0.8rem;
   line-height: 1;
@@ -639,9 +491,7 @@ display: none;
 
   width: 0;
   height: 1px;
-
   background: rgba(201, 177, 138, 0.28);
-
   transition: width 340ms ease;
 }
 
@@ -658,12 +508,9 @@ display: none;
 }
 
 .footer-sns-icon-wrap {
-  position: relative;
-
   display: inline-flex;
   align-items: center;
   justify-content: center;
-
   width: 18px;
   height: 18px;
   flex: 0 0 auto;
@@ -705,11 +552,6 @@ display: none;
   stroke: rgba(201, 177, 138, 0.34) !important;
 }
 
-.footer-sns-label {
-  position: relative;
-  top: 0.02em;
-}
-
 .footer-sns:hover .footer-sns-icon,
 .footer-sns:focus-visible .footer-sns-icon {
   stroke: rgba(255, 255, 255, 0.92);
@@ -734,7 +576,6 @@ display: none;
 
 .footer-legal {
   width: fit-content;
-
   color: rgba(255, 255, 255, 0.32);
   font-size: 0.68rem;
   line-height: 1.6;
@@ -770,25 +611,17 @@ display: none;
 
 .footer-guide-text {
   margin: 0;
-
   color: rgba(255, 255, 255, 0.22);
   font-size: 0.66rem;
   line-height: 1.86;
   letter-spacing: 0.08em;
 }
 
-.footer-guide-text span {
-  color: rgba(255, 255, 255, 0.34);
-}
-
-.footer-guide-text em {
-  color: rgba(255, 255, 255, 0.17);
-  font-style: normal;
-}
+.footer-guide-text span { color: rgba(255, 255, 255, 0.34); }
+.footer-guide-text em { color: rgba(255, 255, 255, 0.17); font-style: normal; }
 
 .footer-copyright {
   margin: 0;
-
   color: rgba(255, 255, 255, 0.24);
   font-size: 0.66rem;
   line-height: 1;
@@ -834,47 +667,18 @@ display: none;
   transform: scaleX(1);
 }
 
-.footer-section {
-  position: relative;
-  overflow: hidden;
-
-  padding: 0;
-
-  background:
-    linear-gradient(
-      180deg,
-      #090909 0%,
-      var(--main, #0b0b0b) 42%,
-      #070707 100%
-    );
-
-  color: rgba(255, 255, 255, 0.86);
-}
-.footer-reveal-1 {
-  transition-delay: 60ms;
-}
-
-.footer-reveal-2 {
-  transition-delay: 120ms;
-}
-
-.footer-reveal-3 {
-  transition-delay: 180ms;
-}
-
-.footer-reveal-4 {
-  transition-delay: 120ms;
-}
+.footer-reveal-1 { transition-delay: 60ms; }
+.footer-reveal-2 { transition-delay: 120ms; }
+.footer-reveal-3 { transition-delay: 180ms; }
+.footer-reveal-4 { transition-delay: 120ms; }
 
 /* child stagger */
-
 .footer-nav .footer-link,
 .footer-side .footer-project-link,
 .footer-side .footer-sns,
 .footer-side .footer-legal {
   opacity: 0;
   transform: translate3d(0, 8px, 0);
-
   transition:
     opacity 680ms cubic-bezier(0.16, 0.72, 0.16, 1),
     transform 760ms cubic-bezier(0.16, 0.72, 0.16, 1),
@@ -894,7 +698,6 @@ display: none;
   opacity: 0;
   transform: scaleX(0.82);
   transform-origin: left;
-
   transition:
     opacity 760ms cubic-bezier(0.16, 0.72, 0.16, 1),
     transform 860ms cubic-bezier(0.16, 0.72, 0.16, 1);
@@ -930,72 +733,34 @@ display: none;
     gap: 2.9rem;
   }
 
-  .footer-logo-frame {
-    width: 38px;
-    height: 38px;
-  }
+  .footer-logo-frame { width: 38px; height: 38px; }
+  .footer-logo { width: 30px; height: 30px; }
 
-  .footer-logo {
-    width: 30px;
-    height: 30px;
-  }
+  .footer-brand-place { font-size: 0.62rem; }
+  .footer-brand-copy { font-size: 0.76rem; }
 
-  .footer-brand-name {
-    font-size: 0.84rem;
-    letter-spacing: 0.16em;
-  }
+  .footer-col-label { margin-bottom: 1rem; }
 
-  .footer-brand-place {
-    font-size: 0.62rem;
-  }
+  .footer-link { font-size: 0.82rem; }
+  .footer-project-link { font-size: 0.72rem; }
 
-  .footer-brand-copy {
-    font-size: 0.76rem;
-  }
-
-  .footer-col-label {
-    margin-bottom: 1rem;
-  }
-
-  .footer-link {
-    font-size: 0.82rem;
-  }
-
-  .footer-project-link {
-    font-size: 0.72rem;
-  }
-
-  .footer-sns-row {
-    gap: 1rem 1.25rem;
-  }
-
-  .footer-sns {
-    font-size: 0.78rem;
-  }
+  .footer-sns-row { gap: 1rem 1.25rem; }
+  .footer-sns { font-size: 0.78rem; }
 
   .footer-sns-icon,
-  .footer-sns-icon-wrap {
-    width: 17px;
-    height: 17px;
-  }
+  .footer-sns-icon-wrap { width: 17px; height: 17px; }
 
-  .footer-lab {
-    font-size: 0.66rem;
-    letter-spacing: 0.15em;
-  }
+  .footer-lab { font-size: 0.66rem; letter-spacing: 0.15em; }
 
   .footer-bottom {
     flex-direction: column;
     align-items: flex-start;
     gap: 1.25rem;
-
     margin-top: 3.1rem;
   }
 
   .footer-guide-text,
-  .footer-copyright {
-    font-size: 0.64rem;
-  }
+  .footer-copyright { font-size: 0.64rem; }
 
   .footer-reveal {
     transform: translate3d(0, 14px, 0) scale(0.998);
@@ -1011,18 +776,8 @@ display: none;
 }
 
 @media (max-width: 390px) {
-  .footer-container {
-    width: calc(100% - 1.5rem);
-  }
-
-  .footer-logo-link {
-    gap: 0.75rem;
-  }
-
-  .footer-brand-name {
-    font-size: 0.78rem;
-    letter-spacing: 0.14em;
-  }
+  .footer-container { width: calc(100% - 1.5rem); }
+  .footer-logo-link { gap: 0.75rem; }
 }
 
 /* ---------------------------------------------
@@ -1040,7 +795,6 @@ display: none;
 
   .footer-reveal,
   .footer-line-reveal,
-  .footer-ambient-reveal,
   .footer-nav .footer-link,
   .footer-side .footer-project-link,
   .footer-side .footer-sns,
@@ -1050,36 +804,25 @@ display: none;
     transform: none !important;
     filter: none !important;
   }
-}
-/* Footer brand name -> SVG mark (mask paint) */
-.footer-brand-name {
-  display: block;
-  line-height: 1;
-}
 
-/* “GushikenDesign.svg” を色付きで描画（色は currentColor ＝既存の文字色） */
-.footer-brand-name-mark {
-  display: block;
-
-  /* サイズはまずこれで “だいたい合う” → 必要なら width だけ微調整 */
- width: clamp(136px, 15vw, 196px);
-  aspect-ratio: 961 / 296;
-
-  background: currentColor;
-  opacity: 0.92;
-
-  -webkit-mask: url("/typography/GushikenDesign.svg") left center / contain
-    no-repeat;
-  mask: url("/typography/GushikenDesign.svg") left center / contain no-repeat;
-
-  transform: translate3d(0, 1px, 0);
-
-  filter:
-    drop-shadow(0 0 10px rgba(255, 255, 255, 0.02))
-    drop-shadow(0 0 14px rgba(217, 185, 138, 0.04));
-}
-@media (max-width: 480px) {
-  .footer-brand-name-mark {
-    width: 156px;
+  .footer-brand-name-svg {
+    -webkit-mask-size: 118% 100% !important;
+    mask-size: 118% 100% !important;
+    clip-path: inset(0 0 0 0) !important;
   }
+}
+
+/* ---------------------------------------------
+   sr-only
+--------------------------------------------- */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }

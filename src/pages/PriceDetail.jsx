@@ -6,7 +6,8 @@ import "./priceDetail.css";
 
 const PAGE_TITLE = "料金の詳細｜GUSHIKEN DESIGN";
 const PAGE_DESCRIPTION =
-  "GUSHIKEN DESIGNの料金詳細ページ。LP・小規模サイト・印象重視サイト・運用保守の料金目安、制作の流れ、お支払い、追加オプションについてご案内しています。";
+  "沖縄を拠点に、商品・空間・サービスの印象を上質に伝えるWeb制作を行っています。LP／小規模サイト／印象重視サイト／運用保守の料金目安、制作の流れ、お支払い、追加オプションをご案内します。";
+
 const CANONICAL_URL = "https://gushikendesign.com/price";
 
 const PLANS = [
@@ -16,8 +17,8 @@ const PLANS = [
     jp: "1ページ構成",
     price: "60,000",
     detail:
-      "サービスや商品の魅力を、1ページで伝えるプランです。まず公開したい、費用を抑えたい、という段階に向いています。",
-    bestFor: "「まだ詳しいページは不要。まず一枚、きちんと見せたい」という方へ。",
+      "サービスや商品の魅力を、1ページで端的に伝えるプランです。まず公開したい、必要最小限で“ちゃんと見える”状態を作りたい、という段階に向いています。",
+    bestFor: "「まず一枚、上質に見せる土台を作りたい」という方へ。",
     includes: [
       "1ページ構成",
       "オリジナルデザイン",
@@ -33,8 +34,8 @@ const PLANS = [
     jp: "小規模サイト",
     price: "120,000",
     detail:
-      "トップページと下層ページで、お店やサービスをきちんと伝えるプランです。何をやっているか、どこに連絡するか、が迷わず伝わる構成を整えます。",
-    bestFor: "「サービス内容・料金・アクセスをページ別にまとめたい」という方へ。",
+      "トップページと下層ページで、必要な情報を整理しながら“迷わず伝わる”構成にします。サービス内容・料金・アクセスなど、判断材料をページ別にまとめたい方へ。",
+    bestFor: "「情報をページ別にまとめて、見え方も揃えたい」という方へ。",
     includes: [
       "トップ + 下層2〜4ページ",
       "サービス内容の整理",
@@ -50,8 +51,8 @@ const PLANS = [
     jp: "印象重視サイト",
     price: "240,000",
     detail:
-      "写真・色・余白・文字・導線まで一つのトーンに整え、見た瞬間に「ここに頼みたい」と感じてもらえるサイトを作ります。価格ではなく、印象で選ばれたい方へ。",
-    bestFor: "「安っぽく見せたくない。お店の雰囲気をちゃんと伝えたい」という方へ。",
+      "写真・色・余白・文字・導線まで一つのトーンに設計し、見た瞬間の印象で選ばれるサイトを作ります。安っぽく見せず、サービスの価値が自然に伝わる状態へ。",
+    bestFor: "「価格ではなく、印象で選ばれたい」という方へ。",
     includes: [
       "印象設計（全体のトーン・空気感の設計）",
       "複数ページ対応",
@@ -68,7 +69,7 @@ const FLOW_STEPS = [
   { n: "01", title: "ヒアリング", sub: "目的・雰囲気・予算感の確認" },
   { n: "02", title: "構成と進め方のご提案", sub: "LP / 複数ページ / 必要範囲の整理" },
   { n: "03", title: "お見積もり・着手金", sub: "内容確定後、着手金50%で制作開始" },
-  { n: "04", title: "デザイン制作", sub: "見え方・情報整理・導線を設計" },
+  { n: "04", title: "デザイン制作", sub: "印象・情報・導線を設計" },
   { n: "05", title: "実装・確認", sub: "スマホ対応・表示調整・公開前確認" },
   { n: "06", title: "公開・納品", sub: "公開完了後、最終確認して納品" },
 ];
@@ -131,14 +132,21 @@ export default function PriceDetail() {
     setMetaByName("description", PAGE_DESCRIPTION);
     setCanonical(CANONICAL_URL);
 
+    // OGP（既存の /ogp.png を仮で使う：必要なら差し替え）
+    const origin =
+      typeof window !== "undefined" ? window.location.origin : "https://gushikendesign.com";
+    const ogImage = `${origin}/ogp.png`;
+
     setMetaByProperty("og:title", PAGE_TITLE);
     setMetaByProperty("og:description", PAGE_DESCRIPTION);
     setMetaByProperty("og:url", CANONICAL_URL);
     setMetaByProperty("og:type", "website");
+    setMetaByProperty("og:image", ogImage);
 
     setMetaByName("twitter:card", "summary_large_image");
     setMetaByName("twitter:title", PAGE_TITLE);
     setMetaByName("twitter:description", PAGE_DESCRIPTION);
+    setMetaByName("twitter:image", ogImage);
   }, []);
 
   useEffect(() => {
@@ -162,23 +170,16 @@ export default function PriceDetail() {
     );
 
     targets.forEach((el) => observer.observe(el));
-
     return () => observer.disconnect();
   }, []);
 
   return (
     <section ref={rootRef} className="pd-root" aria-labelledby="price-heading">
-      <div className="pd-grain" aria-hidden="true" />
-
       <div className="pd-container">
         <div className="pd-side-line" aria-hidden="true" />
 
         <header className="pd-header pd-reveal">
-          <SectionSvgTitle
-            title="PRICE"
-            sub="PRICE / DETAIL"
-            className="pd-svg-title"
-          />
+          <SectionSvgTitle title="PRICE" sub="PRICE / DETAIL" className="pd-svg-title" />
 
           <h1 id="price-heading" className="pd-hidden-heading">
             料金の詳細と進め方
@@ -190,7 +191,7 @@ export default function PriceDetail() {
             はじめてのご相談でも、内容が固まっていなくても大丈夫です。
             <br />
             <span>目的・雰囲気・予算感をお聞きしながら</span>、
-            どのプランが合うかを一緒に整理していきます。
+            必要な範囲と優先順位を一緒に整理していきます。
             <br />
             料金は事前に総額をご案内したうえで進めています。
           </p>
@@ -242,15 +243,11 @@ export default function PriceDetail() {
             </li>
             <li>
               修正は回数と範囲を事前にご案内します。
-              <span className="pd-text-muted">
-                （1回＝まとめて1回分の修正指示）
-              </span>
+              <span className="pd-text-muted">（1回＝まとめて1回分の修正指示）</span>
             </li>
             <li>
               丁寧な仕上がりを優先しているため、
-              <span className="pd-text-accent">
-                急ぎのみを優先されるご依頼とは合わない場合があります。
-              </span>
+              <span className="pd-text-accent">急ぎのみを優先されるご依頼とは合わない場合があります。</span>
             </li>
           </TextBlock>
         </div>
@@ -267,9 +264,7 @@ export default function PriceDetail() {
               <span className="pd-text-muted">（個別補正はオプション）</span>
             </li>
             <li>参考URLやイメージ画像を共有いただくと、方向性を合わせやすくなります。</li>
-            <li className="pd-note">
-              ※ 参考サイトは方向性確認のみに使用します。デザインの模倣は行いません。
-            </li>
+            <li className="pd-note">※ 参考サイトは方向性確認のみに使用します。デザインの模倣は行いません。</li>
           </TextBlock>
         </div>
 
@@ -299,7 +294,7 @@ export default function PriceDetail() {
           <p className="pd-thanks">
             まだ内容が決まっていなくても、予算の目安だけ知りたい段階でも構いません。
             <br />
-            気軽にご連絡ください。要点はこちらで整理しながら進めます。
+            ご相談ください。要点はこちらで整理しながら進めます。
           </p>
 
           <Link to="/contact" className="pd-cta">
@@ -391,9 +386,9 @@ function MaintenanceCard() {
           <h3 className="pd-maintenance-name">Maintenance / Subscription</h3>
 
           <p className="pd-maintenance-detail">
-            公開後も、サイトの印象を保ちながら継続的に整えるための運用プランです。
+            公開後も、サイトの印象を保ちながら継続的に更新するための運用プランです。
             <strong>月管理は必須ではなく、必要な時だけの都度対応も可能</strong>
-            です。更新のたびに連絡する手間を減らしたい方に向いています。
+            です。
           </p>
         </div>
 
@@ -410,7 +405,6 @@ function MaintenanceCard() {
       <div className="pd-maintenance-cols">
         <div>
           <h4 className="pd-maintenance-col-title">月額に含まれる内容</h4>
-
           <ul className="pd-maintenance-list">
             {included.map((item) => (
               <li key={item}>{item}</li>
@@ -422,7 +416,6 @@ function MaintenanceCard() {
           <h4 className="pd-maintenance-col-title pd-maintenance-col-title--extra">
             別途ご相談となる内容
           </h4>
-
           <ul className="pd-maintenance-list pd-maintenance-list--extra">
             {extra.map((item) => (
               <li key={item}>{item}</li>

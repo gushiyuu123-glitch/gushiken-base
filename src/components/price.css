@@ -1083,3 +1083,14 @@
     --price-scale: 1 !important;
   }
 }
+/* price.css 追記 or 置換（好みで） */
+.price-card{
+  background: rgba(255,255,255,0.008);
+  box-shadow: 0 14px 40px rgba(0,0,0,0.18);
+}
+
+.price-card:hover,
+.price-card:focus-within{
+  --price-hover-y: 0px; /* 浮かせない */
+  box-shadow: 0 16px 46px rgba(0,0,0,0.22);
+}

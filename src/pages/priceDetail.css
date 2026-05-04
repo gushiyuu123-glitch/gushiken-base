@@ -1097,3 +1097,18 @@
     transform: none !important;
   }
 }
+/* =========================================
+   Minimalize: no "card lift"
+========================================= */
+.pd-plan-card:hover,
+.pd-plan-card:focus-within {
+  transform: none;
+}
+
+/* touch端末は hover を実質無効化 */
+@media (hover: none) and (pointer: coarse) {
+  .pd-plan-card:hover,
+  .pd-plan-card:focus-within {
+    transform: none;
+  }
+}
