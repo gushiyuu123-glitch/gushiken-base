@@ -75,6 +75,52 @@ subtitle: "世界観と設計力の“核”を示す代表作",
       ogImage: "https://gushikendesign.com/ogp/halo.png",
     },
   },
+  {
+  title: "HARE KARIYUSHI — Summer Wear EC",
+  slug: "HareKariyushiRoom",
+  desc: "涼感 × 端正 × EC導線。かりゆしウェアを“夏服”ではなく、価格帯まで整って見える一枚として設計したブランドEC。",
+  link: "https://hare-kariyushi.vercel.app/",
+  img: "/works/hare-kariyushi.webp",
+  isNew: true,
+  createdAt: "2026-05-06",
+  tags: [
+    "NEW",
+    "PICKUP",
+    "Okinawa",
+    "Kariyushi",
+    "Fashion",
+    "EC",
+    "Branding",
+    "Product",
+    "UI/UX",
+    "React",
+    "CSS Modules",
+    "PC/SP 完全分離"
+  ],
+
+  detail: {
+    concept:
+      "かりゆしウェアを、単なる夏服としてではなく“涼しく、きちんと見える一枚”として受け取らせることを目指したECサイト。商品写真を並べるだけではなく、画面の密度、文字の大きさ、画像の置き方、購入ボタン、カートUI、スクロールの流れまで統合し、Web上で服の価格帯と印象を引き上げる設計にした。沖縄らしさを強く押し出すのではなく、街でも仕事でも着られる端正さを軸に、商品価値の見え方そのものを整えた作品。",
+    tech: [
+      "React",
+      "Vite",
+      "CSS Modules",
+      "IntersectionObserver",
+      "Custom Cart UI",
+      "SEO / OGP",
+      "PC/SP 完全分離"
+    ]
+  },
+
+  seo: {
+    title: "HARE KARIYUSHI｜かりゆしウェアの価値を引き上げるECサイト｜GUSHIKEN DESIGN",
+    description:
+      "HARE KARIYUSHIは、かりゆしウェアを涼感と端正さのある一枚として見せるECサイト。写真、文字、UI、カート導線を統合し、Webデザインによって商品の価格帯と印象を引き上げることを目指した制作例。",
+    keywords:
+      "かりゆしウェア ECサイト, 沖縄 ファッションサイト, アパレルEC デザイン, 商品価値を高めるWebデザイン, React, CSS Modules, GUSHIKEN DESIGN",
+    ogImage: "https://gushikendesign.com/ogp/hare-kariyushi.png"
+  }
+},
         {
       title: "VELMONT — Luxury Auto Showroom",
       slug: "VelmontRoom",
