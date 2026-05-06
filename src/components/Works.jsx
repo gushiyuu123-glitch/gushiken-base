@@ -26,13 +26,14 @@ const FEATURED_WORKS = [
     size: "medium",
   },
   {
-    title: "VELMONT",
-    meta: "Luxury Auto / Trust",
-    href: "https://velmont-virid.vercel.app/",
-    imagePc: "/works/velmonte2.webp",
-    imageSp: "/works/velmonte2-sp.webp",
-    alt: "VELMONT｜高級車ショールームサイト制作（信頼感・高級感・導線設計）",
-    label: "VELMONT を開く",
+    title: "HARE",
+    meta: "Kariyushi EC / Okinawa",
+    href: "https://hare-kariyushi.vercel.app/",
+    // ✅ 画像名は変えない：works一覧で使ってるやつを流用
+    imagePc: "/works/hare-kariyushi.webp",
+    imageSp: "/works/hare-kariyushisp.webp",
+    alt: "HARE KARIYUSHI｜かりゆしECサイト制作（印象設計・購買導線・カートUI）",
+    label: "HARE KARIYUSHI を開く",
     size: "small",
   },
 ];
