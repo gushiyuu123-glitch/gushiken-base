@@ -327,16 +327,15 @@ export default function Contact() {
                 htmlFor="budget"
                 error={fieldErrors.budget}
               >
-                <Select id="budget" name="budget" required error={fieldErrors.budget}>
-                  <option value="" disabled>
-                    選択してください
-                  </option>
-                  <option value="under-60">〜6万円</option>
-                  <option value="under-150">〜15万円</option>
-                  <option value="under-300">〜30万円</option>
-                  <option value="over-300">30万円以上</option>
-                  <option value="undecided">未定・相談したい</option>
-                </Select>
+       <Select id="budget" name="budget" required error={fieldErrors.budget}>
+  <option value="" disabled>選択してください</option>
+
+  <option value="〜6万円">〜6万円</option>
+  <option value="〜15万円">〜15万円</option>
+  <option value="〜30万円">〜30万円</option>
+  <option value="30万円以上">30万円以上</option>
+  <option value="未定・相談したい">未定・相談したい</option>
+</Select>
               </FormField>
             </div>
 
