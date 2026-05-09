@@ -7,7 +7,18 @@ const dotenv = require("dotenv");
 dotenv.config();
 
 const SITE_URL = "https://gushikendesign.com";
+const TODAY = new Date().toISOString().split("T")[0];
 
+// ✅ news を sitemap に入れる上限（デフォ: 50）
+const NEWS_SITEMAP_LIMIT = Number.parseInt(
+  process.env.SITEMAP_NEWS_LIMIT || "50",
+  10
+);
+const NEWS_LIMIT = Number.isFinite(NEWS_SITEMAP_LIMIT) && NEWS_SITEMAP_LIMIT > 0
+  ? NEWS_SITEMAP_LIMIT
+  : 50;
+
+// microCMS env
 const SERVICE_DOMAIN =
   process.env.MICROCMS_SERVICE_DOMAIN ||
   process.env.VITE_MICROCMS_SERVICE_DOMAIN;
@@ -16,23 +27,12 @@ const API_KEY =
   process.env.MICROCMS_API_KEY ||
   process.env.VITE_MICROCMS_API_KEY;
 
-const TODAY = new Date().toISOString().split("T")[0];
-
-// ✅ sitemapに入れない系（noindex運用と整合）
-const ROOM_LIKE_RE = /(Room|Teaser|Intro)$/i;
-
-// ✅ news詳細を入れるなら上限（必要なら env で上書き）
-const NEWS_DETAIL_LIMIT = Number(
-  process.env.SITEMAP_NEWS_DETAIL_LIMIT ?? 30
-);
-
+// ---------------- utils ----------------
 function formatDate(dateString) {
   if (!dateString) return TODAY;
-
-  const date = new Date(dateString);
-  if (Number.isNaN(date.getTime())) return TODAY;
-
-  return date.toISOString().split("T")[0];
+  const d = new Date(dateString);
+  if (Number.isNaN(d.getTime())) return TODAY;
+  return d.toISOString().split("T")[0];
 }
 
 function escapeXml(value) {
@@ -56,7 +56,14 @@ function createUrlXml({ loc, lastmod }) {
   </url>`;
 }
 
-async function fetchAllNews() {
+// ✅ Room/Teaser/Intro は sitemap から除外（noindex 運用と整合）
+function isRoomLikeSlug(slug) {
+  if (!slug) return false;
+  return /Room$/i.test(slug) || /Teaser$/i.test(slug) || /Intro$/i.test(slug);
+}
+
+// ---------------- fetch news (limited) ----------------
+async function fetchLimitedNews() {
   if (!SERVICE_DOMAIN || !API_KEY) {
     console.warn("⚠️ microCMS env is missing. News URLs will be skipped.");
     return [];
@@ -64,39 +71,57 @@ async function fetchAllNews() {
 
   const client = axios.create({
     baseURL: `https://${SERVICE_DOMAIN}.microcms.io/api/v1`,
-    headers: {
-      "X-MICROCMS-API-KEY": API_KEY,
-    },
+    headers: { "X-MICROCMS-API-KEY": API_KEY },
     timeout: 10000,
   });
 
-  const limit = 100;
+  // microCMS は 100 までが安全
+  const pageSize = 100;
   let offset = 0;
-  let totalCount = 0;
-  let allContents = [];
 
-  do {
+  // まず totalCount を知りたいので 1回目で取得
+  const first = await client.get("/news", {
+    params: {
+      limit: Math.min(pageSize, NEWS_LIMIT),
+      offset,
+      orders: "-publishedAt",
+      fields: "id,publishedAt,updatedAt",
+    },
+  });
+
+  const data1 = first.data || {};
+  const totalCount = data1.totalCount || 0;
+
+  const target = Math.min(totalCount, NEWS_LIMIT);
+  let all = (data1.contents || []).slice(0, target);
+
+  offset += all.length;
+
+  while (offset < target) {
+    const remain = target - offset;
     const res = await client.get("/news", {
       params: {
-        limit,
+        limit: Math.min(pageSize, remain),
         offset,
         orders: "-publishedAt",
         fields: "id,publishedAt,updatedAt",
       },
     });
 
-    const data = res.data || {};
-    totalCount = data.totalCount || 0;
-    allContents = allContents.concat(data.contents || []);
-    offset += limit;
-  } while (offset < totalCount);
+    const d = res.data || {};
+    const chunk = d.contents || [];
+    all = all.concat(chunk);
+    offset += chunk.length;
 
-  return allContents;
+    if (chunk.length === 0) break;
+  }
+
+  return all;
 }
 
+// ---------------- works from worksData ----------------
 async function getWorkPages() {
   try {
-    // worksData.js が ESM でも .cjs から dynamic import で読める
     const mod = await import("../src/data/worksData.js");
     const worksData = Array.isArray(mod.worksData) ? mod.worksData : [];
 
@@ -105,8 +130,7 @@ async function getWorkPages() {
 
       return items
         .filter((item) => item?.slug)
-        // ✅ Room/Teaser/Intro は sitemap から外す
-        .filter((item) => !ROOM_LIKE_RE.test(String(item.slug)))
+        .filter((item) => !isRoomLikeSlug(item.slug)) // ✅ Room除外
         .map((item) => ({
           loc: `/works/${item.slug}`,
           lastmod:
@@ -123,8 +147,9 @@ async function getWorkPages() {
   }
 }
 
+// ---------------- generate sitemap ----------------
 async function generateSitemap() {
-  const newsItems = await fetchAllNews();
+  const newsItems = await fetchLimitedNews();
   const workPages = await getWorkPages();
 
   const latestNewsDate =
@@ -132,28 +157,24 @@ async function generateSitemap() {
       ? formatDate(newsItems[0].updatedAt || newsItems[0].publishedAt)
       : TODAY;
 
-  // ✅ sitemapで拾わせたい “骨格＋入口” だけを固定で載せる
   const staticPages = [
     { loc: "/", lastmod: TODAY },
     { loc: "/works", lastmod: TODAY },
 
-    // ✅ 入口（主戦場）を必ず入れる
+    // ✅ ブライダル入口を sitemap に入れる
     { loc: "/okinawa-bridal-website", lastmod: TODAY },
 
     { loc: "/price", lastmod: TODAY },
     { loc: "/contact", lastmod: TODAY },
     { loc: "/news", lastmod: latestNewsDate },
-
     { loc: "/terms", lastmod: TODAY },
     { loc: "/privacy", lastmod: TODAY },
     { loc: "/refund", lastmod: TODAY },
     { loc: "/legal", lastmod: TODAY },
   ];
 
-  // ✅ news詳細は上限つき（膨張を防ぐ）
   const newsPages = newsItems
     .filter((item) => item?.id)
-    .slice(0, Math.max(0, NEWS_DETAIL_LIMIT))
     .map((item) => ({
       loc: `/news/${item.id}`,
       lastmod: item.updatedAt || item.publishedAt || TODAY,
@@ -161,7 +182,7 @@ async function generateSitemap() {
 
   const allUrls = [...staticPages, ...workPages, ...newsPages];
 
-  // slug重複・PICK UP重複を除去
+  // slug重複・PICK UP重複などを除去
   const uniqueUrls = Array.from(
     new Map(allUrls.map((item) => [normalizePath(item.loc), item])).values()
   );
@@ -173,14 +194,13 @@ ${uniqueUrls.map(createUrlXml).join("\n")}
 `;
 
   const outputPath = path.resolve(process.cwd(), "public", "sitemap.xml");
-
   fs.mkdirSync(path.dirname(outputPath), { recursive: true });
   fs.writeFileSync(outputPath, xml, "utf-8");
 
   console.log(`✅ sitemap.xml generated: ${outputPath}`);
-  console.log(`📄 total: ${uniqueUrls.length}`);
-  console.log(`🖼️ works (non-room) count: ${workPages.length}`);
-  console.log(`📰 news detail count: ${newsPages.length} (limit=${NEWS_DETAIL_LIMIT})`);
+  console.log(`📄 total urls: ${uniqueUrls.length}`);
+  console.log(`🖼️ works included (room excluded): ${workPages.length}`);
+  console.log(`📰 news included (limit=${NEWS_LIMIT}): ${newsPages.length}`);
 }
 
 generateSitemap().catch((err) => {
