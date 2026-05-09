@@ -1,164 +1,303 @@
+import { useEffect } from "react";
 import styles from "./OkinawaBridalWebsite.module.css";
 import { Link } from "react-router-dom";
 
 export default function OkinawaBridalWebsite() {
+  useEffect(() => {
+    document.body.classList.add("bridal-entry");
+    return () => document.body.classList.remove("bridal-entry");
+  }, []);
+
+  const cover = "/works/vow-in-light-entry.webp";
+  const liveUrl = "https://vow-in-light.vercel.app/";
+
   return (
     <article className={styles.page}>
-      {/* =============================
-          Room（前室）
-          ============================= */}
-      <header className={`${styles.room} aq-fade`}>
-        <p className={styles.eyebrow}>WORKS — BRIDAL / LIGHT ATMOSPHERE</p>
+      {/* ── Hero ── */}
+      <header className={`${styles.hero} aq-fade`}>
+        <div className={styles.heroInner}>
+          <div className={styles.heroLeft}>
+            <p className={styles.eyebrow}>WORKS — BRIDAL &amp; PHOTOWEDDING / OKINAWA</p>
 
-        {/* SEOはこのH1で取る。見た目は“静かに”扱う */}
-        <h1 className={styles.h1}>
-          沖縄のブライダル・フォトウェディング向けホームページ制作
-        </h1>
+            {/* SEO H1（見た目は静かに） */}
+            <h1 className={styles.h1}>
+              沖縄のブライダル・フォトウェディング向け
+              <br />
+              ホームページ制作
+            </h1>
 
-        {/* 作品名はオブジェクトとして大きく見せる */}
-        <p className={styles.project}>Vow in Light</p>
-        <p className={styles.sub}>
-          ENTRY ROOM<span className={styles.dot}>•</span>
-          写真の価値を、サイトで安く見せないための前室。
-        </p>
+            {/* 作品名はオブジェクト（SVG） */}
+  <p className={styles.project}>
+  <img
+    className={styles.projectMark}
+    src="/typography/VowinLight.svg"
+    alt="Vow in Light"
+    loading="eager"
+  />
+  <span className={styles.projectText}>Vow in Light</span>
+</p>
 
-        <p className={styles.lede}>
-          プロダクト（写真）そのものを強く語る前に、
-          <br />
-          まずは「空気」と「順番」だけが残るように整えました。
-        </p>
+            <p className={styles.lede}>
+              写真は綺麗なのに、サイトで印象が落ちる。
+              <br />
+              そのギャップを、上質さと導線で埋めます。
+            </p>
 
-        <div className={styles.tags} aria-label="keywords">
-          <span>PRECISION</span>
-          <span>SILENCE</span>
-          <span>LIGHT</span>
-          <span>FLOW</span>
-        </div>
+            <div className={styles.tags} aria-label="keywords">
+              <span>BRIDAL</span>
+              <span>OKINAWA</span>
+              <span>PHOTO</span>
+              <span>FLOW</span>
+            </div>
+          </div>
 
-        <div className={styles.ctaRow}>
-          <a
-            className={styles.ctaPrimary}
-            href="https://vow-in-light.vercel.app/"
-            target="_blank"
-            rel="noreferrer"
-          >
-            ENTER Vow in Light <span aria-hidden="true">→</span>
-          </a>
+          <aside className={styles.heroRight} aria-label="Project preview">
+            <a className={styles.preview} href={liveUrl} target="_blank" rel="noreferrer">
+              <img className={styles.previewMark} src="/logo-gd-dark.png" alt="" aria-hidden="true" />
 
-          <Link className={styles.ctaGhost} to="/contact">
-            相談する <span aria-hidden="true">→</span>
-          </Link>
-        </div>
+              <img
+                className={styles.previewImg}
+                src={cover}
+                alt="Vow in Light — 沖縄フォトウェディングサイト制作事例"
+                loading="eager"
+                onError={(e) => {
+                  e.currentTarget.style.display = "none";
+                }}
+              />
 
-        <div className={styles.backRow}>
-          <Link className={styles.back} to="/works">
-            <span aria-hidden="true">←</span> BACK TO WORKS
-          </Link>
+              <span className={styles.previewCap}>
+                PREVIEW <span aria-hidden="true">→</span>
+              </span>
+            </a>
+
+            <div className={styles.ctaStack}>
+              <a className={styles.ctaPrimary} href={liveUrl} target="_blank" rel="noreferrer">
+                ENTER Vow in Light <span aria-hidden="true">→</span>
+              </a>
+              <Link className={styles.ctaGhost} to="/contact">
+                ブライダルサイトを相談する <span aria-hidden="true">→</span>
+              </Link>
+              <Link className={styles.back} to="/works">
+                <span aria-hidden="true">←</span> BACK TO WORKS
+              </Link>
+            </div>
+          </aside>
         </div>
       </header>
 
-      {/* =============================
-          SEO本文（依頼者語）
-          ============================= */}
-      <section className={`${styles.section} aq-fade`} aria-labelledby="sec-intro">
-        <h2 className={styles.h2} id="sec-intro">
-          写真は綺麗なのに、サイトで安く見える。そのギャップを埋める。
+      {/* ── PROBLEM ── */}
+      <section className={`${styles.section} aq-fade`} aria-labelledby="sec-gap">
+        <p className={styles.sectionLabel}>PROBLEM</p>
+        <h2 className={styles.h2} id="sec-gap">
+          写真は綺麗なのに、サイトで安く見える。
         </h2>
-
         <p className={styles.p}>
-          写真の力は、サイトで死ぬことがある。
-          <br />
-          余白がなく、フォントが安く、スマホで開いた瞬間に「ここで頼もう」という気持ちが消える。
-          <br />
-          Webサイトは、撮影の価値を伝える最後の舞台でもある。
+          撮影のクオリティが高くても、サイトを開いた瞬間に印象が落ちることがあります。
+          フォント・余白・情報の出し方で、同じ写真がまったく別物に見えるからです。
+        </p>
+        <p className={styles.p}>
+          沖縄のブライダル・フォトウェディングは比較されます。
+          <strong className={styles.strong}>「どこに頼むか」は、サイトの第一印象で決まる</strong>場面が増えています。
         </p>
       </section>
 
-      <section className={`${styles.section} aq-fade`} aria-labelledby="sec-worries">
-        <h2 className={styles.h2} id="sec-worries">
-          こういう悩みを持つ方に作っています
+      {/* ── WHO ── */}
+      <section className={`${styles.section} aq-fade`} aria-labelledby="sec-who">
+        <p className={styles.sectionLabel}>WHO THIS IS FOR</p>
+        <h2 className={styles.h2} id="sec-who">
+          こういう方のサイトを作っています
         </h2>
-        <ul className={styles.list}>
-          <li>写真は綺麗なのに、サイトで安っぽく見えてしまっている</li>
-          <li>世界観は伝わるが、「問い合わせ」に繋がらない</li>
-          <li>他社と並べたとき、比較で負けている気がする</li>
-          <li>スマホで見たとき、決め手になる何かが足りない</li>
+
+        <ul className={styles.lineList}>
+          {[
+            "写真は綺麗なのに、サイトで安っぽく見えてしまっている",
+            "世界観はあるのに、問い合わせに繋がらない",
+            "他社と並べたとき、比較で負けている気がする",
+            "スマホで見たとき、決め手になる何かが足りない",
+            "リニューアルしたいが、どこから手をつければいいか分からない",
+          ].map((t, i) => (
+            <li key={t} className={styles.lineItem}>
+              <span className={styles.lineNum}>{String(i + 1).padStart(2, "0")}</span>
+              <span className={styles.lineText}>{t}</span>
+            </li>
+          ))}
         </ul>
       </section>
 
-      <section className={`${styles.section} aq-fade`} aria-labelledby="sec-solution">
-        <h2 className={styles.h2} id="sec-solution">
-          解決のために、実はやることは多くない
+      {/* ── APPROACH ── */}
+      <section className={`${styles.section} aq-fade`} aria-labelledby="sec-approach">
+        <p className={styles.sectionLabel}>APPROACH</p>
+        <h2 className={styles.h2} id="sec-approach">
+          「上質に見せる」のに、やることは多くない。
         </h2>
+        <p className={styles.p}>
+          派手に飾るより、整える。迷わせる要素を減らし、伝える順番を揃える。
+          それだけで、写真の価値が正しく伝わります。
+        </p>
 
-        <p className={styles.p}>
-          「上質に見せる」は、金色にすることでも、装飾を増やすことでもない。
-        </p>
-        <p className={styles.p}>
-          情報の量を整え、余白で視線を誘導し、読む順番を設計する。
-          <br />
-          それだけで、同じ写真がまったく違って見える。
-        </p>
-        <p className={styles.p}>
-          「問い合わせを増やす」も、ボタンを増やすことではない。
-          <br />
-          迷う理由を一つずつ消していくと、自然に手が動く。
-        </p>
+        <div className={styles.approachGrid}>
+          {[
+            ["─ 01", "写真の選定と見せ方", "枚数より選定基準。1枚の重みで世界観が決まります。"],
+            ["─ 02", "情報密度と余白", "詰め込みすぎず、抜きすぎず。読み手が迷わない量に整えます。"],
+            ["─ 03", "スマホの視線設計", "問い合わせはスマホから。最初にスマホで成立させます。"],
+            ["─ 04", "問い合わせへの導線", "CTAを増やさない。自然に手が動く一本道を作ります。"],
+          ].map(([n, title, text]) => (
+            <div key={title} className={styles.approachItem}>
+              <span className={styles.approachNum}>{n}</span>
+              <h3 className={styles.approachTitle}>{title}</h3>
+              <p className={styles.approachText}>{text}</p>
+            </div>
+          ))}
+        </div>
       </section>
 
+      {/* ── CASE ── */}
       <section className={`${styles.section} aq-fade`} aria-labelledby="sec-case">
+        <p className={styles.sectionLabel}>CASE STUDY</p>
         <h2 className={styles.h2} id="sec-case">
-          制作事例：Vow in Light
+          制作事例：Vow in Light（沖縄 フォトウェディング）
         </h2>
 
-        <p className={styles.p}>
-          沖縄のフォトウェディングブランド「Vow in Light」のWebサイトを担当した。
-          <br />
-          依頼者の課題は「写真の世界観はある。でもサイトで伝わっていない」というものだった。
-        </p>
+        <div className={styles.caseBox}>
+          <div className={styles.caseMeta}>
+            <span>沖縄 / フォトウェディング</span>
+            <span>ブランドサイト + 予約導線</span>
+            <span>デザイン・実装</span>
+          </div>
 
-        <p className={styles.p}>
-          やったことは、写真の選定基準の整理、テキスト量の削減、スマホでの視線の流れの再設計。
-          <br />
-          結果として、「見た瞬間に頼みたくなる」と言ってもらえるサイトになった。
-        </p>
+          <p className={styles.p}>
+            課題は「写真の世界観はある。でもサイトで伝わっていない」。
+            そこで、写真の選び方・テキスト量・スマホの流れを整えました。
+          </p>
+          <p className={styles.p}>
+            伝えたいのは“情報”ではなく、“印象”。
+            見た瞬間に頼みたくなる空気を、サイト側で支えています。
+          </p>
+        </div>
 
- <a
-  className={styles.inlineLink}
-  href="https://vow-in-light.vercel.app/"
-  target="_blank"
-  rel="noreferrer"
->
-  → 制作詳細を見る <span aria-hidden="true">→</span>
-</a>
+        <a className={styles.inlineLink} href={liveUrl} target="_blank" rel="noreferrer">
+          Vow in Light を見る <span aria-hidden="true">→</span>
+        </a>
       </section>
 
+      {/* ── FAQ ── */}
+      <section className={`${styles.section} aq-fade`} aria-labelledby="sec-faq">
+        <p className={styles.sectionLabel}>FAQ</p>
+        <h2 className={styles.h2} id="sec-faq">
+          よくある質問
+        </h2>
+
+        <dl className={styles.faqList}>
+          {[
+            [
+              "沖縄のブライダル・フォトウェディング向けのホームページ制作は対応していますか？",
+              "はい。沖縄を拠点に、ブライダルサロン・フォトウェディングスタジオ・結婚式場向けのWebサイト制作を行っています。",
+            ],
+            [
+              "写真素材がない場合でも制作できますか？",
+              "ご相談ください。既存写真の整理から進める、撮影タイミングに合わせて仕上げる、どちらも対応できます。",
+            ],
+            [
+              "制作期間はどのくらいかかりますか？",
+              "内容によりますが通常4〜8週間です。素材が揃っているほど短縮できます。",
+            ],
+            [
+              "料金の目安を教えてください。",
+              "ページ数・素材の有無・機能で変わります。まずは状況を伺って、現実的なスコープで提案します。",
+            ],
+            [
+              "沖縄以外からも依頼できますか？",
+              "はい、全国対応しています。オンラインでのやり取りが中心です。",
+            ],
+          ].map(([q, a]) => (
+            <div key={q} className={styles.faqItem}>
+              <dt className={styles.faqQ}>{q}</dt>
+              <dd className={styles.faqA}>{a}</dd>
+            </div>
+          ))}
+        </dl>
+      </section>
+
+      {/* ── PROCESS ── */}
       <section className={`${styles.section} aq-fade`} aria-labelledby="sec-flow">
+        <p className={styles.sectionLabel}>PROCESS &amp; PRICE</p>
         <h2 className={styles.h2} id="sec-flow">
           進め方と料金の目安
         </h2>
 
-        <ul className={styles.flowList}>
-          <li>ヒアリング → 構成案 → デザイン → 実装 → 公開の順で進む</li>
-          <li>修正は2回まで含む（それ以上は都度相談）</li>
-          <li>納期は内容によるが、通常4〜8週間</li>
-          <li>料金は内容・ページ数・素材の有無によって変わるため、まず相談から</li>
-          <li>「いくらですか」は最初に聞いてもいい。答えられる範囲で正直に話す</li>
-        </ul>
+        <ol className={styles.flowSteps}>
+          {[
+            ["01", "ヒアリング・相談", "内容が固まっていない段階でも大丈夫です。方向性から整理します。"],
+            ["02", "構成案・デザイン", "写真と文章のトーンを揃え、迷わない導線を作ります。"],
+            ["03", "実装・確認", "修正は2回まで含みます。それ以上は都度ご相談。"],
+            ["04", "公開", "公開設定までサポートします。"],
+          ].map(([n, t, d]) => (
+            <li key={n} className={styles.flowStep}>
+              <span className={styles.flowNum}>{n}</span>
+              <div>
+                <strong className={styles.flowTitle}>{t}</strong>
+                <p className={styles.flowText}>{d}</p>
+              </div>
+            </li>
+          ))}
+        </ol>
 
         <div className={styles.bottomCta}>
           <p className={styles.bottomLead}>
-            沖縄のブライダル・フォトウェディング向けのサイト制作について、相談はこちらから。
+            沖縄のブライダル・フォトウェディング向けのサイト制作について、まずはご相談ください。
           </p>
           <Link className={styles.cta2} to="/contact">
             相談する <span aria-hidden="true">→</span>
           </Link>
-
           <p className={styles.note}>
-            ※ ブライダル“専門”を名乗るページではなく、写真商材を上質に見せて導線に落とすための入口です。
+            ※ ブライダル専門を名乗るページではありません。写真商材を上質に見せて導線に落とすための入口ページです。
           </p>
         </div>
       </section>
+      <script
+  type="application/ld+json"
+  dangerouslySetInnerHTML={{
+    __html: JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "沖縄のブライダル・フォトウェディング向けのホームページ制作は対応していますか？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "はい。沖縄を拠点に、ブライダルサロン・フォトウェディングスタジオ・結婚式場向けのWebサイト制作を行っています。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "写真素材がない場合でも制作できますか？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "ご相談ください。既存写真の整理から進める、撮影タイミングに合わせて仕上げる、どちらも対応できます。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "制作期間はどのくらいかかりますか？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "内容によりますが通常4〜8週間です。素材が揃っているほど短縮できます。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "料金の目安を教えてください。",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "ページ数・素材の有無・機能で変わります。まずは状況を伺って、現実的なスコープで提案します。"
+          }
+        }
+      ]
+    })
+  }}
+/>
+
     </article>
   );
 }
