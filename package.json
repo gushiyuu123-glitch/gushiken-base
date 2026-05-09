@@ -5,10 +5,10 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-  "prebuild": "node scripts/bump-sw-stamp.cjs && node scripts/generate-sitemap.cjs",
+    "prebuild": "node scripts/bump-sw-stamp.cjs && node scripts/generate-sitemap.cjs",
     "build": "vite build",
     "bump-sw": "node scripts/bump-sw-stamp.cjs",
-   "generate-sitemap": "node scripts/generate-sitemap.cjs",
+    "generate-sitemap": "node scripts/generate-sitemap.cjs",
     "check-no-touch": "node scripts/check-no-touch.cjs",
     "lint": "eslint .",
     "preview": "vite preview",
@@ -23,6 +23,7 @@
     "motion": "^12.38.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
+    "react-helmet-async": "^3.0.0",
     "react-router-dom": "^7.9.6",
     "sitemap": "^9.0.0"
   },

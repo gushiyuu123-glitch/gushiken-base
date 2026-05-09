@@ -1,11 +1,13 @@
 /* ============================================================================
    GUSHIKEN DESIGN Core Init v5
    FOUC Prevention / Ambient Glow / Stable SW Update / Dev Cache Clear
+   + Helmet (SEO head per route)
 =========================================================================== */
 
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
+import { HelmetProvider } from "react-helmet-async";
 import { Analytics } from "@vercel/analytics/react";
 
 import "./index.css";
@@ -52,10 +54,12 @@ if (document.readyState === "loading") {
 
 createRoot(rootEl).render(
   <StrictMode>
-    <BrowserRouter>
-      <App />
-      <Analytics />
-    </BrowserRouter>
+    <HelmetProvider>
+      <BrowserRouter>
+        <App />
+        <Analytics />
+      </BrowserRouter>
+    </HelmetProvider>
   </StrictMode>
 );
 

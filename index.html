@@ -6,12 +6,8 @@
   <!-- Viewport -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
 
-  <!-- Basic -->
+  <!-- Basic (non-SEO-fixed) -->
   <meta name="google" content="notranslate" />
-  <meta
-    name="robots"
-    content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
-  />
   <meta name="author" content="GUSHIKEN DESIGN" />
   <meta name="application-name" content="GUSHIKEN DESIGN" />
   <meta name="theme-color" content="#0b0b0b" />
@@ -20,70 +16,14 @@
   <meta name="format-detection" content="telephone=no, email=no, address=no" />
   <meta name="referrer" content="strict-origin-when-cross-origin" />
 
-  <!-- Canonical -->
-  <link rel="canonical" href="https://gushikendesign.com/" />
-
-  <!-- Title / Description -->
-  <title>GUSHIKEN DESIGN｜沖縄の上質なWebデザイン・ホームページ制作</title>
-
-  <!-- ✅ Claude案：差別化の一言を復活 -->
-  <meta
-    name="description"
-    content="商品・空間・サービスの印象を上質に伝えるWebデザイン。写真、余白、言葉、導線を整え、安っぽく見せず、価値が自然に伝わるWebサイトを制作します。"
-  />
-
-  <meta
-    name="keywords"
-    content="沖縄 Web制作,沖縄 Webデザイン,沖縄 ホームページ制作,沖縄 上質 Webデザイン,沖縄 高級感 ホームページ制作,ブランドサイト制作,店舗サイト制作,美容室 ホームページ制作,宿泊施設 ホームページ制作,GUSHIKEN DESIGN"
-  />
-
-  <!-- Domain Verify -->
+  <!-- Domain Verify (keep) -->
   <meta name="p:domain_verify" content="48dd0e90de53ad499404794fccf42239" />
   <meta
     name="google-site-verification"
     content="iG_ZrJCqMsY5q1LbjYgdRdGnKp4rr3RKKLk7D8HNZ1w"
   />
 
-  <!-- OGP -->
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://gushikendesign.com/" />
-  <meta property="og:site_name" content="GUSHIKEN DESIGN" />
-  <meta property="og:locale" content="ja_JP" />
-  <meta
-    property="og:title"
-    content="GUSHIKEN DESIGN｜沖縄の上質なWebデザイン・ホームページ制作"
-  />
-  <meta
-    property="og:description"
-    content="商品・空間・サービスの印象を上質に伝えるWebデザイン。写真、余白、言葉、導線を整え、安っぽく見せず、価値が自然に伝わるWebサイトを制作します。"
-  />
-  <meta property="og:image" content="https://gushikendesign.com/ogp-v3.png" />
-  <meta property="og:image:secure_url" content="https://gushikendesign.com/ogp-v3.png" />
-  <meta property="og:image:type" content="image/png" />
-  <meta property="og:image:width" content="1200" />
-  <meta property="og:image:height" content="630" />
-  <meta
-    property="og:image:alt"
-    content="GUSHIKEN DESIGN｜沖縄の上質なWebデザイン・ホームページ制作"
-  />
-
-  <!-- Twitter / X -->
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta
-    name="twitter:title"
-    content="GUSHIKEN DESIGN｜沖縄の上質なWebデザイン・ホームページ制作"
-  />
-  <meta
-    name="twitter:description"
-    content="商品・空間・サービスの印象を上質に伝えるWebデザイン。写真、余白、言葉、導線を整え、安っぽく見せず、価値が自然に伝わるWebサイトを制作します。"
-  />
-  <meta name="twitter:image" content="https://gushikendesign.com/ogp-v3.png" />
-  <meta
-    name="twitter:image:alt"
-    content="GUSHIKEN DESIGN｜沖縄の上質なWebデザイン・ホームページ制作"
-  />
-
-  <!-- Favicons -->
+  <!-- Favicons (keep) -->
   <link rel="icon" href="/favicon.ico" sizes="any" />
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
@@ -92,11 +32,14 @@
   <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png" />
   <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
 
-  <!-- PWA / Browser config -->
+  <!-- PWA / Browser config (keep) -->
   <link rel="manifest" href="/site.webmanifest" />
   <meta name="msapplication-config" content="/browserconfig.xml" />
 
-  <!-- FOUC prevention -->
+  <!-- Minimal fallback title (Helmetが上書きする) -->
+  <title>GUSHIKEN DESIGN</title>
+
+  <!-- FOUC prevention (keep) -->
   <style>
     html { background: #0b0b0b; }
     body { margin: 0; background: #0b0b0b; }
@@ -121,7 +64,7 @@
     }
   </style>
 
-  <!-- Google Analytics -->
+  <!-- Google Analytics (keep if you want GA) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-NM83YPOV4Q"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -130,7 +73,7 @@
     gtag("config", "G-NM83YPOV4Q");
   </script>
 
-  <!-- JSON-LD -->
+  <!-- JSON-LD (Organization only) : keep / remove WebPage node -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -145,29 +88,12 @@
         "publisher": { "@id": "https://gushikendesign.com/#organization" }
       },
       {
-        "@type": "WebPage",
-        "@id": "https://gushikendesign.com/#webpage",
-        "url": "https://gushikendesign.com/",
-        "name": "GUSHIKEN DESIGN｜沖縄の上質なWebデザイン・ホームページ制作",
-        "description": "商品・空間・サービスの印象を上質に伝えるWebデザイン。写真、余白、言葉、導線を整え、安っぽく見せず、価値が自然に伝わるWebサイトを制作します。",
-        "isPartOf": { "@id": "https://gushikendesign.com/#website" },
-        "about": { "@id": "https://gushikendesign.com/#organization" },
-        "primaryImageOfPage": {
-          "@type": "ImageObject",
-          "url": "https://gushikendesign.com/ogp-v3.png",
-          "width": 1200,
-          "height": 630
-        },
-        "inLanguage": "ja"
-      },
-      {
         "@type": "ProfessionalService",
         "@id": "https://gushikendesign.com/#organization",
         "name": "GUSHIKEN DESIGN",
         "url": "https://gushikendesign.com/",
         "logo": "https://gushikendesign.com/android-chrome-512x512.png",
         "image": "https://gushikendesign.com/ogp-v3.png",
-        "description": "商品・空間・サービスの印象を上質に伝えるWebデザイン。写真、余白、言葉、導線を整え、安っぽく見せず、価値が自然に伝わるWebサイトを制作します。",
         "founder": { "@id": "https://gushikendesign.com/#person" },
         "areaServed": [
           { "@type": "AdministrativeArea", "name": "沖縄県" },
@@ -201,10 +127,6 @@
 </head>
 
 <body>
-  <h1 class="visually-hidden">
-    GUSHIKEN DESIGN｜沖縄の上質なWebデザイン・ホームページ制作
-  </h1>
-
   <noscript>
     <p style="color:#fff;background:#0b0b0b;padding:16px;margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;">
       このサイトはJavaScriptを有効にすると表示されます。
@@ -215,29 +137,5 @@
 
   <!-- Vite entry -->
   <script type="module" src="/src/main.jsx"></script>
-
-  <!-- Root reveal failsafe -->
-  <script>
-    window.addEventListener("DOMContentLoaded", function () {
-      requestAnimationFrame(function () {
-        var root = document.getElementById("root");
-        if (root) root.classList.add("show");
-      });
-    });
-
-    window.setTimeout(function () {
-      var root = document.getElementById("root");
-      if (root) root.classList.add("show");
-    }, 1200);
-  </script>
-
-  <!-- Service Worker -->
-  <script type="module">
-    if (import.meta.env.PROD && "serviceWorker" in navigator) {
-      window.addEventListener("load", () => {
-        navigator.serviceWorker.register("/sw.js").catch(() => {});
-      });
-    }
-  </script>
 </body>
 </html>

@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react";
-import { Routes, Route, useLocation } from "react-router-dom";
+import { Routes, Route, useLocation, matchPath } from "react-router-dom";
 
+import Seo from "./components/Seo";
 
 import NavGlobal from "./components/NavGlobal";
 import Footer from "./components/FOOTER";
@@ -58,6 +59,7 @@ import Terms from "./pages/Terms";
 import Refund from "./pages/Refund";
 import Legal from "./pages/Legal";
 import Privacy from "./pages/Privacy";
+import OkinawaBridalWebsite from "./pages/OkinawaBridalWebsite";
 
 // News
 import NewsList from "./pages/NewsList";
@@ -67,18 +69,169 @@ import NewsDetail from "./pages/NewsDetail";
 import Layer0 from "./pages/Layer0";
 
 /* ============================================================================
+   SEO Bridge
+   - Routeごとに title/description/canonical/og:url を切り替える
+=========================================================================== */
+
+const SITE_NAME = "GUSHIKEN DESIGN";
+const BASE_TITLE = `${SITE_NAME}｜沖縄のWebデザイン・ホームページ制作`;
+const BASE_DESC =
+  "上質に見えて、読みやすい。沖縄のブライダル・宿泊・美容・EC向けに、世界観と導線を一貫して設計し、公開まで丁寧に制作します。";
+
+function humanizeSlug(slug = "") {
+  // noir-lux -> Noir Lux / NoahRoom -> Noah Room などを雑に人間化
+  const s = String(slug)
+    .replace(/[-_]+/g, " ")
+    .replace(/([a-z])([A-Z])/g, "$1 $2")
+    .trim();
+
+  if (!s) return "Work";
+  return s
+    .split(" ")
+    .map((w) => (w ? w[0].toUpperCase() + w.slice(1) : w))
+    .join(" ");
+}
+
+function buildWebPageJsonLd({ url, name, description }) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "@id": `${url}#webpage`,
+    url,
+    name,
+    description,
+    inLanguage: "ja",
+    isPartOf: { "@id": "https://gushikendesign.com/#website" },
+    about: { "@id": "https://gushikendesign.com/#organization" },
+  };
+}
+
+function SeoBridge() {
+  const { pathname } = useLocation();
+
+  // ---- base ----
+  let title = BASE_TITLE;
+  let description = BASE_DESC;
+  let path = pathname;
+  let noindex = false;
+  let ogType = "website";
+
+  // ---- static routes ----
+  if (pathname === "/") {
+    title = BASE_TITLE;
+    description = BASE_DESC;
+  }
+
+  if (pathname === "/works") {
+    title = `WORKS｜${BASE_TITLE}`;
+    description =
+      "制作したWebサイトの事例一覧。ブライダル・宿泊・美容・ECなど、世界観と導線を両立した設計で、価値がきちんと伝わる見せ方を制作しています。";
+  }
+
+  if (pathname === "/news") {
+    title = `NEWS｜${BASE_TITLE}`;
+    description = "制作の更新・設計の記録。作品の背景や判断の文脈を短く残しています。";
+  }
+
+  if (pathname === "/contact") {
+    title = `CONTACT｜${BASE_TITLE}`;
+    description =
+      "沖縄のホームページ制作・Webデザインの相談窓口。目的・必要な内容・素材の有無を元に、最適なスコープで提案します。";
+  }
+
+  if (pathname === "/price") {
+    title = `PRICE｜${BASE_TITLE}`;
+    description = "制作プランと料金の目安。低価格化ではなく、スコープの最適化で合わせます。";
+  }
+
+  // ✅ 別格入口（Room＋SEO併用の1枚）
+  if (pathname === "/okinawa-bridal-website") {
+    title = "沖縄のブライダル・フォトウェディング向けホームページ制作｜GUSHIKEN DESIGN";
+    description =
+      "写真は綺麗なのに、サイトで安く見える。そのギャップを埋めるのが仕事です。沖縄のブライダル・フォトウェディング・結婚式場向けに、世界観と問い合わせ導線を両立したWebサイトを制作します。";
+  }
+
+  if (pathname === "/terms") {
+    title = `TERMS｜${BASE_TITLE}`;
+    description = "利用規約。";
+  }
+
+  if (pathname === "/privacy") {
+    title = `PRIVACY｜${BASE_TITLE}`;
+    description = "プライバシーポリシー。";
+  }
+
+  if (pathname === "/legal") {
+    title = `LEGAL｜${BASE_TITLE}`;
+    description = "特定商取引法に基づく表記。";
+  }
+
+  if (pathname === "/refund") {
+    title = `REFUND｜${BASE_TITLE}`;
+    description = "返金ポリシー。";
+  }
+
+  // ---- dynamic routes ----
+  const workMatch = matchPath({ path: "/works/:slug", end: true }, pathname);
+  if (workMatch?.params?.slug) {
+    const slug = workMatch.params.slug;
+    const pretty = humanizeSlug(slug);
+
+    title = `${pretty}｜WORKS｜${SITE_NAME}`;
+    description =
+      "制作事例。世界観と導線を一貫して設計し、印象がきちんと伝わる見せ方を制作しています。";
+
+    // ✅ Room/Teaser/Intro は検索に出さない（でも follow は残す）
+    const isRoomLike =
+      /Room$/i.test(slug) || /Teaser$/i.test(slug) || /Intro$/i.test(slug);
+    if (isRoomLike) noindex = true;
+  }
+
+  const newsMatch = matchPath({ path: "/news/:id", end: true }, pathname);
+  if (newsMatch?.params?.id) {
+    title = `NEWS｜${SITE_NAME}`;
+    description = "更新記事。制作の背景や判断の文脈を短く残しています。";
+    ogType = "article";
+  }
+
+  // ---- experiments (noindex) ----
+  if (pathname === "/layer0") {
+    title = `Layer0｜${SITE_NAME}`;
+    description = "Experiment.";
+    noindex = true;
+  }
+
+  // JSON-LD（WebPage）だけはページごとに更新
+  const origin =
+    import.meta.env.VITE_SITE_ORIGIN ||
+    (typeof window !== "undefined" ? window.location.origin : "https://gushikendesign.com");
+  const url = `${origin}${path}`;
+
+  return (
+    <Seo
+      title={title}
+      description={description}
+      path={path}
+      noindex={noindex}
+      ogType={ogType}
+      jsonLd={buildWebPageJsonLd({ url, name: title, description })}
+    />
+  );
+}
+
+/* ============================================================================
    Layout
-   - HOME only: Nav
-   - Lower pages: NavGlobal
 =========================================================================== */
 
 function Layout() {
-
   return (
     <>
       <ScrollManager />
 
-   <NavGlobal />
+      {/* ✅ SEO head per route */}
+      <SeoBridge />
+
+      <NavGlobal />
 
       <main id="page-root">
         <Routes>
@@ -106,10 +259,7 @@ function Layout() {
           <Route path="/works/ActiveDays" element={<ActiveDays />} />
           <Route path="/works/FineOkinawa" element={<FineOkinawa />} />
           <Route path="/works/RyukaIntro" element={<RyukaIntro />} />
-          <Route
-            path="/works/OkinawaLightResortHotel"
-            element={<OkinawaLightResortHotel />}
-          />
+          <Route path="/works/OkinawaLightResortHotel" element={<OkinawaLightResortHotel />} />
           <Route path="/works/HorizonBlanc" element={<HorizonBlanc />} />
           <Route path="/works/TheCalmOkinawa" element={<TheCalmOkinawa />} />
           <Route path="/works/FlowOfTea" element={<FlowOfTea />} />
@@ -130,6 +280,9 @@ function Layout() {
           <Route path="/works/KisuiRoom" element={<KisuiRoom />} />
           <Route path="/works/OriginRoom" element={<OriginRoom />} />
           <Route path="/works/NoahRoom" element={<NoahRoom />} />
+
+          {/* ✅ 別格入口（worksを噛ませない） */}
+          <Route path="/okinawa-bridal-website" element={<OkinawaBridalWebsite />} />
 
           {/* Dynamic Works Detail */}
           <Route path="/works/:slug" element={<WorkDetail />} />
@@ -158,9 +311,7 @@ function Layout() {
 
 /* ============================================================================
    App
-   - Routing wrapper
    - aq-fade observer only
-   - Ambient Glow / SW / FOUC are handled in main.jsx
 =========================================================================== */
 
 export default function App() {
@@ -185,7 +336,6 @@ export default function App() {
       cleanupObserver();
 
       const els = Array.from(document.querySelectorAll(".aq-fade"));
-
       if (!els.length) return;
 
       if (prefersReducedMotion || !("IntersectionObserver" in window)) {
@@ -207,23 +357,13 @@ export default function App() {
             io.unobserve(el);
           });
         },
-        {
-          threshold: 0.14,
-          rootMargin: "0px 0px -10% 0px",
-        }
+        { threshold: 0.14, rootMargin: "0px 0px -10% 0px" }
       );
 
       els.forEach((el) => io.observe(el));
       observerRef.current = io;
     };
 
-    /*
-      requestAnimationFrame:
-      - ルート切替直後のDOM反映後に監視を張る
-
-      setTimeout:
-      - microCMS / 条件描画 / 画像ロード後に遅れて出る .aq-fade の保険
-    */
     rafRef.current = requestAnimationFrame(setupFade);
     timerRef.current = window.setTimeout(setupFade, 120);
 
