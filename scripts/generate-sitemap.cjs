@@ -18,6 +18,14 @@ const API_KEY =
 
 const TODAY = new Date().toISOString().split("T")[0];
 
+// ✅ sitemapに入れない系（noindex運用と整合）
+const ROOM_LIKE_RE = /(Room|Teaser|Intro)$/i;
+
+// ✅ news詳細を入れるなら上限（必要なら env で上書き）
+const NEWS_DETAIL_LIMIT = Number(
+  process.env.SITEMAP_NEWS_DETAIL_LIMIT ?? 30
+);
+
 function formatDate(dateString) {
   if (!dateString) return TODAY;
 
@@ -88,6 +96,7 @@ async function fetchAllNews() {
 
 async function getWorkPages() {
   try {
+    // worksData.js が ESM でも .cjs から dynamic import で読める
     const mod = await import("../src/data/worksData.js");
     const worksData = Array.isArray(mod.worksData) ? mod.worksData : [];
 
@@ -96,11 +105,14 @@ async function getWorkPages() {
 
       return items
         .filter((item) => item?.slug)
+        // ✅ Room/Teaser/Intro は sitemap から外す
+        .filter((item) => !ROOM_LIKE_RE.test(String(item.slug)))
         .map((item) => ({
           loc: `/works/${item.slug}`,
-          lastmod: item.createdAt && !item.createdAt.includes("XX")
-            ? item.createdAt
-            : TODAY,
+          lastmod:
+            item.createdAt && !String(item.createdAt).includes("XX")
+              ? item.createdAt
+              : TODAY,
         }));
     });
 
@@ -120,20 +132,28 @@ async function generateSitemap() {
       ? formatDate(newsItems[0].updatedAt || newsItems[0].publishedAt)
       : TODAY;
 
+  // ✅ sitemapで拾わせたい “骨格＋入口” だけを固定で載せる
   const staticPages = [
     { loc: "/", lastmod: TODAY },
     { loc: "/works", lastmod: TODAY },
+
+    // ✅ 入口（主戦場）を必ず入れる
+    { loc: "/okinawa-bridal-website", lastmod: TODAY },
+
     { loc: "/price", lastmod: TODAY },
     { loc: "/contact", lastmod: TODAY },
     { loc: "/news", lastmod: latestNewsDate },
+
     { loc: "/terms", lastmod: TODAY },
     { loc: "/privacy", lastmod: TODAY },
     { loc: "/refund", lastmod: TODAY },
     { loc: "/legal", lastmod: TODAY },
   ];
 
+  // ✅ news詳細は上限つき（膨張を防ぐ）
   const newsPages = newsItems
     .filter((item) => item?.id)
+    .slice(0, Math.max(0, NEWS_DETAIL_LIMIT))
     .map((item) => ({
       loc: `/news/${item.id}`,
       lastmod: item.updatedAt || item.publishedAt || TODAY,
@@ -158,9 +178,9 @@ ${uniqueUrls.map(createUrlXml).join("\n")}
   fs.writeFileSync(outputPath, xml, "utf-8");
 
   console.log(`✅ sitemap.xml generated: ${outputPath}`);
-  console.log(`📄 static/work/news total: ${uniqueUrls.length}`);
-  console.log(`🖼️ works count: ${workPages.length}`);
-  console.log(`📰 news count: ${newsItems.length}`);
+  console.log(`📄 total: ${uniqueUrls.length}`);
+  console.log(`🖼️ works (non-room) count: ${workPages.length}`);
+  console.log(`📰 news detail count: ${newsPages.length} (limit=${NEWS_DETAIL_LIMIT})`);
 }
 
 generateSitemap().catch((err) => {
