@@ -281,11 +281,14 @@ function Layout() {
           <Route path="/works/OriginRoom" element={<OriginRoom />} />
           <Route path="/works/NoahRoom" element={<NoahRoom />} />
 
-          {/* ✅ 別格入口（worksを噛ませない） */}
-          <Route path="/okinawa-bridal-website" element={<OkinawaBridalWebsite />} />
+ {/* ✅ Vow in Light 前室 */}
+<Route path="/works/vow-in-light" element={<OkinawaBridalWebsite />} />
 
-          {/* Dynamic Works Detail */}
-          <Route path="/works/:slug" element={<WorkDetail />} />
+{/* ✅ 別格入口（現状維持でOK） */}
+<Route path="/okinawa-bridal-website" element={<OkinawaBridalWebsite />} />
+
+{/* Dynamic Works Detail */}
+<Route path="/works/:slug" element={<WorkDetail />} />
 
           {/* Business Pages */}
           <Route path="/price" element={<PriceDetail />} />

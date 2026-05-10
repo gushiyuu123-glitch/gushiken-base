@@ -6,34 +6,37 @@ import "./works.css";
 
 const FEATURED_WORKS = [
   {
+    title: "Vow in Light",
+    meta: "Bridal / Photowedding / Okinawa",
+    href: "/works/vow-in-light", // ✅ 前室へ
+    internal: true,             // ✅ 内部遷移
+    rank: "flagship",           // ✅ 1番目だけ別格フラグ（CSSで額装）
+    imagePc: "/works/vow-in-light-entryhero.webp",
+    imageSp: "/works/vow-in-light-entryherosp.webp",
+    alt: "Vow in Light｜沖縄フォトウェディング向けサイト制作（前室）",
+    label: "Vow in Light（前室）を開く",
+    size: "large",
+  },
+  {
     title: "UMIKAJI",
     meta: "Awamori Brand / Okinawa",
     href: "https://umikaji-awamori.vercel.app/",
+    internal: false,
     imagePc: "/works/umikaji-pc2.webp",
     imageSp: "/works/umikaji-sp.webp",
     alt: "UMIKAJI AWAMORI｜泡盛ブランドサイト制作（沖縄・贈り物・高級感・世界観設計）",
     label: "UMIKAJI AWAMORI を開く",
-    size: "large",
+    size: "medium",
   },
   {
     title: "HALO",
     meta: "Home Projector / Night",
     href: "https://halo-one-iota.vercel.app/",
+    internal: false,
     imagePc: "/works/halo-pc.webp",
     imageSp: "/works/halo-sp.webp",
     alt: "HALO｜ホームプロジェクターのブランドサイト制作（夜の世界観・体験設計・スマホ最適化）",
     label: "HALO を開く",
-    size: "medium",
-  },
-  {
-    title: "HARE",
-    meta: "Kariyushi EC / Okinawa",
-    href: "https://hare-kariyushi.vercel.app/",
-    // ✅ 画像名は変えない：works一覧で使ってるやつを流用
-    imagePc: "/works/hare-kariyushi.webp",
-    imageSp: "/works/hare-kariyushisp.webp",
-    alt: "HARE KARIYUSHI｜かりゆしECサイト制作（印象設計・購買導線・カートUI）",
-    label: "HARE KARIYUSHI を開く",
     size: "small",
   },
 ];
@@ -84,9 +87,7 @@ export default function Works() {
       return () => cleanups.forEach((cleanup) => cleanup());
     }
 
-    const reduceMotion = window.matchMedia?.(
-      "(prefers-reduced-motion: reduce)"
-    )?.matches;
+    const reduceMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches;
 
     if (reduceMotion) {
       revealItems.forEach((item) => item.classList.add("is-visible"));
@@ -130,11 +131,7 @@ export default function Works() {
     <section id="works" ref={worksRef} className="works-section">
       <div className="works-container">
         {/* HEADER */}
-        <div
-          className="works-header aq-fade"
-          data-reveal
-          data-reveal-delay="0"
-        >
+        <div className="works-header aq-fade" data-reveal data-reveal-delay="0">
           <SectionSvgTitle title="WORKS" sub="SELECTED WORKS" count="03" />
 
           <p className="works-lead">
@@ -156,59 +153,75 @@ export default function Works() {
           </div>
 
           <div className="works-grid" aria-label="代表作（抜粋）">
-            {FEATURED_WORKS.map((work, index) => (
-              <a
-                key={work.title}
-                href={work.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={`work-card work-card-reveal work-card-${work.size}`}
-                aria-label={work.label}
-                data-reveal
-                data-reveal-delay={String([0, 80, 120][index] ?? 0)}
-              >
-                <span className="work-image-wrap" aria-hidden="true">
-                  <picture>
-                    <source
-                      media="(max-width: 767px)"
-                      srcSet={work.imageSp || work.imagePc}
-                    />
-                    <img
-                      src={work.imagePc}
-                      alt=""
-                      loading={index === 0 ? "eager" : "lazy"}
-                      fetchPriority={index === 0 ? "high" : "auto"}
-                      decoding="async"
-                      draggable="false"
-                    />
-                  </picture>
-                </span>
-
-                <span className="work-veil" aria-hidden="true" />
-
-                <span className="work-text">
-                  <span className="work-number" aria-hidden="true">
-                    {String(index + 1).padStart(2, "0")}
+            {FEATURED_WORKS.map((work, index) => {
+              const CardInner = (
+                <>
+                  <span className="work-image-wrap" aria-hidden="true">
+                    <picture>
+                      <source media="(max-width: 767px)" srcSet={work.imageSp || work.imagePc} />
+                      <img
+                        src={work.imagePc}
+                        alt=""
+                        loading={index === 0 ? "eager" : "lazy"}
+                        fetchPriority={index === 0 ? "high" : "auto"}
+                        decoding="async"
+                        draggable="false"
+                      />
+                    </picture>
                   </span>
 
-                  <span className="work-copy">
-                    <span className="work-name">{work.title}</span>
-                    <span className="work-meta">{work.meta}</span>
-                  </span>
-                </span>
+                  <span className="work-veil" aria-hidden="true" />
 
-                <span className="work-line" aria-hidden="true" />
-              </a>
-            ))}
+                  <span className="work-text">
+                    <span className="work-number" aria-hidden="true">
+                      {String(index + 1).padStart(2, "0")}
+                    </span>
+
+                    <span className="work-copy">
+                      <span className="work-name">{work.title}</span>
+                      <span className="work-meta">{work.meta}</span>
+                    </span>
+                  </span>
+
+                  <span className="work-line" aria-hidden="true" />
+                </>
+              );
+
+              const commonProps = {
+                className: `work-card work-card-reveal work-card-${work.size}`,
+                "aria-label": work.label,
+                "data-reveal": true,
+                "data-reveal-delay": String([0, 80, 120][index] ?? 0),
+                "data-rank": work.rank || "",
+              };
+
+              // ✅ 前室だけ内部遷移（同一タブ）
+              if (work.internal) {
+                return (
+                  <Link key={work.title} to={work.href} {...commonProps}>
+                    {CardInner}
+                  </Link>
+                );
+              }
+
+              // ✅ 外部は別タブ
+              return (
+                <a
+                  key={work.title}
+                  href={work.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  {...commonProps}
+                >
+                  {CardInner}
+                </a>
+              );
+            })}
           </div>
         </div>
 
         {/* VIEW ALL */}
-        <div
-          className="works-viewall aq-fade"
-          data-reveal
-          data-reveal-delay="360"
-        >
+        <div className="works-viewall aq-fade" data-reveal data-reveal-delay="360">
           <Link to="/works" className="viewall-btn" aria-label="制作例を一覧で見る">
             <span>VIEW ALL WORKS</span>
             <span aria-hidden="true">→</span>

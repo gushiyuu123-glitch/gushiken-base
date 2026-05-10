@@ -825,3 +825,83 @@
     object-position: var(--work-object-position-sp, center center);
   }
 }
+/* =========================
+   01 FLAGSHIP (Only #1)
+   - card臭禁止
+   - 額装/角/番号で格を作る
+========================= */
+.work-card[data-rank="flagship"]{
+  position: relative;
+  border-radius: 14px;         /* 既存より少しだけ上品に */
+  overflow: hidden;
+}
+
+/* PCだけ“全幅の門”にする（SPの横スワイプ崩壊を避ける） */
+@media (min-width: 768px){
+  .work-card[data-rank="flagship"]{
+    grid-column: 1 / -1;
+    min-height: clamp(380px, 34vw, 520px);
+  }
+}
+
+/* 旗艦は veil を薄くして、線で勝つ（暗さで勝たない） */
+.work-card[data-rank="flagship"] .work-veil{
+  opacity: .52;  /* ←既存より薄くしたい意図 */
+}
+
+/* 額装：内側にもう一枚“フレーム”を作る */
+.work-card[data-rank="flagship"]::before{
+  content:"";
+  position:absolute;
+  inset: clamp(12px, 1.2vw, 18px);
+  border-radius: 6px;
+  border: 1px solid rgba(255,255,255,.22);
+  pointer-events:none;
+  z-index: 3;
+}
+
+/* 角：編集の気配（主張しないコーナーマーク） */
+.work-card[data-rank="flagship"]::after{
+  content:"";
+  position:absolute;
+  inset: clamp(12px, 1.2vw, 18px);
+  border-radius: 6px;
+  pointer-events:none;
+  z-index: 3;
+  background:
+    linear-gradient(rgba(255,255,255,.34), rgba(255,255,255,0)) left top / 44px 1px no-repeat,
+    linear-gradient(rgba(255,255,255,.34), rgba(255,255,255,0)) left top / 1px 44px no-repeat,
+    linear-gradient(rgba(255,255,255,.34), rgba(255,255,255,0)) right top / 44px 1px no-repeat,
+    linear-gradient(rgba(255,255,255,.34), rgba(255,255,255,0)) right top / 1px 44px no-repeat,
+    linear-gradient(rgba(255,255,255,.34), rgba(255,255,255,0)) left bottom / 44px 1px no-repeat,
+    linear-gradient(rgba(255,255,255,.34), rgba(255,255,255,0)) left bottom / 1px 44px no-repeat,
+    linear-gradient(rgba(255,255,255,.34), rgba(255,255,255,0)) right bottom / 44px 1px no-repeat,
+    linear-gradient(rgba(255,255,255,.34), rgba(255,255,255,0)) right bottom / 1px 44px no-repeat;
+  opacity: .55;
+}
+
+/* 番号を“王の刻印”に：サイズと密度だけ変える */
+.work-card[data-rank="flagship"] .work-number{
+  font-size: clamp(18px, 1.6vw, 22px);
+  letter-spacing: .18em;
+  opacity: .92;
+}
+
+/* テキストブロックの行間を少しだけ“余裕”へ */
+.work-card[data-rank="flagship"] .work-meta{
+  opacity: .92;
+  letter-spacing: .06em;
+}
+
+/* 旗艦だけ line を“少し長く・少し強く” */
+.work-card[data-rank="flagship"] .work-line{
+  opacity: .72;
+}
+
+/* reduced-motion を尊重 */
+@media (prefers-reduced-motion: reduce){
+  .work-card[data-rank="flagship"]::before,
+  .work-card[data-rank="flagship"]::after{
+    transition: none !important;
+  }
+}
