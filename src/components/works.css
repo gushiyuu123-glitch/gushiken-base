@@ -831,8 +831,7 @@
    - 額装/角/番号で格を作る
 ========================= */
 .work-card[data-rank="flagship"]{
-  position: relative;
-  border-radius: 14px;         /* 既存より少しだけ上品に */
+  position: relative;    /* 既存より少しだけ上品に */
   overflow: hidden;
 }
 
@@ -854,7 +853,6 @@
   content:"";
   position:absolute;
   inset: clamp(12px, 1.2vw, 18px);
-  border-radius: 6px;
   border: 1px solid rgba(255,255,255,.22);
   pointer-events:none;
   z-index: 3;
@@ -865,7 +863,6 @@
   content:"";
   position:absolute;
   inset: clamp(12px, 1.2vw, 18px);
-  border-radius: 6px;
   pointer-events:none;
   z-index: 3;
   background:
