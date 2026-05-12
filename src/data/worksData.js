@@ -1668,42 +1668,7 @@ subtitle: "世界観と設計力の“核”を示す代表作",
       }
     },
 
-    /* ==========================================================
-        FINE — Okinawa Edition
-    ========================================================== */
-    {
-      title: "FINE — Okinawa Edition",
-      slug: "FineOkinawa",
 
-      desc: "40代からの穏やかな出会い。\n安心感を優先した大人向けUI。",
-      link: "https://www.fine-okinawa.com/",
-      img: "/works/fine.webp",
-
-      isNew: false,
-      createdAt: null,
-
-      tags: [
-        "安心感", "穏やか", "白", "柔らかい光",
-        "Real Project", "Matching",
-        "Smartphone"
-      ],
-
-      detail: {
-        concept:
-          "“安心感 × 柔らかさ”を軸に、情報圧を落とした大人向けUI。余白と柔らかい光の階調で、落ち着いたサービス世界観を設計した。",
-        tech: ["Next.js（元サイト仕様）", "Responsive"]
-      },
-
-      seo: {
-        title:
-          "FINE — 沖縄の大人向けマッチングサービスUI｜安心感×柔らかい光｜GUSHIKEN DESIGN",
-        description:
-          "40代からの穏やかな出会いをテーマに、安心感・柔らかい光・余白を中心に設計した大人向けマッチングサービスサイト。",
-        keywords:
-          "マッチングサービスLP, 大人向けデザイン, 柔らかい光UI, 安心感UI, GUSHIKEN DESIGN",
-        ogImage: "https://gushikendesign.com/ogp/fine.png"
-      }
-    }
   ]
 },
 
@@ -1715,7 +1680,120 @@ subtitle: "世界観と設計力の“核”を示す代表作",
   subtitle: "光・影・静寂をテーマにしたアート表現",
   items: [
     // ✅ MEISHIKI（アートサイト枠：ORIGINの次に配置）
-{
+
+          // ✅ ORIGIN（別格・時間軸の外）
+      {
+        title: "ORIGIN — The Source",
+        slug: "OriginRoom",
+        desc: "世界観の原点。\nGUSHIKEN DESIGN の思想と美意識が生まれる場所。",
+        link: "https://origin-gray.vercel.app/", // ←URL差し替え
+        img: "/works/origin2.webp", // ←画像差し替え
+
+        // ✅ 別格フラグ（UIで特別扱いする）
+        isOrigin: true,
+        isFeatured: true, // 任意：カードを大きく/強調
+        createdAt: null,  // 時間軸の外
+        isNew: false,
+
+        tags: ["ORIGIN", "NEW", "Manifesto", "Worldview", "Art", "Silence"],
+
+        detail: {
+          concept:
+            "作品ではなく“核”。世界観・構造・美意識の発生源として、GUSHIKEN DESIGN のOSを可視化した原点ページ。",
+          tech: ["React", "Vite", "Tailwind", "GSAP"]
+        },
+
+        seo: {
+          title: "ORIGIN｜世界観の原点｜GUSHIKEN DESIGN",
+          description:
+            "ORIGIN はGUSHIKEN DESIGNの世界観が生まれる発生源。静けさ・余白・光・構造の思想を“作品ではなく核”として提示する。",
+          keywords:
+            "ORIGIN, 世界観, 思想, 余白, 静寂, アートサイト, GUSHIKEN DESIGN",
+          ogImage: "https://gushikendesign.com/ogp/origin.png"
+        }
+      },
+          // ✅ TRUTH / EDITION（ARTの1番目）
+    {
+      title: "TRUTH / EDITION — ISSUE 00",
+      slug: "TruthEdition",
+      desc:
+        "モノクロの編集アーカイブ。\n" +
+        "余計な説明は増やさず、記録だけを置く。",
+      link: "https://truth-edition.vercel.app/",
+      img: "/works/truth-edition.webp",
+      isNew: true,
+      createdAt: "2026-05-12",
+      tags: [
+        "NEW",
+        "Art",
+        "Fashion",
+        "Monochrome",
+        "Editorial",
+        "Archive",
+        "Silence",
+        "Typography",
+        "ISSUE 00",
+      ],
+      detail: {
+        concept:
+          "“服を見せる”より“服を記録する”を選んだ編集アーカイブ。言葉の量を削り、写真と余白とタイポだけで成立させた。",
+        tech: ["React", "Vite", "CSS Modules", "GSAP", "IntersectionObserver"],
+      },
+      seo: {
+        title:
+          "TRUTH / EDITION｜モノクロ編集アーカイブ ISSUE 00｜GUSHIKEN DESIGN",
+        description:
+          "Monochrome editorial archive. 個人制作。余計な説明は増やさず、記録だけを置く。",
+        keywords:
+          "モノクロ ファッションサイト, 編集 アーカイブ, 余白, タイポグラフィ, 世界観デザイン, GUSHIKEN DESIGN",
+        ogImage: "https://truth-edition.vercel.app/ogp.png",
+      },
+    },
+    {
+  title: "NOAH — SF Web Chronicle",
+  slug: "NoahRoom",
+
+  desc: "愛 × AI × 残響。\n3シーズンで構成した、神話化していくSF Web作品。",
+  link: "/works/NoahRoom",
+  img: "/works/noah-main.webp",
+
+  isNew: true,
+  createdAt: "2026-04-11",
+
+  tags: [
+    "NEW",
+    "Art",
+    "SF",
+    "AI",
+    "Story",
+    "Worldview",
+    "Web Experience",
+    "3 Seasons"
+  ],
+
+  detail: {
+    concept:
+      "孤独な少年アラタと人工知能NOAHの出会いから始まり、愛・喪失・崩壊・継承へと進んでいく3シーズン構成のSF作品。文章・ビジュアル・Web体験を一体化させ、物語そのものを“触れられる作品”として再構築した。",
+    tech: [
+      "React",
+      "Vite",
+      "Tailwind",
+      "GSAP",
+      "IntersectionObserver",
+      "PC/SP 完全分離"
+    ]
+  },
+
+  seo: {
+    title: "NOAH｜愛とAIの境界を描く3シーズン構成のSF Web作品｜GUSHIKEN DESIGN",
+    description:
+      "NOAHは、孤独な少年と人工知能の出会いから始まり、愛・喪失・崩壊・継承へと進んでいく3シーズン構成のSF Web作品。物語とWeb体験を一体化させたアート寄りの代表作。",
+    keywords:
+      "NOAH, SF作品, AI作品, Web作品, 物語サイト, 世界観デザイン, GUSHIKEN DESIGN",
+    ogImage: "https://gushikendesign.com/ogp/noah.png"
+  }
+},
+    {
   title: "MEISHIKI — 命式メモ",
   slug: "MeishikiRoom",
 
@@ -1770,37 +1848,7 @@ subtitle: "世界観と設計力の“核”を示す代表作",
     ogImage: "https://meishiki-rose.vercel.app/ogp.png",
   },
 },
-          // ✅ ORIGIN（別格・時間軸の外）
-      {
-        title: "ORIGIN — The Source",
-        slug: "OriginRoom",
-        desc: "世界観の原点。\nGUSHIKEN DESIGN の思想と美意識が生まれる場所。",
-        link: "https://origin-gray.vercel.app/", // ←URL差し替え
-        img: "/works/origin2.webp", // ←画像差し替え
 
-        // ✅ 別格フラグ（UIで特別扱いする）
-        isOrigin: true,
-        isFeatured: true, // 任意：カードを大きく/強調
-        createdAt: null,  // 時間軸の外
-        isNew: false,
-
-        tags: ["ORIGIN", "NEW", "Manifesto", "Worldview", "Art", "Silence"],
-
-        detail: {
-          concept:
-            "作品ではなく“核”。世界観・構造・美意識の発生源として、GUSHIKEN DESIGN のOSを可視化した原点ページ。",
-          tech: ["React", "Vite", "Tailwind", "GSAP"]
-        },
-
-        seo: {
-          title: "ORIGIN｜世界観の原点｜GUSHIKEN DESIGN",
-          description:
-            "ORIGIN はGUSHIKEN DESIGNの世界観が生まれる発生源。静けさ・余白・光・構造の思想を“作品ではなく核”として提示する。",
-          keywords:
-            "ORIGIN, 世界観, 思想, 余白, 静寂, アートサイト, GUSHIKEN DESIGN",
-          ogImage: "https://gushikendesign.com/ogp/origin.png"
-        }
-      },
 {
   title: "SINGULARITY LAB — AI Research Experience",
   slug: "SingularityLab",
@@ -1846,50 +1894,7 @@ subtitle: "世界観と設計力の“核”を示す代表作",
     ogImage: "https://gushikendesign.com/ogp/singularity-lab.png"
   }
 },
-{
-  title: "NOAH — SF Web Chronicle",
-  slug: "NoahRoom",
 
-  desc: "愛 × AI × 残響。\n3シーズンで構成した、神話化していくSF Web作品。",
-  link: "/works/NoahRoom",
-  img: "/works/noah-main.webp",
-
-  isNew: true,
-  createdAt: "2026-04-11",
-
-  tags: [
-    "NEW",
-    "Art",
-    "SF",
-    "AI",
-    "Story",
-    "Worldview",
-    "Web Experience",
-    "3 Seasons"
-  ],
-
-  detail: {
-    concept:
-      "孤独な少年アラタと人工知能NOAHの出会いから始まり、愛・喪失・崩壊・継承へと進んでいく3シーズン構成のSF作品。文章・ビジュアル・Web体験を一体化させ、物語そのものを“触れられる作品”として再構築した。",
-    tech: [
-      "React",
-      "Vite",
-      "Tailwind",
-      "GSAP",
-      "IntersectionObserver",
-      "PC/SP 完全分離"
-    ]
-  },
-
-  seo: {
-    title: "NOAH｜愛とAIの境界を描く3シーズン構成のSF Web作品｜GUSHIKEN DESIGN",
-    description:
-      "NOAHは、孤独な少年と人工知能の出会いから始まり、愛・喪失・崩壊・継承へと進んでいく3シーズン構成のSF Web作品。物語とWeb体験を一体化させたアート寄りの代表作。",
-    keywords:
-      "NOAH, SF作品, AI作品, Web作品, 物語サイト, 世界観デザイン, GUSHIKEN DESIGN",
-    ogImage: "https://gushikendesign.com/ogp/noah.png"
-  }
-},
 {
   title: "GLASS ROOM — Shards & Words",
   slug: "GlassRoom",
