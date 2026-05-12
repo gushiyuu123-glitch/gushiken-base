@@ -11,6 +11,49 @@ subtitle: "世界観と設計力の“核”を示す代表作",
   accent: true,
   items: [
     {
+  title: "Vow in Light — Okinawa Wedding",
+  slug: "vow-in-light",
+  desc: "沖縄の光に、ふたりの誓いを預ける。ヴェールと静けさの膜で、記念日の時間を整えたブライダルLP。",
+  link: "https://vow-in-light.vercel.app/", // TODO: 実URLに差し替え
+  img: "/works/vow-in-light-entryhero.webp",          // TODO: works用画像を配置して差し替え
+  isNew: true,
+  createdAt: "2026-05-12",
+  tags: [
+    "NEW",
+    "PICKUP",
+    "Okinawa",
+    "Wedding",
+    "Bridal",
+    "Light",
+    "Veil",
+    "Quiet Luxury",
+    "UI/UX",
+    "PC/SP 完全分離"
+  ],
+
+  detail: {
+    concept:
+      "花柄やテンプレ結婚式感に寄せず、光とヴェールの“膜”、写真の重心、余白、文字の密度を揃えて、記念日が静かに残る体験として組み上げたブライダルLP。ページ全体を一つの空気として成立させることを優先した。",
+    tech: [
+      "React",
+      "Vite",
+      "CSS Modules",
+      "GSAP",
+      "IntersectionObserver",
+      "PC/SP 完全分離"
+    ]
+  },
+
+  seo: {
+    title: "Vow in Light｜沖縄ウェディングの光と静けさを設計したブライダルLP｜GUSHIKEN DESIGN",
+    description:
+      "Vow in Lightは、沖縄の光と静けさを“記念日として残す体験”に翻訳したブライダルLP。ヴェールの膜、写真の重心、余白、導線を統合し、世界観と選びやすさを両立した制作例。",
+    keywords:
+      "沖縄 ウェディング LP, ブライダルサイト, 沖縄 前撮り, 静かな高級感, 余白デザイン, 世界観デザイン, GUSHIKEN DESIGN",
+    ogImage: "https://gushikendesign.com/ogp/vow-in-light.png" // TODO: 必要なら用意
+  }
+},
+    {
   title: "UMIKAJI — Okinawa Awamori Brand",
   slug: "UmikajiRoom",
   desc: "沖縄 × 海風 × 泡盛。伝統を、静かな高級感と余白で再構築したブランドサイト。",
