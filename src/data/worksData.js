@@ -169,7 +169,7 @@ subtitle: "世界観と設計力の“核”を示す代表作",
       slug: "VelmontRoom",
       desc: "静かな信頼感 × 精度 × 高級感。比較し、納得し、選ぶまでの体験ごと整えた高級車サイト。",
       link: "https://velmont-virid.vercel.app/",
-      img: "/works/velmonte22.webp",
+      img: "/works/velmonte222.webp",
       isNew: true,
       createdAt: "2026-04-13",
       tags: [
