@@ -200,19 +200,11 @@ export default function WorksList() {
             return (
               <div key={`${block.category}-${blockIndex}`}>
                 {block.items.some((item) => item.isOrigin) && (
-                  <div className="mb-20 text-center md:mb-24">
-                    <p className="mb-5 text-[0.7rem] tracking-[0.42em] text-white/40">
-                      — ORIGIN —
-                    </p>
-
-                    <p className="mx-auto max-w-[620px] text-[0.92rem] leading-[1.95] text-white/52">
-                      偉人たちの視点や本質を、
-                      Webという形で静かに再構築したシリーズです。
-                      <br />
-                      ORIGIN は、その思考を
-                      “デザインの起点” として整理した場所でもあります。
-                    </p>
-                  </div>
+   <div className="mb-20 text-center md:mb-24">
+  <p className="text-[0.7rem] tracking-[0.42em] text-white/40">
+    — ORIGINALITY —
+  </p>
+</div>
                 )}
 
                 <Category
