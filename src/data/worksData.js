@@ -1382,6 +1382,48 @@ subtitle: "世界観と設計力の“核”を示す代表作",
   category: "FOOD / FURNITURE / BRAND",
   subtitle: "飲食・家具・ブランドUIに最適化した世界観設計",
   items: [
+        /* ==========================================================
+        SORAOTO — Piano Private Lesson
+    ========================================================== */
+    {
+      title: "SORAOTO — Piano Private Lesson",
+      slug: "Soraoto",
+
+      desc: "空 × 音 × 指名制。\n時間帯で空気が変わる、ピアノ個人レッスンのブランドサイト。",
+      link: "https://soraoto-delta.vercel.app/", // ← あなたの本番URLに合わせて必要なら修正
+      img: "/works/soraoto.webp",          // ← 画像パスを合わせて
+
+      isNew: true,
+      createdAt: "2026-05-14",
+
+      tags: [
+        "NEW",
+        "Music",
+        "Branding",
+        "Appointment-only",
+        "Time",
+        "Editorial UI",
+        "Okinawa",
+        "Motion"
+      ],
+
+      detail: {
+        concept:
+          "“空の時間”を体験として渡すために、写真・余白・タイポ・導線を一枚絵の密度で統合。指名制・予約制の信頼感を削らず、温度だけを残して設計したブランドサイト。",
+        tech: ["React", "Vite", "CSS Modules", "IntersectionObserver", "GSAP"]
+      },
+
+      seo: {
+        title:
+          "SORAOTO｜ピアノ個人レッスンのブランドサイト｜GUSHIKEN DESIGN",
+        description:
+          "SORAOTO は指名制・予約制のピアノ個人レッスンを、空気と時間の体験として設計したブランドサイト。余白・写真・導線を統合し、安心して申し込める構成に整理。",
+        keywords:
+          "ピアノ教室, 個人レッスン, 指名制, 予約制, ブランドサイト, UIデザイン, 沖縄, GUSHIKEN DESIGN",
+        ogImage:
+          "https://gushikendesign.com/ogp/soraoto.png"
+      }
+    },
     /* ==========================================================
         RÉSONANCE — Restaurant
     ========================================================== */
