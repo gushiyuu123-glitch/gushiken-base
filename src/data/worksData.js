@@ -10,6 +10,39 @@ export const worksData = [
 subtitle: "世界観と設計力の“核”を示す代表作",
   accent: true,
   items: [
+       // ✅ 01：KOU（PICK UP 1番）
+    {
+      title: "KOU RYUI — Ryukyu Costume Rental",
+      slug: "KouRyuiRoom",
+      desc: "那覇・国際通りで、“迷わず予約できる状態”を先に作った琉球衣装サイト。体験（写真）と記憶（ロゴ）を同時に立てる。",
+      link: "https://kouryui.vercel.app/",
+      img: "/works/kouryui.webp", // ←ここは実ファイルに合わせる
+      isNew: true,
+      createdAt: "2026-05-16",
+      tags: [
+        "NEW",
+        "PICKUP",
+        "Okinawa",
+        "Naha",
+        "Ryukyu Costume",
+        "Travel",
+        "UI/UX",
+        "PC/SP 完全分離",
+      ],
+      detail: {
+        concept:
+          "旅行中の迷い（料金/手ぶら/当日/場所/流れ）を増やさず、必要な情報を“使う順番”に揃えて予約まで落とす。見栄えより『決められる状態』を最優先に設計。",
+        tech: ["React", "Vite", "CSS Modules", "GSAP", "IntersectionObserver", "PC/SP 完全分離"],
+      },
+      seo: {
+        title: "KOU RYUI｜迷わず予約できる琉球衣装サイト｜GUSHIKEN DESIGN",
+        description:
+          "那覇・国際通りエリアの琉球衣装レンタル体験を想定し、旅行中でも迷わず予約まで進める順番で情報を設計したコンセプトサイト。",
+        keywords:
+          "那覇 琉球衣装, 国際通り, 着物レンタル, 予約導線, UI/UX, 沖縄 Web制作, GUSHIKEN DESIGN",
+        ogImage: "https://gushikendesign.com/ogp/kou-ryui.png", // 任意
+      },
+    },
     {
   title: "Vow in Light — Okinawa Wedding",
   slug: "vow-in-light",
