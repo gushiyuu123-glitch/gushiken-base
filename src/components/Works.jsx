@@ -5,25 +5,28 @@ import SectionSvgTitle from "../components/SectionSvgTitle";
 import "./works.css";
 
 const FEATURED_WORKS = [
-  {
-    title: "Vow in Light",
-    meta: "Bridal / Photowedding / Okinawa",
-    href: "/works/vow-in-light", // ✅ 前室へ
-    internal: true,             // ✅ 内部遷移
-    rank: "flagship",           // ✅ 1番目だけ別格フラグ（CSSで額装）
-    imagePc: "/works/vow-in-light-entryhero.webp",
-    imageSp: "/works/vow-in-light-entryherosp.webp",
-    alt: "Vow in Light｜沖縄フォトウェディング向けサイト制作（前室）",
-    label: "Vow in Light（前室）を開く",
-    size: "large",
-  },
+{
+  title: "Vow in Light",
+  meta: "Bridal / Photowedding / Okinawa",
+  href: "https://vow-in-light.vercel.app/", // ✅ 改行なし
+  internal: false, // ✅ 外部直行
+  rank: "flagship",
+  imagePc: "/works/vow-in-light-entryhero.webp",
+  imageSp: "/works/vow-in-light-entryherosp.webp",
+  alt: "Vow in Light｜沖縄フォトウェディング向けサイト",
+  label: "Vow in Light を開く",
+  size: "large",
+
+  // （任意）前室を残すなら“裏リンク用”に別フィールド
+  entryHref: "/works/vow-in-light",
+},
   {
     title: "KOU RYUI",
     meta: "Ryukyu Costume / Naha / Okinawa",
     href: "https://kouryui.vercel.app/",
     internal: false,
     imagePc: "/works/kouryui.webp",
-    imageSp: "/works/kouryuisp.webp",
+    imageSp: "/works/kouryui1sp.webp",
     alt: "KOU RYUI｜那覇・国際通りエリアの琉球衣装コンセプトサイト（迷わず予約できる導線）",
     label: "KOU RYUI を開く",
     size: "medium",

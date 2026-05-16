@@ -13,29 +13,29 @@ export default function OkinawaBridalWebsite() {
 
   return (
     <article className={styles.page}>
+
       {/* ── Hero ── */}
       <header className={`${styles.hero} aq-fade`}>
         <div className={styles.heroInner}>
           <div className={styles.heroLeft}>
-            <p className={styles.eyebrow}>WORKS — BRIDAL &amp; PHOTOWEDDING / OKINAWA</p>
+            <p className={styles.eyebrow}>
+              Works — Bridal &amp; Photowedding / Okinawa
+            </p>
 
             {/* SEO H1（見た目は静かに） */}
             <h1 className={styles.h1}>
-              沖縄のブライダル・フォトウェディング向け
-              <br />
-              ホームページ制作
+              沖縄のブライダル・フォトウェディング向けホームページ制作
             </h1>
 
-            {/* 作品名はオブジェクト（SVG） */}
-  <p className={styles.project}>
-  <img
-    className={styles.projectMark}
-    src="/typography/VowinLight.svg"
-    alt="Vow in Light"
-    loading="eager"
-  />
-  <span className={styles.projectText}>Vow in Light</span>
-</p>
+            <p className={styles.project}>
+              <img
+                className={styles.projectMark}
+                src="/typography/VowinLight.svg"
+                alt="Vow in Light"
+                loading="eager"
+              />
+              <span className={styles.projectText}>Vow in Light</span>
+            </p>
 
             <p className={styles.lede}>
               写真は綺麗なのに、サイトで印象が落ちる。
@@ -44,17 +44,28 @@ export default function OkinawaBridalWebsite() {
             </p>
 
             <div className={styles.tags} aria-label="keywords">
-              <span>BRIDAL</span>
-              <span>OKINAWA</span>
-              <span>PHOTO</span>
-              <span>FLOW</span>
+              <span>Bridal</span>
+              <span>Okinawa</span>
+              <span>Photo</span>
+              <span>Flow</span>
             </div>
           </div>
 
+          {/* ✅ プレビュー ＋ 相談CTAの1本のみ。戻るは最下部。 */}
           <aside className={styles.heroRight} aria-label="Project preview">
-            <a className={styles.preview} href={liveUrl} target="_blank" rel="noreferrer">
-              <img className={styles.previewMark} src="/logo-gd-dark.png" alt="" aria-hidden="true" />
-
+            <a
+              className={styles.preview}
+              href={liveUrl}
+              target="_blank"
+              rel="noreferrer"
+              aria-label="Vow in Light を開く"
+            >
+              <img
+                className={styles.previewMark}
+                src="/logo-gd-dark.png"
+                alt=""
+                aria-hidden="true"
+              />
               <img
                 className={styles.previewImg}
                 src={cover}
@@ -64,30 +75,28 @@ export default function OkinawaBridalWebsite() {
                   e.currentTarget.style.display = "none";
                 }}
               />
-
               <span className={styles.previewCap}>
-                PREVIEW <span aria-hidden="true">→</span>
+                Preview <span aria-hidden="true">→</span>
               </span>
             </a>
 
-            <div className={styles.ctaStack}>
-              <a className={styles.ctaPrimary} href={liveUrl} target="_blank" rel="noreferrer">
-                ENTER Vow in Light <span aria-hidden="true">→</span>
-              </a>
-              <Link className={styles.ctaGhost} to="/contact">
-                ブライダルサイトを相談する <span aria-hidden="true">→</span>
-              </Link>
-              <Link className={styles.back} to="/works">
-                <span aria-hidden="true">←</span> BACK TO WORKS
-              </Link>
-            </div>
+            <a
+              className={styles.ctaPrimary}
+              href={liveUrl}
+              target="_blank"
+              rel="noreferrer"
+            >
+                     
+          Vow in Light を見る <span aria-hidden="true">→</span>
+   
+            </a>
           </aside>
         </div>
       </header>
 
       {/* ── PROBLEM ── */}
       <section className={`${styles.section} aq-fade`} aria-labelledby="sec-gap">
-        <p className={styles.sectionLabel}>PROBLEM</p>
+        <p className={styles.sectionLabel}>Problem</p>
         <h2 className={styles.h2} id="sec-gap">
           写真は綺麗なのに、サイトで安く見える。
         </h2>
@@ -97,17 +106,19 @@ export default function OkinawaBridalWebsite() {
         </p>
         <p className={styles.p}>
           沖縄のブライダル・フォトウェディングは比較されます。
-          <strong className={styles.strong}>「どこに頼むか」は、サイトの第一印象で決まる</strong>場面が増えています。
+          <strong className={styles.strong}>
+            「どこに頼むか」は、サイトの第一印象で決まる
+          </strong>
+          場面が増えています。
         </p>
       </section>
 
       {/* ── WHO ── */}
       <section className={`${styles.section} aq-fade`} aria-labelledby="sec-who">
-        <p className={styles.sectionLabel}>WHO THIS IS FOR</p>
+        <p className={styles.sectionLabel}>Who this is for</p>
         <h2 className={styles.h2} id="sec-who">
           こういう方のサイトを作っています
         </h2>
-
         <ul className={styles.lineList}>
           {[
             "写真は綺麗なのに、サイトで安っぽく見えてしまっている",
@@ -126,7 +137,7 @@ export default function OkinawaBridalWebsite() {
 
       {/* ── APPROACH ── */}
       <section className={`${styles.section} aq-fade`} aria-labelledby="sec-approach">
-        <p className={styles.sectionLabel}>APPROACH</p>
+        <p className={styles.sectionLabel}>Approach</p>
         <h2 className={styles.h2} id="sec-approach">
           「上質に見せる」のに、やることは多くない。
         </h2>
@@ -134,7 +145,6 @@ export default function OkinawaBridalWebsite() {
           派手に飾るより、整える。迷わせる要素を減らし、伝える順番を揃える。
           それだけで、写真の価値が正しく伝わります。
         </p>
-
         <div className={styles.approachGrid}>
           {[
             ["─ 01", "写真の選定と見せ方", "枚数より選定基準。1枚の重みで世界観が決まります。"],
@@ -153,31 +163,26 @@ export default function OkinawaBridalWebsite() {
 
       {/* ── CASE ── */}
       <section className={`${styles.section} aq-fade`} aria-labelledby="sec-case">
-        <p className={styles.sectionLabel}>CASE STUDY</p>
+        <p className={styles.sectionLabel}>Case study</p>
         <h2 className={styles.h2} id="sec-case">
           制作事例：Vow in Light（沖縄 フォトウェディング）
         </h2>
-
         <div className={styles.caseBox}>
           <div className={styles.caseMeta}>
             <span>沖縄 / フォトウェディング</span>
             <span>ブランドサイト + 予約導線</span>
             <span>デザイン・実装</span>
           </div>
-
           <p className={styles.p}>
             課題は「写真の世界観はある。でもサイトで伝わっていない」。
-            そこで、写真の選び方・テキスト量・スマホの流れを整えました。
+            写真の選び方・テキスト量・スマホの流れを整えました。
           </p>
           <p className={styles.p}>
-            伝えたいのは“情報”ではなく、“印象”。
+            伝えたいのは"情報"ではなく、"印象"。
             見た瞬間に頼みたくなる空気を、サイト側で支えています。
           </p>
         </div>
 
-        <a className={styles.inlineLink} href={liveUrl} target="_blank" rel="noreferrer">
-          Vow in Light を見る <span aria-hidden="true">→</span>
-        </a>
       </section>
 
       {/* ── FAQ ── */}
@@ -186,7 +191,6 @@ export default function OkinawaBridalWebsite() {
         <h2 className={styles.h2} id="sec-faq">
           よくある質問
         </h2>
-
         <dl className={styles.faqList}>
           {[
             [
@@ -220,11 +224,10 @@ export default function OkinawaBridalWebsite() {
 
       {/* ── PROCESS ── */}
       <section className={`${styles.section} aq-fade`} aria-labelledby="sec-flow">
-        <p className={styles.sectionLabel}>PROCESS &amp; PRICE</p>
+        <p className={styles.sectionLabel}>Process &amp; Price</p>
         <h2 className={styles.h2} id="sec-flow">
           進め方と料金の目安
         </h2>
-
         <ol className={styles.flowSteps}>
           {[
             ["01", "ヒアリング・相談", "内容が固まっていない段階でも大丈夫です。方向性から整理します。"],
@@ -242,61 +245,24 @@ export default function OkinawaBridalWebsite() {
           ))}
         </ol>
 
+        {/* ✅ ページ最下部：テキストリンクのみ。ボタンなし。戻るもここ。 */}
         <div className={styles.bottomCta}>
           <p className={styles.bottomLead}>
             沖縄のブライダル・フォトウェディング向けのサイト制作について、まずはご相談ください。
           </p>
-          <Link className={styles.cta2} to="/contact">
-            相談する <span aria-hidden="true">→</span>
+          <Link className={styles.ctaConsult} to="/contact">
+            ブライダルサイトを相談する <span aria-hidden="true">→</span>
           </Link>
           <p className={styles.note}>
             ※ ブライダル専門を名乗るページではありません。写真商材を上質に見せて導線に落とすための入口ページです。
           </p>
+          <div className={styles.footerRow}>
+            <Link className={styles.back} to="/works">
+              <span aria-hidden="true">←</span> Back to works
+            </Link>
+          </div>
         </div>
       </section>
-      <script
-  type="application/ld+json"
-  dangerouslySetInnerHTML={{
-    __html: JSON.stringify({
-      "@context": "https://schema.org",
-      "@type": "FAQPage",
-      "mainEntity": [
-        {
-          "@type": "Question",
-          "name": "沖縄のブライダル・フォトウェディング向けのホームページ制作は対応していますか？",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "はい。沖縄を拠点に、ブライダルサロン・フォトウェディングスタジオ・結婚式場向けのWebサイト制作を行っています。"
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "写真素材がない場合でも制作できますか？",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "ご相談ください。既存写真の整理から進める、撮影タイミングに合わせて仕上げる、どちらも対応できます。"
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "制作期間はどのくらいかかりますか？",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "内容によりますが通常4〜8週間です。素材が揃っているほど短縮できます。"
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "料金の目安を教えてください。",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "ページ数・素材の有無・機能で変わります。まずは状況を伺って、現実的なスコープで提案します。"
-          }
-        }
-      ]
-    })
-  }}
-/>
 
     </article>
   );

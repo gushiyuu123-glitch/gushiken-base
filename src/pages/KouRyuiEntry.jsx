@@ -1,74 +1,70 @@
 // src/pages/KouRyuiEntry.jsx
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import styles from "./KouRyuiEntry.module.css";
 
 const SITE_URL = "https://kouryui.vercel.app/";
-
-// ここは public 配下の実ファイル名に合わせて差し替えOK
-const HERO_PC = "/works/kou-ryui-entryhero.webp";
-const HERO_SP = "/works/kou-ryui-entryherosp.webp";
+const HERO_PC = "/works/kouryui.webp";
+const HERO_SP = "/works/kouryui1sp.webp";
 
 export default function KouRyuiEntry() {
+  useEffect(() => {
+    document.body.classList.add("kou-entry");
+    return () => document.body.classList.remove("kou-entry");
+  }, []);
+
   return (
     <article className={styles.page}>
-      {/* HERO */}
-      <header className={`${styles.hero} aq-fade`}>
-        <div className={styles.heroFrame}>
-          <picture>
-            <source media="(max-width: 880px)" srcSet={HERO_SP} />
-            <img className={styles.heroImg} src={HERO_PC} alt="" />
-          </picture>
+      {/* STAGE */}
+      <header className={`${styles.stage} aq-fade`}>
+        <div className={styles.stageInner}>
+          <div className={styles.heroFrame}>
+            <picture>
+              <source media="(max-width: 880px)" srcSet={HERO_SP} />
+              <img
+                className={styles.heroImg}
+                src={HERO_PC}
+                alt="那覇・国際通りの琉球衣装体験を想定したキービジュアル"
+              />
+            </picture>
 
-          <div className={styles.heroVeil} aria-hidden="true" />
-          <div className={styles.heroInk} aria-hidden="true" />
-        </div>
-
-        <div className={styles.heroCopy}>
-          <p className={styles.kicker}>CONCEPT SITE</p>
-
-          <h1 className={styles.h1}>
-            那覇・国際通りで、
-            <br />
-            迷わず予約できる
-            <br />
-            琉球衣装サイト。
-          </h1>
-
-          <p className={styles.lead}>
-            KOU RYUI（紅琉衣）は「見栄え」より先に、
-            <br />
-            旅行中の迷いが消える順番を設計した入口です。
-          </p>
-
-          <div className={styles.meta}>
-            <span>着付け込み</span>
-            <span>手ぶらOK</span>
-            <span>当日相談可</span>
-            <span>那覇・国際通り</span>
+            <div className={styles.heroVeil} aria-hidden="true" />
+            <div className={styles.heroInk} aria-hidden="true" />
           </div>
 
-          <div className={styles.actions}>
-            <a
-              className={styles.primary}
-              href={SITE_URL}
-              target="_blank"
-              rel="noreferrer"
-            >
-              サイトを見る
-              <span className={styles.arrow} aria-hidden="true">→</span>
-            </a>
+          <div className={styles.heroCopy}>
+            <p className={styles.kicker}>CONCEPT SITE</p>
 
-            <Link className={styles.secondary} to="/works">
-              WORKSへ戻る
-            </Link>
+            <h1 className={styles.h1}>
+              那覇・国際通りで、
+              <br />
+              迷わず予約できる
+              <br />
+              琉球衣装サイト。
+            </h1>
+
+            <p className={styles.lead}>
+              KOU RYUI（紅琉衣）は「見栄え」より先に、
+              <br />
+              旅行中の迷いが消える順番を設計した入口です。
+            </p>
+
+            <div className={styles.meta} aria-label="条件">
+              <span>着付け込み</span>
+              <span>手ぶらOK</span>
+              <span>当日相談可</span>
+              <span>那覇・国際通り</span>
+            </div>
           </div>
         </div>
+
+        <div className={styles.stageFade} aria-hidden="true" />
       </header>
 
-      {/* BODY */}
-      <section className={styles.body}>
-        <div className={`${styles.block} aq-fade`}>
-          <h2 className={styles.h2}>狙い</h2>
+      {/* PAPER */}
+      <main className={styles.body}>
+        <section className={`${styles.block} aq-fade`} aria-labelledby="kou-aim">
+          <h2 id="kou-aim" className={styles.h2}>狙い</h2>
           <p className={styles.p}>
             旅行中は調べるほど、選択肢と不安が増える。
             <br />
@@ -78,10 +74,10 @@ export default function KouRyuiEntry() {
             <br />
             だからKOU RYUIは、必要な情報を“使う順番”に揃えた。
           </p>
-        </div>
+        </section>
 
-        <div className={`${styles.block} aq-fade`}>
-          <h2 className={styles.h2}>やったことは3つ</h2>
+        <section className={`${styles.block} aq-fade`} aria-labelledby="kou-3">
+          <h2 id="kou-3" className={styles.h2}>やったことは3つ</h2>
 
           <div className={styles.list}>
             <div className={styles.item}>
@@ -118,10 +114,10 @@ export default function KouRyuiEntry() {
               </div>
             </div>
           </div>
-        </div>
+        </section>
 
-        <div className={`${styles.block} aq-fade`}>
-          <h2 className={styles.h2}>想定ユーザー</h2>
+        <section className={`${styles.block} aq-fade`} aria-labelledby="kou-user">
+          <h2 id="kou-user" className={styles.h2}>想定ユーザー</h2>
           <p className={styles.p}>
             「旅行中に、一枠だけ印象に残る体験を入れたい」人。
             <br />
@@ -134,15 +130,17 @@ export default function KouRyuiEntry() {
             <p className={styles.noteLabel}>制作担当範囲</p>
             <p className={styles.noteText}>企画 / 構成 / デザイン / 実装（コンセプトサイト）</p>
           </div>
-        </div>
+        </section>
 
         <div className={`${styles.bottom} aq-fade`}>
-          <a className={styles.primaryBottom} href={SITE_URL} target="_blank" rel="noreferrer">
-            KOU RYUI を開く
-            <span className={styles.arrow} aria-hidden="true">→</span>
-          </a>
+          <div className={styles.actions}>
+            <Link className={styles.secondary} to="/works">WORKSへ戻る</Link>
+            <a className={styles.primary} href={SITE_URL} target="_blank" rel="noreferrer">
+              KOU RYUI を開く <span className={styles.arrow} aria-hidden="true">→</span>
+            </a>
+          </div>
         </div>
-      </section>
+      </main>
     </article>
   );
 }

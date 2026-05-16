@@ -1,6 +1,5 @@
 import { useEffect, useRef } from "react";
-import { Routes, Route, useLocation, matchPath } from "react-router-dom";
-import { Navigate } from "react-router-dom";
+import { Routes, Route, useLocation, matchPath, Navigate } from "react-router-dom";
 import Seo from "./components/Seo";
 
 import NavGlobal from "./components/NavGlobal";
@@ -61,6 +60,7 @@ import Legal from "./pages/Legal";
 import Privacy from "./pages/Privacy";
 import OkinawaBridalWebsite from "./pages/OkinawaBridalWebsite";
 import KouRyuiEntry from "./pages/KouRyuiEntry";
+
 // News
 import NewsList from "./pages/NewsList";
 import NewsDetail from "./pages/NewsDetail";
@@ -78,8 +78,46 @@ const BASE_TITLE = `${SITE_NAME}｜沖縄のWebデザイン・ホームページ
 const BASE_DESC =
   "上質に見えて、読みやすい。沖縄のブライダル・宿泊・美容・EC向けに、世界観と導線を一貫して設計し、公開まで丁寧に制作します。";
 
+// ✅ 個別作品のSEO（slugで上書き）
+const WORK_SEO = {
+  "kou-ryui": {
+    title:
+      "那覇・国際通りの琉球衣装（着物）レンタルを迷わず予約できるサイト｜紅琉衣（KOU RYUI）｜GUSHIKEN DESIGN",
+    description:
+      "着付け込み・手ぶらOKの琉球衣装（着物）体験を、那覇・国際通りエリアで“迷わず決められる順番”に再設計したコンセプトサイト。旅行中の不安（料金/持ち物/当日/場所）を先回りで消し、予約まで迷子にさせない導線を作った。",
+  },
+  "vow-in-light": {
+    title: "沖縄フォトウェディングのための世界観サイト｜Vow in Light｜GUSHIKEN DESIGN",
+    description:
+      "沖縄の光を軸に、写真・言葉・導線を一枚絵として統合したコンセプトサイト。結婚式/フォトウェディング/記念日の“期待→安心→決断”を崩さずに進める設計で、体験とブランドの記憶を同時に立てた。",
+  },
+};
+
+// ✅ /okinawa-bridal-website 用 FAQ（HeadにFAQPageを刺す）
+const BRIDAL_FAQ = [
+  {
+    q: "沖縄のブライダル・フォトウェディング向けのホームページ制作は対応していますか？",
+    a: "はい。沖縄を拠点に、ブライダルサロン・フォトウェディングスタジオ・結婚式場向けのWebサイト制作を行っています。",
+  },
+  {
+    q: "写真素材がない場合でも制作できますか？",
+    a: "ご相談ください。既存写真の整理から進める、撮影タイミングに合わせて仕上げる、どちらも対応できます。",
+  },
+  {
+    q: "制作期間はどのくらいかかりますか？",
+    a: "内容によりますが通常4〜8週間です。素材が揃っているほど短縮できます。",
+  },
+  {
+    q: "料金の目安を教えてください。",
+    a: "ページ数・素材の有無・機能で変わります。まずは状況を伺って、現実的なスコープで提案します。",
+  },
+  {
+    q: "沖縄以外からも依頼できますか？",
+    a: "はい、全国対応しています。オンラインでのやり取りが中心です。",
+  },
+];
+
 function humanizeSlug(slug = "") {
-  // noir-lux -> Noir Lux / NoahRoom -> Noah Room などを雑に人間化
   const s = String(slug)
     .replace(/[-_]+/g, " ")
     .replace(/([a-z])([A-Z])/g, "$1 $2")
@@ -106,6 +144,18 @@ function buildWebPageJsonLd({ url, name, description }) {
   };
 }
 
+function buildFaqJsonLd(faq) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faq.map(({ q, a }) => ({
+      "@type": "Question",
+      name: q,
+      acceptedAnswer: { "@type": "Answer", text: a },
+    })),
+  };
+}
+
 function SeoBridge() {
   const { pathname } = useLocation();
 
@@ -116,16 +166,10 @@ function SeoBridge() {
   let noindex = false;
   let ogType = "website";
 
+  // ✅ 追加：jsonLdを差し替え可能にする
+  let attachBridalFaq = false;
+
   // ---- static routes ----
-  if (pathname === "/") {
-    title = BASE_TITLE;
-    description = BASE_DESC;
-  }
-if (pathname === "/works/kou-ryui") {
-  title = "那覇・国際通りの琉球衣装レンタルを迷わず予約できるサイト｜紅琉衣（KOU RYUI）｜GUSHIKEN DESIGN";
-  description =
-    "着付け込み・手ぶらOKの琉球衣装体験を、那覇・国際通りエリアで“迷わず決められる順番”に再設計したコンセプトサイト。旅行中の不安（料金/持ち物/当日/場所）を先回りで消し、予約まで迷子にさせない導線を作った。";
-}
   if (pathname === "/works") {
     title = `WORKS｜${BASE_TITLE}`;
     description =
@@ -148,11 +192,12 @@ if (pathname === "/works/kou-ryui") {
     description = "制作プランと料金の目安。低価格化ではなく、スコープの最適化で合わせます。";
   }
 
-  // ✅ 別格入口（Room＋SEO併用の1枚）
+  // ✅ 別格入口（SEO併用の1枚）
   if (pathname === "/okinawa-bridal-website") {
     title = "沖縄のブライダル・フォトウェディング向けホームページ制作｜GUSHIKEN DESIGN";
     description =
       "写真は綺麗なのに、サイトで安く見える。そのギャップを埋めるのが仕事です。沖縄のブライダル・フォトウェディング・結婚式場向けに、世界観と問い合わせ導線を両立したWebサイトを制作します。";
+    attachBridalFaq = true; // ✅ HeadにFAQ JSON-LDも刺す
   }
 
   if (pathname === "/terms") {
@@ -179,16 +224,22 @@ if (pathname === "/works/kou-ryui") {
   const workMatch = matchPath({ path: "/works/:slug", end: true }, pathname);
   if (workMatch?.params?.slug) {
     const slug = workMatch.params.slug;
-    const pretty = humanizeSlug(slug);
-
-    title = `${pretty}｜WORKS｜${SITE_NAME}`;
-    description =
-      "制作事例。世界観と導線を一貫して設計し、印象がきちんと伝わる見せ方を制作しています。";
 
     // ✅ Room/Teaser/Intro は検索に出さない（でも follow は残す）
-    const isRoomLike =
-      /Room$/i.test(slug) || /Teaser$/i.test(slug) || /Intro$/i.test(slug);
+    const isRoomLike = /Room$/i.test(slug) || /Teaser$/i.test(slug) || /Intro$/i.test(slug);
     if (isRoomLike) noindex = true;
+
+    // ✅ 個別作品はここで上書き（動的の汎用titleに潰されない）
+    const override = WORK_SEO[slug];
+    if (override) {
+      title = override.title;
+      description = override.description;
+    } else {
+      const pretty = humanizeSlug(slug);
+      title = `${pretty}｜WORKS｜${SITE_NAME}`;
+      description =
+        "制作事例。世界観と導線を一貫して設計し、印象がきちんと伝わる見せ方を制作しています。";
+    }
   }
 
   const newsMatch = matchPath({ path: "/news/:id", end: true }, pathname);
@@ -205,11 +256,14 @@ if (pathname === "/works/kou-ryui") {
     noindex = true;
   }
 
-  // JSON-LD（WebPage）だけはページごとに更新
+  // ---- JSON-LD ----
   const origin =
     import.meta.env.VITE_SITE_ORIGIN ||
     (typeof window !== "undefined" ? window.location.origin : "https://gushikendesign.com");
   const url = `${origin}${path}`;
+
+  const pageJsonLd = buildWebPageJsonLd({ url, name: title, description });
+  const jsonLd = attachBridalFaq ? [pageJsonLd, buildFaqJsonLd(BRIDAL_FAQ)] : pageJsonLd;
 
   return (
     <Seo
@@ -218,11 +272,10 @@ if (pathname === "/works/kou-ryui") {
       path={path}
       noindex={noindex}
       ogType={ogType}
-      jsonLd={buildWebPageJsonLd({ url, name: title, description })}
+      jsonLd={jsonLd}
     />
   );
 }
-
 /* ============================================================================
    Layout
 =========================================================================== */
@@ -285,22 +338,24 @@ function Layout() {
           <Route path="/works/OriginRoom" element={<OriginRoom />} />
           <Route path="/works/NoahRoom" element={<NoahRoom />} />
 
- {/* ✅ Vow in Light 前室 */}
-<Route path="/works/vow-in-light" element={<OkinawaBridalWebsite />} />
+          {/* ✅ Vow in Light 前室 */}
+          <Route path="/works/vow-in-light" element={<OkinawaBridalWebsite />} />
 
-{/* ✅ 別格入口（現状維持でOK） */}
-<Route path="/okinawa-bridal-website" element={<OkinawaBridalWebsite />} />
+          {/* ✅ KOU RYUI 前室（SEO効かせる“部屋”） */}
+          <Route path="/works/kou-ryui" element={<KouRyuiEntry />} />
 
-{/* Dynamic Works Detail */}
-<Route path="/works/:slug" element={<WorkDetail />} />
-{/* ✅ KOU RYUI 前室（SEO効かせる“部屋”） */}
-<Route path="/works/kou-ryui" element={<KouRyuiEntry />} />
+          {/* ✅ 別格入口（現状維持でOK） */}
+          <Route path="/okinawa-bridal-website" element={<OkinawaBridalWebsite />} />
 
-{/* ✅ キーワード入口を作りたいなら別名は redirect（重複させない） */}
-<Route
-  path="/naha-ryukyu-costume-website"
-  element={<Navigate to="/works/kou-ryui" replace />}
-/>
+          {/* ✅ キーワード入口を作りたいなら別名は redirect（重複させない） */}
+          <Route
+            path="/naha-ryukyu-costume-website"
+            element={<Navigate to="/works/kou-ryui" replace />}
+          />
+
+          {/* Dynamic Works Detail */}
+          <Route path="/works/:slug" element={<WorkDetail />} />
+
           {/* Business Pages */}
           <Route path="/price" element={<PriceDetail />} />
           <Route path="/contact" element={<Contact />} />
