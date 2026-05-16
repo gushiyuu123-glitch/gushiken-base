@@ -13,7 +13,7 @@ subtitle: "世界観と設計力の“核”を示す代表作",
        // ✅ 01：KOU（PICK UP 1番）
     {
       title: "KOU RYUI — Ryukyu Costume Rental",
-      slug: "KouRyuiRoom",
+      slug: "kou-ryui",
       desc: "那覇・国際通りで、“迷わず予約できる状態”を先に作った琉球衣装サイト。体験（写真）と記憶（ロゴ）を同時に立てる。",
       link: "https://kouryui.vercel.app/",
       img: "/works/kouryui.webp", // ←ここは実ファイルに合わせる

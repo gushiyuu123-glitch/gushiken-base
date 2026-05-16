@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 import { Routes, Route, useLocation, matchPath } from "react-router-dom";
-
+import { Navigate } from "react-router-dom";
 import Seo from "./components/Seo";
 
 import NavGlobal from "./components/NavGlobal";
@@ -60,7 +60,7 @@ import Refund from "./pages/Refund";
 import Legal from "./pages/Legal";
 import Privacy from "./pages/Privacy";
 import OkinawaBridalWebsite from "./pages/OkinawaBridalWebsite";
-
+import KouRyuiEntry from "./pages/KouRyuiEntry";
 // News
 import NewsList from "./pages/NewsList";
 import NewsDetail from "./pages/NewsDetail";
@@ -121,7 +121,11 @@ function SeoBridge() {
     title = BASE_TITLE;
     description = BASE_DESC;
   }
-
+if (pathname === "/works/kou-ryui") {
+  title = "那覇・国際通りの琉球衣装レンタルを迷わず予約できるサイト｜紅琉衣（KOU RYUI）｜GUSHIKEN DESIGN";
+  description =
+    "着付け込み・手ぶらOKの琉球衣装体験を、那覇・国際通りエリアで“迷わず決められる順番”に再設計したコンセプトサイト。旅行中の不安（料金/持ち物/当日/場所）を先回りで消し、予約まで迷子にさせない導線を作った。";
+}
   if (pathname === "/works") {
     title = `WORKS｜${BASE_TITLE}`;
     description =
@@ -289,7 +293,14 @@ function Layout() {
 
 {/* Dynamic Works Detail */}
 <Route path="/works/:slug" element={<WorkDetail />} />
+{/* ✅ KOU RYUI 前室（SEO効かせる“部屋”） */}
+<Route path="/works/kou-ryui" element={<KouRyuiEntry />} />
 
+{/* ✅ キーワード入口を作りたいなら別名は redirect（重複させない） */}
+<Route
+  path="/naha-ryukyu-costume-website"
+  element={<Navigate to="/works/kou-ryui" replace />}
+/>
           {/* Business Pages */}
           <Route path="/price" element={<PriceDetail />} />
           <Route path="/contact" element={<Contact />} />
