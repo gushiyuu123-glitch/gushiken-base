@@ -206,7 +206,6 @@ subtitle: "世界観と設計力の“核”を示す代表作",
       isNew: true,
       createdAt: "2026-04-13",
       tags: [
-        "NEW",
         "PICKUP",
         "Luxury",
         "Automotive",
@@ -250,7 +249,6 @@ subtitle: "世界観と設計力の“核”を示す代表作",
   isNew: true,
   createdAt: "2026-04-26",
   tags: [
-    "NEW",
     "PICKUP",
     "Corporate",
     "System Integration",
@@ -293,7 +291,6 @@ subtitle: "世界観と設計力の“核”を示す代表作",
   isNew: true,
   createdAt: "2026-04-05",
   tags: [
-    "NEW",
     "PICKUP",
     "Specialty",
     "Store",
@@ -328,44 +325,7 @@ subtitle: "世界観と設計力の“核”を示す代表作",
     ogImage: "https://gushikendesign.com/ogp/crested-gecko.png"
   }
 },
-        {
-  title: "KISUI — Skin Care Water Essence",
-  slug: "KisuiRoom",
-  desc: "透明 × 静けさ × 素肌。水と光の粒度で“肌のやさしさ”を構築したスキンケアブランド。",
-  link: "https://kisui.vercel.app/",
-  img: "/works/kisui1.webp",
-  isNew: true,
-  createdAt: "2026-02-28",
-  tags: [
-    "NEW",
-    "透明感", "水", "静寂", "余白",
-    "Beauty", "Skincare",
-    "Luxury", "Minimal",
-    "GSAP", "PC/SP 完全分離"
-  ],
 
-  detail: {
-    concept:
-      "“肌に触れた瞬間の静けさ”を軸に、光膜・水膜・余白の階調で構成したスキンケアデザイン。広告的な圧を排除し、素肌に寄り添うような透明感を中心に設計されたブランドUI。",
-    tech: [
-      "React",
-      "Vite",
-      "Tailwind",
-      "GSAP",
-      "IntersectionObserver",
-      "PC/SP 完全分離"
-    ]
-  },
-
-  seo: {
-    title: "KISUI — 透明×静寂のスキンケアブランドUI｜GUSHIKEN DESIGN",
-    description:
-      "KISUI は水と光の粒度を0.3px単位で整え、“肌に優しい透明感”を再構築したスキンケアブランド。余白・光膜・水膜の三層レイヤーで静けさと上質感を両立したUIデザイン。",
-    keywords:
-      "スキンケアEC, 化粧水LP, 透明感デザイン, 静寂UI, 美容Webデザイン, 沖縄 Web制作, KISUI",
-    ogImage: "https://gushikendesign.com/ogp/kisui.png"
-  }
-},
     {
   title: "LÜMIN — Minimal Audio EC",
   slug: "LuminRoom",
@@ -374,7 +334,7 @@ subtitle: "世界観と設計力の“核”を示す代表作",
   img: "/works/lumin-main.webp",
   isNew: true,
   createdAt: "2026-02-02",
-  tags: ["PICKUP","NEW", "Audio", "Minimal", "WhiteSilver", "EC", "Precision"],
+  tags: ["PICKUP", "Audio", "Minimal", "WhiteSilver", "EC", "Precision"],
 
   seo: {
     title: "LÜMIN — Minimal Audio EC｜白銀×精度×透明音のミニマルECデザイン",
@@ -394,7 +354,7 @@ subtitle: "世界観と設計力の“核”を示す代表作",
       img: "/works/roseveil2.webp",
       isNew: true,
       createdAt: "2026-01-30",
-      tags: ["PICKUP", "NEW", "EC", "Luxury", "Fragrance"],
+      tags: ["PICKUP",  "EC", "Luxury", "Fragrance"],
 
       seo: {
         title: "ROSE VEIL — Fragrance Shampoo｜香り×余白×世界観ECデザイン",
@@ -405,51 +365,7 @@ subtitle: "世界観と設計力の“核”を示す代表作",
         ogImage: "https://gushikendesign.com/ogp/roseveil.png"
       }
     },
-{
-  title: "ELNO — Monotone Fashion",
-  slug: "ElnoRoom",
 
-  desc: "黒 × グレー × 白。\n空気感で印象を残す、モード系ファッションサイト。",
-  link: "https://elno.vercel.app/",
-  img: "/works/elno1.webp",
-
-  isNew: true,
-  createdAt: "2026-04-03",
-
-  tags: [
-    "NEW",
-    "Fashion",
-    "Monotone",
-    "Mode",
-    "Branding",
-    "Minimal",
-    "EC",
-    "静寂",
-    "余白",
-    "PC/SP 分離"
-  ],
-
-  detail: {
-    concept:
-      "黒・グレー・白を軸に、派手な演出ではなく“空気感で印象を残すこと”を目指して設計したモード系ファッションサイト。トップはあえて一枚絵のように見せ、ブランドの温度感を先に伝える構成にした。商品の見やすさと世界観の両立を重視し、余白・文字位置・画像の見せ方・SP時の印象まで一貫して調整している。",
-    tech: [
-      "React",
-      "Vite",
-      "Tailwind",
-      "React Router",
-      "PC/SP 完全分離"
-    ]
-  },
-
-  seo: {
-    title: "ELNO｜黒・グレー・白で空気感を残すモード系ファッションサイト｜GUSHIKEN DESIGN",
-    description:
-      "ELNOは黒・グレー・白を軸に、派手さではなく空気感で印象を残すモード系ファッションサイト。トップを一枚絵のように見せ、ブランドの雰囲気と商品の見やすさを両立するよう設計した作品。",
-    keywords:
-      "ファッションサイト, モード系, モノトーン, ブランドサイト, ECデザイン, ミニマルデザイン, 世界観デザイン, GUSHIKEN DESIGN",
-    ogImage: "https://gushikendesign.com/ogp/elno.png"
-  }
-},
   
   ]
 },
@@ -589,11 +505,10 @@ subtitle: "世界観と設計力の“核”を示す代表作",
   slug: "KisuiRoom",
   desc: "透明 × 静けさ × 素肌。水と光の粒度で“肌のやさしさ”を構築したスキンケアブランド。",
   link: "https://kisui.vercel.app/",
-  img: "/works/kisui.webp",
+  img: "/works/kisui1.webp",
   isNew: true,
   createdAt: "2026-02-28",
   tags: [
-    "NEW",
     "透明感", "水", "静寂", "余白",
     "Beauty", "Skincare",
     "Luxury", "Minimal",
@@ -1086,7 +1001,7 @@ subtitle: "世界観と設計力の“核”を示す代表作",
   img: "/works/lumin-main.webp",
   isNew: true,
   createdAt: "2026-02-02",
-  tags: ["PICKUP", "NEW", "Audio", "Minimal", "WhiteSilver", "EC", "Precision"],
+  tags: ["PICKUP",  "Audio", "Minimal", "WhiteSilver", "EC", "Precision"],
 
   seo: {
     title: "LÜMIN — Minimal Audio EC｜白銀×精度×透明音のミニマルECデザイン",
@@ -1109,7 +1024,7 @@ subtitle: "世界観と設計力の“核”を示す代表作",
       createdAt: "2026-01-30",
 
       tags: [
-        "NEW", "香り", "高見え", "Fragrance",
+     "香り", "高見え", "Fragrance",
         "Luxury", "EC", "Branding",
         "余白", "光", "GSAP", "PC/SP 分離"
       ],
@@ -1167,13 +1082,12 @@ subtitle: "世界観と設計力の“核”を示す代表作",
 
   desc: "黒 × グレー × 白。\n空気感で印象を残す、モード系ファッションサイト。",
   link: "https://elno.vercel.app/",
-  img: "/works/elno.webp",
+  img: "/works/elno1.webp",
 
   isNew: true,
   createdAt: "2026-04-03",
 
   tags: [
-    "NEW",
     "Fashion",
     "Monotone",
     "Mode",
@@ -1221,7 +1135,6 @@ subtitle: "世界観と設計力の“核”を示す代表作",
       createdAt: "2026-01-19",
 
       tags: [
-        "NEW",
         "白", "カカオ", "ミニマル",
         "EC", "Branding",
         "Food",
@@ -1473,7 +1386,7 @@ subtitle: "世界観と設計力の“核”を示す代表作",
       createdAt: "2025-02-10",
 
       tags: [
-        "NEW",
+
         "静寂", "陰影", "光", "黒",
         "Restaurant", "Branding",
         "Cinematic Scroll", "GSAP"
@@ -1771,7 +1684,7 @@ subtitle: "世界観と設計力の“核”を示す代表作",
         createdAt: null,  // 時間軸の外
         isNew: false,
 
-        tags: ["ORIGIN", "NEW", "Manifesto", "Worldview", "Art", "Silence"],
+        tags: ["ORIGIN",  "Manifesto", "Worldview", "Art", "Silence"],
 
         detail: {
           concept:
@@ -1937,7 +1850,6 @@ subtitle: "世界観と設計力の“核”を示す代表作",
   createdAt: "2026-04-06",
 
   tags: [
-    "NEW",
     "AI",
     "Lab",
     "Future",
