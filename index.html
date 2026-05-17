@@ -6,7 +6,7 @@
   <!-- Viewport -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
 
-  <!-- Basic (non-SEO-fixed) -->
+  <!-- Basic -->
   <meta name="google" content="notranslate" />
   <meta name="author" content="GUSHIKEN DESIGN" />
   <meta name="application-name" content="GUSHIKEN DESIGN" />
@@ -37,7 +37,38 @@
   <meta name="msapplication-config" content="/browserconfig.xml" />
 
   <!-- Minimal fallback title (Helmetが上書きする) -->
-<title data-rh="true">GUSHIKEN DESIGN</title>
+  <title data-rh="true">GUSHIKEN DESIGN</title>
+
+  <!-- ✅ Fallback SEO/OGP (JS非実行スクレイパー対策) -->
+  <meta
+    name="description"
+    content="GUSHIKEN DESIGN｜沖縄を拠点に、世界観設計からフロントエンド実装まで一気通貫で制作します。"
+  />
+
+  <meta property="og:site_name" content="GUSHIKEN DESIGN" />
+  <meta property="og:title" content="GUSHIKEN DESIGN" />
+  <meta
+    property="og:description"
+    content="沖縄を拠点に、世界観設計からフロントエンド実装まで一気通貫で制作します。"
+  />
+<meta property="og:image" content="https://gushikendesign.com/ogp-v3.png?v=20260517-1" />
+<meta property="og:image:secure_url" content="https://gushikendesign.com/ogp-v3.png?v=20260517-1" />
+<meta property="og:image:type" content="image/png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="GUSHIKEN DESIGN" />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://gushikendesign.com/ogp-v3.png?v=20260517-1" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="GUSHIKEN DESIGN" />
+  <meta
+    name="twitter:description"
+    content="沖縄を拠点に、世界観設計からフロントエンド実装まで一気通貫で制作します。"
+  />
+  <meta name="twitter:image" content="https://gushikendesign.com/ogp-v3.png" />
+
   <!-- FOUC prevention (keep) -->
   <style>
     html { background: #0b0b0b; }
@@ -72,7 +103,7 @@
     gtag("config", "G-NM83YPOV4Q");
   </script>
 
-  <!-- JSON-LD (Organization only) : keep / remove WebPage node -->
+  <!-- JSON-LD (Organization only) -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -126,10 +157,14 @@
 </head>
 
 <body>
+  <!-- ✅ 本文に拾われても痛くないように極短 + data-nosnippet -->
   <noscript>
-    <p style="color:#fff;background:#0b0b0b;padding:16px;margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;">
-      このサイトはJavaScriptを有効にすると表示されます。
-    </p>
+    <div
+      data-nosnippet
+      style="color:#fff;background:#0b0b0b;padding:16px;margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;"
+    >
+      JavaScript が無効のため表示できません。
+    </div>
   </noscript>
 
   <div id="root"></div>
