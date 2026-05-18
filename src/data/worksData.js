@@ -1173,7 +1173,7 @@ subtitle: "世界観と設計力の“核”を示す代表作",
     ========================================== */
     {
       title: "STILL — Minimal EC",
-      slug: "still",
+      slug: "stillRoom",
 
       desc: "静寂 × 緊張感 × ファッション。\nストイックな構成美を追求したEC。",
       link: "https://still-ec.vercel.app",
