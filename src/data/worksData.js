@@ -1371,6 +1371,49 @@ subtitle: "世界観と設計力の“核”を示す代表作",
           "https://gushikendesign.com/ogp/soraoto.png"
       }
     },
+    // worksData の「FOOD / FURNITURE / BRAND」カテゴリ items の先頭に追加
+
+{
+  title: "AURIA TONE — Space Design & Supervision",
+  slug: "AuriaTone",
+  desc: "相談前の迷い（できること／進め方／費用／確認事項）を、ページの順番で先に消す。空気で惹きつけ、不安を消し、相談へ落とす空間設計・監修サイト。",
+  link: "https://auria-tone.vercel.app/",
+  img: "/works/auria-tone.webp", // TODO: works 用画像を配置してパス合わせて
+  isNew: true,
+  createdAt: "2026-05-19",
+  tags: [
+    "NEW",
+    "Space Design",
+    "Interior",
+    "Studio",
+    "Trust",
+    "Information Design",
+    "UI/UX",
+    "PC/SP 完全分離"
+  ],
+
+  detail: {
+    concept:
+      "内装相談で止まりやすい「どこまで頼める？」「いくら？」「何を決めればいい？」を、作品→役割→費用→進め方→FAQ→相談の順番で先に回収。雰囲気で惚れるだけで終わらせず、判断の材料を揃えて“相談できる状態”まで落とす構造にした。",
+    tech: [
+      "React",
+      "Vite",
+      "CSS Modules",
+      "IntersectionObserver",
+      "GSAP",
+      "PC/SP 完全分離"
+    ]
+  },
+
+  seo: {
+    title: "AURIA TONE｜相談がラクになる空間設計・監修サイト｜GUSHIKEN DESIGN",
+    description:
+      "AURIA TONEは、空間設計・監修の相談で迷いがちな点（できること／進め方／費用／確認事項）をページ内で先に整理し、作品で惹きつけ、不安を消して相談へ落とす順番で設計したコンセプトサイト。",
+    keywords:
+      "空間設計, 設計監修, 内装, 店舗内装, 相談導線, UI/UX, 情報設計, Webデザイン, GUSHIKEN DESIGN",
+    ogImage: "https://gushikendesign.com/ogp/auria-tone.png" // TODO: 必要なら用意
+  }
+},
     /* ==========================================================
         RÉSONANCE — Restaurant
     ========================================================== */

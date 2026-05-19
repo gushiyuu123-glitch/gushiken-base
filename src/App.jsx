@@ -14,7 +14,6 @@ import WorkDetail from "./pages/WorkDetail";
 // Works
 import NoirLux from "./pages/works/NoirLux";
 import Resonance from "./pages/works/Resonance";
-import Still from "./pages/works/Still";
 import BlueShoreHotel from "./pages/works/BlueShoreHotel";
 import CapeOkinawa from "./pages/works/CapeOkinawa";
 import OkinawaWhiteSpa from "./pages/works/OkinawaWhiteSpa";
@@ -301,7 +300,7 @@ function Layout() {
           {/* Works Detail Pages */}
           <Route path="/works/noir-lux" element={<NoirLux />} />
           <Route path="/works/resonance" element={<Resonance />} />
-          <Route path="/works/still" element={<Still />} />
+<Route path="/works/still" element={<Navigate to="/works/stillRoom" replace />} />
           <Route path="/works/BlueShoreHotel" element={<BlueShoreHotel />} />
           <Route path="/works/CapeOkinawa" element={<CapeOkinawa />} />
           <Route path="/works/OkinawaWhiteSpa" element={<OkinawaWhiteSpa />} />
