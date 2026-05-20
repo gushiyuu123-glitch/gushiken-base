@@ -10,6 +10,10 @@ const PAGE_DESCRIPTION =
 
 const CANONICAL_URL = "https://gushikendesign.com/price";
 
+// ✅ 見積フォーム（外部URL）
+const MITUMORI_BASE = "https://mitumori-form.vercel.app/";
+const MITUMORI_QUICK = "https://mitumori-form.vercel.app/?mode=quick";
+
 const PLANS = [
   {
     badge: "01",
@@ -134,7 +138,9 @@ export default function PriceDetail() {
 
     // OGP（既存の /ogp.png を仮で使う：必要なら差し替え）
     const origin =
-      typeof window !== "undefined" ? window.location.origin : "https://gushikendesign.com";
+      typeof window !== "undefined"
+        ? window.location.origin
+        : "https://gushikendesign.com";
     const ogImage = `${origin}/ogp.png`;
 
     setMetaByProperty("og:title", PAGE_TITLE);
@@ -179,7 +185,11 @@ export default function PriceDetail() {
         <div className="pd-side-line" aria-hidden="true" />
 
         <header className="pd-header pd-reveal">
-          <SectionSvgTitle title="PRICE" sub="PRICE / DETAIL" className="pd-svg-title" />
+          <SectionSvgTitle
+            title="PRICE"
+            sub="PRICE / DETAIL"
+            className="pd-svg-title"
+          />
 
           <h1 id="price-heading" className="pd-hidden-heading">
             料金の詳細と進め方
@@ -209,6 +219,9 @@ export default function PriceDetail() {
           ))}
         </div>
 
+        {/* ✅ ここ：PLAN直後に「30秒診断」ブロックを挿入 */}
+        <DiagnosisCta />
+
         <SectionTitle main>運用・保守</SectionTitle>
 
         <div className="pd-reveal">
@@ -226,8 +239,12 @@ export default function PriceDetail() {
         <div className="pd-reveal">
           <TextBlock>
             <li>着手金：50%（制作開始前）</li>
-            <li>残金：公開完了・最終確認後、7日以内のお支払いをお願いしています。</li>
-            <li>内容の追加や変更がある場合は、必ず事前にご相談のうえで調整します。</li>
+            <li>
+              残金：公開完了・最終確認後、7日以内のお支払いをお願いしています。
+            </li>
+            <li>
+              内容の追加や変更がある場合は、必ず事前にご相談のうえで調整します。
+            </li>
           </TextBlock>
         </div>
 
@@ -243,11 +260,15 @@ export default function PriceDetail() {
             </li>
             <li>
               修正は回数と範囲を事前にご案内します。
-              <span className="pd-text-muted">（1回＝まとめて1回分の修正指示）</span>
+              <span className="pd-text-muted">
+                （1回＝まとめて1回分の修正指示）
+              </span>
             </li>
             <li>
               丁寧な仕上がりを優先しているため、
-              <span className="pd-text-accent">急ぎのみを優先されるご依頼とは合わない場合があります。</span>
+              <span className="pd-text-accent">
+                急ぎのみを優先されるご依頼とは合わない場合があります。
+              </span>
             </li>
           </TextBlock>
         </div>
@@ -256,15 +277,23 @@ export default function PriceDetail() {
 
         <div className="pd-reveal">
           <TextBlock>
-            <li>写真素材が不足している場合は、雰囲気に合う画像の選定も行います。</li>
+            <li>
+              写真素材が不足している場合は、雰囲気に合う画像の選定も行います。
+            </li>
             <li>
               お持ちの写真は、
-              <span className="pd-text-accent">明るさ・色の軽い補正は料金内</span>
+              <span className="pd-text-accent">
+                明るさ・色の軽い補正は料金内
+              </span>
               で対応します。
               <span className="pd-text-muted">（個別補正はオプション）</span>
             </li>
-            <li>参考URLやイメージ画像を共有いただくと、方向性を合わせやすくなります。</li>
-            <li className="pd-note">※ 参考サイトは方向性確認のみに使用します。デザインの模倣は行いません。</li>
+            <li>
+              参考URLやイメージ画像を共有いただくと、方向性を合わせやすくなります。
+            </li>
+            <li className="pd-note">
+              ※ 参考サイトは方向性確認のみに使用します。デザインの模倣は行いません。
+            </li>
           </TextBlock>
         </div>
 
@@ -272,9 +301,13 @@ export default function PriceDetail() {
 
         <div className="pd-reveal">
           <TextBlock>
-            <li>タイトル・説明文・OGP画像・favicon などの初期設定は標準対応です。</li>
+            <li>
+              タイトル・説明文・OGP画像・favicon などの初期設定は標準対応です。
+            </li>
             <li>画像の軽量化・表示速度の最適化も含まれます。</li>
-            <li>ドメイン・サーバー接続など、公開に必要な設定までサポートします。</li>
+            <li>
+              ドメイン・サーバー接続など、公開に必要な設定までサポートします。
+            </li>
           </TextBlock>
         </div>
 
@@ -304,6 +337,48 @@ export default function PriceDetail() {
         </div>
       </div>
     </section>
+  );
+}
+
+function DiagnosisCta() {
+  return (
+    <div className="pd-diag pd-reveal" aria-label="制作規模の目安">
+      <div className="pd-diag-kicker">OPTION</div>
+
+      <p className="pd-diag-lead">
+        まだ決まってない方へ。ページ数と更新の有無から、目安を確認できます。
+      </p>
+
+      <div className="pd-diag-links" role="list">
+        {/* <a
+          className="pd-diag-link is-primary"
+          href={MITUMORI_QUICK}
+          target="_blank"
+          rel="noreferrer"
+          role="listitem"
+        >
+          30秒診断 →
+        </a>
+
+        <span className="pd-diag-sep" aria-hidden="true">
+          /
+        </span> */}
+
+        <a
+          className="pd-diag-link"
+          href={MITUMORI_BASE}
+          target="_blank"
+          rel="noreferrer"
+          role="listitem"
+        >
+          詳細見積フォーム →
+        </a>
+      </div>
+
+      <p className="pd-diag-note">
+        ※ これは目安です。確定はヒアリング後に総額をご案内します。
+      </p>
+    </div>
   );
 }
 

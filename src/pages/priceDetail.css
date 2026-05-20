@@ -1112,3 +1112,78 @@
     transform: none;
   }
 }
+/* =========================
+   PRICE: Diagnosis CTA (world-fit override)
+   追記で上書き
+========================= */
+.pd-root .pd-diag{
+  margin-top: clamp(18px, 3.2vw, 28px);
+  padding: clamp(16px, 2.2vw, 22px);
+  border-radius: 18px;
+
+  /* 白い箱を殺す */
+  background: rgba(8, 8, 8, .58);
+  border: 1px solid rgba(206, 184, 137, .16); /* 金の薄線 */
+  box-shadow: none;
+
+  /* PLANの余韻を壊さないために面積を沈める */
+  backdrop-filter: blur(10px);
+}
+
+.pd-root .pd-diag-kicker{
+  font-size: 11px;
+  letter-spacing: .28em;
+  color: rgba(206, 184, 137, .78);
+  margin-bottom: 10px;
+}
+
+.pd-root .pd-diag-lead{
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.95;
+  color: rgba(235, 230, 220, .82);
+}
+
+.pd-root .pd-diag-links{
+  margin-top: 14px;
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+/* ボタン→下線リンクに変える */
+.pd-root .pd-diag-link{
+  display: inline-block;
+  padding: 0;
+  border: 0;
+  background: transparent;
+
+  color: rgba(235, 230, 220, .86);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(235, 230, 220, .36);
+  line-height: 1.6;
+  transition: border-color .18s ease, color .18s ease, transform .18s ease;
+}
+
+.pd-root .pd-diag-link:hover{
+  color: rgba(235, 230, 220, .96);
+  border-bottom-color: rgba(206, 184, 137, .68);
+  transform: translateY(-1px);
+}
+
+.pd-root .pd-diag-link.is-primary{
+  color: rgba(206, 184, 137, .92);
+  border-bottom-color: rgba(206, 184, 137, .46);
+}
+
+.pd-root .pd-diag-sep{
+  color: rgba(235, 230, 220, .28);
+}
+
+.pd-root .pd-diag-note{
+  margin: 12px 0 0;
+  font-size: 12px;
+  line-height: 1.85;
+  color: rgba(235, 230, 220, .56);
+}
