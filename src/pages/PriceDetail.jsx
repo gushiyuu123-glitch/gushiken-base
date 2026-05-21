@@ -84,7 +84,7 @@ const FLOW_STEPS = [
 
 const OPTIONS = [
   { name: "お知らせ更新機能の導入", price: "¥30,000〜" },
-  { name: "写真の個別補正（1枚）", price: "¥10,000〜" },
+{ name: "写真の個別補正（こだわり調整）", price: "¥3,000 / 枚〜" },
   { name: "追加ページ", price: "内容に応じてお見積もり" },
   { name: "ロゴ / 印刷物 / 撮影", price: "内容に応じてご相談" },
 ];
@@ -344,19 +344,29 @@ function DiagnosisCta() {
       <p className="pd-diag-lead">
         まだ決まってない方へ。ページ数と更新の有無から、目安を確認できます。
       </p>
+<div className="pd-diag-links" role="list">
+  <a
+    className="pd-diag-link is-primary"
+    href={MITUMORI_QUICK}
+    target="_blank"
+    rel="noreferrer"
+    role="listitem"
+  >
+    制作規模の目安を見る 
+  </a>
 
-      <div className="pd-diag-links" role="list">
-        {/* 30秒診断を復活させるならここを有効化
-        <a className="pd-diag-link is-primary" href={MITUMORI_QUICK} target="_blank" rel="noreferrer" role="listitem">
-          30秒診断 →
-        </a>
-        <span className="pd-diag-sep" aria-hidden="true">/</span>
-        */}
+  <span className="pd-diag-sep" aria-hidden="true">/</span>
 
-        <a className="pd-diag-link" href={MITUMORI_BASE} target="_blank" rel="noreferrer" role="listitem">
-          詳細見積フォーム →
-        </a>
-      </div>
+  <a
+    className="pd-diag-link"
+    href={MITUMORI_BASE}
+    target="_blank"
+    rel="noreferrer"
+    role="listitem"
+  >
+    詳細見積フォーム 
+  </a>
+</div>
 
       <p className="pd-diag-note">※ これは目安です。確定はヒアリング後に総額をご案内します。</p>
     </div>
