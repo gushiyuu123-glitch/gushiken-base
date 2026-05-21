@@ -10,9 +10,12 @@ const PAGE_DESCRIPTION =
 
 const CANONICAL_URL = "https://gushikendesign.com/price";
 
-// ✅ 見積フォーム（外部URL）
+// 見積フォーム（外部URL）
 const MITUMORI_BASE = "https://mitumori-form.vercel.app/";
 const MITUMORI_QUICK = "https://mitumori-form.vercel.app/?mode=quick";
+
+// internal
+const WORKS_PATH = "/works";
 
 const PLANS = [
   {
@@ -73,9 +76,10 @@ const FLOW_STEPS = [
   { n: "01", title: "ヒアリング", sub: "目的・雰囲気・予算感の確認" },
   { n: "02", title: "構成と進め方のご提案", sub: "LP / 複数ページ / 必要範囲の整理" },
   { n: "03", title: "お見積もり・着手金", sub: "内容確定後、着手金50%で制作開始" },
-  { n: "04", title: "デザイン制作", sub: "印象・情報・導線を設計" },
-  { n: "05", title: "実装・確認", sub: "スマホ対応・表示調整・公開前確認" },
-  { n: "06", title: "公開・納品", sub: "公開完了後、最終確認して納品" },
+  { n: "04", title: "方向性の確定", sub: "トーンを1案で確定してから本制作へ" },
+  { n: "05", title: "デザイン制作", sub: "印象・情報・導線を設計" },
+  { n: "06", title: "実装・確認", sub: "スマホ対応・表示調整・公開前確認" },
+  { n: "07", title: "公開・納品", sub: "公開完了後、最終確認して納品" },
 ];
 
 const OPTIONS = [
@@ -85,45 +89,37 @@ const OPTIONS = [
   { name: "ロゴ / 印刷物 / 撮影", price: "内容に応じてご相談" },
 ];
 
+/* ========= meta helpers ========= */
 function setMetaByName(name, content) {
   if (!content) return;
-
   let tag = document.querySelector(`meta[name="${name}"]`);
-
   if (!tag) {
     tag = document.createElement("meta");
     tag.setAttribute("name", name);
     document.head.appendChild(tag);
   }
-
   tag.setAttribute("content", content);
 }
 
 function setMetaByProperty(property, content) {
   if (!content) return;
-
   let tag = document.querySelector(`meta[property="${property}"]`);
-
   if (!tag) {
     tag = document.createElement("meta");
     tag.setAttribute("property", property);
     document.head.appendChild(tag);
   }
-
   tag.setAttribute("content", content);
 }
 
 function setCanonical(href) {
   if (!href) return;
-
   let tag = document.querySelector('link[rel="canonical"]');
-
   if (!tag) {
     tag = document.createElement("link");
     tag.setAttribute("rel", "canonical");
     document.head.appendChild(tag);
   }
-
   tag.setAttribute("href", href);
 }
 
@@ -136,7 +132,6 @@ export default function PriceDetail() {
     setMetaByName("description", PAGE_DESCRIPTION);
     setCanonical(CANONICAL_URL);
 
-    // OGP（既存の /ogp.png を仮で使う：必要なら差し替え）
     const origin =
       typeof window !== "undefined"
         ? window.location.origin
@@ -169,10 +164,7 @@ export default function PriceDetail() {
           observer.unobserve(entry.target);
         });
       },
-      {
-        threshold: 0.1,
-        rootMargin: "0px 0px -10% 0px",
-      }
+      { threshold: 0.1, rootMargin: "0px 0px -10% 0px" }
     );
 
     targets.forEach((el) => observer.observe(el));
@@ -185,11 +177,7 @@ export default function PriceDetail() {
         <div className="pd-side-line" aria-hidden="true" />
 
         <header className="pd-header pd-reveal">
-          <SectionSvgTitle
-            title="PRICE"
-            sub="PRICE / DETAIL"
-            className="pd-svg-title"
-          />
+          <SectionSvgTitle title="PRICE" sub="PRICE / DETAIL" className="pd-svg-title" />
 
           <h1 id="price-heading" className="pd-hidden-heading">
             料金の詳細と進め方
@@ -200,8 +188,7 @@ export default function PriceDetail() {
           <p className="pd-lead">
             はじめてのご相談でも、内容が固まっていなくても大丈夫です。
             <br />
-            <span>目的・雰囲気・予算感をお聞きしながら</span>、
-            必要な範囲と優先順位を一緒に整理していきます。
+            <span>目的・雰囲気・予算感をお聞きしながら</span>、必要な範囲と優先順位を一緒に整理していきます。
             <br />
             料金は事前に総額をご案内したうえで進めています。
           </p>
@@ -219,7 +206,7 @@ export default function PriceDetail() {
           ))}
         </div>
 
-        {/* ✅ ここ：PLAN直後に「30秒診断」ブロックを挿入 */}
+        {/* PLAN直後：見積フォーム */}
         <DiagnosisCta />
 
         <SectionTitle main>運用・保守</SectionTitle>
@@ -238,13 +225,11 @@ export default function PriceDetail() {
 
         <div className="pd-reveal">
           <TextBlock>
-            <li>着手金：50%（制作開始前）</li>
             <li>
-              残金：公開完了・最終確認後、7日以内のお支払いをお願いしています。
+              <span className="pd-text-accent">着手金：50%</span>（入金確認後に制作開始）
             </li>
-            <li>
-              内容の追加や変更がある場合は、必ず事前にご相談のうえで調整します。
-            </li>
+            <li>残金：公開完了・最終確認後、7日以内のお支払いをお願いしています。</li>
+            <li>内容の追加や変更がある場合は、必ず事前にご相談のうえで調整します。</li>
           </TextBlock>
         </div>
 
@@ -253,22 +238,30 @@ export default function PriceDetail() {
         <div className="pd-reveal">
           <TextBlock>
             <li>納期の目安は内容により2〜5週間前後です。</li>
+
             <li>
               素材のご提出が遅れた場合は、
-              <span className="pd-text-accent">納期も同じ日数分スライド</span>
-              します。
+              <span className="pd-text-accent">納期も同じ日数分スライド</span>します。
             </li>
+
+            <li>
+              “イメージ違い”を防ぐため、制作前に
+              <span className="pd-text-accent">方向性（トーン）を1案で確定</span>してから本制作へ進みます。
+            </li>
+
+            <li>
+              デザイン案（ラフを含む）の作成は制作業務のため、
+              <span className="pd-text-accent">着手金の入金確認後</span>に開始します。
+            </li>
+
             <li>
               修正は回数と範囲を事前にご案内します。
-              <span className="pd-text-muted">
-                （1回＝まとめて1回分の修正指示）
-              </span>
+              <span className="pd-text-muted">（1回＝まとめて1回分の修正指示）</span>
             </li>
+
             <li>
               丁寧な仕上がりを優先しているため、
-              <span className="pd-text-accent">
-                急ぎのみを優先されるご依頼とは合わない場合があります。
-              </span>
+              <span className="pd-text-accent">急ぎのみを優先されるご依頼とは合わない場合があります。</span>
             </li>
           </TextBlock>
         </div>
@@ -277,22 +270,29 @@ export default function PriceDetail() {
 
         <div className="pd-reveal">
           <TextBlock>
-            <li>
-              写真素材が不足している場合は、雰囲気に合う画像の選定も行います。
-            </li>
+            <li>写真素材が不足している場合は、雰囲気に合う画像の選定も行います。</li>
+
             <li>
               お持ちの写真は、
-              <span className="pd-text-accent">
-                明るさ・色の軽い補正は料金内
-              </span>
-              で対応します。
+              <span className="pd-text-accent">明るさ・色の軽い補正は料金内</span>で対応します。
               <span className="pd-text-muted">（個別補正はオプション）</span>
             </li>
+
             <li>
-              参考URLやイメージ画像を共有いただくと、方向性を合わせやすくなります。
+              参考サイトの共有は歓迎です。ただし完全な再現ではなく、「どこが良いか」を読み取り、
+              <span className="pd-text-accent">目的と内容に合わせて最適化</span>します。
             </li>
+
+            <li>
+              スムーズに進めるため、
+              <Link to={WORKS_PATH} className="pd-inline-link">
+                WORKS
+              </Link>
+              から近い雰囲気の作品を1〜2つ共有いただくと、方向性を合わせやすくなります。
+            </li>
+
             <li className="pd-note">
-              ※ 参考サイトは方向性確認のみに使用します。デザインの模倣は行いません。
+              ※ 参考は“好みの共有”として拝見します。再現ではなく、設計として仕上げます。
             </li>
           </TextBlock>
         </div>
@@ -301,13 +301,9 @@ export default function PriceDetail() {
 
         <div className="pd-reveal">
           <TextBlock>
-            <li>
-              タイトル・説明文・OGP画像・favicon などの初期設定は標準対応です。
-            </li>
+            <li>タイトル・説明文・OGP画像・favicon などの初期設定は標準対応です。</li>
             <li>画像の軽量化・表示速度の最適化も含まれます。</li>
-            <li>
-              ドメイン・サーバー接続など、公開に必要な設定までサポートします。
-            </li>
+            <li>ドメイン・サーバー接続など、公開に必要な設定までサポートします。</li>
           </TextBlock>
         </div>
 
@@ -350,34 +346,19 @@ function DiagnosisCta() {
       </p>
 
       <div className="pd-diag-links" role="list">
-        {/* <a
-          className="pd-diag-link is-primary"
-          href={MITUMORI_QUICK}
-          target="_blank"
-          rel="noreferrer"
-          role="listitem"
-        >
+        {/* 30秒診断を復活させるならここを有効化
+        <a className="pd-diag-link is-primary" href={MITUMORI_QUICK} target="_blank" rel="noreferrer" role="listitem">
           30秒診断 →
         </a>
+        <span className="pd-diag-sep" aria-hidden="true">/</span>
+        */}
 
-        <span className="pd-diag-sep" aria-hidden="true">
-          /
-        </span> */}
-
-        <a
-          className="pd-diag-link"
-          href={MITUMORI_BASE}
-          target="_blank"
-          rel="noreferrer"
-          role="listitem"
-        >
+        <a className="pd-diag-link" href={MITUMORI_BASE} target="_blank" rel="noreferrer" role="listitem">
           詳細見積フォーム →
         </a>
       </div>
 
-      <p className="pd-diag-note">
-        ※ これは目安です。確定はヒアリング後に総額をご案内します。
-      </p>
+      <p className="pd-diag-note">※ これは目安です。確定はヒアリング後に総額をご案内します。</p>
     </div>
   );
 }
@@ -462,8 +443,7 @@ function MaintenanceCard() {
 
           <p className="pd-maintenance-detail">
             公開後も、サイトの印象を保ちながら継続的に更新するための運用プランです。
-            <strong>月管理は必須ではなく、必要な時だけの都度対応も可能</strong>
-            です。
+            <strong>月管理は必須ではなく、必要な時だけの都度対応も可能</strong>です。
           </p>
         </div>
 

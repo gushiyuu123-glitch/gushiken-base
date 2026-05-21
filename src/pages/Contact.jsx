@@ -1,5 +1,6 @@
 // src/pages/Contact.jsx
 import React, { useEffect, useRef, useState } from "react";
+import { Link } from "react-router-dom";
 import SectionSvgTitle from "../components/SectionSvgTitle";
 import styles from "../styles/contact.module.css";
 
@@ -10,11 +11,21 @@ const PAGE_DESCRIPTION =
   "GUSHIKEN DESIGN お問い合わせ。沖縄のWeb制作・Webデザイン。店舗・サロン・ブランド向けに、印象と伝わり方を整えるサイト制作のご相談を受け付けています。";
 const CANONICAL_URL = "https://gushikendesign.com/contact";
 
+const WORKS_PATH = "/works";
+// ★ 追加：hint用（URLは見せず、WORKS文字に埋め込む）
+const WORKS_URL = "https://gushikendesign.com/works";
+
 const STARTERS = [
   "まだ内容が決まっていない",
   "LPか複数ページか相談したい",
   "予算に合う進め方を知りたい",
   "今のサイトの印象を整えたい",
+];
+
+const ALIGN = [
+  "まずWORKSから、近い雰囲気の作品を1〜2つ選ぶ",
+  "参考サイトは歓迎（完全再現ではなく最適化）",
+  "方向性（トーン）を1案で確定してから本制作へ",
 ];
 
 const FLOW = [
@@ -25,43 +36,34 @@ const FLOW = [
 
 function setMetaByName(name, content) {
   if (!content) return;
-
   let tag = document.querySelector(`meta[name="${name}"]`);
-
   if (!tag) {
     tag = document.createElement("meta");
     tag.setAttribute("name", name);
     document.head.appendChild(tag);
   }
-
   tag.setAttribute("content", content);
 }
 
 function setMetaByProperty(property, content) {
   if (!content) return;
-
   let tag = document.querySelector(`meta[property="${property}"]`);
-
   if (!tag) {
     tag = document.createElement("meta");
     tag.setAttribute("property", property);
     document.head.appendChild(tag);
   }
-
   tag.setAttribute("content", content);
 }
 
 function setCanonical(href) {
   if (!href) return;
-
   let tag = document.querySelector('link[rel="canonical"]');
-
   if (!tag) {
     tag = document.createElement("link");
     tag.setAttribute("rel", "canonical");
     document.head.appendChild(tag);
   }
-
   tag.setAttribute("href", href);
 }
 
@@ -76,6 +78,11 @@ function validateForm(formData) {
   const email = String(formData.get("email") || "").trim();
   const siteType = String(formData.get("siteType") || "").trim();
   const budget = String(formData.get("budget") || "").trim();
+  const decision = String(formData.get("decision") || "").trim();
+
+  // ここが“吸われない入口”の核（必須）
+  const works1 = String(formData.get("works1") || "").trim();
+
   const detail = String(formData.get("detail") || "").trim();
 
   if (!name) errors.name = "お名前を入力してください。";
@@ -88,10 +95,23 @@ function validateForm(formData) {
 
   if (!siteType) errors.siteType = "制作形式を選択してください。";
   if (!budget) errors.budget = "ご予算感を選択してください。";
+  if (!decision) errors.decision = "決裁者の状況を選択してください。";
+
+  if (!works1) {
+    errors.works1 = "WORKSから近い作品（URLまたは作品名）を1つ入力してください。";
+  }
+
   if (!detail) errors.detail = "ご相談内容を入力してください。";
 
   return errors;
 }
+
+const SITE_TYPE_LABEL = {
+  lp: "LP",
+  multi: "複数ページ",
+  renewal: "リニューアル",
+  consult: "相談",
+};
 
 export default function Contact() {
   const rootRef = useRef(null);
@@ -119,19 +139,26 @@ export default function Contact() {
     setMetaByName("description", PAGE_DESCRIPTION);
     setCanonical(CANONICAL_URL);
 
+    const origin =
+      typeof window !== "undefined"
+        ? window.location.origin
+        : "https://gushikendesign.com";
+    const ogImage = `${origin}/ogp.png`;
+
     setMetaByProperty("og:title", PAGE_TITLE);
     setMetaByProperty("og:description", PAGE_DESCRIPTION);
     setMetaByProperty("og:url", CANONICAL_URL);
     setMetaByProperty("og:type", "website");
+    setMetaByProperty("og:image", ogImage);
 
     setMetaByName("twitter:card", "summary_large_image");
     setMetaByName("twitter:title", PAGE_TITLE);
     setMetaByName("twitter:description", PAGE_DESCRIPTION);
+    setMetaByName("twitter:image", ogImage);
   }, []);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
     if (isLoading) return;
 
     const form = event.currentTarget;
@@ -158,21 +185,24 @@ export default function Contact() {
     setMessage("");
     setFieldErrors({});
 
-    formData.append("_subject", "GUSHIKEN DESIGN お問い合わせ");
+    const siteType = String(formData.get("siteType") || "");
+    const budget = String(formData.get("budget") || "");
+    const typeLabel = SITE_TYPE_LABEL[siteType] || siteType || "未選択";
+
+    formData.append(
+      "_subject",
+      `GUSHIKEN DESIGN お問い合わせ（${typeLabel} / ${budget || "予算未選択"}）`
+    );
     formData.append("_replyto", String(formData.get("email") || ""));
 
     try {
       const response = await fetch(FORMSPREE_ENDPOINT, {
         method: "POST",
-        headers: {
-          Accept: "application/json",
-        },
+        headers: { Accept: "application/json" },
         body: formData,
       });
 
-      if (!response.ok) {
-        throw new Error("Form submission failed");
-      }
+      if (!response.ok) throw new Error("Form submission failed");
 
       setStatus("success");
       setMessage("送信が完了しました。お問い合わせありがとうございます。");
@@ -210,6 +240,12 @@ export default function Contact() {
             まだ内容が固まっていない段階でも大丈夫です。
             <br />
             <span>LPか複数ページか、予算に合う進め方から整理できます。</span>
+            <br />
+            まずは{" "}
+            <Link to={WORKS_PATH}>
+              WORKS
+            </Link>{" "}
+            から近い雰囲気を選んでいただくと、方向性が揃って進行が早いです。
           </p>
         </header>
 
@@ -224,6 +260,19 @@ export default function Contact() {
                   <p>{item}</p>
                 </div>
               ))}
+            </div>
+
+            <div className={styles.flowBlock}>
+              <p className={styles.panelLabel}>方向性の合わせ方</p>
+
+              <div className={styles.starterList}>
+                {ALIGN.map((item, index) => (
+                  <div key={item} className={styles.starterItem}>
+                    <span>{String(index + 1).padStart(2, "0")}</span>
+                    <p>{item}</p>
+                  </div>
+                ))}
+              </div>
             </div>
 
             <div className={styles.flowBlock}>
@@ -310,7 +359,12 @@ export default function Contact() {
                 htmlFor="siteType"
                 error={fieldErrors.siteType}
               >
-                <Select id="siteType" name="siteType" required error={fieldErrors.siteType}>
+                <Select
+                  id="siteType"
+                  name="siteType"
+                  required
+                  error={fieldErrors.siteType}
+                >
                   <option value="" disabled>
                     選択してください
                   </option>
@@ -327,28 +381,38 @@ export default function Contact() {
                 htmlFor="budget"
                 error={fieldErrors.budget}
               >
-       <Select id="budget" name="budget" required error={fieldErrors.budget}>
-  <option value="" disabled>選択してください</option>
-
-  <option value="〜6万円">〜6万円</option>
-  <option value="〜15万円">〜15万円</option>
-  <option value="〜30万円">〜30万円</option>
-  <option value="30万円以上">30万円以上</option>
-  <option value="未定・相談したい">未定・相談したい</option>
-</Select>
+                <Select id="budget" name="budget" required error={fieldErrors.budget}>
+                  <option value="" disabled>
+                    選択してください
+                  </option>
+                  <option value="〜6万円">〜6万円</option>
+                  <option value="〜15万円">〜15万円</option>
+                  <option value="〜30万円">〜30万円</option>
+                  <option value="30万円以上">30万円以上</option>
+                  <option value="未定・相談したい">未定・相談したい</option>
+                </Select>
               </FormField>
             </div>
 
             <div className={styles.formGrid}>
-              <FormField label="素材の有無（任意）" htmlFor="materials">
-                <Select id="materials" name="materials">
+              <FormField
+                label="決裁者の状況"
+                required
+                htmlFor="decision"
+                error={fieldErrors.decision}
+              >
+                <Select
+                  id="decision"
+                  name="decision"
+                  required
+                  error={fieldErrors.decision}
+                >
                   <option value="" disabled>
-                    未選択
+                    選択してください
                   </option>
-                  <option value="have">写真・文章あり</option>
-                  <option value="partial">一部あり</option>
-                  <option value="none">まだ揃っていない</option>
-                  <option value="consult">相談したい</option>
+                  <option value="決裁者（または同等）">決裁者（または同等）</option>
+                  <option value="社内確認が必要">社内確認が必要</option>
+                  <option value="未定">未定</option>
                 </Select>
               </FormField>
 
@@ -365,6 +429,83 @@ export default function Contact() {
               </FormField>
             </div>
 
+            <div className={styles.formGrid}>
+              <FormField label="素材の有無（任意）" htmlFor="materials">
+                <Select id="materials" name="materials">
+                  <option value="" disabled>
+                    未選択
+                  </option>
+                  <option value="have">写真・文章あり</option>
+                  <option value="partial">一部あり</option>
+                  <option value="none">まだ揃っていない</option>
+                  <option value="consult">相談したい</option>
+                </Select>
+              </FormField>
+
+              {/* （ここは空き枠にしておく or 別の任意項目にしてもOK）
+                  いまは「近い作品/参考サイト」を下でまとめるので、ここは触らない */}
+              <FormField label="備考（任意）" htmlFor="note">
+                <input
+                  id="note"
+                  name="note"
+                  type="text"
+                  className={styles.input}
+                  placeholder="（任意）"
+                />
+              </FormField>
+            </div>
+
+            {/* ★ ここが変更点：WORKS必須 ＋ 参考サイト任意 */}
+    <div className={styles.formGrid}>
+  <FormField
+    label={
+      <>
+        近い作品{" "}
+        <a
+          href={WORKS_URL}
+          target="_blank"
+          rel="noreferrer noopener"
+          aria-label="WORKSを新しいタブで開く"
+          title="WORKS（新しいタブ）"
+          style={{
+            textDecoration: "underline",
+            textUnderlineOffset: 3,
+            opacity: 0.92,
+            // “飛べる”気配（強すぎない）
+            textShadow: "0 0 14px rgba(255,255,255,0.22)",
+          }}
+        >
+          （WORKS）
+        </a>
+      </>
+    }
+    required
+    htmlFor="works1"
+    error={fieldErrors.works1}
+  >
+                <input
+                  id="works1"
+                  name="works1"
+                  type="text"
+                  required
+                  className={styles.input}
+                  placeholder="WORKSのURL または 作品名（必須）"
+                  aria-invalid={Boolean(fieldErrors.works1)}
+                  aria-describedby={fieldErrors.works1 ? "works1-error" : undefined}
+                />
+              </FormField>
+
+              <FormField label="参考サイト（任意）" htmlFor="refUrl">
+                <input
+                  id="refUrl"
+                  name="refUrl"
+                  type="text"
+                  className={styles.input}
+                  placeholder="参考サイトのURL または 作品名（任意）"
+                />
+              </FormField>
+            </div>
+
             <FormField
               label="ご相談内容"
               required
@@ -377,22 +518,30 @@ export default function Contact() {
                 rows={7}
                 required
                 className={styles.textarea}
-                placeholder="目的・現状・参考サイト・入れたい内容など、書ける範囲で大丈夫です。"
+                placeholder="目的・現状・入れたい内容など、書ける範囲で大丈夫です。"
                 aria-invalid={Boolean(fieldErrors.detail)}
                 aria-describedby={fieldErrors.detail ? "detail-error" : undefined}
               />
             </FormField>
 
             <ul className={styles.notes}>
-              <li>まだ内容が固まっていなくてもご相談いただけます。</li>
-              <li>写真がある場合、明るさ・色の軽い補正は料金内です。</li>
-              <li>内容確認後、制作範囲と費用感をご案内します。</li>
+              <li>
+                参考サイトの共有は歓迎です。ただし完全な再現ではなく、「どこが良いか」を読み、目的に合わせて最適化します。
+              </li>
+              <li>
+                “イメージ違い”を防ぐため、制作前に方向性（トーン）を1案で確定してから本制作へ進みます。
+              </li>
+              <li>
+                デザイン案（ラフを含む）の作成は制作業務のため、着手金の入金確認後に開始します。
+              </li>
             </ul>
 
             <div className={styles.cta}>
               <button
                 type="submit"
-                className={`${styles.submitBtn} ${isLoading ? styles.submitDisabled : ""}`}
+                className={`${styles.submitBtn} ${
+                  isLoading ? styles.submitDisabled : ""
+                }`}
                 disabled={isLoading}
               >
                 {isLoading ? (
@@ -411,7 +560,9 @@ export default function Contact() {
               {message && (
                 <p
                   className={`${styles.statusMsg} ${
-                    status === "success" ? styles.statusSuccess : styles.statusError
+                    status === "success"
+                      ? styles.statusSuccess
+                      : styles.statusError
                   }`}
                   role={status === "error" ? "alert" : "status"}
                 >
@@ -426,13 +577,20 @@ export default function Contact() {
   );
 }
 
-function FormField({ label, children, required = false, htmlFor, error }) {
+function FormField({ label, children, required = false, htmlFor, error, hint }) {
   return (
     <div className={styles.field}>
       <label className={styles.label} htmlFor={htmlFor}>
         {label}
         {required && <span className={styles.req}> *</span>}
       </label>
+
+      {/* CSSはいじらず、ここだけインラインで軽く出す */}
+      {hint && (
+        <div style={{ marginTop: "-2px", marginBottom: "8px", fontSize: "12px", opacity: 0.78 }}>
+          {hint}
+        </div>
+      )}
 
       {children}
 
