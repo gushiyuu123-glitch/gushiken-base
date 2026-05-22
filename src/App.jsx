@@ -444,7 +444,19 @@ export default function App() {
       cleanupObserver();
     };
   }, [location.pathname, location.search]);
+useEffect(() => {
+  if (!import.meta.env.PROD) return;
 
+  const id = requestAnimationFrame(() => {
+    window.gtag?.("event", "page_view", {
+      page_path: location.pathname + location.search,
+      page_location: window.location.href,
+      page_title: document.title,
+    });
+  });
+
+  return () => cancelAnimationFrame(id);
+}, [location.pathname, location.search]);
 return (
   <>
     <Layout />
