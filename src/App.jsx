@@ -67,6 +67,8 @@ import NewsDetail from "./pages/NewsDetail";
 // Experiments
 import Layer0 from "./pages/Layer0";
 
+import { Analytics } from "@vercel/analytics/react";
+
 /* ============================================================================
    SEO Bridge
    - Routeごとに title/description/canonical/og:url を切り替える
@@ -275,6 +277,7 @@ function SeoBridge() {
     />
   );
 }
+
 /* ============================================================================
    Layout
 =========================================================================== */
@@ -300,7 +303,7 @@ function Layout() {
           {/* Works Detail Pages */}
           <Route path="/works/noir-lux" element={<NoirLux />} />
           <Route path="/works/resonance" element={<Resonance />} />
-<Route path="/works/still" element={<Navigate to="/works/stillRoom" replace />} />
+          <Route path="/works/still" element={<Navigate to="/works/stillRoom" replace />} />
           <Route path="/works/BlueShoreHotel" element={<BlueShoreHotel />} />
           <Route path="/works/CapeOkinawa" element={<CapeOkinawa />} />
           <Route path="/works/OkinawaWhiteSpa" element={<OkinawaWhiteSpa />} />
@@ -442,5 +445,10 @@ export default function App() {
     };
   }, [location.pathname, location.search]);
 
-  return <Layout />;
+return (
+  <>
+    <Layout />
+    <Analytics mode="production" />
+  </>
+);
 }
