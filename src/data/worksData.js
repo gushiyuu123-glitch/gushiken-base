@@ -1329,6 +1329,44 @@ subtitle: "世界観と設計力の“核”を示す代表作",
   category: "FOOD / FURNITURE / BRAND",
   subtitle: "飲食・家具・ブランドUIに最適化した世界観設計",
   items: [
+    {
+  title: "島豚の湯霧 — Okinawa Shabu-Shabu",
+  slug: "shimabuta-yugiri",
+  desc: "出汁で、決まる。\n迷う順番を先に消して、予約まで落とすしゃぶしゃぶLP。",
+  link: "https://shimabuta-yugiri.vercel.app/", // TODO: 本番URLに差し替え
+  img: "/works/shimabuta-yugiri.webp", // TODO: 画像配置
+
+  isNew: true,
+  createdAt: "2026-05-23", // TODO: 公開日に合わせて
+
+  tags: [
+    "NEW",
+    "Okinawa",
+    "Naha",
+    "Shabu-shabu",
+    "Restaurant",
+    "Decision Design",
+    "UI/UX",
+    "PC/SP 完全分離",
+    "GSAP",
+    "IntersectionObserver"
+  ],
+
+  detail: {
+    concept:
+      "“豚がうまい”を語るためではなく、決まる順番を作るための設計。コースの答えを一本化し、当日の流れを1枚で終わらせ、予約は短くして迷いを残さない。Heroは筆文字（SVG）と写真の重心で一撃を作り、以降は不安要素（当日枠・遅刻・駐車場・アレルギー）を必要な場所で回収する。",
+    tech: ["React", "Vite", "CSS Modules", "GSAP", "IntersectionObserver", "PC/SP 完全分離"]
+  },
+
+  seo: {
+    title: "島豚の湯霧｜出汁で、決まる。沖縄豚しゃぶのコンセプトサイト｜GUSHIKEN DESIGN",
+    description:
+      "島豚の湯霧は、飲食店サイトで起きる“決まらない”を順番で解決するコンセプトLP。コース選び、当日の流れ、予約の不安を先回りで消し、迷わず予約できる状態を作る。",
+    keywords:
+      "沖縄 しゃぶしゃぶ, 那覇 牧志, 飲食店 LP, 予約導線, UI/UX, 世界観デザイン, GUSHIKEN DESIGN",
+    ogImage: "https://gushikendesign.com/ogp/shimabuta-yugiri.png" // TODO: 用意したOGPに合わせて
+  }
+},
         /* ==========================================================
         SORAOTO — Piano Private Lesson
     ========================================================== */
