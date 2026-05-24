@@ -93,11 +93,13 @@
       padding: 0;
     }
   </style>
+<!-- Google Analytics (GA4) - self exclude (no GA settings touch) -->
 <script>
   (function () {
     const KEY = "__gd_internal__";
     const qs = new URLSearchParams(location.search);
 
+    // internalフラグのON/OFF（端末ブラウザ単位）
     if (qs.get("internal") === "1") localStorage.setItem(KEY, "1");
     if (qs.get("internal") === "0") localStorage.removeItem(KEY);
 
@@ -105,16 +107,23 @@
     window.dataLayer = window.dataLayer || [];
     window.gtag = window.gtag || function(){ window.dataLayer.push(arguments); };
 
-    // internal 端末はGAを一切ロードしない
+    // internal端末はGAを一切ロードしない（= 計測されない）
     if (localStorage.getItem(KEY) === "1") return;
 
     const GA_ID = "G-NM83YP0V4Q";
-    const s = document.createElement("script");
-    s.async = true;
-    s.src = "https://www.googletagmanager.com/gtag/js?id=" + GA_ID;
-    document.head.appendChild(s);
 
+    // ✅ 念のため二重ロード防止（他経路が無い前提だが保険）
+    if (!document.querySelector('script[src^="https://www.googletagmanager.com/gtag/js?id="]')) {
+      const s = document.createElement("script");
+      s.async = true;
+      s.src = "https://www.googletagmanager.com/gtag/js?id=" + GA_ID;
+      document.head.appendChild(s);
+    }
+
+    // 初期化
     gtag("js", new Date());
+
+    // SPA前提：自動page_viewは止める（君の手動page_view運用を維持）
     gtag("config", GA_ID, { send_page_view: false });
   })();
 </script>
