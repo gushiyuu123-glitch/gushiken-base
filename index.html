@@ -18,10 +18,7 @@
 
   <!-- Domain Verify (keep) -->
   <meta name="p:domain_verify" content="48dd0e90de53ad499404794fccf42239" />
-  <meta
-    name="google-site-verification"
-    content="iG_ZrJCqMsY5q1LbjYgdRdGnKp4rr3RKKLk7D8HNZ1w"
-  />
+  <meta name="google-site-verification" content="iG_ZrJCqMsY5q1LbjYgdRdGnKp4rr3RKKLk7D8HNZ1w" />
 
   <!-- Favicons (keep) -->
   <link rel="icon" href="/favicon.ico" sizes="any" />
@@ -51,23 +48,21 @@
     property="og:description"
     content="沖縄を拠点に、世界観設計からフロントエンド実装まで一気通貫で制作します。"
   />
-<meta property="og:image" content="https://gushikendesign.com/ogp-v3.png?v=20260517-1" />
-<meta property="og:image:secure_url" content="https://gushikendesign.com/ogp-v3.png?v=20260517-1" />
-<meta property="og:image:type" content="image/png" />
-<meta property="og:image:width" content="1200" />
-<meta property="og:image:height" content="630" />
-<meta property="og:image:alt" content="GUSHIKEN DESIGN" />
+  <meta property="og:image" content="https://gushikendesign.com/ogp-v3.png?v=20260517-1" />
+  <meta property="og:image:secure_url" content="https://gushikendesign.com/ogp-v3.png?v=20260517-1" />
+  <meta property="og:image:type" content="image/png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="GUSHIKEN DESIGN" />
 
-<meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:image" content="https://gushikendesign.com/ogp-v3.png?v=20260517-1" />
-
+  <!-- ✅ Twitter（二重定義を廃止 / 画像URLをOGと統一） -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="GUSHIKEN DESIGN" />
   <meta
     name="twitter:description"
     content="沖縄を拠点に、世界観設計からフロントエンド実装まで一気通貫で制作します。"
   />
-  <meta name="twitter:image" content="https://gushikendesign.com/ogp-v3.png" />
+  <meta name="twitter:image" content="https://gushikendesign.com/ogp-v3.png?v=20260517-1" />
 
   <!-- FOUC prevention (keep) -->
   <style>
@@ -93,40 +88,53 @@
       padding: 0;
     }
   </style>
-<!-- Google Analytics (GA4) - self exclude (no GA settings touch) -->
-<script>
-  (function () {
-    const KEY = "__gd_internal__";
-    const qs = new URLSearchParams(location.search);
 
-    // internalフラグのON/OFF（端末ブラウザ単位）
-    if (qs.get("internal") === "1") localStorage.setItem(KEY, "1");
-    if (qs.get("internal") === "0") localStorage.removeItem(KEY);
+  <!-- Google Analytics (GA4) - self exclude (secret + url scrub) -->
+  <script>
+    (function () {
+      const KEY = "__gd_internal__";
+      const qs = new URLSearchParams(location.search);
 
-    // ✅ internal時でもアプリが落ちないように、gtagだけは常に定義しておく
-    window.dataLayer = window.dataLayer || [];
-    window.gtag = window.gtag || function(){ window.dataLayer.push(arguments); };
+      // 🔒 必ず変えろ：自分だけ知ってる長いランダム文字列
+      const SECRET = "CHANGE_ME_TO_LONG_RANDOM";
 
-    // internal端末はGAを一切ロードしない（= 計測されない）
-    if (localStorage.getItem(KEY) === "1") return;
+      // internalフラグのON/OFF（端末ブラウザ単位）
+      if (qs.get("internal") === "1" && qs.get("k") === SECRET) localStorage.setItem(KEY, "1");
+      if (qs.get("internal") === "0") localStorage.removeItem(KEY);
 
-    const GA_ID = "G-NM83YP0V4Q";
+      // ✅ URLから internal/k を消す（共有事故・ログ露出を殺す）
+      if (qs.has("internal") || qs.has("k")) {
+        qs.delete("internal");
+        qs.delete("k");
+        const rest = qs.toString();
+        const clean = location.pathname + (rest ? `?${rest}` : "") + location.hash;
+        history.replaceState(null, "", clean);
+      }
 
-    // ✅ 念のため二重ロード防止（他経路が無い前提だが保険）
-    if (!document.querySelector('script[src^="https://www.googletagmanager.com/gtag/js?id="]')) {
-      const s = document.createElement("script");
-      s.async = true;
-      s.src = "https://www.googletagmanager.com/gtag/js?id=" + GA_ID;
-      document.head.appendChild(s);
-    }
+      // ✅ internal時でもアプリが落ちないように、gtagだけは常に定義しておく
+      window.dataLayer = window.dataLayer || [];
+      window.gtag = window.gtag || function(){ window.dataLayer.push(arguments); };
 
-    // 初期化
-    gtag("js", new Date());
+      // internal端末はGAを一切ロードしない（= 計測されない）
+      if (localStorage.getItem(KEY) === "1") return;
 
-    // SPA前提：自動page_viewは止める（君の手動page_view運用を維持）
-    gtag("config", GA_ID, { send_page_view: false });
-  })();
-</script>
+      const GA_ID = "G-NM83YP0V4Q";
+
+      // ✅ 二重ロード防止（保険）
+      if (!document.querySelector('script[src^="https://www.googletagmanager.com/gtag/js?id="]')) {
+        const s = document.createElement("script");
+        s.async = true;
+        s.src = "https://www.googletagmanager.com/gtag/js?id=" + GA_ID;
+        document.head.appendChild(s);
+      }
+
+      gtag("js", new Date());
+
+      // SPA手動page_view前提：自動送信は止める（君の運用を維持）
+      gtag("config", GA_ID, { send_page_view: false });
+    })();
+  </script>
+
   <!-- JSON-LD (Organization only) -->
   <script type="application/ld+json">
   {
@@ -181,7 +189,6 @@
 </head>
 
 <body>
-  <!-- ✅ 本文に拾われても痛くないように極短 + data-nosnippet -->
   <noscript>
     <div
       data-nosnippet
