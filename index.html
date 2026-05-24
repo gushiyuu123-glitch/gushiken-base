@@ -93,16 +93,30 @@
       padding: 0;
     }
   </style>
-
-<!-- Google Analytics (GA4) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-NM83YP0V4Q"></script>
 <script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){ dataLayer.push(arguments); }
-  gtag("js", new Date());
+  (function () {
+    const KEY = "__gd_internal__";
+    const qs = new URLSearchParams(location.search);
 
-  // SPAで手動page_viewするので自動送信を止める
-  gtag("config", "G-NM83YP0V4Q", { send_page_view: false });
+    if (qs.get("internal") === "1") localStorage.setItem(KEY, "1");
+    if (qs.get("internal") === "0") localStorage.removeItem(KEY);
+
+    // ✅ internal時でもアプリが落ちないように、gtagだけは常に定義しておく
+    window.dataLayer = window.dataLayer || [];
+    window.gtag = window.gtag || function(){ window.dataLayer.push(arguments); };
+
+    // internal 端末はGAを一切ロードしない
+    if (localStorage.getItem(KEY) === "1") return;
+
+    const GA_ID = "G-NM83YP0V4Q";
+    const s = document.createElement("script");
+    s.async = true;
+    s.src = "https://www.googletagmanager.com/gtag/js?id=" + GA_ID;
+    document.head.appendChild(s);
+
+    gtag("js", new Date());
+    gtag("config", GA_ID, { send_page_view: false });
+  })();
 </script>
   <!-- JSON-LD (Organization only) -->
   <script type="application/ld+json">
