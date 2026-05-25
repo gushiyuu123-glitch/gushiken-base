@@ -1333,7 +1333,7 @@ subtitle: "世界観と設計力の“核”を示す代表作",
   title: "島豚の湯霧 — Okinawa Shabu-Shabu",
   slug: "shimabuta-yugiri",
   desc: "出汁で、決まる。\n迷う順番を先に消して、予約まで落とすしゃぶしゃぶLP。",
-  link: "https://shimabuta-yugiri.vercel.app/", // TODO: 本番URLに差し替え
+  link: "https://shimabutano-yugiri.vercel.app/", // TODO: 本番URLに差し替え
   img: "/works/shimabuta-yugiri.webp", // TODO: 画像配置
 
   isNew: true,

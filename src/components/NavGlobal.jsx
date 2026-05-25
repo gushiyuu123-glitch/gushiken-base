@@ -21,6 +21,10 @@ const GLOBAL_ITEMS = [
   { to: "/news", label: "NEWS" },
   { to: "/contact", label: "CONTACT", emphasis: true },
 ];
+// これを追加（監視専用）
+const OBSERVE_IDS = ["works", "about", "philosophy", "price", "news", "contact", "footer"];
+const DARK_HASHES = new Set(["#works",  "#news", "#footer"]);
+const DARK_ROUTES = new Set(["/works", "/news"]);
 
 function cx(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -108,7 +112,13 @@ function scrollToHash(hash, offsetPx) {
   });
 }
 
-export default function NavGlobal({ mode }) {
+/**
+ * tone:
+ * - "auto" (default): homeはhashで自動、下層はrouteで自動
+ * - "paper": 常に紙
+ * - "dark": 常に黒
+ */
+export default function NavGlobal({ mode, tone = "auto" }) {
   const { pathname } = useLocation();
   const isHome = mode ? mode === "home" : pathname === "/";
 
@@ -120,7 +130,6 @@ export default function NavGlobal({ mode }) {
   const navRef = useRef(null);
   const buttonRef = useRef(null);
   const firstLinkRef = useRef(null);
-  const panelRef = useRef(null);
   const pendingHashRef = useRef(null);
 
   const [navH, setNavH] = useState(FALLBACK_NAV_HEIGHT);
@@ -133,7 +142,7 @@ export default function NavGlobal({ mode }) {
 
   useEffect(() => setMounted(true), []);
 
-  /* ── measure nav height (real offset) ── */
+  /* ── measure nav height ── */
   useEffect(() => {
     const measure = () => {
       const h = navRef.current?.getBoundingClientRect?.().height;
@@ -157,7 +166,7 @@ export default function NavGlobal({ mode }) {
     };
   }, []);
 
-  /* ── scroll → background state ── */
+  /* ── scroll → active density ── */
   useEffect(() => {
     let raf = 0;
     const onScroll = () => {
@@ -218,7 +227,10 @@ export default function NavGlobal({ mode }) {
     const MAX_TRIES = 8;
 
     const setup = () => {
-      const targets = HOME_ITEMS.map((item) => document.querySelector(item.href)).filter(Boolean);
+ // 置き換え
+const targets = OBSERVE_IDS
+  .map((id) => document.getElementById(id))
+  .filter(Boolean);
 
       if (!targets.length) {
         tries += 1;
@@ -314,10 +326,20 @@ export default function NavGlobal({ mode }) {
 
   if (!mounted) return null;
 
+  // ── theme decision ──
+  let theme = "paper";
+  if (tone === "dark") theme = "dark";
+  else if (tone === "paper") theme = "paper";
+  else {
+    if (isHome) theme = DARK_HASHES.has(activeHash) ? "dark" : "paper";
+    else theme = DARK_ROUTES.has(pathname) ? "dark" : "paper";
+  }
+
   const ui = (
     <>
       <nav
         ref={navRef}
+        data-theme={theme}
         className={cx(styles.navRoot, scrolled ? styles.navActive : styles.navIdle)}
         aria-label="Global Navigation"
       >
@@ -338,7 +360,6 @@ export default function NavGlobal({ mode }) {
               }}
             >
               <span className={styles.navLogoMask} />
-              <span className={styles.navSheen} aria-hidden="true" />
             </span>
 
             <span className={styles.navLogoText}>
@@ -347,7 +368,6 @@ export default function NavGlobal({ mode }) {
                 style={{ "--nav-delay": "0.10s" }}
               >
                 GUSHIKEN DESIGN
-                <span className={styles.navSheen} aria-hidden="true" />
               </span>
 
               <span
@@ -355,7 +375,6 @@ export default function NavGlobal({ mode }) {
                 style={{ "--nav-delay": "0.16s" }}
               >
                 Web Design / Okinawa
-                <span className={styles.navSheen} aria-hidden="true" />
               </span>
             </span>
           </Link>
@@ -370,13 +389,16 @@ export default function NavGlobal({ mode }) {
                       href={item.href}
                       onClick={handleAnchorClick(item.href)}
                       aria-current={active ? "location" : undefined}
-                      data-active={active ? "true" : "false"}
                       data-emphasis={item.emphasis ? "true" : "false"}
-                      className={cx(styles.navItem, styles.sharpIn, active && styles.navItemActive)}
-                      style={{ "--nav-delay": `${0.24 + index * 0.07}s` }}
+                      className={cx(
+                        styles.navItem,
+                        styles.sharpIn,
+                        active && styles.navItemActive,
+                        item.emphasis && styles.navItemEmphasis
+                      )}
+                      style={{ "--nav-delay": `${0.22 + index * 0.06}s`, "--i": index }}
                     >
                       <span className={styles.navItemText}>{item.label}</span>
-                      <span className={styles.navSheen} aria-hidden="true" />
                     </a>
                   );
                 })
@@ -387,13 +409,16 @@ export default function NavGlobal({ mode }) {
                       key={item.to}
                       to={item.to}
                       aria-current={active ? "page" : undefined}
-                      data-active={active ? "true" : "false"}
                       data-emphasis={item.emphasis ? "true" : "false"}
-                      className={cx(styles.navItem, styles.sharpIn, active && styles.navItemActive)}
-                      style={{ "--nav-delay": `${0.24 + index * 0.07}s` }}
+                      className={cx(
+                        styles.navItem,
+                        styles.sharpIn,
+                        active && styles.navItemActive,
+                        item.emphasis && styles.navItemEmphasis
+                      )}
+                      style={{ "--nav-delay": `${0.22 + index * 0.06}s`, "--i": index }}
                     >
                       <span className={styles.navItemText}>{item.label}</span>
-                      <span className={styles.navSheen} aria-hidden="true" />
                     </Link>
                   );
                 })}
@@ -416,14 +441,15 @@ export default function NavGlobal({ mode }) {
       </nav>
 
       <div
+        data-theme={theme}
         className={cx(styles.mobileOverlay, open && styles.mobileOverlayOpen)}
         onClick={closeMenu}
         aria-hidden="true"
       />
 
       <div
-        ref={panelRef}
         id="global-mobile-navigation"
+        data-theme={theme}
         className={cx(styles.mobileNav, open && styles.mobileOpen)}
         role="dialog"
         aria-modal="true"
@@ -461,13 +487,18 @@ export default function NavGlobal({ mode }) {
                       tabIndex={open ? 0 : -1}
                       onClick={handleAnchorClick(item.href)}
                       aria-current={active ? "location" : undefined}
-                      data-active={active ? "true" : "false"}
                       data-emphasis={item.emphasis ? "true" : "false"}
-                      className={cx(styles.mobileNavItem, active && styles.mobileNavItemActive)}
+                      className={cx(
+                        styles.mobileNavItem,
+                        active && styles.mobileNavItemActive,
+                        item.emphasis && styles.mobileNavItemEmphasis
+                      )}
                       style={{ "--i": index }}
                     >
                       <span className={styles.mobileNavText}>{item.label}</span>
-                      <span className={styles.mobileNavArrow} aria-hidden="true">→</span>
+                      <span className={styles.mobileNavArrow} aria-hidden="true">
+                        →
+                      </span>
                     </a>
                   );
                 })
@@ -481,13 +512,18 @@ export default function NavGlobal({ mode }) {
                       tabIndex={open ? 0 : -1}
                       onClick={() => setOpen(false)}
                       aria-current={active ? "page" : undefined}
-                      data-active={active ? "true" : "false"}
                       data-emphasis={item.emphasis ? "true" : "false"}
-                      className={cx(styles.mobileNavItem, active && styles.mobileNavItemActive)}
+                      className={cx(
+                        styles.mobileNavItem,
+                        active && styles.mobileNavItemActive,
+                        item.emphasis && styles.mobileNavItemEmphasis
+                      )}
                       style={{ "--i": index }}
                     >
                       <span className={styles.mobileNavText}>{item.label}</span>
-                      <span className={styles.mobileNavArrow} aria-hidden="true">→</span>
+                      <span className={styles.mobileNavArrow} aria-hidden="true">
+                        →
+                      </span>
                     </Link>
                   );
                 })}

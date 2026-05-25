@@ -1,413 +1,536 @@
-/* src/sections/Hero.module.css */
-
-/* ============================================================
-   HERO — minimal tuning
-   - tempo: closer to 0.62〜0.68s
-   - blur: ultra thin only
-   - CTA: text-only, no uppercase, quieter
-============================================================ */
-
 .heroRoot{
-  --hero-silver: rgba(220, 226, 235, 0.55);
+  --paper:#f4efe6;
+  --ink:rgba(28,28,28,.92);
+  --muted:rgba(28,28,28,.60);
+  --faint:rgba(28,28,28,.42);
+  --line:rgba(100,80,50,.18);
+  --gold:#b8905a;
 
-  /* timings */
-  --t-img: 1.02s;
-  --t-text: 0.64s;
-  --t-logo: 0.84s;
-
-  --ease: cubic-bezier(.22,.56,.18,1);
-  --ease-soft: cubic-bezier(.18,.62,.20,1);
-
-  /* CTA */
-  --hero-cta-color: rgba(255,255,255,0.64);
-  --hero-cta-border: rgba(255,255,255,0.14);
-  --hero-cta-hover: rgba(255,255,255,0.86);
-  --hero-cta-border-hover: rgba(255,255,255,0.28);
+  position:relative;
+  min-height:100svh;
+  background:var(--paper);
+  color:var(--ink);
+  overflow:hidden;
+  isolation:isolate;
 }
 
-/* ------------------------------------------------------------
-   Image
------------------------------------------------------------- */
-.heroImage{
-  opacity: 0;
-  transform: scale(1.018) translate3d(0, 7px, 0);
-  filter: brightness(0.82) saturate(0.88) contrast(1.025);
-  will-change: transform, opacity, filter;
-  backface-visibility: hidden;
-  transform-origin: center center;
+/* 紙の光 */
+.heroRoot::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  z-index:0;
+  background:
+    radial-gradient(900px 600px at 18% 18%, rgba(255,255,255,.62), rgba(255,255,255,0)),
+    radial-gradient(1000px 700px at 78% 38%, rgba(255,255,255,.38), rgba(255,255,255,0));
 }
 
-.heroImageReveal{}
-
-.heroRoot[data-loaded="true"] .heroImageReveal{
-  opacity: 1;
-  animation:
-    heroImageReveal var(--t-img) var(--ease) 0s both,
-    heroStill 22s ease-in-out var(--t-img) infinite;
+/* グレイン */
+.heroRoot::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  z-index:0;
+  opacity:.022;
+  background-image: radial-gradient(rgba(0,0,0,.22) .4px, transparent .42px);
+  background-size:4px 4px;
+  mix-blend-mode:multiply;
 }
 
-/* ------------------------------------------------------------
-   Text reveal
------------------------------------------------------------- */
-.heroFade{
-  opacity: 0;
-  transform: translate3d(0, 18px, 0) scale(0.995);
-  filter: blur(0.12px);
-  animation: heroReveal var(--t-text) var(--ease) forwards;
-  will-change: transform, opacity, filter;
-  backface-visibility: hidden;
+/* =========================
+   SHELF PHOTO
+========================= */
+.bgPhoto{
+  position:absolute;
+  left:0; right:0; bottom:0;
+  height:clamp(220px,34vh,380px);
+  z-index:0;
+  pointer-events:none;
+
+  background-image:url("/images/shelf-vase1.webp");
+  background-size:cover;
+  background-position:82% 100%;
+  background-repeat:no-repeat;
+
+  opacity:.92;
+  filter:saturate(.96) contrast(.95) brightness(1.05);
+
+  -webkit-mask-image:linear-gradient(to top, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 62%, rgba(0,0,0,0) 100%);
+  mask-image:linear-gradient(to top, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 62%, rgba(0,0,0,0) 100%);
 }
-
-.heroFade1{ animation-delay: 0.06s; }
-.heroFade2{ animation-delay: 0.12s; }
-.heroFade4{ animation-delay: 0.22s; }
-.heroFade5{ animation-delay: 0.30s; }
-.heroFade6{ animation-delay: 0.40s; }
-
-/* ------------------------------------------------------------
-   Title
------------------------------------------------------------- */
-.heroTitleWrap{
-  position: relative;
-  width: clamp(284px, 34.5vw, 444px);
-  max-width: 100%;
-  line-height: 1;
-  isolation: isolate;
-}
-
-.heroLogoReveal{
-  opacity: 0;
-  transform: translate3d(0, 10px, 0) scale(0.982);
-  animation: heroLogoReveal var(--t-logo) var(--ease) 0.16s both;
-  will-change: transform, opacity;
-  backface-visibility: hidden;
-}
-
-.heroTitleImg{
-  display: block;
-  width: 100%;
-  height: auto;
-
-  margin-block: 8px;
-  margin-top: 12px;
-
-  opacity: 0.78;
-
-  filter:
-    invert(1)
-    brightness(1.04)
-    saturate(0)
-    contrast(1.04)
-    drop-shadow(0 2px 12px rgba(0,0,0,0.18))
-    drop-shadow(0 0 0.45px rgba(255,255,255,0.06));
-
-  transform: translateZ(0);
-  backface-visibility: hidden;
-  -webkit-font-smoothing: antialiased;
-
-  -webkit-mask-image: linear-gradient(
-    90deg,
-    rgba(0,0,0,1) 0%,
-    rgba(0,0,0,1) 84%,
-    rgba(0,0,0,0) 100%
+.bgPhoto::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  background:linear-gradient(
+    to top,
+    rgba(244,239,230,.92) 0%,
+    rgba(244,239,230,.62) 26%,
+    rgba(244,239,230,0) 68%
   );
-  mask-image: linear-gradient(
-    90deg,
-    rgba(0,0,0,1) 0%,
-    rgba(0,0,0,1) 84%,
-    rgba(0,0,0,0) 100%
-  );
-  -webkit-mask-repeat: no-repeat;
-  mask-repeat: no-repeat;
-  -webkit-mask-position: left center;
-  mask-position: left center;
-  -webkit-mask-size: 0% 100%;
-  mask-size: 0% 100%;
-
-  will-change: -webkit-mask-size, mask-size, opacity, filter;
 }
 
-.heroLogoReveal .heroTitleImg{
-  animation:
-    logoWipe 0.96s var(--ease) 0.20s both,
-    logoFocus 0.96s var(--ease-soft) 0.20s both;
+/* =========================
+   BG TYPE（主張を落とす）
+========================= */
+.bgType{
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  z-index:1;
+  overflow:hidden;
+}
+.bgWord{
+  position:absolute;
+  font-family:"Cormorant Garamond","Times New Roman",serif;
+  font-weight:300;
+  line-height:.88;
+  letter-spacing:.04em;
+  color: rgba(140,120,90,.050); /* ←主張落とす（作品勝ち） */
+  white-space:nowrap;
+  user-select:none;
+}
+.bgWordTop{ top:52px; left:-8px; font-size:clamp(108px,16.8vw,276px); }
+.bgWordBottom{ bottom:-34px; left:-6px; font-size:clamp(126px,18.8vw,312px); }
+
+/* =========================
+   NAV
+========================= */
+.nav{
+  position:absolute;
+  top:0; left:0; right:0;
+  z-index:10;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:24px 36px;
+}
+.logo{ display:flex; align-items:center; gap:11px; text-decoration:none; }
+.logoMark{
+  width:38px; height:38px;
+  border-radius:50%;
+  border:1px solid rgba(100,80,50,.20);
+  display:flex; align-items:center; justify-content:center;
+  font-family:"Cormorant Garamond","Times New Roman",serif;
+  font-size:12px;
+  letter-spacing:.04em;
+  color:var(--ink);
+  background:rgba(255,255,255,.50);
+}
+.logoText{ display:flex; flex-direction:column; gap:1px; }
+.logoName{ font-size:11px; letter-spacing:.18em; color:var(--ink); }
+
+/* SPは別Heroに任せるなら、ここで消してOK（PC基準を守る） */
+@media (max-width: 900px){
+  .logoSub{ display:none; }
+}
+.navLinks{ display:flex; align-items:center; gap:28px; }
+.navLink{
+  font-size:10.5px;
+  letter-spacing:.18em;
+  color:var(--muted);
+  text-decoration:none;
+  transition:color .2s;
+}
+.navLink:hover{ color:var(--ink); }
+
+.navCta{
+  font-size:10.5px;
+  letter-spacing:.14em;
+  color:var(--ink);
+  text-decoration:none;
+  border:1px solid var(--line);
+  padding:8px 20px;
+  transition:background .22s,color .22s,border-color .22s;
+}
+.navCta:hover{ background:var(--ink); color:var(--paper); border-color:rgba(28,28,28,.9); }
+
+/* =========================
+   GRID
+========================= */
+.grid{
+  position:relative;
+  z-index:2;
+  display:grid;
+  grid-template-columns:minmax(280px,390px) minmax(560px,1fr);
+  align-items:end;
+  gap:0 46px;
+  min-height:100svh;
+  padding:104px 36px 54px;
 }
 
-@supports not (mask-image: linear-gradient(#000, #000)) {
-  .heroTitleImg { clip-path: inset(0 100% 0 0); }
-  .heroLogoReveal .heroTitleImg{
-    animation:
-      logoClipWipe 0.96s var(--ease) 0.20s both,
-      logoFocus 0.96s var(--ease-soft) 0.20s both;
+/* LEFT（最終値だけ残す） */
+.left{
+  position:relative;
+  z-index:3;
+  transform: translate(72px, -248px);
+}
+
+.kicker{ font-size:14px; letter-spacing:.08em; color:var(--ink); margin-bottom:7px; }
+.kickerRule{ width:36px; height:1px; background:var(--gold); margin-bottom:20px; opacity:.7; }
+
+.h1{
+  font-family:"Cormorant Garamond","Times New Roman",serif;
+  font-size:clamp(58px,5.8vw,106px);
+  font-weight:400;
+  line-height:.92;
+  letter-spacing:.01em;
+  margin-bottom:24px;
+}
+
+.copy{ max-width:440px; }
+.copyMeta{ font-size:10px; letter-spacing:.16em; color:rgba(28,28,28,.40); margin-bottom:12px; }
+.copy p{ font-size:12px; line-height:2.0; letter-spacing:.02em; color:var(--muted); }
+.copySub{ margin-top:12px; color:rgba(28,28,28,.46); }
+
+.cta{
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+  margin-top:24px;
+  padding-bottom:8px;
+  border-bottom:1px solid var(--line);
+  text-decoration:none;
+  color:var(--ink);
+  font-size:11px;
+  letter-spacing:.16em;
+  transition:gap .22s,border-color .22s,transform .22s;
+}
+.cta:hover{ gap:16px; border-color:rgba(100,80,50,.36); transform:translateX(2px); }
+.ctaArrow{ font-size:13px; }
+
+/* =========================
+   RIGHT (STAGE) + 壁殺し込み
+========================= */
+.right{
+  /* 壁を殺す：巨大ボックス化を止める */
+  justify-self:end;
+  width:min(calc(var(--stageW) + var(--stageInsetR)), 100%);
+  position:relative;
+  z-index:2;
+
+  display:flex;
+  flex-direction:column;
+  align-items:stretch;
+
+  --stageW: min(820px, 100%);
+  --stageInsetR: clamp(140px, 10vw, 240px);
+}
+
+.selectedLabel{
+  font-size:10px;
+  letter-spacing:.22em;
+  color:var(--faint);
+  margin-bottom:14px;
+  width:var(--stageW);
+  margin-left:auto;
+  margin-right:var(--stageInsetR);
+}
+
+.shelfWrap{
+  position:relative;
+  width:var(--stageW);
+  margin-left:auto;
+  margin-right:var(--stageInsetR);
+  height:clamp(520px,70vh,740px);
+  --shelfTop: clamp(96px, 13vh, 176px);
+}
+
+.frames{
+  position:absolute;
+  left:-110px;
+  bottom:var(--shelfTop);
+  display:flex;
+  align-items:flex-end;
+}
+
+.frame{ display:block; text-decoration:none; color:inherit; outline:none; }
+.frame:focus-visible{ outline:2px solid rgba(100,80,50,.36); outline-offset:8px; }
+
+/* 額縁（影を深く） */
+.frameInner{
+  background:rgba(255,255,255,.88);
+  border:1px solid rgba(180,165,145,.40);
+
+  /* ← Claude案の“深い影”を正式採用 */
+  box-shadow:
+    0 60px 100px rgba(0,0,0,.20),
+    0 34px 70px rgba(0,0,0,.15),
+    0 10px 22px rgba(0,0,0,.09),
+    0 1px 0 rgba(255,255,255,.82) inset;
+
+  transition:transform .42s cubic-bezier(.22,.1,.28,1), box-shadow .42s cubic-bezier(.22,.1,.28,1);
+  transform-origin:center bottom;
+}
+
+.frame:hover .frameInner{
+  transform: translateY(-8px);
+  box-shadow:
+    0 72px 120px rgba(0,0,0,.22),
+    0 40px 82px rgba(0,0,0,.17),
+    0 14px 28px rgba(0,0,0,.10),
+    0 1px 0 rgba(255,255,255,.84) inset;
+}
+
+/* サイズ・段差（今の座標感を維持） */
+.lg{ z-index:2; position:relative; top:22px; }
+.lg .frameInner{ width: clamp(370px, 39vw, 460px); }
+
+.md{
+  z-index:3;
+  position:relative;
+  margin-left:-108px;           /* ほどよく重なる */
+  transform: translateY(26px);  /* 奥行き */
+}
+.md .frameInner{ width: clamp(320px, 32vw, 390px); }
+
+/* 中身 */
+.imgWrap{
+  padding:14px;
+  background:rgba(255,255,255,.70);
+}
+.imgWrap > img,
+.imgWrap > span{
+  width:100%;
+  aspect-ratio:3/4;
+  display:block;
+}
+.workImg{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  border:1px solid rgba(100,80,50,.08);
+}
+
+.fallback{ display:block; }
+.fallbackVow{
+  background: linear-gradient(155deg, rgba(185,205,220,.75) 0%, rgba(155,185,210,.55) 45%, rgba(230,225,218,.45) 100%);
+}
+.fallbackKou{
+  background: linear-gradient(155deg, rgba(170,35,35,.70) 0%, rgba(130,25,25,.55) 50%, rgba(185,140,100,.35) 100%);
+}
+
+.caption{
+  display:flex;
+  flex-direction:column;
+  gap:3px;
+  padding:8px 12px 10px;
+  border-top:1px solid rgba(100,80,50,.08);
+  background:rgba(255,255,255,.58);
+}
+.workTitle{ font-size:11px; letter-spacing:.14em; color:rgba(28,28,28,.86); }
+.workSub{ font-size:9.5px; letter-spacing:.10em; color:var(--faint); }
+
+.sideText{
+  position: absolute;
+
+  /* ✅ 左の指定を無効化して、右下へ退避 */
+  left: auto;
+  right: 12px;
+  bottom: 12px;
+
+  font-size: 9px;
+  letter-spacing: .28em;
+  color: var(--faint);
+
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+
+  /* 既存の読み方向を維持 */
+  transform: rotate(180deg);
+
+  white-space: nowrap;
+  user-select: none;
+
+  /* ✅ “邪魔”を物理的に消す */
+  pointer-events: none;
+
+  /* ✅ フレーム/CTAより後ろに回す（必要なら数字は微調整） */
+  z-index: 1;
+  opacity: .55;
+}
+
+/* =========================
+   SP
+========================= */
+@media (max-width:860px){
+  .nav{ padding:20px 20px; }
+  .navLink{ display:none; }
+
+  .grid{
+    grid-template-columns:1fr;
+    padding:88px 20px 40px;
+    min-height:unset;
+    gap:26px;
+    align-items:start;
   }
+
+  .left{ transform:none; }
+  .bgPhoto{ opacity:.20; height:min(280px,38vh); }
+
+  .right{
+    width:100%;
+    --stageW:100%;
+    --stageInsetR:0px;
+  }
+
+  .selectedLabel{ margin-right:0; width:100%; }
+
+  .shelfWrap{ height:auto; }
+  .frames{
+    position:relative;
+    bottom:auto;
+    left:auto;
+    overflow-x:auto;
+    gap:12px;
+    padding-bottom:4px;
+    scroll-snap-type:x mandatory;
+  }
+
+  .lg, .md{
+    top:0;
+    margin-left:0;
+    transform:none;
+    scroll-snap-align:start;
+  }
+
+  .lg .frameInner{ width:min(82vw,390px); }
+  .md .frameInner{ width:min(74vw,340px); }
+
+  .frame:hover .frameInner{ transform: translateY(-4px); }
+  .sideText{ display:none; }
 }
 
-/* ------------------------------------------------------------
-   CTA (minimal)
------------------------------------------------------------- */
-.heroCta{
-  display: inline-flex;
-  align-items: center;
-  gap: 0.62rem;
-
-  margin-top: 1.45rem;
-  padding: 0.56rem 0;
-
-  border-bottom: 1px solid var(--hero-cta-border);
-  color: var(--hero-cta-color);
-
-  font-size: 0.78rem;
-  letter-spacing: 0.11em;
-
-  text-decoration: none;
-  text-transform: none;
-
-  transition:
-    color 0.38s ease,
-    border-color 0.38s ease,
-    transform 0.38s ease,
-    opacity 0.38s ease;
-
-  cursor: pointer;
-  text-shadow: 0 1px 14px rgba(0,0,0,0.46);
+@media (prefers-reduced-motion: reduce){
+  .frameInner{ transition:none; }
+  .frame:hover .frameInner{ transform:none; }
+  .cta:hover{ transform:none; }
+}
+/* KOUを少し右へ＋少し離す（mdだけ） */
+.md{
+  margin-left: -84px;          /* 例：-108px → -84px で離す */
+  transform: translate(18px, 26px); /* 右へ18px / 下は現状維持 */
 }
 
-.heroCtaArrow{
-  flex-shrink: 0;
-  transition: transform 0.38s ease, opacity 0.38s ease;
-  opacity: 0.86;
+.md .frame,
+.md img,
+.md a{
+  box-shadow: 0 32px 60px rgba(0,0,0,.14);
 }
-
-.heroCta:hover{
-  color: var(--hero-cta-hover);
-  border-bottom-color: var(--hero-cta-border-hover);
+/* BG TYPE：さらに背景化（作品勝ち） */
+.bgWord{
+  position:absolute;
+  font-family:"Cormorant Garamond","Times New Roman",serif;
+  font-weight:300;
+  line-height:.88;
+  letter-spacing:.04em;
+  color: rgba(140,120,90,.035); /* ← 0.050 → 0.035 */
+  white-space:nowrap;
+  user-select:none;
 }
-
-.heroCta:hover .heroCtaArrow{
-  transform: translateX(2px);
-  opacity: 0.92;
-}
-
-.heroCta:active{
-  transform: translateY(1px);
-}
-
-.heroCta:focus-visible{
-  outline: 1px solid rgba(255,255,255,0.36);
-  outline-offset: 7px;
-  border-radius: 4px;
-}
-
-/* ------------------------------------------------------------
-   Scroll indicator
------------------------------------------------------------- */
-.heroScrollButton{
-  background: none;
-  border: none;
-  padding: 10px;
-  cursor: pointer;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  opacity: 0.86;
-  transition: opacity 0.34s ease;
-}
-
-.heroScrollButton:hover{ opacity: 1; }
-
-.heroScrollButton:focus-visible{
-  outline: 1px solid rgba(255,255,255,0.30);
-  outline-offset: 8px;
-  border-radius: 9999px;
-}
-
-.heroScrollLine{
-  width: 1px;
-  height: 32px;
-  border-radius: 9999px;
-
-  background: linear-gradient(
-    180deg,
-    rgba(220,226,235,0) 0%,
-    rgba(220,226,235,0.22) 24%,
-    var(--hero-silver) 50%,
-    rgba(255,255,255,0.16) 68%,
-    rgba(220,226,235,0) 100%
-  );
-
-  opacity: 0.24;
+.frameInner{
+  position:relative; /* ← 追加 */
+  background:rgba(255,255,255,.88);
+  border:1px solid rgba(180,165,145,.40);
 
   box-shadow:
-    0 0 0 0.5px rgba(220,226,235,0.07),
-    0 0 16px rgba(220,226,235,0.04);
+    0 60px 100px rgba(0,0,0,.20),
+    0 34px 70px rgba(0,0,0,.15),
+    0 10px 22px rgba(0,0,0,.09),
+    0 1px 0 rgba(255,255,255,.82) inset;
 
-  animation: scrollLineBreath 4.8s ease-in-out 1.0s infinite;
-  will-change: opacity, transform;
+  transition:transform .42s cubic-bezier(.22,.1,.28,1), box-shadow .42s cubic-bezier(.22,.1,.28,1);
+  transform-origin:center bottom;
 }
 
-/* ------------------------------------------------------------
-   Keyframes
------------------------------------------------------------- */
-@keyframes scrollLineBreath{
-  0%   { opacity: 0.18; transform: scaleY(0.96); }
-  50%  { opacity: 0.30; transform: scaleY(1); }
-  100% { opacity: 0.18; transform: scaleY(0.96); }
+/* 接地影（棚に“乗ってる”説得力） */
+.frameInner::after{
+  content:"";
+  position:absolute;
+  left:22px;
+  right:22px;
+  bottom:-18px;
+  height:28px;
+  background: radial-gradient(closest-side, rgba(0,0,0,.26), rgba(0,0,0,0));
+  filter: blur(10px);
+  opacity:.45;
+  pointer-events:none;
 }
 
-@keyframes heroStill{
-  0%   { transform: scale(1.006) translate3d(0, 0, 0); }
-  50%  { transform: scale(1.012) translate3d(-1px, 3px, 0); }
-  100% { transform: scale(1.006) translate3d(0, 0, 0); }
+
+/* =========================
+   追加：作品比率ノブ（縦→ワイド）
+========================= */
+.heroRoot{
+  /* 3 / 4 → 16 / 10（ワイドだけど額縁として成立する高さ） */
+  --shotRatio: 16 / 10;
 }
 
-@keyframes heroImageReveal{
-  0%{
-    opacity: 0;
-    transform: scale(1.018) translate3d(0, 7px, 0);
-    filter: brightness(0.82) saturate(0.88) contrast(1.025);
-  }
-  100%{
-    opacity: 1;
-    transform: scale(1.006) translate3d(0, 0, 0);
-    filter: brightness(0.90) saturate(0.90) contrast(1.03);
-  }
+/* サイズ（ワイド化で“弱くなる”のを防ぐ：幅も増やす） */
+.lg .frameInner{ width: clamp(460px, 50vw, 600px); }
+
+.md{
+  /* 重なりは署名：少しだけ深くする */
+  margin-left: -168px;
+  transform: translateY(28px);
+}
+.md .frameInner{ width: clamp(360px, 40vw, 500px); }
+
+/* 中身（比率をノブで統一） */
+.imgWrap > img,
+.imgWrap > span{
+  width: 100%;
+  aspect-ratio: var(--shotRatio);
+  display: block;
+}
+.md .frameInner,
+.md{
+  box-shadow: 0 34px 70px rgba(0,0,0,.14);
 }
 
-@keyframes heroReveal{
-  0%{
-    opacity: 0;
-    transform: translate3d(0, 18px, 0) scale(0.995);
-    filter: blur(0.12px);
-  }
-  100%{
-    opacity: 1;
-    transform: translate3d(0, 0, 0) scale(1);
-    filter: blur(0);
-  }
+/* まずこれ */
+.shelfWrap{
+  margin-right: clamp(8px, 1.2vw, 24px); /* 右余白を削る */
 }
 
-@keyframes heroLogoReveal{
-  0%   { opacity: 0; transform: translate3d(0, 10px, 0) scale(0.982); }
-  100% { opacity: 1; transform: translate3d(0, 0, 0) scale(1); }
+.frames{
+  transform: translateX(-252px); /* 2枚まとめて左へ */
+}
+/* =========================
+   PATCH: Ken Burns（窓パララックス）
+   位置は触らない / 中身だけ動かす
+========================= */
+
+/* 1) 窓化：scale/y移動で“はみ出し”を切る */
+.imgWrap{
+  position: relative;
+  overflow: hidden; /* ← 必須（中身だけ動かして動画っぽく） */
 }
 
-@keyframes logoWipe{
-  0%   { -webkit-mask-size: 0% 100%; mask-size: 0% 100%; }
-  100% { -webkit-mask-size: 118% 100%; mask-size: 118% 100%; }
+/* 2) マット保持：imgが動いても白フチが消えないように上から“内側縁”を足す */
+.imgWrap::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  z-index:2;
+  /* 今の padding:14px と同じ太さで“内側マット”を再現 */
+  box-shadow: inset 0 0 0 14px rgba(255,255,255,.70);
 }
 
-@keyframes logoClipWipe{
-  0%   { clip-path: inset(0 100% 0 0); }
-  100% { clip-path: inset(0 0 0 0); }
+/* 3) 動く対象：transformの品質を上げる（GSAPが触る） */
+.workImg,
+.fallback{
+  will-change: transform;
+  transform: translateZ(0); /* サブピクセル安定 */
+  position: relative;
+  z-index:1;
 }
 
-@keyframes logoFocus{
-  0%{
-    opacity: 0.10;
-    filter:
-      invert(1)
-      brightness(1.03)
-      saturate(0)
-      contrast(1.02)
-      blur(0.18px)
-      drop-shadow(0 2px 10px rgba(0,0,0,0.16));
-  }
-  55%{
-    opacity: 0.62;
-    filter:
-      invert(1)
-      brightness(1.05)
-      saturate(0)
-      contrast(1.03)
-      blur(0.06px)
-      drop-shadow(0 2px 12px rgba(0,0,0,0.20));
-  }
-  100%{
-    opacity: 0.78;
-    filter:
-      invert(1)
-      brightness(1.05)
-      saturate(0)
-      contrast(1.03)
-      blur(0)
-      drop-shadow(0 2px 12px rgba(0,0,0,0.20));
-  }
-}
-
-/* ------------------------------------------------------------
-   SP tuning
------------------------------------------------------------- */
-@media (max-width: 768px){
-  .heroTitleWrap{ width: min(82vw, 344px); }
-  .heroLogoReveal{ transform: translate3d(0, 9px, 0) scale(0.986); }
-  .heroTitleImg{ opacity: 0.72; }
-
-  .heroRoot[data-loaded="true"] .heroImageReveal{
-    animation:
-      heroImageRevealSp 0.94s var(--ease) 0s both,
-      heroStill 22s ease-in-out 0.94s infinite;
-  }
-}
-
-@keyframes heroImageRevealSp{
-  0%{
-    opacity: 0;
-    transform: scale(1.014) translate3d(0, 6px, 0);
-    filter: brightness(0.83) saturate(0.87) contrast(1.02);
-  }
-  100%{
-    opacity: 1;
-    transform: scale(1.004) translate3d(0, 0, 0);
-    filter: brightness(0.89) saturate(0.89) contrast(1.028);
-  }
-}
-
-/* ------------------------------------------------------------
-   Reduced motion
------------------------------------------------------------- */
-@media (prefers-reduced-motion: reduce){
-  .heroImage,
-  .heroImageReveal,
-  .heroFade,
-  .heroScrollLine,
-  .heroLogoReveal,
-  .heroLogoReveal .heroTitleImg{
-    animation: none !important;
-  }
-
-  .heroImage,
-  .heroImageReveal{
-    transform: none !important;
-    opacity: 1 !important;
-    filter: brightness(0.90) saturate(0.90) contrast(1.03) !important;
-  }
-
-  .heroFade{
-    transform: none !important;
-    opacity: 1 !important;
-    filter: none !important;
-  }
-
-  .heroLogoReveal{ opacity: 1 !important; transform: none !important; }
-
-  .heroTitleImg{
-    -webkit-mask-size: 100% 100% !important;
-    mask-size: 100% 100% !important;
-    clip-path: inset(0 0 0 0) !important;
-    opacity: 0.76 !important;
-    filter:
-      invert(1)
-      brightness(1.05)
-      saturate(0)
-      contrast(1.03)
-      drop-shadow(0 2px 12px rgba(0,0,0,0.20)) !important;
-  }
-
-  .heroCta,
-  .heroCtaArrow,
-  .heroScrollButton{
-    transition: none !important;
-  }
+/* 4) ついでに：画像の縁が“薄く汚れる”の防止（任意だが効く） */
+.workImg{
+  backface-visibility: hidden;
 }

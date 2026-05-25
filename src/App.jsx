@@ -51,6 +51,7 @@ import OriginRoom from "./pages/works/OriginRoom";
 import NoahRoom from "./pages/works/NoahRoom";
 
 // Business pages
+
 import PriceDetail from "./pages/PriceDetail";
 import Contact from "./pages/Contact";
 import Terms from "./pages/Terms";

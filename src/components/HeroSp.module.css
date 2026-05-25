@@ -1,390 +1,391 @@
-/* src/sections/HeroSp.module.css
-   Minimal tuning for SP Hero
-   - calmer typography (size / spacing / opacity)
-   - thinner shadows
-   - faster, quieter reveal
-   - FIX: reduce gap between copy and signature (head↓ + sign↑)
-*/
+.root{
+  --paper: rgba(246,241,232,1);
+  --ink: rgba(22,22,22,.88);
+  --faint: rgba(90,75,55,.55);
+  --hair: rgba(120,95,65,.18);
 
-.root {
+  /* “棚の天面”ノブ（±6pxで接地が決まる） */
+  --shelfTop: clamp(94px, 14vh, 142px);
+
+  position: relative;
+  min-height: 100svh;
+  background: var(--paper);
+  color: var(--ink);
+  overflow: hidden;
+}
+
+/* =========================
+   BG PHOTO (shelf + vase)
+========================= */
+.bgPhoto{
+  position:absolute;
+  inset:0;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: 82% 100%;
+  opacity: .92;
+  filter: saturate(.96) contrast(.95) brightness(1.06);
+  transform: translateZ(0);
+}
+.bgPhoto::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  /* 棚の上に薄い白膜：写真立ての“置かれてる感”が出る */
+  background: linear-gradient(
+    to top,
+    rgba(244,239,230,.92) 0%,
+    rgba(244,239,230,.64) 26%,
+    rgba(244,239,230,0) 68%
+  );
+}
+
+/* =========================
+   BIG TYPE (air)
+========================= */
+.bgType{
+  position:absolute;
+  inset:-8% -8% auto -8%;
+  pointer-events:none;
+  user-select:none;
+  z-index: 0;
+}
+.bgWordTop,
+.bgWordBottom{
+  display:block;
+  font-family: "Cormorant Garamond", serif;
+  letter-spacing: .06em;
+  line-height: .88;
+  color: rgba(140,120,90,.06); /* 主張落とす */
+  text-transform: uppercase;
+}
+.bgWordTop{
+  font-size: clamp(120px, 28vw, 220px);
+  transform: translate(-6vw, 5vh);
+}
+.bgWordBottom{
+  font-size: clamp(120px, 28vw, 220px);
+  transform: translate(-2vw, 24vh);
+}
+
+/* =========================
+   LAYOUT
+========================= */
+.content{
+  position: relative;
+  z-index: 2;
+  padding: 88px 18px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-height: 100svh;
+}
+
+/* ✅ 可読性だけ上げる“白膜”（箱に見せない） */
+.readPad{
+  position:absolute;
+  left: -18px;
+  top: 70px;
+  width: min(82vw, 470px);
+  height: clamp(300px, 48vh, 560px);
+  pointer-events:none;
+  z-index: 0;
+
+  /* 角の立った矩形にしない：左上から溶ける */
+  background:
+    radial-gradient(120% 90% at 0% 0%,
+      rgba(246,241,232,.98) 0%,
+      rgba(246,241,232,.86) 44%,
+      rgba(246,241,232,0) 78%
+    ),
+    linear-gradient(to bottom,
+      rgba(246,241,232,.72) 0%,
+      rgba(246,241,232,.62) 58%,
+      rgba(246,241,232,0) 100%
+    );
+}
+
+.left{
+  width: 100%;
+  max-width: 420px;
+  position: relative;
+  z-index: 6; /* 文字は常に上 */
+}
+
+.kicker{
+  font-size: 11px;
+  letter-spacing: .18em;
+  color: var(--faint);
+  margin: 0 0 10px;
+}
+.hook{
+  font-size: 14px;
+  letter-spacing: .08em;
+  margin: 0 0 18px;
+  color: rgba(22,22,22,.86);
+  text-shadow: 0 1px 0 rgba(255,255,255,.38);
+}
+.h1{
+  margin: 0 0 14px;
+  font-family: "Cormorant Garamond", serif;
+  font-weight: 400;
+  font-size: clamp(56px, 12.6vw, 84px);
+  letter-spacing: .02em;
+  line-height: .92;
+  text-shadow: 0 1px 0 rgba(255,255,255,.32);
+}
+.copy{
+  margin: 0 0 18px;
+  font-size: 13px;
+  line-height: 1.9;
+  color: rgba(22,22,22,.84); /* ✅ 少しだけ濃く */
+  text-shadow: 0 1px 0 rgba(255,255,255,.34);
+}
+.copyMeta{
+  display:block;
+  font-size: 11px;
+  letter-spacing: .10em;
+  color: rgba(70,55,40,.60);
+  margin-bottom: 8px;
+}
+.copyText{ display:block; }
+
+.cta{
+  display:inline-flex;
+  align-items:center;
+  gap: 10px;
+  padding: 10px 0 8px;
+  font-size: 12px;
+  letter-spacing: .14em;
+  color: rgba(22,22,22,.86);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(110,85,55,.22);
+}
+.ctaArrow{ font-size: 14px; }
+
+/* =========================
+   STAGE (frames on shelf)
+========================= */
+.stage{
+  margin-top: auto;
   position: relative;
   width: 100%;
+  padding-bottom: 8px;
+  z-index: 2;
+}
+
+.selected{
+  font-size: 10px;
+  letter-spacing: .22em;
+  color: var(--faint);
+  margin: 0 0 10px 4px;
+}
+
+.frames{
+  position: relative;
+  height: min(58svh, 520px);
+}
+
+/* base frame */
+.frame{
+  position:absolute;
+  bottom: var(--shelfTop);
+  text-decoration:none;
+  color: inherit;
+  outline: none;
+  transform: translateZ(0);
+}
+.frame:focus-visible{
+  outline: 2px solid rgba(100,80,50,.36);
+  outline-offset: 8px;
+}
+
+/* 影を“棚に密着”させる */
+.frameInner{
+  position: relative;
+  background: rgba(255,255,255,.72);
+  border: 1px solid rgba(180,165,145,.36);
+  box-shadow:
+    0 60px 100px rgba(0,0,0,.20),
+    0 18px 34px rgba(0,0,0,.10),
+    0 1px 0 rgba(255,255,255,.86) inset;
+}
+.frameInner::after{
+  content:"";
+  position:absolute;
+  left: 12%;
+  right: 12%;
+  bottom: -18px;
+  height: 22px;
+  background: radial-gradient(ellipse 60% 80% at 50% 20%, rgba(0,0,0,.16), rgba(0,0,0,0));
+  filter: blur(0.2px);
+  pointer-events:none;
+}
+
+/* Vow (back / large) */
+.lg{
+  left: 44%;
+  transform: translateX(-50%);
+  z-index: 2;
+}
+.lg .frameInner{
+  width: min(76vw, 360px);
+}
+
+/* KOU (front / overlap) */
+.md{
+  left: 66%;
+  transform: translateX(-50%) translateY(34px); /* ✅ もう少し下げて接地 */
+  z-index: 3;
+}
+.md .frameInner{
+  width: min(66vw, 310px);
+}
+
+.imgWrap{
+  width: 100%;
+  aspect-ratio: 3 / 4;
   overflow: hidden;
-  background: #0a0a0a;
-  height: 100svh;
-  min-height: 520px;
-  display: block;
-  isolation: isolate;
-
-  --fx: 56%;
-  --fy: 45%;
-
-  /* ✅ gap を詰める：headを少し下げ、signを少し上げる */
---shift-head: clamp(-340px, calc(-18svh - 48px), -184px);
---shift-sign: clamp(-18px, calc(-1.05svh - 6px), -10px);
-
-  /* tones (calmer) */
-  --c-label: rgba(255, 255, 255, 0.26);
-  --c-meta: rgba(255, 255, 255, 0.42);
-  --c-copy: rgba(255, 255, 255, 0.82);
-  --c-hook: rgba(255, 255, 255, 0.90);
-  --c-em: rgba(255, 255, 255, 0.88);
+  position: relative;
+  background: rgba(240,235,225,.60);
+  padding: 14px; /* “写真立て”のマット */
 }
-
-.noBreak{
-  white-space: nowrap;
-  display: inline-block;
-}
-@media (min-width: 768px) {
-  .root { display: none; }
-}
-
-@media (max-width: 390px) { .root { --fx: 56%; --fy: 43%; } }
-@media (max-width: 370px) { .root { --fx: 57%; --fy: 41%; } }
-
-/* background */
-.bg { position: absolute; inset: 0; }
-
-.image {
+.workImg{
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: var(--fx) var(--fy);
-  user-select: none;
-
-  filter: brightness(0.93) saturate(0.88) contrast(1.03);
-  opacity: 0;
-  transform: translate3d(0, 10px, 0) scale(1.010);
-
-  transition:
-    opacity 1.08s cubic-bezier(0.18, 0.62, 0.2, 1),
-    transform 1.64s cubic-bezier(0.22, 0.1, 0.28, 1),
-    filter 1.20s cubic-bezier(0.22, 0.1, 0.28, 1);
-
-  will-change: transform, opacity;
-  backface-visibility: hidden;
-  transform-origin: center center;
+  display: block;
 }
 
-.root[data-loaded="true"] .image {
-  opacity: 1;
-  transform: translate3d(0, 0, 0) scale(1);
-}
-
-.imageVeil{
-  position:absolute; inset:0; z-index:1; pointer-events:none;
-  opacity:1;
-  background: linear-gradient(
-    180deg,
-    rgba(7,7,7,.30) 0%,
-    rgba(7,7,7,.16) 32%,
-    rgba(7,7,7,.07) 58%,
-    rgba(7,7,7,.02) 100%
-  );
-  transition: opacity 1.35s cubic-bezier(.2,.62,.2,1);
-}
-.root[data-loaded="true"] .imageVeil{ opacity:0; }
-
-.imageBloom{
-  position:absolute; inset:0; z-index:1; pointer-events:none;
-  opacity:0; transform: scale(1.03);
-  background:
-    radial-gradient(76% 54% at 58% 32%, rgba(255,255,255,.09) 0%, rgba(217,185,138,.032) 34%, rgba(255,255,255,.010) 58%, rgba(255,255,255,0) 80%),
-    radial-gradient(52% 40% at 12% 76%, rgba(217,185,138,.030) 0%, rgba(217,185,138,.010) 42%, rgba(217,185,138,0) 72%);
-  transition: opacity 1.55s cubic-bezier(.2,.62,.2,1), transform 1.9s cubic-bezier(.2,.62,.2,1);
-}
-.root[data-loaded="true"] .imageBloom{ opacity:.22; transform: scale(1); }
-
-/* overlays */
-.topVeil{
-  position:absolute; inset:0 0 auto 0;
-  height:108px; z-index:1; pointer-events:none;
-  background: linear-gradient(180deg, rgba(6,6,6,.46) 0%, rgba(6,6,6,.18) 48%, transparent 100%);
-}
-.globalDepth{
-  position:absolute; inset:0; z-index:1; pointer-events:none;
-  background: linear-gradient(180deg, rgba(0,0,0,.08) 0%, rgba(0,0,0,.04) 24%, rgba(0,0,0,.13) 58%, rgba(0,0,0,.46) 100%);
-}
-.leftShadow{
-  position:absolute; inset:0 auto 0 0; width:90%;
-  z-index:1; pointer-events:none;
-  background: linear-gradient(90deg, rgba(0,0,0,.36) 0%, rgba(0,0,0,.13) 44%, transparent 100%);
-}
-.leftFog{
-  position:absolute; inset:0 auto 0 0; width:42%;
-  z-index:1; pointer-events:none;
-  background: linear-gradient(90deg, rgba(0,0,0,.16) 0%, transparent 100%);
-}
-.bottomReadability{
-  position:absolute; inset:auto 0 0 0; height:360px;
-  z-index:1; pointer-events:none;
-  background: linear-gradient(180deg, transparent 0%, rgba(0,0,0,.10) 18%, rgba(0,0,0,.62) 100%);
-}
-.edgeVignette{
-  position:absolute; inset:0; z-index:1; pointer-events:none;
-  box-shadow: inset 0 0 88px rgba(0,0,0,.18);
-}
-.filmNoise{
-  position:absolute; inset:0; z-index:1; pointer-events:none;
-  opacity:.030;
-  background-image: radial-gradient(rgba(255,255,255,.4) 0.42px, transparent 0.42px);
-  background-size: 4px 4px;
-}
-
-/* layout (床方式) */
-.textBlock{
+/* fallback */
+.fallback{
   position:absolute;
-  inset:0;
-  z-index:2;
+  inset:14px;
+  display:block;
+}
+.fallbackVow{
+  background: linear-gradient(155deg, rgba(185,205,220,.75) 0%, rgba(155,185,210,.55) 45%, rgba(230,225,218,.45) 100%);
+}
+.fallbackKou{
+  background: linear-gradient(155deg, rgba(170,35,35,.70) 0%, rgba(130,25,25,.55) 50%, rgba(185,140,100,.35) 100%);
+}
 
+.caption{
   display:flex;
-  align-items:flex-end;
-
-  padding-left:24px;
-  padding-right:24px;
-
-  /* ✅ 端末差で揺れない床 */
-  padding-bottom: calc(env(safe-area-inset-bottom, 0px) + clamp(76px, 8.4svh, 96px));
+  flex-direction:column;
+  gap: 3px;
+  padding: 9px 12px 11px;
+  border-top: 1px solid rgba(100,80,50,.10);
+  background: rgba(255,255,255,.58);
+}
+.workTitle{
+  font-size: 11px;
+  letter-spacing: .14em;
+  color: rgba(28,28,28,.86);
+}
+.workSub{
+  font-size: 9.5px;
+  letter-spacing: .10em;
+  color: var(--faint);
 }
 
-.max{ max-width:20.4rem; }
-
-.headGroup{ transform: translate3d(0, var(--shift-head), 0); }
-.signatureShift{ transform: translate3d(0, var(--shift-sign), 0); }
-
-/* reveal */
-.fade{
-  opacity:0;
-  transform: translate3d(0,16px,0) scale(.996);
-  filter: blur(0.12px);
-  animation: heroSPReveal 0.68s cubic-bezier(.22,.56,.18,1) forwards;
-  will-change: transform, opacity, filter;
-  backface-visibility:hidden;
-}
-.fade1{ animation-delay:.12s; }
-.fade2{ animation-delay:.20s; }
-.fade4{ animation-delay:.42s; }
-.fade5{ animation-delay:.54s; }
-
-@keyframes heroSPReveal{
-  to{ opacity:1; transform: translate3d(0,0,0) scale(1); filter: blur(0); }
-}
-
-/* typography */
-.label{
-  margin:0 0 10px 0;
-  font-size:.56rem;
-  line-height:1;
-  letter-spacing:.22em;
-  color: var(--c-label);
-}
-
-.hookPad{ padding-left:2px; }
-.hook{
-  margin:0 0 12px 0;
-  font-size: clamp(1.02rem, 3.85vw, 1.14rem);
-  font-weight:480;
-  line-height:1.58;
-  letter-spacing:.060em;
-  color: var(--c-hook);
-  text-shadow: 0 1px 18px rgba(0,0,0,.40), 0 0 .45px rgba(255,255,255,.08);
-}
-
-.copyBlock{ margin-top:10px; }
-
-.divider{
-  height:1px; width:46px; margin:0 0 16px 7px;
-  background: linear-gradient(90deg, rgba(255,255,255,.34), rgba(217,185,138,.18), rgba(255,255,255,0));
-  box-shadow: 0 0 10px rgba(217,185,138,.035);
-}
-
-.bodyPad{ padding-left:7px; }
-
-.copy{
-  margin:0;
-  max-width:16.9rem;
-  font-size:.90rem;
-  line-height:1.84;
-  letter-spacing:.008em;
-  color: var(--c-copy);
-}
-
-.copyMeta{
-  display:block;
-  margin-bottom:9px;
-  font-size:.68rem;
-  line-height:1.62;
-  letter-spacing:.10em;
-  color: var(--c-meta);
-  white-space:nowrap;
-  overflow:hidden;
-  text-overflow:ellipsis;
-}
-
-/* ✅ SEだけ：折り返し許可（…を消す） */
-@media (max-width: 375px), (max-height: 700px){
-  .copyMeta{
-    white-space: normal;
-    overflow: visible;
-    text-overflow: clip;
-  }
-}
-
-.copyText{ display:block; color: var(--c-copy); }
-.em{ font-weight:600; color: var(--c-em); }
-
-/* logo */
-.logoWrap{
-  position:relative;
-  margin: 0 0 16px 0;
-  width: min(84vw, 304px);
-  line-height:1;
-  isolation:isolate;
-  padding-block:8px;
-  padding-top:10px;
-
-  opacity:0;
-  transform: translate3d(0, 10px, 0) scale(0.982);
-  animation: heroSpLogoReveal 0.84s cubic-bezier(.22,.56,.18,1) .26s both;
-  will-change: transform, opacity;
-  backface-visibility:hidden;
-}
-@media (max-width:390px){ .logoWrap{ width:min(86vw, 300px); } }
-@media (max-width:370px){ .logoWrap{ width:min(88vw, 292px); } }
-
-.titleImg{
-  display:block;
-  width:100%;
-  height:auto;
-
-  /* ✅ 薄くする（著名っぽく） */
-  opacity: .56;
-
-  /* ✅ 光りすぎない白（上品寄せ） */
-  filter:
-    invert(1)
-    brightness(1.02)
-    saturate(0)
-    contrast(1.00)
-    drop-shadow(0 2px 10px rgba(0,0,0,.16))
-    drop-shadow(0 0 .40px rgba(255,255,255,.04));
-
-  backface-visibility:hidden;
-  will-change: -webkit-mask-size, mask-size, opacity;
-
-  -webkit-mask-image: linear-gradient(90deg, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 84%, rgba(0,0,0,0) 100%);
-  mask-image: linear-gradient(90deg, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 84%, rgba(0,0,0,0) 100%);
-  -webkit-mask-repeat:no-repeat;
-  mask-repeat:no-repeat;
-  -webkit-mask-position:left center;
-  mask-position:left center;
-  -webkit-mask-size:0% 100%;
-  mask-size:0% 100%;
-}
-.logoWrap .titleImg{
-  animation:
-    heroSpLogoWipe 0.92s cubic-bezier(.22,.56,.18,1) .34s both,
-    heroSpLogoFocus 0.92s cubic-bezier(.18,.62,.2,1) .34s both;
-}
-
-@keyframes heroSpLogoReveal{
-  0%{ opacity:0; transform: translate3d(0,10px,0) scale(.982); }
-  100%{ opacity:1; transform: translate3d(0,0,0) scale(1); }
-}
-@keyframes heroSpLogoWipe{
-  0%{ -webkit-mask-size:0% 100%; mask-size:0% 100%; }
-  100%{ -webkit-mask-size:118% 100%; mask-size:118% 100%; }
-}
-@keyframes heroSpLogoFocus{
-  0%{
-    opacity:.10;
-    filter: invert(1) brightness(1.03) saturate(0) contrast(1.02)
-      blur(.18px) drop-shadow(0 2px 10px rgba(0,0,0,.16));
-  }
-  55%{
-    opacity:.56;
-    filter: invert(1) brightness(1.04) saturate(0) contrast(1.02)
-      blur(.06px) drop-shadow(0 2px 12px rgba(0,0,0,.18));
-  }
-  100%{
-    opacity:.68;
-    filter: invert(1) brightness(1.04) saturate(0) contrast(1.02)
-      blur(0) drop-shadow(0 2px 12px rgba(0,0,0,.18));
-  }
-}
-
-/* scroll hint */
-.scrollHintWrap{
-  position:absolute;
-  left:50%;
-  bottom:20px;
-  transform:translateX(-50%);
-  z-index:2;
-  pointer-events:none;
-}
+/* subtle scroll hint */
 .scrollHint{
-  width:1px; height:27px;
-  background: linear-gradient(
-    to bottom,
-    rgba(220,226,235,0),
-    rgba(220,226,235,.26),
-    rgba(220,226,235,.40),
-    rgba(217,185,138,.14),
-    rgba(220,226,235,0)
-  );
-  opacity:.20;
-  box-shadow: 0 0 0 .5px rgba(220,226,235,.07), 0 0 14px rgba(217,185,138,.03);
-  animation: scrollPulseSP 3.2s ease-in-out infinite;
-}
-@keyframes scrollPulseSP{
-  0%{opacity:.12; transform:scaleY(.96);}
-  50%{opacity:.28; transform:scaleY(1);}
-  100%{opacity:.12; transform:scaleY(.96);}
+  margin-top: 10px;
+  height: 1px;
+  width: 42px;
+  background: rgba(110,85,55,.18);
+  opacity: .6;
 }
 
-/* a11y */
-.srOnly{
-  position:absolute;
-  width:1px; height:1px;
-  padding:0; margin:-1px;
-  overflow:hidden;
-  clip: rect(0,0,0,0);
-  white-space:nowrap;
-  border:0;
-}
-
+/* reduced motion */
 @media (prefers-reduced-motion: reduce){
-  .image,.imageVeil,.imageBloom,.fade,.scrollHint,.logoWrap,.titleImg{
-    animation:none !important;
-    transition:none !important;
-    filter:none !important;
-  }
-  .image{ opacity:1 !important; transform:none !important; }
-  .imageVeil,.imageBloom{ opacity:0 !important; }
-  .fade{ opacity:1 !important; transform:none !important; filter:none !important; }
-  .logoWrap{ opacity:1 !important; transform:none !important; }
-  .titleImg{
-    -webkit-mask-size:118% 100% !important;
-    mask-size:118% 100% !important;
-    opacity:.74 !important;
-  }
+  .bgPhoto{ transform:none; }
+  .frame{ transform: translateX(-50%); }
+  .md{ transform: translateX(-50%) translateY(34px); }
 }
 
-/* iPhone SE / 小型端末：床を下げつつ、ギャップは作らない */
-@media (max-width: 375px), (max-height: 700px) {
-  .root {
-    /* ✅ 小型は弱めに詰める（崩壊防止） */
-    --shift-head: clamp(-236px, calc(-12svh - 36px), -196px);
-    --shift-sign: clamp(4px, calc(0.7svh + 2px), 12px);
+/* =========================
+   SHORT VIEWPORT (iPhone SEなど)
+   作品の見切れ/重なりを潰す
+========================= */
+@media (max-height: 720px), (max-width: 390px){
+  .content{
+    padding: 70px 14px 10px;
+    gap: 10px;
   }
 
-  .textBlock {
-    padding-bottom: calc(env(safe-area-inset-bottom, 0px) + clamp(40px, 5.6svh, 60px));
+  /* 白膜も短い画面に合わせて縮める */
+  .readPad{
+    top: 58px;
+    width: min(86vw, 470px);
+    height: clamp(260px, 46vh, 460px);
   }
+
+  .kicker{ margin: 0 0 6px; font-size: 10px; }
+  .hook{ margin: 0 0 10px; font-size: 13px; }
+
+  .h1{
+    margin: 0 0 8px;
+    font-size: clamp(48px, 12.2vw, 72px);
+    line-height: .92;
+  }
+
+  .copy{
+    margin: 0 0 10px;
+    font-size: 12px;
+    line-height: 1.7;
+  }
+
+  .cta{ padding: 8px 0 6px; }
+
+  /* stageを下に落としすぎない */
+  .stage{
+    margin-top: 14px;
+    padding-bottom: 0;
+  }
+
+  /* 棚の天面＝フレームを少し下へ（上に詰まり過ぎ防止） */
+  .root{ --shelfTop: 118px; }
+
+  .frames{ height: min(54svh, 440px); }
+
+  .lg .frameInner{ width: min(74vw, 332px); }
+  .md .frameInner{ width: min(62vw, 286px); }
+
+  /* Vow/KOUを全体的に少し下へ */
+  .lg{ transform: translateX(-50%) translateY(16px); }
+  .md{ transform: translateX(-50%) translateY(44px); }
 }
-@media (max-width: 375px), (max-height: 700px) {
-  .root{
-    --shift-head: clamp(-184px, calc(-9.2svh - 6px), -140px);
-    --shift-sign: clamp(4px, calc(0.7svh + 2px), 12px);
-  }
+/* 文字エリアの安全地帯を増やす */
+.topArea{
+  position: relative;
+  z-index: 6;
+  max-width: 320px;
+  min-height: 180px; /* ここで上の文字群ぶんを確保 */
+}
+/* 画像群をまとめて下へ（強め） */
+.stage{
+  position: relative;
+  z-index: 4;
+
+  /* 既存の変数はそのまま */
+  --shelfTop: 32px;
+  --shelfH: 108px;
+  --frameRadius: 0px;
+
+  /* ★追加：全体を下げる量（iPhone SEでも効くように強め） */
+--stageY: clamp(26px, 4svh, 64px);
+  margin-top: auto; /* これは残す */
+}
+
+/* 舞台ごと下げる */
+.frames{
+  position: relative;
+  width: 100%;
+  height: clamp(380px, 56vh, 440px);
+
+  transform: translateY(var(--stageY));
+  will-change: transform;
 }

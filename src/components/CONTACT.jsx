@@ -1,7 +1,10 @@
+// src/components/Contact.jsx
 import React, { useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import SectionSvgTitle from "../components/SectionSvgTitle";
-import "./contact.css";
+import styles from "./Contact.module.css";
+
+const cx = (...a) => a.filter(Boolean).join(" ");
 
 const STARTERS = [
   "まだ内容が固まっていない",
@@ -13,31 +16,31 @@ const STARTERS = [
 
 function ContactVisual() {
   return (
-    <div className="contact-visual contact-reveal contact-reveal-4" data-contact-reveal>
-      <p className="contact-visual-label">こんな段階から</p>
+    <div className={cx(styles.visual, styles.reveal, styles.r4)} data-contact-reveal>
+      <p className={styles.visualLabel}>こんな段階から</p>
 
-      <div className="contact-starter-list" role="list">
+      <div className={styles.starterList} role="list">
         {STARTERS.map((text, index) => (
           <div
             key={text}
-            className="contact-starter-row"
+            className={styles.starterRow}
             style={{ "--starter-index": index }}
             role="listitem"
           >
-            <span className="contact-starter-index" aria-hidden="true">
+            <span className={styles.starterIndex} aria-hidden="true">
               {String(index + 1).padStart(2, "0")}
             </span>
 
-            <p>{text}</p>
+            <p className={styles.starterText}>{text}</p>
 
-            <span className="contact-starter-check" aria-hidden="true">
+            <span className={styles.starterCheck} aria-hidden="true">
               ✓
             </span>
           </div>
         ))}
       </div>
 
-      <div className="contact-visual-note" aria-hidden="true">
+      <div className={styles.visualNote} aria-hidden="true">
         <span />
         <p>まだ具体的でなくても、大丈夫です。</p>
         <span />
@@ -54,64 +57,67 @@ export default function Contact() {
     if (!root) return undefined;
 
     const targets = Array.from(root.querySelectorAll("[data-contact-reveal]"));
-    const reveal = (target) => target.classList.add("is-in");
+    const reveal = (el) => el.classList.add(styles.in);
 
-    if (typeof IntersectionObserver === "undefined") {
+    const reduce =
+      window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches ?? false;
+
+    if (reduce || typeof IntersectionObserver === "undefined") {
       targets.forEach(reveal);
       return undefined;
     }
 
-    const observer = new IntersectionObserver(
+    const io = new IntersectionObserver(
       (entries) => {
-        entries.forEach((entry) => {
-          if (!entry.isIntersecting) return;
-          reveal(entry.target);
-          observer.unobserve(entry.target);
+        entries.forEach((e) => {
+          if (!e.isIntersecting) return;
+          reveal(e.target);
+          io.unobserve(e.target);
         });
       },
       { threshold: 0.14, rootMargin: "0px 0px -8% 0px" }
     );
 
-    targets.forEach((target) => observer.observe(target));
-    return () => observer.disconnect();
+    targets.forEach((t) => io.observe(t));
+    return () => io.disconnect();
   }, []);
 
   return (
     <section
       ref={sectionRef}
       id="contact"
-      className="contact-section"
+      className={styles.section}
       aria-labelledby="contact-heading"
     >
-      <div className="contact-container">
+      <div className={styles.container}>
         <div
-          className="contact-side-line contact-reveal contact-line-reveal contact-reveal-1"
+          className={cx(styles.sideLine, styles.reveal, styles.lineReveal, styles.r1)}
           data-contact-reveal
           aria-hidden="true"
         />
 
-        <header className="contact-header contact-reveal contact-reveal-1" data-contact-reveal>
+        <header className={cx(styles.header, styles.reveal, styles.r1)} data-contact-reveal>
           <SectionSvgTitle
             title="CONTACT"
             sub="CONTACT / REQUEST"
-            className="contact-svg-title"
+            className={styles.svgTitle}
           />
 
-          <h2 id="contact-heading" className="contact-hidden-heading">
+          <h2 id="contact-heading" className={styles.sr}>
             お問い合わせ
           </h2>
 
-          <p className="contact-section-title">お問い合わせ / CONTACT FORM</p>
+          <p className={styles.sectionTitle}>お問い合わせ / CONTACT FORM</p>
         </header>
 
-        <div className="contact-intro">
-          <p className="contact-lead contact-reveal contact-reveal-2" data-contact-reveal>
+        <div className={styles.intro}>
+          <p className={cx(styles.lead, styles.reveal, styles.r2)} data-contact-reveal>
             このトーンが、
             <br />
             <span>あなたのサービスに合いそうなら。</span>
           </p>
 
-          <p className="contact-lead-sub contact-reveal contact-reveal-3" data-contact-reveal>
+          <p className={cx(styles.leadSub, styles.reveal, styles.r3)} data-contact-reveal>
             まだ内容が固まっていなくても大丈夫です。
             <br />
             印象の方向性から整理しながら、無理のない形で進めます。
@@ -120,14 +126,14 @@ export default function Contact() {
 
         <ContactVisual />
 
-        <div className="contact-actions contact-reveal contact-reveal-5" data-contact-reveal>
-          <Link to="/contact" className="contact-btn">
+        <div className={cx(styles.actions, styles.reveal, styles.r5)} data-contact-reveal>
+          <Link to="/contact" className={styles.btn}>
             <span>お問い合わせはこちら</span>
             <span aria-hidden="true">→</span>
           </Link>
         </div>
 
-        <p className="contact-footer contact-reveal contact-reveal-6" data-contact-reveal>
+        <p className={cx(styles.footer, styles.reveal, styles.r6)} data-contact-reveal>
           ※ 時期や内容により、開始時期のご相談をお願いする場合があります。
           <br />
           その際も、できるだけ丁寧にご案内いたします。

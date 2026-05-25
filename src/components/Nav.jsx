@@ -14,6 +14,12 @@ const navItems = [
 const NAV_HEIGHT = 68;
 const SCROLL_OFFSET = NAV_HEIGHT + 12;
 
+// ✅ 黒ナビにしたいセクション（必要なら追加）
+const DARK_HASHES = new Set(["#works", "#price", "#news", "#footer"]);
+
+// いつでも黒にしたいなら true
+const FORCE_DARK = false;
+
 /* =========================================================
    Body Scroll Lock
 ========================================================= */
@@ -107,7 +113,7 @@ export default function Nav() {
     const onScroll = () => {
       cancelAnimationFrame(raf);
       raf = requestAnimationFrame(() => {
-        setScrolled(window.scrollY > 12);
+        setScrolled(window.scrollY > 10);
       });
     };
 
@@ -123,7 +129,6 @@ export default function Nav() {
   /* ── Close menu when desktop ── */
   useEffect(() => {
     const mq = window.matchMedia("(min-width: 768px)");
-
     const closeIfDesktop = () => {
       if (mq.matches) setOpen(false);
     };
@@ -179,7 +184,6 @@ export default function Nav() {
           visible.sort((a, b) => {
             const ratio = (b.intersectionRatio || 0) - (a.intersectionRatio || 0);
             if (ratio) return ratio;
-
             return (
               Math.abs(a.boundingClientRect.top) -
               Math.abs(b.boundingClientRect.top)
@@ -228,7 +232,6 @@ export default function Nav() {
   /* ── Focus first link on open ── */
   useEffect(() => {
     if (!open) return;
-
     const t = setTimeout(() => firstLinkRef.current?.focus(), 90);
     return () => clearTimeout(t);
   }, [open]);
@@ -241,10 +244,7 @@ export default function Nav() {
     if (!pending) return;
 
     pendingHashRef.current = null;
-
-    requestAnimationFrame(() => {
-      scrollToHash(pending);
-    });
+    requestAnimationFrame(() => scrollToHash(pending));
   }, [open]);
 
   const closeMenu = useCallback(() => setOpen(false), []);
@@ -270,169 +270,17 @@ export default function Nav() {
 
   const pcLinks = useMemo(() => navItems, []);
 
+  const isDark = FORCE_DARK || DARK_HASHES.has(activeHash);
+
   return (
     <>
-      {/* Local motion / logo mask utility */}
-      <style>{`
-        .gd-nav-sharp {
-          position: relative;
-          opacity: 0;
-          transform: translate3d(-10px, 0, 0) scale(0.985);
-          filter: brightness(0.9);
-          clip-path: inset(0 100% 0 0);
-          animation: gdNavSharpIn 0.72s cubic-bezier(.22,.56,.18,1) var(--nav-delay, 0s) forwards;
-          will-change: opacity, transform, filter, clip-path;
-        }
-
-        .gd-nav-sheen {
-          position: absolute;
-          left: -10%;
-          top: 50%;
-          z-index: 0;
-          width: 42%;
-          height: 1px;
-          pointer-events: none;
-          background: linear-gradient(
-            90deg,
-            rgba(255,255,255,0),
-            rgba(255,255,255,0.46),
-            rgba(217,185,138,0.32),
-            rgba(255,255,255,0)
-          );
-          opacity: 0;
-          transform: translate3d(-18px, -50%, 0) scaleX(0.25);
-          transform-origin: left center;
-          animation: gdNavSheen 0.56s cubic-bezier(.22,.56,.18,1) calc(var(--nav-delay, 0s) + 0.15s) forwards;
-        }
-
-        .gd-nav-logo-seal {
-          position: relative;
-          display: grid;
-          place-items: center;
-          width: 34px;
-          height: 34px;
-          flex-shrink: 0;
-        }
-
-        .gd-nav-logo-mask {
-          width: 100%;
-          height: 100%;
-          display: block;
-
-          background:
-            linear-gradient(
-              145deg,
-              rgba(225, 216, 196, 0.92) 0%,
-              rgba(196, 177, 143, 0.90) 24%,
-              rgba(149, 126, 91, 0.88) 50%,
-              rgba(218, 207, 186, 0.92) 73%,
-              rgba(130, 109, 79, 0.88) 100%
-            );
-
-          -webkit-mask: var(--logo-url) center / contain no-repeat;
-          mask: var(--logo-url) center / contain no-repeat;
-
-          filter:
-            drop-shadow(0 0 0.5px rgba(255,255,255,0.08))
-            drop-shadow(0 2px 8px rgba(0,0,0,0.24))
-            drop-shadow(0 0 16px rgba(217,185,138,0.035));
-
-          opacity: 0.92;
-
-          transition:
-            opacity 0.4s ease,
-            filter 0.4s ease,
-            transform 0.4s ease;
-        }
-
-        .gd-nav-logo-seal::after {
-          content: "";
-          position: absolute;
-          inset: -5px;
-          border-radius: 9999px;
-          pointer-events: none;
-          background:
-            radial-gradient(
-              circle at 50% 50%,
-              rgba(217,185,138,0.08),
-              rgba(217,185,138,0.025) 38%,
-              transparent 70%
-            );
-          opacity: 0.48;
-          filter: blur(0.2px);
-        }
-
-        .gd-nav-logo-seal:hover .gd-nav-logo-mask {
-          opacity: 1;
-          transform: translateY(-0.5px);
-          filter:
-            drop-shadow(0 0 0.5px rgba(255,255,255,0.12))
-            drop-shadow(0 3px 10px rgba(0,0,0,0.28))
-            drop-shadow(0 0 18px rgba(217,185,138,0.055));
-        }
-
-        @keyframes gdNavSharpIn {
-          0% {
-            opacity: 0;
-            transform: translate3d(-10px, 0, 0) scale(0.985);
-            filter: brightness(0.88);
-            clip-path: inset(0 100% 0 0);
-          }
-
-          68% {
-            opacity: 1;
-            filter: brightness(1.06);
-          }
-
-          100% {
-            opacity: 1;
-            transform: translate3d(0, 0, 0) scale(1);
-            filter: brightness(1);
-            clip-path: inset(0 0 0 0);
-          }
-        }
-
-        @keyframes gdNavSheen {
-          0% {
-            opacity: 0;
-            transform: translate3d(-18px, -50%, 0) scaleX(0.25);
-          }
-
-          24% {
-            opacity: 0.72;
-          }
-
-          100% {
-            opacity: 0;
-            transform: translate3d(92px, -50%, 0) scaleX(1);
-          }
-        }
-
-        @media (max-width: 767px) {
-          .gd-nav-logo-seal {
-            width: 30px;
-            height: 30px;
-          }
-
-          .gd-nav-sheen {
-            display: none;
-          }
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-          .gd-nav-sharp,
-          .gd-nav-sheen {
-            animation: none !important;
-            opacity: 1 !important;
-            transform: none !important;
-            filter: none !important;
-            clip-path: none !important;
-          }
-        }
-      `}</style>
-
       <nav
-        className={`${styles.navRoot} ${scrolled ? styles.navActive : styles.navIdle}`}
+        data-theme={isDark ? "dark" : "paper"}
+        className={[
+          styles.navRoot,
+          scrolled ? styles.isScrolled : "",
+          open ? styles.isMenuOpen : "",
+        ].join(" ")}
         aria-label="Primary navigation"
       >
         <div className={styles.navInner}>
@@ -444,32 +292,26 @@ export default function Nav() {
             aria-label="GUSHIKEN DESIGN ホームへ"
           >
             <span
-              className="gd-nav-sharp gd-nav-logo-seal"
+              className={`${styles.navLogoSeal} ${styles.sharpIn}`}
               aria-hidden="true"
-              style={{ "--nav-delay": "0.04s" }}
+              style={{ "--nav-delay": "0.04s", "--logo-url": `url(${LOGO_SRC})` }}
             >
-              <span
-                className="gd-nav-logo-mask"
-                style={{ "--logo-url": `url(${LOGO_SRC})` }}
-              />
-              <span className="gd-nav-sheen" aria-hidden="true" />
+              <span className={styles.navLogoMask} aria-hidden="true" />
             </span>
 
             <span className={styles.navLogoText}>
               <span
-                className={`${styles.navLogoMain} gd-nav-sharp`}
+                className={`${styles.navLogoMain} ${styles.sharpIn}`}
                 style={{ "--nav-delay": "0.10s" }}
               >
                 GUSHIKEN DESIGN
-                <span className="gd-nav-sheen" aria-hidden="true" />
               </span>
 
               <span
-                className={`${styles.navLogoSub} gd-nav-sharp`}
+                className={`${styles.navLogoSub} ${styles.sharpIn}`}
                 style={{ "--nav-delay": "0.16s" }}
               >
                 Web Design / Okinawa
-                <span className="gd-nav-sheen" aria-hidden="true" />
               </span>
             </span>
           </a>
@@ -484,16 +326,16 @@ export default function Nav() {
                   href={item.href}
                   onClick={handleAnchorClick(item.href)}
                   aria-current={active ? "location" : undefined}
-                  className={`
-                    ${styles.navItem}
-                    ${active ? styles.navItemActive : ""}
-                    ${item.emphasis ? styles.navItemEmphasis : ""}
-                    gd-nav-sharp
-                  `}
-                  style={{ "--nav-delay": `${0.24 + index * 0.07}s` }}
+                  data-emphasis={item.emphasis ? "true" : "false"}
+                  className={[
+                    styles.navItem,
+                    active ? styles.navItemActive : "",
+                    item.emphasis ? styles.navItemEmphasis : "",
+                    styles.sharpIn,
+                  ].join(" ")}
+                  style={{ "--nav-delay": `${0.22 + index * 0.06}s` }}
                 >
-                  <span className="relative z-[1]">{item.label}</span>
-                  <span className="gd-nav-sheen" aria-hidden="true" />
+                  <span className={styles.navItemText}>{item.label}</span>
                 </a>
               );
             })}
@@ -524,6 +366,7 @@ export default function Nav() {
       <div
         ref={panelRef}
         id="mobile-navigation"
+        data-theme={isDark ? "dark" : "paper"}
         className={`${styles.mobileNav} ${open ? styles.mobileOpen : ""}`}
         role="dialog"
         aria-modal="true"
@@ -560,11 +403,12 @@ export default function Nav() {
                   onClick={handleAnchorClick(item.href)}
                   tabIndex={open ? 0 : -1}
                   aria-current={active ? "location" : undefined}
-                  className={`
-                    ${styles.mobileNavItem}
-                    ${active ? styles.mobileNavItemActive : ""}
-                    ${item.emphasis ? styles.mobileNavItemEmphasis : ""}
-                  `}
+                  data-emphasis={item.emphasis ? "true" : "false"}
+                  className={[
+                    styles.mobileNavItem,
+                    active ? styles.mobileNavItemActive : "",
+                    item.emphasis ? styles.mobileNavItemEmphasis : "",
+                  ].join(" ")}
                   style={{ "--i": i }}
                 >
                   <span className={styles.mobileNavLeft}>
@@ -578,9 +422,7 @@ export default function Nav() {
           </div>
 
           <div className={styles.mobileNavFooter}>
-            <p className={styles.mobileNavNote}>
-              Structure, atmosphere, and trust.
-            </p>
+            <p className={styles.mobileNavNote}>Structure, atmosphere, and trust.</p>
           </div>
         </div>
       </div>

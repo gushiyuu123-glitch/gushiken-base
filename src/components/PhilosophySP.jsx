@@ -1,7 +1,7 @@
 // Philosophy.jsx
 import React, { useEffect, useRef } from "react";
 import SectionSvgTitle from "../components/SectionSvgTitle";
-import styles from "./Philosophy.module.css";
+import styles from "./PhilosophySP.module.css";
 
 const cx = (...a) => a.filter(Boolean).join(" ");
 
@@ -119,7 +119,7 @@ function VisualPrinciples() {
   );
 }
 
-export default function Philosophy() {
+export default function PhilosophySP() {
   const sectionRef = useRef(null);
 
   useEffect(() => {

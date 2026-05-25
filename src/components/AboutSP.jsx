@@ -1,7 +1,6 @@
-// src/pages/About.jsx
 import React, { useEffect, useRef, useState } from "react";
 import SectionSvgTitle from "./SectionSvgTitle";
-import styles from "./About.module.css";
+import styles from "./AboutSP.module.css";
 
 const cx = (...a) => a.filter(Boolean).join(" ");
 
@@ -31,10 +30,22 @@ const QUALIFICATIONS = [
 ];
 
 const STYLE_ITEMS = [
-  { title: "伝わる順序を設計する", text: "必要な情報が自然に入るよう、見せる順序と区切りを整えます。" },
-  { title: "見え方のトーンを揃える", text: "写真や色の温度を合わせ、全体の印象をひとつにまとめます。" },
-  { title: "迷いを減らす", text: "初めての方でも戸惑わないよう、導線とUIの分かりやすさに配慮します。" },
-  { title: "公開まで丁寧に進める", text: "デザインから実装まで一貫して対応し、公開まで進行します。" },
+  {
+    title: "伝わる順序を設計する",
+    text: "必要な情報が自然に入るよう、見せる順序と区切りを整えます。",
+  },
+  {
+    title: "見え方のトーンを揃える",
+    text: "写真や色の温度を合わせ、全体の印象をひとつにまとめます。",
+  },
+  {
+    title: "迷いを減らす",
+    text: "初めての方でも戸惑わないよう、導線とUIの分かりやすさに配慮します。",
+  },
+  {
+    title: "公開まで丁寧に進める",
+    text: "デザインから実装まで一貫して対応し、公開まで進行します。",
+  },
 ];
 
 const SWATCHES = [
@@ -47,9 +58,21 @@ const SWATCHES = [
 
 function CrownIcon({ className = "" }) {
   return (
-    <svg className={className} viewBox="0 0 40 26" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <svg
+      className={cx(styles.crownIcon, className)}
+      viewBox="0 0 40 26"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
+    >
       <line x1="4" y1="22" x2="36" y2="22" strokeWidth="1" strokeLinecap="round" />
-      <polyline points="4,22 4,10 13,17 20,4 27,17 36,10 36,22" strokeWidth="1" strokeLinejoin="round" strokeLinecap="round" fill="none" />
+      <polyline
+        points="4,22 4,10 13,17 20,4 27,17 36,10 36,22"
+        strokeWidth="1"
+        strokeLinejoin="round"
+        strokeLinecap="round"
+        fill="none"
+      />
       <rect x="18.2" y="2" width="3.6" height="3.6" transform="rotate(45 20 3.8)" strokeWidth="0.85" />
       <rect x="2.2" y="8" width="3.6" height="3.6" transform="rotate(45 4 9.8)" strokeWidth="0.85" />
       <rect x="34.2" y="8" width="3.6" height="3.6" transform="rotate(45 36 9.8)" strokeWidth="0.85" />
@@ -59,7 +82,13 @@ function CrownIcon({ className = "" }) {
 
 function StudyIcon({ className = "" }) {
   return (
-    <svg className={className} viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <svg
+      className={cx(styles.studyIcon, className)}
+      viewBox="0 0 40 40"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
+    >
       <circle cx="20" cy="20" r="14" strokeWidth="0.8" strokeDasharray="2.5 3" />
       <circle cx="20" cy="20" r="1.6" strokeWidth="0.9" />
       <line x1="20" y1="18.4" x2="20" y2="7" strokeWidth="0.9" strokeLinecap="round" />
@@ -79,14 +108,18 @@ function QualificationRow({ item, index, onOpen }) {
 
   return (
     <div
-      className={cx(styles.qrow, styles[`qrow--${item.tier}`], clickable ? styles["qrow--clickable"] : "")}
+      className={cx(
+        styles.qrow,
+        styles[`qrow--${item.tier}`],
+        clickable ? styles["qrow--clickable"] : ""
+      )}
       onClick={handleOpen}
       role={clickable ? "button" : undefined}
       tabIndex={clickable ? 0 : undefined}
-      onKeyDown={(e) => {
+      onKeyDown={(event) => {
         if (!clickable) return;
-        if (e.key === "Enter" || e.key === " ") {
-          e.preventDefault();
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
           handleOpen();
         }
       }}
@@ -130,11 +163,12 @@ function CertificateModal({ item, onClose }) {
 
     const html = document.documentElement;
     const body = document.body;
+
     lastActiveRef.current = document.activeElement;
 
-    const onKey = (e) => {
-      if (e.key === "Escape") {
-        e.preventDefault();
+    const handleKeyDown = (event) => {
+      if (event.key === "Escape") {
+        event.preventDefault();
         onClose();
       }
     };
@@ -148,16 +182,32 @@ function CertificateModal({ item, onClose }) {
 
     html.classList.add("scroll-lock");
     body.classList.add("scroll-lock");
-    document.addEventListener("keydown", onKey);
+    document.addEventListener("keydown", handleKeyDown);
 
     return () => {
       const y = scrollYRef.current;
-      document.removeEventListener("keydown", onKey);
+
+      document.removeEventListener("keydown", handleKeyDown);
 
       html.classList.remove("scroll-lock");
       body.classList.remove("scroll-lock");
 
       window.scrollTo(0, y);
+      document.documentElement.scrollTop = y;
+      document.body.scrollTop = y;
+
+      requestAnimationFrame(() => {
+        window.scrollTo(0, y);
+        document.documentElement.scrollTop = y;
+        document.body.scrollTop = y;
+      });
+
+      window.setTimeout(() => {
+        window.scrollTo(0, y);
+        document.documentElement.scrollTop = y;
+        document.body.scrollTop = y;
+      }, 60);
+
       const el = lastActiveRef.current;
       if (el && typeof el.focus === "function") el.focus();
       lastActiveRef.current = null;
@@ -167,7 +217,13 @@ function CertificateModal({ item, onClose }) {
   if (!item) return null;
 
   return (
-    <div className={styles["certificate-modal"]} onClick={onClose} role="dialog" aria-modal="true" aria-labelledby="certificate-modal-title">
+    <div
+      className={styles["certificate-modal"]}
+      onClick={onClose}
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="certificate-modal-title"
+    >
       <div className={styles["certificate-modal__inner"]} onClick={(e) => e.stopPropagation()}>
         <div className={styles["certificate-modal__header"]}>
           <div>
@@ -176,13 +232,24 @@ function CertificateModal({ item, onClose }) {
               {item.title}
             </h4>
           </div>
-          <button type="button" className={styles["certificate-modal__close"]} onClick={onClose} aria-label="証明画像を閉じる">
+
+          <button
+            type="button"
+            className={styles["certificate-modal__close"]}
+            onClick={onClose}
+            aria-label="証明画像を閉じる"
+          >
             CLOSE
           </button>
         </div>
 
         <div className={styles["certificate-modal__imageWrap"]}>
-          <img src={item.image} alt={`${item.title} の証明画像`} className={styles["certificate-modal__image"]} />
+          <img
+            src={item.image}
+            alt={`${item.title} の証明画像`}
+            className={styles["certificate-modal__image"]}
+          />
+
           <p className={styles["certificate-modal__note"]} aria-label="注意事項">
             ※悪用防止のため、一部情報を加工・解像度調整しています。
           </p>
@@ -192,8 +259,9 @@ function CertificateModal({ item, onClose }) {
   );
 }
 
-export default function About() {
+export default function AboutSP() {
   const [activeCertificate, setActiveCertificate] = useState(null);
+
   const sectionRef = useRef(null);
   const styleBlockRef = useRef(null);
 
@@ -202,10 +270,10 @@ export default function About() {
     const styleBlock = styleBlockRef.current;
     if (!root) return undefined;
 
-    const sel = `.${styles["about-flow"]}, .${styles["qrow-flow"]}`;
-    const revealTargets = Array.from(root.querySelectorAll(sel)).filter(
-      (el) => !el.classList.contains(styles["site-tone-block"])
-    );
+    const revealTargets = Array.from(
+      root.querySelectorAll(`.${styles["about-flow"]}, .${styles["qrow-flow"]}`)
+    ).filter((el) => !el.classList.contains(styles["site-tone-block"]));
+
     const siteToneBlock = root.querySelector(`.${styles["site-tone-block"]}`);
 
     const reveal = (target) => target.classList.add(styles.isIn);
@@ -225,7 +293,7 @@ export default function About() {
           flowObserver.unobserve(entry.target);
         });
       },
-      { threshold: 0.12, rootMargin: "0px 0px -8% 0px" }
+      { threshold: 0.12, rootMargin: "0px 0px -10% 0px" }
     );
     revealTargets.forEach((t) => flowObserver.observe(t));
 
@@ -237,7 +305,7 @@ export default function About() {
           styleBlock.classList.add(styles.isIn);
           styleObserver.disconnect();
         },
-        { threshold: 0.18, rootMargin: "0px 0px -10% 0px" }
+        { threshold: 0.18, rootMargin: "0px 0px -12% 0px" }
       );
       styleObserver.observe(styleBlock);
     }
@@ -250,7 +318,7 @@ export default function About() {
           siteToneBlock.classList.add(styles.isIn);
           siteToneObserver.disconnect();
         },
-        { threshold: 0.14, rootMargin: "0px 0px -10% 0px" }
+        { threshold: 0.14, rootMargin: "0px 0px -12% 0px" }
       );
       siteToneObserver.observe(siteToneBlock);
     }
@@ -264,9 +332,17 @@ export default function About() {
 
   return (
     <>
-      <section id="about" ref={sectionRef} className={styles["about-section"]}>
-        <div className={styles["about-container"]}>
-          <div className={cx(styles["about-side-line"], styles["about-flow"], styles["about-flow-line"], styles["about-flow-1"])} aria-hidden="true" />
+      <section id="about" ref={sectionRef} className={cx(styles["about-section"], styles["sp-about"])}>
+        <div className={cx(styles["about-container"], styles["sp-about__container"])}>
+          <div
+            className={cx(
+              styles["about-side-line"],
+              styles["about-flow"],
+              styles["about-flow-line"],
+              styles["about-flow-1"]
+            )}
+            aria-hidden="true"
+          />
 
           <header className={cx(styles["about-header"], styles["about-flow"], styles["about-flow-1"])}>
             <SectionSvgTitle title="ABOUT" sub="ABOUT / CREATOR" className={styles["about-svg-title"]} />
@@ -275,28 +351,40 @@ export default function About() {
 
           <div className={styles["about-intro"]}>
             <p className={cx(styles["about-lead"], styles["about-flow"], styles["about-flow-2"])}>
-              上質に見えて、読みやすい。<br />
-              <span>商品・空間・サービスの印象</span>が、きちんと伝わるWebサイトへ。<br />
+              上質に見えて、読みやすい。
+              <br />
+              <span>商品・空間・サービスの印象</span>が、きちんと伝わるWebサイトへ。
+              <br />
               デザインと導線を一貫して設計し、公開まで丁寧に制作しています。
             </p>
 
             <p className={cx(styles["about-body"], styles["about-flow"], styles["about-flow-3"])}>
-              大切にしているのは、<span>必要な情報が迷わず入ること</span>。<br />
-              写真・色・余白・言葉のトーンを揃え、印象をひとつにします。<br />
+              大切にしているのは、<span>必要な情報が迷わず入ること</span>。
+              <br />
+              写真・色・余白・言葉のトーンを揃え、印象をひとつにします。
+              <br />
               見た目だけで終わらせず、<span>読み手が判断しやすい流れ</span>まで設計します。
             </p>
           </div>
 
           <div className={cx(styles["about-profile"], styles["about-flow"], styles["about-flow-4"])}>
-            <h3 className={styles["about-name"]} translate="no">Gushiken Yuto</h3>
+            <h3 className={styles["about-name"]} translate="no">
+              Gushiken Yuto
+            </h3>
             <p className={styles["about-role"]}>Web Design / Art Direction</p>
 
             <p className={styles["about-text"]}>
-              沖縄を拠点に、Web制作・Webデザインを行っています。<br />
+              沖縄を拠点に、Web制作・Webデザインを行っています。
+              <br />
               デザインから実装まで一貫して対応し、<span>印象と使いやすさ</span>を両立しながら公開まで進めます。
             </p>
 
-            <a href="https://note.com/noahgushi123" target="_blank" rel="noopener noreferrer" className={styles["about-note-link"]}>
+            <a
+              href="https://note.com/noahgushi123"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles["about-note-link"]}
+            >
               制作の裏側を見る
             </a>
           </div>
@@ -304,7 +392,9 @@ export default function About() {
           <div className={cx(styles["qualifications-block"], styles["about-flow"], styles["about-flow-5"])}>
             <p className={styles["qualifications-label"]}>QUALIFICATIONS</p>
             <p className={styles["qualifications-intro"]}>
-              制作の信頼性を高めるため、<br />基礎学習と資格取得も継続しています。
+              制作の信頼性を高めるため、
+              <br />
+              基礎学習と資格取得も継続しています。
             </p>
 
             <div className={styles["qualifications-list"]}>
@@ -321,7 +411,11 @@ export default function About() {
 
             <div className={styles["about-style-list"]}>
               {STYLE_ITEMS.map((item, index) => (
-                <div key={item.title} className={cx(styles["about-style-item"], styles["about-style-reveal"])} style={{ "--style-index": index }}>
+                <div
+                  key={item.title}
+                  className={cx(styles["about-style-item"], styles["about-style-reveal"])}
+                  style={{ "--style-index": index }}
+                >
                   <span className={styles["about-style-no"]}>{String(index + 1).padStart(2, "0")}</span>
                   <h4 className={styles["about-style-title"]}>{item.title}</h4>
                   <p className={styles["about-style-text"]}>{item.text}</p>
@@ -331,9 +425,14 @@ export default function About() {
           </div>
 
           <div className={cx(styles["site-tone-block"], styles["about-flow"], styles["about-flow-7"])}>
-            <p className={cx(styles["site-tone-label"], styles["site-flow"])} style={{ "--site-index": 0 }}>SITE TONE</p>
+            <p className={cx(styles["site-tone-label"], styles["site-flow"])} style={{ "--site-index": 0 }}>
+              SITE TONE
+            </p>
+
             <p className={cx(styles["site-tone-text"], styles["site-flow"])} style={{ "--site-index": 1 }}>
-              掲載しているサイトでは、<br />余白と読みやすさを優先し、見え方の一貫性を大切にしています。
+              掲載しているサイトでは、
+              <br />
+              余白と読みやすさを優先し、見え方の一貫性を大切にしています。
             </p>
 
             <div className={styles["site-swatch-grid"]}>
@@ -354,13 +453,22 @@ export default function About() {
 
               <div>
                 <p className={styles["site-tone-meta-label"]}>SPACING</p>
-                <div className={styles["spacing-lines"]}><span /><span /><span /></div>
+                <div className={styles["spacing-lines"]}>
+                  <span />
+                  <span />
+                  <span />
+                </div>
                 <p className={styles["site-tone-meta-sub"]}>情報の区切り</p>
               </div>
 
               <div>
                 <p className={styles["site-tone-meta-label"]}>TONE</p>
-                <div className={styles["tone-dots"]}><span /><span /><span /><span /></div>
+                <div className={styles["tone-dots"]}>
+                  <span />
+                  <span />
+                  <span />
+                  <span />
+                </div>
                 <p className={styles["site-tone-meta-sub"]}>統一感</p>
               </div>
             </div>

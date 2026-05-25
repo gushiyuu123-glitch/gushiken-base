@@ -2,7 +2,7 @@
 import React, { useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import SectionSvgTitle from "../components/SectionSvgTitle";
-import styles from "./Price.module.css";
+import styles from "./PriceSP.module.css";
 
 const cx = (...a) => a.filter(Boolean).join(" ");
 
@@ -200,7 +200,7 @@ function MaintenancePlan() {
   );
 }
 
-export default function Price() {
+export default function PriceSP() {
   const sectionRef = useRef(null);
 
   useEffect(() => {

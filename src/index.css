@@ -1,7 +1,7 @@
 /* ============================================================
-   GUSHIKEN DESIGN Core Index v8
-   Black Frame × Champagne Gold × Silver Line × Silent Motion
-   統一トークン + 事故耐性 + 全ページ共通OS
+   GUSHIKEN DESIGN Core Index v9
+   Paper Frame × Champagne Gold × Hairline × Silent Motion
+   Hero（棚×フレーム展示）に合わせた全ページ共通OS
 ============================================================ */
 
 @tailwind base;
@@ -9,48 +9,48 @@
 @tailwind utilities;
 
 /* ------------------------------------------------------------
-   ROOT TOKENS
+   ROOT TOKENS （既存変数名は維持：中身だけ“紙”に反転）
 ------------------------------------------------------------ */
 :root {
   /* ===== Core / Main ===== */
-  --main: #0b0b0b;
-  --main-deep: #070707;
-  --main-soft: rgba(15, 15, 15, 0.92);
-  --main-panel: rgba(12, 12, 12, 0.965);
+  --main: #f6f1e8;                    /* paper */
+  --main-deep: #efe7db;               /* deeper paper */
+  --main-soft: rgba(246, 241, 232, 0.92);
+  --main-panel: rgba(255, 255, 255, 0.74); /* milk panel */
 
-  /* ===== Assort / White ===== */
-  --assort: rgba(255, 255, 255, 0.86);
-  --assort-soft: rgba(238, 234, 224, 0.86);
-  --assort-muted: rgba(255, 255, 255, 0.60);
-  --assort-faint: rgba(255, 255, 255, 0.38);
-  --assort-ghost: rgba(255, 255, 255, 0.22);
-  --assort-line: rgba(255, 255, 255, 0.12);
-  --assort-line-faint: rgba(255, 255, 255, 0.075);
+  /* ===== Assort / Ink ===== */
+  --assort: rgba(18, 18, 18, 0.88);
+  --assort-soft: rgba(18, 18, 18, 0.74);
+  --assort-muted: rgba(18, 18, 18, 0.56);
+  --assort-faint: rgba(18, 18, 18, 0.36);
+  --assort-ghost: rgba(18, 18, 18, 0.20);
+  --assort-line: rgba(18, 18, 18, 0.10);
+  --assort-line-faint: rgba(18, 18, 18, 0.06);
 
   /* ===== Accent / Champagne Gold ===== */
   --accent: #c9b18a;
   --accent-bright: #d9c29a;
   --accent-deep: #8f7650;
-  --accent-dim: rgba(201, 177, 138, 0.24);
-  --accent-soft: rgba(201, 177, 138, 0.14);
-  --accent-border: rgba(201, 177, 138, 0.32);
-  --accent-glow: rgba(201, 177, 138, 0.075);
+  --accent-dim: rgba(201, 177, 138, 0.22);
+  --accent-soft: rgba(201, 177, 138, 0.12);
+  --accent-border: rgba(201, 177, 138, 0.30);
+  --accent-glow: rgba(201, 177, 138, 0.06);
 
-  /* ===== Subaccent / Silver ===== */
-  --subaccent: rgba(220, 226, 235, 0.78);
-  --subaccent-dim: rgba(220, 226, 235, 0.22);
-  --subaccent-border: rgba(220, 226, 235, 0.32);
-  --subaccent-glow: rgba(220, 226, 235, 0.06);
+  /* ===== Subaccent / Steel (控えめ) ===== */
+  --subaccent: rgba(38, 50, 66, 0.62);
+  --subaccent-dim: rgba(38, 50, 66, 0.18);
+  --subaccent-border: rgba(38, 50, 66, 0.22);
+  --subaccent-glow: rgba(38, 50, 66, 0.045);
 
-  /* ===== Legacy / Keep Existing Code Working ===== */
-  --black-900: var(--main);
-  --black-880: rgba(10, 10, 10, 0.98);
-  --black-850: rgba(12, 12, 12, 0.95);
-  --black-800: rgba(18, 18, 18, 0.92);
+  /* ===== Legacy aliases（既存コード互換） ===== */
+  --black-900: rgba(10, 10, 10, 0.98);
+  --black-880: rgba(12, 12, 12, 0.94);
+  --black-850: rgba(16, 16, 16, 0.90);
+  --black-800: rgba(22, 22, 22, 0.86);
 
   --white-980: rgba(255, 255, 255, 0.98);
-  --white-950: #fafafa;
-  --white-900: rgba(255, 255, 255, 0.95);
+  --white-950: #ffffff;
+  --white-900: rgba(255, 255, 255, 0.92);
   --white-800: rgba(255, 255, 255, 0.82);
   --white-700: rgba(255, 255, 255, 0.70);
   --white-600: rgba(255, 255, 255, 0.60);
@@ -60,61 +60,50 @@
   --white-200: rgba(255, 255, 255, 0.20);
   --white-100: rgba(255, 255, 255, 0.10);
 
-  /* 旧ゴールド。強く使いすぎない */
   --gold: #d9b98a;
   --gold-muted: var(--accent);
-
-  /* 旧クラス互換 */
   --accent-faint: var(--assort-line-faint);
   --nav-silver: var(--subaccent);
 
-  /* ===== Motion ===== */
+  /* ===== Motion（裕人の速め帯に寄せる） ===== */
   --ease-silent: cubic-bezier(0.22, 0.72, 0.18, 1);
   --ease-float: cubic-bezier(0.16, 1, 0.24, 1);
   --ease-sharp: cubic-bezier(0.22, 0.61, 0.36, 1);
   --ease-settle: cubic-bezier(0.22, 0.1, 0.28, 1);
 
-  --fade-time: 1.08s;
-  --fade-transform-time: 1.22s;
-  --fade-distance: 22px;
-  --fade-scale: 0.992;
+  --fade-time: 0.66s;
+  --fade-transform-time: 0.78s;
+  --fade-distance: 18px;
+  --fade-scale: 0.995;
   --fade-blur: 0px;
 
-  /* ===== Glow / Shadow ===== */
-  --glow-white: rgba(255, 255, 255, 0.08);
-  --glow-gold: var(--accent-glow);
-  --glow-silver: var(--subaccent-glow);
-  --glow-soft: rgba(255, 255, 255, 0.045);
+  /* ===== Shadow（棚に“置いてある感”の核） ===== */
+  --shadow-soft: 0 14px 34px rgba(0, 0, 0, 0.10);
+  --shadow-medium: 0 20px 50px rgba(0, 0, 0, 0.12);
+  --shadow-deep: 0 34px 78px rgba(0, 0, 0, 0.16);
+  --shadow-heavy: 0 60px 110px rgba(0, 0, 0, 0.20);
 
-  --shadow-soft: 0 14px 36px rgba(0, 0, 0, 0.22);
-  --shadow-medium: 0 18px 48px rgba(0, 0, 0, 0.28);
-  --shadow-deep: 0 24px 64px rgba(0, 0, 0, 0.34);
-  --shadow-heavy: 0 24px 70px rgba(0, 0, 0, 0.54);
+  /* フレーム専用（Heroが欲しい“密着”の深さ） */
+  --shadow-frame: 0 60px 100px rgba(0, 0, 0, 0.20);
 
   /* ===== Lines ===== */
   --line-gold: linear-gradient(
     90deg,
     transparent,
-    rgba(201, 177, 138, 0.70),
-    rgba(255, 255, 255, 0.18),
+    rgba(201, 177, 138, 0.58),
+    rgba(18, 18, 18, 0.10),
     transparent
   );
 
   --line-silver: linear-gradient(
     90deg,
     transparent,
-    rgba(220, 226, 235, 0.70),
+    rgba(38, 50, 66, 0.46),
     transparent
   );
 
-  --metal-champagne: linear-gradient(
-    145deg,
-    rgba(225, 216, 196, 0.92) 0%,
-    rgba(196, 177, 143, 0.90) 24%,
-    rgba(149, 126, 91, 0.88) 50%,
-    rgba(218, 207, 186, 0.92) 73%,
-    rgba(130, 109, 79, 0.88) 100%
-  );
+  /* ===== Paper Grain（署名：紙の気配を1枚だけ） ===== */
+  --paper-grain-opacity: 0.035;
 }
 
 /* ------------------------------------------------------------
@@ -124,21 +113,37 @@ html {
   background: var(--main);
   scroll-behavior: smooth;
   scroll-padding-top: 84px;
-  color-scheme: dark;
+  color-scheme: light;
 }
 
 body {
   margin: 0;
-  background: var(--main);
+  background:
+    radial-gradient(1100px 680px at 18% 12%, rgba(255, 255, 255, 0.86), transparent 56%),
+    radial-gradient(920px 620px at 74% 18%, rgba(201, 177, 138, 0.09), transparent 58%),
+    linear-gradient(180deg, rgba(246, 241, 232, 0.88), rgba(239, 231, 219, 0.78)),
+    var(--main);
   color: var(--assort);
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
 
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  opacity: var(--paper-grain-opacity);
+  background-image:
+    radial-gradient(rgba(0,0,0,0.22) 0.42px, transparent 0.42px);
+  background-size: 4px 4px;
+  mix-blend-mode: multiply;
+}
+
 ::selection {
-  color: rgba(10, 10, 10, 0.96);
-  background: rgba(201, 177, 138, 0.78);
+  color: rgba(10, 10, 10, 0.94);
+  background: rgba(201, 177, 138, 0.40);
 }
 
 #root {
@@ -153,9 +158,7 @@ body {
 }
 
 @keyframes rootFailsafe {
-  to {
-    opacity: 1;
-  }
+  to { opacity: 1; }
 }
 
 img,
@@ -167,33 +170,22 @@ svg {
   max-width: 100%;
 }
 
-a {
-  color: inherit;
-}
+a { color: inherit; }
 
 button,
 input,
 select,
-textarea {
-  font: inherit;
-}
+textarea { font: inherit; }
 
-button {
-  color: inherit;
-}
+button { color: inherit; }
 
 :focus-visible {
-  outline: 1px solid rgba(201, 177, 138, 0.42);
+  outline: 1px solid rgba(201, 177, 138, 0.46);
   outline-offset: 3px;
 }
 
-.no-scrollbar::-webkit-scrollbar {
-  display: none;
-}
-
-.no-scrollbar {
-  scrollbar-width: none;
-}
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { scrollbar-width: none; }
 
 /* ------------------------------------------------------------
    SCROLL LOCK
@@ -207,7 +199,7 @@ body.scroll-lock {
 
 /* ------------------------------------------------------------
    1) Silent Fade / AQ Fade
-   基本はblurなし。必要なページだけ --aq-blur で極薄指定。
+   blurは基本0。必要な時だけ --aq-blur を“極薄”で指定。
 ------------------------------------------------------------ */
 .aq-fade {
   --aq-y: var(--fade-distance);
@@ -232,12 +224,11 @@ body.scroll-lock {
   backface-visibility: hidden;
 }
 
-.aq-show,
-.aq-fade.is-visible {
-  opacity: 1 !important;
-  transform: translate3d(0, 0, 0) scale(1) !important;
-  filter: blur(0) !important;
-  backdrop-filter: none !important;
+/* “ここぞ”だけ遅く（ギャラリー/大写真用） */
+.aq-fade.lux {
+  --aq-opacity-time: 0.96s;
+  --aq-transform-time: 1.05s;
+  --aq-y: 14px;
 }
 
 /* Delay tokens */
@@ -249,7 +240,15 @@ body.scroll-lock {
 .aq-fade.delay-6 { --aq-delay: 0.50s; }
 .aq-fade.delay-7 { --aq-delay: 0.58s; }
 
-/* blur強制禁止 — [class*="fade"] は外して個別指定に */
+.aq-show,
+.aq-fade.is-visible {
+  opacity: 1 !important;
+  transform: translate3d(0, 0, 0) scale(1) !important;
+  filter: blur(0) !important;
+  backdrop-filter: none !important;
+}
+
+/* blur強制禁止（事故防止） */
 .gd-no-blur,
 .animate-fadeUp {
   filter: none !important;
@@ -257,13 +256,12 @@ body.scroll-lock {
 }
 
 /* ------------------------------------------------------------
-   2) Sharp Reveal
-   Nav / ロゴ / 小さな導線用
+   2) Sharp Reveal（小さな導線用）
 ------------------------------------------------------------ */
 .gd-sharp {
   opacity: 0;
   transform: translate3d(-10px, 0, 0) scale(0.985);
-  filter: brightness(0.9);
+  filter: brightness(0.96);
   clip-path: inset(0 100% 0 0);
   animation: gdSharpIn 0.72s var(--ease-silent) var(--sharp-delay, 0s) forwards;
   will-change: opacity, transform, filter, clip-path;
@@ -273,15 +271,10 @@ body.scroll-lock {
   0% {
     opacity: 0;
     transform: translate3d(-10px, 0, 0) scale(0.985);
-    filter: brightness(0.88);
+    filter: brightness(0.94);
     clip-path: inset(0 100% 0 0);
   }
-
-  68% {
-    opacity: 1;
-    filter: brightness(1.06);
-  }
-
+  68% { opacity: 1; filter: brightness(1.02); }
   100% {
     opacity: 1;
     transform: translate3d(0, 0, 0) scale(1);
@@ -290,74 +283,23 @@ body.scroll-lock {
   }
 }
 
-.gd-sheen {
-  position: absolute;
-  left: -10%;
-  top: 50%;
-  width: 42%;
-  height: 1px;
-  pointer-events: none;
-  background: linear-gradient(
-    90deg,
-    rgba(255,255,255,0),
-    rgba(255,255,255,0.46),
-    rgba(201,177,138,0.32),
-    rgba(255,255,255,0)
-  );
-  opacity: 0;
-  transform: translate3d(-18px, -50%, 0) scaleX(0.25);
-  transform-origin: left center;
-  animation: gdSheen 0.56s var(--ease-silent) var(--sheen-delay, 0.15s) forwards;
-}
-
-@keyframes gdSheen {
-  0% {
-    opacity: 0;
-    transform: translate3d(-18px, -50%, 0) scaleX(0.25);
-  }
-
-  24% {
-    opacity: 0.72;
-  }
-
-  100% {
-    opacity: 0;
-    transform: translate3d(92px, -50%, 0) scaleX(1);
-  }
-}
-
 /* ------------------------------------------------------------
-   3) Common Surface / Panel
+   3) Common Surface / Panel（紙のパネル）
 ------------------------------------------------------------ */
 .gd-panel {
   background:
-    radial-gradient(
-      circle at 14% 0%,
-      rgba(201, 177, 138, 0.055),
-      transparent 32%
-    ),
-    linear-gradient(
-      180deg,
-      rgba(12, 12, 12, 0.985),
-      rgba(7, 7, 7, 0.965)
-    );
-  border: 1px solid rgba(255, 255, 255, 0.085);
-  border-top: 1px solid var(--accent-dim);
+    radial-gradient(circle at 14% 0%, rgba(201, 177, 138, 0.06), transparent 34%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.78), rgba(250, 247, 241, 0.72));
+  border: 1px solid rgba(18, 18, 18, 0.08);
+  border-top: 1px solid rgba(201, 177, 138, 0.34);
   box-shadow:
-    0 0 0 0.5px var(--accent-glow),
-    var(--shadow-heavy),
-    inset 0 1px 0 rgba(255, 255, 255, 0.045);
+    0 0 0 0.5px rgba(255, 255, 255, 0.58),
+    var(--shadow-deep),
+    inset 0 1px 0 rgba(255, 255, 255, 0.62);
 }
 
-.gd-hairline {
-  height: 1px;
-  background: var(--line-gold);
-}
-
-.gd-silver-line {
-  height: 1px;
-  background: var(--line-silver);
-}
+.gd-hairline { height: 1px; background: var(--line-gold); }
+.gd-silver-line { height: 1px; background: var(--line-silver); }
 
 .gd-caption {
   font-size: 0.72rem;
@@ -369,18 +311,18 @@ body.scroll-lock {
 .gd-kicker {
   font-size: 0.68rem;
   line-height: 1;
-  letter-spacing: 0.28em;
+  letter-spacing: 0.24em;
   color: var(--assort-faint);
   text-transform: uppercase;
 }
 
 /* ------------------------------------------------------------
-   4) Ambient Glow
+   4) Ambient Glow（控えめ）
 ------------------------------------------------------------ */
 .ambient-glow {
   position: relative;
   opacity: 0;
-  transition: opacity 2.2s ease;
+  transition: opacity 2.0s ease;
 }
 
 .ambient-glow::before,
@@ -389,7 +331,7 @@ body.scroll-lock {
   position: absolute;
   border-radius: 9999px;
   filter: blur(120px);
-  opacity: 0.035;
+  opacity: 0.03;
   pointer-events: none;
 }
 
@@ -398,7 +340,7 @@ body.scroll-lock {
   left: -10%;
   width: 240px;
   height: 240px;
-  background: var(--glow-white);
+  background: rgba(255, 255, 255, 0.30);
 }
 
 .ambient-glow::after {
@@ -406,21 +348,13 @@ body.scroll-lock {
   right: -10%;
   width: 300px;
   height: 300px;
-  background: var(--glow-gold);
+  background: rgba(201, 177, 138, 0.10);
 }
 
-body.scrolled .ambient-glow {
-  opacity: 1;
-}
-
-body.scrolled .ambient-glow::before,
-body.scrolled .ambient-glow::after {
-  opacity: 0.085;
-  filter: blur(140px);
-}
+body.scrolled .ambient-glow { opacity: 1; }
 
 /* ------------------------------------------------------------
-   5) Elevated Card Motion
+   5) Elevated Card Motion（丸角にしない前提）
 ------------------------------------------------------------ */
 .elevated-card {
   position: relative;
@@ -429,113 +363,47 @@ body.scrolled .ambient-glow::after {
     box-shadow 0.45s ease,
     border-color 0.45s ease,
     background 0.45s ease;
-  box-shadow: 0 0 0 rgba(255, 255, 255, 0);
+  box-shadow: 0 0 0 rgba(0, 0, 0, 0);
 }
 
 .elevated-card:hover {
   transform: translateY(-2px);
   box-shadow:
-    0 12px 28px rgba(0, 0, 0, 0.28),
-    0 -4px 12px rgba(255, 255, 255, 0.03);
-}
-
-.soft-frame-glow::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(
-    circle at 22% 18%,
-    rgba(255, 255, 255, 0.055),
-    transparent 70%
-  );
-  opacity: 0;
-  transition: opacity 0.9s ease;
-  pointer-events: none;
-}
-
-.elevated-card:hover .soft-frame-glow::before {
-  opacity: 0.16;
+    0 18px 48px rgba(0, 0, 0, 0.12),
+    0 60px 110px rgba(0, 0, 0, 0.08);
 }
 
 .card-image {
   transition:
     transform 1s var(--ease-silent),
     filter 0.8s ease;
-  filter: brightness(0.88) contrast(1.04);
+  filter: brightness(0.98) contrast(1.02);
 }
 
 .elevated-card:hover .card-image {
-  transform: scale(1.018);
-  filter: brightness(0.94) contrast(1.06);
-}
-
-/* 旧クラス互換 */
-.dior-card {
-  position: relative;
-  transition:
-    transform 0.75s var(--ease-silent),
-    box-shadow 0.45s ease,
-    border-color 0.45s ease,
-    background 0.45s ease;
-  box-shadow: 0 0 0 rgba(255,255,255,0);
-}
-
-.dior-card:hover {
-  transform: translateY(-2px);
-  box-shadow:
-    0 12px 28px rgba(0, 0, 0, 0.28),
-    0 -4px 12px rgba(255, 255, 255, 0.03);
-}
-
-.dior-frame-glow::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(
-    circle at 22% 18%,
-    rgba(255,255,255,0.055),
-    transparent 70%
-  );
-  opacity: 0;
-  transition: opacity 0.9s ease;
-  pointer-events: none;
-}
-
-.dior-card:hover .dior-frame-glow::before {
-  opacity: 0.16;
-}
-
-.dior-img {
-  transition:
-    transform 1s var(--ease-silent),
-    filter 0.8s ease;
-  filter: brightness(0.88) contrast(1.04);
-}
-
-.dior-card:hover .dior-img {
-  transform: scale(1.018);
-  filter: brightness(0.94) contrast(1.06);
+  transform: scale(1.012);
+  filter: brightness(1.02) contrast(1.03);
 }
 
 /* ------------------------------------------------------------
-   6) Surface Grain
+   6) Surface Grain（紙面の粒）
 ------------------------------------------------------------ */
 .surface-grain,
 .dior-grain {
   position: absolute;
   inset: 0;
   background-image: radial-gradient(
-    rgba(255,255,255,0.16) 0.42px,
+    rgba(0,0,0,0.22) 0.42px,
     transparent 0.42px
   );
   background-size: 4px 4px;
-  opacity: 0.022;
+  opacity: 0.018;
   pointer-events: none;
-  mix-blend-mode: normal;
+  mix-blend-mode: multiply;
 }
 
 /* ------------------------------------------------------------
-   7) Horizontal Rail
+   7) Horizontal Rail（既存互換）
 ------------------------------------------------------------ */
 .works-rail {
   scroll-snap-type: x mandatory;
@@ -548,23 +416,22 @@ body.scrolled .ambient-glow::after {
     transform 0.36s var(--ease-silent),
     box-shadow 0.36s var(--ease-silent),
     opacity 0.28s ease;
-  opacity: 0.96;
+  opacity: 0.98;
 }
 
 .works-rail:active .works-card {
   transform: translateY(-1px) scale(0.99);
-  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.26);
+  box-shadow: 0 18px 48px rgba(0, 0, 0, 0.14);
 }
 
 .works-rail:not(:active) .works-card {
   transform: translateY(0) scale(1);
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.22);
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.12);
 }
 
-.works-card:hover {
-  opacity: 1;
-}
+.works-card:hover { opacity: 1; }
 
+/* rail内はinview制御しない（ガタつき防止） */
 .works-rail .aq-fade,
 .works-rail [class*="aq-"] {
   opacity: 1 !important;
@@ -581,41 +448,28 @@ body.scrolled .ambient-glow::after {
   border-radius: 9999px;
   background: linear-gradient(
     180deg,
-    rgba(220, 226, 235, 0),
-    rgba(220, 226, 235, 0.34),
+    rgba(38, 50, 66, 0),
+    rgba(38, 50, 66, 0.22),
     rgba(201, 177, 138, 0.26),
-    rgba(220, 226, 235, 0)
+    rgba(38, 50, 66, 0)
   );
   box-shadow:
-    0 0 0 0.5px rgba(220, 226, 235, 0.08),
-    0 0 16px rgba(201, 177, 138, 0.035);
+    0 0 0 0.5px rgba(38, 50, 66, 0.08),
+    0 0 16px rgba(201, 177, 138, 0.05);
   animation: scrollPulse 2.8s ease-in-out infinite;
 }
 
 @keyframes scrollPulse {
-  0% {
-    opacity: 0.16;
-    transform: translateY(-5px) scaleY(0.96);
-  }
-
-  45% {
-    opacity: 0.42;
-    transform: translateY(0) scaleY(1);
-  }
-
-  100% {
-    opacity: 0.16;
-    transform: translateY(7px) scaleY(0.96);
-  }
+  0% { opacity: 0.16; transform: translateY(-5px) scaleY(0.96); }
+  45% { opacity: 0.42; transform: translateY(0) scaleY(1); }
+  100% { opacity: 0.16; transform: translateY(7px) scaleY(0.96); }
 }
 
 /* ------------------------------------------------------------
    9) Reduced Motion
 ------------------------------------------------------------ */
 @media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
-  }
+  html { scroll-behavior: auto; }
 
   #root {
     transition: none !important;
@@ -627,16 +481,11 @@ body.scrolled .ambient-glow::after {
   .aq-show,
   .aq-fade.is-visible,
   .gd-sharp,
-  .gd-sheen,
   .ambient-glow,
   .ambient-glow::before,
   .ambient-glow::after,
   .elevated-card,
-  .soft-frame-glow::before,
   .card-image,
-  .dior-card,
-  .dior-frame-glow::before,
-  .dior-img,
   .works-card,
   .scroll-hint {
     transition: none !important;
@@ -647,27 +496,25 @@ body.scrolled .ambient-glow::after {
   .aq-fade,
   .aq-show,
   .aq-fade.is-visible,
-  .gd-sharp {
-    opacity: 1 !important;
-  }
+  .gd-sharp { opacity: 1 !important; }
 }
 
 /* ============================================================
-   WORKS LIST CARD REVEAL
+   WORKS LIST CARD REVEAL（既存互換）
 ============================================================ */
 .work-list-card.work-rise {
   opacity: 0;
-  transform: translate3d(0, 32px, 0) scale(0.99);
-  filter: brightness(0.88) saturate(0.92) blur(0.08px);
+  transform: translate3d(0, 24px, 0) scale(0.995);
+  filter: brightness(0.98) saturate(0.98) blur(0px);
   will-change: opacity, transform, filter;
 
   transition:
-    opacity 980ms cubic-bezier(0.22, 0.72, 0.18, 1),
-    transform 1180ms cubic-bezier(0.16, 1, 0.24, 1),
-    filter 980ms cubic-bezier(0.22, 0.72, 0.18, 1),
-    border-color 520ms cubic-bezier(0.22, 0.56, 0.18, 1),
-    box-shadow 620ms cubic-bezier(0.22, 0.56, 0.18, 1),
-    background-color 520ms cubic-bezier(0.22, 0.56, 0.18, 1);
+    opacity 780ms var(--ease-silent),
+    transform 920ms var(--ease-float),
+    filter 780ms var(--ease-silent),
+    border-color 520ms var(--ease-silent),
+    box-shadow 620ms var(--ease-silent),
+    background-color 520ms var(--ease-silent);
 
   transition-delay: var(--work-rise-delay, 0ms);
 }
@@ -692,3 +539,7 @@ body.scrolled .ambient-glow::after {
     transition: none !important;
   }
 }
+/* Lenis */
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+.lenis.lenis-stopped { overflow: hidden; }

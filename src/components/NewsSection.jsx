@@ -159,12 +159,13 @@ export default function NewsSection() {
   const hasNews = news.length > 0;
 
   return (
-    <section
-      ref={sectionRef}
-      className={styles.wrapper}
-      aria-labelledby="news-heading"
-      aria-busy={loading ? "true" : "false"}
-    >
+<section
+  id="news"
+  ref={sectionRef}
+  className={styles.wrapper}
+  aria-labelledby="news-heading"
+  aria-busy={loading ? "true" : "false"}
+>
       <div className={styles.inner}>
         <div
           className={cx(styles.sideLine, styles.reveal, styles.lineReveal)}
@@ -173,7 +174,11 @@ export default function NewsSection() {
         />
 
         <header className={cx(styles.header, styles.reveal, styles.reveal1)} data-news-reveal>
-          <SectionSvgTitle title="NEWS" sub="UPDATE / JOURNAL" className={styles.svgTitle} />
+       <SectionSvgTitle
+  title="NEWS"
+  sub="UPDATE / JOURNAL"
+  className="is-dark"
+/>
           <h2 id="news-heading" className={styles.hiddenHeading}>お知らせ</h2>
 
           <p className={styles.lead}>

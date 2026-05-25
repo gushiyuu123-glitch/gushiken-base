@@ -1,30 +1,39 @@
 /* src/components/Nav.module.css */
-
 /* ======================================================
-   GUSHIKEN DESIGN — Global Navigation
-   Beam (wipe) / Black Frame / Quiet Luxury
-   - dot removed
-   - sheen (blinking) removed
-   - active = bloom -> settle
+   NAV — Less FX / More Judgment (bar keep / dot zero)
+   - バー(帯)は残す
+   - dotは一切使わない
+   - 署名は「下線が100%到達しない」＋均し除去の“微ズレ”
 ====================================================== */
 
-:root {
-  --nav-gold: #d9b98a;
-  --nav-gold-dim: rgba(217, 185, 138, 0.22);
-  --nav-gold-soft: rgba(217, 185, 138, 0.12);
-  --nav-gold-glow: rgba(217, 185, 138, 0.08);
+.navRoot{
+  /* paper */
+  --paper-bg-top: linear-gradient(180deg, rgba(248,244,236,0.66) 0%, rgba(248,244,236,0.22) 76%, rgba(248,244,236,0) 100%);
+  --paper-bg: rgba(248,244,236,0.92);
+  --paper-ink: rgba(24,19,12,0.92);
+  --paper-ink-mid: rgba(24,19,12,0.58);
+  --paper-ink-dim: rgba(24,19,12,0.38);
+  --paper-line: rgba(24,19,12,0.10);
 
-  --nav-white: rgba(255, 255, 255, 0.92);
-  --nav-white-mid: rgba(255, 255, 255, 0.56);
-  --nav-white-dim: rgba(255, 255, 255, 0.34);
+  /* dark */
+  --dark-bg-top: linear-gradient(180deg, rgba(7,7,7,0.76) 0%, rgba(7,7,7,0.26) 76%, rgba(7,7,7,0) 100%);
+  --dark-bg: rgba(7,7,7,0.92);
+  --dark-ink: rgba(255,255,255,0.92);
+  --dark-ink-mid: rgba(255,255,255,0.64);
+  --dark-ink-dim: rgba(255,255,255,0.42);
+  --dark-line: rgba(255,255,255,0.08);
 
-  --nav-ease: cubic-bezier(0.22, 0.56, 0.18, 1);
-  --nav-soft-ease: cubic-bezier(0.22, 1, 0.36, 1);
-}
+  --gold: rgba(217,185,138,0.78);
+  --ease: cubic-bezier(0.22, 0.56, 0.18, 1);
 
-/* ─── Root ───────────────────────────────────── */
+  /* default = paper */
+  --bg-top: var(--paper-bg-top);
+  --bg-solid: var(--paper-bg);
+  --ink: var(--paper-ink);
+  --ink-mid: var(--paper-ink-mid);
+  --ink-dim: var(--paper-ink-dim);
+  --line: var(--paper-line);
 
-.navRoot {
   position: fixed;
   inset: 0 0 auto 0;
   width: 100%;
@@ -32,130 +41,109 @@
   z-index: 999999;
   isolation: isolate;
 
+  background: var(--bg-top);
+  border-bottom: 1px solid rgba(0,0,0,0);
+
   transition:
-    background 0.5s ease,
-    border-bottom-color 0.5s ease,
-    box-shadow 0.5s ease,
-    backdrop-filter 0.5s ease;
+    background 420ms ease,
+    border-bottom-color 420ms ease,
+    box-shadow 420ms ease;
 }
 
-/* “膜”の上の薄いハイライト */
-.navRoot::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  pointer-events: none;
-
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), transparent 64%);
-  opacity: 0.75;
+/* theme switch */
+.navRoot[data-theme="dark"]{
+  --bg-top: var(--dark-bg-top);
+  --bg-solid: var(--dark-bg);
+  --ink: var(--dark-ink);
+  --ink-mid: var(--dark-ink-mid);
+  --ink-dim: var(--dark-ink-dim);
+  --line: var(--dark-line);
 }
 
-/* 下の梁（beam） */
-.navRoot::after {
-  content: "";
-  position: absolute;
-  inset: auto 0 0 0;
+.navIdle{
+  background: var(--bg-top);
+}
+
+.navActive{
+  background: var(--bg-solid);
+  border-bottom-color: var(--line);
+  box-shadow: 0 12px 38px rgba(0,0,0,0.10);
+}
+.navRoot[data-theme="dark"].navActive{
+  box-shadow: 0 16px 48px rgba(0,0,0,0.42);
+}
+
+/* bottom beam (not full width) */
+.navRoot::after{
+  content:"";
+  position:absolute;
+  left: clamp(18px, 3vw, 40px);
+  right: clamp(18px, 3vw, 40px);
+  bottom: 0;
   height: 1px;
-  pointer-events: none;
+  pointer-events:none;
 
   background: linear-gradient(
     90deg,
     transparent 0%,
-    rgba(217, 185, 138, 0.11) 22%,
-    rgba(255, 255, 255, 0.065) 50%,
-    rgba(217, 185, 138, 0.09) 78%,
+    rgba(217,185,138,0.12) 22%,
+    rgba(255,255,255,0.06) 52%,
+    rgba(217,185,138,0.08) 86%,
     transparent 100%
   );
-
-  opacity: 0.64;
+  opacity: 0.52;
 }
 
-.navIdle {
-  background: rgba(0, 0, 0, 0.08);
-  backdrop-filter: blur(8px) saturate(112%);
-  -webkit-backdrop-filter: blur(8px) saturate(112%);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.038);
-  box-shadow: none;
-}
-
-.navActive {
-  background: rgba(6, 6, 6, 0.82);
-  backdrop-filter: blur(14px) saturate(126%);
-  -webkit-backdrop-filter: blur(14px) saturate(126%);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.085);
-
-  box-shadow:
-    0 1px 0 rgba(217, 185, 138, 0.05),
-    0 12px 42px rgba(0, 0, 0, 0.28);
-}
-
-/* ─── Inner ───────────────────────────────────── */
-
-.navInner {
+/* inner */
+.navInner{
   width: min(100%, 1280px);
   height: 68px;
   margin: 0 auto;
   padding: 0 clamp(18px, 3vw, 40px);
-
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
-/* ─── Logo ───────────────────────────────────── */
-
-.navLogo {
-  display: flex;
-  align-items: center;
+/* logo */
+.navLogo{
+  display:flex;
+  align-items:center;
   gap: 0.78rem;
-
-  color: var(--nav-white);
-  text-decoration: none;
-
-  transition: opacity 0.35s ease, transform 0.35s ease;
+  color: var(--ink);
+  text-decoration:none;
+  transition: opacity 320ms ease, transform 360ms var(--ease);
 }
+.navLogo:hover{ opacity: 0.90; transform: translateY(-0.5px); }
 
-.navLogo:hover { opacity: 0.88; }
-
-.navLogoSeal {
+.navLogoSeal{
   position: relative;
-  display: grid;
-  place-items: center;
-
+  display:grid;
+  place-items:center;
   width: 34px;
   height: 34px;
   flex-shrink: 0;
 }
-
-/* “印章の薄い環” */
-.navLogoSeal::after {
-  content: "";
-  position: absolute;
-  inset: -6px;
-  border-radius: 9999px;
-  pointer-events: none;
-
-  background: radial-gradient(
-    circle at 50% 50%,
-    rgba(217, 185, 138, 0.075),
-    rgba(217, 185, 138, 0.022) 40%,
-    transparent 72%
-  );
-
-  opacity: 0.52;
+.navLogoSeal::after{
+  content:"";
+  position:absolute;
+  inset:-6px;
+  border-radius:9999px;
+  pointer-events:none;
+  background: radial-gradient(circle at 50% 50%, rgba(217,185,138,0.10), rgba(217,185,138,0.03) 42%, transparent 72%);
+  opacity: 0.56;
   filter: blur(0.2px);
 }
 
-.navLogoMask {
-  display: block;
+.navLogoMask{
   width: 100%;
   height: 100%;
+  display:block;
 
   background: linear-gradient(
     145deg,
     rgba(225, 216, 196, 0.92) 0%,
-    rgba(196, 177, 143, 0.9) 24%,
+    rgba(196, 177, 143, 0.90) 24%,
     rgba(149, 126, 91, 0.88) 50%,
     rgba(218, 207, 186, 0.92) 73%,
     rgba(130, 109, 79, 0.88) 100%
@@ -164,551 +152,408 @@
   -webkit-mask: var(--logo-url) center / contain no-repeat;
   mask: var(--logo-url) center / contain no-repeat;
 
-  opacity: 0.92;
-
+  opacity: 0.90;
   filter:
-    drop-shadow(0 0 0.5px rgba(255, 255, 255, 0.08))
-    drop-shadow(0 2px 8px rgba(0, 0, 0, 0.24))
-    drop-shadow(0 0 18px rgba(217, 185, 138, 0.03));
-
-  transition: opacity 0.4s ease, filter 0.4s ease, transform 0.4s ease;
+    drop-shadow(0 0 0.5px rgba(255,255,255,0.10))
+    drop-shadow(0 2px 10px rgba(0,0,0,0.18));
+  transition: opacity 360ms ease, transform 360ms var(--ease);
 }
+.navLogo:hover .navLogoMask{ opacity: 1; transform: translateY(-0.5px); }
 
-.navLogo:hover .navLogoMask {
-  opacity: 1;
-  transform: translateY(-0.5px);
-  filter:
-    drop-shadow(0 0 0.5px rgba(255, 255, 255, 0.12))
-    drop-shadow(0 3px 10px rgba(0, 0, 0, 0.28))
-    drop-shadow(0 0 20px rgba(217, 185, 138, 0.05));
-}
-
-.navLogoText {
-  display: flex;
+.navLogoText{
+  display:flex;
   flex-direction: column;
   gap: 0.16rem;
-  min-width: 0;
   line-height: 1;
 }
-
-.navLogoMain {
-  position: relative;
-  display: inline-block;
-
+.navLogoMain{
   font-size: 0.78rem;
-  font-weight: 300;
-  letter-spacing: 0.24em;
-  color: rgba(255, 255, 255, 0.92);
+  font-weight: 400;
+  letter-spacing: 0.22em;
+  color: var(--ink);
   white-space: nowrap;
 }
-
-.navLogoSub {
-  position: relative;
-  display: inline-block;
-
+.navLogoSub{
   font-family: "Cormorant Garamond", Georgia, serif;
-  font-size: 0.7rem;
-  font-weight: 300;
-  letter-spacing: 0.2em;
-  color: rgba(255, 255, 255, 0.32);
+  font-size: 0.70rem;
+  font-weight: 400;
+  letter-spacing: 0.18em;
+  color: var(--ink-dim);
   white-space: nowrap;
 }
 
-/* “点滅/走査”は完全に殺す（JSXに残ってても無害） */
-.navSheen { display: none !important; }
+/* pc (bar keep, but “均し”を殺す) */
+.navPc{
+  position: relative;
+  display:flex;
+  align-items:flex-end;
 
-/* ─── PC Nav ─────────────────────────────────── */
-
-.navPc {
-  display: flex;
-  align-items: center;
-  gap: 42px;
+  /* 均し回避：可変gap＋“目次レール”の余白 */
+  gap: clamp(22px, 2.6vw, 34px);
+  padding-left: 18px;
 }
 
-/* ドット無し：梁を“拭き出し”で出す */
-.navItem {
-  position: relative;
-  display: inline-block;
+/* left rail (NO DOT) */
+.navPc::before{
+  content:"";
+  position:absolute;
+  left: 0;
+  top: 10px;
+  bottom: 12px;
+  width: 1px;
+  pointer-events:none;
 
+  background: linear-gradient(
+    to bottom,
+    rgba(217,185,138,0.52),
+    rgba(255,255,255,0.06),
+    transparent
+  );
+  opacity: 0.78;
+}
+
+.navItem{
+  position: relative;
+  display:inline-block;
   padding: 6px 2px 12px;
 
   font-size: 0.74rem;
-  font-weight: 300;
-  letter-spacing: 0.22em;
-  color: rgba(255, 255, 255, 0.5);
-  text-decoration: none;
+  font-weight: 400;
+  letter-spacing: 0.18em;
 
-  transition:
-    color 0.35s ease,
-    opacity 0.35s ease,
-    transform 0.45s var(--nav-ease);
+  color: var(--ink-mid);
+  text-decoration:none;
+
+  transition: color 320ms ease, transform 420ms var(--ease);
+  will-change: transform;
 }
-
-.navItemText { position: relative; z-index: 1; }
-
-.navItem:hover {
-  color: rgba(255, 255, 255, 0.92);
+.navItem:hover{
+  color: var(--ink);
   transform: translateY(-0.5px);
 }
 
-/* beam (wipe) */
-.navItem::after {
-  content: "";
-  position: absolute;
-  left: -6px;
-  right: -6px;
-  bottom: 2px;
-
-  height: 1px;
+/* underline: never reach 100% + micro-variance by index (AI均し殺し) */
+.navItem::after{
+  content:"";
+  position:absolute;
+  /* ほんの僅かな“編集のズレ”で均しを消す（dot禁止） */
+  left: calc(-7px + (var(--i, 0) * 0.7px));
+  right: calc(-7px + (var(--i, 0) * 0.35px));
+  bottom:2px;
+  height:1px;
 
   background: linear-gradient(
     90deg,
-    rgba(217, 185, 138, 0) 0%,
-    rgba(217, 185, 138, 0.78) 18%,
-    rgba(255, 255, 255, 0.18) 52%,
-    rgba(217, 185, 138, 0.08) 82%,
-    rgba(217, 185, 138, 0) 100%
+    rgba(217,185,138,0) 0%,
+    rgba(217,185,138,0.78) 18%,
+    rgba(255,255,255,0.10) 52%,
+    rgba(217,185,138,0.10) 82%,
+    rgba(217,185,138,0) 100%
   );
 
   opacity: 0;
   clip-path: inset(0 100% 0 0);
-
-  transition:
-    clip-path 0.62s var(--nav-ease),
-    opacity 0.42s ease;
-
-  box-shadow: 0 0 18px rgba(217, 185, 138, 0.05);
+  transition: clip-path 620ms var(--ease), opacity 360ms ease;
 }
 
-.navItem:hover::after {
-  opacity: 0.52;
-  clip-path: inset(0 0 0 0);
+/* hover underline: never full reach */
+.navItem:hover::after{
+  opacity: 0.42;
+  clip-path: inset(0 calc(10% + (var(--i, 0) * 1.1%)) 0 0);
 }
 
-/* active：到達瞬間だけ “強く光る → 弱くなる” */
-.navItemActive {
-  color: rgba(255, 255, 255, 0.94);
+.navItemActive{
+  color: var(--ink);
+}
+.navItemActive::after{
+  opacity: 0.58;
+  clip-path: inset(0 calc(12% + (var(--i, 0) * 0.8%)) 0 0);
 }
 
-.navItemActive::after {
-  opacity: 0.68;                /* 最終到達（弱くなる） */
-  clip-path: inset(0 0 0 0);
-  animation: navActiveBloom 0.92s var(--nav-ease) both;
+.navItemEmphasis:not(.navItemActive){
+  color: rgba(143,118,80,0.88);
+}
+.navRoot[data-theme="dark"] .navItemEmphasis:not(.navItemActive){
+  color: rgba(217,185,138,0.82);
+}
+.navItemEmphasis:not(.navItemActive)::after{
+  opacity: 0.22;
+  clip-path: inset(0 22% 0 0);
 }
 
-/* emphasis（CONTACT）も両対応（data属性 / class） */
-.navItem[data-emphasis="true"]:not(.navItemActive),
-.navItemEmphasis:not(.navItemActive) {
-  color: rgba(217, 185, 138, 0.72);
-}
+.navItemText{ position:relative; z-index:1; }
 
-/* emphasis は hover しなくても薄い梁がある（押さない強さ） */
-.navItem[data-emphasis="true"]:not(.navItemActive)::after,
-.navItemEmphasis:not(.navItemActive)::after {
-  opacity: 0.26;
-  clip-path: inset(0 18% 0 0);
-}
-
-@keyframes navActiveBloom {
-  0% {
-    opacity: 0;
-    clip-path: inset(0 100% 0 0);
-    box-shadow: 0 0 0 rgba(217, 185, 138, 0);
-  }
-  42% {
-    opacity: 0.92; /* 到達瞬間：強い発光 */
-    clip-path: inset(0 0 0 0);
-    box-shadow: 0 0 26px rgba(217, 185, 138, 0.16);
-  }
-  100% {
-    opacity: 0.68; /* 鎮静：弱くなる */
-    clip-path: inset(0 0 0 0);
-    box-shadow: 0 0 18px rgba(217, 185, 138, 0.06);
-  }
-}
-
-/* ─── Sharp Reveal（テキスト出現） ───────────────── */
-
-.sharpIn {
+/* appear */
+.sharpIn{
   opacity: 0;
-  transform: translate3d(-10px, 0, 0) scale(0.985);
-  filter: brightness(0.9);
+  transform: translate3d(-8px, 0, 0);
   clip-path: inset(0 100% 0 0);
-
-  animation: navSharpIn 0.72s var(--nav-ease) var(--nav-delay, 0s) forwards;
-  will-change: opacity, transform, filter, clip-path;
+  animation: navSharpIn 0.62s var(--ease) var(--nav-delay, 0s) forwards;
 }
-
-@keyframes navSharpIn {
-  0% {
-    opacity: 0;
-    transform: translate3d(-10px, 0, 0) scale(0.985);
-    filter: brightness(0.88);
-    clip-path: inset(0 100% 0 0);
-  }
-  68% { opacity: 1; filter: brightness(1.04); }
-  100% {
+@keyframes navSharpIn{
+  to{
     opacity: 1;
-    transform: translate3d(0, 0, 0) scale(1);
-    filter: brightness(1);
+    transform: translate3d(0,0,0);
     clip-path: inset(0 0 0 0);
   }
 }
 
-/* ─── Hamburger ──────────────────────────────── */
-
-.hamburger {
+/* hamburger */
+.hamburger{
   position: relative;
   z-index: 1000001;
-
-  display: none;
-  flex-direction: column;
-  justify-content: space-between;
-
-  width: 28px;
-  height: 20px;
-
-  border: 0;
-  background: transparent;
-  padding: 0;
-  cursor: pointer;
+  display:none;
+  flex-direction:column;
+  justify-content:space-between;
+  width:28px;
+  height:20px;
+  border:0;
+  background:transparent;
+  padding:0;
+  cursor:pointer;
 }
-
-.hamburger span {
-  width: 100%;
-  height: 1px;
-  border-radius: 999px;
-
-  background: rgba(255, 255, 255, 0.82);
-  transform-origin: center;
-
-  transition:
-    transform 0.42s var(--nav-ease),
-    opacity 0.42s var(--nav-ease),
-    width 0.42s var(--nav-ease);
+.hamburger span{
+  width:100%;
+  height:1px;
+  border-radius:999px;
+  background: var(--ink);
+  transform-origin:center;
+  transition: transform 420ms var(--ease), opacity 420ms var(--ease), width 420ms var(--ease);
 }
+.hamburger span:nth-child(2){ background: var(--gold); }
+.hamburger span:last-child{ width:58%; margin-left:auto; }
 
-.hamburger span:nth-child(2) { background: rgba(217, 185, 138, 0.68); }
+.hamburgerOpen span:nth-child(1){ transform: translateY(9.5px) rotate(45deg); }
+.hamburgerOpen span:nth-child(2){ opacity: 0; }
+.hamburgerOpen span:nth-child(3){ width: 100%; transform: translateY(-9.5px) rotate(-45deg); }
 
-.hamburger span:last-child {
-  width: 58%;
-  margin-left: auto;
-}
-
-.hamburgerOpen span:nth-child(1) { transform: translateY(9.5px) rotate(45deg); }
-.hamburgerOpen span:nth-child(2) { opacity: 0; }
-.hamburgerOpen span:nth-child(3) {
-  width: 100%;
-  transform: translateY(-9.5px) rotate(-45deg);
-}
-
-/* ─── Mobile Overlay ─────────────────────────── */
-
-.mobileOverlay {
+/* overlay */
+.mobileOverlay{
   position: fixed;
-  inset: 0;
-  z-index: 999997;
-
-  background: rgba(0, 0, 0, 0.42);
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
-
-  opacity: 0;
-  pointer-events: none;
-
-  transition: opacity 0.36s ease;
+  inset:0;
+  z-index:999997;
+  opacity:0;
+  pointer-events:none;
+  transition: opacity 360ms ease;
   overscroll-behavior: contain;
+
+  background: rgba(10,7,2,0.28);
 }
-
-.mobileOverlayOpen {
-  opacity: 1;
-  pointer-events: auto;
+.mobileOverlay[data-theme="dark"]{
+  background: rgba(0,0,0,0.46);
 }
+.mobileOverlayOpen{ opacity:1; pointer-events:auto; }
 
-/* ─── Mobile Panel ───────────────────────────── */
-
-.mobileNav {
+/* mobile panel */
+.mobileNav{
   position: fixed;
   top: 84px;
   left: 14px;
   right: 14px;
   z-index: 999998;
 
-  width: auto;
+  width:auto;
   max-width: 404px;
   max-height: calc(100svh - 108px);
-  margin-inline: auto;
+  margin-inline:auto;
 
-  overflow-y: auto;
+  overflow-y:auto;
   -webkit-overflow-scrolling: touch;
   overscroll-behavior: contain;
 
-  border: 1px solid rgba(255, 255, 255, 0.082);
-  border-top: 1px solid var(--nav-gold-dim);
-  border-radius: 22px;
+  border: 1px solid rgba(24,19,12,0.10);
+  border-top: 1px solid rgba(217,185,138,0.22);
+  border-radius: 18px;
 
-  background: linear-gradient(180deg, rgba(13, 13, 13, 0.985), rgba(7, 7, 7, 0.965));
-
+  background: linear-gradient(180deg, rgba(248,244,236,0.98), rgba(246,241,232,0.94));
   box-shadow:
-    0 0 0 0.5px var(--nav-gold-glow),
-    0 24px 70px rgba(0, 0, 0, 0.54),
-    inset 0 1px 0 rgba(255, 255, 255, 0.045);
-
-  backdrop-filter: blur(16px) saturate(125%);
-  -webkit-backdrop-filter: blur(16px) saturate(125%);
+    0 0 0 0.5px rgba(255,255,255,0.52),
+    0 24px 70px rgba(0,0,0,0.18),
+    inset 0 1px 0 rgba(255,255,255,0.62);
 
   transform: translateY(-8px) scale(0.99);
-  opacity: 0;
-  pointer-events: none;
+  opacity:0;
+  pointer-events:none;
 
-  transition: transform 0.36s var(--nav-soft-ease), opacity 0.36s ease;
+  transition: transform 360ms cubic-bezier(0.22, 1, 0.36, 1), opacity 360ms ease;
+}
+.mobileNav[data-theme="dark"]{
+  border: 1px solid rgba(255,255,255,0.10);
+  border-top-color: rgba(217,185,138,0.26);
+  background: #0b0b0b;
+  box-shadow:
+    0 0 0 0.5px rgba(255,255,255,0.06),
+    0 30px 90px rgba(0,0,0,0.42);
 }
 
-.mobileOpen {
-  transform: translateY(0) scale(1);
-  opacity: 1;
-  pointer-events: auto;
-}
+.mobileOpen{ transform: translateY(0) scale(1); opacity:1; pointer-events:auto; }
+.mobileNavInner{ padding: 1.1rem 1.2rem 1.35rem; }
 
-.mobileNavInner { padding: 1.1rem 1.2rem 1.35rem; }
-
-.mobileNavTop {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-
+.mobileNavTop{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
   margin-bottom: 0.75rem;
   padding-bottom: 0.85rem;
-
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  border-bottom: 1px solid rgba(24,19,12,0.08);
+}
+.mobileNav[data-theme="dark"] .mobileNavTop{
+  border-bottom-color: rgba(255,255,255,0.10);
 }
 
-.mobileNavLabel {
-  display: flex;
-  align-items: center;
-  gap: 0.55rem;
-  margin: 0;
-
+.mobileNavLabel{
+  margin:0;
   font-size: 0.64rem;
-  letter-spacing: 0.28em;
-  color: rgba(255, 255, 255, 0.34);
+  letter-spacing: 0.26em;
+  color: rgba(24,19,12,0.46);
+}
+.mobileNav[data-theme="dark"] .mobileNavLabel{
+  color: rgba(255,255,255,0.46);
 }
 
-.mobileNavLabel::before {
-  content: "";
-  display: block;
-  width: 16px;
-  height: 1px;
-  background: linear-gradient(90deg, var(--nav-gold), rgba(255, 255, 255, 0.18));
-  opacity: 0.62;
-  flex-shrink: 0;
+.mobileClose{
+  position:relative;
+  width:32px;
+  height:32px;
+  border: 1px solid rgba(24,19,12,0.10);
+  border-radius:9999px;
+  background: rgba(255,255,255,0.20);
+  cursor:pointer;
 }
-
-.mobileClose {
-  position: relative;
-  width: 32px;
-  height: 32px;
-
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 9999px;
-  background: rgba(255, 255, 255, 0.018);
-
-  cursor: pointer;
-  transition: border-color 0.28s ease, background 0.28s ease;
+.mobileNav[data-theme="dark"] .mobileClose{
+  border-color: rgba(255,255,255,0.12);
+  background: rgba(255,255,255,0.06);
 }
-
-.mobileClose:hover {
-  border-color: rgba(255, 255, 255, 0.14);
-  background: rgba(255, 255, 255, 0.04);
+.mobileClose span{
+  position:absolute;
+  left:9px;
+  top:15px;
+  width:14px;
+  height:1px;
+  border-radius:999px;
+  background: rgba(24,19,12,0.62);
 }
-
-.mobileClose span {
-  position: absolute;
-  left: 9px;
-  top: 15px;
-
-  width: 14px;
-  height: 1px;
-  border-radius: 999px;
-
-  background: rgba(255, 255, 255, 0.62);
+.mobileNav[data-theme="dark"] .mobileClose span{
+  background: rgba(255,255,255,0.62);
 }
+.mobileClose span:first-child{ transform: rotate(45deg); }
+.mobileClose span:last-child{ transform: rotate(-45deg); }
 
-.mobileClose span:first-child { transform: rotate(45deg); }
-.mobileClose span:last-child { transform: rotate(-45deg); }
+.mobileNavLinks{ display:flex; flex-direction:column; }
 
-.mobileNavLinks { display: flex; flex-direction: column; }
-
-/* mobile：ドット無し + active は bloom -> settle */
-.mobileNavItem {
-  position: relative;
-
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+.mobileNavItem{
+  position:relative;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
 
   min-height: 56px;
   padding: 0 0.2rem;
 
-  border-bottom: 1px solid rgba(255, 255, 255, 0.055);
+  border-bottom: 1px solid rgba(24,19,12,0.08);
+  color: rgba(24,19,12,0.78);
+  text-decoration:none;
 
-  color: rgba(255, 255, 255, 0.74);
-  text-decoration: none;
-
-  opacity: 0;
+  opacity:0;
   transform: translate3d(0, 7px, 0);
-
-  transition: color 0.3s ease, transform 0.3s ease;
+}
+.mobileNav[data-theme="dark"] .mobileNavItem{
+  border-bottom-color: rgba(255,255,255,0.10);
+  color: rgba(255,255,255,0.78);
 }
 
-.mobileOpen .mobileNavItem {
-  animation: mobileNavItemIn 0.62s var(--nav-ease) forwards;
-  animation-delay: calc(0.04s + var(--i) * 0.055s);
+.mobileOpen .mobileNavItem{
+  animation: mobileNavItemIn 0.56s var(--ease) forwards;
+  animation-delay: calc(0.04s + var(--i) * 0.05s);
+}
+.mobileNavItem:last-child{ border-bottom:none; }
+
+@keyframes mobileNavItemIn{
+  to{ opacity:1; transform: translate3d(0,0,0); }
 }
 
-.mobileNavItem:last-child { border-bottom: none; }
-
-.mobileNavItem:hover {
-  color: rgba(255, 255, 255, 0.95);
-  transform: translateX(3px);
+.mobileNavText{
+  font-size: 0.92rem;
+  letter-spacing: 0.12em;
 }
-
-.mobileNavText {
-  font-size: 0.9rem;
-  font-weight: 300;
-  letter-spacing: 0.14em;
-}
-
-.mobileNavArrow {
+.mobileNavArrow{
   font-size: 0.75rem;
-  color: rgba(255, 255, 255, 0.26);
-  transition: transform 0.3s ease, color 0.3s ease;
+  color: rgba(24,19,12,0.28);
+}
+.mobileNav[data-theme="dark"] .mobileNavArrow{
+  color: rgba(255,255,255,0.28);
 }
 
-.mobileNavItem:hover .mobileNavArrow {
-  transform: translateX(2px);
-  color: rgba(255, 255, 255, 0.48);
+.mobileNavItemActive{
+  color: rgba(143,118,80,0.92);
 }
-
-.mobileNavItemActive { color: var(--nav-gold); }
-.mobileNavItemActive .mobileNavArrow { color: rgba(217, 185, 138, 0.58); }
-
-/* active beam (mobile) */
-.mobileNavItemActive::after {
-  content: "";
-  position: absolute;
+.mobileNav[data-theme="dark"] .mobileNavItemActive{
+  color: rgba(217,185,138,0.88);
+}
+.mobileNavItemActive::after{
+  content:"";
+  position:absolute;
   left: 0;
   right: 12px;
   bottom: 10px;
-
   height: 1px;
-
-  background: linear-gradient(
-    90deg,
-    rgba(217, 185, 138, 0.88),
-    rgba(255, 255, 255, 0.14),
-    rgba(217, 185, 138, 0)
-  );
-
-  opacity: 0.52; /* 最終到達（弱くなる） */
-  clip-path: inset(0 100% 0 0);
-  animation: mobileActiveBloom 0.88s var(--nav-ease) both;
+  background: linear-gradient(90deg, rgba(217,185,138,0.86), rgba(255,255,255,0.10), rgba(217,185,138,0));
+  opacity: 0.48;
+  clip-path: inset(0 12% 0 0);
 }
 
-@keyframes mobileNavItemIn {
-  to { opacity: 1; transform: translate3d(0, 0, 0); }
+/* emphasis (mobile) */
+.mobileNavItemEmphasis:not(.mobileNavItemActive){
+  color: rgba(143,118,80,0.92);
+}
+.mobileNav[data-theme="dark"] .mobileNavItemEmphasis:not(.mobileNavItemActive){
+  color: rgba(217,185,138,0.84);
 }
 
-@keyframes mobileActiveBloom {
-  0% {
-    opacity: 0;
-    clip-path: inset(0 100% 0 0);
-    box-shadow: 0 0 0 rgba(217, 185, 138, 0);
-  }
-  46% {
-    opacity: 0.9; /* 到達瞬間：強い */
-    clip-path: inset(0 0 0 0);
-    box-shadow: 0 0 22px rgba(217, 185, 138, 0.14);
-  }
-  100% {
-    opacity: 0.52; /* 鎮静 */
-    clip-path: inset(0 0 0 0);
-    box-shadow: 0 0 14px rgba(217, 185, 138, 0.06);
-  }
+.mobileNavFooter{ margin-top: 0.75rem; padding-top: 0.8rem; }
+.mobileNavNote{
+  margin: 0;
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  color: rgba(24,19,12,0.38);
+}
+.mobileNav[data-theme="dark"] .mobileNavNote{
+  color: rgba(255,255,255,0.34);
 }
 
-/* ─── Responsive ─────────────────────────────── */
-
-@media (max-width: 767px) {
-  .navPc { display: none; }
-  .hamburger { display: flex; }
-
-  .navLogo { gap: 0.64rem; }
-  .navLogoSeal { width: 30px; height: 30px; }
-  .navLogoMain { font-size: 0.74rem; letter-spacing: 0.2em; }
-  .navLogoSub { display: none; }
+/* responsive */
+@media (max-width: 767px){
+  .navPc{ display:none; }
+  .hamburger{ display:flex; }
+  .navLogo{ gap: 0.64rem; }
+  .navLogoSeal{ width:30px; height:30px; }
+  .navLogoMain{ font-size: 0.74rem; letter-spacing: 0.18em; }
+  .navLogoSub{ display:none; }
+}
+@media (min-width: 768px){
+  .mobileOverlay, .mobileNav{ display:none; }
 }
 
-@media (min-width: 768px) {
-  .mobileOverlay, .mobileNav { display: none; }
-}
-
-@media (max-width: 390px) {
-  .mobileNav { left: 10px; right: 10px; border-radius: 18px; }
-  .mobileNavInner { padding: 1rem 1.05rem 1.2rem; }
-  .mobileNavItem { min-height: 52px; }
-  .mobileNavText { font-size: 0.86rem; }
-  .navLogoMain { font-size: 0.7rem; letter-spacing: 0.18em; }
-}
-
-@media (max-width: 360px) {
-  .navLogo { gap: 0.52rem; }
-  .navLogoMain { font-size: 0.66rem; letter-spacing: 0.15em; }
-}
-
-/* ─── Focus ─────────────────────────────────── */
-
+/* focus */
 .hamburger:focus-visible,
 .mobileClose:focus-visible,
 .mobileNavItem:focus-visible,
 .navItem:focus-visible,
-.navLogo:focus-visible {
-  outline: 1px solid rgba(217, 185, 138, 0.42);
+.navLogo:focus-visible{
+  outline: 1px solid rgba(217,185,138,0.42);
   outline-offset: 3px;
   border-radius: 2px;
 }
 
-/* ─── Reduced Motion ────────────────────────── */
-
-@media (prefers-reduced-motion: reduce) {
-  .navRoot,
-  .navLogo,
-  .navItem,
-  .navItem::after,
-  .hamburger span,
-  .mobileOverlay,
-  .mobileNav,
-  .mobileNavItem,
-  .mobileNavArrow,
-  .mobileClose,
-  .sharpIn,
-  .mobileNavItemActive::after {
-    animation: none !important;
-    transition: none !important;
+/* reduced motion */
+@media (prefers-reduced-motion: reduce){
+  .navRoot, .navItem, .hamburger span, .mobileOverlay, .mobileNav, .mobileNavItem, .sharpIn{
+    animation:none !important;
+    transition:none !important;
   }
-
-  .sharpIn,
-  .mobileNavItem {
-    opacity: 1 !important;
-    transform: none !important;
-    filter: none !important;
-    clip-path: none !important;
-  }
-
-  .navItem::after,
-  .mobileNavItemActive::after {
-    opacity: 0.6 !important;
-    clip-path: inset(0 0 0 0) !important;
-    box-shadow: none !important;
+  .sharpIn, .mobileNavItem{
+    opacity:1 !important;
+    transform:none !important;
+    clip-path:none !important;
   }
 }

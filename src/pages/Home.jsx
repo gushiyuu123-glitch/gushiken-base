@@ -1,17 +1,32 @@
+// src/pages/Home.jsx
 import React, { useEffect, useState } from "react";
 import Hero from "../components/Hero";
 import HeroSP from "../components/HeroSP";
-import Works from "../components/Works";
-import Philosophy from "../components/Philosophy";
-import Price from "../components/Price";
-import About from "../components/ABOUT";
-import Contact from "../components/CONTACT";
-import NewsSection from "../components/NewsSection";
-import Title from "../components/Title";
-import FloatingFAQ from "../components/FloatingFAQ";
 
-const PAGE_TITLE =
-  "GUSHIKEN DESIGN｜沖縄のWebデザイン・ホームページ制作";
+import Works from "../components/Works";
+import WorksSP from "../components/WorksSP";
+
+import Philosophy from "../components/Philosophy";
+import PhilosophySP from "../components/PhilosophySP";
+
+import Price from "../components/Price";
+import PriceSP from "../components/PriceSP";
+
+import About from "../components/About";
+import AboutSP from "../components/AboutSP";
+
+import Contact from "../components/CONTACT";
+
+
+import NewsSection from "../components/NewsSection";
+
+
+import Title from "../components/Title";
+
+import FloatingFAQ from "../components/FloatingFAQ";
+import FloatingFAQSP from "../components/FloatingFAQSP";
+
+const PAGE_TITLE = "GUSHIKEN DESIGN｜沖縄のWebデザイン・ホームページ制作";
 
 const PAGE_DESCRIPTION =
   "沖縄のフリーランスWebデザイナー GUSHIKEN DESIGN。高品質なWebサイト制作、ブランドサイト、事業サイト、UI/UX設計まで一貫対応。美容・店舗・ブランド向けを中心に、上品で伝わりやすいWeb制作を行っています。";
@@ -20,61 +35,48 @@ const CANONICAL_URL = "https://gushikendesign.com/";
 
 function setMetaByName(name, content) {
   if (!content) return;
-
   let tag = document.querySelector(`meta[name="${name}"]`);
-
   if (!tag) {
     tag = document.createElement("meta");
     tag.setAttribute("name", name);
     document.head.appendChild(tag);
   }
-
   tag.setAttribute("content", content);
 }
 
 function setMetaByProperty(property, content) {
   if (!content) return;
-
   let tag = document.querySelector(`meta[property="${property}"]`);
-
   if (!tag) {
     tag = document.createElement("meta");
     tag.setAttribute("property", property);
     document.head.appendChild(tag);
   }
-
   tag.setAttribute("content", content);
 }
 
 function setCanonical(href) {
   if (!href) return;
-
   let tag = document.querySelector('link[rel="canonical"]');
-
   if (!tag) {
     tag = document.createElement("link");
     tag.setAttribute("rel", "canonical");
     document.head.appendChild(tag);
   }
-
   tag.setAttribute("href", href);
 }
 
-function useIsDesktop() {
-  const [isDesktop, setIsDesktop] = useState(() => {
-    if (typeof window === "undefined") return true;
-    return window.matchMedia("(min-width: 768px)").matches;
+function useMediaQuery(query, fallback = true) {
+  const [matches, setMatches] = useState(() => {
+    if (typeof window === "undefined") return fallback;
+    return window.matchMedia(query).matches;
   });
 
   useEffect(() => {
     if (typeof window === "undefined") return undefined;
 
-    const media = window.matchMedia("(min-width: 768px)");
-
-    const update = () => {
-      setIsDesktop(media.matches);
-    };
-
+    const media = window.matchMedia(query);
+    const update = () => setMatches(media.matches);
     update();
 
     if (media.addEventListener) {
@@ -84,13 +86,20 @@ function useIsDesktop() {
 
     media.addListener(update);
     return () => media.removeListener(update);
-  }, []);
+  }, [query]);
 
-  return isDesktop;
+  return matches;
 }
 
 export default function Home() {
-  const isDesktop = useIsDesktop();
+  // ✅ PC/SP DOM分離：ここで完全に分岐して “片方だけ” を描画
+  const isDesktop = useMediaQuery("(min-width: 768px)", true);
+
+  // ✅ WORKSは “PCでもタッチ大画面” をSP側へ落とす（既存ルール維持）
+  const isWorksDesktop = useMediaQuery(
+    "(min-width: 981px) and (pointer: fine)",
+    true
+  );
 
   useEffect(() => {
     setMetaByName("description", PAGE_DESCRIPTION);
@@ -114,26 +123,28 @@ export default function Home() {
         {/* HERO */}
         {isDesktop ? <Hero /> : <HeroSP />}
 
-        {/* WORKS */}
-        <Works />
+        {/* ABOUT（Hero直下：理解） */}
+        {isDesktop ? <About /> : <AboutSP />}
 
-        {/* ABOUT */}
-        <About />
+        {/* WORKS（委ねたい） */}
+        {isDesktop ? (isWorksDesktop ? <Works /> : <WorksSP />) : <WorksSP />}
 
-        {/* PHILOSOPHY / DESIGN POLICY */}
-        <Philosophy />
+        {/* PHILOSOPHY（安心） */}
+        {isDesktop ? <Philosophy /> : <PhilosophySP />}
 
-        {/* PRICE */}
-        <Price />
+        {/* PRICE（決断） */}
+        {isDesktop ? <Price /> : <PriceSP />}
 
-        {/* NEWS */}
+
+        {/* ✅ NEWS：共通（DOM分離なし） */}
         <NewsSection />
 
-        {/* CONTACT */}
+        {/* ✅ NEWS：共通（DOM分離なし） */}
         <Contact />
       </main>
 
-      <FloatingFAQ />
+      {/* 浮遊UIもDOM分離（いったん空でOK） */}
+      {isDesktop ? <FloatingFAQ /> : <FloatingFAQSP />}
     </>
   );
 }

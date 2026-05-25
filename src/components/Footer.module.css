@@ -1,31 +1,42 @@
+/* src/components/Footer.module.css */
+
 /* =========================================================
-   FOOTER — GUSHIKEN DESIGN OS
-   Quiet Ending / Black Frame
+   FOOTER — Quiet Ending / Black Frame (Module)
+   paper → black seam + fixed black base
 ========================================================= */
 
-.footer-section {
-  --footer-main: var(--main, #0b0b0b);
-  --footer-gold: rgba(201, 177, 138, 0.42);
-  --footer-gold-soft: rgba(201, 177, 138, 0.26);
-  --footer-silver: rgba(220, 226, 235, 0.12);
+.in{}
+
+/* ===== Section ===== */
+.section{
+  --gold: rgba(201, 177, 138, 0.42);
+  --goldSoft: rgba(201, 177, 138, 0.26);
+  --silver: rgba(220, 226, 235, 0.12);
 
   position: relative;
   overflow: hidden;
   padding: 0;
 
+  /* ✅ fixed black (no var(--main)) */
   background:
     radial-gradient(circle at 18% 0%, rgba(201, 177, 138, 0.032), transparent 34%),
-    linear-gradient(180deg, #090909 0%, var(--footer-main) 42%, #070707 100%);
+    radial-gradient(1100px 740px at 78% 46%, rgba(255,255,255,0.03), transparent 64%),
+    linear-gradient(180deg, #0a0a0a 0%, #070707 45%, #060606 100%);
 
   color: rgba(255, 255, 255, 0.86);
 }
 
-.footer-section::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
+/* seam + film */
+.section::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+
   background:
+    /* paper → black seam（CONTACTから自然に落とす） */
+    linear-gradient(180deg, rgba(244, 239, 230, 0.96) 0%, rgba(244,239,230,0) 160px),
+    /* film */
     linear-gradient(
       180deg,
       rgba(255, 255, 255, 0.012) 0%,
@@ -33,24 +44,22 @@
       transparent 82%,
       rgba(255, 255, 255, 0.008) 100%
     );
+
   opacity: 0.92;
 }
 
-.footer-section::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
+.section::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
   background-image: radial-gradient(rgba(255, 255, 255, 0.13) 0.42px, transparent 0.42px);
   background-size: 4px 4px;
   opacity: 0.014;
 }
 
-/* ---------------------------------------------
-   Top Line
---------------------------------------------- */
-
-.footer-top-line {
+/* ===== Top Line ===== */
+.topLine{
   position: relative;
   z-index: 1;
   height: 1px;
@@ -69,68 +78,56 @@
     0 0 32px rgba(201, 177, 138, 0.04);
 }
 
-/* ---------------------------------------------
-   Container / Layout
---------------------------------------------- */
-
-.footer-container {
+/* ===== Container / Layout ===== */
+.container{
   position: relative;
   z-index: 1;
-
   width: min(88vw, 1180px);
   margin: 0 auto;
   padding: 4.8rem 0 2.8rem;
 }
 
-.footer-grid {
+.grid{
   display: grid;
   grid-template-columns: 1.25fr 0.72fr 1fr;
   gap: clamp(3rem, 6vw, 5.8rem);
   align-items: start;
 }
 
-/* ---------------------------------------------
-   Brand
---------------------------------------------- */
+/* ===== Brand ===== */
+.brand{ min-width: 0; }
 
-.footer-brand {
-  min-width: 0;
-}
-
-.footer-logo-link {
+.logoLink{
   display: inline-flex;
   align-items: center;
   gap: 0.9rem;
   margin-bottom: 1.35rem;
-
   color: inherit;
   text-decoration: none;
 }
 
-.footer-logo-frame {
+.logoFrame{
   position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-
   width: 42px;
   height: 42px;
   flex: 0 0 auto;
 }
 
-.footer-logo-frame::before {
-  content: "";
-  position: absolute;
-  inset: -5px;
+.logoFrame::before{
+  content:"";
+  position:absolute;
+  inset:-5px;
   border: 1px solid rgba(201, 177, 138, 0.06);
   border-radius: 999px;
   opacity: 0.72;
 }
 
-.footer-logo {
+.logo{
   position: relative;
   z-index: 1;
-
   width: 34px;
   height: 34px;
   object-fit: contain;
@@ -145,35 +142,33 @@
     transform 420ms cubic-bezier(0.18, 0.72, 0.18, 1);
 }
 
-.footer-logo-link:hover .footer-logo,
-.footer-logo-link:focus-visible .footer-logo {
+.logoLink:hover .logo,
+.logoLink:focus-visible .logo{
   opacity: 0.96;
   filter: saturate(0.88) brightness(1.04) contrast(1);
   transform: translateY(-1px);
 }
 
-.footer-brand-text {
+.brandText{
   display: flex;
   flex-direction: column;
   gap: 0.25rem;
   min-width: 0;
 }
 
-/* wordmark wipe（著名っぽく：薄め・余韻） */
-.footer-brand-name {
+.brandName{
   display: block;
   line-height: 1;
   width: clamp(128px, 14vw, 186px);
   max-width: 100%;
 }
 
-.footer-brand-name-svg {
+.brandNameSvg{
   display: block;
   width: 100%;
   height: auto;
   padding-bottom: 5px;
 
-  /* ✅ 少し薄くして“署名感” */
   opacity: 0.72;
 
   filter:
@@ -188,84 +183,67 @@
   backface-visibility: hidden;
   will-change: filter, opacity, -webkit-mask-size, mask-size, clip-path;
 
-  -webkit-mask-image: linear-gradient(
-    90deg,
-    rgba(0, 0, 0, 1) 0%,
-    rgba(0, 0, 0, 1) 86%,
-    rgba(0, 0, 0, 0) 100%
-  );
-  mask-image: linear-gradient(
-    90deg,
-    rgba(0, 0, 0, 1) 0%,
-    rgba(0, 0, 0, 1) 86%,
-    rgba(0, 0, 0, 0) 100%
-  );
+  -webkit-mask-image: linear-gradient(90deg, #000 0%, #000 86%, rgba(0,0,0,0) 100%);
+  mask-image: linear-gradient(90deg, #000 0%, #000 86%, rgba(0,0,0,0) 100%);
 
   -webkit-mask-repeat: no-repeat;
   mask-repeat: no-repeat;
   -webkit-mask-position: left center;
   mask-position: left center;
+
   -webkit-mask-size: 0% 100%;
   mask-size: 0% 100%;
 }
 
-.footer-brand.is-in .footer-brand-name-svg {
+.brand.in .brandNameSvg{
   animation:
-    footerLogoWipe 1.12s cubic-bezier(.22,.56,.18,1) 0.12s both,
-    footerLogoFocus 1.12s cubic-bezier(.18,.62,.2,1) 0.12s both;
+    logoWipe 1.12s cubic-bezier(.22,.56,.18,1) 0.12s both,
+    logoFocus 1.12s cubic-bezier(.18,.62,.2,1) 0.12s both;
 }
 
-@supports not (mask-image: linear-gradient(#000, #000)) {
-  .footer-brand-name-svg {
-    clip-path: inset(0 100% 0 0);
-  }
-  .footer-brand.is-in .footer-brand-name-svg {
+@supports not (mask-image: linear-gradient(#000, #000)){
+  .brandNameSvg{ clip-path: inset(0 100% 0 0); }
+  .brand.in .brandNameSvg{
     animation:
-      footerLogoClip 1.12s cubic-bezier(.22,.56,.18,1) 0.12s both,
-      footerLogoFocus 1.12s cubic-bezier(.18,.62,.2,1) 0.12s both;
+      logoClip 1.12s cubic-bezier(.22,.56,.18,1) 0.12s both,
+      logoFocus 1.12s cubic-bezier(.18,.62,.2,1) 0.12s both;
   }
 }
 
-@keyframes footerLogoWipe {
+@keyframes logoWipe{
   0% { -webkit-mask-size: 0% 100%; mask-size: 0% 100%; }
   100% { -webkit-mask-size: 118% 100%; mask-size: 118% 100%; }
 }
-@keyframes footerLogoClip {
+@keyframes logoClip{
   0% { clip-path: inset(0 100% 0 0); }
   100% { clip-path: inset(0 0 0 0); }
 }
-@keyframes footerLogoFocus {
-  0% {
+@keyframes logoFocus{
+  0%{
     opacity: 0.10;
-    filter:
-      invert(1) brightness(1.03) saturate(0) contrast(1.02)
-      blur(0.18px)
-      drop-shadow(0 2px 10px rgba(0,0,0,0.16));
+    filter: invert(1) brightness(1.03) saturate(0) contrast(1.02)
+      blur(0.18px) drop-shadow(0 2px 10px rgba(0,0,0,0.16));
   }
-  55% {
+  55%{
     opacity: 0.60;
-    filter:
-      invert(1) brightness(1.04) saturate(0) contrast(1.02)
-      blur(0.06px)
-      drop-shadow(0 2px 12px rgba(0,0,0,0.20));
+    filter: invert(1) brightness(1.04) saturate(0) contrast(1.02)
+      blur(0.06px) drop-shadow(0 2px 12px rgba(0,0,0,0.20));
   }
-  100% {
+  100%{
     opacity: 0.72;
-    filter:
-      invert(1) brightness(1.04) saturate(0) contrast(1.02)
-      blur(0)
-      drop-shadow(0 2px 12px rgba(0,0,0,0.20));
+    filter: invert(1) brightness(1.04) saturate(0) contrast(1.02)
+      blur(0) drop-shadow(0 2px 12px rgba(0,0,0,0.20));
   }
 }
 
-.footer-brand-place {
+.brandPlace{
   color: rgba(255, 255, 255, 0.34);
   font-size: 0.66rem;
   line-height: 1;
   letter-spacing: 0.16em;
 }
 
-.footer-brand-copy {
+.brandCopy{
   max-width: 19rem;
   margin: 0 0 1.35rem;
 
@@ -275,10 +253,9 @@
   letter-spacing: 0.045em;
 }
 
-.footer-lab {
+.lab{
   position: relative;
   display: inline-flex;
-
   color: rgba(201, 177, 138, 0.34);
   font-size: 0.68rem;
   line-height: 1;
@@ -291,15 +268,13 @@
     transform 380ms cubic-bezier(0.18, 0.72, 0.18, 1);
 }
 
-.footer-lab::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  bottom: -0.45rem;
-
-  width: 62%;
-  height: 1px;
-
+.lab::after{
+  content:"";
+  position:absolute;
+  left:0;
+  bottom:-0.45rem;
+  width:62%;
+  height:1px;
   background: linear-gradient(90deg, rgba(201, 177, 138, 0.42), rgba(220, 226, 235, 0.12), transparent);
   opacity: 0.62;
 
@@ -308,24 +283,20 @@
     opacity 420ms ease;
 }
 
-.footer-lab:hover,
-.footer-lab:focus-visible {
+.lab:hover,
+.lab:focus-visible{
   color: rgba(238, 226, 204, 0.72);
   transform: translateY(-1px);
   outline: none;
 }
-
-.footer-lab:hover::after,
-.footer-lab:focus-visible::after {
+.lab:hover::after,
+.lab:focus-visible::after{
   width: 100%;
   opacity: 0.9;
 }
 
-/* ---------------------------------------------
-   Labels / Links
---------------------------------------------- */
-
-.footer-col-label {
+/* ===== Labels / Links ===== */
+.colLabel{
   margin: 0 0 1.25rem;
   color: rgba(201, 177, 138, 0.38);
   font-size: 0.58rem;
@@ -334,26 +305,17 @@
   text-transform: uppercase;
 }
 
-.footer-nav,
-.footer-side {
-  min-width: 0;
-}
+.nav,
+.side{ min-width: 0; }
 
-.footer-link-list {
+.linkList{
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   gap: 0.86rem;
 }
 
-.footer-link,
-.footer-sns,
-.footer-project-link,
-.footer-legal {
-  text-decoration: none;
-}
-
-.footer-link {
+.link{
   position: relative;
   display: inline-flex;
 
@@ -362,52 +324,47 @@
   line-height: 1;
   letter-spacing: 0.16em;
 
+  text-decoration: none;
+
   transition:
     color 340ms ease,
     transform 380ms cubic-bezier(0.18, 0.72, 0.18, 1);
 }
 
-.footer-link::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  bottom: -0.42rem;
-
+.link::after{
+  content:"";
+  position:absolute;
+  left:0;
+  bottom:-0.42rem;
   width: 0;
-  height: 1px;
+  height:1px;
   background: linear-gradient(90deg, rgba(201, 177, 138, 0.52), rgba(220, 226, 235, 0.18));
   transition: width 420ms cubic-bezier(0.18, 0.72, 0.18, 1);
 }
 
-.footer-link:hover,
-.footer-link:focus-visible {
+.link:hover,
+.link:focus-visible{
   color: rgba(255, 255, 255, 0.92);
   transform: translateX(2px);
   outline: none;
 }
+.link:hover::after,
+.link:focus-visible::after{ width: 100%; }
 
-.footer-link:hover::after,
-.footer-link:focus-visible::after {
-  width: 100%;
-}
-
-/* ---------------------------------------------
-   Side Column
---------------------------------------------- */
-
-.footer-side {
+/* ===== Side Column ===== */
+.side{
   display: flex;
   flex-direction: column;
   gap: 1.25rem;
 }
 
-.footer-project-list {
+.projectList{
   display: flex;
   flex-direction: column;
   gap: 0.72rem;
 }
 
-.footer-project-link {
+.projectLink{
   position: relative;
   display: inline-flex;
   width: fit-content;
@@ -417,97 +374,88 @@
   line-height: 1.6;
   letter-spacing: 0.12em;
 
+  text-decoration: none;
+
   transition:
     color 340ms ease,
     transform 380ms cubic-bezier(0.18, 0.72, 0.18, 1);
 }
 
-.footer-project-link::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  bottom: -0.28rem;
-
+.projectLink::after{
+  content:"";
+  position:absolute;
+  left:0;
+  bottom:-0.28rem;
   width: 0;
   height: 1px;
   background: rgba(201, 177, 138, 0.28);
-
   transition: width 380ms cubic-bezier(0.18, 0.72, 0.18, 1);
 }
 
-.footer-project-link:hover,
-.footer-project-link:focus-visible {
+.projectLink:hover,
+.projectLink:focus-visible{
   color: rgba(255, 255, 255, 0.84);
   transform: translateX(2px);
   outline: none;
 }
+.projectLink:hover::after,
+.projectLink:focus-visible::after{ width: 100%; }
 
-.footer-project-link:hover::after,
-.footer-project-link:focus-visible::after {
-  width: 100%;
-}
-
-/* ---------------------------------------------
-   Dividers / SNS / Legal
---------------------------------------------- */
-
-.footer-divider {
+/* ===== Dividers / SNS / Legal ===== */
+.divider{
   width: 100%;
   height: 1px;
   background: linear-gradient(90deg, rgba(255, 255, 255, 0.035), rgba(220, 226, 235, 0.1), rgba(255, 255, 255, 0.035));
   opacity: 0.72;
 }
 
-.footer-sns-row {
+.snsRow{
   display: flex;
   align-items: center;
   gap: 1.2rem;
   flex-wrap: wrap;
 }
 
-.footer-sns {
+.sns{
   position: relative;
   color: rgba(255, 255, 255, 0.48);
   font-size: 0.8rem;
   line-height: 1;
   letter-spacing: 0.08em;
+  text-decoration: none;
 
   transition:
     color 340ms ease,
     transform 340ms cubic-bezier(0.18, 0.72, 0.18, 1);
 }
 
-.footer-sns--with-icon {
+.snsWithIcon{
   display: inline-flex;
   align-items: center;
   gap: 0.58rem;
 }
 
-.footer-sns::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  bottom: -0.38rem;
-
-  width: 0;
-  height: 1px;
+.sns::after{
+  content:"";
+  position:absolute;
+  left:0;
+  bottom:-0.38rem;
+  width:0;
+  height:1px;
   background: rgba(201, 177, 138, 0.28);
   transition: width 340ms ease;
 }
 
-.footer-sns:hover,
-.footer-sns:focus-visible {
+.sns:hover,
+.sns:focus-visible{
   color: rgba(255, 255, 255, 0.92);
   transform: translateY(-1px);
   outline: none;
 }
+.sns:hover::after,
+.sns:focus-visible::after{ width: 100%; }
 
-.footer-sns:hover::after,
-.footer-sns:focus-visible::after {
-  width: 100%;
-}
-
-.footer-sns-icon-wrap {
+.snsIconWrap{
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -516,7 +464,7 @@
   flex: 0 0 auto;
 }
 
-.footer-sns-icon {
+.snsIcon{
   width: 18px;
   height: 18px;
   overflow: visible;
@@ -533,71 +481,56 @@
     opacity 340ms ease;
 }
 
-.footer-sns-dot {
+.snsDot{
   fill: rgba(220, 226, 235, 0.62);
   stroke: none;
   transition: fill 340ms ease;
 }
 
-.footer-sns-icon--note rect {
+.snsIconNote rect{
   fill: rgba(255, 255, 255, 0.02);
   stroke: rgba(220, 226, 235, 0.6);
 }
+.snsIconNote path{ stroke: rgba(220, 226, 235, 0.7); }
+.snsNoteLine{ stroke: rgba(201, 177, 138, 0.34) !important; }
 
-.footer-sns-icon--note path {
-  stroke: rgba(220, 226, 235, 0.7);
-}
-
-.footer-sns-note-line {
-  stroke: rgba(201, 177, 138, 0.34) !important;
-}
-
-.footer-sns:hover .footer-sns-icon,
-.footer-sns:focus-visible .footer-sns-icon {
+.sns:hover .snsIcon,
+.sns:focus-visible .snsIcon{
   stroke: rgba(255, 255, 255, 0.92);
   transform: translateY(-0.5px);
 }
+.sns:hover .snsDot,
+.sns:focus-visible .snsDot{ fill: rgba(255, 255, 255, 0.92); }
+.sns:hover .snsNoteLine,
+.sns:focus-visible .snsNoteLine{ stroke: rgba(201, 177, 138, 0.6) !important; }
 
-.footer-sns:hover .footer-sns-dot,
-.footer-sns:focus-visible .footer-sns-dot {
-  fill: rgba(255, 255, 255, 0.92);
-}
-
-.footer-sns:hover .footer-sns-note-line,
-.footer-sns:focus-visible .footer-sns-note-line {
-  stroke: rgba(201, 177, 138, 0.6) !important;
-}
-
-.footer-legal-list {
+.legalList{
   display: flex;
   flex-direction: column;
   gap: 0.42rem;
 }
 
-.footer-legal {
+.legal{
   width: fit-content;
   color: rgba(255, 255, 255, 0.32);
   font-size: 0.68rem;
   line-height: 1.6;
   letter-spacing: 0.13em;
+  text-decoration: none;
 
   transition:
     color 320ms ease,
     transform 340ms cubic-bezier(0.18, 0.72, 0.18, 1);
 }
-
-.footer-legal:hover,
-.footer-legal:focus-visible {
+.legal:hover,
+.legal:focus-visible{
   color: rgba(255, 255, 255, 0.66);
   transform: translateX(1px);
   outline: none;
 }
 
-/* ---------------------------------------------
-   Bottom
---------------------------------------------- */
-
-.footer-bottom {
+/* ===== Bottom ===== */
+.bottom{
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
@@ -609,18 +542,17 @@
   border-top: 1px solid rgba(255, 255, 255, 0.06);
 }
 
-.footer-guide-text {
+.guideText{
   margin: 0;
   color: rgba(255, 255, 255, 0.22);
   font-size: 0.66rem;
   line-height: 1.86;
   letter-spacing: 0.08em;
 }
+.guideText span{ color: rgba(255, 255, 255, 0.34); }
+.guideText em{ color: rgba(255, 255, 255, 0.17); font-style: normal; }
 
-.footer-guide-text span { color: rgba(255, 255, 255, 0.34); }
-.footer-guide-text em { color: rgba(255, 255, 255, 0.17); font-style: normal; }
-
-.footer-copyright {
+.copyright{
   margin: 0;
   color: rgba(255, 255, 255, 0.24);
   font-size: 0.66rem;
@@ -629,11 +561,8 @@
   white-space: nowrap;
 }
 
-/* ---------------------------------------------
-   Reveal
---------------------------------------------- */
-
-.footer-reveal {
+/* ===== Reveal ===== */
+.reveal{
   opacity: 0;
   transform: translate3d(0, 16px, 0) scale(0.998);
   filter: brightness(0.94) blur(0.08px);
@@ -645,14 +574,13 @@
     transform 1080ms cubic-bezier(0.16, 0.72, 0.16, 1),
     filter 1040ms cubic-bezier(0.16, 0.72, 0.16, 1);
 }
-
-.footer-reveal.is-in {
+.reveal.in{
   opacity: 1;
   transform: translate3d(0, 0, 0) scale(1);
   filter: brightness(1) blur(0);
 }
 
-.footer-line-reveal {
+.lineReveal{
   transform: scaleX(0.42);
   transform-origin: center;
   filter: none;
@@ -661,22 +589,21 @@
     opacity 980ms cubic-bezier(0.16, 0.72, 0.16, 1),
     transform 1280ms cubic-bezier(0.16, 0.72, 0.16, 1);
 }
-
-.footer-line-reveal.is-in {
+.lineReveal.in{
   opacity: 1;
   transform: scaleX(1);
 }
 
-.footer-reveal-1 { transition-delay: 60ms; }
-.footer-reveal-2 { transition-delay: 120ms; }
-.footer-reveal-3 { transition-delay: 180ms; }
-.footer-reveal-4 { transition-delay: 120ms; }
+.r1{ transition-delay: 60ms; }
+.r2{ transition-delay: 120ms; }
+.r3{ transition-delay: 180ms; }
+.r4{ transition-delay: 120ms; }
 
 /* child stagger */
-.footer-nav .footer-link,
-.footer-side .footer-project-link,
-.footer-side .footer-sns,
-.footer-side .footer-legal {
+.nav .link,
+.side .projectLink,
+.side .sns,
+.side .legal{
   opacity: 0;
   transform: translate3d(0, 8px, 0);
   transition:
@@ -684,17 +611,16 @@
     transform 760ms cubic-bezier(0.16, 0.72, 0.16, 1),
     color 340ms ease;
 }
-
-.footer-nav.is-in .footer-link,
-.footer-side.is-in .footer-project-link,
-.footer-side.is-in .footer-sns,
-.footer-side.is-in .footer-legal {
+.nav.in .link,
+.side.in .projectLink,
+.side.in .sns,
+.side.in .legal{
   opacity: 1;
   transform: translate3d(0, 0, 0);
   transition-delay: calc(160ms + (var(--link-index, 0) * 58ms));
 }
 
-.footer-side .footer-divider {
+.side .divider{
   opacity: 0;
   transform: scaleX(0.82);
   transform-origin: left;
@@ -702,127 +628,176 @@
     opacity 760ms cubic-bezier(0.16, 0.72, 0.16, 1),
     transform 860ms cubic-bezier(0.16, 0.72, 0.16, 1);
 }
-
-.footer-side.is-in .footer-divider {
+.side.in .divider{
   opacity: 0.72;
   transform: scaleX(1);
   transition-delay: 260ms;
 }
 
-/* ---------------------------------------------
-   Focus
---------------------------------------------- */
-
-.footer-section a:focus-visible {
+/* Focus */
+.section a:focus-visible{
   outline: 1px solid rgba(201, 177, 138, 0.38);
   outline-offset: 4px;
 }
 
-/* ---------------------------------------------
-   Mobile
---------------------------------------------- */
-
-@media (max-width: 768px) {
-  .footer-container {
+/* ===== Mobile ===== */
+@media (max-width: 768px){
+  .container{
     width: calc(100% - 2rem);
     padding: 3.7rem 0 2.4rem;
   }
 
-  .footer-grid {
+  .grid{
     grid-template-columns: 1fr;
     gap: 2.9rem;
   }
 
-  .footer-logo-frame { width: 38px; height: 38px; }
-  .footer-logo { width: 30px; height: 30px; }
+  .logoFrame{ width: 38px; height: 38px; }
+  .logo{ width: 30px; height: 30px; }
 
-  .footer-brand-place { font-size: 0.62rem; }
-  .footer-brand-copy { font-size: 0.76rem; }
+  .brandPlace{ font-size: 0.62rem; }
+  .brandCopy{ font-size: 0.76rem; }
 
-  .footer-col-label { margin-bottom: 1rem; }
+  .colLabel{ margin-bottom: 1rem; }
 
-  .footer-link { font-size: 0.82rem; }
-  .footer-project-link { font-size: 0.72rem; }
+  .link{ font-size: 0.82rem; }
+  .projectLink{ font-size: 0.72rem; }
 
-  .footer-sns-row { gap: 1rem 1.25rem; }
-  .footer-sns { font-size: 0.78rem; }
+  .snsRow{ gap: 1rem 1.25rem; }
+  .sns{ font-size: 0.78rem; }
 
-  .footer-sns-icon,
-  .footer-sns-icon-wrap { width: 17px; height: 17px; }
+  .snsIcon,
+  .snsIconWrap{ width: 17px; height: 17px; }
 
-  .footer-lab { font-size: 0.66rem; letter-spacing: 0.15em; }
+  .lab{ font-size: 0.66rem; letter-spacing: 0.15em; }
 
-  .footer-bottom {
+  .bottom{
     flex-direction: column;
     align-items: flex-start;
     gap: 1.25rem;
     margin-top: 3.1rem;
   }
 
-  .footer-guide-text,
-  .footer-copyright { font-size: 0.64rem; }
+  .guideText,
+  .copyright{ font-size: 0.64rem; }
 
-  .footer-reveal {
+  .reveal{
     transform: translate3d(0, 14px, 0) scale(0.998);
     filter: brightness(0.95) blur(0.06px);
   }
 
-  .footer-nav.is-in .footer-link,
-  .footer-side.is-in .footer-project-link,
-  .footer-side.is-in .footer-sns,
-  .footer-side.is-in .footer-legal {
+  .nav.in .link,
+  .side.in .projectLink,
+  .side.in .sns,
+  .side.in .legal{
     transition-delay: calc(110ms + (var(--link-index, 0) * 46ms));
   }
 }
 
-@media (max-width: 390px) {
-  .footer-container { width: calc(100% - 1.5rem); }
-  .footer-logo-link { gap: 0.75rem; }
+@media (max-width: 390px){
+  .container{ width: calc(100% - 1.5rem); }
+  .logoLink{ gap: 0.75rem; }
 }
 
-/* ---------------------------------------------
-   Reduced Motion
---------------------------------------------- */
-
-@media (prefers-reduced-motion: reduce) {
-  .footer-section,
-  .footer-section *,
-  .footer-section *::before,
-  .footer-section *::after {
+/* reduced motion */
+@media (prefers-reduced-motion: reduce){
+  .section,
+  .section *,
+  .section *::before,
+  .section *::after{
     transition: none !important;
     animation: none !important;
   }
 
-  .footer-reveal,
-  .footer-line-reveal,
-  .footer-nav .footer-link,
-  .footer-side .footer-project-link,
-  .footer-side .footer-sns,
-  .footer-side .footer-legal,
-  .footer-side .footer-divider {
+  .reveal,
+  .lineReveal,
+  .nav .link,
+  .side .projectLink,
+  .side .sns,
+  .side .legal,
+  .side .divider{
     opacity: 1 !important;
     transform: none !important;
     filter: none !important;
   }
 
-  .footer-brand-name-svg {
+  .brandNameSvg{
     -webkit-mask-size: 118% 100% !important;
     mask-size: 118% 100% !important;
     clip-path: inset(0 0 0 0) !important;
   }
 }
 
-/* ---------------------------------------------
-   sr-only
---------------------------------------------- */
-.sr-only {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border: 0;
+/* sr-only */
+.srOnly{
+  position:absolute;
+  width:1px;
+  height:1px;
+  padding:0;
+  margin:-1px;
+  overflow:hidden;
+  clip: rect(0,0,0,0);
+  white-space:nowrap;
+  border:0;
 }
+
+/* minor */
+.snsLabel{ line-height: 1; }
+.projects{ min-width: 0; }
+/* ===== Footer: NO GRADIENT, FIXED BLACK ===== */
+
+.section{
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+
+  /* ✅ 完全固定黒（他セクションの影響を受けない） */
+  background: #070707;
+
+  /* うっすらフィルム（読みやすさは落とさない） */
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255,255,255,0.010) 0%,
+      transparent 22%,
+      transparent 82%,
+      rgba(255,255,255,0.008) 100%
+    ),
+    #070707;
+
+  color: rgba(255,255,255,0.86);
+
+  /* 境界だけ“線”で締める（紙→黒の切替が自然） */
+  border-top: 1px solid rgba(255,255,255,0.06);
+}
+
+/* ✅ seam用の白グラデは撤去 */
+.section::before{ display:none; }
+
+/* 粒だけ残す（濃いと霞むので薄く） */
+.section::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  background-image: radial-gradient(rgba(255,255,255,0.13) 0.42px, transparent 0.42px);
+  background-size: 4px 4px;
+  opacity: 0.012;
+}
+/* 主要リンクだけ“読める”に寄せる（雰囲気は崩さない） */
+.link { color: rgba(255,255,255,0.58); }
+.link:hover, .link:focus-visible { color: rgba(255,255,255,0.92); }
+
+.projectLink { color: rgba(255,255,255,0.46); }
+.projectLink:hover, .projectLink:focus-visible { color: rgba(255,255,255,0.82); }
+
+/* ブランド説明文：薄すぎると存在が消える */
+.brandCopy { color: rgba(255,255,255,0.38); }
+
+/* 法務リンク：読める最低ライン */
+.legal { color: rgba(255,255,255,0.36); }
+.legal:hover, .legal:focus-visible { color: rgba(255,255,255,0.66); }
+
+/* “HIDDEN LABORATORY” は上品に主張してOK */
+.lab { color: rgba(201,177,138,0.44); }
+.lab:hover, .lab:focus-visible { color: rgba(238,226,204,0.78); }

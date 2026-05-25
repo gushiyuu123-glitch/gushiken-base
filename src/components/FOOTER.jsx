@@ -1,6 +1,9 @@
+// src/components/Footer.jsx
 import React, { useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
-import "./footer.css";
+import styles from "./Footer.module.css";
+
+const cx = (...a) => a.filter(Boolean).join(" ");
 
 const LOGO_SRC = "/logo-gd.png";
 
@@ -30,24 +33,20 @@ const LEGAL_LINKS = [
 
 function InstagramIcon() {
   return (
-    <svg viewBox="0 0 24 24" aria-hidden="true" className="footer-sns-icon">
+    <svg viewBox="0 0 24 24" aria-hidden="true" className={styles.snsIcon}>
       <rect x="3.25" y="3.25" width="17.5" height="17.5" rx="5.2" />
       <circle cx="12" cy="12" r="4.15" />
-      <circle cx="17.2" cy="6.9" r="1.05" className="footer-sns-dot" />
+      <circle cx="17.2" cy="6.9" r="1.05" className={styles.snsDot} />
     </svg>
   );
 }
 
 function NoteIcon() {
   return (
-    <svg
-      viewBox="0 0 24 24"
-      aria-hidden="true"
-      className="footer-sns-icon footer-sns-icon--note"
-    >
+    <svg viewBox="0 0 24 24" aria-hidden="true" className={cx(styles.snsIcon, styles.snsIconNote)}>
       <rect x="3.2" y="4.1" width="17.6" height="15.8" rx="3.2" />
       <path d="M7.2 15.8V8.2h2.1l3.8 5.1V8.2h2v7.6H13l-3.8-5.1v5.1z" />
-      <path d="M6.6 18.3h10.8" className="footer-sns-note-line" />
+      <path d="M6.6 18.3h10.8" className={styles.snsNoteLine} />
     </svg>
   );
 }
@@ -60,9 +59,12 @@ export default function Footer() {
     if (!root) return undefined;
 
     const targets = Array.from(root.querySelectorAll("[data-footer-reveal]"));
-    const reveal = (el) => el.classList.add("is-in");
+    const reveal = (el) => el.classList.add(styles.in);
 
-    if (typeof IntersectionObserver === "undefined") {
+    const reduce =
+      window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches ?? false;
+
+    if (reduce || typeof IntersectionObserver === "undefined") {
       targets.forEach(reveal);
       return undefined;
     }
@@ -83,74 +85,61 @@ export default function Footer() {
   }, []);
 
   return (
-    <footer ref={sectionRef} className="footer-section" aria-label="サイトフッター">
-      <div
-        className="footer-top-line footer-reveal footer-line-reveal"
-        data-footer-reveal
-        aria-hidden="true"
-      />
+   <footer
+  id="footer"
+  ref={sectionRef}
+  className={styles.section}
+  aria-label="サイトフッター"
+>
+      <div className={cx(styles.topLine, styles.reveal, styles.lineReveal)} data-footer-reveal aria-hidden="true" />
 
-      <div className="footer-container">
-        <div className="footer-grid">
+      <div className={styles.container}>
+        <div className={styles.grid}>
           {/* BRAND */}
-          <section
-            className="footer-brand footer-reveal footer-reveal-1"
-            data-footer-reveal
-            aria-label="GUSHIKEN DESIGN"
-          >
-            <Link to="/" className="footer-logo-link" aria-label="GUSHIKEN DESIGN ホームへ">
-              <span className="footer-logo-frame" aria-hidden="true">
-                <img src={LOGO_SRC} alt="" className="footer-logo" loading="lazy" decoding="async" />
+          <section className={cx(styles.brand, styles.reveal, styles.r1)} data-footer-reveal aria-label="GUSHIKEN DESIGN">
+            <Link to="/" className={styles.logoLink} aria-label="GUSHIKEN DESIGN ホームへ">
+              <span className={styles.logoFrame} aria-hidden="true">
+                <img src={LOGO_SRC} alt="" className={styles.logo} loading="lazy" decoding="async" />
               </span>
 
-              <span className="footer-brand-text">
-                <span className="footer-brand-name" translate="no">
-                  <span className="sr-only">GUSHIKEN DESIGN</span>
+              <span className={styles.brandText}>
+                <span className={styles.brandName} translate="no">
+                  <span className={styles.srOnly}>GUSHIKEN DESIGN</span>
                   <img
                     src="/typography/Gushiken Design22.svg"
                     alt=""
                     aria-hidden="true"
-                    className="footer-brand-name-svg"
+                    className={styles.brandNameSvg}
                     loading="lazy"
                     decoding="async"
                     draggable="false"
                   />
                 </span>
 
-                <span className="footer-brand-place" translate="no">
+                <span className={styles.brandPlace} translate="no">
                   Web Design / Okinawa
                 </span>
               </span>
             </Link>
 
-            {/* ✅ Heroの新軸に合わせる（「整える」連呼を避ける） */}
-            <p className="footer-brand-copy">
+            <p className={styles.brandCopy}>
               沖縄を拠点に、
               <br />
               空気から設計するWeb制作を行っています。
             </p>
 
-            <Link to="/layer0" className="footer-lab">
+            <Link to="/layer0" className={styles.lab}>
               HIDDEN LABORATORY
             </Link>
           </section>
 
           {/* MENU */}
-          <nav
-            className="footer-nav footer-reveal footer-reveal-2"
-            data-footer-reveal
-            aria-label="フッターメニュー"
-          >
-            <p className="footer-col-label">MENU</p>
+          <nav className={cx(styles.nav, styles.reveal, styles.r2)} data-footer-reveal aria-label="フッターメニュー">
+            <p className={styles.colLabel}>MENU</p>
 
-            <div className="footer-link-list">
+            <div className={styles.linkList}>
               {MENU_LINKS.map((item, index) => (
-                <a
-                  key={item.label}
-                  href={item.href}
-                  className="footer-link"
-                  style={{ "--link-index": index }}
-                >
+                <a key={item.label} href={item.href} className={styles.link} style={{ "--link-index": index }}>
                   {item.label}
                 </a>
               ))}
@@ -158,22 +147,18 @@ export default function Footer() {
           </nav>
 
           {/* PROJECTS / SOCIAL / LEGAL */}
-          <section
-            className="footer-side footer-reveal footer-reveal-3"
-            data-footer-reveal
-            aria-label="関連リンク"
-          >
-            <div className="footer-projects">
-              <p className="footer-col-label">EXPERIMENTAL PROJECTS</p>
+          <section className={cx(styles.side, styles.reveal, styles.r3)} data-footer-reveal aria-label="関連リンク">
+            <div className={styles.projects}>
+              <p className={styles.colLabel}>EXPERIMENTAL PROJECTS</p>
 
-              <div className="footer-project-list">
+              <div className={styles.projectList}>
                 {PROJECT_LINKS.map((item, index) => (
                   <a
                     key={item.label}
                     href={item.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="footer-project-link"
+                    className={styles.projectLink}
                     translate="no"
                     style={{ "--link-index": index }}
                   >
@@ -183,50 +168,45 @@ export default function Footer() {
               </div>
             </div>
 
-            <div className="footer-divider" aria-hidden="true" />
+            <div className={styles.divider} aria-hidden="true" />
 
-            <div className="footer-sns-row" aria-label="SNSリンク">
+            <div className={styles.snsRow} aria-label="SNSリンク">
               <a
                 href={INSTAGRAM_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="footer-sns footer-sns--with-icon"
+                className={cx(styles.sns, styles.snsWithIcon)}
                 translate="no"
                 aria-label="Instagramを開く"
                 style={{ "--link-index": 0 }}
               >
-                <span className="footer-sns-icon-wrap" aria-hidden="true">
+                <span className={styles.snsIconWrap} aria-hidden="true">
                   <InstagramIcon />
                 </span>
-                <span className="footer-sns-label">Instagram</span>
+                <span className={styles.snsLabel}>Instagram</span>
               </a>
 
               <a
                 href={NOTE_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="footer-sns footer-sns--with-icon"
+                className={cx(styles.sns, styles.snsWithIcon)}
                 translate="no"
                 aria-label="noteを開く"
                 style={{ "--link-index": 1 }}
               >
-                <span className="footer-sns-icon-wrap" aria-hidden="true">
+                <span className={styles.snsIconWrap} aria-hidden="true">
                   <NoteIcon />
                 </span>
-                <span className="footer-sns-label">note</span>
+                <span className={styles.snsLabel}>note</span>
               </a>
             </div>
 
-            <div className="footer-divider" aria-hidden="true" />
+            <div className={styles.divider} aria-hidden="true" />
 
-            <nav className="footer-legal-list" aria-label="法務リンク">
+            <nav className={styles.legalList} aria-label="法務リンク">
               {LEGAL_LINKS.map((item, index) => (
-                <Link
-                  key={item.to}
-                  to={item.to}
-                  className="footer-legal"
-                  style={{ "--link-index": index }}
-                >
+                <Link key={item.to} to={item.to} className={styles.legal} style={{ "--link-index": index }}>
                   {item.label}
                 </Link>
               ))}
@@ -235,15 +215,15 @@ export default function Footer() {
         </div>
 
         {/* BOTTOM */}
-        <div className="footer-bottom footer-reveal footer-reveal-4" data-footer-reveal>
-          <p className="footer-guide-text">
+        <div className={cx(styles.bottom, styles.reveal, styles.r4)} data-footer-reveal>
+          <p className={styles.guideText}>
             このサイトのデザインや文章は、
             <span>紹介・引用の範囲であれば歓迎しています。</span>
             <br />
             <em>無断転載・複製・再配布・商用利用はご遠慮ください。</em>
           </p>
 
-          <p className="footer-copyright" translate="no">
+          <p className={styles.copyright} translate="no">
             © 2025 GUSHIKEN DESIGN
           </p>
         </div>

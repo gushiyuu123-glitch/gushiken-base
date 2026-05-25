@@ -2,6 +2,7 @@
    GUSHIKEN DESIGN Core Init v5
    FOUC Prevention / Ambient Glow / Stable SW Update / Dev Cache Clear
    + Helmet (SEO head per route)
+   + Lenis (PC only) + ScrollTrigger sync
 =========================================================================== */
 
 import { StrictMode } from "react";
@@ -10,8 +11,14 @@ import { BrowserRouter } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
 import { Analytics } from "@vercel/analytics/react";
 
+import Lenis from "lenis";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
 import "./index.css";
 import App from "./App.jsx";
+
+gsap.registerPlugin(ScrollTrigger);
 
 /* ============================================================================
    0) Root
@@ -222,3 +229,111 @@ function initServiceWorker() {
 }
 
 initServiceWorker();
+
+/* ============================================================================
+   5) Lenis (PC only)
+   - pointer:coarse（スマホ）/ 980px以下 / reduced-motion では無効
+   - GSAP ScrollTrigger と同期（lenis.on(scroll) + gsap.ticker）
+=========================================================================== */
+
+function initLenisPcOnly() {
+  if (typeof window === "undefined") return;
+
+  const mqReduce = window.matchMedia("(prefers-reduced-motion: reduce)");
+  const mqCoarse = window.matchMedia("(pointer: coarse)");
+  const mqNarrow = window.matchMedia("(max-width: 980px)");
+
+  const canUse = () => !mqReduce.matches && !mqCoarse.matches && !mqNarrow.matches;
+
+  // HMR/再実行でも二重起動しないように、前のインスタンスがいたら掃除
+  const prev = window.__gd_lenis__;
+  if (prev?.cleanup) {
+    try { prev.cleanup(); } catch (_) {}
+  }
+
+  let lenis = null;
+  let tickerFn = null;
+
+  const start = () => {
+    if (lenis) return;
+
+    lenis = new Lenis({
+      lerp: 0.08,          // “質量”の重さ：0.06〜0.12で調整
+      smoothWheel: true,
+      wheelMultiplier: 1,
+      // touch系はそもそも起動しない（coarse/narrowで止める）
+    });
+
+    // Lenisのスクロール → ScrollTriggerに通知
+    lenis.on("scroll", ScrollTrigger.update);
+
+    // Lenisのrafをgsap tickerで回す（ScrollTriggerと同じ心臓に乗せる）
+    tickerFn = (time) => {
+      lenis?.raf?.(time * 1000);
+    };
+    gsap.ticker.add(tickerFn);
+    gsap.ticker.lagSmoothing(0);
+
+    // 初回はレイアウト確定後にrefresh（pin/計測ズレ防止）
+    requestAnimationFrame(() => {
+      ScrollTrigger.refresh();
+    });
+
+    console.info("[GD] Lenis enabled (PC only).");
+  };
+
+  const stop = () => {
+    if (!lenis) return;
+
+    try {
+      // lenisのevents解除（offが無い版もあるので安全に）
+      lenis.off?.("scroll", ScrollTrigger.update);
+    } catch (_) {}
+
+    if (tickerFn) gsap.ticker.remove(tickerFn);
+    tickerFn = null;
+
+    try { lenis.destroy(); } catch (_) {}
+    lenis = null;
+
+    // Lenis停止後にScrollTriggerを整える
+    requestAnimationFrame(() => {
+      ScrollTrigger.refresh();
+    });
+
+    console.info("[GD] Lenis disabled.");
+  };
+
+  const sync = () => {
+    if (canUse()) start();
+    else stop();
+  };
+
+  // 初期判定
+  sync();
+
+  // 状態変化追従（回転/リサイズ/設定変更）
+  const onChange = () => sync();
+  mqReduce.addEventListener?.("change", onChange);
+  mqCoarse.addEventListener?.("change", onChange);
+  mqNarrow.addEventListener?.("change", onChange);
+
+  window.addEventListener("resize", onChange, { passive: true });
+  window.addEventListener("orientationchange", onChange, { passive: true });
+
+  const cleanup = () => {
+    mqReduce.removeEventListener?.("change", onChange);
+    mqCoarse.removeEventListener?.("change", onChange);
+    mqNarrow.removeEventListener?.("change", onChange);
+
+    window.removeEventListener("resize", onChange);
+    window.removeEventListener("orientationchange", onChange);
+
+    stop();
+  };
+
+  // グローバルに保持（HMR/再初期化用）
+  window.__gd_lenis__ = { cleanup };
+}
+
+initLenisPcOnly();

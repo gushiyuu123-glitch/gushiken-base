@@ -1,0 +1,290 @@
+/* src/components/WorksSP.module.css */
+
+.section{
+  width: 100%;
+  background: #070707;
+  color: rgba(255,255,255,.88);
+  overflow: hidden;
+  isolation: isolate;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* うっすい粒（質感） */
+.section::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  background-image: radial-gradient(rgba(255,255,255,.10) 0.35px, transparent 0.35px);
+  background-size: 4px 4px;
+  opacity: .06;
+  mix-blend-mode: screen;
+}
+
+.head{
+  position: relative;
+  width: min(560px, 92vw);
+  margin: 0 auto;
+  padding: 44px 0 18px;
+}
+
+.kicker{
+  margin: 0 0 10px;
+  font-size: 10px;
+  letter-spacing: .22em;
+  color: rgba(255,255,255,.54);
+}
+
+.h2{
+  margin: 0 0 12px;
+  position: relative;
+}
+
+.sr{
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  white-space: nowrap;
+}
+
+.h2Mask{
+  display: block;
+  width: min(560px, 88vw);
+  overflow: hidden;
+}
+
+.h2Img{
+  display: block;
+  width: 100%;
+  height: auto;
+  transform: translateZ(0);
+}
+
+.lead{
+  margin: 0;
+  font-size: 12.5px;
+  line-height: 1.9;
+  color: rgba(255,255,255,.62);
+}
+
+.list{
+  width: min(560px, 92vw);
+  margin: 0 auto;
+  padding: 10px 0 22px;
+
+  display: grid;
+  gap: 14px; /* ✅ 作品同士の余白を少し詰める */
+}
+
+/* ===== item（カード感ゼロ：画像が主役） ===== */
+.item{
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  outline: none;
+}
+
+.item:active{
+  transform: translateY(1px);
+}
+
+/* 窓（ここが“パネル”） */
+.media{
+  position: relative;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+
+  border: 1px solid rgba(255,255,255,.12);
+  background: rgba(255,255,255,.01);
+  box-shadow: 0 34px 120px rgba(0,0,0,.66);
+}
+
+/* ✅ “中身”だけが動くための内側レイヤー */
+.imageInner{
+  position: absolute;
+  inset: 0;
+  transform: translateZ(0);
+  will-change: transform;
+}
+
+.img{
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+
+  /* 初期：少し大きくして“像が整う”余白を作る */
+  transform: scale(1.10) translate3d(0, 0, 0);
+  will-change: transform;
+}
+
+/* 膜（可読域） */
+.veil{
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(0,0,0,.02), rgba(0,0,0,.78));
+  opacity: .95;
+  pointer-events: none;
+}
+
+/* うっすい光のスキャン（主張しない） */
+.glint{
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    110deg,
+    transparent 0%,
+    rgba(255,255,255,.14) 44%,
+    rgba(255,255,255,.05) 52%,
+    transparent 70%
+  );
+  mix-blend-mode: screen;
+  opacity: 0;
+  transform: translateX(-38%);
+}
+
+/* ===== caption（文字位置：画像内で詰める） ===== */
+.caption{
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  bottom: 12px; /* ✅ 文字位置を少し下に詰める */
+  z-index: 2;
+
+  padding: 10px 10px 8px 12px;
+
+  /* 箱っぽくしない。輪郭だけ */
+  border-left: 1px solid rgba(255,255,255,.24);
+}
+
+.meta{
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: baseline;
+
+  margin-bottom: 6px;
+  font-size: 10px;
+  letter-spacing: .18em;
+  color: rgba(255,255,255,.58);
+}
+
+.no{
+  letter-spacing: .14em;
+  color: rgba(255,255,255,.74);
+}
+
+.title{
+  font-size: 18px;
+  letter-spacing: .06em;
+  font-weight: 300;
+  color: rgba(255,255,255,.94);
+  line-height: 1.25;
+}
+
+.sub{
+  margin-top: 6px;
+  font-size: 12.5px;
+  line-height: 1.75;
+  color: rgba(255,255,255,.62);
+}
+
+.open{
+  margin-top: 10px;
+  font-size: 10.5px;
+  letter-spacing: .22em;
+  color: rgba(255,255,255,.84);
+}
+
+/* ===== VIEW ALL（bottom center） ===== */
+.tail{
+  width: min(560px, 92vw);
+  margin: 0 auto;
+  padding: 20px 0 44px;
+  border-top: 1px solid rgba(255,255,255,.08);
+
+  display: flex;
+  justify-content: center;
+}
+
+.all{
+  position: relative;
+  text-decoration: none;
+  color: rgba(255,255,255,.82);
+  letter-spacing: .22em;
+  font-size: 11px;
+  padding: 10px 0;
+}
+
+.all::after{
+  content:"";
+  position:absolute;
+  left:50%;
+  bottom:0;
+  height:1px;
+  width: 72%;
+  transform: translateX(-50%);
+  background: rgba(255,255,255,.18);
+  transition:
+    width .45s cubic-bezier(.22,.56,.18,1),
+    background .35s ease;
+}
+
+.all:active::after{
+  width: 100%;
+  background: rgba(255,255,255,.44);
+}
+
+/* ===== reveal（SP軽量：clip-pathやりすぎない） ===== */
+.item,
+.kicker,
+.h2,
+.lead,
+.tail{
+  opacity: 0;
+  transform: translate3d(0, 16px, 0) scale(0.996);
+  filter: blur(0.18px);
+
+  transition:
+    opacity .66s cubic-bezier(.22,.56,.18,1) var(--d, 0ms),
+    transform .72s cubic-bezier(.22,.56,.18,1) var(--d, 0ms),
+    filter .66s cubic-bezier(.22,.56,.18,1) var(--d, 0ms);
+}
+
+/* in */
+.in{
+  opacity: 1;
+  transform: translate3d(0, 0, 0) scale(1);
+  filter: blur(0px);
+}
+
+/* “像が整う”：in になった瞬間だけ、画像が少し落ち着く */
+.item.in .img{
+  transform: scale(1.06) translate3d(0, -1%, 0);
+  transition: transform 1.15s cubic-bezier(.22,.56,.18,1);
+}
+
+/* glintも薄く1回だけ（押し付けない） */
+.item.in .glint{
+  opacity: .28;
+  transform: translateX(38%);
+  transition:
+    transform 1.05s cubic-bezier(.22,.56,.18,1),
+    opacity .55s ease;
+}
+
+/* reduce motion */
+@media (prefers-reduced-motion: reduce){
+  .item,.kicker,.h2,.lead,.tail{
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+    transition: none !important;
+  }
+  .img{ transform: none !important; transition: none !important; }
+  .glint{ opacity: 0 !important; transition: none !important; }
+}
