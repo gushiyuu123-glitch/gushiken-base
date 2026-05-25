@@ -138,7 +138,7 @@ export default function Hero() {
   }, []);
 
   return (
-    <section ref={rootRef} className={styles.heroRoot} aria-label="Hero">
+    <section id="hero" ref={rootRef} className={styles.heroRoot} aria-label="Hero">
       {/* Shelf photo background */}
       <div className={styles.bgPhoto} data-hero="bgPhoto" aria-hidden="true" />
 
