@@ -1,10 +1,14 @@
-/* Philosophy.module.css */
+/* src/sections/Philosophy.module.css */
 
 /* JS付与用（Modulesでclassが生成されるための置き場） */
 .isIn {}
 
-/* ========= paper tokens ========= */
-:root{
+/* =======================================================
+   POLICY (paper base)
+======================================================= */
+
+.section{
+  /* ✅ tokens を section スコープに閉じる（グローバル汚染防止） */
   --paper-a: #f5f0e7;
   --paper-b: #f4efe6;
   --paper-c: #f2ece3;
@@ -16,19 +20,12 @@
 
   --gold-1: rgba(201,177,138,.86);
   --gold-2: rgba(201,177,138,.56);
-}
 
-/* =======================================================
-   POLICY (paper base)
-======================================================= */
-
-.section{
   position: relative;
   overflow: hidden;
   padding: 9vh 0 12vh;
   isolation: isolate;
 
-  /* Aboutの“紙＋光”文法に寄せる（濁りグラデ禁止） */
   background:
     radial-gradient(900px 600px at 18% 14%, rgba(255,255,255,.70), rgba(255,255,255,0) 66%),
     radial-gradient(1100px 700px at 82% 42%, rgba(255,255,255,.42), rgba(255,255,255,0) 68%),
@@ -66,7 +63,6 @@
   mix-blend-mode: multiply;
 }
 
-/* 隣接セクションの境界を“うっすら”溶かす（白ベースなので控えめ） */
 .seamTop,
 .seamBottom{
   position:absolute;
@@ -135,7 +131,7 @@
   width: min(100%, 780px);
 }
 
-/* 見出し直下のルール（カードじゃなく編集） */
+/* 見出し直下のルール */
 .header::after{
   content:"";
   display:block;
@@ -157,21 +153,20 @@
 /* copy */
 .copy{ padding-left: 1rem; }
 
-/* 読ませる本文は“常に黒で勝つ” */
 .lead{
-  max-width: 640px;
+  max-width: 680px;
   margin: 0 0 2.0rem;
   color: var(--ink-1);
   font-size: 1rem;
-  line-height: 2.10;
-  letter-spacing: 0.045em;
+  line-height: 2.08;
+  letter-spacing: 0.042em;
 }
 .body{
-  max-width: 680px;
+  max-width: 720px;
   margin: 0 0 2.8rem;
   color: var(--ink-2);
   font-size: 0.96rem;
-  line-height: 2.08;
+  line-height: 2.06;
   letter-spacing: 0.04em;
 }
 .lead span,
@@ -179,26 +174,62 @@
   color: rgba(12,12,12,.92);
 }
 
-/* 締めも暗落ちさせず、紙の上で成立させる */
 .last{
-  max-width: 720px;
-  margin: 4.2rem 0 0;
+  max-width: 740px;
+  margin: 4.0rem 0 0;
   color: rgba(12,12,12,.78);
   font-size: 1rem;
   font-weight: 300;
-  line-height: 2.05;
+  line-height: 2.02;
   letter-spacing: 0.035em;
 }
 .last span{ color: rgba(12,12,12,.90); }
 .last em{
   display:inline-block;
-  margin-top: .2rem;
+  margin-top: .25rem;
   color: rgba(12,12,12,.62);
   font-style: normal;
 }
 
+/* actions (editorial) */
+.actions{
+  margin: 2.2rem 0 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+.action{
+  text-decoration: none;
+  color: rgba(12,12,12,.74);
+  font-size: 0.72rem;
+  letter-spacing: 0.22em;
+  padding-bottom: 8px;
+  position: relative;
+}
+.action::after{
+  content:"";
+  position:absolute;
+  left:50%;
+  bottom:0;
+  height:1px;
+  width: 72%;
+  transform: translateX(-50%);
+  background: rgba(12,12,12,0.18);
+  transition: width .45s cubic-bezier(.22,.56,.18,1), background .35s ease;
+}
+.action:hover{ color: rgba(12,12,12,.92); }
+.action:hover::after{ width:100%; background: rgba(201,177,138,0.62); }
+.action:focus-visible{
+  outline: 2px solid rgba(201,177,138,0.45);
+  outline-offset: 4px;
+}
+.sep{
+  color: rgba(12,12,12,.26);
+  letter-spacing: .2em;
+}
+
 /* =======================================================
-   Visual Principles (paper)
+   Visual Principles
 ======================================================= */
 
 .principles{ margin: 3.6rem 0 0; }
@@ -237,7 +268,6 @@
   pointer-events:none;
 }
 
-/* item */
 .vpItem{
   position: relative;
   display: grid;
@@ -291,7 +321,6 @@
   letter-spacing: 0.12em;
 }
 
-/* visuals */
 .vpVisual{ margin-bottom: .9rem; }
 
 /* clarity */
@@ -338,7 +367,6 @@
   opacity: 0;
   transform: scaleY(0.72);
   transform-origin: top;
-  filter:none;
 
   transition:
     opacity 640ms cubic-bezier(.22,.56,.18,1),
@@ -378,7 +406,7 @@
   filter: blur(0);
 }
 
-/* inside reveal */
+/* inside reveal (stagger via --d) */
 .principleReveal{
   opacity: 0;
   transform: translate3d(0, 12px, 0) scale(0.998);
@@ -389,15 +417,13 @@
     opacity 620ms cubic-bezier(.22,.56,.18,1),
     transform 680ms cubic-bezier(.22,.56,.18,1),
     filter 620ms cubic-bezier(.22,.56,.18,1);
+
+  transition-delay: var(--d, 0ms);
 }
 .principles.isIn .principleReveal{
   opacity: 1;
   transform: translate3d(0,0,0) scale(1);
   filter: blur(0);
-}
-.principles.isIn .principlesLabel{ transition-delay: 40ms; }
-.principles.isIn .vpItem{
-  transition-delay: calc(140ms + (var(--vp-index) * 105ms));
 }
 
 /* axis reveal */
@@ -464,7 +490,8 @@
   .vpHeading p{ font-size: .56rem; }
   .vpText{ font-size: .68rem; line-height: 1.85; letter-spacing: .10em; }
 
-  .last{ margin-top: 3.6rem; font-size: .94rem; line-height: 2; }
+  .last{ margin-top: 3.4rem; font-size: .94rem; line-height: 2; }
+  .actions{ margin-top: 2.0rem; }
 }
 
 @media (prefers-reduced-motion: reduce){

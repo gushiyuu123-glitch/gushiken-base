@@ -1,3 +1,4 @@
+// src/components/Nav.jsx
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import styles from "./Nav.module.css";
 
@@ -11,17 +12,24 @@ const navItems = [
   { href: "#contact", label: "CONTACT", emphasis: true },
 ];
 
-const NAV_HEIGHT = 68;
-const SCROLL_OFFSET = NAV_HEIGHT + 12;
-
 // ✅ 黒ナビにしたいセクション（必要なら追加）
-const DARK_HASHES = new Set(["#works", "#price", "#news", "#footer"]);
+const DARK_HASHES = new Set(["#works", "#news", "#footer"]);
 
 // いつでも黒にしたいなら true
 const FORCE_DARK = false;
 
+// ✅ SPメニューは常にdark固定（白化事故を根絶）
+const MENU_THEME = "dark";
+
+function prefersReducedMotion() {
+  return (
+    typeof window !== "undefined" &&
+    window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches
+  );
+}
+
 /* =========================================================
-   Body Scroll Lock
+   Body Scroll Lock (fixed body)
 ========================================================= */
 function useBodyScrollLock(locked) {
   const scrollYRef = useRef(0);
@@ -74,24 +82,36 @@ function useBodyScrollLock(locked) {
 }
 
 /* =========================================================
-   Smooth scroll to section
+   Scroll (Lenis safe)
 ========================================================= */
-function scrollToHash(hash) {
+function scrollToY(y) {
+  const safeY = Math.max(0, Math.round(y));
+  const reduce = prefersReducedMotion();
+  const lenis = window?.__gd_lenis;
+
+  if (lenis?.scrollTo) {
+    if (reduce) lenis.scrollTo(safeY, { immediate: true });
+    else lenis.scrollTo(safeY, { duration: 0.78, easing: (t) => 1 - Math.pow(1 - t, 3) });
+    return;
+  }
+
+  window.scrollTo({ top: safeY, behavior: reduce ? "auto" : "smooth" });
+}
+
+function scrollToHash(hash, offsetPx) {
   if (!hash?.startsWith("#")) return;
 
   const el = document.querySelector(hash);
   if (!el) return;
 
-  const top =
-    el.getBoundingClientRect().top + (window.scrollY || 0) - SCROLL_OFFSET;
-
+  const top = el.getBoundingClientRect().top + (window.scrollY || 0) - offsetPx;
   const safeTop = Math.max(0, Math.round(top));
 
   if (window.location.hash !== hash) {
     window.history.pushState(null, "", hash);
   }
 
-  window.scrollTo({ top: safeTop, behavior: "smooth" });
+  scrollToY(safeTop);
 }
 
 export default function Nav() {
@@ -99,12 +119,45 @@ export default function Nav() {
   const [scrolled, setScrolled] = useState(false);
   const [activeHash, setActiveHash] = useState("");
 
+  const navRef = useRef(null);
   const firstLinkRef = useRef(null);
   const buttonRef = useRef(null);
   const pendingHashRef = useRef(null);
-  const panelRef = useRef(null);
+
+  const [navH, setNavH] = useState(68);
+  const scrollOffset = navH + 12;
+
+  // ✅ IOのコールバックから常に最新offset参照する（closure事故防止）
+  const scrollOffsetRef = useRef(scrollOffset);
+  useEffect(() => {
+    scrollOffsetRef.current = scrollOffset;
+  }, [scrollOffset]);
 
   useBodyScrollLock(open);
+
+  /* ── measure nav height ── */
+  useEffect(() => {
+    const measure = () => {
+      const h = navRef.current?.getBoundingClientRect?.().height;
+      if (!h) return;
+      const rounded = Math.round(h);
+      setNavH((prev) => (prev === rounded ? prev : rounded));
+    };
+
+    measure();
+
+    let raf = 0;
+    const onResize = () => {
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(measure);
+    };
+
+    window.addEventListener("resize", onResize);
+    return () => {
+      cancelAnimationFrame(raf);
+      window.removeEventListener("resize", onResize);
+    };
+  }, []);
 
   /* ── Scroll → solid background ── */
   useEffect(() => {
@@ -166,9 +219,7 @@ export default function Nav() {
     const MAX_TRIES = 8;
 
     const setup = () => {
-      const targets = navItems
-        .map((item) => document.querySelector(item.href))
-        .filter(Boolean);
+      const targets = navItems.map((item) => document.querySelector(item.href)).filter(Boolean);
 
       if (!targets.length) {
         tries += 1;
@@ -178,16 +229,24 @@ export default function Nav() {
 
       observer = new IntersectionObserver(
         (entries) => {
+          // ✅ Heroが見えてる間は active を消す（ABOUTが先に反応する事故を根絶）
+          // Hero最外側に id="hero" が付いてる前提（無ければ下にある注意参照）
+          const hero = document.getElementById("hero");
+          if (hero) {
+            const r = hero.getBoundingClientRect();
+            if (r.bottom > (scrollOffsetRef.current ?? 80)) {
+              setActiveHash((prev) => (prev ? "" : prev));
+              return;
+            }
+          }
+
           const visible = entries.filter((entry) => entry.isIntersecting);
           if (!visible.length) return;
 
           visible.sort((a, b) => {
             const ratio = (b.intersectionRatio || 0) - (a.intersectionRatio || 0);
             if (ratio) return ratio;
-            return (
-              Math.abs(a.boundingClientRect.top) -
-              Math.abs(b.boundingClientRect.top)
-            );
+            return Math.abs(a.boundingClientRect.top) - Math.abs(b.boundingClientRect.top);
           });
 
           const id = visible[0]?.target?.id;
@@ -218,11 +277,10 @@ export default function Nav() {
     if (!open) return;
 
     const onKey = (e) => {
-      if (e.key === "Escape") {
-        e.preventDefault();
-        setOpen(false);
-        setTimeout(() => buttonRef.current?.focus(), 0);
-      }
+      if (e.key !== "Escape") return;
+      e.preventDefault();
+      setOpen(false);
+      window.setTimeout(() => buttonRef.current?.focus(), 0);
     };
 
     window.addEventListener("keydown", onKey);
@@ -232,19 +290,17 @@ export default function Nav() {
   /* ── Focus first link on open ── */
   useEffect(() => {
     if (!open) return;
-    const t = setTimeout(() => firstLinkRef.current?.focus(), 90);
-    return () => clearTimeout(t);
+    const t = window.setTimeout(() => firstLinkRef.current?.focus(), 90);
+    return () => window.clearTimeout(t);
   }, [open]);
 
   /* ── Close → then scroll ── */
   useEffect(() => {
     if (open) return;
-
     const pending = pendingHashRef.current;
     if (!pending) return;
-
     pendingHashRef.current = null;
-    requestAnimationFrame(() => scrollToHash(pending));
+    requestAnimationFrame(() => scrollToHash(pending, scrollOffsetRef.current));
   }, [open]);
 
   const closeMenu = useCallback(() => setOpen(false), []);
@@ -253,8 +309,8 @@ export default function Nav() {
   const handleAnchorClick = useCallback(
     (href) => (e) => {
       if (!href?.startsWith("#")) return;
-
       e.preventDefault();
+
       setActiveHash((prev) => (prev === href ? prev : href));
 
       if (open) {
@@ -263,18 +319,39 @@ export default function Nav() {
         return;
       }
 
-      scrollToHash(href);
+      scrollToHash(href, scrollOffsetRef.current);
+    },
+    [open]
+  );
+
+  const handleLogoTop = useCallback(
+    (e) => {
+      e.preventDefault();
+
+      // ✅ hashを消して「ABOUTが残留」する事故を防ぐ
+      if (window.location.hash) {
+        window.history.replaceState(null, "", window.location.pathname + window.location.search);
+      }
+
+      setActiveHash("");
+      if (open) {
+        setOpen(false);
+        pendingHashRef.current = null;
+      }
+
+      requestAnimationFrame(() => scrollToY(0));
     },
     [open]
   );
 
   const pcLinks = useMemo(() => navItems, []);
-
   const isDark = FORCE_DARK || DARK_HASHES.has(activeHash);
 
   return (
     <>
+      {/* ===== TOP BAR（paper/dark 自動） ===== */}
       <nav
+        ref={navRef}
         data-theme={isDark ? "dark" : "paper"}
         className={[
           styles.navRoot,
@@ -284,33 +361,27 @@ export default function Nav() {
         aria-label="Primary navigation"
       >
         <div className={styles.navInner}>
+          {/* ✅ HOME内なので reload しない：トップへ */}
           <a
-            href="/"
+            href="#top"
             className={styles.navLogo}
             translate="no"
-            onClick={() => open && closeMenu()}
-            aria-label="GUSHIKEN DESIGN ホームへ"
+            onClick={handleLogoTop}
+            aria-label="GUSHIKEN DESIGN トップへ"
           >
+            {/* ✅ GDロゴ透過前提：囲み/背景のための子要素を持たない */}
             <span
               className={`${styles.navLogoSeal} ${styles.sharpIn}`}
               aria-hidden="true"
               style={{ "--nav-delay": "0.04s", "--logo-url": `url(${LOGO_SRC})` }}
-            >
-              <span className={styles.navLogoMask} aria-hidden="true" />
-            </span>
+            />
 
             <span className={styles.navLogoText}>
-              <span
-                className={`${styles.navLogoMain} ${styles.sharpIn}`}
-                style={{ "--nav-delay": "0.10s" }}
-              >
+              <span className={`${styles.navLogoMain} ${styles.sharpIn}`} style={{ "--nav-delay": "0.10s" }}>
                 GUSHIKEN DESIGN
               </span>
 
-              <span
-                className={`${styles.navLogoSub} ${styles.sharpIn}`}
-                style={{ "--nav-delay": "0.16s" }}
-              >
+              <span className={`${styles.navLogoSub} ${styles.sharpIn}`} style={{ "--nav-delay": "0.16s" }}>
                 Web Design / Okinawa
               </span>
             </span>
@@ -319,7 +390,6 @@ export default function Nav() {
           <div className={styles.navPc}>
             {pcLinks.map((item, index) => {
               const active = activeHash === item.href;
-
               return (
                 <a
                   key={item.href}
@@ -357,20 +427,26 @@ export default function Nav() {
         </div>
       </nav>
 
+      {/* ===== MOBILE OVERLAY（常にdark） ===== */}
       <div
+        data-theme={MENU_THEME}
         className={`${styles.mobileOverlay} ${open ? styles.mobileOverlayOpen : ""}`}
-        onClick={closeMenu}
-        aria-hidden={!open}
+        onClick={() => {
+          closeMenu();
+          window.setTimeout(() => buttonRef.current?.focus(), 0);
+        }}
+        aria-hidden="true"
       />
 
+      {/* ===== MOBILE NAV（常にdark固定） ===== */}
       <div
-        ref={panelRef}
         id="mobile-navigation"
-        data-theme={isDark ? "dark" : "paper"}
+        data-theme={MENU_THEME}
         className={`${styles.mobileNav} ${open ? styles.mobileOpen : ""}`}
         role="dialog"
         aria-modal="true"
         aria-hidden={!open}
+        aria-label="Navigation menu"
       >
         <div className={styles.mobileNavInner}>
           <div className={styles.mobileNavTop}>
@@ -381,7 +457,7 @@ export default function Nav() {
               className={styles.mobileClose}
               onClick={() => {
                 setOpen(false);
-                setTimeout(() => buttonRef.current?.focus(), 0);
+                window.setTimeout(() => buttonRef.current?.focus(), 0);
               }}
               aria-label="Close navigation"
               tabIndex={open ? 0 : -1}
@@ -394,7 +470,6 @@ export default function Nav() {
           <div className={styles.mobileNavLinks}>
             {navItems.map((item, i) => {
               const active = activeHash === item.href;
-
               return (
                 <a
                   key={item.href}
@@ -414,8 +489,9 @@ export default function Nav() {
                   <span className={styles.mobileNavLeft}>
                     <span className={styles.mobileNavText}>{item.label}</span>
                   </span>
-
-                  <span className={styles.mobileNavArrow}>→</span>
+                  <span className={styles.mobileNavArrow} aria-hidden="true">
+                    →
+                  </span>
                 </a>
               );
             })}

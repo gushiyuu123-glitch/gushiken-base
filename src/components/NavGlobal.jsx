@@ -21,9 +21,10 @@ const GLOBAL_ITEMS = [
   { to: "/news", label: "NEWS" },
   { to: "/contact", label: "CONTACT", emphasis: true },
 ];
-// これを追加（監視専用）
+
+// 監視専用（Heroは「下線を消す」判定にだけ使う）
 const OBSERVE_IDS = ["works", "about", "philosophy", "price", "news", "contact", "footer"];
-const DARK_HASHES = new Set(["#works",  "#news", "#footer"]);
+const DARK_HASHES = new Set(["#works", "#news", "#footer"]);
 const DARK_ROUTES = new Set(["/works", "/news"]);
 
 function cx(...classes) {
@@ -91,8 +92,22 @@ function useBodyScrollLock(locked) {
 }
 
 /* =========================================================
-   Scroll to hash with dynamic offset
+   Scroll helpers (Lenis safe)
 ========================================================= */
+function scrollToY(y) {
+  const safeY = Math.max(0, Math.round(y));
+  const reduce = prefersReducedMotion();
+  const lenis = window?.__gd_lenis;
+
+  if (lenis?.scrollTo) {
+    if (reduce) lenis.scrollTo(safeY, { immediate: true });
+    else lenis.scrollTo(safeY, { duration: 0.78, easing: (t) => 1 - Math.pow(1 - t, 3) });
+    return;
+  }
+
+  window.scrollTo({ top: safeY, behavior: reduce ? "auto" : "smooth" });
+}
+
 function scrollToHash(hash, offsetPx) {
   if (!hash?.startsWith("#")) return;
 
@@ -106,10 +121,7 @@ function scrollToHash(hash, offsetPx) {
     window.history.pushState(null, "", hash);
   }
 
-  window.scrollTo({
-    top: safeTop,
-    behavior: prefersReducedMotion() ? "auto" : "smooth",
-  });
+  scrollToY(safeTop);
 }
 
 /**
@@ -134,6 +146,7 @@ export default function NavGlobal({ mode, tone = "auto" }) {
 
   const [navH, setNavH] = useState(FALLBACK_NAV_HEIGHT);
   const scrollOffset = navH + 12;
+  const scrollOffsetRef = useRef(scrollOffset);
 
   const homeLinks = useMemo(() => HOME_ITEMS, []);
   const globalLinks = useMemo(() => GLOBAL_ITEMS, []);
@@ -141,6 +154,9 @@ export default function NavGlobal({ mode, tone = "auto" }) {
   useBodyScrollLock(open);
 
   useEffect(() => setMounted(true), []);
+  useEffect(() => {
+    scrollOffsetRef.current = scrollOffset;
+  }, [scrollOffset]);
 
   /* ── measure nav height ── */
   useEffect(() => {
@@ -166,7 +182,7 @@ export default function NavGlobal({ mode, tone = "auto" }) {
     };
   }, []);
 
-  /* ── scroll → active density ── */
+  /* ── scroll → density ── */
   useEffect(() => {
     let raf = 0;
     const onScroll = () => {
@@ -227,10 +243,10 @@ export default function NavGlobal({ mode, tone = "auto" }) {
     const MAX_TRIES = 8;
 
     const setup = () => {
- // 置き換え
-const targets = OBSERVE_IDS
-  .map((id) => document.getElementById(id))
-  .filter(Boolean);
+      const targets = OBSERVE_IDS.map((id) => document.getElementById(id)).filter(Boolean);
+
+      // Hero優先判定用（存在すれば最強に安定）
+      const heroEl = document.getElementById("hero");
 
       if (!targets.length) {
         tries += 1;
@@ -240,6 +256,15 @@ const targets = OBSERVE_IDS
 
       observer = new IntersectionObserver(
         (entries) => {
+          // ✅ Hero が見えてる間は active を消す（ABOUTが先に反応するのを根絶）
+          if (heroEl) {
+            const r = heroEl.getBoundingClientRect();
+            if (r.bottom > (scrollOffsetRef.current ?? 80)) {
+              setActiveHash((prev) => (prev ? "" : prev));
+              return;
+            }
+          }
+
           const visible = entries.filter((entry) => entry.isIntersecting);
           if (!visible.length) return;
 
@@ -300,8 +325,8 @@ const targets = OBSERVE_IDS
     const pending = pendingHashRef.current;
     if (!pending) return;
     pendingHashRef.current = null;
-    requestAnimationFrame(() => scrollToHash(pending, scrollOffset));
-  }, [open, scrollOffset]);
+    requestAnimationFrame(() => scrollToHash(pending, scrollOffsetRef.current));
+  }, [open]);
 
   const closeMenu = useCallback(() => setOpen(false), []);
   const toggleMenu = useCallback(() => setOpen((v) => !v), []);
@@ -319,14 +344,38 @@ const targets = OBSERVE_IDS
         return;
       }
 
-      scrollToHash(href, scrollOffset);
+      scrollToHash(href, scrollOffsetRef.current);
     },
-    [open, scrollOffset]
+    [open]
+  );
+
+  const handleLogoClick = useCallback(
+    (e) => {
+      if (!isHome) {
+        if (open) closeMenu();
+        return;
+      }
+
+      // home上でロゴ → 必ずトップへ（hashも消す）
+      e.preventDefault();
+      if (open) setOpen(false);
+
+      // hash を消す（"ABOUTが残る"事故防止）
+      if (window.location.hash) {
+        window.history.replaceState(null, "", window.location.pathname + window.location.search);
+      }
+
+      requestAnimationFrame(() => {
+        setActiveHash("");
+        scrollToY(0);
+      });
+    },
+    [isHome, open, closeMenu]
   );
 
   if (!mounted) return null;
 
-  // ── theme decision ──
+  // ── theme decision（上のバーだけ） ──
   let theme = "paper";
   if (tone === "dark") theme = "dark";
   else if (tone === "paper") theme = "paper";
@@ -335,8 +384,12 @@ const targets = OBSERVE_IDS
     else theme = DARK_ROUTES.has(pathname) ? "dark" : "paper";
   }
 
+  // ✅ スマホで開くメニューは常に “dark”
+  const menuTheme = "dark";
+
   const ui = (
     <>
+      {/* ===== TOP BAR ===== */}
       <nav
         ref={navRef}
         data-theme={theme}
@@ -347,7 +400,7 @@ const targets = OBSERVE_IDS
           <Link
             to="/"
             translate="no"
-            onClick={() => { if (open) closeMenu(); }}
+            onClick={handleLogoClick}
             className={styles.navLogo}
             aria-label="GUSHIKEN DESIGN Home"
           >
@@ -358,27 +411,20 @@ const targets = OBSERVE_IDS
                 "--nav-delay": "0.04s",
                 "--logo-url": `url(${LOGO_SRC})`,
               }}
-            >
-              <span className={styles.navLogoMask} />
-            </span>
+            />
 
             <span className={styles.navLogoText}>
-              <span
-                className={cx(styles.navLogoMain, styles.sharpIn)}
-                style={{ "--nav-delay": "0.10s" }}
-              >
+              <span className={cx(styles.navLogoMain, styles.sharpIn)} style={{ "--nav-delay": "0.10s" }}>
                 GUSHIKEN DESIGN
               </span>
 
-              <span
-                className={cx(styles.navLogoSub, styles.sharpIn)}
-                style={{ "--nav-delay": "0.16s" }}
-              >
+              <span className={cx(styles.navLogoSub, styles.sharpIn)} style={{ "--nav-delay": "0.16s" }}>
                 Web Design / Okinawa
               </span>
             </span>
           </Link>
 
+          {/* ===== PC LINKS ===== */}
           <div className={styles.navPc}>
             {isHome
               ? homeLinks.map((item, index) => {
@@ -424,6 +470,7 @@ const targets = OBSERVE_IDS
                 })}
           </div>
 
+          {/* ===== HAMBURGER ===== */}
           <button
             ref={buttonRef}
             type="button"
@@ -440,16 +487,18 @@ const targets = OBSERVE_IDS
         </div>
       </nav>
 
+      {/* ===== MOBILE OVERLAY ===== */}
       <div
-        data-theme={theme}
+        data-theme={menuTheme}
         className={cx(styles.mobileOverlay, open && styles.mobileOverlayOpen)}
         onClick={closeMenu}
         aria-hidden="true"
       />
 
+      {/* ===== MOBILE NAV ===== */}
       <div
         id="global-mobile-navigation"
-        data-theme={theme}
+        data-theme={menuTheme}
         className={cx(styles.mobileNav, open && styles.mobileOpen)}
         role="dialog"
         aria-modal="true"

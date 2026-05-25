@@ -1,5 +1,5 @@
-// Philosophy.jsx
-import React, { useEffect, useRef } from "react";
+// src/sections/Philosophy.jsx
+import React, { useEffect, useMemo, useRef } from "react";
 import SectionSvgTitle from "../components/SectionSvgTitle";
 import styles from "./Philosophy.module.css";
 
@@ -8,40 +8,40 @@ const cx = (...a) => a.filter(Boolean).join(" ");
 const PRINCIPLES = [
   {
     number: "01",
-    title: "見やすさ",
+    title: "迷わない設計",
     en: "CLARITY",
     type: "clarity",
     text: (
       <>
-        必要な情報が自然に目に入り、
+        最初の数秒で「何をしているか」が伝わる。
         <br />
-        迷わず読み進められる画面へ。
+        読み返さなくていい順序に整えます。
       </>
     ),
   },
   {
     number: "02",
-    title: "印象",
+    title: "印象の統一",
     en: "ATMOSPHERE",
     type: "atmosphere",
     text: (
       <>
-        写真・色・余白の温度を合わせ、
+        写真の見え方と余白の温度を揃える。
         <br />
-        魅力が静かに伝わる空気へ。
+        上質さが“静かに”残る状態へ。
       </>
     ),
   },
   {
     number: "03",
-    title: "相談への流れ",
+    title: "相談までの導線",
     en: "FLOW",
     type: "flow",
     text: (
       <>
-        不安を減らし、問い合わせまで
+        不安が出る前に答えを置く。
         <br />
-        無理なく進める導線へ。
+        迷わず相談できる流れを作ります。
       </>
     ),
   },
@@ -86,8 +86,8 @@ function VisualPrinciples() {
       <div className={styles.principlesInner}>
         <div className={styles.vpAxis} aria-hidden="true" />
 
-        <p className={cx(styles.principlesLabel, styles.principleReveal)}>
-          DESIGN IN PRACTICE
+        <p className={cx(styles.principlesLabel, styles.principleReveal)} style={{ "--d": "40ms" }}>
+          HOW I DESIGN
         </p>
 
         <div className={styles.principlesList}>
@@ -95,7 +95,7 @@ function VisualPrinciples() {
             <article
               key={item.number}
               className={cx(styles.vpItem, styles.principleReveal)}
-              style={{ "--vp-index": index }}
+              style={{ "--d": `${140 + index * 95}ms` }}
             >
               <span className={styles.vpNum} aria-hidden="true">
                 {item.number}
@@ -122,19 +122,21 @@ function VisualPrinciples() {
 export default function Philosophy() {
   const sectionRef = useRef(null);
 
+  const reduceMotion = useMemo(() => {
+    if (typeof window === "undefined") return false;
+    return window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches ?? false;
+  }, []);
+
   useEffect(() => {
     const root = sectionRef.current;
     if (!root) return;
-
-    const reduce =
-      window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches ?? false;
 
     const flowTargets = Array.from(root.querySelectorAll("[data-reveal-flow]"));
     const principlesTarget = root.querySelector("[data-reveal-principles]");
 
     const reveal = (el) => el.classList.add(styles.isIn);
 
-    if (reduce || typeof IntersectionObserver === "undefined") {
+    if (reduceMotion || typeof IntersectionObserver === "undefined") {
       flowTargets.forEach(reveal);
       if (principlesTarget) reveal(principlesTarget);
       return;
@@ -155,10 +157,10 @@ export default function Philosophy() {
     if (principlesTarget) io.observe(principlesTarget);
 
     return () => io.disconnect();
-  }, []);
+  }, [reduceMotion]);
 
   return (
-    <section id="philosophy" ref={sectionRef} className={styles.section}>
+    <section id="philosophy" ref={sectionRef} className={styles.section} aria-label="制作方針">
       <div className={styles.seamTop} aria-hidden="true" />
       <div className={styles.seamBottom} aria-hidden="true" />
 
@@ -174,50 +176,42 @@ export default function Philosophy() {
         />
 
         <header className={cx(styles.header, styles.flow, styles.flow1)} data-reveal-flow>
-          <SectionSvgTitle
-            title="POLICY"
-            sub="DESIGN POLICY"
-            className={styles.svgTitle}
-          />
+          <SectionSvgTitle title="POLICY" sub="DESIGN POLICY" className={styles.svgTitle} />
           <p className={styles.sub}>制作で大切にしていること</p>
         </header>
 
         <div className={styles.copy}>
           <p className={cx(styles.lead, styles.flow, styles.flow2)} data-reveal-flow>
-            商品・空間・サービスの印象を、
+            <span>見た瞬間に伝わり</span>、読み進めても迷わない。
             <br />
-            <span>上質に、きちんと伝える</span>ために。
+            その上で、写真と余白の印象を整えて
             <br />
-            まずは、見やすさと安心感の土台から設計します。
+            <span>「相談したくなる」</span>までつなげます。
           </p>
 
           <p className={cx(styles.body, styles.flow, styles.flow3)} data-reveal-flow>
-            Webサイトは、最初から丁寧に読まれるとは限りません。
+            Webサイトは、じっくり読まれる前に“印象”で判断されます。
             <br />
-            だからこそ、情報の順序・余白・文字量・写真の見え方を整え、
-            <span>何をしているのか、誰に向いているのか</span>
-            が自然に伝わる状態を目指します。
+            だからこそ、情報の順序・文字量・写真の見え方を編集して、
+            <span>何をしているか／誰に向いているか</span>が自然に入る状態を作ります。
             <br />
             <br />
-            見た目だけで終わらせず、読み手の不安を減らし、
-            <span>問い合わせにつながる流れ</span>
-            まで設計することを大切にしています。
+            きれいに整えるだけで終わらず、
+            <span>不安を先回りで潰し</span>、問い合わせまでの流れも一緒に設計します。
           </p>
 
           <VisualPrinciples />
 
           <p className={cx(styles.last, styles.flow, styles.flow5)} data-reveal-flow>
             <span>
-              見やすさと印象の両方を整え、
+              迷わない。伝わる。決められる。
               <br />
-              魅力が自然に伝わるサイトを。
+              この3つが揃うと、サイトは“強く”なります。
             </span>
             <br />
-            <em>
-              「ここなら相談しやすそう」と感じてもらえることも、
-              制作の大切な役割だと考えています。
-            </em>
+            <em>「ここなら任せやすそう」と感じてもらえることを、成果の前提に置いています。</em>
           </p>
+
         </div>
       </div>
     </section>

@@ -98,7 +98,7 @@ export default function HeroSP() {
   }, []);
 
   return (
-    <section ref={rootRef} className={styles.root} aria-label="GUSHIKEN DESIGN Hero (SP)">
+    <section id="hero-sp" ref={rootRef} className={styles.root} aria-label="GUSHIKEN DESIGN Hero (SP)">
       {/* 背景：棚＋花瓶（右下） */}
       <div
         className={styles.bgPhoto}
