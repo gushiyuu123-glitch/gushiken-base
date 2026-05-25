@@ -10,11 +10,15 @@
   <meta name="google" content="notranslate" />
   <meta name="author" content="GUSHIKEN DESIGN" />
   <meta name="application-name" content="GUSHIKEN DESIGN" />
-  <meta name="theme-color" content="#0b0b0b" />
-  <meta name="msapplication-TileColor" content="#0b0b0b" />
-  <meta name="color-scheme" content="dark" />
   <meta name="format-detection" content="telephone=no, email=no, address=no" />
   <meta name="referrer" content="strict-origin-when-cross-origin" />
+
+  <!-- ✅ サイトが白基調なら light / 混在なら light dark（どっちでもOK） -->
+  <meta name="color-scheme" content="light dark" />
+
+  <!-- ✅ Theme color（白基調のベースに寄せる。必要なら好みで調整） -->
+  <meta name="theme-color" content="#f7f4ee" />
+  <meta name="msapplication-TileColor" content="#f7f4ee" />
 
   <!-- Domain Verify (keep) -->
   <meta name="p:domain_verify" content="48dd0e90de53ad499404794fccf42239" />
@@ -33,50 +37,62 @@
   <link rel="manifest" href="/site.webmanifest" />
   <meta name="msapplication-config" content="/browserconfig.xml" />
 
-  <!-- Minimal fallback title (Helmetが上書きする) -->
-  <title data-rh="true">GUSHIKEN DESIGN</title>
+  <!-- Canonical（✅ JS非実行スクレイパー対策としてHTMLに固定で置く） -->
+  <link rel="canonical" href="https://gushikendesign.com/" />
 
-  <!-- ✅ Fallback SEO/OGP (JS非実行スクレイパー対策) -->
+  <!-- Minimal fallback title（SPAでdocument.titleを変えても、クローラーはこれを見ることが多い） -->
+  <title>GUSHIKEN DESIGN｜沖縄のWebデザイン・ホームページ制作</title>
+
+  <!-- ✅ Fallback SEO（JS非実行対策） -->
   <meta
     name="description"
-    content="GUSHIKEN DESIGN｜沖縄を拠点に、世界観設計からフロントエンド実装まで一気通貫で制作します。"
+    content="沖縄のフリーランスWebデザイナー GUSHIKEN DESIGN。世界観設計からフロントエンド実装まで一気通貫で制作します。"
   />
+  <meta name="robots" content="index,follow,max-image-preview:large" />
 
+  <!-- ✅ OGP（JS非実行対策：ここが本命） -->
   <meta property="og:site_name" content="GUSHIKEN DESIGN" />
-  <meta property="og:title" content="GUSHIKEN DESIGN" />
+  <meta property="og:locale" content="ja_JP" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://gushikendesign.com/" />
+  <meta property="og:title" content="GUSHIKEN DESIGN｜沖縄のWebデザイン・ホームページ制作" />
   <meta
     property="og:description"
     content="沖縄を拠点に、世界観設計からフロントエンド実装まで一気通貫で制作します。"
   />
-  <meta property="og:image" content="https://gushikendesign.com/ogp-v4.png?v=20260517-1" />
-  <meta property="og:image:secure_url" content="https://gushikendesign.com/ogp-v4.png?v=20260517-1" />
+
+  <!-- ✅ 重要：クエリ無しで安定させる（更新したい時はファイル名を ogp-v5.png に上げる） -->
+  <meta property="og:image" content="https://gushikendesign.com/ogp-v4.png" />
+  <meta property="og:image:secure_url" content="https://gushikendesign.com/ogp-v4.png" />
   <meta property="og:image:type" content="image/png" />
-  <meta property="og:image:width" content="1200" />
-  <meta property="og:image:height" content="630" />
   <meta property="og:image:alt" content="GUSHIKEN DESIGN" />
 
-  <!-- ✅ Twitter（二重定義を廃止 / 画像URLをOGと統一） -->
+  <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="GUSHIKEN DESIGN" />
+  <meta name="twitter:title" content="GUSHIKEN DESIGN｜沖縄のWebデザイン・ホームページ制作" />
   <meta
     name="twitter:description"
     content="沖縄を拠点に、世界観設計からフロントエンド実装まで一気通貫で制作します。"
   />
-  <meta name="twitter:image" content="https://gushikendesign.com/ogp-v4.png?v=20260517-1" />
+  <meta name="twitter:image" content="https://gushikendesign.com/ogp-v4.png" />
 
-  <!-- FOUC prevention (keep) -->
+  <!-- FOUC prevention（白基調に寄せた初期背景） -->
   <style>
-    html { background: #0b0b0b; }
-    body { margin: 0; background: #0b0b0b; }
+    :root{
+      --boot-bg: #f7f4ee;
+      --boot-fg: #0b0b0b;
+    }
+    html { background: var(--boot-bg); }
+    body { margin: 0; background: var(--boot-bg); color: var(--boot-fg); }
 
-    #root {
+    #root{
       min-height: 100svh;
       opacity: 0;
       transition: opacity 0.28s cubic-bezier(0.22, 0.1, 0.28, 1);
     }
-    #root.show { opacity: 1; }
+    #root.show{ opacity: 1; }
 
-    .visually-hidden {
+    .visually-hidden{
       position: absolute;
       width: 1px;
       height: 1px;
@@ -95,7 +111,7 @@
       const KEY = "__gd_internal__";
       const qs = new URLSearchParams(location.search);
 
-      // 🔒 必ず変えろ：自分だけ知ってる長いランダム文字列
+      // 🔒 必ず変える：自分だけ知ってる長いランダム文字列
       const SECRET = "CHANGE_ME_TO_LONG_RANDOM";
 
       // internalフラグのON/OFF（端末ブラウザ単位）
@@ -111,7 +127,7 @@
         history.replaceState(null, "", clean);
       }
 
-      // ✅ internal時でもアプリが落ちないように、gtagだけは常に定義しておく
+      // ✅ internal時でもアプリが落ちないように、gtagだけは常に定義
       window.dataLayer = window.dataLayer || [];
       window.gtag = window.gtag || function(){ window.dataLayer.push(arguments); };
 
@@ -129,8 +145,7 @@
       }
 
       gtag("js", new Date());
-
-      // SPA手動page_view前提：自動送信は止める（君の運用を維持）
+      // SPA手動page_view前提：自動送信は止める
       gtag("config", GA_ID, { send_page_view: false });
     })();
   </script>
@@ -167,9 +182,6 @@
           "Web制作",
           "ブランドサイト制作",
           "LP制作",
-          "美容室サイト制作",
-          "宿泊施設サイト制作",
-          "ECサイト制作",
           "UI/UXデザイン",
           "フロントエンド実装"
         ]
@@ -192,7 +204,7 @@
   <noscript>
     <div
       data-nosnippet
-      style="color:#fff;background:#0b0b0b;padding:16px;margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;"
+      style="color:#111;background:#f7f4ee;padding:16px;margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;"
     >
       JavaScript が無効のため表示できません。
     </div>
