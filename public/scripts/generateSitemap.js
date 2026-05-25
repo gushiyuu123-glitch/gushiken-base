@@ -7,7 +7,10 @@ import { worksData } from "../src/data/worksData.js";
 
 dotenv.config();
 
-const SITE = process.env.SITE_URL || "https://gushikendesign.com";
+const SITE =
+  String(process.env.SITE_URL || process.env.VITE_SITE_ORIGIN || "https://gushikendesign.com")
+    .replace(/\/+$/, ""); // ✅ 末尾スラッシュ除去
+
 const TODAY = new Date().toISOString().split("T")[0];
 
 // newsは上限を切る（増えてもsitemapが肥大化しない）
@@ -29,7 +32,8 @@ function escapeXml(value) {
 
 function normalizePath(p) {
   if (!p) return "/";
-  return p.startsWith("/") ? p : `/${p}`;
+  const v = String(p);
+  return v.startsWith("/") ? v : `/${v}`;
 }
 
 function formatDate(dateString) {
@@ -38,9 +42,14 @@ function formatDate(dateString) {
   return Number.isNaN(d.getTime()) ? TODAY : d.toISOString().split("T")[0];
 }
 
-// Room/Teaser/Intro は sitemap から除外（検索に出したいのは“証拠ページ”だけ）
+// ✅ Room/Teaser/Intro は sitemap から除外（将来kebab化しても拾う）
 function isRoomLikeSlug(slug = "") {
-  return /(?:Room|Teaser|Intro)$/i.test(slug);
+  const s = String(slug);
+  return (
+    /(?:^|[-_])room$/i.test(s) || /Room$/i.test(s) ||
+    /(?:^|[-_])teaser$/i.test(s) || /Teaser$/i.test(s) ||
+    /(?:^|[-_])intro$/i.test(s) || /Intro$/i.test(s)
+  );
 }
 
 function urlXml({ loc, lastmod, changefreq, priority }) {
@@ -50,6 +59,26 @@ function urlXml({ loc, lastmod, changefreq, priority }) {
     ${changefreq ? `<changefreq>${escapeXml(changefreq)}</changefreq>` : ""}
     ${priority ? `<priority>${escapeXml(priority)}</priority>` : ""}
   </url>`;
+}
+
+function newerDate(a, b) {
+  const da = new Date(formatDate(a)).getTime();
+  const db = new Date(formatDate(b)).getTime();
+  return db > da ? b : a;
+}
+
+// ✅ 同じpathなら lastmod は新しい方へ寄せる
+function mergeUrl(map, item) {
+  const key = normalizePath(item.path);
+  const prev = map.get(key);
+  if (!prev) return map.set(key, { ...item, path: key });
+
+  map.set(key, {
+    ...prev,
+    ...item,
+    path: key,
+    lastmod: newerDate(prev.lastmod, item.lastmod),
+  });
 }
 
 async function fetchNewsPages() {
@@ -84,7 +113,7 @@ async function fetchNewsPages() {
     for (const item of contents) {
       if (!item?.id) continue;
       pages.push({
-        path: `/news/${item.id}`,
+        path: `/news/${encodeURIComponent(String(item.id))}`,
         lastmod: formatDate(item.updatedAt || item.publishedAt),
         changefreq: "monthly",
         priority: "0.55",
@@ -100,7 +129,6 @@ async function fetchNewsPages() {
 }
 
 async function generate() {
-  // ブライダル入口は必ず入れる（槍）
   const staticPages = [
     { path: "/", changefreq: "weekly", priority: "1.0", lastmod: TODAY },
     { path: "/works", changefreq: "weekly", priority: "0.9", lastmod: TODAY },
@@ -116,16 +144,14 @@ async function generate() {
     { path: "/legal", changefreq: "yearly", priority: "0.35", lastmod: TODAY },
   ];
 
-  // worksData から “検索に出す価値がある” work ページだけ抽出
   const workPages = (worksData || []).flatMap((category) => {
     const items = Array.isArray(category?.items) ? category.items : [];
     return items
       .filter((item) => item?.slug && !isRoomLikeSlug(item.slug))
       .map((item) => ({
-        path: `/works/${item.slug}`,
+        path: `/works/${encodeURIComponent(String(item.slug))}`,
         changefreq: "monthly",
         priority: "0.75",
-        // createdAt を持ってるなら採用。無いならTODAY
         lastmod: formatDate(item.updatedAt || item.createdAt || TODAY),
       }));
   });
@@ -134,10 +160,10 @@ async function generate() {
 
   const all = [...staticPages, ...workPages, ...newsPages];
 
-  // 重複削除（pathをキー）
-  const unique = Array.from(
-    new Map(all.map((u) => [normalizePath(u.path), u])).values()
-  );
+  // ✅ 重複排除 + lastmod最大
+  const map = new Map();
+  all.forEach((u) => mergeUrl(map, u));
+  const unique = Array.from(map.values());
 
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">

@@ -2,14 +2,11 @@
 import React, { useEffect, useMemo, useRef } from "react";
 import { useParams, Link } from "react-router-dom";
 import styles from "./WorkDetail.module.css";
-import { worksData } from "../data/worksData";
+import { worksBySlug, normalizeWorkSlug } from "../data/worksIndex";
 
 /* ================================
    utils
 ================================ */
-const normalizeSlug = (str = "") =>
-  String(str).replace(/\s+/g, "").replace(/[^\w-]/g, "").toLowerCase();
-
 const isNewItem = (work) => {
   if (work.tags?.includes("NEW")) return true;
   if (!work.createdAt) return false;
@@ -21,19 +18,31 @@ const isNewItem = (work) => {
 };
 
 function scrollToTopStable() {
+  if (typeof window === "undefined") return;
+
   const reduce =
     window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches ?? false;
 
-  // ✅ Lenisがいるなら最優先
+  // ✅ Lenis Proxy（window.__gd_lenis__）がいれば最優先
   const lenis = window.__gd_lenis__;
-  if (lenis && typeof lenis.scrollTo === "function") {
-    try {
-      lenis.scrollTo(0, { immediate: true });
-      return;
-    } catch (_) {}
+  if (lenis) {
+    // scrollToTop があればそれを優先
+    if (typeof lenis.scrollToTop === "function") {
+      try {
+        lenis.scrollToTop();
+        return;
+      } catch (_) {}
+    }
+    // scrollTo があれば 0へ
+    if (typeof lenis.scrollTo === "function") {
+      try {
+        lenis.scrollTo(0, { immediate: true });
+        return;
+      } catch (_) {}
+    }
   }
 
-  window.scrollTo({ top: 0, behavior: reduce ? "auto" : "auto" });
+  window.scrollTo({ top: 0, left: 0, behavior: reduce ? "auto" : "auto" });
 }
 
 /* ================================
@@ -43,16 +52,13 @@ export default function WorkDetail() {
   const { slug } = useParams();
   const rootRef = useRef(null);
 
-  const normalizedSlug = normalizeSlug(slug);
+  const normalizedSlug = normalizeWorkSlug(slug);
 
-  const allWorks = useMemo(() => worksData.flatMap((block) => block.items), []);
-  const work = useMemo(() => {
-    return allWorks.find((item) => normalizeSlug(item.slug) === normalizedSlug);
-  }, [allWorks, normalizedSlug]);
+  // ✅ Map参照（重複・大小文字・空白差で事故らない）
+  const work = useMemo(() => worksBySlug.get(normalizedSlug) || null, [normalizedSlug]);
 
   // ✅ 作品詳細に入った瞬間、必ず上へ（Lenis導入後の事故対策）
   useEffect(() => {
-    if (typeof window === "undefined") return;
     scrollToTopStable();
   }, [normalizedSlug]);
 
@@ -65,6 +71,8 @@ export default function WorkDetail() {
       window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches ?? false;
 
     const targets = Array.from(root.querySelectorAll("[data-reveal]"));
+
+    if (!targets.length) return;
 
     if (reduce || !("IntersectionObserver" in window)) {
       targets.forEach((el) => el.classList.add(styles.in));

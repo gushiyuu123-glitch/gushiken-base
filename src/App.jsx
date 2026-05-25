@@ -1,3 +1,4 @@
+// src/App.jsx
 import { useEffect, useRef } from "react";
 import {
   Routes,
@@ -80,7 +81,7 @@ import Layer0 from "./pages/Layer0";
 const SITE_NAME = "GUSHIKEN DESIGN";
 const BASE_TITLE = `${SITE_NAME}｜沖縄のWebデザイン・ホームページ制作`;
 const BASE_DESC =
-  "上質に見えて、読みやすい。沖縄のブライダル・宿泊・美容・EC向けに、世界観と導線を一貫して設計し、公開まで丁寧に制作します。";
+  "沖縄を拠点に、ブライダル・宿泊・美容・EC向けのWebデザイン／ホームページ制作を行っています。世界観と導線を一貫して設計し、公開まで丁寧に仕上げます。";
 
 const WORK_SEO = {
   "kou-ryui": {
@@ -118,6 +119,27 @@ const BRIDAL_FAQ = [
     a: "はい、全国対応しています。オンラインでのやり取りが中心です。",
   },
 ];
+
+// ✅ Seo.jsx と同じ正規化（canonical / JSON-LD の URL を一致させる）
+const stripTrailingSlash = (s = "") => String(s).replace(/\/+$/, "");
+const ensureLeadingSlash = (p = "/") =>
+  String(p).startsWith("/") ? String(p) : `/${p}`;
+
+/** / 以外の末尾スラッシュを落とす。?query/#hashも落とす。 */
+const normalizePathname = (p = "/") => {
+  const raw = ensureLeadingSlash(String(p || "/"));
+  const noHash = raw.split("#")[0];
+  const noQuery = noHash.split("?")[0];
+  const cleaned = noQuery === "/" ? "/" : stripTrailingSlash(noQuery);
+  return cleaned || "/";
+};
+
+function getOrigin() {
+  const env = import.meta.env.VITE_SITE_ORIGIN;
+  if (env) return stripTrailingSlash(env);
+  if (typeof window !== "undefined") return stripTrailingSlash(window.location.origin);
+  return "https://gushikendesign.com";
+}
 
 function humanizeSlug(slug = "") {
   const s = String(slug)
@@ -160,6 +182,10 @@ function buildFaqJsonLd(faq) {
 
 function SeoBridge() {
   const { pathname } = useLocation();
+
+  // ✅ canonical / jsonLd URL の基準（Seo.jsx と完全一致）
+  const origin = getOrigin();
+  const canonicalUrl = `${origin}${normalizePathname(pathname)}`;
 
   let title = BASE_TITLE;
   let description = BASE_DESC;
@@ -236,7 +262,7 @@ function SeoBridge() {
 
   const newsMatch = matchPath({ path: "/news/:id", end: true }, pathname);
   if (newsMatch?.params?.id) {
-    title = `NEWS｜${SITE_NAME}`;
+    title = `NEWS｜${BASE_TITLE}`;
     description = "更新記事。制作の背景や判断の文脈を短く残しています。";
     ogType = "article";
   }
@@ -247,14 +273,13 @@ function SeoBridge() {
     noindex = true;
   }
 
-  const origin =
-    import.meta.env.VITE_SITE_ORIGIN ||
-    (typeof window !== "undefined"
-      ? window.location.origin
-      : "https://gushikendesign.com");
-  const url = `${origin}${path}`;
+  // ✅ JSON-LD の URL も canonical と一致させる
+  const pageJsonLd = buildWebPageJsonLd({
+    url: canonicalUrl,
+    name: title,
+    description,
+  });
 
-  const pageJsonLd = buildWebPageJsonLd({ url, name: title, description });
   const jsonLd = attachBridalFaq
     ? [pageJsonLd, buildFaqJsonLd(BRIDAL_FAQ)]
     : pageJsonLd;
@@ -264,9 +289,13 @@ function SeoBridge() {
       title={title}
       description={description}
       path={path}
+      origin={origin}               // ✅ Seo.jsx の canonical基準を固定
+      canonicalUrl={canonicalUrl}   // ✅ canonicalを完全一致させる
       noindex={noindex}
       ogType={ogType}
       jsonLd={jsonLd}
+      titleMode="raw"               // ✅ ここで作った title をそのまま使う
+      imagePath="/ogp-v4.png"
     />
   );
 }
@@ -278,13 +307,13 @@ function SeoBridge() {
 function Layout() {
   return (
     <>
-      {/* 既存：残してOK（ただしLenis対応は下のApp側で確実に担保する） */}
       <ScrollManager />
 
       <SeoBridge />
       <NavGlobal />
 
-      <main id="page-root">
+      {/* ✅ main の入れ子を避ける（ページ側が main を持っても壊れない） */}
+      <div id="page-root" role="main">
         <Routes>
           <Route path="/" element={<Home />} />
 
@@ -355,7 +384,7 @@ function Layout() {
 
           <Route path="/layer0" element={<Layer0 />} />
         </Routes>
-      </main>
+      </div>
 
       <Footer />
     </>
@@ -364,8 +393,6 @@ function Layout() {
 
 /* ============================================================================
    App
-   - aq-fade observer only
-   - ✅ route change: scrollToTop (Lenis-aware)
 =========================================================================== */
 
 export default function App() {
@@ -378,10 +405,7 @@ export default function App() {
 
   // ✅ ルート遷移でトップに戻す（hash遷移は維持）
   useEffect(() => {
-    // #section のような遷移は潰さない
     if (location.hash) return;
-
-    // Lenisが有効ならLenisで、無効ならwindow.scrollToで確実に戻す
     window.__gd_lenis__?.scrollToTop?.();
   }, [location.pathname, location.search, location.hash]);
 

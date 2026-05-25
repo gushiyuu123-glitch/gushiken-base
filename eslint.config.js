@@ -5,16 +5,14 @@ import reactRefresh from "eslint-plugin-react-refresh";
 import { defineConfig, globalIgnores } from "eslint/config";
 
 export default defineConfig([
-  globalIgnores([
-    "dist",
-    "node_modules",
-    "public",
-    "coverage",
-  ]),
+  globalIgnores(["dist", "node_modules", "coverage"]),
 
+  // ─────────────────────────────
+  // App code (browser)
+  // ─────────────────────────────
   {
-    files: ["**/*.{js,jsx}"],
-    ignores: ["scripts/**/*.cjs"],
+    files: ["src/**/*.{js,jsx}", "**/*.{js,jsx}"],
+    ignores: ["scripts/**", "public/**"],
 
     extends: [
       js.configs.recommended,
@@ -27,7 +25,6 @@ export default defineConfig([
       sourceType: "module",
       globals: {
         ...globals.browser,
-        ...globals.node,
       },
       parserOptions: {
         ecmaFeatures: { jsx: true },
@@ -38,10 +35,26 @@ export default defineConfig([
       "no-unused-vars": [
         "error",
         {
-          varsIgnorePattern: "^[A-Z_]",
           argsIgnorePattern: "^_",
+          // varsIgnorePattern は外す方が安全（取り逃し減る）
+          // varsIgnorePattern: "^_", // ←必要ならこのくらいに絞る
         },
       ],
+    },
+  },
+
+  // ─────────────────────────────
+  // Node scripts (node)
+  // ─────────────────────────────
+  {
+    files: ["scripts/**/*.{js,cjs,mjs}", "*.config.{js,cjs,mjs}"],
+
+    languageOptions: {
+      ecmaVersion: "latest",
+      sourceType: "module",
+      globals: {
+        ...globals.node,
+      },
     },
   },
 ]);

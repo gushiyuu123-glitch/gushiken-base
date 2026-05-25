@@ -1,14 +1,17 @@
 // =====================================================
-//  GUSHIKEN DESIGN — Ultra-Stable Service Worker V4
+//  GUSHIKEN DESIGN — Ultra-Stable Service Worker V5
 //  PWA Safe / No White Screen / Fresh JS / Safe Cache
 // =====================================================
 
 const CACHE_PREFIX = "gushiken-design-";
-const CACHE_STAMP = "v20260524115155";
+const CACHE_STAMP = "v20260525172012"; // ← scripts/bump-sw-stamp.cjs が置換
 const CACHE_NAME = `${CACHE_PREFIX}${CACHE_STAMP}`;
 
+const OFFLINE_URL = "/offline.html";
+
+// “絶対に壊したくない静的”だけをプリキャッシュ
 const STATIC_ASSETS = [
-  "/offline.html",
+  OFFLINE_URL,
 
   // PWA / Browser
   "/site.webmanifest",
@@ -26,8 +29,8 @@ const STATIC_ASSETS = [
   "/android-chrome-512x512.png",
   "/mstile-150x150.png",
 
-  // OGP / SEO
-  "/ogp-v3.png",
+  // OGP / SEO（常に最新が欲しいが、オフライン時の最低保証にもなる）
+  "/ogp-v4.png",
   "/sitemap.xml",
   "/robots.txt",
 ];
@@ -37,15 +40,20 @@ const STATIC_ASSETS = [
 // ===========================
 self.addEventListener("install", (event) => {
   event.waitUntil(
-    caches.open(CACHE_NAME).then(async (cache) => {
+    (async () => {
+      const cache = await caches.open(CACHE_NAME);
+
+      // addAll は1つ失敗で全部落ちるので、1個ずつ握りつぶし
       await Promise.allSettled(
-        STATIC_ASSETS.map((asset) =>
-          cache.add(asset).catch((error) => {
-            console.warn(`[SW] Failed to cache: ${asset}`, error);
-          })
-        )
+        STATIC_ASSETS.map(async (asset) => {
+          try {
+            await cache.add(asset);
+          } catch (err) {
+            console.warn(`[SW] Failed to cache: ${asset}`, err);
+          }
+        })
       );
-    })
+    })()
   );
 
   self.skipWaiting();
@@ -67,6 +75,7 @@ self.addEventListener("activate", (event) => {
 
       await self.clients.claim();
 
+      // クライアントへ更新通知
       const clients = await self.clients.matchAll({
         type: "window",
         includeUncontrolled: true,
@@ -86,10 +95,7 @@ self.addEventListener("activate", (event) => {
 // Helpers
 // ===========================
 function isNavigationRequest(req) {
-  return (
-    req.mode === "navigate" ||
-    req.headers.get("accept")?.includes("text/html")
-  );
+  return req.mode === "navigate" || req.headers.get("accept")?.includes("text/html");
 }
 
 function isFreshAsset(req, url) {
@@ -119,81 +125,87 @@ function isStaticAsset(req, url) {
   );
 }
 
+async function cachePut(request, response) {
+  if (!response || response.status !== 200 || response.type !== "basic") return;
+  const cache = await caches.open(CACHE_NAME);
+  await cache.put(request, response.clone());
+}
+
+async function cacheMatch(request, ignoreSearch = false) {
+  return caches.match(request, ignoreSearch ? { ignoreSearch: true } : undefined);
+}
+
 // ===========================
 // Fetch
 // ===========================
 self.addEventListener("fetch", (event) => {
   const req = event.request;
 
-  // GET以外はキャッシュしない
+  // GET以外はSWで触らない
   if (req.method !== "GET") return;
 
   const url = new URL(req.url);
 
-  // microCMS / 外部API / 外部ドメインはService Worker対象外
-  if (url.origin !== location.origin) {
-    return;
-  }
+  // 外部ドメインは対象外（microCMS含む）
+  if (url.origin !== location.origin) return;
 
-  // HTMLは常にネット優先
-  // PWAで古いindex.htmlを掴んで白画面・古いJS参照になる事故を防ぐ
+  // 1) HTML：常にネット優先（古いindex.htmlを掴む事故を防ぐ）
   if (isNavigationRequest(req)) {
     event.respondWith(
-      fetch(req, { cache: "no-store" }).catch(() => caches.match("/offline.html"))
-    );
-    return;
-  }
-
-  // JS / CSS は Network First
-  // ホーム画面追加アプリで古いJSチャンクを掴む事故を減らす
-  if (isFreshAsset(req, url)) {
-    event.respondWith(
-      fetch(req, { cache: "no-store" })
-        .then((res) => {
-          if (!res || res.status !== 200 || res.type !== "basic") {
-            return res;
-          }
-
-          const clone = res.clone();
-
-          caches.open(CACHE_NAME).then((cache) => {
-            cache.put(req, clone);
-          });
-
-          return res;
-        })
-        .catch(() => caches.match(req))
-    );
-    return;
-  }
-
-  // 画像・フォント・faviconなどは Cache First
-  if (isStaticAsset(req, url)) {
-    event.respondWith(
-      caches.match(req).then((cached) => {
-        if (cached) return cached;
-
-        return fetch(req).then((res) => {
-          if (!res || res.status !== 200 || res.type !== "basic") {
-            return res;
-          }
-
-          const clone = res.clone();
-
-          caches.open(CACHE_NAME).then((cache) => {
-            cache.put(req, clone);
-          });
-
-          return res;
-        });
+      fetch(req, { cache: "no-store" }).catch(async () => {
+        const cached = await cacheMatch(OFFLINE_URL, true);
+        return cached || new Response("OFFLINE", { status: 503 });
       })
     );
     return;
   }
 
-  // その他は基本ネット優先
+  // 2) JS / CSS：Network First（古いチャンク事故を減らす）
+  if (isFreshAsset(req, url)) {
+    event.respondWith(
+      (async () => {
+        try {
+          const res = await fetch(req, { cache: "no-store" });
+          event.waitUntil(cachePut(req, res));
+          return res;
+        } catch (_) {
+          // 念のため ignoreSearch は false（ハッシュ名は一致させたい）
+          const cached = await cacheMatch(req, false);
+          if (cached) return cached;
+          throw _;
+        }
+      })()
+    );
+    return;
+  }
+
+  // 3) 画像/フォント/manifest等：Cache First（必要なら裏で補充）
+  if (isStaticAsset(req, url)) {
+    event.respondWith(
+      (async () => {
+        // query付きでも拾えるよう ignoreSearch:true（/site.webmanifest?x=... など）
+        const cached = await cacheMatch(req, true);
+        if (cached) return cached;
+
+        const res = await fetch(req);
+        event.waitUntil(cachePut(req, res));
+        return res;
+      })()
+    );
+    return;
+  }
+
+  // 4) その他：基本ネット優先
   event.respondWith(
-    fetch(req, { cache: "no-store" }).catch(() => caches.match(req))
+    (async () => {
+      try {
+        return await fetch(req, { cache: "no-store" });
+      } catch (_) {
+        // その他は一致優先。必要なら true にしてもいいが、今は安全寄りで false。
+        const cached = await cacheMatch(req, false);
+        return cached || new Response("OFFLINE", { status: 503 });
+      }
+    })()
   );
 });
 
@@ -201,9 +213,33 @@ self.addEventListener("fetch", (event) => {
 // Message
 // ===========================
 self.addEventListener("message", (event) => {
-  if (!event.data) return;
+  const data = event.data;
+  if (!data) return;
 
-  if (event.data.type === "SKIP_WAITING") {
+  if (data.type === "SKIP_WAITING") {
     self.skipWaiting();
+    return;
+  }
+
+  // デバッグ・緊急用
+  if (data.type === "CLEAR_CACHES") {
+    event.waitUntil(
+      (async () => {
+        const keys = await caches.keys();
+        await Promise.all(keys.filter((k) => k.startsWith(CACHE_PREFIX)).map((k) => caches.delete(k)));
+        const clients = await self.clients.matchAll({ type: "window", includeUncontrolled: true });
+        clients.forEach((c) => c.postMessage({ type: "CACHES_CLEARED" }));
+      })()
+    );
+    return;
+  }
+
+  if (data.type === "GET_VERSION") {
+    event.waitUntil(
+      (async () => {
+        const clients = await self.clients.matchAll({ type: "window", includeUncontrolled: true });
+        clients.forEach((c) => c.postMessage({ type: "SW_VERSION", version: CACHE_NAME }));
+      })()
+    );
   }
 });

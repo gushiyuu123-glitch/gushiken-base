@@ -13,14 +13,11 @@
   <meta name="format-detection" content="telephone=no, email=no, address=no" />
   <meta name="referrer" content="strict-origin-when-cross-origin" />
 
-  <!-- ✅ サイトが白基調なら light / 混在なら light dark（どっちでもOK） -->
+  <!-- UI -->
   <meta name="color-scheme" content="light dark" />
-
-  <!-- ✅ Theme color（白基調のベースに寄せる。必要なら好みで調整） -->
   <meta name="theme-color" content="#f7f4ee" />
   <meta name="msapplication-TileColor" content="#f7f4ee" />
-<meta property="og:image:width" content="1200" />
-<meta property="og:image:height" content="630" />
+
   <!-- Domain Verify (keep) -->
   <meta name="p:domain_verify" content="48dd0e90de53ad499404794fccf42239" />
   <meta name="google-site-verification" content="iG_ZrJCqMsY5q1LbjYgdRdGnKp4rr3RKKLk7D8HNZ1w" />
@@ -41,15 +38,19 @@
   <!-- Canonical（✅ JS非実行スクレイパー対策としてHTMLに固定で置く） -->
   <link rel="canonical" href="https://gushikendesign.com/" />
 
-  <!-- Minimal fallback title（SPAでdocument.titleを変えても、クローラーはこれを見ることが多い） -->
+  <!-- Title（fallback） -->
   <title>GUSHIKEN DESIGN｜沖縄のWebデザイン・ホームページ制作</title>
 
   <!-- ✅ Fallback SEO（JS非実行対策） -->
   <meta
     name="description"
-    content="沖縄のフリーランスWebデザイナー GUSHIKEN DESIGN。世界観設計からフロントエンド実装まで一気通貫で制作します。"
+    content="沖縄を拠点に、ブライダル・宿泊・美容・EC向けのWebデザイン／ホームページ制作を行っています。世界観と導線を一貫して設計し、公開まで丁寧に仕上げます。"
   />
-  <meta name="robots" content="index,follow,max-image-preview:large" />
+  <!-- ✅ Seo.jsx(本番) と同じ思想に寄せる -->
+  <meta
+    name="robots"
+    content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1"
+  />
 
   <!-- ✅ OGP（JS非実行対策：ここが本命） -->
   <meta property="og:site_name" content="GUSHIKEN DESIGN" />
@@ -59,25 +60,29 @@
   <meta property="og:title" content="GUSHIKEN DESIGN｜沖縄のWebデザイン・ホームページ制作" />
   <meta
     property="og:description"
-    content="沖縄を拠点に、世界観設計からフロントエンド実装まで一気通貫で制作します。"
+    content="沖縄を拠点に、ブライダル・宿泊・美容・EC向けのWebデザイン／ホームページ制作を行っています。世界観と導線を一貫して設計し、公開まで丁寧に仕上げます。"
   />
 
-  <!-- ✅ 重要：クエリ無しで安定させる（更新したい時はファイル名を ogp-v5.png に上げる） -->
+  <!-- ✅ 重要：クエリ無しで安定（更新したい時はファイル名を切る） -->
   <meta property="og:image" content="https://gushikendesign.com/ogp-v4.png" />
   <meta property="og:image:secure_url" content="https://gushikendesign.com/ogp-v4.png" />
   <meta property="og:image:type" content="image/png" />
   <meta property="og:image:alt" content="GUSHIKEN DESIGN" />
+  <!-- サイズは拾いが雑なスクレイパー対策で “image直後にも” 置く -->
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
 
   <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="GUSHIKEN DESIGN｜沖縄のWebデザイン・ホームページ制作" />
   <meta
     name="twitter:description"
-    content="沖縄を拠点に、世界観設計からフロントエンド実装まで一気通貫で制作します。"
+    content="沖縄を拠点に、ブライダル・宿泊・美容・EC向けのWebデザイン／ホームページ制作を行っています。世界観と導線を一貫して設計し、公開まで丁寧に仕上げます。"
   />
   <meta name="twitter:image" content="https://gushikendesign.com/ogp-v4.png" />
+  <meta name="twitter:url" content="https://gushikendesign.com/" />
 
-  <!-- FOUC prevention（白基調に寄せた初期背景） -->
+  <!-- FOUC prevention -->
   <style>
     :root{
       --boot-bg: #f7f4ee;
@@ -107,44 +112,44 @@
   </style>
 
   <!-- Google Analytics (GA4) - self exclude (secret + url scrub) -->
- <script>
-  (function () {
-    const KEY = "__gd_internal__";
-    const qs = new URLSearchParams(location.search);
-    const SECRET = "CHANGE_ME_TO_LONG_RANDOM";
+  <script>
+    (function () {
+      const KEY = "__gd_internal__";
+      const qs = new URLSearchParams(location.search);
+      const SECRET = "CHANGE_ME_TO_LONG_RANDOM";
 
-    const safeLS = {
-      get(k){ try { return localStorage.getItem(k); } catch { return null; } },
-      set(k,v){ try { localStorage.setItem(k,v); } catch {} },
-      del(k){ try { localStorage.removeItem(k); } catch {} },
-    };
+      const safeLS = {
+        get(k){ try { return localStorage.getItem(k); } catch { return null; } },
+        set(k,v){ try { localStorage.setItem(k,v); } catch {} },
+        del(k){ try { localStorage.removeItem(k); } catch {} },
+      };
 
-    if (qs.get("internal") === "1" && qs.get("k") === SECRET) safeLS.set(KEY, "1");
-    if (qs.get("internal") === "0") safeLS.del(KEY);
+      if (qs.get("internal") === "1" && qs.get("k") === SECRET) safeLS.set(KEY, "1");
+      if (qs.get("internal") === "0") safeLS.del(KEY);
 
-    if (qs.has("internal") || qs.has("k")) {
-      qs.delete("internal"); qs.delete("k");
-      const rest = qs.toString();
-      const clean = location.pathname + (rest ? `?${rest}` : "") + location.hash;
-      history.replaceState(null, "", clean);
-    }
+      if (qs.has("internal") || qs.has("k")) {
+        qs.delete("internal"); qs.delete("k");
+        const rest = qs.toString();
+        const clean = location.pathname + (rest ? `?${rest}` : "") + location.hash;
+        history.replaceState(null, "", clean);
+      }
 
-    window.dataLayer = window.dataLayer || [];
-    window.gtag = window.gtag || function(){ window.dataLayer.push(arguments); };
+      window.dataLayer = window.dataLayer || [];
+      window.gtag = window.gtag || function(){ window.dataLayer.push(arguments); };
 
-    if (safeLS.get(KEY) === "1") return;
+      if (safeLS.get(KEY) === "1") return;
 
-    const GA_ID = "G-NM83YP0V4Q";
-    if (!document.querySelector('script[src^="https://www.googletagmanager.com/gtag/js?id="]')) {
-      const s = document.createElement("script");
-      s.async = true;
-      s.src = "https://www.googletagmanager.com/gtag/js?id=" + GA_ID;
-      document.head.appendChild(s);
-    }
-    gtag("js", new Date());
-    gtag("config", GA_ID, { send_page_view: false });
-  })();
-</script>
+      const GA_ID = "G-NM83YP0V4Q";
+      if (!document.querySelector('script[src^="https://www.googletagmanager.com/gtag/js?id="]')) {
+        const s = document.createElement("script");
+        s.async = true;
+        s.src = "https://www.googletagmanager.com/gtag/js?id=" + GA_ID;
+        document.head.appendChild(s);
+      }
+      gtag("js", new Date());
+      gtag("config", GA_ID, { send_page_view: false });
+    })();
+  </script>
 
   <!-- JSON-LD (Organization only) -->
   <script type="application/ld+json">

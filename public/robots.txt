@@ -5,8 +5,8 @@
 User-agent: *
 Allow: /
 
-# Avoid crawling source maps / development-only files
+# Avoid crawling sourcemaps (if they exist)
 Disallow: /*.map$
-Disallow: /node_modules/
+Disallow: /assets/*.map$
 
 Sitemap: https://gushikendesign.com/sitemap.xml

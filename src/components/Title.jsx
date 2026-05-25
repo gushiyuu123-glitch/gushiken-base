@@ -1,10 +1,19 @@
 // src/components/Title.jsx
-import { useEffect } from "react";
+import { Helmet } from "react-helmet-async";
 
-export default function Title({ text }) {
-  useEffect(() => {
-    document.title = text;
-  }, [text]);
+const SITE_NAME = "GUSHIKEN DESIGN";
 
-  return null;
+export default function Title({ text, mode = "suffix" }) {
+  if (!text) return null;
+
+  const full =
+    mode === "raw" || String(text).includes(SITE_NAME)
+      ? text
+      : `${text} | ${SITE_NAME}`;
+
+  return (
+    <Helmet prioritizeSeoTags>
+      <title>{full}</title>
+    </Helmet>
+  );
 }

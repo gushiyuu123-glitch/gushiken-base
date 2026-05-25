@@ -6,26 +6,22 @@ const dotenv = require("dotenv");
 
 dotenv.config();
 
-const SITE_URL = "https://gushikendesign.com";
+const SITE_URL =
+  (process.env.SITE_URL || process.env.VITE_SITE_ORIGIN || "https://gushikendesign.com")
+    .replace(/\/+$/, "");
+
 const TODAY = new Date().toISOString().split("T")[0];
 
 // ✅ news を sitemap に入れる上限（デフォ: 50）
-const NEWS_SITEMAP_LIMIT = Number.parseInt(
-  process.env.SITEMAP_NEWS_LIMIT || "50",
-  10
-);
-const NEWS_LIMIT = Number.isFinite(NEWS_SITEMAP_LIMIT) && NEWS_SITEMAP_LIMIT > 0
-  ? NEWS_SITEMAP_LIMIT
-  : 50;
+const NEWS_SITEMAP_LIMIT = Number.parseInt(process.env.SITEMAP_NEWS_LIMIT || "50", 10);
+const NEWS_LIMIT =
+  Number.isFinite(NEWS_SITEMAP_LIMIT) && NEWS_SITEMAP_LIMIT > 0 ? NEWS_SITEMAP_LIMIT : 50;
 
 // microCMS env
 const SERVICE_DOMAIN =
-  process.env.MICROCMS_SERVICE_DOMAIN ||
-  process.env.VITE_MICROCMS_SERVICE_DOMAIN;
+  process.env.MICROCMS_SERVICE_DOMAIN || process.env.VITE_MICROCMS_SERVICE_DOMAIN;
 
-const API_KEY =
-  process.env.MICROCMS_API_KEY ||
-  process.env.VITE_MICROCMS_API_KEY;
+const API_KEY = process.env.MICROCMS_API_KEY || process.env.VITE_MICROCMS_API_KEY;
 
 // ---------------- utils ----------------
 function formatDate(dateString) {
@@ -46,7 +42,22 @@ function escapeXml(value) {
 
 function normalizePath(value) {
   if (!value) return "/";
-  return value.startsWith("/") ? value : `/${value}`;
+  const v = String(value);
+  return v.startsWith("/") ? v : `/${v}`;
+}
+
+function isValidDateLike(s) {
+  if (!s) return false;
+  const str = String(s);
+  if (str.includes("XX")) return false;
+  const d = new Date(str);
+  return !Number.isNaN(d.getTime());
+}
+
+function newerDate(a, b) {
+  const da = new Date(formatDate(a)).getTime();
+  const db = new Date(formatDate(b)).getTime();
+  return db > da ? b : a;
 }
 
 function createUrlXml({ loc, lastmod }) {
@@ -56,10 +67,30 @@ function createUrlXml({ loc, lastmod }) {
   </url>`;
 }
 
-// ✅ Room/Teaser/Intro は sitemap から除外（noindex 運用と整合）
+// ✅ Room/Teaser/Intro は sitemap から除外（noindex運用と整合）
+// 将来 kebab-case にしても拾えるように強化
 function isRoomLikeSlug(slug) {
   if (!slug) return false;
-  return /Room$/i.test(slug) || /Teaser$/i.test(slug) || /Intro$/i.test(slug);
+  const s = String(slug);
+  return (
+    /(?:^|[-_])room$/i.test(s) ||
+    /Room$/i.test(s) ||
+    /(?:^|[-_])teaser$/i.test(s) ||
+    /Teaser$/i.test(s) ||
+    /(?:^|[-_])intro$/i.test(s) ||
+    /Intro$/i.test(s)
+  );
+}
+
+function mergeUrl(map, { loc, lastmod }) {
+  const key = normalizePath(loc);
+  const prev = map.get(key);
+  if (!prev) {
+    map.set(key, { loc: key, lastmod });
+    return;
+  }
+  // ✅ 同じlocは lastmod を“新しい方”に寄せる
+  map.set(key, { loc: key, lastmod: newerDate(prev.lastmod, lastmod) });
 }
 
 // ---------------- fetch news (limited) ----------------
@@ -75,11 +106,9 @@ async function fetchLimitedNews() {
     timeout: 10000,
   });
 
-  // microCMS は 100 までが安全
   const pageSize = 100;
   let offset = 0;
 
-  // まず totalCount を知りたいので 1回目で取得
   const first = await client.get("/news", {
     params: {
       limit: Math.min(pageSize, NEWS_LIMIT),
@@ -119,28 +148,43 @@ async function fetchLimitedNews() {
   return all;
 }
 
-// ---------------- works from worksData ----------------
+// ---------------- works from worksIndex (preferred) ----------------
 async function getWorkPages() {
+  // ✅ worksIndex があれば重複排除済みの uniqueWorks を使う（最優先）
+  try {
+    const mod = await import("../src/data/worksIndex.js");
+    const uniqueWorks = Array.isArray(mod.uniqueWorks) ? mod.uniqueWorks : [];
+    return uniqueWorks
+      .filter((w) => w?.slug)
+      .filter((w) => !isRoomLikeSlug(w.slug))
+      .map((w) => ({
+        loc: `/works/${encodeURIComponent(String(w.slug))}`,
+        lastmod: isValidDateLike(w.updatedAt)
+          ? w.updatedAt
+          : isValidDateLike(w.createdAt)
+            ? w.createdAt
+            : TODAY,
+      }));
+  } catch (_) {
+    // fallback: worksData 直import（現状互換）
+  }
+
   try {
     const mod = await import("../src/data/worksData.js");
     const worksData = Array.isArray(mod.worksData) ? mod.worksData : [];
+    const items = worksData.flatMap((c) => (Array.isArray(c?.items) ? c.items : []));
 
-    const pages = worksData.flatMap((category) => {
-      const items = Array.isArray(category?.items) ? category.items : [];
-
-      return items
-        .filter((item) => item?.slug)
-        .filter((item) => !isRoomLikeSlug(item.slug)) // ✅ Room除外
-        .map((item) => ({
-          loc: `/works/${item.slug}`,
-          lastmod:
-            item.createdAt && !String(item.createdAt).includes("XX")
-              ? item.createdAt
-              : TODAY,
-        }));
-    });
-
-    return pages;
+    return items
+      .filter((w) => w?.slug)
+      .filter((w) => !isRoomLikeSlug(w.slug))
+      .map((w) => ({
+        loc: `/works/${encodeURIComponent(String(w.slug))}`,
+        lastmod: isValidDateLike(w.updatedAt)
+          ? w.updatedAt
+          : isValidDateLike(w.createdAt)
+            ? w.createdAt
+            : TODAY,
+      }));
   } catch (error) {
     console.warn("⚠️ worksData could not be imported. Work URLs will be skipped.");
     return [];
@@ -157,13 +201,15 @@ async function generateSitemap() {
       ? formatDate(newsItems[0].updatedAt || newsItems[0].publishedAt)
       : TODAY;
 
+  const latestWorkDate =
+    workPages.length > 0
+      ? workPages.reduce((acc, p) => newerDate(acc, p.lastmod), workPages[0].lastmod)
+      : TODAY;
+
   const staticPages = [
     { loc: "/", lastmod: TODAY },
-    { loc: "/works", lastmod: TODAY },
-
-    // ✅ ブライダル入口を sitemap に入れる
+    { loc: "/works", lastmod: latestWorkDate },
     { loc: "/okinawa-bridal-website", lastmod: TODAY },
-
     { loc: "/price", lastmod: TODAY },
     { loc: "/contact", lastmod: TODAY },
     { loc: "/news", lastmod: latestNewsDate },
@@ -176,16 +222,14 @@ async function generateSitemap() {
   const newsPages = newsItems
     .filter((item) => item?.id)
     .map((item) => ({
-      loc: `/news/${item.id}`,
+      loc: `/news/${encodeURIComponent(String(item.id))}`,
       lastmod: item.updatedAt || item.publishedAt || TODAY,
     }));
 
-  const allUrls = [...staticPages, ...workPages, ...newsPages];
-
-  // slug重複・PICK UP重複などを除去
-  const uniqueUrls = Array.from(
-    new Map(allUrls.map((item) => [normalizePath(item.loc), item])).values()
-  );
+  // ✅ “locごとにlastmod最大” で確定させる
+  const map = new Map();
+  [...staticPages, ...workPages, ...newsPages].forEach((u) => mergeUrl(map, u));
+  const uniqueUrls = Array.from(map.values());
 
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
