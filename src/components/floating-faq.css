@@ -5,6 +5,7 @@
    - hoverは (hover:hover) & (pointer:fine) のみ（タッチ誤爆ゼロ）
    - 回転/派手さを削って、像が整う方向へ
    - backdrop追加（特にSPで迷いゼロ）
+   - iOSフリーズ対策：gridアコーディオン廃止 / iOSだけブラー・慣性スクロール弱め
 ============================== */
 
 .floating-faq-wrap {
@@ -16,7 +17,10 @@
   font-family: inherit;
 }
 
-/* Backdrop */
+/* ==============================
+   Backdrop
+============================== */
+
 .floating-faq-backdrop{
   position: fixed;
   inset: 0;
@@ -218,6 +222,7 @@
   color: inherit;
   text-align: left;
   cursor: pointer;
+  touch-action: manipulation;
 }
 
 .floating-faq-question-text {
@@ -257,17 +262,34 @@
   transform: translate(-50%, -50%) rotate(0deg);
 }
 
+/* ==============================
+   Answer (iOSフリーズ回避)
+   - grid-template-rows は iOSで固まりやすいので廃止
+============================== */
+
 .floating-faq-answer-wrap {
-  display: grid;
-  grid-template-rows: 0fr;
-  transition: grid-template-rows 0.26s cubic-bezier(0.22, 1, 0.36, 1);
+  overflow: hidden;
+
+  max-height: 0;
+  opacity: 0;
+  transform: translate3d(0, -2px, 0);
+
+  transition:
+    max-height 0.32s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.20s ease,
+    transform 0.32s cubic-bezier(0.22, 1, 0.36, 1);
+
+  will-change: max-height, opacity, transform;
+  contain: layout paint;
 }
 
 .floating-faq-item.is-active .floating-faq-answer-wrap {
-  grid-template-rows: 1fr;
+  max-height: 900px; /* 余裕を持たせる */
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
 }
 
-.floating-faq-answer-inner { overflow: hidden; }
+.floating-faq-answer-inner { overflow: visible; }
 
 .floating-faq-answer {
   margin: 0;
@@ -478,6 +500,21 @@
 }
 
 /* ==============================
+   iOS Safari: フリーズ対策（ブラー + 慣性スクロールを弱める）
+============================== */
+
+@supports (-webkit-touch-callout: none) {
+  .floating-faq-panel {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+
+  .floating-faq-panel-inner {
+    -webkit-overflow-scrolling: auto; /* touch を切る */
+  }
+}
+
+/* ==============================
    Reduced Motion
 ============================== */
 
@@ -500,24 +537,8 @@
     background: rgba(0,0,0,0.14);
   }
 }
-/* ===== Backdrop (SP) ===== */
-.floating-faq-backdrop{
-  position: fixed;
-  inset: 0;
-  border: 0;
-  background: rgba(0,0,0,0);
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity .24s ease, background .24s ease;
-}
 
-.floating-faq-backdrop.is-open{
-  opacity: 1;
-  pointer-events: auto;
-  background: rgba(0,0,0,.26);
-}
-
-/* ===== SP: 左下に置く（SHAREと干渉しない） ===== */
+/* ✅ SP: 左下に置く（SHAREと干渉しない） */
 @media (max-width: 767px){
   .floating-faq-wrap[data-variant="sp"]{
     left: 18px;

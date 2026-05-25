@@ -1,10 +1,19 @@
-import React, { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
+// src/components/FloatingFAQ.jsx
+import React, {
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { Link, useLocation } from "react-router-dom";
 import { faqData } from "../data/faqData";
 import "./floating-faq.css";
 
 function getFocusable(container) {
   if (!container) return [];
+
   const selectors = [
     'a[href]:not([tabindex="-1"])',
     'button:not([disabled]):not([tabindex="-1"])',
@@ -13,19 +22,28 @@ function getFocusable(container) {
     'select:not([disabled]):not([tabindex="-1"])',
     '[tabindex]:not([tabindex="-1"])',
   ];
-  return Array.from(container.querySelectorAll(selectors.join(","))).filter((el) => {
-    if (el.closest("[inert]")) return false;
-    if (el.closest('[aria-hidden="true"]')) return false;
-    return el.getClientRects().length > 0;
-  });
+
+  return Array.from(container.querySelectorAll(selectors.join(","))).filter(
+    (el) => {
+      if (el.closest("[inert]")) return false;
+      if (el.closest('[aria-hidden="true"]')) return false;
+      return el.getClientRects().length > 0;
+    }
+  );
 }
 
 function restoreScrollInstant(scrollY, scrollX = 0) {
+  if (typeof window === "undefined") return;
   window.scrollTo({ top: scrollY, left: scrollX, behavior: "auto" });
 }
 
 function focusWithoutScroll(el) {
   if (!el || typeof el.focus !== "function") return;
+
+  if (typeof window === "undefined" || typeof document === "undefined") {
+    el.focus();
+    return;
+  }
 
   const x = window.scrollX || document.documentElement.scrollLeft || 0;
   const y = window.scrollY || document.documentElement.scrollTop || 0;
@@ -39,11 +57,18 @@ function focusWithoutScroll(el) {
 }
 
 function prefersReducedMotion() {
-  return window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches ?? false;
+  if (typeof window === "undefined") return false;
+  return (
+    window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches ?? false
+  );
 }
 
-export default function FloatingFAQSP({ showAfter = 220 }) {
-  const [isVisible, setIsVisible] = useState(false);
+function isCoarsePointer() {
+  if (typeof window === "undefined") return false;
+  return window.matchMedia?.("(pointer: coarse)")?.matches ?? false;
+}
+
+export default function FloatingFAQ() {
   const [isOpen, setIsOpen] = useState(false);
   const [activeIndex, setActiveIndex] = useState(null);
 
@@ -57,7 +82,11 @@ export default function FloatingFAQSP({ showAfter = 220 }) {
   const closePanel = useCallback((restoreFocus = false) => {
     setIsOpen(false);
     setActiveIndex(null);
-    if (restoreFocus) requestAnimationFrame(() => focusWithoutScroll(toggleButtonRef.current));
+
+    // ✅ タッチ端末はフォーカス移動しない（iOSでの固まり・ジャンプ防止）
+    if (restoreFocus && !isCoarsePointer()) {
+      requestAnimationFrame(() => focusWithoutScroll(toggleButtonRef.current));
+    }
   }, []);
 
   const openPanel = useCallback(() => {
@@ -69,81 +98,41 @@ export default function FloatingFAQSP({ showAfter = 220 }) {
     setActiveIndex((prev) => (prev === index ? null : index));
   }, []);
 
-  // ✅ SPだけ表示（念のため。Homeで分岐してても保険になる）
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-    const mq = window.matchMedia("(max-width: 767px)");
-    const apply = () => {
-      if (!mq.matches) {
-        setIsVisible(false);
-        setIsOpen(false);
-      }
-    };
-    apply();
-    mq.addEventListener?.("change", apply);
-    return () => mq.removeEventListener?.("change", apply);
-  }, []);
-
-  // route change → close
+  // ルート変更時に閉じる
   useEffect(() => {
     closePanel(false);
-  }, [location.pathname, location.search, closePanel]);
+  }, [location.pathname, closePanel]);
 
-  // ✅ show/hide（Lenis対応）
+  // ✅ Lenisがいる環境は、開いてる間だけ stop（背景スクロール事故防止）
   useEffect(() => {
-    if (typeof window === "undefined") return;
-
-    const update = (y) => setIsVisible((y ?? window.scrollY) > showAfter);
+    if (typeof window === "undefined") return undefined;
 
     const lenis = window.__gd_lenis__;
-    if (lenis && typeof lenis.on === "function") {
-      let raf = 0;
-      const onLenis = (e) => {
-        const y = typeof e === "number" ? e : e?.scroll ?? e?.animatedScroll ?? window.scrollY;
-        if (raf) cancelAnimationFrame(raf);
-        raf = requestAnimationFrame(() => update(y));
-      };
-
-      update(window.scrollY);
-      lenis.on("scroll", onLenis);
-      return () => {
-        if (raf) cancelAnimationFrame(raf);
-        try { lenis.off?.("scroll", onLenis); } catch {}
-      };
-    }
-
-    let ticking = false;
-    const onScroll = () => {
-      if (ticking) return;
-      ticking = true;
-      requestAnimationFrame(() => {
-        update(window.scrollY);
-        ticking = false;
-      });
-    };
-
-    update(window.scrollY);
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, [showAfter]);
-
-  // ✅ Lenis：open中は stop（背景スクロール事故防止）
-  useEffect(() => {
-    const lenis = window.__gd_lenis__;
-    if (!lenis) return;
+    if (!lenis) return undefined;
 
     if (isOpen) {
-      try { lenis.stop?.(); } catch {}
+      try {
+        lenis.stop?.();
+      } catch {}
       return () => {
-        try { lenis.start?.(); } catch {}
+        try {
+          lenis.start?.();
+        } catch {}
       };
     }
+
+    return undefined;
   }, [isOpen]);
 
-  // ✅ SP：open中は body fixed（iOS系の背景スクロール事故を殺す）
+  // ✅ スマホでFAQを開いた時、背景スクロールを固定する
   useLayoutEffect(() => {
-    if (!isOpen) return;
-    if (typeof document === "undefined") return;
+    if (!isOpen) return undefined;
+    if (typeof window === "undefined" || typeof document === "undefined") {
+      return undefined;
+    }
+
+    const isMobile = window.matchMedia("(max-width: 767px)").matches;
+    if (!isMobile) return undefined;
 
     const html = document.documentElement;
     const body = document.body;
@@ -151,19 +140,21 @@ export default function FloatingFAQSP({ showAfter = 220 }) {
     const scrollY = window.scrollY || html.scrollTop || 0;
     const scrollX = window.scrollX || html.scrollLeft || 0;
 
-    const prevHtmlOverflow = html.style.overflow;
-    const prevHtmlScrollBehavior = html.style.scrollBehavior;
+    const previousHtmlOverflow = html.style.overflow;
+    const previousHtmlScrollBehavior = html.style.scrollBehavior;
 
-    const prevBodyPosition = body.style.position;
-    const prevBodyTop = body.style.top;
-    const prevBodyLeft = body.style.left;
-    const prevBodyRight = body.style.right;
-    const prevBodyWidth = body.style.width;
-    const prevBodyOverflow = body.style.overflow;
-    const prevBodyScrollBehavior = body.style.scrollBehavior;
+    const previousBodyPosition = body.style.position;
+    const previousBodyTop = body.style.top;
+    const previousBodyLeft = body.style.left;
+    const previousBodyRight = body.style.right;
+    const previousBodyWidth = body.style.width;
+    const previousBodyOverflow = body.style.overflow;
+    const previousBodyScrollBehavior = body.style.scrollBehavior;
 
+    // 復帰時の“高速smooth戻り”を殺す
     html.style.scrollBehavior = "auto";
     body.style.scrollBehavior = "auto";
+
     html.style.overflow = "hidden";
 
     body.style.position = "fixed";
@@ -174,27 +165,30 @@ export default function FloatingFAQSP({ showAfter = 220 }) {
     body.style.overflow = "hidden";
 
     return () => {
-      html.style.overflow = prevHtmlOverflow;
+      html.style.scrollBehavior = "auto";
+      body.style.scrollBehavior = "auto";
 
-      body.style.position = prevBodyPosition;
-      body.style.top = prevBodyTop;
-      body.style.left = prevBodyLeft;
-      body.style.right = prevBodyRight;
-      body.style.width = prevBodyWidth;
-      body.style.overflow = prevBodyOverflow;
+      html.style.overflow = previousHtmlOverflow;
+
+      body.style.position = previousBodyPosition;
+      body.style.top = previousBodyTop;
+      body.style.left = previousBodyLeft;
+      body.style.right = previousBodyRight;
+      body.style.width = previousBodyWidth;
+      body.style.overflow = previousBodyOverflow;
 
       restoreScrollInstant(scrollY, scrollX);
 
       requestAnimationFrame(() => {
-        html.style.scrollBehavior = prevHtmlScrollBehavior;
-        body.style.scrollBehavior = prevBodyScrollBehavior;
+        html.style.scrollBehavior = previousHtmlScrollBehavior;
+        body.style.scrollBehavior = previousBodyScrollBehavior;
       });
     };
   }, [isOpen]);
 
-  // outside click
+  // 外側クリックで閉じる（バックドロップでも閉じる）
   useEffect(() => {
-    if (!isOpen) return;
+    if (!isOpen) return undefined;
 
     const handler = (event) => {
       const wrap = wrapRef.current;
@@ -203,36 +197,42 @@ export default function FloatingFAQSP({ showAfter = 220 }) {
     };
 
     document.addEventListener("pointerdown", handler, { capture: true });
-    return () => document.removeEventListener("pointerdown", handler, { capture: true });
+    return () => {
+      document.removeEventListener("pointerdown", handler, { capture: true });
+    };
   }, [isOpen, closePanel]);
 
-  // esc
+  // Escで閉じる
   useEffect(() => {
-    if (!isOpen) return;
+    if (!isOpen) return undefined;
 
-    const onKeyDown = (event) => {
+    const handleKeyDown = (event) => {
       if (event.key !== "Escape") return;
       event.preventDefault();
       closePanel(true);
     };
 
-    window.addEventListener("keydown", onKeyDown);
-    return () => window.removeEventListener("keydown", onKeyDown);
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
   }, [isOpen, closePanel]);
 
-  // focus first
+  // ✅ 開いたら最初の質問へ（タッチ端末はやらない）
   useEffect(() => {
-    if (!isOpen) return;
-    const raf = requestAnimationFrame(() => focusWithoutScroll(firstQuestionRef.current));
+    if (!isOpen) return undefined;
+    if (isCoarsePointer()) return undefined;
+
+    const raf = requestAnimationFrame(() => {
+      focusWithoutScroll(firstQuestionRef.current);
+    });
     return () => cancelAnimationFrame(raf);
   }, [isOpen]);
 
-  // focus trap
+  // フォーカストラップ（キーボード用）
   useEffect(() => {
-    if (!isOpen) return;
+    if (!isOpen) return undefined;
 
     const panel = panelRef.current;
-    if (!panel) return;
+    if (!panel) return undefined;
 
     const onKeyDown = (event) => {
       if (event.key !== "Tab") return;
@@ -265,17 +265,13 @@ export default function FloatingFAQSP({ showAfter = 220 }) {
     };
   }, [isOpen]);
 
-  // 表示されてない時は描画しない（余計なDOMを残さない）
-  if (!isVisible) return null;
-
   return (
     <div
       ref={wrapRef}
       className="floating-faq-wrap"
-      data-variant="sp"
       data-open={isOpen ? "true" : "false"}
     >
-      {/* Backdrop（CSSで全画面化。タップで閉じる） */}
+      {/* ✅ Backdrop（モバイル中心に効かせる / クリックで閉じる） */}
       <button
         type="button"
         className={`floating-faq-backdrop ${isOpen ? "is-open" : ""}`}
@@ -301,7 +297,9 @@ export default function FloatingFAQSP({ showAfter = 220 }) {
                 <p id="floating-faq-title" className="floating-faq-title">
                   よくあるご質問
                 </p>
-                <p className="floating-faq-subtitle">ご依頼前の不安を、整理します。</p>
+                <p className="floating-faq-subtitle">
+                  ご依頼前の不安を、整理します。
+                </p>
               </div>
 
               <button
@@ -335,7 +333,9 @@ export default function FloatingFAQSP({ showAfter = 220 }) {
                     aria-controls={`faq-answer-${index}`}
                     id={`faq-question-${index}`}
                   >
-                    <span className="floating-faq-question-text">{item.question}</span>
+                    <span className="floating-faq-question-text">
+                      {item.question}
+                    </span>
 
                     <span className="floating-faq-icon" aria-hidden="true">
                       <span />
@@ -363,7 +363,11 @@ export default function FloatingFAQSP({ showAfter = 220 }) {
               掲載していない内容は、お問い合わせフォームよりご相談ください。
             </p>
 
-            <Link to="/contact" className="floating-faq-link" onClick={() => closePanel(false)}>
+            <Link
+              to="/contact"
+              className="floating-faq-link"
+              onClick={() => closePanel(false)}
+            >
               <span>お問い合わせへ</span>
               <span aria-hidden="true">→</span>
             </Link>
@@ -371,7 +375,6 @@ export default function FloatingFAQSP({ showAfter = 220 }) {
         </div>
       </div>
 
-      {/* Toggle（SPは左下固定。SHAREと干渉しない） */}
       <button
         ref={toggleButtonRef}
         type="button"
@@ -383,10 +386,20 @@ export default function FloatingFAQSP({ showAfter = 220 }) {
         aria-label={isOpen ? "FAQを閉じる" : "FAQを開く"}
       >
         <span className="floating-faq-toggle-icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24" className="floating-faq-toggle-svg" fill="none">
+          <svg
+            viewBox="0 0 24 24"
+            className="floating-faq-toggle-svg"
+            fill="none"
+          >
             <circle cx="12" cy="12" r="8.5" />
             <path d="M9.9 9.2a2.35 2.35 0 0 1 4.2 1.45c0 1.55-1.6 2.02-2.1 2.75-.22.32-.28.62-.28 1.1" />
-            <circle cx="12" cy="17.1" r="0.7" fill="currentColor" stroke="none" />
+            <circle
+              cx="12"
+              cy="17.1"
+              r="0.7"
+              fill="currentColor"
+              stroke="none"
+            />
           </svg>
         </span>
 
