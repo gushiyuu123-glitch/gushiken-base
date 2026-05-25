@@ -25,7 +25,7 @@ const WORKS = [
     tag: "PICK UP / WEB",
     title: "Vow in Light",
     sub: "Wedding / Okinawa",
-    img: "/works/vow-in-light-entryhero.webp",
+    img: "/works/vow-in-light-works1.webp",
     to: "/works/vow-in-light",
     href: "https://vow-in-light.vercel.app/",
     alt: "制作事例：Vow in Light（Wedding / Okinawa）",
@@ -36,7 +36,7 @@ const WORKS = [
     tag: "PICK UP / BRAND",
     title: "UMIKAJI",
     sub: "Awamori Brand / Okinawa",
-    img: "/works/umikaji-pc2.webp",
+    img: "/works/umikaji-works.webp",
     to: "/works/UmikajiRoom", // ✅ ROOMへ修正
     href: "https://umikaji-awamori.vercel.app/",
     alt: "制作事例：UMIKAJI（Awamori Brand / Okinawa）",
