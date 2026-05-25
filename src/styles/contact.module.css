@@ -1,77 +1,92 @@
 /* ==========================================================
-   Contact Page — GUSHIKEN DESIGN OS
-   Request Room / Black Frame / Champagne Gold × Silver Line
+   Contact Page — Paper / Ink (NO black gradient)
+   - Remove dark top gradient
+   - Make header texts ALL black ink
+   Scope: this page only via body.is-contact + CSS Module
 ========================================================== */
 
-.contactSection {
+/* ✅ index.css の膜/トーン副作用を“このページだけ”無効化 */
+:global(body.is-contact::after){
+  opacity: 0 !important;
+  filter: none !important;
+}
+:global(body.is-contact){
+  background: #f3efe7;
+}
+
+/* ===============================
+   ROOT
+================================ */
+.contactSection{
+  /* tokens */
+  --ct-gold: #d9b98a;
+  --ct-silver: #dce2eb;
+
+  --ct-paper: #f3efe7;
+  --ct-paper2: #f1eadf;
+
+  /* ✅ INK（黒） */
+  --ct-ink: rgba(11,11,11,.92);
+  --ct-ink-soft: rgba(11,11,11,.72);
+  --ct-ink-dim: rgba(11,11,11,.56);
+
+  --ct-border-ink: rgba(11,11,11,.12);
+  --ct-border-ink2: rgba(11,11,11,.08);
+
+  --ct-ease: var(--ease-silent, cubic-bezier(.22,.56,.18,1));
+
   position: relative;
   overflow: hidden;
+  isolation: isolate;
 
   min-height: 100svh;
   padding: 112px 0 128px;
 
+  /* ✅ 紙（黒グラデ無し） */
   background:
-    radial-gradient(
-      circle at 16% 0%,
-      rgba(201, 177, 138, 0.034),
-      transparent 30%
-    ),
-    linear-gradient(
-      180deg,
-      #0a0a0a 0%,
-      var(--main, #0b0b0b) 28%,
-      #090909 68%,
-      #0a0a0a 100%
-    );
-
-  color: rgba(255, 255, 255, 0.92);
+    radial-gradient(900px 520px at 66% 18%, rgba(0,0,0,0.028), transparent 70%),
+    linear-gradient(180deg, var(--ct-paper) 0%, var(--ct-paper2) 72%, var(--ct-paper) 100%);
+  color: var(--ct-ink);
 
   opacity: 0;
   transform: translate3d(0, 18px, 0);
-
   transition:
-    opacity 1.05s var(--ease-silent, cubic-bezier(.22,.56,.18,1)),
-    transform 1.05s var(--ease-silent, cubic-bezier(.22,.56,.18,1));
+    opacity 1.02s var(--ct-ease),
+    transform 1.02s var(--ct-ease);
+
+  -webkit-font-smoothing: antialiased;
+  text-rendering: geometricPrecision;
 }
 
-.contactSection::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
+/* ✅ 黒いグラデは “完全撤去” */
+.contactSection::before{
+  content: none !important;
+}
 
+/* 薄い膜（紙への馴染み）※暗転しない */
+.contactSection::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
   background:
-    linear-gradient(
-      180deg,
-      rgba(255, 255, 255, 0.014) 0%,
-      transparent 18%,
-      transparent 82%,
-      rgba(255, 255, 255, 0.01) 100%
-    );
-
-  opacity: 0.9;
+    linear-gradient(180deg,
+      rgba(255,255,255,.18) 0%,
+      transparent 22%,
+      transparent 78%,
+      rgba(0,0,0,.035) 100%);
+  opacity: .55;
 }
 
-.contactSection::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-
-  background-image: radial-gradient(
-    rgba(255, 255, 255, 0.14) 0.42px,
-    transparent 0.42px
-  );
-  background-size: 4px 4px;
-  opacity: 0.016;
+.show{
+  opacity: 1;
+  transform: translate3d(0,0,0);
 }
 
-.show {
-  opacity: 1 !important;
-  transform: translate3d(0, 0, 0) !important;
-}
-
-.inner {
+/* ===============================
+   LAYOUT FRAME
+================================ */
+.inner{
   position: relative;
   z-index: 1;
 
@@ -79,7 +94,7 @@
   margin: 0 auto;
 }
 
-.sideLine {
+.sideLine{
   position: absolute;
   left: 0;
   top: 2.2rem;
@@ -89,38 +104,28 @@
 
   background: linear-gradient(
     to bottom,
-    rgba(201, 177, 138, 0.38),
-    rgba(220, 226, 235, 0.1),
-    rgba(255, 255, 255, 0.05)
+    rgba(217, 185, 138, 0.52),
+    rgba(11, 11, 11, 0.22),
+    rgba(11, 11, 11, 0.08)
   );
 
   pointer-events: none;
-  opacity: 0.84;
+  opacity: 0.92;
 }
 
 /* ===============================
-   HEADER
+   HEADER (ALL INK)
 ================================ */
-.header {
+.header{
   position: relative;
-
   padding-left: 1rem;
   margin-bottom: 4rem;
+
+  /* ✅ ここから上も全部“黒” */
+  color: var(--ct-ink);
 }
 
-.svgTitle {
-  max-width: 100%;
-}
-
-.svgTitle :global(.section-svg) {
-  width: min(100%, 840px);
-}
-
-.svgTitle :global(.section-svg-text) {
-  font-size: 122px;
-}
-
-.hiddenHeading {
+.hiddenHeading{
   position: absolute;
   width: 1px;
   height: 1px;
@@ -129,382 +134,395 @@
   white-space: nowrap;
 }
 
-.sectionTitle {
-  margin: 1.05rem 0 0;
+/* SVG title instance theme (this page only) */
+.svgTitle{
+  max-width: 100%;
+}
 
-  color: rgba(255, 255, 255, 0.42);
+/* サイズは維持 */
+.svgTitle :global(.section-svg){
+  width: min(100%, 840px);
+}
+.svgTitle :global(.section-svg-text){
+  font-size: 122px;
+}
+
+/* ✅ “CONTACT / REQUEST” → 黒 */
+.svgTitle :global(.section-svg-kicker){
+  color: var(--ct-ink-dim);
+}
+
+/* ✅ “CONTACT” 本体 → 黒 */
+.svgTitle :global(.section-svg-text),
+.svgTitle :global(.section-svg-char){
+  fill: var(--ct-ink);
+}
+
+/* ✅ 下線：黒インク＋金気配（文字は黒のまま） */
+.svgTitle :global(.section-svg-line){
+  background: linear-gradient(
+    90deg,
+    rgba(217,185,138,.44),
+    rgba(11,11,11,.16),
+    transparent
+  );
+}
+
+/* 念のため：blend/filter事故を殺す */
+.svgTitle :global(.section-svg){
+  mix-blend-mode: normal;
+  filter: none;
+}
+
+.sectionTitle{
+  margin: 1.05rem 0 0;
+  color: var(--ct-ink-dim);
   font-size: 0.82rem;
   line-height: 1;
   letter-spacing: 0.14em;
 }
 
-.lead {
+/* ✅ リードも全部黒 */
+.lead{
   max-width: 720px;
   margin: 2.2rem 0 0;
 
-  color: rgba(255, 255, 255, 0.62);
-  font-size: 0.96rem;
-  line-height: 2.08;
-  letter-spacing: 0.04em;
+  font-size: 1.02rem;
+  line-height: 2.05;
+  color: var(--ct-ink-soft);
+}
+.lead span{
+  color: var(--ct-ink);
 }
 
-.lead span {
-  color: rgba(255, 255, 255, 0.92);
+/* “WORKS” は文字黒のまま、下線だけ金（主張は軽く） */
+.inlineLink{
+  color: var(--ct-ink);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(217,185,138,.34);
+  padding-bottom: 2px;
+}
+.inlineLink:hover{
+  border-bottom-color: rgba(217,185,138,.58);
 }
 
 /* ===============================
-   LAYOUT
+   BODY (PAPER)
 ================================ */
-.layout {
+.layout{
   display: grid;
-  grid-template-columns: 0.78fr 1.22fr;
-  gap: 1.2rem;
-
+  grid-template-columns: 0.82fr 1.18fr;
+  gap: 1.35rem;
   padding-left: 1rem;
 }
 
-.guidePanel,
-.formPanel {
+/* ===== GUIDE PANEL ===== */
+.guidePanel{
+  position: relative;
+  align-self: start;
+  padding: 1.45rem 1.25rem;
+
+  color: var(--ct-ink);
+  background:
+    radial-gradient(520px 280px at 18% 0%, rgba(217,185,138,.14), transparent 62%),
+    linear-gradient(180deg, rgba(255,255,255,.62) 0%, rgba(255,255,255,.44) 100%);
+
+  border: 1px solid var(--ct-border-ink);
+  border-top-color: rgba(217,185,138,.44);
+  box-shadow:
+    0 18px 46px rgba(0,0,0,.12),
+    inset 0 1px 0 rgba(255,255,255,.52);
+}
+
+.panelLabel{
+  margin: 0 0 0.85rem;
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  color: var(--ct-ink-dim);
+}
+
+.starterList{
+  display: grid;
+  gap: 0.66rem;
+}
+
+.starterItem{
+  display: grid;
+  grid-template-columns: 44px 1fr;
+  gap: 0.65rem;
+  align-items: start;
+
+  padding: 0.6rem 0.65rem;
+  border: 1px solid var(--ct-border-ink2);
+  background: rgba(255,255,255,.56);
+}
+
+.starterItem span{
+  font-variant-numeric: tabular-nums;
+  font-size: 0.78rem;
+  letter-spacing: 0.18em;
+  color: rgba(217,185,138,.92);
+}
+.starterItem p{
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.8;
+  color: var(--ct-ink);
+}
+
+.flowBlock{
+  margin-top: 1.4rem;
+  padding-top: 1.1rem;
+  border-top: 1px solid var(--ct-border-ink2);
+}
+
+.flowList{
+  display: grid;
+  gap: 0.85rem;
+}
+
+.flowItem{
+  display: grid;
+  grid-template-columns: 42px 1fr;
+  gap: 0.75rem;
+  align-items: start;
+}
+
+.flowNum{
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 42px;
+  height: 42px;
+
+  border: 1px solid rgba(217,185,138,.42);
+  color: rgba(217,185,138,.95);
+  font-size: 0.78rem;
+  letter-spacing: 0.18em;
+  background: rgba(255,255,255,.56);
+}
+
+.flowTitle{
+  margin: 0;
+  font-size: 0.98rem;
+  letter-spacing: 0.06em;
+  color: var(--ct-ink);
+}
+.flowText{
+  margin: 0.3rem 0 0;
+  font-size: 0.92rem;
+  line-height: 1.8;
+  color: var(--ct-ink-soft);
+}
+
+/* ===== FORM PANEL ===== */
+.formPanel{
   position: relative;
   overflow: hidden;
 
-  border: 1px solid rgba(255, 255, 255, 0.075);
-  border-top-color: rgba(201, 177, 138, 0.16);
-  border-radius: 2px;
+  padding: 1.45rem 1.35rem;
 
+  color: var(--ct-ink);
   background:
-    radial-gradient(
-      circle at 16% 0%,
-      rgba(201, 177, 138, 0.04),
-      transparent 36%
-    ),
-    rgba(255, 255, 255, 0.012);
+    radial-gradient(520px 280px at 14% 0%, rgba(217,185,138,.10), transparent 62%),
+    linear-gradient(180deg, rgba(255,255,255,.76) 0%, rgba(255,255,255,.62) 100%);
+
+  border: 1px solid var(--ct-border-ink);
+  border-top-color: rgba(217,185,138,.44);
 
   box-shadow:
-    0 0 0 0.5px rgba(201, 177, 138, 0.025),
-    0 18px 48px rgba(0, 0, 0, 0.22);
+    0 18px 46px rgba(0,0,0,.16),
+    inset 0 1px 0 rgba(255,255,255,.72);
 }
 
-.guidePanel::before,
-.formPanel::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-
-  background-image: radial-gradient(
-    rgba(255, 255, 255, 0.13) 0.42px,
-    transparent 0.42px
-  );
-  background-size: 4px 4px;
-  opacity: 0.014;
-}
-
-.guidePanel {
-  padding: 1.45rem 1.25rem;
-  align-self: start;
-}
-
-.formPanel {
-  display: flex;
-  flex-direction: column;
-  gap: 1.35rem;
-
-  padding: 1.55rem;
-}
-
-/* ===============================
-   GUIDE
-================================ */
-.panelLabel {
-  position: relative;
-  z-index: 1;
-
-  margin: 0 0 1.15rem;
-
-  color: rgba(201, 177, 138, 0.56);
-  font-size: 0.66rem;
-  line-height: 1;
-  letter-spacing: 0.24em;
-  text-transform: uppercase;
-}
-
-.starterList {
-  position: relative;
-  z-index: 1;
-
-  display: grid;
-  gap: 0;
-  margin-bottom: 2rem;
-
-  border-top: 1px solid rgba(255, 255, 255, 0.055);
-}
-
-.starterItem {
-  display: grid;
-  grid-template-columns: 2.2rem 1fr;
-  gap: 0.75rem;
-  align-items: center;
-
-  min-height: 52px;
-
-  border-bottom: 1px solid rgba(255, 255, 255, 0.055);
-}
-
-.starterItem span {
-  color: rgba(201, 177, 138, 0.38);
-  font-family: "Cormorant Garamond", Georgia, serif;
-  font-size: 1.05rem;
-  line-height: 1;
-}
-
-.starterItem p {
-  margin: 0;
-
-  color: rgba(255, 255, 255, 0.52);
-  font-size: 0.76rem;
-  line-height: 1.75;
-  letter-spacing: 0.06em;
-}
-
-.flowBlock {
-  position: relative;
-  z-index: 1;
-}
-
-.flowList {
-  display: grid;
-  gap: 1rem;
-}
-
-.flowItem {
-  display: grid;
-  grid-template-columns: 2.2rem 1fr;
-  gap: 0.75rem;
-}
-
-.flowNum {
-  color: rgba(255, 255, 255, 0.14);
-  font-family: "Cormorant Garamond", Georgia, serif;
-  font-size: 1.15rem;
-  line-height: 1.1;
-}
-
-.flowTitle {
-  margin: 0 0 0.25rem;
-
-  color: rgba(255, 255, 255, 0.74);
-  font-size: 0.78rem;
-  line-height: 1.5;
-  letter-spacing: 0.08em;
-}
-
-.flowText {
-  margin: 0;
-
-  color: rgba(255, 255, 255, 0.34);
-  font-size: 0.72rem;
-  line-height: 1.75;
-  letter-spacing: 0.05em;
-}
-
-/* ===============================
-   HONEYPOT
-================================ */
-.hp {
+.hp{
   position: absolute;
   left: -9999px;
-  top: auto;
-
   width: 1px;
   height: 1px;
   overflow: hidden;
 }
 
-/* ===============================
-   FORM
-================================ */
-.formGrid {
+/* grid */
+.formGrid{
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 1.1rem;
+  gap: 1.15rem;
 }
 
-.field {
-  position: relative;
-  z-index: 1;
-
-  display: flex;
-  flex-direction: column;
-  gap: 0.58rem;
+/* field */
+.field{
+  margin-top: 1.05rem;
+}
+.field:first-child{
+  margin-top: 0;
 }
 
-.label {
-  color: rgba(255, 255, 255, 0.52);
-  font-size: 0.76rem;
-  line-height: 1.5;
-  letter-spacing: 0.11em;
+.label{
+  display: block;
+  margin: 0 0 0.55rem;
+
+  font-size: 0.82rem;
+  letter-spacing: 0.14em;
+  color: var(--ct-ink-dim);
 }
 
-.req {
-  color: rgba(201, 177, 138, 0.76);
+.req{
+  color: rgba(201, 177, 138, 0.95);
+}
+
+.hint{
+  margin-top: -2px;
+  margin-bottom: 8px;
+  font-size: 13px;
+  opacity: 0.78;
+  color: var(--ct-ink-soft);
 }
 
 .input,
 .textarea,
-.select {
+.select{
   width: 100%;
 
-  border: 1px solid rgba(255, 255, 255, 0.085);
-  border-top-color: rgba(220, 226, 235, 0.12);
+  border: 1px solid rgba(11,11,11,.14);
+  border-top-color: rgba(11,11,11,.18);
+
+  background: rgba(255,255,255,.88);
+  color: var(--ct-ink);
+
   border-radius: 2px;
 
-  background:
-    linear-gradient(
-      180deg,
-      rgba(255, 255, 255, 0.018),
-      rgba(255, 255, 255, 0.008)
-    );
-
-  color: rgba(255, 255, 255, 0.9);
-  font: inherit;
-  font-size: 0.9rem;
-  line-height: 1.7;
-  letter-spacing: 0.04em;
-
   outline: none;
-  box-sizing: border-box;
+  box-shadow: none;
 
   transition:
-    border-color 0.28s ease,
-    background 0.28s ease,
-    box-shadow 0.28s ease;
+    border-color 260ms ease,
+    background 260ms ease,
+    box-shadow 260ms ease;
 }
 
 .input,
-.textarea {
+.textarea{
   padding: 0.86rem 0.95rem;
 }
 
-.textarea {
+.textarea{
   min-height: 164px;
   resize: vertical;
 }
 
-.selectWrap {
+.selectWrap{
   position: relative;
 }
-
-.select {
-  padding: 0.86rem 2.35rem 0.86rem 0.95rem;
-
+.select{
   appearance: none;
-  -webkit-appearance: none;
-
-  cursor: pointer;
+  padding-right: 2.2rem;
+  padding-left: 0.95rem;
+  padding-top: 0.86rem;
+  padding-bottom: 0.86rem;
 }
 
-.select option {
-  background: #0f0f0f;
-  color: rgba(255, 255, 255, 0.92);
-}
-
-.selectArrow {
+.selectArrow{
   position: absolute;
-  right: 1rem;
+  right: 0.8rem;
   top: 50%;
+  transform: translateY(-45%) rotate(45deg);
 
   width: 7px;
   height: 7px;
 
-  border-right: 1px solid rgba(201, 177, 138, 0.72);
-  border-bottom: 1px solid rgba(201, 177, 138, 0.72);
-
-  transform: translateY(-64%) rotate(45deg);
+  border-right: 1px solid rgba(11,11,11,.58);
+  border-bottom: 1px solid rgba(11,11,11,.58);
   pointer-events: none;
+  opacity: 0.66;
 }
 
 .input::placeholder,
-.textarea::placeholder {
-  color: rgba(255, 255, 255, 0.26);
+.textarea::placeholder{
+  color: rgba(11,11,11,.46);
 }
 
 .input:hover,
 .textarea:hover,
-.select:hover {
-  border-color: rgba(255, 255, 255, 0.14);
+.select:hover{
+  border-color: rgba(11,11,11,.26);
+  background: rgba(255,255,255,.94);
 }
 
 .input:focus,
 .textarea:focus,
-.select:focus {
-  border-color: rgba(201, 177, 138, 0.42);
-  background: rgba(201, 177, 138, 0.025);
-  box-shadow:
-    0 0 0 3px rgba(201, 177, 138, 0.055),
-    inset 0 1px 0 rgba(255, 255, 255, 0.02);
+.select:focus{
+  border-color: rgba(217,185,138,.72);
+  background: rgba(255,255,255,.98);
+  box-shadow: 0 0 0 3px rgba(217,185,138,.16);
 }
 
 .input[aria-invalid="true"],
 .textarea[aria-invalid="true"],
-.select[aria-invalid="true"] {
-  border-color: rgba(255, 140, 130, 0.42);
+.select[aria-invalid="true"]{
+  border-color: rgba(173, 50, 50, 0.55);
+  box-shadow: 0 0 0 3px rgba(173, 50, 50, 0.10);
 }
 
-.fieldError {
-  margin: 0;
-
-  color: rgba(255, 150, 140, 0.84);
-  font-size: 0.72rem;
+.fieldError{
+  margin: 0.55rem 0 0;
+  font-size: 0.86rem;
   line-height: 1.6;
-  letter-spacing: 0.04em;
+  color: rgba(173, 50, 50, 0.92);
 }
 
-/* ===============================
-   NOTES
-================================ */
-.notes {
-  position: relative;
-  z-index: 1;
+/* works link (in label) */
+.worksLink{
+  color: rgba(11,11,11,.84);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(217,185,138,.28);
+  padding-bottom: 1px;
+}
+.worksLink:hover{
+  border-bottom-color: rgba(217,185,138,.52);
+}
+
+/* notes */
+.notes{
+  margin: 1.2rem 0 0;
+  padding: 0;
+  list-style: none;
 
   display: grid;
-  gap: 0.48rem;
+  gap: 0.55rem;
 
-  margin: 0;
-  padding: 0 0 0 1.05rem;
+  border-top: 1px solid rgba(11,11,11,.10);
+  padding-top: 1.05rem;
 
-  border-left: 1px solid rgba(220, 226, 235, 0.14);
-  list-style: none;
+  color: var(--ct-ink-soft);
+  font-size: 0.92rem;
+  line-height: 1.85;
 }
-
-.notes li {
-  color: rgba(255, 255, 255, 0.38);
-  font-size: 0.76rem;
-  line-height: 1.82;
-  letter-spacing: 0.045em;
-}
-
-.notes li::before {
-  content: "※ ";
-  color: rgba(220, 226, 235, 0.36);
-}
-
-/* ===============================
-   CTA
-================================ */
-.cta {
+.notes li{
   position: relative;
-  z-index: 1;
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1.15rem;
-
-  padding-top: 0.35rem;
+  padding-left: 0.9rem;
+}
+.notes li::before{
+  content:"※";
+  position:absolute;
+  left:0;
+  top:0;
+  color: rgba(217,185,138,.88);
 }
 
-.submitBtn {
+/* CTA */
+.cta{
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+
+  margin-top: 1.45rem;
+  padding-top: 1.2rem;
+  border-top: 1px solid rgba(11,11,11,.10);
+}
+
+.submitBtn{
   position: relative;
   overflow: hidden;
 
@@ -513,186 +531,150 @@
   justify-content: center;
   gap: 0.58rem;
 
-  min-width: 210px;
-  min-height: 48px;
+  min-width: 220px;
+  min-height: 50px;
   padding: 0 1.8rem;
 
-  border: 1px solid rgba(201, 177, 138, 0.26);
-  border-radius: 999px;
+  border: 1px solid rgba(217,185,138,.42);
+  border-radius: 2px;
 
   background:
-    linear-gradient(
-      180deg,
-      rgba(201, 177, 138, 0.05),
-      rgba(255, 255, 255, 0.01)
-    );
+    linear-gradient(180deg, rgba(11,11,11,.98), rgba(11,11,11,.92));
+  color: rgba(243,239,231,.92);
 
-  color: rgba(238, 226, 204, 0.88);
-  font-size: 0.74rem;
+  font-size: 0.78rem;
   line-height: 1;
-  letter-spacing: 0.15em;
+  letter-spacing: 0.11em;
   cursor: pointer;
 
   box-shadow:
-    0 14px 36px rgba(0, 0, 0, 0.22),
-    inset 0 1px 0 rgba(255, 255, 255, 0.035);
+    0 18px 42px rgba(0,0,0,.20),
+    inset 0 1px 0 rgba(255,255,255,.06);
 
   transition:
-    transform 0.35s var(--ease-silent, cubic-bezier(.22,.56,.18,1)),
-    border-color 0.35s ease,
-    background 0.35s ease,
-    color 0.35s ease,
-    box-shadow 0.35s ease,
-    opacity 0.25s ease;
+    transform 420ms var(--ct-ease),
+    border-color 340ms ease,
+    box-shadow 420ms var(--ct-ease),
+    background 340ms ease;
 }
-
-.submitBtn:hover:not(:disabled),
-.submitBtn:focus-visible:not(:disabled) {
-  transform: translateY(-2px);
-  border-color: rgba(201, 177, 138, 0.42);
-  background: rgba(201, 177, 138, 0.07);
-  color: rgba(255, 255, 255, 0.96);
+.submitBtn:hover{
+  transform: translate3d(0,-1px,0);
+  border-color: rgba(217,185,138,.70);
   box-shadow:
-    0 18px 48px rgba(0, 0, 0, 0.3),
-    0 0 0 0.5px rgba(201, 177, 138, 0.06);
-  outline: none;
+    0 22px 56px rgba(0,0,0,.24),
+    inset 0 1px 0 rgba(255,255,255,.08);
+}
+.submitBtn:active{
+  transform: translate3d(0,0,0);
 }
 
-.submitDisabled {
-  opacity: 0.55;
-  cursor: default;
+.submitDisabled{
+  opacity: 0.62;
+  pointer-events: none;
 }
 
-.spinner {
-  width: 12px;
-  height: 12px;
-
-  border: 1px solid rgba(201, 177, 138, 0.26);
-  border-top-color: rgba(238, 226, 204, 0.92);
-  border-radius: 999px;
-
-  animation: contactSpin 0.72s linear infinite;
+.spinner{
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 2px solid rgba(243,239,231,.26);
+  border-top-color: rgba(243,239,231,.86);
+  animation: spin 820ms linear infinite;
+}
+@keyframes spin{
+  to{ transform: rotate(360deg); }
 }
 
-@keyframes contactSpin {
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-/* ===============================
-   STATUS
-================================ */
-.statusMsg {
-  max-width: 420px;
+.statusMsg{
   margin: 0;
-
-  padding: 0.85rem 1rem;
-
-  border: 1px solid;
-  border-radius: 2px;
-
-  font-size: 0.78rem;
-  line-height: 1.75;
-  letter-spacing: 0.04em;
-  text-align: left;
+  font-size: 0.92rem;
+  line-height: 1.8;
 }
-
-.statusSuccess {
-  color: rgba(238, 226, 204, 0.86);
-  border-color: rgba(201, 177, 138, 0.18);
-  background: rgba(201, 177, 138, 0.045);
-}
-
-.statusError {
-  color: rgba(255, 150, 140, 0.88);
-  border-color: rgba(255, 150, 140, 0.18);
-  background: rgba(255, 150, 140, 0.04);
-}
+.statusSuccess{ color: rgba(20, 115, 70, 0.92); }
+.statusError{ color: rgba(173, 50, 50, 0.92); }
 
 /* ===============================
-   MOBILE
+   RESPONSIVE
 ================================ */
-@media (max-width: 960px) {
-  .layout {
+@media (max-width: 960px){
+  .layout{
     grid-template-columns: 1fr;
   }
-
-  .guidePanel {
-    order: 2;
-  }
-
-  .formPanel {
-    order: 1;
-  }
+  .guidePanel{ order: 2; }
+  .formPanel{ order: 1; }
 }
 
-@media (max-width: 768px) {
-  .contactSection {
+@media (max-width: 768px){
+  .contactSection{
     padding: 88px 0 104px;
   }
 
-  .inner {
+  .inner{
     width: calc(100% - 2rem);
   }
 
-  .sideLine {
+  .sideLine{
     top: 1.6rem;
     height: calc(100% - 3.2rem);
-    opacity: 0.76;
+    opacity: 0.82;
   }
 
-  .header {
+  .header{
     padding-left: 0.75rem;
     margin-bottom: 3rem;
   }
 
-  .svgTitle :global(.section-svg) {
+  .svgTitle :global(.section-svg){
     width: min(100%, 560px);
   }
-
-  .svgTitle :global(.section-svg-text) {
+  .svgTitle :global(.section-svg-text){
     font-size: 114px;
   }
 
-  .sectionTitle {
+  .sectionTitle{
     font-size: 0.74rem;
   }
 
-  .lead {
+  .lead{
     margin-top: 1.8rem;
-    font-size: 0.9rem;
-    line-height: 2;
+    font-size: 0.98rem;
+    line-height: 2.0;
   }
 
-  .layout {
+  .layout{
     padding-left: 0.75rem;
+    gap: 1rem;
   }
 
   .guidePanel,
-  .formPanel {
+  .formPanel{
     padding: 1.25rem 1rem;
   }
 
-  .formGrid {
+  .formGrid{
     grid-template-columns: 1fr;
     gap: 1.25rem;
   }
 
   .input,
   .textarea,
-  .select {
-    font-size: 0.88rem;
+  .select{
+    font-size: 0.94rem;
   }
 
-  .submitBtn {
+  .cta{
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .submitBtn{
     width: 100%;
     min-height: 46px;
   }
 }
 
-@media (max-width: 390px) {
-  .inner {
+@media (max-width: 390px){
+  .inner{
     width: calc(100% - 1.5rem);
   }
 }
@@ -700,16 +682,16 @@
 /* ===============================
    REDUCED MOTION
 ================================ */
-@media (prefers-reduced-motion: reduce) {
+@media (prefers-reduced-motion: reduce){
   .contactSection,
   .contactSection *,
   .contactSection *::before,
-  .contactSection *::after {
+  .contactSection *::after{
     transition: none !important;
     animation: none !important;
   }
 
-  .contactSection {
+  .contactSection{
     opacity: 1 !important;
     transform: none !important;
   }

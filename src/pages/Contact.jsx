@@ -12,7 +12,6 @@ const PAGE_DESCRIPTION =
 const CANONICAL_URL = "https://gushikendesign.com/contact";
 
 const WORKS_PATH = "/works";
-// ★ 追加：hint用（URLは見せず、WORKS文字に埋め込む）
 const WORKS_URL = "https://gushikendesign.com/works";
 
 const STARTERS = [
@@ -80,59 +79,50 @@ function validateForm(formData) {
   const budget = String(formData.get("budget") || "").trim();
   const decision = String(formData.get("decision") || "").trim();
 
-  // ここが“吸われない入口”の核（必須）
   const works1 = String(formData.get("works1") || "").trim();
-
   const detail = String(formData.get("detail") || "").trim();
 
   if (!name) errors.name = "お名前を入力してください。";
 
-  if (!email) {
-    errors.email = "メールアドレスを入力してください。";
-  } else if (!isValidEmail(email)) {
-    errors.email = "メールアドレスの形式を確認してください。";
-  }
+  if (!email) errors.email = "メールアドレスを入力してください。";
+  else if (!isValidEmail(email)) errors.email = "メールアドレスの形式が正しくありません。";
 
   if (!siteType) errors.siteType = "制作形式を選択してください。";
   if (!budget) errors.budget = "ご予算感を選択してください。";
   if (!decision) errors.decision = "決裁者の状況を選択してください。";
 
-  if (!works1) {
-    errors.works1 = "WORKSから近い作品（URLまたは作品名）を1つ入力してください。";
-  }
+  if (!works1) errors.works1 = "近い作品（WORKSのURL or 作品名）を入力してください。";
 
   if (!detail) errors.detail = "ご相談内容を入力してください。";
+  else if (detail.length < 12) errors.detail = "もう少し詳しくお願いします（12文字以上）。";
 
   return errors;
 }
 
-const SITE_TYPE_LABEL = {
-  lp: "LP",
-  multi: "複数ページ",
-  renewal: "リニューアル",
-  consult: "相談",
-};
-
 export default function Contact() {
   const rootRef = useRef(null);
 
-  const [status, setStatus] = useState("idle");
+  const [status, setStatus] = useState("idle"); // idle | loading | success | error
   const [message, setMessage] = useState("");
   const [fieldErrors, setFieldErrors] = useState({});
 
   const isLoading = status === "loading";
 
+  // ✅ this page only: index.css の膜やトーンの副作用を殺す
+  useEffect(() => {
+    document.body.classList.add("is-contact");
+    return () => document.body.classList.remove("is-contact");
+  }, []);
+
+  // reveal
   useEffect(() => {
     const root = rootRef.current;
     if (!root) return undefined;
-
-    const raf = requestAnimationFrame(() => {
-      root.classList.add(styles.show);
-    });
-
+    const raf = requestAnimationFrame(() => root.classList.add(styles.show));
     return () => cancelAnimationFrame(raf);
   }, []);
 
+  // SEO
   useEffect(() => {
     document.title = PAGE_TITLE;
 
@@ -143,66 +133,47 @@ export default function Contact() {
       typeof window !== "undefined"
         ? window.location.origin
         : "https://gushikendesign.com";
-    const ogImage = `${origin}/ogp.png`;
 
     setMetaByProperty("og:title", PAGE_TITLE);
     setMetaByProperty("og:description", PAGE_DESCRIPTION);
-    setMetaByProperty("og:url", CANONICAL_URL);
+    setMetaByProperty("og:url", `${origin}/contact`);
     setMetaByProperty("og:type", "website");
-    setMetaByProperty("og:image", ogImage);
 
     setMetaByName("twitter:card", "summary_large_image");
     setMetaByName("twitter:title", PAGE_TITLE);
     setMetaByName("twitter:description", PAGE_DESCRIPTION);
-    setMetaByName("twitter:image", ogImage);
   }, []);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    if (isLoading) return;
+
+    setStatus("idle");
+    setMessage("");
 
     const form = event.currentTarget;
     const formData = new FormData(form);
 
     // honeypot
-    if (String(formData.get("website") || "").trim()) {
-      setStatus("success");
-      setMessage("送信が完了しました。お問い合わせありがとうございます。");
-      form.reset();
-      return;
-    }
+    if (String(formData.get("website") || "").trim()) return;
 
     const errors = validateForm(formData);
-
+    setFieldErrors(errors);
     if (Object.keys(errors).length > 0) {
-      setFieldErrors(errors);
       setStatus("error");
-      setMessage("入力内容をご確認ください。");
+      setMessage("入力内容を確認してください。");
       return;
     }
 
     setStatus("loading");
-    setMessage("");
-    setFieldErrors({});
-
-    const siteType = String(formData.get("siteType") || "");
-    const budget = String(formData.get("budget") || "");
-    const typeLabel = SITE_TYPE_LABEL[siteType] || siteType || "未選択";
-
-    formData.append(
-      "_subject",
-      `GUSHIKEN DESIGN お問い合わせ（${typeLabel} / ${budget || "予算未選択"}）`
-    );
-    formData.append("_replyto", String(formData.get("email") || ""));
 
     try {
-      const response = await fetch(FORMSPREE_ENDPOINT, {
+      const res = await fetch(FORMSPREE_ENDPOINT, {
         method: "POST",
         headers: { Accept: "application/json" },
         body: formData,
       });
 
-      if (!response.ok) throw new Error("Form submission failed");
+      if (!res.ok) throw new Error(`Formspree error: ${res.status}`);
 
       setStatus("success");
       setMessage("送信が完了しました。お問い合わせありがとうございます。");
@@ -242,7 +213,7 @@ export default function Contact() {
             <span>LPか複数ページか、予算に合う進め方から整理できます。</span>
             <br />
             まずは{" "}
-            <Link to={WORKS_PATH}>
+            <Link to={WORKS_PATH} className={styles.inlineLink}>
               WORKS
             </Link>{" "}
             から近い雰囲気を選んでいただくと、方向性が揃って進行が早いです。
@@ -381,7 +352,12 @@ export default function Contact() {
                 htmlFor="budget"
                 error={fieldErrors.budget}
               >
-                <Select id="budget" name="budget" required error={fieldErrors.budget}>
+                <Select
+                  id="budget"
+                  name="budget"
+                  required
+                  error={fieldErrors.budget}
+                >
                   <option value="" disabled>
                     選択してください
                   </option>
@@ -442,8 +418,6 @@ export default function Contact() {
                 </Select>
               </FormField>
 
-              {/* （ここは空き枠にしておく or 別の任意項目にしてもOK）
-                  いまは「近い作品/参考サイト」を下でまとめるので、ここは触らない */}
               <FormField label="備考（任意）" htmlFor="note">
                 <input
                   id="note"
@@ -455,34 +429,27 @@ export default function Contact() {
               </FormField>
             </div>
 
-            {/* ★ ここが変更点：WORKS必須 ＋ 参考サイト任意 */}
-    <div className={styles.formGrid}>
-  <FormField
-    label={
-      <>
-        近い作品{" "}
-        <a
-          href={WORKS_URL}
-          target="_blank"
-          rel="noreferrer noopener"
-          aria-label="WORKSを新しいタブで開く"
-          title="WORKS（新しいタブ）"
-          style={{
-            textDecoration: "underline",
-            textUnderlineOffset: 3,
-            opacity: 0.92,
-            // “飛べる”気配（強すぎない）
-            textShadow: "0 0 14px rgba(255,255,255,0.22)",
-          }}
-        >
-          （WORKS）
-        </a>
-      </>
-    }
-    required
-    htmlFor="works1"
-    error={fieldErrors.works1}
-  >
+            <div className={styles.formGrid}>
+              <FormField
+                label={
+                  <>
+                    近い作品{" "}
+                    <a
+                      href={WORKS_URL}
+                      target="_blank"
+                      rel="noreferrer noopener"
+                      aria-label="WORKSを新しいタブで開く"
+                      title="WORKS（新しいタブ）"
+                      className={styles.worksLink}
+                    >
+                      （WORKS）
+                    </a>
+                  </>
+                }
+                required
+                htmlFor="works1"
+                error={fieldErrors.works1}
+              >
                 <input
                   id="works1"
                   name="works1"
@@ -539,9 +506,7 @@ export default function Contact() {
             <div className={styles.cta}>
               <button
                 type="submit"
-                className={`${styles.submitBtn} ${
-                  isLoading ? styles.submitDisabled : ""
-                }`}
+                className={`${styles.submitBtn} ${isLoading ? styles.submitDisabled : ""}`}
                 disabled={isLoading}
               >
                 {isLoading ? (
@@ -560,9 +525,7 @@ export default function Contact() {
               {message && (
                 <p
                   className={`${styles.statusMsg} ${
-                    status === "success"
-                      ? styles.statusSuccess
-                      : styles.statusError
+                    status === "success" ? styles.statusSuccess : styles.statusError
                   }`}
                   role={status === "error" ? "alert" : "status"}
                 >
@@ -585,12 +548,7 @@ function FormField({ label, children, required = false, htmlFor, error, hint }) 
         {required && <span className={styles.req}> *</span>}
       </label>
 
-      {/* CSSはいじらず、ここだけインラインで軽く出す */}
-      {hint && (
-        <div style={{ marginTop: "-2px", marginBottom: "8px", fontSize: "12px", opacity: 0.78 }}>
-          {hint}
-        </div>
-      )}
+      {hint && <div className={styles.hint}>{hint}</div>}
 
       {children}
 

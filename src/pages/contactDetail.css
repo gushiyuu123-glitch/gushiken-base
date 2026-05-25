@@ -1,0 +1,557 @@
+/* ============================================================
+   Contact Detail — Hybrid Tone (same as PriceDetail)
+   TOP: Dark (world) / BODY: Paper (trust & readability)
+   Scope: body.is-contact-detail + .cd-root
+============================================================ */
+
+.cd-root{
+  --cd-gold: #d9b98a;
+  --cd-silver: #dce2eb;
+
+  --cd-paper: #f3efe7;
+  --cd-paper2: #f1eadf;
+  --cd-ink: rgba(11,11,11,.88);
+  --cd-ink-soft: rgba(11,11,11,.62);
+  --cd-ink-dim: rgba(11,11,11,.52);
+
+  --cd-white: rgba(255,255,255,.94);
+  --cd-w82: rgba(255,255,255,.82);
+  --cd-w62: rgba(255,255,255,.62);
+  --cd-w54: rgba(255,255,255,.54);
+
+  --cd-border-dark: rgba(255,255,255,.08);
+  --cd-border-ink: rgba(11,11,11,.10);
+
+  --cd-ease: cubic-bezier(.22,.56,.18,1);
+
+  isolation: isolate;
+  position: relative;
+  overflow: hidden;
+
+  min-height: 100svh;
+  padding: 112px 0 128px;
+
+  /* BODYは紙 */
+  background:
+    radial-gradient(900px 520px at 62% 18%, rgba(0,0,0,0.035), transparent 68%),
+    linear-gradient(180deg, var(--cd-paper) 0%, var(--cd-paper2) 70%, var(--cd-paper) 100%);
+  color: var(--cd-ink);
+
+  -webkit-font-smoothing: antialiased;
+  text-rendering: geometricPrecision;
+}
+
+/* ===============================
+   Scope guard (index.cssの膜殺し)
+=============================== */
+body.is-contact-detail::before,
+body.is-contact-detail::after{
+  opacity: 0 !important;
+  filter: none !important;
+}
+body.is-contact-detail{
+  background: var(--cd-paper);
+}
+
+/* TOPだけ暗く落とす（黒の圧を“上だけ”に限定） */
+.cd-root::before{
+  content:"";
+  position:absolute;
+  left:0; right:0; top:0;
+  height: 520px;
+  pointer-events:none;
+  background:
+    radial-gradient(1100px 520px at 40% 10%, rgba(0,0,0,.88), transparent 62%),
+    radial-gradient(900px 460px at 72% 18%, rgba(0,0,0,.78), transparent 66%),
+    linear-gradient(180deg, rgba(0,0,0,.86) 0%, rgba(0,0,0,.42) 60%, rgba(0,0,0,0) 100%);
+  opacity: 1;
+}
+
+/* ===============================
+   Layout
+=============================== */
+.cd-container{
+  width: min(1100px, 92vw);
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+.cd-side-line{
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    rgba(217,185,138,.34) 12%,
+    rgba(11,11,11,.10) 44%,
+    transparent 100%
+  );
+  opacity: .72;
+}
+
+/* ===============================
+   Header (Dark)
+=============================== */
+.cd-header{
+  position: relative;
+  padding: 0 0 78px 18px;
+  border-bottom: 1px solid rgba(255,255,255,.08);
+  color: rgba(255,255,255,.92);
+}
+
+.cd-hidden-heading{
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  white-space: nowrap;
+}
+
+.cd-page-title{
+  margin: 12px 0 10px;
+  font-size: 13px;
+  letter-spacing: .14em;
+  color: rgba(255,255,255,.74);
+}
+
+.cd-lead{
+  margin: 22px 0 0;
+  font-size: 1.05rem;
+  line-height: 2.10;
+  color: rgba(255,255,255,.82);
+}
+
+.cd-taxnote{
+  margin: 18px 0 0;
+  font-size: 12px;
+  line-height: 1.9;
+  color: rgba(255,255,255,.56);
+}
+
+.cd-inline-link{
+  color: rgba(255,255,255,.92);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  text-decoration-color: rgba(217,185,138,.58);
+}
+.cd-inline-link:hover{
+  text-decoration-color: rgba(217,185,138,.80);
+}
+
+/* SectionSvgTitle（このページのheaderだけ支配） */
+.cd-header .cd-svg-title.section-svg-title .section-svg-kicker{
+  color: rgba(255,255,255,.72) !important;
+}
+.cd-header .cd-svg-title.section-svg-title .section-svg-text,
+.cd-header .cd-svg-title.section-svg-title .section-svg-char{
+  fill: rgba(255,255,255,.92) !important;
+}
+.cd-header .cd-svg-title.section-svg-title .section-svg-line{
+  background: linear-gradient(90deg, rgba(217,185,138,.58), rgba(255,255,255,.12), transparent) !important;
+}
+.cd-header .cd-svg-title.section-svg-title .section-svg{
+  mix-blend-mode: normal !important;
+  filter: none !important;
+}
+
+/* ===============================
+   Reveal
+=============================== */
+.cd-reveal{
+  opacity: 0;
+  transform: translate3d(0, 18px, 0);
+  filter: blur(0.18px);
+  transition:
+    opacity 680ms var(--cd-ease),
+    transform 820ms var(--cd-ease),
+    filter 680ms var(--cd-ease);
+}
+.cd-revealed{
+  opacity: 1;
+  transform: none;
+  filter: none;
+}
+
+/* ===============================
+   Sections (Paper)
+=============================== */
+.cd-section{
+  padding: 76px 0 0;
+  color: var(--cd-ink);
+}
+
+.cd-sec-head{
+  display:flex;
+  align-items: baseline;
+  gap: 14px;
+  margin: 0 0 26px 18px;
+}
+
+.cd-sec-kicker{
+  color: rgba(217,185,138,.92);
+  letter-spacing: .22em;
+  font-size: 12px;
+}
+
+.cd-sec-title{
+  margin: 0;
+  font-size: 15px;
+  letter-spacing: .18em;
+  font-weight: 300;
+  color: rgba(11,11,11,.90);
+}
+
+/* ===============================
+   Contact layout (Guide + Form)
+=============================== */
+.cd-layout{
+  display:grid;
+  grid-template-columns: 0.78fr 1.22fr;
+  gap: 18px;
+  margin-top: 18px;
+  padding-left: 18px;
+}
+
+.cd-panel{
+  border: 1px solid var(--cd-border-ink);
+  background: rgba(255,255,255,.72);
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 28px 90px rgba(0,0,0,.08);
+}
+
+.cd-panel::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  background: radial-gradient(640px 260px at 14% 0%, rgba(217,185,138,.10), transparent 62%);
+  opacity: .9;
+}
+
+.cd-panel-inner{
+  position: relative;
+  z-index: 1;
+  padding: 18px 16px 16px;
+}
+
+.cd-panel-label{
+  margin: 0 0 10px;
+  font-size: 10px;
+  letter-spacing: .22em;
+  color: rgba(80,60,28,.88);
+  text-transform: uppercase;
+}
+
+.cd-row-list{
+  border-top: 1px solid rgba(11,11,11,.10);
+}
+
+.cd-row{
+  display:grid;
+  grid-template-columns: 54px 1fr;
+  gap: 14px;
+  padding: 14px 0;
+  border-bottom: 1px solid rgba(11,11,11,.10);
+  background: rgba(255,255,255,.42);
+}
+
+.cd-row-no{
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: 20px;
+  letter-spacing: .08em;
+  color: rgba(80,60,28,.92);
+  padding-left: 10px;
+}
+
+.cd-row-text{
+  font-size: 12px;
+  line-height: 1.9;
+  letter-spacing: .04em;
+  color: rgba(11,11,11,.74);
+  padding-right: 10px;
+}
+
+.cd-flow{
+  margin-top: 12px;
+  border-top: 1px solid rgba(11,11,11,.10);
+}
+
+.cd-flow-item{
+  display:grid;
+  grid-template-columns: 54px 1fr;
+  gap: 14px;
+  padding: 14px 0;
+  border-bottom: 1px solid rgba(11,11,11,.10);
+}
+
+.cd-flow-no{
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: 20px;
+  letter-spacing: .08em;
+  color: rgba(80,60,28,.92);
+  padding-left: 10px;
+}
+
+.cd-flow-title{
+  font-size: 12px;
+  letter-spacing: .12em;
+  color: rgba(11,11,11,.90);
+}
+
+.cd-flow-desc{
+  margin-top: 6px;
+  font-size: 12px;
+  line-height: 1.9;
+  color: rgba(11,11,11,.70);
+}
+
+/* ===============================
+   Form
+=============================== */
+.cd-hp{
+  position: absolute;
+  left: -9999px;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.cd-form-grid{
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.cd-field{
+  display:flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.cd-label{
+  font-size: 12px;
+  letter-spacing: .12em;
+  color: rgba(11,11,11,.78);
+}
+
+.cd-req{
+  color: rgba(217,185,138,.92);
+}
+
+.cd-input,
+.cd-textarea,
+.cd-select{
+  width: 100%;
+  box-sizing: border-box;
+
+  border: 1px solid rgba(11,11,11,.16);
+  background: rgba(255,255,255,.82);
+  color: rgba(11,11,11,.90);
+
+  font: inherit;
+  font-size: 14px;
+  line-height: 1.8;
+  letter-spacing: .02em;
+
+  padding: 12px 12px;
+  outline: none;
+
+  transition: border-color .28s ease, background .28s ease, box-shadow .28s ease;
+}
+
+.cd-textarea{
+  min-height: 160px;
+  resize: vertical;
+}
+
+.cd-input::placeholder,
+.cd-textarea::placeholder{
+  color: rgba(11,11,11,.42);
+}
+
+.cd-input:focus,
+.cd-textarea:focus,
+.cd-select:focus{
+  border-color: rgba(217,185,138,.70);
+  box-shadow: 0 0 0 3px rgba(217,185,138,.14);
+  background: rgba(255,255,255,.92);
+}
+
+.cd-input[aria-invalid="true"],
+.cd-textarea[aria-invalid="true"],
+.cd-select[aria-invalid="true"]{
+  border-color: rgba(220,80,70,.55);
+}
+
+.cd-error{
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.7;
+  color: rgba(220,80,70,.90);
+}
+
+.cd-select-wrap{
+  position: relative;
+}
+
+.cd-select{
+  appearance: none;
+  -webkit-appearance: none;
+  cursor: pointer;
+  padding-right: 42px;
+}
+
+.cd-select-arrow{
+  position:absolute;
+  right: 14px;
+  top: 50%;
+  width: 7px;
+  height: 7px;
+  border-right: 1px solid rgba(217,185,138,.90);
+  border-bottom: 1px solid rgba(217,185,138,.90);
+  transform: translateY(-64%) rotate(45deg);
+  pointer-events:none;
+}
+
+.cd-works-link{
+  color: rgba(11,11,11,.78);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+  text-decoration-color: rgba(217,185,138,.58);
+}
+.cd-works-link:hover{
+  text-decoration-color: rgba(217,185,138,.80);
+}
+
+/* Notes */
+.cd-notes{
+  margin: 18px 0 0;
+  padding-left: 18px;
+  color: rgba(11,11,11,.66);
+  font-size: 12px;
+  line-height: 1.9;
+}
+.cd-notes li::marker{
+  color: rgba(217,185,138,.78);
+}
+
+/* Actions */
+.cd-actions{
+  margin: 18px 0 0;
+  display:flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.cd-btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap: 10px;
+  text-decoration:none;
+  letter-spacing: .18em;
+  font-size: 11px;
+  padding: 12px 14px 11px;
+  border: 1px solid rgba(11,11,11,.16);
+  color: rgba(11,11,11,.88);
+  background: rgba(255,255,255,.66);
+  transition: border-color .32s ease, background .32s ease, color .32s ease, opacity .25s ease;
+}
+
+.cd-btn:hover:not(.is-disabled){
+  border-color: rgba(11,11,11,.28);
+  background: rgba(255,255,255,.82);
+  color: rgba(11,11,11,.94);
+}
+
+.cd-btn.primary{
+  border-color: rgba(217,185,138,.56);
+  background: rgba(217,185,138,.12);
+  color: rgba(80,60,28,.92);
+}
+.cd-btn.primary:hover:not(.is-disabled){
+  border-color: rgba(217,185,138,.78);
+  background: rgba(217,185,138,.18);
+}
+
+.cd-btn.is-disabled{
+  opacity: .58;
+  cursor: default;
+}
+
+.cd-spinner{
+  width: 12px;
+  height: 12px;
+  border: 1px solid rgba(80,60,28,.24);
+  border-top-color: rgba(80,60,28,.92);
+  border-radius: 999px;
+  animation: cdSpin .72s linear infinite;
+}
+@keyframes cdSpin { to { transform: rotate(360deg); } }
+
+.cd-status{
+  max-width: 520px;
+  margin: 0;
+  padding: 12px 12px;
+  border: 1px solid;
+  font-size: 12px;
+  line-height: 1.9;
+  letter-spacing: .02em;
+}
+.cd-status.is-success{
+  color: rgba(80,60,28,.92);
+  border-color: rgba(217,185,138,.44);
+  background: rgba(217,185,138,.10);
+}
+.cd-status.is-error{
+  color: rgba(220,80,70,.92);
+  border-color: rgba(220,80,70,.34);
+  background: rgba(220,80,70,.06);
+}
+
+/* Footer */
+.cd-footer{
+  margin-top: 64px;
+  padding-left: 18px;
+}
+.cd-footer .cd-inline-link{
+  color: rgba(11,11,11,.88);
+  text-decoration-color: rgba(11,11,11,.28);
+}
+.cd-footer .cd-inline-link:hover{
+  text-decoration-color: rgba(11,11,11,.46);
+}
+
+/* ===============================
+   Responsive
+=============================== */
+@media (max-width: 980px){
+  .cd-root{ padding: 92px 0 110px; }
+  .cd-root::before{ height: 460px; }
+
+  .cd-side-line{ display:none; }
+  .cd-header{ padding-left: 0; }
+  .cd-sec-head{ margin-left: 0; }
+  .cd-layout{
+    grid-template-columns: 1fr;
+    padding-left: 0;
+  }
+  .cd-form-grid{
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce){
+  .cd-reveal{ opacity: 1; transform: none; filter:none; transition: none; }
+}
