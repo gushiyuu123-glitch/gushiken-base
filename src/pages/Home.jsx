@@ -11,9 +11,16 @@ import PhilosophySP from "../components/PhilosophySP";
 
 import Price from "../components/Price";
 import PriceSP from "../components/PriceSP";
+
 import About from "../components/ABOUT";
+
+
 import Contact from "../components/CONTACT";
+
+
 import NewsSection from "../components/NewsSection";
+
+
 import Title from "../components/Title";
 
 import FloatingFAQ from "../components/FloatingFAQ";
@@ -84,51 +91,11 @@ function useMediaQuery(query, fallback = true) {
   return matches;
 }
 
-function CommonSections() {
-  return (
-    <>
-      <About />
-      <NewsSection />
-      <Contact />
-    </>
-  );
-}
-
-function DesktopTree({ isWorksDesktop }) {
-  return (
-    <>
-      <main id="top" className="home-wrapper">
-        <Hero />
-        <CommonSections />
-        {isWorksDesktop ? <Works /> : <WorksSP />}
-        <Philosophy />
-        <Price />
-      </main>
-      <FloatingFAQ />
-    </>
-  );
-}
-
-function MobileTree() {
-  return (
-    <>
-      <main id="top" className="home-wrapper">
-        <HeroSP />
-        <CommonSections />
-        <WorksSP />
-        <PhilosophySP />
-        <PriceSP />
-      </main>
-      <FloatingFAQSP />
-    </>
-  );
-}
-
 export default function Home() {
-  // ✅ PC/SP 完全分岐（ツリー丸ごと切り替え）
+  // ✅ PC/SP DOM分離：ここで完全に分岐して “片方だけ” を描画
   const isDesktop = useMediaQuery("(min-width: 768px)", true);
 
-  // ✅ WORKSは “PCでもタッチ大画面” をSP側へ落とす（既存ルール）
+  // ✅ WORKSは “PCでもタッチ大画面” をSP側へ落とす（既存ルール維持）
   const isWorksDesktop = useMediaQuery(
     "(min-width: 981px) and (pointer: fine)",
     true
@@ -151,11 +118,33 @@ export default function Home() {
   return (
     <>
       <Title text={PAGE_TITLE} />
-      {isDesktop ? (
-        <DesktopTree isWorksDesktop={isWorksDesktop} />
-      ) : (
-        <MobileTree />
-      )}
+
+      <main id="top" className="home-wrapper">
+        {/* HERO */}
+        {isDesktop ? <Hero /> : <HeroSP />}
+
+       {/* ✅ NEWS：共通（DOM分離なし） */}
+        <About />
+
+        {/* WORKS（委ねたい） */}
+        {isDesktop ? (isWorksDesktop ? <Works /> : <WorksSP />) : <WorksSP />}
+
+        {/* PHILOSOPHY（安心） */}
+        {isDesktop ? <Philosophy /> : <PhilosophySP />}
+
+        {/* PRICE（決断） */}
+        {isDesktop ? <Price /> : <PriceSP />}
+
+
+        {/* ✅ NEWS：共通（DOM分離なし） */}
+        <NewsSection />
+
+        {/* ✅ NEWS：共通（DOM分離なし） */}
+        <Contact />
+      </main>
+
+      {/* 浮遊UIもDOM分離（いったん空でOK） */}
+      {isDesktop ? <FloatingFAQ /> : <FloatingFAQSP />}
     </>
   );
 }
