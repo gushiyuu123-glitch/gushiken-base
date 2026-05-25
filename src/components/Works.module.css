@@ -316,37 +316,42 @@
 }
 
 /* =========================
-   DUO — 完全修正（02/03が出ない原因を根治）
-   1) 親の高さを bottom/inset で確定
-   2) imageMask(100%) の基準になる cardLink に height:100% を付ける
+   DUO — 見栄え改善（02/03）
+   - 02を手前に戻す（z-index）
+   - 幅合計を抑えてoverlapを上品に
+   - 03のcaption/stampを右側へ逃がす（干渉を消す）
+   - 根治（bottom + cardLink:100%）は維持
 ========================= */
 .duoWrap{
   position: relative;
   width: min(1260px, 94vw);
-  height: min(78vh, 720px);
+  height: min(74vh, 680px);
 }
 
-/* ✅ 高さを確定（topだけだと潰れる環境がある） */
 .card_duoA,
 .card_duoB{
   position: absolute;
   top: 0;
-  bottom: 0;              /* ←これが効く */
-  width: min(720px, 58vw);
+  bottom: 0;
 }
 
+/* 02（Vow）＝手前＆少し強く */
 .card_duoA{
   left: 0;
-  transform: translateY(clamp(18px, 2.2vw, 34px));
+  width: min(740px, 56vw);
+  z-index: 2;
+  transform: translate3d(0, clamp(42px, 3.0vw, 66px), 0);
 }
 
+/* 03（UMIKAJI）＝奥＆overlap控えめ */
 .card_duoB{
   right: 0;
-  transform: translateY(clamp(-22px, -2.4vw, -40px));
-  width: min(760px, 62vw);
+  width: min(760px, 58vw);
+  z-index: 1;
+  transform: translate3d(0, clamp(-12px, -1.2vw, -20px), 0);
 }
 
-/* ✅ ここが“2/3だけ消える”本当の原因：cardLinkに高さが無いとimageMask100%が0になる */
+/* ✅ これが無いと imageMask(100%) が0になる環境がある */
 .card_duoA .cardLink,
 .card_duoB .cardLink{
   height: 100%;
@@ -358,15 +363,33 @@
   height: 100%;
 }
 
+/* 02は右下captionでOK */
 .card_duoA .caption{ right: 14px; bottom: 14px; }
-.card_duoB .caption{ left: 14px; right: auto; bottom: 14px; }
+
+/* 03は“右下”へ統一（重なり地帯から退避） */
+.card_duoB .caption{
+  right: 14px;
+  left: auto;
+  bottom: 14px;
+}
+
+/* 03のstampも右寄せ（02の画面を汚さない） */
+.card_duoB .stamp{
+  left: auto;
+  right: 0;
+  background: linear-gradient(270deg, rgba(12,10,12,.74) 0%, rgba(12,10,12,.34) 62%, transparent 100%);
+}
+.card_duoB .stampLine{
+  left: auto;
+  right: 0;
+}
 
 .card_wide{ width: min(1320px, 94vw); }
 .card_wide .imageMask{ height: min(68vh, 660px); }
 .card_wide .caption{
   position: absolute;
-  left: clamp(14px, 2vw, 24px);
-  right: auto;
+  right: clamp(14px, 2vw, 24px);
+  left: auto;
   bottom: clamp(14px, 2vw, 24px);
   margin: 0;
   max-width: 520px;
@@ -374,7 +397,6 @@
   background: rgba(7,7,7,.48);
   border: 1px solid rgba(255,255,255,.12);
 }
-
 /* title png */
 .h2Sr{
   position: absolute;
@@ -425,11 +447,9 @@
   }
   .card_duoB{ margin-top: 18px; }
 
-  /* ✅ SPは高さ基準が消えるので、DUOにも比率で高さを作る */
   .card_duoA .cardLink,
-  .card_duoB .cardLink{
-    height: auto;
-  }
+  .card_duoB .cardLink{ height: auto; }
+
   .card_duoA .imageMask,
   .card_duoB .imageMask{
     height: auto;

@@ -37,7 +37,7 @@ const WORKS = [
     title: "UMIKAJI",
     sub: "Awamori Brand / Okinawa",
     img: "/works/umikaji-pc2.webp",
-    to: "/works/umikaji",
+    to: "/works/UmikajiRoom", // ✅ ROOMへ修正
     href: "https://umikaji-awamori.vercel.app/",
     alt: "制作事例：UMIKAJI（Awamori Brand / Okinawa）",
   },
@@ -48,7 +48,7 @@ const WORKS = [
     title: "VELMONT",
     sub: "Luxury Auto Showroom",
     img: "/works/velmonte222.webp",
-    to: "/works/velmont",
+    to: "/works/VelmontRoom", // ✅ ROOMへ修正
     href: "https://velmont-virid.vercel.app/",
     alt: "制作事例：VELMONT（Luxury Auto Showroom）",
   },
@@ -239,18 +239,27 @@ export default function Works() {
           const glint = card.querySelector("[data-glint]");
           if (!mask || !image) return;
 
-          gsap.set(texts, { opacity: 0, y: yText, filter: `blur(${blurText}px)` });
+          gsap.set(texts, {
+            opacity: 0,
+            y: yText,
+            filter: `blur(${blurText}px)`,
+          });
 
           const isFade = mask.hasAttribute("data-fade");
           if (isFade) {
-            gsap.set(mask, { clipPath: "inset(0% 0% 0% 0%)", opacity: 0, y: 12 });
+            gsap.set(mask, {
+              clipPath: "inset(0% 0% 0% 0%)",
+              opacity: 0,
+              y: 12,
+            });
           } else {
             gsap.set(mask, { clipPath: "inset(0% 0% 100% 0%)" });
           }
 
           gsap.set(image, { scale: 1.09, yPercent: 0 });
           if (veil) gsap.set(veil, { opacity: 0 });
-          if (stamp) gsap.set(stamp, { opacity: 0, y: 14, filter: "blur(0.18px)" });
+          if (stamp)
+            gsap.set(stamp, { opacity: 0, y: 14, filter: "blur(0.18px)" });
           if (glint) gsap.set(glint, { opacity: 0, xPercent: -140 });
         });
 
@@ -264,7 +273,12 @@ export default function Works() {
           gsap
             .timeline()
             .set(glintEl, { opacity: strength, xPercent: -140 })
-            .to(glintEl, { xPercent: 140, duration: 0.92, ease: [0.22, 1, 0.36, 1], delay })
+            .to(glintEl, {
+              xPercent: 140,
+              duration: 0.92,
+              ease: [0.22, 1, 0.36, 1],
+              delay,
+            })
             .to(glintEl, { opacity: 0, duration: 0.18 }, delay + 0.7);
         };
 
@@ -281,8 +295,16 @@ export default function Works() {
           tl.to(mask, { opacity: 1, y: 0, duration: 0.66 }, 0.02)
             .to(veil, { opacity: 1, duration: 0.72 }, 0.1)
             .to(image, { scale: 1.06, yPercent: -1, duration: 1.25 }, 0.02)
-            .to(texts, { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.62 }, 0.2)
-            .to(stamp, { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.62 }, 0.24);
+            .to(
+              texts,
+              { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.62 },
+              0.2
+            )
+            .to(
+              stamp,
+              { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.62 },
+              0.24
+            );
 
           ScrollTrigger.create({
             trigger: panel,
@@ -314,13 +336,29 @@ export default function Works() {
           tl.to(m1, { clipPath: "inset(0% 0% 0% 0%)", duration: 0.72 }, 0.02)
             .to(v1, { opacity: 1, duration: 0.72 }, 0.1)
             .to(i1, { scale: 1.06, yPercent: -2, duration: 1.3 }, 0.02)
-            .to(t1, { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.62 }, 0.22)
-            .to(s1, { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.62 }, 0.26)
+            .to(
+              t1,
+              { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.62 },
+              0.22
+            )
+            .to(
+              s1,
+              { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.62 },
+              0.26
+            )
             .to(m2, { clipPath: "inset(0% 0% 0% 0%)", duration: 0.72 }, 0.18)
             .to(v2, { opacity: 1, duration: 0.72 }, 0.26)
             .to(i2, { scale: 1.06, yPercent: 2, duration: 1.3 }, 0.18)
-            .to(t2, { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.62 }, 0.38)
-            .to(s2, { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.62 }, 0.42);
+            .to(
+              t2,
+              { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.62 },
+              0.38
+            )
+            .to(
+              s2,
+              { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.62 },
+              0.42
+            );
 
           ScrollTrigger.create({
             trigger: panel,
@@ -349,8 +387,16 @@ export default function Works() {
           tl.to(mask, { clipPath: "inset(0% 0% 0% 0%)", duration: 0.72 }, 0.02)
             .to(veil, { opacity: 1, duration: 0.72 }, 0.1)
             .to(image, { scale: 1.06, yPercent: 1, duration: 1.35 }, 0.02)
-            .to(texts, { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.62 }, 0.22)
-            .to(stamp, { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.62 }, 0.26);
+            .to(
+              texts,
+              { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.62 },
+              0.22
+            )
+            .to(
+              stamp,
+              { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.62 },
+              0.26
+            );
 
           ScrollTrigger.create({
             trigger: panel,
@@ -420,9 +466,16 @@ export default function Works() {
   }, [stages]);
 
   return (
-    <section ref={rootRef} className={styles.section} id="works" aria-label="Works">
+    <section
+      ref={rootRef}
+      className={styles.section}
+      id="works"
+      aria-label="Works"
+    >
       <header className={styles.head}>
-        <p className={styles.kicker} data-works-intro>SELECTED</p>
+        <p className={styles.kicker} data-works-intro>
+          SELECTED
+        </p>
 
         <h2 className={styles.h2}>
           <span className={styles.h2Sr}>WORKS</span>
@@ -446,7 +499,12 @@ export default function Works() {
 
       <div className={styles.runway}>
         {stages.map((s) => (
-          <article key={s.key} className={styles.panel} data-stage data-stage-type={s.type}>
+          <article
+            key={s.key}
+            className={styles.panel}
+            data-stage
+            data-stage-type={s.type}
+          >
             <div className={styles.stage}>
               <div className={styles.axis} aria-hidden="true">
                 <span className={styles.axisLabel}>{s.label}</span>
@@ -457,11 +515,17 @@ export default function Works() {
               <div className={styles.seamBottom} aria-hidden="true" />
 
               <div className={styles.bgNo} aria-hidden="true">
-                {s.type === "main" ? "01" : s.type === "duo" ? "02–03" : "04"}
+                {s.type === "main"
+                  ? "01"
+                  : s.type === "duo"
+                  ? "02–03"
+                  : "04"}
               </div>
 
               <div className={`${styles.inner} ${styles[`inner_${s.type}`]}`}>
-                {s.type === "main" && <WorkCard item={s.items[0]} kind="main" order={0} />}
+                {s.type === "main" && (
+                  <WorkCard item={s.items[0]} kind="main" order={0} />
+                )}
 
                 {s.type === "duo" && (
                   <div className={styles.duoWrap}>
@@ -470,7 +534,9 @@ export default function Works() {
                   </div>
                 )}
 
-                {s.type === "wide" && <WorkCard item={s.items[0]} kind="wide" order={0} />}
+                {s.type === "wide" && (
+                  <WorkCard item={s.items[0]} kind="wide" order={0} />
+                )}
               </div>
             </div>
           </article>
