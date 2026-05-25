@@ -12,7 +12,7 @@ import PhilosophySP from "../components/PhilosophySP";
 import Price from "../components/Price";
 import PriceSP from "../components/PriceSP";
 
-import About from "../components/About";
+import About from "../components/ABOUT";
 import AboutSP from "../components/AboutSP";
 
 import Contact from "../components/CONTACT";
