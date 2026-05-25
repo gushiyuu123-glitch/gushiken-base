@@ -492,7 +492,8 @@
 .tail{
   width: min(1100px, 92vw);
   margin: 0 auto;
-  padding: 34px 0 56px;
+  padding: 18px 0 28px;
+  margin-top: -40px; /* ← 上に寄せるノブ */
   border-top: 1px solid rgba(255,255,255,.08);
   display: flex;
   justify-content: center;
@@ -519,3 +520,32 @@
 }
 .all:hover{ color: rgba(255,255,255,.94); }
 .all:hover::after{ width: 100%; background: rgba(255,255,255,.46); }
+
+/* =========================
+   PC: VIEW ALL — ボタンは上、下に余韻を足す
+========================= */
+@media (min-width: 981px){
+  /* （任意）最後の谷：消しすぎない。※現状128vh :contentReference[oaicite:1]{index=1} */
+  .panel[data-stage-type="wide"]{
+    min-height: 102vh;
+  }
+
+  /* ボタンは上固定 / 下に余白だけ増やす */
+  .tail{
+    margin-top: 0; /* -100px を殺す :contentReference[oaicite:2]{index=2} */
+    padding: 6px 0 clamp(140px, 20vh, 320px); /* ←下だけ爆増 */
+    min-height: clamp(260px, 28vh, 520px);    /* ←“余韻”保証 */
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;                  /* ←上に固定 */
+  }
+
+  .all{
+    align-self: flex-start; /* 伸び事故防止（クリック領域が伸びない） */
+  }
+}
+@media (min-width: 981px){
+  .all{
+   margin-top: clamp(32px, 2.2vh, 54px);
+  }
+}

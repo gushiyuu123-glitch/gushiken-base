@@ -1,3 +1,4 @@
+// src/sections/HeroSP.jsx
 import { useLayoutEffect, useMemo, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import gsap from "gsap";
@@ -61,7 +62,7 @@ export default function HeroSP() {
         filter: "blur(0.12px)",
       });
 
-      gsap.set(q('[data-hero="selected"]'), { opacity: 0, y: 10 });
+      // ✅ selected（SELECTED WORKS）は削除したのでアニメも削除
       gsap.set(q('[data-hero="frameVow"]'), { opacity: 0, y: 34, scale: 0.988 });
       gsap.set(q('[data-hero="frameKou"]'), { opacity: 0, y: 46, scale: 0.988 });
 
@@ -75,9 +76,9 @@ export default function HeroSP() {
           { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.66, stagger: 0.085 },
           0.14
         )
-        .to(q('[data-hero="selected"]'), { opacity: 1, y: 0, duration: 0.54 }, 0.38)
-        .to(q('[data-hero="frameVow"]'), { opacity: 1, y: 0, scale: 1, duration: 0.76 }, 0.44)
-        .to(q('[data-hero="frameKou"]'), { opacity: 1, y: 0, scale: 1, duration: 0.76 }, 0.52);
+        // ✅ 作品を少し早めに出して、“詰まり”を解く
+        .to(q('[data-hero="frameVow"]'), { opacity: 1, y: 0, scale: 1, duration: 0.76 }, 0.40)
+        .to(q('[data-hero="frameKou"]'), { opacity: 1, y: 0, scale: 1, duration: 0.76 }, 0.48);
 
       // 深度だけ（動かし過ぎない）
       ScrollTrigger.create({
@@ -146,7 +147,6 @@ export default function HeroSP() {
             <span>相談する</span>
           </a>
 
-          {/* ✅ SPでも「一行の安心」 */}
           <p className={styles.ctaNote} data-hero="leftItem">
             返信目安：24時間以内 / オンライン可
           </p>
@@ -154,9 +154,7 @@ export default function HeroSP() {
 
         {/* 作品ステージ */}
         <div className={styles.stage}>
-          <p className={styles.selected} data-hero="selected">
-            SELECTED WORKS
-          </p>
+          {/* ✅ SELECTED WORKS は削除 */}
 
           <div className={styles.frames}>
             {/* Vow（奥・大） */}
