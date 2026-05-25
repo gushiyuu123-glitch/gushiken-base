@@ -31,7 +31,7 @@ export default function Seo({
   title,
   description,
   path = "/",
-  imagePath = "/ogp-v3.png",
+  imagePath = "/ogp-v4.png",
 
   // optional
   keywords = null, // ※欲しいなら入れる、でも主役にしない

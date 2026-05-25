@@ -19,7 +19,8 @@
   <!-- ✅ Theme color（白基調のベースに寄せる。必要なら好みで調整） -->
   <meta name="theme-color" content="#f7f4ee" />
   <meta name="msapplication-TileColor" content="#f7f4ee" />
-
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
   <!-- Domain Verify (keep) -->
   <meta name="p:domain_verify" content="48dd0e90de53ad499404794fccf42239" />
   <meta name="google-site-verification" content="iG_ZrJCqMsY5q1LbjYgdRdGnKp4rr3RKKLk7D8HNZ1w" />
@@ -106,49 +107,44 @@
   </style>
 
   <!-- Google Analytics (GA4) - self exclude (secret + url scrub) -->
-  <script>
-    (function () {
-      const KEY = "__gd_internal__";
-      const qs = new URLSearchParams(location.search);
+ <script>
+  (function () {
+    const KEY = "__gd_internal__";
+    const qs = new URLSearchParams(location.search);
+    const SECRET = "CHANGE_ME_TO_LONG_RANDOM";
 
-      // 🔒 必ず変える：自分だけ知ってる長いランダム文字列
-      const SECRET = "CHANGE_ME_TO_LONG_RANDOM";
+    const safeLS = {
+      get(k){ try { return localStorage.getItem(k); } catch { return null; } },
+      set(k,v){ try { localStorage.setItem(k,v); } catch {} },
+      del(k){ try { localStorage.removeItem(k); } catch {} },
+    };
 
-      // internalフラグのON/OFF（端末ブラウザ単位）
-      if (qs.get("internal") === "1" && qs.get("k") === SECRET) localStorage.setItem(KEY, "1");
-      if (qs.get("internal") === "0") localStorage.removeItem(KEY);
+    if (qs.get("internal") === "1" && qs.get("k") === SECRET) safeLS.set(KEY, "1");
+    if (qs.get("internal") === "0") safeLS.del(KEY);
 
-      // ✅ URLから internal/k を消す（共有事故・ログ露出を殺す）
-      if (qs.has("internal") || qs.has("k")) {
-        qs.delete("internal");
-        qs.delete("k");
-        const rest = qs.toString();
-        const clean = location.pathname + (rest ? `?${rest}` : "") + location.hash;
-        history.replaceState(null, "", clean);
-      }
+    if (qs.has("internal") || qs.has("k")) {
+      qs.delete("internal"); qs.delete("k");
+      const rest = qs.toString();
+      const clean = location.pathname + (rest ? `?${rest}` : "") + location.hash;
+      history.replaceState(null, "", clean);
+    }
 
-      // ✅ internal時でもアプリが落ちないように、gtagだけは常に定義
-      window.dataLayer = window.dataLayer || [];
-      window.gtag = window.gtag || function(){ window.dataLayer.push(arguments); };
+    window.dataLayer = window.dataLayer || [];
+    window.gtag = window.gtag || function(){ window.dataLayer.push(arguments); };
 
-      // internal端末はGAを一切ロードしない（= 計測されない）
-      if (localStorage.getItem(KEY) === "1") return;
+    if (safeLS.get(KEY) === "1") return;
 
-      const GA_ID = "G-NM83YP0V4Q";
-
-      // ✅ 二重ロード防止（保険）
-      if (!document.querySelector('script[src^="https://www.googletagmanager.com/gtag/js?id="]')) {
-        const s = document.createElement("script");
-        s.async = true;
-        s.src = "https://www.googletagmanager.com/gtag/js?id=" + GA_ID;
-        document.head.appendChild(s);
-      }
-
-      gtag("js", new Date());
-      // SPA手動page_view前提：自動送信は止める
-      gtag("config", GA_ID, { send_page_view: false });
-    })();
-  </script>
+    const GA_ID = "G-NM83YP0V4Q";
+    if (!document.querySelector('script[src^="https://www.googletagmanager.com/gtag/js?id="]')) {
+      const s = document.createElement("script");
+      s.async = true;
+      s.src = "https://www.googletagmanager.com/gtag/js?id=" + GA_ID;
+      document.head.appendChild(s);
+    }
+    gtag("js", new Date());
+    gtag("config", GA_ID, { send_page_view: false });
+  })();
+</script>
 
   <!-- JSON-LD (Organization only) -->
   <script type="application/ld+json">
