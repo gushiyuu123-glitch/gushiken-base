@@ -1,5 +1,11 @@
 import { useEffect, useRef } from "react";
-import { Routes, Route, useLocation, matchPath, Navigate } from "react-router-dom";
+import {
+  Routes,
+  Route,
+  useLocation,
+  matchPath,
+  Navigate,
+} from "react-router-dom";
 import Seo from "./components/Seo";
 
 import NavGlobal from "./components/NavGlobal";
@@ -51,7 +57,6 @@ import OriginRoom from "./pages/works/OriginRoom";
 import NoahRoom from "./pages/works/NoahRoom";
 
 // Business pages
-
 import PriceDetail from "./pages/PriceDetail";
 import Contact from "./pages/Contact";
 import Terms from "./pages/Terms";
@@ -68,11 +73,8 @@ import NewsDetail from "./pages/NewsDetail";
 // Experiments
 import Layer0 from "./pages/Layer0";
 
-import { Analytics } from "@vercel/analytics/react";
-
 /* ============================================================================
    SEO Bridge
-   - Routeごとに title/description/canonical/og:url を切り替える
 =========================================================================== */
 
 const SITE_NAME = "GUSHIKEN DESIGN";
@@ -80,7 +82,6 @@ const BASE_TITLE = `${SITE_NAME}｜沖縄のWebデザイン・ホームページ
 const BASE_DESC =
   "上質に見えて、読みやすい。沖縄のブライダル・宿泊・美容・EC向けに、世界観と導線を一貫して設計し、公開まで丁寧に制作します。";
 
-// ✅ 個別作品のSEO（slugで上書き）
 const WORK_SEO = {
   "kou-ryui": {
     title:
@@ -95,7 +96,6 @@ const WORK_SEO = {
   },
 };
 
-// ✅ /okinawa-bridal-website 用 FAQ（HeadにFAQPageを刺す）
 const BRIDAL_FAQ = [
   {
     q: "沖縄のブライダル・フォトウェディング向けのホームページ制作は対応していますか？",
@@ -161,17 +161,13 @@ function buildFaqJsonLd(faq) {
 function SeoBridge() {
   const { pathname } = useLocation();
 
-  // ---- base ----
   let title = BASE_TITLE;
   let description = BASE_DESC;
   let path = pathname;
   let noindex = false;
   let ogType = "website";
-
-  // ✅ 追加：jsonLdを差し替え可能にする
   let attachBridalFaq = false;
 
-  // ---- static routes ----
   if (pathname === "/works") {
     title = `WORKS｜${BASE_TITLE}`;
     description =
@@ -194,44 +190,38 @@ function SeoBridge() {
     description = "制作プランと料金の目安。低価格化ではなく、スコープの最適化で合わせます。";
   }
 
-  // ✅ 別格入口（SEO併用の1枚）
   if (pathname === "/okinawa-bridal-website") {
     title = "沖縄のブライダル・フォトウェディング向けホームページ制作｜GUSHIKEN DESIGN";
     description =
       "写真は綺麗なのに、サイトで安く見える。そのギャップを埋めるのが仕事です。沖縄のブライダル・フォトウェディング・結婚式場向けに、世界観と問い合わせ導線を両立したWebサイトを制作します。";
-    attachBridalFaq = true; // ✅ HeadにFAQ JSON-LDも刺す
+    attachBridalFaq = true;
   }
 
   if (pathname === "/terms") {
     title = `TERMS｜${BASE_TITLE}`;
     description = "利用規約。";
   }
-
   if (pathname === "/privacy") {
     title = `PRIVACY｜${BASE_TITLE}`;
     description = "プライバシーポリシー。";
   }
-
   if (pathname === "/legal") {
     title = `LEGAL｜${BASE_TITLE}`;
     description = "特定商取引法に基づく表記。";
   }
-
   if (pathname === "/refund") {
     title = `REFUND｜${BASE_TITLE}`;
     description = "返金ポリシー。";
   }
 
-  // ---- dynamic routes ----
   const workMatch = matchPath({ path: "/works/:slug", end: true }, pathname);
   if (workMatch?.params?.slug) {
     const slug = workMatch.params.slug;
 
-    // ✅ Room/Teaser/Intro は検索に出さない（でも follow は残す）
-    const isRoomLike = /Room$/i.test(slug) || /Teaser$/i.test(slug) || /Intro$/i.test(slug);
+    const isRoomLike =
+      /Room$/i.test(slug) || /Teaser$/i.test(slug) || /Intro$/i.test(slug);
     if (isRoomLike) noindex = true;
 
-    // ✅ 個別作品はここで上書き（動的の汎用titleに潰されない）
     const override = WORK_SEO[slug];
     if (override) {
       title = override.title;
@@ -251,21 +241,23 @@ function SeoBridge() {
     ogType = "article";
   }
 
-  // ---- experiments (noindex) ----
   if (pathname === "/layer0") {
     title = `Layer0｜${SITE_NAME}`;
     description = "Experiment.";
     noindex = true;
   }
 
-  // ---- JSON-LD ----
   const origin =
     import.meta.env.VITE_SITE_ORIGIN ||
-    (typeof window !== "undefined" ? window.location.origin : "https://gushikendesign.com");
+    (typeof window !== "undefined"
+      ? window.location.origin
+      : "https://gushikendesign.com");
   const url = `${origin}${path}`;
 
   const pageJsonLd = buildWebPageJsonLd({ url, name: title, description });
-  const jsonLd = attachBridalFaq ? [pageJsonLd, buildFaqJsonLd(BRIDAL_FAQ)] : pageJsonLd;
+  const jsonLd = attachBridalFaq
+    ? [pageJsonLd, buildFaqJsonLd(BRIDAL_FAQ)]
+    : pageJsonLd;
 
   return (
     <Seo
@@ -286,22 +278,18 @@ function SeoBridge() {
 function Layout() {
   return (
     <>
+      {/* 既存：残してOK（ただしLenis対応は下のApp側で確実に担保する） */}
       <ScrollManager />
 
-      {/* ✅ SEO head per route */}
       <SeoBridge />
-
       <NavGlobal />
 
       <main id="page-root">
         <Routes>
-          {/* Home */}
           <Route path="/" element={<Home />} />
 
-          {/* Works Index */}
           <Route path="/works" element={<WorksList />} />
 
-          {/* Works Detail Pages */}
           <Route path="/works/noir-lux" element={<NoirLux />} />
           <Route path="/works/resonance" element={<Resonance />} />
           <Route path="/works/still" element={<Navigate to="/works/stillRoom" replace />} />
@@ -319,7 +307,10 @@ function Layout() {
           <Route path="/works/ActiveDays" element={<ActiveDays />} />
           <Route path="/works/FineOkinawa" element={<FineOkinawa />} />
           <Route path="/works/RyukaIntro" element={<RyukaIntro />} />
-          <Route path="/works/OkinawaLightResortHotel" element={<OkinawaLightResortHotel />} />
+          <Route
+            path="/works/OkinawaLightResortHotel"
+            element={<OkinawaLightResortHotel />}
+          />
           <Route path="/works/HorizonBlanc" element={<HorizonBlanc />} />
           <Route path="/works/TheCalmOkinawa" element={<TheCalmOkinawa />} />
           <Route path="/works/FlowOfTea" element={<FlowOfTea />} />
@@ -341,25 +332,17 @@ function Layout() {
           <Route path="/works/OriginRoom" element={<OriginRoom />} />
           <Route path="/works/NoahRoom" element={<NoahRoom />} />
 
-          {/* ✅ Vow in Light 前室 */}
           <Route path="/works/vow-in-light" element={<OkinawaBridalWebsite />} />
-
-          {/* ✅ KOU RYUI 前室（SEO効かせる“部屋”） */}
           <Route path="/works/kou-ryui" element={<KouRyuiEntry />} />
 
-          {/* ✅ 別格入口（現状維持でOK） */}
           <Route path="/okinawa-bridal-website" element={<OkinawaBridalWebsite />} />
-
-          {/* ✅ キーワード入口を作りたいなら別名は redirect（重複させない） */}
           <Route
             path="/naha-ryukyu-costume-website"
             element={<Navigate to="/works/kou-ryui" replace />}
           />
 
-          {/* Dynamic Works Detail */}
           <Route path="/works/:slug" element={<WorkDetail />} />
 
-          {/* Business Pages */}
           <Route path="/price" element={<PriceDetail />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/terms" element={<Terms />} />
@@ -367,11 +350,9 @@ function Layout() {
           <Route path="/legal" element={<Legal />} />
           <Route path="/privacy" element={<Privacy />} />
 
-          {/* News */}
           <Route path="/news" element={<NewsList />} />
           <Route path="/news/:id" element={<NewsDetail />} />
 
-          {/* Experiments */}
           <Route path="/layer0" element={<Layer0 />} />
         </Routes>
       </main>
@@ -384,18 +365,29 @@ function Layout() {
 /* ============================================================================
    App
    - aq-fade observer only
+   - ✅ route change: scrollToTop (Lenis-aware)
 =========================================================================== */
 
 export default function App() {
   const location = useLocation();
+
+  // aq-fade observer
   const observerRef = useRef(null);
   const rafRef = useRef(0);
   const timerRef = useRef(0);
 
+  // ✅ ルート遷移でトップに戻す（hash遷移は維持）
   useEffect(() => {
-    const prefersReducedMotion = window.matchMedia?.(
-      "(prefers-reduced-motion: reduce)"
-    )?.matches;
+    // #section のような遷移は潰さない
+    if (location.hash) return;
+
+    // Lenisが有効ならLenisで、無効ならwindow.scrollToで確実に戻す
+    window.__gd_lenis__?.scrollToTop?.();
+  }, [location.pathname, location.search, location.hash]);
+
+  useEffect(() => {
+    const prefersReducedMotion =
+      window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches ?? false;
 
     const cleanupObserver = () => {
       if (observerRef.current) {
@@ -415,15 +407,12 @@ export default function App() {
         return;
       }
 
-      els.forEach((el) => {
-        el.classList.remove("aq-show");
-      });
+      els.forEach((el) => el.classList.remove("aq-show"));
 
       const io = new IntersectionObserver(
         (entries) => {
           entries.forEach((entry) => {
             if (!entry.isIntersecting) return;
-
             const el = entry.target;
             el.classList.add("aq-show");
             io.unobserve(el);
@@ -445,23 +434,21 @@ export default function App() {
       cleanupObserver();
     };
   }, [location.pathname, location.search]);
-useEffect(() => {
-  if (!import.meta.env.PROD) return;
 
-  const id = requestAnimationFrame(() => {
-    window.gtag?.("event", "page_view", {
-      page_path: location.pathname + location.search,
-      page_location: window.location.href,
-      page_title: document.title,
+  // page_view（本番のみ）
+  useEffect(() => {
+    if (!import.meta.env.PROD) return;
+
+    const id = requestAnimationFrame(() => {
+      window.gtag?.("event", "page_view", {
+        page_path: location.pathname + location.search,
+        page_location: window.location.href,
+        page_title: document.title,
+      });
     });
-  });
 
-  return () => cancelAnimationFrame(id);
-}, [location.pathname, location.search]);
-return (
-  <>
-    <Layout />
-    <Analytics mode="production" />
-  </>
-);
+    return () => cancelAnimationFrame(id);
+  }, [location.pathname, location.search]);
+
+  return <Layout />;
 }

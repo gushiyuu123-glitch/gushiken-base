@@ -1,5 +1,3 @@
-
-
 .section{
   position: relative;
   width: 100%;
@@ -7,12 +5,10 @@
   color: rgba(255,255,255,.88);
   overflow: hidden;
   isolation: isolate;
-
-  --accent: 217 185 138; /* 金寄り（主張しすぎない） */
+  --accent: 217 185 138;
 }
 
 /* header */
-
 .kicker{
   margin: 0 0 14px;
   font-size: 11px;
@@ -27,6 +23,7 @@
   font-size: clamp(56px, 7.6vw, 132px);
   line-height: .92;
   color: rgba(255,255,255,.94);
+  position: relative;
 }
 .lead{
   margin: 0;
@@ -35,36 +32,24 @@
   color: rgba(255,255,255,.62);
 }
 
-/* runway */
 .runway{ position: relative; }
 
-/* header：上と下の“溜め”を削る */
 .head{
   width: min(1100px, 92vw);
   margin: 0 auto;
   padding: clamp(56px, 8vh, 92px) 0 clamp(26px, 5vh, 56px);
 }
 
-/* 作品同士の縦余白を“ほんの少し”詰める（-5〜-8vh） */
 .panel{
   position: relative;
-  min-height: 132vh;                 /* 140 → 132 */
+  min-height: 132vh;
   border-top: 1px solid rgba(255,255,255,.06);
 }
+.panel:last-child{ min-height: 120vh; }
+.panel[data-stage-type="main"]{ min-height: 138vh; }
+.panel[data-stage-type="duo"] { min-height: 135vh; }
+.panel[data-stage-type="wide"]{ min-height: 128vh; }
 
-/* 最後だけさらに締める */
-.panel:last-child{
-  min-height: 120vh;                 /* 128 → 120 */
-}
-
-/* stage type */
-.panel[data-stage-type="main"]{ min-height: 138vh; }  /* 145 → 138 */
-.panel[data-stage-type="duo"] { min-height: 135vh; }  /* 142 → 135 */
-.panel[data-stage-type="wide"]{ min-height: 128vh; }  /* 135 → 128 */
-
-/* final（ここが広さの犯人になりやすい） */
-.panel[data-variant="final"]{ min-height: 148vh; }    /* 165 → 148 */
-/* sticky stage */
 .stage{
   position: sticky;
   top: 0;
@@ -75,7 +60,7 @@
   isolation: isolate;
 }
 
-/* seam fade（境界を溶かす） */
+/* seam fade */
 .seamTop,
 .seamBottom{
   position: absolute;
@@ -83,7 +68,6 @@
   height: clamp(72px, 11vh, 132px);
   pointer-events: none;
   z-index: 3;
-  opacity: 1;
 }
 .seamTop{
   top: 0;
@@ -94,7 +78,7 @@
   background: linear-gradient(to top, rgba(7,7,7,1), rgba(7,7,7,0));
 }
 
-/* axis（基準線＝KOUの主旋律） */
+/* axis */
 .axis{
   position: absolute;
   left: clamp(14px, 3.4vw, 68px);
@@ -113,15 +97,10 @@
   width: 1px;
   height: clamp(180px, 36vh, 420px);
   margin-top: 14px;
-  background: linear-gradient(
-    180deg,
-    rgba(255,255,255,.18),
-    rgba(255,255,255,.08),
-    transparent
-  );
+  background: linear-gradient(180deg, rgba(255,255,255,.18), rgba(255,255,255,.08), transparent);
 }
 
-/* bg number（重心の錘） */
+/* bg number */
 .bgNo{
   position: absolute;
   right: clamp(12px, 4vw, 92px);
@@ -135,31 +114,25 @@
   user-select: none;
   z-index: 2;
 }
+.panel[data-stage-type="wide"] .bgNo{
+  bottom: clamp(-18px, -2.2vh, -6px);
+}
 
-/* inner shells */
+/* inner */
 .inner{
   width: min(1400px, 94vw);
   position: relative;
   z-index: 5;
 }
+.inner_main{ display: grid; place-items: center; }
+.inner_duo{ display: grid; place-items: center; }
+.inner_wide{ display: grid; place-items: center; gap: 22px; }
 
-/* stage types */
-.inner_main{
-  display: grid;
-  place-items: center;
-}
-.inner_duo{
-  display: grid;
-  place-items: center;
-}
-.inner_wide{
-  display: grid;
-  place-items: center;
-  gap: 22px;
-}
+/* card */
+.card{ position: relative; }
 
-/* card base */
-.card{
+/* clickable wrapper */
+.cardLink{
   position: relative;
   display: block;
   text-decoration: none;
@@ -167,7 +140,32 @@
   outline: none;
 }
 
-/* image mask */
+/* external live */
+.live{
+  position: absolute;
+  top: clamp(12px, 2vw, 18px);
+  right: clamp(12px, 2vw, 18px);
+  z-index: 7;
+
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+
+  font-size: 10px;
+  letter-spacing: .22em;
+  color: rgba(255,255,255,.78);
+  text-decoration: none;
+
+  padding: 10px 12px 9px;
+  background: rgba(7,7,7,.42);
+  border: 1px solid rgba(255,255,255,.14);
+}
+.live:hover{
+  color: rgba(255,255,255,.92);
+  border-color: rgba(255,255,255,.32);
+}
+
+/* image */
 .imageMask{
   position: relative;
   overflow: hidden;
@@ -175,6 +173,11 @@
   border: 1px solid rgba(255,255,255,.12);
   box-shadow: 0 52px 160px rgba(0,0,0,.72);
   will-change: clip-path, opacity, transform;
+}
+.imageInner{
+  position: absolute;
+  inset: 0;
+  will-change: transform;
 }
 .image{
   width: 100%;
@@ -184,7 +187,7 @@
   will-change: transform;
 }
 
-/* veil（膜） */
+/* veil */
 .veil{
   position: absolute;
   inset: 0;
@@ -193,7 +196,7 @@
   pointer-events: none;
 }
 
-/* glint（主役/締めだけ） */
+/* glint */
 .glint{
   position: absolute;
   inset: 0;
@@ -209,19 +212,14 @@
   opacity: 0;
 }
 
-/* stamp（KOU：赤は線の役割 → ここでは金の縦罫） */
+/* stamp */
 .stamp{
   position: absolute;
   left: 0;
   bottom: clamp(16px, 2vw, 24px);
   z-index: 4;
   padding: 12px 14px 10px 14px;
-  background: linear-gradient(
-    90deg,
-    rgba(12,10,12,.74) 0%,
-    rgba(12,10,12,.34) 62%,
-    transparent 100%
-  );
+  background: linear-gradient(90deg, rgba(12,10,12,.74) 0%, rgba(12,10,12,.34) 62%, transparent 100%);
 }
 .stampLine{
   position: absolute;
@@ -254,7 +252,7 @@
   color: rgba(255,255,255,.70);
 }
 
-/* caption（字幕＝箱じゃなく“刺す”） */
+/* caption */
 .caption{
   position: absolute;
   right: clamp(14px, 2vw, 24px);
@@ -266,8 +264,6 @@
 
   background: rgba(7,7,7,.48);
   border: 1px solid rgba(255,255,255,.12);
-
-  /* blurは使わない（KOU思想） */
   backdrop-filter: none;
 }
 .meta{
@@ -307,9 +303,7 @@
   color: rgba(255,255,255,.84);
 }
 
-/* ===== variants (編集で崩す) ===== */
-
-/* MAIN：でかい。越境する。字幕は内側で落とす */
+/* variants */
 .card_main{ width: min(1200px, 92vw); }
 .card_main .imageMask{
   height: min(78vh, 760px);
@@ -321,94 +315,99 @@
   background: rgba(7,7,7,.42);
 }
 
-/* DUO：均等に並べない（崩し） */
+/* =========================
+   DUO — 完全修正（02/03が出ない原因を根治）
+   1) 親の高さを bottom/inset で確定
+   2) imageMask(100%) の基準になる cardLink に height:100% を付ける
+========================= */
 .duoWrap{
   position: relative;
   width: min(1260px, 94vw);
   height: min(78vh, 720px);
 }
+
+/* ✅ 高さを確定（topだけだと潰れる環境がある） */
 .card_duoA,
 .card_duoB{
   position: absolute;
   top: 0;
+  bottom: 0;              /* ←これが効く */
   width: min(720px, 58vw);
 }
+
 .card_duoA{
   left: 0;
-  transform: translateY(clamp(18px, 2.2vw, 34px)); /* 低く */
+  transform: translateY(clamp(18px, 2.2vw, 34px));
 }
+
 .card_duoB{
   right: 0;
-  transform: translateY(clamp(-22px, -2.4vw, -40px)); /* 高く */
+  transform: translateY(clamp(-22px, -2.4vw, -40px));
   width: min(760px, 62vw);
 }
+
+/* ✅ ここが“2/3だけ消える”本当の原因：cardLinkに高さが無いとimageMask100%が0になる */
+.card_duoA .cardLink,
+.card_duoB .cardLink{
+  height: 100%;
+}
+
+/* ✅ 画像枠は cardLink の高さに追従 */
 .card_duoA .imageMask,
 .card_duoB .imageMask{
   height: 100%;
 }
-.card_duoA .caption{
-  right: 14px;
-  bottom: 14px;
-}
-.card_duoB .caption{
-  left: 14px; right: auto;
-  bottom: 14px;
-}
 
-/* WIDE：横長で締める。字幕は外に逃がす */
+.card_duoA .caption{ right: 14px; bottom: 14px; }
+.card_duoB .caption{ left: 14px; right: auto; bottom: 14px; }
+
 .card_wide{ width: min(1320px, 94vw); }
-.card_wide .imageMask{
-  height: min(68vh, 660px);
-}
-/* WIDE：字幕も画像上に戻す（VELMONTだけズレる問題の解消） */
+.card_wide .imageMask{ height: min(68vh, 660px); }
 .card_wide .caption{
   position: absolute;
   left: clamp(14px, 2vw, 24px);
   right: auto;
   bottom: clamp(14px, 2vw, 24px);
-
   margin: 0;
   max-width: 520px;
   padding: 14px 16px 12px;
-
   background: rgba(7,7,7,.48);
   border: 1px solid rgba(255,255,255,.12);
 }
-/* view all inline */
-.tailInline{
-  width: min(1320px, 94vw);
-  display: flex;
-  justify-content: flex-end;
-  margin-top: 12px;
+
+/* title png */
+.h2Sr{
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  white-space: nowrap;
 }
-.all{
-  text-decoration: none;
-  color: rgba(255,255,255,.82);
-  letter-spacing: .22em;
-  font-size: 11px;
-  padding-bottom: 8px;
-  border-bottom: 1px solid rgba(255,255,255,.18);
+.h2Mask{
+  display: block;
+  width: min(920px, 66vw);
+  overflow: hidden;
+  will-change: transform, clip-path, filter;
 }
-.all:hover{
-  border-bottom-color: rgba(255,255,255,.46);
-  color: rgba(255,255,255,.94);
+.h2Img{
+  display: block;
+  width: 100%;
+  height: auto;
+  will-change: transform, filter;
 }
 
-/* ===== mobile ===== */
+/* mobile */
 @media (max-width: 980px){
-  .panel{
-    min-height: auto;
-    padding: 26px 0 56px;
-  }
-  .stage{
-    position: relative;
-    height: auto;
-  }
+  .panel{ min-height: auto; padding: 26px 0 56px; }
+  .stage{ position: relative; height: auto; }
   .axis, .bgNo, .seamTop, .seamBottom{ display: none; }
 
   .inner{ width: min(92vw, 560px); }
 
+  .card{ display:flex; flex-direction: column; }
   .card_main, .card_wide{ width: 100%; }
+
   .card_main .imageMask,
   .card_wide .imageMask{
     height: auto;
@@ -416,16 +415,26 @@
     transform: none;
   }
 
-  .duoWrap{
-    height: auto;
-    width: 100%;
-  }
+  .duoWrap{ height: auto; width: 100%; }
+
   .card_duoA, .card_duoB{
     position: relative;
+    top: auto; bottom: auto;
     width: 100%;
     transform: none;
   }
   .card_duoB{ margin-top: 18px; }
+
+  /* ✅ SPは高さ基準が消えるので、DUOにも比率で高さを作る */
+  .card_duoA .cardLink,
+  .card_duoB .cardLink{
+    height: auto;
+  }
+  .card_duoA .imageMask,
+  .card_duoB .imageMask{
+    height: auto;
+    aspect-ratio: 16/10;
+  }
 
   .caption{
     position: relative;
@@ -444,66 +453,39 @@
     padding: 0;
   }
   .stampLine{ display: none; }
+
+  .live{
+    position: relative;
+    top: auto; right: auto;
+    margin-top: 10px;
+    align-self: flex-end;
+  }
 }
 
-/* reduced-motion：JSが走らないので、素で成立 */
+/* reduced-motion */
 @media (prefers-reduced-motion: reduce){
   .glint{ display:none; }
   .veil{ opacity: 1; }
 }
-/* tail（下が広すぎるので締める） */
-.tail{
-  width: min(1100px, 92vw);
-  margin: 0 auto;
-  padding: 34px 0 46px;            /* clamp(64px, 9vh, 110px) → 固定で締め */
-  border-top: 1px solid rgba(255,255,255,.08);
-}
-.h2{
-  position: relative;
-}
 
-/* SEO/見出し構造は残す */
-.h2Sr{
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
-  clip: rect(0,0,0,0);
-  white-space: nowrap;
-}
-
-/* タイトルPNGを“像が整う”出方にするためのマスク */
-.h2Mask{
-  display: block;
-  width: min(920px, 66vw); /* 好みで調整 */
-  overflow: hidden;
-  will-change: transform, clip-path, filter;
-}
-
-.h2Img{
-  display: block;
-  width: 100%;
-  height: auto;
-  will-change: transform, filter;
-}
-/* 04（WIDE）の番号だけ、下に寄せる */
-.panel[data-stage-type="wide"] .bgNo{
-  bottom: clamp(-18px, -2.2vh, -6px); /* 好みで微調整 */
-}
-
-/* ===== VIEW ALL（bottom center） ===== */
+/* view all */
 .tail{
   width: min(1100px, 92vw);
   margin: 0 auto;
   padding: 34px 0 56px;
   border-top: 1px solid rgba(255,255,255,.08);
-
   display: flex;
   justify-content: center;
 }
-
-
-
+.all{
+  position: relative;
+  display: inline-block;
+  text-decoration: none;
+  color: rgba(255,255,255,.82);
+  letter-spacing: .22em;
+  font-size: 11px;
+  padding-bottom: 10px;
+}
 .all::after{
   content:"";
   position:absolute;
@@ -513,16 +495,7 @@
   width: 72%;
   transform: translateX(-50%);
   background: rgba(255,255,255,.18);
-
-  transition:
-    width .45s cubic-bezier(.22,.56,.18,1),
-    background .35s ease;
+  transition: width .45s cubic-bezier(.22,.56,.18,1), background .35s ease;
 }
-
-.all:hover{
-  color: rgba(255,255,255,.94);
-}
-.all:hover::after{
-  width: 100%;
-  background: rgba(255,255,255,.46);
-}
+.all:hover{ color: rgba(255,255,255,.94); }
+.all:hover::after{ width: 100%; background: rgba(255,255,255,.46); }

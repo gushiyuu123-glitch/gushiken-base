@@ -1,5 +1,6 @@
 // src/components/WorksSP.jsx
 import { useEffect, useRef } from "react";
+import { Link } from "react-router-dom";
 import styles from "./WorksSP.module.css";
 
 const WORKS = [
@@ -11,6 +12,7 @@ const WORKS = [
     sub: "琉球衣装キャンペーンサイト",
     img: "/works/kouryui.webp",
     href: "https://kouryui.vercel.app/",
+    pos: "50% 56%",
   },
   {
     key: "vow",
@@ -20,6 +22,7 @@ const WORKS = [
     sub: "Wedding / Okinawa",
     img: "/works/vow-in-light-entryhero.webp",
     href: "https://vow-in-light.vercel.app/",
+    pos: "46% 44%",
   },
   {
     key: "umikaji",
@@ -29,6 +32,7 @@ const WORKS = [
     sub: "Awamori Brand / Okinawa",
     img: "/works/umikaji-pc2.webp",
     href: "https://umikaji-awamori.vercel.app/",
+    pos: "72% 56%",
   },
   {
     key: "velmont",
@@ -38,6 +42,7 @@ const WORKS = [
     sub: "Luxury Auto Showroom",
     img: "/works/velmonte222.webp",
     href: "https://velmont-virid.vercel.app/",
+    pos: "50% 54%",
   },
 ];
 
@@ -57,7 +62,6 @@ export default function WorksSP() {
 
     const targets = Array.from(root.querySelectorAll("[data-reveal]"));
 
-    // reduced-motion or no IO → 即表示
     if (reduce || !("IntersectionObserver" in window)) {
       targets.forEach((el) => el.classList.add(styles.in));
       return;
@@ -79,46 +83,29 @@ export default function WorksSP() {
   }, []);
 
   return (
-    <section
-      ref={rootRef}
-      className={styles.section}
-      id="works"
-      aria-label="Works"
-    >
+    <section ref={rootRef} className={styles.section} id="works" aria-label="Works">
       <header className={styles.head}>
-        <p
-          className={styles.kicker}
-          data-reveal
-          style={{ "--d": "0ms" }}
-        >
+        <p className={styles.kicker} data-reveal style={{ "--d": "0ms" }}>
           SELECTED
         </p>
 
-        <h2
-          className={styles.h2}
-          data-reveal
-          style={{ "--d": "70ms" }}
-        >
+        <h2 className={styles.h2} data-reveal style={{ "--d": "70ms" }}>
           <span className={styles.sr}>WORKS</span>
           <span className={styles.h2Mask}>
-    <img
-  className={styles.h2Img}
-  src="/typography/works.png"
-  alt=""
-  aria-hidden="true"
-  decoding="async"
-/>
+            <img
+              className={styles.h2Img}
+              src="/typography/works.png"
+              alt=""
+              aria-hidden="true"
+              decoding="async"
+            />
           </span>
         </h2>
 
-        <p
-          className={styles.lead}
-          data-reveal
-          style={{ "--d": "140ms" }}
-        >
-          並べない。編集する。
+        <p className={styles.lead} data-reveal style={{ "--d": "140ms" }}>
+          事例は、判断しやすい順に。
           <br />
-          像が整うタイミングまで設計する。
+          印象と導線を、きれいに整える。
         </p>
       </header>
 
@@ -131,28 +118,31 @@ export default function WorksSP() {
               key={w.key}
               className={styles.item}
               data-reveal
-              style={{ "--d": `${220 + i * 70}ms` }}
+              style={{
+                "--d": `${220 + i * 70}ms`,
+                "--pos": w.pos || "50% 50%",
+              }}
               href={w.href}
               target={external ? "_blank" : undefined}
               rel={external ? "noreferrer noopener" : undefined}
-              aria-label={`${w.title} を開く`}
+              aria-label={`${w.title} を新しいタブで開く`}
             >
               <div className={styles.media}>
-                {/* “窓”は固定 / 中身だけが少し動く（スクロールじゃなく、像が整う系） */}
                 <div className={styles.imageInner}>
                   <img
                     className={styles.img}
                     src={w.img}
-                    alt={w.title}
-                    loading="lazy"
+                    alt={`${w.title}（${w.sub}）`}
+                    loading={i === 0 ? "eager" : "lazy"}
+                    fetchPriority={i === 0 ? "high" : "auto"}
                     decoding="async"
+                    style={{ objectPosition: "var(--pos)" }}
                   />
                 </div>
 
                 <div className={styles.veil} aria-hidden="true" />
                 <div className={styles.glint} aria-hidden="true" />
 
-                {/* 字幕＝画像内で編集（カード感を消す） */}
                 <div className={styles.caption} aria-label="Work caption">
                   <div className={styles.meta}>
                     <span className={styles.tag}>{w.tag}</span>
@@ -161,7 +151,7 @@ export default function WorksSP() {
 
                   <div className={styles.title}>{w.title}</div>
                   <div className={styles.sub}>{w.sub}</div>
-                  <div className={styles.open}>OPEN →</div>
+                  <div className={styles.open}>OPEN ↗</div>
                 </div>
               </div>
             </a>
@@ -169,15 +159,14 @@ export default function WorksSP() {
         })}
       </div>
 
-      {/* VIEW ALL：最下部センター */}
       <div
         className={styles.tail}
         data-reveal
         style={{ "--d": `${220 + WORKS.length * 70 + 80}ms` }}
       >
-        <a className={styles.all} href="/works" aria-label="すべての制作実績を見る">
+        <Link className={styles.all} to="/works" aria-label="すべての制作実績を見る">
           VIEW ALL WORKS
-        </a>
+        </Link>
       </div>
     </section>
   );

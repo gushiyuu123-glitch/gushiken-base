@@ -1,6 +1,8 @@
+/* src/styles/newsDetail.module.css */
 /* ==========================================================
-   News Detail — GUSHIKEN DESIGN OS
-   Record Room / Editorial Reading / Quiet Black
+   News Detail — Readable Edition (FULL)
+   - 白グラデ膜を弱体化 → 文字のコントラストを復活
+   - innerに“黒い台座”を敷いて読書体験を保証
 ========================================================== */
 
 .wrapper {
@@ -13,20 +15,26 @@
   background:
     radial-gradient(
       circle at 16% 0%,
-      rgba(201, 177, 138, 0.034),
-      transparent 30%
+      rgba(201, 177, 138, 0.028),
+      transparent 32%
+    ),
+    radial-gradient(
+      980px 520px at 62% 22%,
+      rgba(255, 255, 255, 0.010),
+      transparent 70%
     ),
     linear-gradient(
       180deg,
-      #0a0a0a 0%,
-      var(--main, #0b0b0b) 28%,
-      #090909 68%,
-      #0a0a0a 100%
+      #070707 0%,
+      #070707 28%,
+      #060606 68%,
+      #070707 100%
     );
 
   color: rgba(255, 255, 255, 0.92);
 }
 
+/* ❌可読性を殺してた“白膜”はほぼ消す */
 .wrapper::before {
   content: "";
   position: absolute;
@@ -34,17 +42,16 @@
   pointer-events: none;
 
   background:
-    linear-gradient(
-      180deg,
-      rgba(255, 255, 255, 0.014) 0%,
-      transparent 18%,
-      transparent 82%,
-      rgba(255, 255, 255, 0.01) 100%
+    radial-gradient(
+      1200px 560px at 50% 18%,
+      rgba(0, 0, 0, 0.42),
+      transparent 65%
     );
 
-  opacity: 0.9;
+  opacity: 0.28;
 }
 
+/* ドットは残すが超薄く（読書の邪魔をしない） */
 .wrapper::after {
   content: "";
   position: absolute;
@@ -56,7 +63,7 @@
     transparent 0.42px
   );
   background-size: 4px 4px;
-  opacity: 0.016;
+  opacity: 0.010;
 }
 
 .inner {
@@ -65,6 +72,33 @@
 
   width: min(88vw, 860px);
   margin: 0 auto;
+}
+
+/* ✅ 読書台座：ここで“必ず読める”を保証 */
+.inner::before{
+  content:"";
+  position:absolute;
+  left: -18px;
+  right: -18px;
+  top: -10px;
+  bottom: -26px;
+  z-index: -1;
+  pointer-events:none;
+
+  background:
+    radial-gradient(
+      900px 520px at 40% 0%,
+      rgba(0,0,0,0.62),
+      transparent 70%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(0,0,0,0.52),
+      rgba(0,0,0,0.28) 55%,
+      rgba(0,0,0,0.46)
+    );
+
+  opacity: 0.92;
 }
 
 .sideLine {
@@ -78,7 +112,7 @@
   background: linear-gradient(
     to bottom,
     rgba(201, 177, 138, 0.38),
-    rgba(220, 226, 235, 0.1),
+    rgba(220, 226, 235, 0.10),
     rgba(255, 255, 255, 0.05)
   );
 
@@ -101,7 +135,7 @@
   margin: 0 0 1.1rem;
   padding-top: 1.2rem;
 
-  color: rgba(201, 177, 138, 0.56);
+  color: rgba(201, 177, 138, 0.62);
   font-size: 0.66rem;
   line-height: 1;
   letter-spacing: 0.26em;
@@ -129,7 +163,7 @@
   max-width: 760px;
   margin: 0 0 1rem;
 
-  color: rgba(255, 255, 255, 0.95);
+  color: rgba(255, 255, 255, 0.96);
   font-size: clamp(2rem, 4.6vw, 3rem);
   font-weight: 300;
   line-height: 1.32;
@@ -140,7 +174,7 @@
 .date {
   margin: 0;
 
-  color: rgba(201, 177, 138, 0.46);
+  color: rgba(201, 177, 138, 0.54);
   font-family: "Cormorant Garamond", Georgia, serif;
   font-size: 1rem;
   line-height: 1;
@@ -177,9 +211,9 @@
 .body {
   padding-left: 1rem;
 
-  color: rgba(255, 255, 255, 0.76);
+  color: rgba(255, 255, 255, 0.82);
   font-size: 1rem;
-  line-height: 2.08;
+  line-height: 2.06;
   letter-spacing: 0.035em;
 
   overflow-wrap: anywhere;
@@ -200,7 +234,7 @@
   margin: 3em 0 1em;
   padding-top: 1.15rem;
 
-  color: rgba(255, 255, 255, 0.94);
+  color: rgba(255, 255, 255, 0.96);
   font-size: 1.42rem;
   font-weight: 300;
   line-height: 1.55;
@@ -227,7 +261,7 @@
 .body h3 {
   margin: 2.4em 0 0.8em;
 
-  color: rgba(255, 255, 255, 0.88);
+  color: rgba(255, 255, 255, 0.90);
   font-size: 1.12rem;
   font-weight: 400;
   line-height: 1.6;
@@ -262,13 +296,13 @@
     ),
     rgba(255, 255, 255, 0.014);
 
-  color: rgba(255, 255, 255, 0.68);
+  color: rgba(255, 255, 255, 0.72);
 
   border-radius: 2px;
 }
 
 .body a {
-  color: rgba(238, 226, 204, 0.9);
+  color: rgba(238, 226, 204, 0.92);
   text-decoration: underline;
   text-underline-offset: 4px;
   text-decoration-color: rgba(201, 177, 138, 0.32);
@@ -307,8 +341,8 @@
 }
 
 .body strong {
-  color: rgba(255, 255, 255, 0.94);
-  font-weight: 500;
+  color: rgba(255, 255, 255, 0.96);
+  font-weight: 600;
 }
 
 .body code {
@@ -319,7 +353,7 @@
 
   background: rgba(255, 255, 255, 0.045);
 
-  color: rgba(238, 226, 204, 0.9);
+  color: rgba(238, 226, 204, 0.92);
   font-size: 0.92em;
 }
 
@@ -349,6 +383,50 @@
 }
 
 /* ===============================
+   TABLE / EMBED SAFETY
+================================ */
+.body table{
+  width: 100%;
+  border-collapse: collapse;
+  margin: 2.2rem 0;
+  font-size: 0.94rem;
+  line-height: 1.8;
+  color: rgba(255,255,255,0.82);
+  border: 1px solid rgba(255,255,255,0.08);
+  background: rgba(255,255,255,0.01);
+}
+
+.body thead th{
+  text-align: left;
+  font-weight: 600;
+  color: rgba(255,255,255,0.92);
+  background: rgba(255,255,255,0.03);
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+
+.body th,
+.body td{
+  padding: 12px 12px;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  vertical-align: top;
+}
+
+.body tr:last-child td{
+  border-bottom: 0;
+}
+
+.body iframe,
+.body video{
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  margin: 2.4rem 0;
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 2px;
+  background: rgba(255,255,255,0.01);
+}
+
+/* ===============================
    STATE
 ================================ */
 .loading,
@@ -356,7 +434,7 @@
   margin: 0;
   padding-left: 1rem;
 
-  color: rgba(255, 255, 255, 0.46);
+  color: rgba(255, 255, 255, 0.54);
   font-size: 0.86rem;
   line-height: 1.9;
   letter-spacing: 0.08em;
@@ -399,7 +477,7 @@
       rgba(255, 255, 255, 0.01)
     );
 
-  color: rgba(255, 255, 255, 0.78);
+  color: rgba(255, 255, 255, 0.82);
   font-size: 0.74rem;
   line-height: 1;
   letter-spacing: 0.14em;
@@ -418,16 +496,14 @@
   transform: translateY(-1px);
   border-color: rgba(201, 177, 138, 0.36);
   background: rgba(201, 177, 138, 0.06);
-  color: rgba(255, 255, 255, 0.94);
+  color: rgba(255, 255, 255, 0.96);
   box-shadow:
     0 14px 36px rgba(0, 0, 0, 0.24),
     0 0 0 0.5px rgba(201, 177, 138, 0.055);
   outline: none;
 }
 
-/* ===============================
-   AQ SAFETY
-================================ */
+/* AQ safety（aq-fadeに余計なフィルタが乗る事故対策） */
 .wrapper :global(.aq-fade) {
   filter: none !important;
   backdrop-filter: none !important;
@@ -443,6 +519,11 @@
 
   .inner {
     width: calc(100% - 2rem);
+  }
+
+  .inner::before{
+    left: -14px;
+    right: -14px;
   }
 
   .sideLine {
@@ -486,7 +567,7 @@
 
   .body {
     font-size: 0.92rem;
-    line-height: 1.95;
+    line-height: 1.96;
     letter-spacing: 0.025em;
   }
 

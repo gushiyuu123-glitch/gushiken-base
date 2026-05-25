@@ -1,5 +1,6 @@
 // src/pages/About.jsx
 import React, { useEffect, useRef, useState } from "react";
+import { Link } from "react-router-dom";
 import SectionSvgTitle from "./SectionSvgTitle";
 import styles from "./About.module.css";
 
@@ -31,10 +32,22 @@ const QUALIFICATIONS = [
 ];
 
 const STYLE_ITEMS = [
-  { title: "伝わる順序を設計する", text: "必要な情報が自然に入るよう、見せる順序と区切りを整えます。" },
-  { title: "見え方のトーンを揃える", text: "写真や色の温度を合わせ、全体の印象をひとつにまとめます。" },
-  { title: "迷いを減らす", text: "初めての方でも戸惑わないよう、導線とUIの分かりやすさに配慮します。" },
-  { title: "公開まで丁寧に進める", text: "デザインから実装まで一貫して対応し、公開まで進行します。" },
+  {
+    title: "伝わる順序を設計する",
+    text: "必要な情報が自然に入るよう、見せる順序と区切りを整えます。",
+  },
+  {
+    title: "見え方のトーンを揃える",
+    text: "写真や色の温度を合わせ、全体の印象をひとつにまとめます。",
+  },
+  {
+    title: "迷いを減らす",
+    text: "初めての方でも戸惑わないよう、導線とUIの分かりやすさに配慮します。",
+  },
+  {
+    title: "公開まで丁寧に進める",
+    text: "デザインから実装まで一貫して対応し、公開まで進行します。",
+  },
 ];
 
 const SWATCHES = [
@@ -47,23 +60,89 @@ const SWATCHES = [
 
 function CrownIcon({ className = "" }) {
   return (
-    <svg className={className} viewBox="0 0 40 26" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-      <line x1="4" y1="22" x2="36" y2="22" strokeWidth="1" strokeLinecap="round" />
-      <polyline points="4,22 4,10 13,17 20,4 27,17 36,10 36,22" strokeWidth="1" strokeLinejoin="round" strokeLinecap="round" fill="none" />
-      <rect x="18.2" y="2" width="3.6" height="3.6" transform="rotate(45 20 3.8)" strokeWidth="0.85" />
-      <rect x="2.2" y="8" width="3.6" height="3.6" transform="rotate(45 4 9.8)" strokeWidth="0.85" />
-      <rect x="34.2" y="8" width="3.6" height="3.6" transform="rotate(45 36 9.8)" strokeWidth="0.85" />
+    <svg
+      className={className}
+      viewBox="0 0 40 26"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
+    >
+      <line
+        x1="4"
+        y1="22"
+        x2="36"
+        y2="22"
+        strokeWidth="1"
+        strokeLinecap="round"
+      />
+      <polyline
+        points="4,22 4,10 13,17 20,4 27,17 36,10 36,22"
+        strokeWidth="1"
+        strokeLinejoin="round"
+        strokeLinecap="round"
+        fill="none"
+      />
+      <rect
+        x="18.2"
+        y="2"
+        width="3.6"
+        height="3.6"
+        transform="rotate(45 20 3.8)"
+        strokeWidth="0.85"
+      />
+      <rect
+        x="2.2"
+        y="8"
+        width="3.6"
+        height="3.6"
+        transform="rotate(45 4 9.8)"
+        strokeWidth="0.85"
+      />
+      <rect
+        x="34.2"
+        y="8"
+        width="3.6"
+        height="3.6"
+        transform="rotate(45 36 9.8)"
+        strokeWidth="0.85"
+      />
     </svg>
   );
 }
 
 function StudyIcon({ className = "" }) {
   return (
-    <svg className={className} viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-      <circle cx="20" cy="20" r="14" strokeWidth="0.8" strokeDasharray="2.5 3" />
+    <svg
+      className={className}
+      viewBox="0 0 40 40"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
+    >
+      <circle
+        cx="20"
+        cy="20"
+        r="14"
+        strokeWidth="0.8"
+        strokeDasharray="2.5 3"
+      />
       <circle cx="20" cy="20" r="1.6" strokeWidth="0.9" />
-      <line x1="20" y1="18.4" x2="20" y2="7" strokeWidth="0.9" strokeLinecap="round" />
-      <line x1="20" y1="21.6" x2="26" y2="30" strokeWidth="0.9" strokeLinecap="round" />
+      <line
+        x1="20"
+        y1="18.4"
+        x2="20"
+        y2="7"
+        strokeWidth="0.9"
+        strokeLinecap="round"
+      />
+      <line
+        x1="20"
+        y1="21.6"
+        x2="26"
+        y2="30"
+        strokeWidth="0.9"
+        strokeLinecap="round"
+      />
     </svg>
   );
 }
@@ -79,10 +158,16 @@ function QualificationRow({ item, index, onOpen }) {
 
   return (
     <div
-      className={cx(styles.qrow, styles[`qrow--${item.tier}`], clickable ? styles["qrow--clickable"] : "")}
+      className={cx(
+        styles.qrow,
+        styles[`qrow--${item.tier}`],
+        clickable ? styles["qrow--clickable"] : ""
+      )}
       onClick={handleOpen}
       role={clickable ? "button" : undefined}
       tabIndex={clickable ? 0 : undefined}
+      aria-label={clickable ? `${item.title} の証明画像を開く` : undefined}
+      aria-haspopup={clickable ? "dialog" : undefined}
       onKeyDown={(e) => {
         if (!clickable) return;
         if (e.key === "Enter" || e.key === " ") {
@@ -92,8 +177,14 @@ function QualificationRow({ item, index, onOpen }) {
       }}
     >
       <div className={styles["qrow__meta"]}>
-        <span className={styles["qrow__no"]}>{String(index + 1).padStart(2, "0")}</span>
-        {isAcquired ? <CrownIcon className={styles["qrow__icon"]} /> : <StudyIcon className={styles["qrow__icon"]} />}
+        <span className={styles["qrow__no"]}>
+          {String(index + 1).padStart(2, "0")}
+        </span>
+        {isAcquired ? (
+          <CrownIcon className={styles["qrow__icon"]} />
+        ) : (
+          <StudyIcon className={styles["qrow__icon"]} />
+        )}
         <span className={styles["qrow__status"]}>{item.status}</span>
         <span className={styles["qrow__statusEn"]}>{item.statusEn}</span>
       </div>
@@ -167,22 +258,43 @@ function CertificateModal({ item, onClose }) {
   if (!item) return null;
 
   return (
-    <div className={styles["certificate-modal"]} onClick={onClose} role="dialog" aria-modal="true" aria-labelledby="certificate-modal-title">
-      <div className={styles["certificate-modal__inner"]} onClick={(e) => e.stopPropagation()}>
+    <div
+      className={styles["certificate-modal"]}
+      onClick={onClose}
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="certificate-modal-title"
+    >
+      <div
+        className={styles["certificate-modal__inner"]}
+        onClick={(e) => e.stopPropagation()}
+      >
         <div className={styles["certificate-modal__header"]}>
           <div>
             <p className={styles["certificate-modal__label"]}>QUALIFICATION</p>
-            <h4 id="certificate-modal-title" className={styles["certificate-modal__title"]}>
+            <h4
+              id="certificate-modal-title"
+              className={styles["certificate-modal__title"]}
+            >
               {item.title}
             </h4>
           </div>
-          <button type="button" className={styles["certificate-modal__close"]} onClick={onClose} aria-label="証明画像を閉じる">
+          <button
+            type="button"
+            className={styles["certificate-modal__close"]}
+            onClick={onClose}
+            aria-label="証明画像を閉じる"
+          >
             CLOSE
           </button>
         </div>
 
         <div className={styles["certificate-modal__imageWrap"]}>
-          <img src={item.image} alt={`${item.title} の証明画像`} className={styles["certificate-modal__image"]} />
+          <img
+            src={item.image}
+            alt={`${item.title} の証明画像`}
+            className={styles["certificate-modal__image"]}
+          />
           <p className={styles["certificate-modal__note"]} aria-label="注意事項">
             ※悪用防止のため、一部情報を加工・解像度調整しています。
           </p>
@@ -266,63 +378,151 @@ export default function About() {
     <>
       <section id="about" ref={sectionRef} className={styles["about-section"]}>
         <div className={styles["about-container"]}>
-          <div className={cx(styles["about-side-line"], styles["about-flow"], styles["about-flow-line"], styles["about-flow-1"])} aria-hidden="true" />
+          <div
+            className={cx(
+              styles["about-side-line"],
+              styles["about-flow"],
+              styles["about-flow-line"],
+              styles["about-flow-1"]
+            )}
+            aria-hidden="true"
+          />
 
-          <header className={cx(styles["about-header"], styles["about-flow"], styles["about-flow-1"])}>
-            <SectionSvgTitle title="ABOUT" sub="ABOUT / CREATOR" className={styles["about-svg-title"]} />
+          <header
+            className={cx(
+              styles["about-header"],
+              styles["about-flow"],
+              styles["about-flow-1"]
+            )}
+          >
+            {/* ✅ 視覚はそのまま、構造だけ強化 */}
+            <h2 className={styles.srOnly}>ABOUT</h2>
+
+            <SectionSvgTitle
+              title="ABOUT"
+              sub="ABOUT / CREATOR"
+              className={styles["about-svg-title"]}
+            />
             <p className={styles["about-sub"]}>制作者について</p>
           </header>
 
           <div className={styles["about-intro"]}>
-            <p className={cx(styles["about-lead"], styles["about-flow"], styles["about-flow-2"])}>
-              上質に見えて、読みやすい。<br />
-              <span>商品・空間・サービスの印象</span>が、きちんと伝わるWebサイトへ。<br />
-              デザインと導線を一貫して設計し、公開まで丁寧に制作しています。
+            <p
+              className={cx(
+                styles["about-lead"],
+                styles["about-flow"],
+                styles["about-flow-2"]
+              )}
+            >
+              上質に見えて、読みやすい。
+              <br />
+              <span>商品・空間・サービスの印象</span>が、きちんと伝わるWebサイトへ。
+              <br />
+              目的と不安を先回りで整理し、問い合わせまで迷わない流れに整えます。
             </p>
 
-            <p className={cx(styles["about-body"], styles["about-flow"], styles["about-flow-3"])}>
-              大切にしているのは、<span>必要な情報が迷わず入ること</span>。<br />
-              写真・色・余白・言葉のトーンを揃え、印象をひとつにします。<br />
+            <p
+              className={cx(
+                styles["about-body"],
+                styles["about-flow"],
+                styles["about-flow-3"]
+              )}
+            >
+              大切にしているのは、<span>必要な情報が迷わず入ること</span>。
+              <br />
+              写真の見え方、文章の温度、導線の分かりやすさを揃えて、印象をひとつにします。
+              <br />
               見た目だけで終わらせず、<span>読み手が判断しやすい流れ</span>まで設計します。
             </p>
           </div>
 
-          <div className={cx(styles["about-profile"], styles["about-flow"], styles["about-flow-4"])}>
-            <h3 className={styles["about-name"]} translate="no">Gushiken Yuto</h3>
+          <div
+            className={cx(
+              styles["about-profile"],
+              styles["about-flow"],
+              styles["about-flow-4"]
+            )}
+          >
+            <h3 className={styles["about-name"]} translate="no">
+              Gushiken Yuto
+            </h3>
             <p className={styles["about-role"]}>Web Design / Art Direction</p>
 
             <p className={styles["about-text"]}>
-              沖縄を拠点に、Web制作・Webデザインを行っています。<br />
+              沖縄を拠点に、Web制作・Webデザインを行っています。
+              <br />
               デザインから実装まで一貫して対応し、<span>印象と使いやすさ</span>を両立しながら公開まで進めます。
             </p>
 
-            <a href="https://note.com/noahgushi123" target="_blank" rel="noopener noreferrer" className={styles["about-note-link"]}>
-              制作の裏側を見る
-            </a>
+            {/* ✅ About内の回遊/成約導線（静かに） */}
+            <div className={styles["about-links"]}>
+
+              <a
+                href="https://note.com/noahgushi123"
+                target="_blank"
+                rel="noopener noreferrer"
+                className={styles["about-note-link"]}
+              >
+                制作の裏側（note）
+              </a>
+           
+            </div>
           </div>
 
-          <div className={cx(styles["qualifications-block"], styles["about-flow"], styles["about-flow-5"])}>
-            <p className={styles["qualifications-label"]}>QUALIFICATIONS</p>
+          <div
+            className={cx(
+              styles["qualifications-block"],
+              styles["about-flow"],
+              styles["about-flow-5"]
+            )}
+          >
+            <h3 className={styles["qualifications-label"]}>QUALIFICATIONS</h3>
             <p className={styles["qualifications-intro"]}>
-              制作の信頼性を高めるため、<br />基礎学習と資格取得も継続しています。
+              制作の信頼性を高めるため、
+              <br />
+              基礎学習と資格取得も継続しています。
             </p>
 
             <div className={styles["qualifications-list"]}>
               {QUALIFICATIONS.map((item, index) => (
-                <div key={item.id} className={styles["qrow-flow"]} style={{ "--q-index": index }}>
-                  <QualificationRow item={item} index={index} onOpen={setActiveCertificate} />
+                <div
+                  key={item.id}
+                  className={styles["qrow-flow"]}
+                  style={{ "--q-index": index }}
+                >
+                  <QualificationRow
+                    item={item}
+                    index={index}
+                    onOpen={setActiveCertificate}
+                  />
                 </div>
               ))}
             </div>
           </div>
 
           <div ref={styleBlockRef} className={styles["about-style-block"]}>
-            <p className={cx(styles["about-style-label"], styles["about-style-reveal"])}>DESIGN APPROACH</p>
+            <p
+              className={cx(
+                styles["about-style-label"],
+                styles["about-style-reveal"]
+              )}
+            >
+              DESIGN APPROACH
+            </p>
 
             <div className={styles["about-style-list"]}>
               {STYLE_ITEMS.map((item, index) => (
-                <div key={item.title} className={cx(styles["about-style-item"], styles["about-style-reveal"])} style={{ "--style-index": index }}>
-                  <span className={styles["about-style-no"]}>{String(index + 1).padStart(2, "0")}</span>
+                <div
+                  key={item.title}
+                  className={cx(
+                    styles["about-style-item"],
+                    styles["about-style-reveal"]
+                  )}
+                  style={{ "--style-index": index }}
+                >
+                  <span className={styles["about-style-no"]}>
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
                   <h4 className={styles["about-style-title"]}>{item.title}</h4>
                   <p className={styles["about-style-text"]}>{item.text}</p>
                 </div>
@@ -330,22 +530,45 @@ export default function About() {
             </div>
           </div>
 
-          <div className={cx(styles["site-tone-block"], styles["about-flow"], styles["about-flow-7"])}>
-            <p className={cx(styles["site-tone-label"], styles["site-flow"])} style={{ "--site-index": 0 }}>SITE TONE</p>
-            <p className={cx(styles["site-tone-text"], styles["site-flow"])} style={{ "--site-index": 1 }}>
-              掲載しているサイトでは、<br />余白と読みやすさを優先し、見え方の一貫性を大切にしています。
+          <div
+            className={cx(
+              styles["site-tone-block"],
+              styles["about-flow"],
+              styles["about-flow-7"]
+            )}
+          >
+            <p
+              className={cx(styles["site-tone-label"], styles["site-flow"])}
+              style={{ "--site-index": 0 }}
+            >
+              SITE TONE
+            </p>
+            <p
+              className={cx(styles["site-tone-text"], styles["site-flow"])}
+              style={{ "--site-index": 1 }}
+            >
+              掲載しているサイトでは、
+              <br />
+              余白と読みやすさを優先し、見え方の一貫性を大切にしています。
             </p>
 
             <div className={styles["site-swatch-grid"]}>
               {SWATCHES.map(({ bg, label }, index) => (
-                <div key={label} className={cx(styles["site-swatch-item"], styles["site-flow"])} style={{ "--site-index": index + 2 }}>
+                <div
+                  key={label}
+                  className={cx(styles["site-swatch-item"], styles["site-flow"])}
+                  style={{ "--site-index": index + 2 }}
+                >
                   <div className={styles["site-swatch"]} style={{ background: bg }} />
                   <p>{label}</p>
                 </div>
               ))}
             </div>
 
-            <div className={cx(styles["site-tone-meta"], styles["site-flow"])} style={{ "--site-index": 7 }}>
+            <div
+              className={cx(styles["site-tone-meta"], styles["site-flow"])}
+              style={{ "--site-index": 7 }}
+            >
               <div>
                 <p className={styles["site-tone-meta-label"]}>FONT</p>
                 <p className={styles["site-tone-meta-main"]}>Aa Bb</p>
@@ -354,27 +577,46 @@ export default function About() {
 
               <div>
                 <p className={styles["site-tone-meta-label"]}>SPACING</p>
-                <div className={styles["spacing-lines"]}><span /><span /><span /></div>
+                <div className={styles["spacing-lines"]}>
+                  <span />
+                  <span />
+                  <span />
+                </div>
                 <p className={styles["site-tone-meta-sub"]}>情報の区切り</p>
               </div>
 
               <div>
                 <p className={styles["site-tone-meta-label"]}>TONE</p>
-                <div className={styles["tone-dots"]}><span /><span /><span /><span /></div>
+                <div className={styles["tone-dots"]}>
+                  <span />
+                  <span />
+                  <span />
+                  <span />
+                </div>
                 <p className={styles["site-tone-meta-sub"]}>統一感</p>
               </div>
             </div>
           </div>
 
-          <div className={cx(styles["about-last"], styles["about-flow"], styles["about-flow-8"])}>
+          <div
+            className={cx(
+              styles["about-last"],
+              styles["about-flow"],
+              styles["about-flow-8"]
+            )}
+          >
             <p>
-              あなたのサービスの魅力を、<span>見やすく、上質に伝わるWebサイト</span>として形にします。
+              あなたのサービスの魅力を、
+              <span>見やすく、上質に伝わるWebサイト</span>として形にします。
             </p>
           </div>
         </div>
       </section>
 
-      <CertificateModal item={activeCertificate} onClose={() => setActiveCertificate(null)} />
+      <CertificateModal
+        item={activeCertificate}
+        onClose={() => setActiveCertificate(null)}
+      />
     </>
   );
 }

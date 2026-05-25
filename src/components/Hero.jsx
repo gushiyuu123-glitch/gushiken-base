@@ -1,13 +1,14 @@
 import { useLayoutEffect, useRef, useState } from "react";
+import { Link } from "react-router-dom";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import styles from "./Hero.module.css";
 
 gsap.registerPlugin(ScrollTrigger);
 
-// ✅ 直リンク（前室なし） + render毎の再定義を防ぐ
-const VOW_URL = "https://vow-in-light.vercel.app/";
-const KOU_URL = "https://kouryui.vercel.app/";
+// ✅ 内部導線（SEO/回遊/迷子防止）
+const VOW_PATH = "/works/vow-in-light";
+const KOU_PATH = "/works/kou-ryui";
 
 export default function Hero() {
   const rootRef = useRef(null);
@@ -17,7 +18,6 @@ export default function Hero() {
     const root = rootRef.current;
     if (!root) return;
 
-    // ✅ reduced-motion は “一切GSAPを走らせない”
     const reduce =
       window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches ?? false;
     if (reduce) return;
@@ -28,7 +28,7 @@ export default function Hero() {
       const q = (sel) => root.querySelector(sel);
       const qa = (sel) => root.querySelectorAll(sel);
 
-      // 初期化（“像が整う”立ち上がり：既存のまま）
+      // 初期化（“像が整う”）
       gsap.set(q('[data-hero="bgPhoto"]'), { opacity: 0, y: 18 });
       gsap.set(q('[data-hero="bgType"]'), { opacity: 0 });
       gsap.set(q('[data-hero="selected"]'), { opacity: 0, y: 10 });
@@ -73,12 +73,12 @@ export default function Hero() {
         );
 
       // =========================
-      // ✅ 必殺：窓パララックス（Ken Burns / 擬似動画）
+      // Ken Burns（窓パララックス）
       // 位置は触らず、中身(img)だけ動かす
-      // coarse（SP/タッチ）は量を弱める
+      // coarse（SP/タッチ）は弱める
       // =========================
-      const amt = coarse ? 3.5 : 7;        // yPercent量
-      const sc  = coarse ? 1.035 : 1.055;  // scale（強すぎ禁止）
+      const amt = coarse ? 3.5 : 7;
+      const sc = coarse ? 1.035 : 1.055;
 
       const bindKenBurns = (shotSel, triggerSel, from, to) => {
         const shot = q(shotSel);
@@ -104,10 +104,20 @@ export default function Hero() {
         });
       };
 
-      bindKenBurns('[data-hero="shotVow"]', '[data-hero="frameVow"]', amt * 0.55, -amt);
-      bindKenBurns('[data-hero="shotKou"]', '[data-hero="frameKou"]', amt * 0.35, -amt * 0.8);
+      bindKenBurns(
+        '[data-hero="shotVow"]',
+        '[data-hero="frameVow"]',
+        amt * 0.55,
+        -amt
+      );
+      bindKenBurns(
+        '[data-hero="shotKou"]',
+        '[data-hero="frameKou"]',
+        amt * 0.35,
+        -amt * 0.8
+      );
 
-      // “深度”だけ足す（既存のまま）
+      // “深度”だけ足す
       ScrollTrigger.create({
         trigger: root,
         start: "top top",
@@ -137,7 +147,10 @@ export default function Hero() {
         <div className={`${styles.bgWord} ${styles.bgWordTop}`} data-hero="wordTop">
           GUSHIKEN
         </div>
-        <div className={`${styles.bgWord} ${styles.bgWordBottom}`} data-hero="wordBottom">
+        <div
+          className={`${styles.bgWord} ${styles.bgWordBottom}`}
+          data-hero="wordBottom"
+        >
           DESIGN
         </div>
       </div>
@@ -159,11 +172,11 @@ export default function Hero() {
 
           <div className={styles.copy} data-hero="leftItem">
             <p className={styles.copyMeta}>沖縄の上質なWebデザイン・ホームページ制作</p>
-            <p>商品・空間・サービスの印象を上質に伝えるWebデザイン。</p>
+            <p>写真が良いのに、サイトで安く見える。</p>
             <p>
-              写真、余白、言葉、導線まで整え、安っぽく見せず、
+              そのギャップを埋めて、問い合わせまで
               <br />
-              価値が自然に伝わるWebサイトへ。
+              迷わない形に整えます。
             </p>
             <p className={styles.copySub}>
               見やすく、迷わず、判断しやすい。信頼感のある第一印象を設計します。
@@ -173,6 +186,11 @@ export default function Hero() {
           <a href="#contact" className={styles.cta} data-hero="leftItem">
             <span>制作を相談する</span>
           </a>
+
+          {/* ✅ CTA直下：不安を潰す一行（短く） */}
+          <p className={styles.ctaNote} data-hero="leftItem">
+            返信目安：24時間以内 / オンライン可
+          </p>
         </div>
 
         {/* RIGHT */}
@@ -183,21 +201,19 @@ export default function Hero() {
 
           <div className={styles.shelfWrap}>
             <div className={styles.frames}>
-              {/* Large — Vow */}
-              <a
-                href={VOW_URL}
-                target="_blank"
-                rel="noreferrer noopener"
+              {/* Large — Vow (internal) */}
+              <Link
+                to={VOW_PATH}
                 className={`${styles.frame} ${styles.lg}`}
                 data-hero="frameVow"
-                aria-label="Vow in Light（外部サイトを開く）"
+                aria-label="制作事例：Vow in Light（詳細へ）"
               >
                 <div className={styles.frameInner}>
                   <div className={styles.imgWrap}>
                     {!imgErr.vow ? (
                       <img
                         className={styles.workImg}
-                        data-hero="shotVow"   /* ✅ 追加 */
+                        data-hero="shotVow"
                         src="/works/vow-in-light-entryhero.webp"
                         alt="制作事例：Vow in Light"
                         loading="eager"
@@ -208,7 +224,7 @@ export default function Hero() {
                     ) : (
                       <span
                         className={`${styles.fallback} ${styles.fallbackVow}`}
-                        data-hero="shotVow"  /* ✅ 追加 */
+                        data-hero="shotVow"
                         aria-hidden="true"
                       />
                     )}
@@ -218,23 +234,21 @@ export default function Hero() {
                     <span className={styles.workSub}>Wedding / Okinawa</span>
                   </div>
                 </div>
-              </a>
+              </Link>
 
-              {/* Medium — KOU */}
-              <a
-                href={KOU_URL}
-                target="_blank"
-                rel="noreferrer noopener"
+              {/* Medium — KOU (internal) */}
+              <Link
+                to={KOU_PATH}
                 className={`${styles.frame} ${styles.md}`}
                 data-hero="frameKou"
-                aria-label="KOU RYUI（外部サイトを開く）"
+                aria-label="制作事例：KOU RYUI（詳細へ）"
               >
                 <div className={styles.frameInner}>
                   <div className={styles.imgWrap}>
                     {!imgErr.kou ? (
                       <img
                         className={styles.workImg}
-                        data-hero="shotKou"  /* ✅ 追加 */
+                        data-hero="shotKou"
                         src="/works/kouryui.webp"
                         alt="制作事例：KOU RYUI"
                         loading="lazy"
@@ -244,17 +258,19 @@ export default function Hero() {
                     ) : (
                       <span
                         className={`${styles.fallback} ${styles.fallbackKou}`}
-                        data-hero="shotKou"  /* ✅ 追加 */
+                        data-hero="shotKou"
                         aria-hidden="true"
                       />
                     )}
                   </div>
                   <div className={styles.caption}>
                     <span className={styles.workTitle}>KOU RYUI</span>
-                    <span className={styles.workSub}>Ryukyu Costume / Naha / Okinawa</span>
+                    <span className={styles.workSub}>
+                      Ryukyu Costume / Naha / Okinawa
+                    </span>
                   </div>
                 </div>
-              </a>
+              </Link>
             </div>
 
             <div className={styles.sideText} aria-hidden="true">

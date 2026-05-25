@@ -13,7 +13,7 @@ import Price from "../components/Price";
 import PriceSP from "../components/PriceSP";
 
 import About from "../components/ABOUT";
-import AboutSP from "../components/AboutSP";
+
 
 import Contact from "../components/CONTACT";
 
@@ -123,8 +123,8 @@ export default function Home() {
         {/* HERO */}
         {isDesktop ? <Hero /> : <HeroSP />}
 
-        {/* ABOUT（Hero直下：理解） */}
-        {isDesktop ? <About /> : <AboutSP />}
+       {/* ✅ NEWS：共通（DOM分離なし） */}
+        <About />
 
         {/* WORKS（委ねたい） */}
         {isDesktop ? (isWorksDesktop ? <Works /> : <WorksSP />) : <WorksSP />}

@@ -543,3 +543,95 @@ body.scrolled .ambient-glow { opacity: 1; }
 html.lenis, html.lenis body { height: auto; }
 .lenis.lenis-smooth { scroll-behavior: auto !important; }
 .lenis.lenis-stopped { overflow: hidden; }
+/* ------------------------------------------------------------
+   10) Scrollbar — Paper × Champagne Gold
+   - 全体スクロールバーを“細い金の芯”にする
+   - no-scrollbar は既存通り完全無効化
+------------------------------------------------------------ */
+
+/* レイアウトのガタつき防止（Windows系で効く） */
+html { scrollbar-gutter: stable; }
+
+/* Firefox（+ 一部ブラウザ） */
+html, body {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(201, 177, 138, 0.42) rgba(18, 18, 18, 0.06);
+}
+
+/* 追加：中でスクロールする要素（panel内など）も同じ気配に */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(201, 177, 138, 0.38) rgba(18, 18, 18, 0.06);
+}
+
+/* WebKit（Chrome / Edge / Safari系） */
+html::-webkit-scrollbar,
+body::-webkit-scrollbar,
+*::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+html::-webkit-scrollbar-track,
+body::-webkit-scrollbar-track,
+*::-webkit-scrollbar-track {
+  background:
+    linear-gradient(
+      180deg,
+      rgba(18, 18, 18, 0.04),
+      rgba(18, 18, 18, 0.06)
+    );
+}
+
+html::-webkit-scrollbar-thumb,
+body::-webkit-scrollbar-thumb,
+*::-webkit-scrollbar-thumb {
+  background:
+    linear-gradient(
+      180deg,
+      rgba(201, 177, 138, 0.58),
+      rgba(201, 177, 138, 0.22)
+    );
+  border-radius: 999px;
+
+  /* “細い芯”に見せる（太さは維持しつつ中身だけ細く） */
+  border: 3px solid rgba(246, 241, 232, 0.72); /* paperに馴染ませる */
+  background-clip: padding-box;
+
+  box-shadow:
+    inset 0 0 0 1px rgba(18, 18, 18, 0.10),
+    0 2px 10px rgba(201, 177, 138, 0.10);
+}
+
+html::-webkit-scrollbar-thumb:hover,
+body::-webkit-scrollbar-thumb:hover,
+*::-webkit-scrollbar-thumb:hover {
+  background:
+    linear-gradient(
+      180deg,
+      rgba(201, 177, 138, 0.74),
+      rgba(201, 177, 138, 0.30)
+    );
+}
+
+html::-webkit-scrollbar-thumb:active,
+body::-webkit-scrollbar-thumb:active,
+*::-webkit-scrollbar-thumb:active {
+  background:
+    linear-gradient(
+      180deg,
+      rgba(143, 118, 80, 0.70),   /* --accent-deep寄り */
+      rgba(201, 177, 138, 0.32)
+    );
+}
+
+/* 角（両方向スクロールの交差部） */
+html::-webkit-scrollbar-corner,
+body::-webkit-scrollbar-corner,
+*::-webkit-scrollbar-corner {
+  background: rgba(18, 18, 18, 0.04);
+}
+
+/* ✅ no-scrollbar は最優先で“完全無効化” */
+.no-scrollbar::-webkit-scrollbar { display: none !important; }
+.no-scrollbar { scrollbar-width: none !important; }

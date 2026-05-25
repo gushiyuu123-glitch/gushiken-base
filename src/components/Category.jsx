@@ -1,5 +1,22 @@
 import React, { useMemo } from "react";
 
+const normalize = (str = "") =>
+  String(str)
+    .replace(/\s+/g, "")
+    .replace(/[／・]/g, "/")
+    .replace(/-{1,}/g, "")
+    .replace(/_/g, "")
+    .toLowerCase();
+
+const WIDTH_MAP = {
+  [normalize("PICK UP")]: "88%",
+  [normalize("BEAUTY / SALON")]: "94%",
+  [normalize("HOTEL")]: "90%",
+  [normalize("FOOD / FURNITURE / BRAND")]: "88%",
+  [normalize("EC / BRAND DESIGN")]: "82%",
+  [normalize("ART / CREATIVE")]: "96%",
+};
+
 export default function Category({
   title,
   subtitle,
@@ -10,83 +27,49 @@ export default function Category({
 }) {
   const items = React.Children.toArray(children);
 
-  const normalize = (str = "") =>
-    str
-      .replace(/\s+/g, "")
-      .replace(/[／・]/g, "/")
-      .replace(/-{1,}/g, "")
-      .replace(/_/g, "")
-      .toLowerCase();
-
-  const key = normalize(title);
+  const key = useMemo(() => normalize(title), [title]);
   const headingId = useMemo(() => `cat-${key}`, [key]);
 
-  const hasNew = itemsRaw.some((item) => item?.isNew === true);
+  const hasNew = useMemo(
+    () => itemsRaw.some((item) => item?.isNew === true),
+    [itemsRaw]
+  );
 
-  // SPカード幅：展示感のため、カテゴリ別の幅差だけ少し残す
-  const widthMap = {
-    [normalize("PICK UP")]: "w-[88%]",
-    [normalize("BEAUTY / SALON")]: "w-[94%]",
-    [normalize("HOTEL")]: "w-[90%]",
-    [normalize("FOOD / FURNITURE / BRAND")]: "w-[88%]",
-    [normalize("EC / BRAND DESIGN")]: "w-[82%]",
-    [normalize("ART / CREATIVE")]: "w-[96%]",
-  };
-
-  const cardWidth = widthMap[key] || "w-[88%]";
+  // ✅ SPカード幅：カテゴリ別に“展示感”を少し残す（Tailwind依存を消して安定）
+  const cardWidth = WIDTH_MAP[key] || "88%";
 
   return (
     <section
       aria-labelledby={headingId}
-      className={`
-        relative w-full
-        ${
-          accent
-            ? `
-              border-y border-white/[0.065]
-              bg-white/[0.012]
-              px-0 py-8 md:px-0 md:py-10
-            `
-            : ""
-        }
-      `}
+      data-category={key}
+      className={[
+        "relative w-full",
+        accent
+          ? "border-y border-white/[0.065] bg-white/[0.012] px-0 py-8 md:py-10"
+          : "",
+      ].join(" ")}
     >
-      {/* HEADER */}
-      <div className="relative mb-12">
+      {/* ================= HEADER ================= */}
+      <header className="relative mb-12">
         <div
-          className={`
-            mb-6 h-px
-            ${
-              accent
-                ? `
-                  w-20
-                  bg-gradient-to-r
-                  from-[rgba(201,177,138,0.58)]
-                  via-[rgba(255,255,255,0.12)]
-                  to-transparent
-                `
-                : `
-                  w-12
-                  bg-gradient-to-r
-                  from-[rgba(220,226,235,0.26)]
-                  via-[rgba(255,255,255,0.08)]
-                  to-transparent
-                `
-            }
-          `}
+          className={[
+            "mb-6 h-px",
+            accent
+              ? "w-20 bg-gradient-to-r from-[rgba(201,177,138,0.58)] via-[rgba(255,255,255,0.12)] to-transparent"
+              : "w-12 bg-gradient-to-r from-[rgba(220,226,235,0.26)] via-[rgba(255,255,255,0.08)] to-transparent",
+          ].join(" ")}
+          aria-hidden="true"
         />
 
         <div className="flex items-center gap-3">
           <h2
             id={headingId}
-            className={`
-              font-light text-white
-              ${
-                accent
-                  ? "text-[1.14rem] tracking-[0.24em]"
-                  : "text-[1.02rem] tracking-[0.22em] md:text-[1.12rem]"
-              }
-            `}
+            className={[
+              "font-light text-white",
+              accent
+                ? "text-[1.14rem] tracking-[0.24em]"
+                : "text-[1.02rem] tracking-[0.22em] md:text-[1.12rem]",
+            ].join(" ")}
           >
             {title}
           </h2>
@@ -99,8 +82,9 @@ export default function Category({
                 bg-[rgba(201,177,138,0.045)]
                 px-2 py-[2px]
                 text-[0.60rem] tracking-[0.18em]
-                text-[rgba(238,226,204,0.80)]
+                text-[rgba(238,226,204,0.84)]
               "
+              aria-label="新規作品あり"
             >
               NEW
             </span>
@@ -109,23 +93,35 @@ export default function Category({
 
         {!!subtitle && (
           <p
-            className={`
-              mt-2 leading-relaxed tracking-[0.14em]
-              ${
-                accent
-                  ? "text-[0.84rem] text-white/56"
-                  : "text-[0.78rem] text-white/38"
-              }
-            `}
+            className={[
+              "mt-2 leading-relaxed tracking-[0.14em]",
+              accent ? "text-[0.84rem] text-white/56" : "text-[0.78rem] text-white/38",
+            ].join(" ")}
           >
             {subtitle}
           </p>
         )}
-      </div>
+      </header>
 
-      {/* SP RAIL */}
+      {/* ================= SP RAIL ================= */}
       <div className="relative mb-20 w-full pt-4 sm:hidden">
-        <div className="relative px-1">
+        <div className="relative">
+          {/* ✅ 端フェード（“続きがある”の無言の合図 / でも邪魔しない） */}
+          <div
+            className="
+              pointer-events-none absolute left-0 top-0 z-20 h-full w-10
+              bg-gradient-to-r from-black/55 via-black/15 to-transparent
+            "
+            aria-hidden="true"
+          />
+          <div
+            className="
+              pointer-events-none absolute right-0 top-0 z-20 h-full w-10
+              bg-gradient-to-l from-black/55 via-black/15 to-transparent
+            "
+            aria-hidden="true"
+          />
+
           <div
             className="
               works-rail no-scrollbar flex gap-5
@@ -136,6 +132,8 @@ export default function Category({
               [scrollbar-width:none]
               [-webkit-overflow-scrolling:touch]
               [touch-action:pan-x]
+              [scroll-padding-left:16px]
+              [scroll-padding-right:16px]
             "
             style={{
               WebkitOverflowScrolling: "touch",
@@ -146,11 +144,11 @@ export default function Category({
             {items.map((child, index) => (
               <div
                 key={index}
-                className={`
-                  works-card flex-none
-                  ${cardWidth}
-                  ${index === 0 ? "snap-start" : "snap-center"}
-                `}
+                className={[
+                  "works-card flex-none",
+                  index === 0 ? "snap-start" : "snap-center",
+                ].join(" ")}
+                style={{ width: cardWidth }}
               >
                 {child}
               </div>
@@ -159,22 +157,13 @@ export default function Category({
         </div>
       </div>
 
-      {/* PC GRID */}
+      {/* ================= PC GRID ================= */}
       {accent ? (
-        <div
-          className="
-            hidden grid-cols-2 gap-x-12 gap-y-16 sm:grid
-          "
-        >
+        <div className="hidden grid-cols-2 gap-x-12 gap-y-16 sm:grid">
           {items}
         </div>
       ) : (
-        <div
-          className="
-            hidden grid-cols-2 gap-x-12 gap-y-16
-            sm:grid xl:grid-cols-3
-          "
-        >
+        <div className="hidden grid-cols-2 gap-x-12 gap-y-16 sm:grid xl:grid-cols-3">
           {items}
         </div>
       )}

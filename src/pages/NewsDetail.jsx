@@ -1,10 +1,75 @@
+// src/pages/NewsDetail.jsx
 import React, { useEffect, useMemo, useState } from "react";
 import { getNewsDetail } from "../lib/microcms";
 import styles from "../styles/newsDetail.module.css";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useLocation } from "react-router-dom";
+
+const SITE_NAME = "GUSHIKEN DESIGN";
+const FALLBACK_OG = "/ogp.png";
+
+function stripHtml(html = "") {
+  return html
+    .replace(/<script[\s\S]*?>[\s\S]*?<\/script>/gi, "")
+    .replace(/<style[\s\S]*?>[\s\S]*?<\/style>/gi, "")
+    .replace(/<[^>]+>/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function clampText(text = "", max = 120) {
+  if (!text) return "";
+  return text.length > max ? `${text.slice(0, max)}…` : text;
+}
+
+function setMetaByName(name, content) {
+  if (!content) return;
+  let tag = document.querySelector(`meta[name="${name}"]`);
+  if (!tag) {
+    tag = document.createElement("meta");
+    tag.setAttribute("name", name);
+    document.head.appendChild(tag);
+  }
+  tag.setAttribute("content", content);
+}
+
+function setMetaByProperty(property, content) {
+  if (!content) return;
+  let tag = document.querySelector(`meta[property="${property}"]`);
+  if (!tag) {
+    tag = document.createElement("meta");
+    tag.setAttribute("property", property);
+    document.head.appendChild(tag);
+  }
+  tag.setAttribute("content", content);
+}
+
+function setCanonical(href) {
+  if (!href) return;
+  let tag = document.querySelector('link[rel="canonical"]');
+  if (!tag) {
+    tag = document.createElement("link");
+    tag.setAttribute("rel", "canonical");
+    document.head.appendChild(tag);
+  }
+  tag.setAttribute("href", href);
+}
+
+function scrollTopSafe() {
+  // Lenis がいる場合も事故らないように
+  try {
+    const gdLenis = window?.__gd_lenis;
+    if (gdLenis?.scrollTo) {
+      gdLenis.scrollTo(0, { immediate: true });
+      return;
+    }
+  } catch {}
+  window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+}
 
 export default function NewsDetail() {
   const { id } = useParams();
+  const location = useLocation();
+
   const [article, setArticle] = useState(null);
   const [error, setError] = useState(false);
 
@@ -17,13 +82,17 @@ export default function NewsDetail() {
 
     return (dateStr) => {
       if (!dateStr) return "";
-
       const date = new Date(dateStr);
       if (Number.isNaN(date.getTime())) return "";
-
       return fmt.format(date);
     };
   }, []);
+
+  // ✅ ルート遷移で必ずトップへ（「クリックしたあとトップに移動しない」事故対策）
+  useEffect(() => {
+    scrollTopSafe();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [location.pathname]);
 
   useEffect(() => {
     let mounted = true;
@@ -34,18 +103,42 @@ export default function NewsDetail() {
     async function fetchArticle() {
       try {
         const res = await getNewsDetail(id);
-
         if (!mounted) return;
 
         setArticle(res);
 
-        if (res?.title) {
-          document.title = `${res.title}｜GUSHIKEN DESIGN`;
-        }
+        const title = res?.title ? `${res.title}｜${SITE_NAME}` : `NEWS｜${SITE_NAME}`;
+        document.title = title;
+
+        const bodyText = clampText(stripHtml(res?.body || ""), 120);
+        const desc = bodyText || "制作の背景、判断、更新を記録しています。";
+
+        const origin = window?.location?.origin || "https://gushikendesign.com";
+        const canonical = `${origin}/news/${id}`;
+        const ogImage = res?.eyecatch?.url || `${origin}${FALLBACK_OG}`;
+
+        setCanonical(canonical);
+
+        setMetaByName("description", desc);
+
+        setMetaByProperty("og:site_name", SITE_NAME);
+        setMetaByProperty("og:title", title);
+        setMetaByProperty("og:description", desc);
+        setMetaByProperty("og:type", "article");
+        setMetaByProperty("og:url", canonical);
+        setMetaByProperty("og:image", ogImage);
+
+        setMetaByName("twitter:card", "summary_large_image");
+        setMetaByName("twitter:title", title);
+        setMetaByName("twitter:description", desc);
+        setMetaByName("twitter:image", ogImage);
       } catch {
         if (!mounted) return;
         setError(true);
-        document.title = "NEWS｜GUSHIKEN DESIGN";
+        document.title = `NEWS｜${SITE_NAME}`;
+
+        const origin = window?.location?.origin || "https://gushikendesign.com";
+        setCanonical(`${origin}/news/${id}`);
       }
     }
 
@@ -90,14 +183,10 @@ export default function NewsDetail() {
     );
   }
 
-  const date =
-    article.publishedAt || article.createdAt || article.updatedAt || null;
+  const date = article.publishedAt || article.createdAt || article.updatedAt || null;
 
   return (
-    <article
-      className={`${styles.wrapper} aq-fade aq-show`}
-      aria-busy="false"
-    >
+    <article className={`${styles.wrapper} aq-fade aq-show`} aria-busy="false">
       <div className={styles.inner}>
         <div className={styles.sideLine} aria-hidden="true" />
 
@@ -122,10 +211,7 @@ export default function NewsDetail() {
           </figure>
         )}
 
-        <div
-          className={styles.body}
-          dangerouslySetInnerHTML={{ __html: article.body || "" }}
-        />
+        <div className={styles.body} dangerouslySetInnerHTML={{ __html: article.body || "" }} />
 
         <div className={styles.backWrap}>
           <Link to="/news" className={styles.backLink}>

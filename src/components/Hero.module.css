@@ -6,6 +6,9 @@
   --line:rgba(100,80,50,.18);
   --gold:#b8905a;
 
+  /* ✅ 作品の比率ノブ（Ken Burns対応） */
+  --shotRatio: 16 / 10;
+
   position:relative;
   min-height:100svh;
   background:var(--paper);
@@ -74,7 +77,7 @@
 }
 
 /* =========================
-   BG TYPE（主張を落とす）
+   BG TYPE（作品勝ち）
 ========================= */
 .bgType{
   position:absolute;
@@ -89,64 +92,12 @@
   font-weight:300;
   line-height:.88;
   letter-spacing:.04em;
-  color: rgba(140,120,90,.050); /* ←主張落とす（作品勝ち） */
+  color: rgba(140,120,90,.035);
   white-space:nowrap;
   user-select:none;
 }
 .bgWordTop{ top:52px; left:-8px; font-size:clamp(108px,16.8vw,276px); }
 .bgWordBottom{ bottom:-34px; left:-6px; font-size:clamp(126px,18.8vw,312px); }
-
-/* =========================
-   NAV
-========================= */
-.nav{
-  position:absolute;
-  top:0; left:0; right:0;
-  z-index:10;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding:24px 36px;
-}
-.logo{ display:flex; align-items:center; gap:11px; text-decoration:none; }
-.logoMark{
-  width:38px; height:38px;
-  border-radius:50%;
-  border:1px solid rgba(100,80,50,.20);
-  display:flex; align-items:center; justify-content:center;
-  font-family:"Cormorant Garamond","Times New Roman",serif;
-  font-size:12px;
-  letter-spacing:.04em;
-  color:var(--ink);
-  background:rgba(255,255,255,.50);
-}
-.logoText{ display:flex; flex-direction:column; gap:1px; }
-.logoName{ font-size:11px; letter-spacing:.18em; color:var(--ink); }
-
-/* SPは別Heroに任せるなら、ここで消してOK（PC基準を守る） */
-@media (max-width: 900px){
-  .logoSub{ display:none; }
-}
-.navLinks{ display:flex; align-items:center; gap:28px; }
-.navLink{
-  font-size:10.5px;
-  letter-spacing:.18em;
-  color:var(--muted);
-  text-decoration:none;
-  transition:color .2s;
-}
-.navLink:hover{ color:var(--ink); }
-
-.navCta{
-  font-size:10.5px;
-  letter-spacing:.14em;
-  color:var(--ink);
-  text-decoration:none;
-  border:1px solid var(--line);
-  padding:8px 20px;
-  transition:background .22s,color .22s,border-color .22s;
-}
-.navCta:hover{ background:var(--ink); color:var(--paper); border-color:rgba(28,28,28,.9); }
 
 /* =========================
    GRID
@@ -162,11 +113,14 @@
   padding:104px 36px 54px;
 }
 
-/* LEFT（最終値だけ残す） */
+/* LEFT（固定transformの事故をclampで抑える） */
 .left{
   position:relative;
   z-index:3;
-  transform: translate(72px, -248px);
+  transform: translate(
+    clamp(0px, 6vw, 72px),
+    clamp(-248px, -18vw, -140px)
+  );
 }
 
 .kicker{ font-size:14px; letter-spacing:.08em; color:var(--ink); margin-bottom:7px; }
@@ -200,13 +154,18 @@
   transition:gap .22s,border-color .22s,transform .22s;
 }
 .cta:hover{ gap:16px; border-color:rgba(100,80,50,.36); transform:translateX(2px); }
-.ctaArrow{ font-size:13px; }
+
+.ctaNote{
+  margin-top:10px;
+  font-size:10px;
+  letter-spacing:.12em;
+  color:rgba(28,28,28,.46);
+}
 
 /* =========================
-   RIGHT (STAGE) + 壁殺し込み
+   RIGHT (STAGE)
 ========================= */
 .right{
-  /* 壁を殺す：巨大ボックス化を止める */
   justify-self:end;
   width:min(calc(var(--stageW) + var(--stageInsetR)), 100%);
   position:relative;
@@ -217,7 +176,7 @@
   align-items:stretch;
 
   --stageW: min(820px, 100%);
-  --stageInsetR: clamp(140px, 10vw, 240px);
+  --stageInsetR: clamp(24px, 4vw, 72px);
 }
 
 .selectedLabel{
@@ -245,25 +204,45 @@
   bottom:var(--shelfTop);
   display:flex;
   align-items:flex-end;
+  transform: translateX(-252px); /* 2枚まとめて左へ（統合） */
 }
 
-.frame{ display:block; text-decoration:none; color:inherit; outline:none; }
-.frame:focus-visible{ outline:2px solid rgba(100,80,50,.36); outline-offset:8px; }
+/* Link/Anchor共通 */
+.frame{
+  display:block;
+  text-decoration:none;
+  color:inherit;
+  outline:none;
+}
+.frame:focus-visible{
+  outline:2px solid rgba(100,80,50,.36);
+  outline-offset:8px;
+}
 
-/* 額縁（影を深く） */
+/* 額縁（深い影 + 接地影） */
 .frameInner{
+  position:relative;
   background:rgba(255,255,255,.88);
   border:1px solid rgba(180,165,145,.40);
-
-  /* ← Claude案の“深い影”を正式採用 */
   box-shadow:
     0 60px 100px rgba(0,0,0,.20),
     0 34px 70px rgba(0,0,0,.15),
     0 10px 22px rgba(0,0,0,.09),
     0 1px 0 rgba(255,255,255,.82) inset;
-
   transition:transform .42s cubic-bezier(.22,.1,.28,1), box-shadow .42s cubic-bezier(.22,.1,.28,1);
   transform-origin:center bottom;
+}
+.frameInner::after{
+  content:"";
+  position:absolute;
+  left:22px;
+  right:22px;
+  bottom:-18px;
+  height:28px;
+  background: radial-gradient(closest-side, rgba(0,0,0,.26), rgba(0,0,0,0));
+  filter: blur(10px);
+  opacity:.45;
+  pointer-events:none;
 }
 
 .frame:hover .frameInner{
@@ -275,37 +254,67 @@
     0 1px 0 rgba(255,255,255,.84) inset;
 }
 
-/* サイズ・段差（今の座標感を維持） */
+/* サイズ・段差（最終形） */
 .lg{ z-index:2; position:relative; top:22px; }
-.lg .frameInner{ width: clamp(370px, 39vw, 460px); }
+.lg .frameInner{ width: clamp(460px, 50vw, 600px); }
 
 .md{
   z-index:3;
   position:relative;
-  margin-left:-108px;           /* ほどよく重なる */
-  transform: translateY(26px);  /* 奥行き */
+  margin-left: -168px;
+  transform: translateY(28px);
 }
-.md .frameInner{ width: clamp(320px, 32vw, 390px); }
+.md .frameInner{ width: clamp(360px, 40vw, 500px); }
 
-/* 中身 */
+/* =========================
+   中身（Ken Burns：窓化）
+========================= */
 .imgWrap{
   padding:14px;
   background:rgba(255,255,255,.70);
+
+  position:relative;
+  overflow:hidden; /* ✅ 必須：中身だけ動かす */
 }
+
+/* 内側マット：imgが動いても白縁が保たれる */
+.imgWrap::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  z-index:2;
+  box-shadow: inset 0 0 0 14px rgba(255,255,255,.70);
+}
+
 .imgWrap > img,
 .imgWrap > span{
   width:100%;
-  aspect-ratio:3/4;
+  aspect-ratio: var(--shotRatio);
   display:block;
 }
+
 .workImg{
   width:100%;
   height:100%;
   object-fit:cover;
   border:1px solid rgba(100,80,50,.08);
+
+  will-change: transform;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  position:relative;
+  z-index:1;
 }
 
-.fallback{ display:block; }
+.fallback{
+  display:block;
+  will-change: transform;
+  transform: translateZ(0);
+  position:relative;
+  z-index:1;
+}
+
 .fallbackVow{
   background: linear-gradient(155deg, rgba(185,205,220,.75) 0%, rgba(155,185,210,.55) 45%, rgba(230,225,218,.45) 100%);
 }
@@ -325,30 +334,18 @@
 .workSub{ font-size:9.5px; letter-spacing:.10em; color:var(--faint); }
 
 .sideText{
-  position: absolute;
-
-  /* ✅ 左の指定を無効化して、右下へ退避 */
-  left: auto;
-  right: 12px;
-  bottom: 12px;
-
-  font-size: 9px;
-  letter-spacing: .28em;
-  color: var(--faint);
-
+  position:absolute;
+  right:12px;
+  bottom:12px;
+  font-size:9px;
+  letter-spacing:.28em;
+  color:var(--faint);
   writing-mode: vertical-rl;
   text-orientation: mixed;
-
-  /* 既存の読み方向を維持 */
   transform: rotate(180deg);
-
   white-space: nowrap;
   user-select: none;
-
-  /* ✅ “邪魔”を物理的に消す */
   pointer-events: none;
-
-  /* ✅ フレーム/CTAより後ろに回す（必要なら数字は微調整） */
   z-index: 1;
   opacity: .55;
 }
@@ -357,9 +354,6 @@
    SP
 ========================= */
 @media (max-width:860px){
-  .nav{ padding:20px 20px; }
-  .navLink{ display:none; }
-
   .grid{
     grid-template-columns:1fr;
     padding:88px 20px 40px;
@@ -384,6 +378,7 @@
     position:relative;
     bottom:auto;
     left:auto;
+    transform:none;
     overflow-x:auto;
     gap:12px;
     padding-bottom:4px;
@@ -408,129 +403,4 @@
   .frameInner{ transition:none; }
   .frame:hover .frameInner{ transform:none; }
   .cta:hover{ transform:none; }
-}
-/* KOUを少し右へ＋少し離す（mdだけ） */
-.md{
-  margin-left: -84px;          /* 例：-108px → -84px で離す */
-  transform: translate(18px, 26px); /* 右へ18px / 下は現状維持 */
-}
-
-.md .frame,
-.md img,
-.md a{
-  box-shadow: 0 32px 60px rgba(0,0,0,.14);
-}
-/* BG TYPE：さらに背景化（作品勝ち） */
-.bgWord{
-  position:absolute;
-  font-family:"Cormorant Garamond","Times New Roman",serif;
-  font-weight:300;
-  line-height:.88;
-  letter-spacing:.04em;
-  color: rgba(140,120,90,.035); /* ← 0.050 → 0.035 */
-  white-space:nowrap;
-  user-select:none;
-}
-.frameInner{
-  position:relative; /* ← 追加 */
-  background:rgba(255,255,255,.88);
-  border:1px solid rgba(180,165,145,.40);
-
-  box-shadow:
-    0 60px 100px rgba(0,0,0,.20),
-    0 34px 70px rgba(0,0,0,.15),
-    0 10px 22px rgba(0,0,0,.09),
-    0 1px 0 rgba(255,255,255,.82) inset;
-
-  transition:transform .42s cubic-bezier(.22,.1,.28,1), box-shadow .42s cubic-bezier(.22,.1,.28,1);
-  transform-origin:center bottom;
-}
-
-/* 接地影（棚に“乗ってる”説得力） */
-.frameInner::after{
-  content:"";
-  position:absolute;
-  left:22px;
-  right:22px;
-  bottom:-18px;
-  height:28px;
-  background: radial-gradient(closest-side, rgba(0,0,0,.26), rgba(0,0,0,0));
-  filter: blur(10px);
-  opacity:.45;
-  pointer-events:none;
-}
-
-
-/* =========================
-   追加：作品比率ノブ（縦→ワイド）
-========================= */
-.heroRoot{
-  /* 3 / 4 → 16 / 10（ワイドだけど額縁として成立する高さ） */
-  --shotRatio: 16 / 10;
-}
-
-/* サイズ（ワイド化で“弱くなる”のを防ぐ：幅も増やす） */
-.lg .frameInner{ width: clamp(460px, 50vw, 600px); }
-
-.md{
-  /* 重なりは署名：少しだけ深くする */
-  margin-left: -168px;
-  transform: translateY(28px);
-}
-.md .frameInner{ width: clamp(360px, 40vw, 500px); }
-
-/* 中身（比率をノブで統一） */
-.imgWrap > img,
-.imgWrap > span{
-  width: 100%;
-  aspect-ratio: var(--shotRatio);
-  display: block;
-}
-.md .frameInner,
-.md{
-  box-shadow: 0 34px 70px rgba(0,0,0,.14);
-}
-
-/* まずこれ */
-.shelfWrap{
-  margin-right: clamp(8px, 1.2vw, 24px); /* 右余白を削る */
-}
-
-.frames{
-  transform: translateX(-252px); /* 2枚まとめて左へ */
-}
-/* =========================
-   PATCH: Ken Burns（窓パララックス）
-   位置は触らない / 中身だけ動かす
-========================= */
-
-/* 1) 窓化：scale/y移動で“はみ出し”を切る */
-.imgWrap{
-  position: relative;
-  overflow: hidden; /* ← 必須（中身だけ動かして動画っぽく） */
-}
-
-/* 2) マット保持：imgが動いても白フチが消えないように上から“内側縁”を足す */
-.imgWrap::before{
-  content:"";
-  position:absolute;
-  inset:0;
-  pointer-events:none;
-  z-index:2;
-  /* 今の padding:14px と同じ太さで“内側マット”を再現 */
-  box-shadow: inset 0 0 0 14px rgba(255,255,255,.70);
-}
-
-/* 3) 動く対象：transformの品質を上げる（GSAPが触る） */
-.workImg,
-.fallback{
-  will-change: transform;
-  transform: translateZ(0); /* サブピクセル安定 */
-  position: relative;
-  z-index:1;
-}
-
-/* 4) ついでに：画像の縁が“薄く汚れる”の防止（任意だが効く） */
-.workImg{
-  backface-visibility: hidden;
 }

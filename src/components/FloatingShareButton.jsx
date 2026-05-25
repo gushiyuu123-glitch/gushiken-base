@@ -1,10 +1,4 @@
-import React, {
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
+import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
 import "./floatingShareButton.css";
 
@@ -86,15 +80,7 @@ function IconLINE({ s }) {
 function IconInstagram({ s }) {
   return (
     <svg width={s} height={s} viewBox="0 0 24 24" fill="none" aria-hidden="true">
-      <rect
-        x="3.2"
-        y="3.2"
-        width="17.6"
-        height="17.6"
-        rx="5.2"
-        stroke="currentColor"
-        strokeWidth="1.45"
-      />
+      <rect x="3.2" y="3.2" width="17.6" height="17.6" rx="5.2" stroke="currentColor" strokeWidth="1.45" />
       <circle cx="12" cy="12" r="4.05" stroke="currentColor" strokeWidth="1.45" />
       <circle cx="17.2" cy="6.9" r="1.05" fill="currentColor" />
     </svg>
@@ -144,16 +130,7 @@ const PLATFORM_ICONS = {
   telegram: (s) => <IconTelegram s={s} />,
 };
 
-function buildItems({
-  shareUrl,
-  shareText,
-  encode,
-  openWin,
-  closeMenu,
-  copyFn,
-  notify,
-  setCopiedKey,
-}) {
+function buildItems({ shareUrl, shareText, encode, openWin, closeMenu, copyFn, notify, setCopiedKey }) {
   return [
     {
       key: "copy",
@@ -170,11 +147,7 @@ function buildItems({
       label: "X",
       sub: "Post",
       onClick: () => {
-        openWin(
-          `https://twitter.com/intent/tweet?text=${encode(shareText)}&url=${encode(
-            shareUrl
-          )}`
-        );
+        openWin(`https://twitter.com/intent/tweet?text=${encode(shareText)}&url=${encode(shareUrl)}`);
         closeMenu();
       },
     },
@@ -238,6 +211,10 @@ function buildItems({
   ];
 }
 
+function prefersReduced() {
+  return window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches ?? false;
+}
+
 export default function FloatingShareButton({
   label = "SHARE",
   showAfter = 260,
@@ -256,6 +233,7 @@ export default function FloatingShareButton({
   const firstItemRef = useRef(null);
 
   const location = useLocation();
+  const panelId = "floating-share-panel";
 
   const shareUrl = useMemo(() => {
     if (url) return url;
@@ -263,60 +241,187 @@ export default function FloatingShareButton({
     return "";
   }, [url, location.pathname, location.search, location.hash]);
 
+  // route change → close
   useEffect(() => {
     setIsOpen(false);
     setCopiedKey("");
     setNotice("");
   }, [location.pathname, location.search]);
 
+  // show/hide: Lenis優先 → fallback scroll
   useEffect(() => {
+    if (typeof window === "undefined") return undefined;
+
+    let raf = 0;
+    const update = (y) => setIsVisible((y ?? window.scrollY) > showAfter);
+
+    // ✅ Lenisがいるなら購読（滑らかスクロールでもズレない）
+    const lenis = window.__gd_lenis__;
+    if (lenis && typeof lenis.on === "function") {
+      const onLenis = (e) => {
+        // Lenis v1: e.scroll / v0: e.animatedScroll など揺れるので全部吸収
+        const y =
+          typeof e === "number"
+            ? e
+            : e?.scroll ?? e?.animatedScroll ?? window.scrollY;
+
+        if (raf) cancelAnimationFrame(raf);
+        raf = requestAnimationFrame(() => update(y));
+      };
+
+      // 初期
+      update(window.scrollY);
+
+      lenis.on("scroll", onLenis);
+      return () => {
+        if (raf) cancelAnimationFrame(raf);
+        try {
+          lenis.off?.("scroll", onLenis);
+        } catch (_) {}
+      };
+    }
+
+    // fallback
     let ticking = false;
-
-    const update = () => {
-      setIsVisible(window.scrollY > showAfter);
-      ticking = false;
-    };
-
     const onScroll = () => {
       if (ticking) return;
       ticking = true;
-      requestAnimationFrame(update);
+      requestAnimationFrame(() => {
+        update(window.scrollY);
+        ticking = false;
+      });
     };
 
-    update();
-
+    update(window.scrollY);
     window.addEventListener("scroll", onScroll, { passive: true });
-
-    return () => {
-      window.removeEventListener("scroll", onScroll);
-    };
+    return () => window.removeEventListener("scroll", onScroll);
   }, [showAfter]);
 
+  // toast auto-hide
   useEffect(() => {
     if (!notice) return undefined;
     const timer = window.setTimeout(() => setNotice(""), 2000);
     return () => window.clearTimeout(timer);
   }, [notice]);
 
+  // copied state auto-clear
   useEffect(() => {
     if (!copiedKey) return undefined;
     const timer = window.setTimeout(() => setCopiedKey(""), 1400);
     return () => window.clearTimeout(timer);
   }, [copiedKey]);
 
+  const encode = useCallback((value) => encodeURIComponent(value || ""), []);
+  const openWin = useCallback((targetUrl) => {
+    window.open(targetUrl, "_blank", "noopener,noreferrer");
+  }, []);
+
+  const notify = useCallback((message) => setNotice(message), []);
+  const closeMenu = useCallback((restoreFocus = true) => {
+    setIsOpen(false);
+    if (restoreFocus) requestAnimationFrame(() => triggerRef.current?.focus());
+  }, []);
+
+  const copyToClipboard = useCallback(async (text) => {
+    if (!text) return;
+
+    try {
+      if (navigator.clipboard?.writeText) {
+        await navigator.clipboard.writeText(text);
+        return;
+      }
+    } catch (_) {
+      // fallback
+    }
+
+    const textarea = document.createElement("textarea");
+    textarea.value = text;
+    textarea.setAttribute("readonly", "");
+    textarea.style.position = "fixed";
+    textarea.style.left = "-9999px";
+    textarea.style.top = "0";
+
+    document.body.appendChild(textarea);
+    textarea.select();
+    try {
+      document.execCommand("copy");
+    } finally {
+      document.body.removeChild(textarea);
+    }
+  }, []);
+
+  const canNative = typeof navigator !== "undefined" && typeof navigator.share === "function";
+
+  const preferNative = useMemo(() => {
+    if (!canNative) return false;
+    try {
+      return window.matchMedia("(pointer: coarse)").matches;
+    } catch {
+      return false;
+    }
+  }, [canNative]);
+
+  const handleNative = useCallback(async () => {
+    if (!canNative) return;
+
+    try {
+      await navigator.share({ title, text: shareText, url: shareUrl });
+      closeMenu(false);
+    } catch (error) {
+      if (error?.name !== "AbortError") console.error(error);
+    }
+  }, [canNative, title, shareText, shareUrl, closeMenu]);
+
+  const handleTrigger = useCallback(async () => {
+    if (preferNative) {
+      await handleNative();
+      return;
+    }
+    setIsOpen((prev) => !prev);
+  }, [preferNative, handleNative]);
+
+  const items = useMemo(
+    () =>
+      buildItems({
+        shareUrl,
+        shareText,
+        encode,
+        openWin,
+        closeMenu: () => closeMenu(true),
+        copyFn: copyToClipboard,
+        notify,
+        setCopiedKey,
+      }),
+    [shareUrl, shareText, encode, openWin, closeMenu, copyToClipboard, notify]
+  );
+
+  const handleItemClick = useCallback(
+    async (item) => {
+      try {
+        await item.onClick();
+      } catch (error) {
+        console.error(error);
+        setNotice("Failed");
+      }
+    },
+    []
+  );
+
+  // open: outside click + esc + focus trap
   useEffect(() => {
     if (!isOpen) return undefined;
 
     const onPointerDown = (event) => {
       if (!wrapRef.current?.contains(event.target)) {
-        setIsOpen(false);
+        closeMenu(false);
       }
     };
 
     const onKeyDown = (event) => {
       if (event.key === "Escape") {
-        setIsOpen(false);
-        triggerRef.current?.focus();
+        event.preventDefault();
+        closeMenu(true);
+        return;
       }
 
       if (event.key !== "Tab") return;
@@ -351,124 +456,44 @@ export default function FloatingShareButton({
       document.removeEventListener("pointerdown", onPointerDown, { capture: true });
       document.removeEventListener("keydown", onKeyDown);
     };
-  }, [isOpen]);
+  }, [isOpen, closeMenu]);
 
+  // focus first item
   useEffect(() => {
     if (!isOpen) return undefined;
     const raf = requestAnimationFrame(() => firstItemRef.current?.focus());
     return () => cancelAnimationFrame(raf);
   }, [isOpen]);
 
-  const encode = useCallback((value) => encodeURIComponent(value || ""), []);
-
-  const openWin = useCallback((targetUrl) => {
-    if (typeof window === "undefined") return;
-    window.open(targetUrl, "_blank", "noopener,noreferrer");
-  }, []);
-
-  const notify = useCallback((message) => setNotice(message), []);
-  const closeMenu = useCallback(() => setIsOpen(false), []);
-
-  const copyToClipboard = useCallback(async (text) => {
-    if (!text) return;
-
-    if (navigator.clipboard?.writeText) {
-      await navigator.clipboard.writeText(text);
-      return;
-    }
-
-    const textarea = document.createElement("textarea");
-    textarea.value = text;
-    textarea.setAttribute("readonly", "");
-    textarea.style.position = "fixed";
-    textarea.style.left = "-9999px";
-    textarea.style.top = "0";
-
-    document.body.appendChild(textarea);
-    textarea.select();
-    document.execCommand("copy");
-    document.body.removeChild(textarea);
-  }, []);
-
-  const canNative =
-    typeof navigator !== "undefined" && typeof navigator.share === "function";
-
-  const preferNative = useMemo(() => {
-    if (!canNative || typeof window === "undefined") return false;
-
-    try {
-      return window.matchMedia("(pointer: coarse)").matches;
-    } catch {
-      return false;
-    }
-  }, [canNative]);
-
-  const handleNative = useCallback(async () => {
-    if (!canNative) return;
-
-    try {
-      await navigator.share({ title, text: shareText, url: shareUrl });
-      closeMenu();
-    } catch (error) {
-      if (error?.name !== "AbortError") {
-        console.error(error);
+  // inert fallback: closedのときフォーカス不能に
+  const inertProps = !isOpen
+    ? {
+        "aria-hidden": true,
+        tabIndex: -1,
+        inert: "",
       }
-    }
-  }, [canNative, title, shareText, shareUrl, closeMenu]);
+    : {
+        "aria-hidden": false,
+      };
 
-  const handleTrigger = useCallback(async () => {
-    if (preferNative) {
-      await handleNative();
-      return;
-    }
-
-    setIsOpen((prev) => !prev);
-  }, [preferNative, handleNative]);
-
-  const items = useMemo(
-    () =>
-      buildItems({
-        shareUrl,
-        shareText,
-        encode,
-        openWin,
-        closeMenu,
-        copyFn: copyToClipboard,
-        notify,
-        setCopiedKey,
-      }),
-    [shareUrl, shareText, encode, openWin, closeMenu, copyToClipboard, notify]
-  );
-
-  const handleItemClick = useCallback(async (item) => {
-    try {
-      await item.onClick();
-    } catch (error) {
-      console.error(error);
-      setNotice("Failed");
-    }
-  }, []);
+  const reduced = typeof window !== "undefined" ? prefersReduced() : false;
 
   return (
     <div ref={wrapRef} className={`fsb-root${isVisible ? "" : " hidden"}`}>
-      <div
-        className={`fsb-toast${notice ? "" : " hidden"}`}
-        role="status"
-        aria-live="polite"
-      >
+      <div className={`fsb-toast${notice ? "" : " hidden"}`} role="status" aria-live="polite">
         {notice || "\u00a0"}
       </div>
 
-  <div
-  id="floating-share-panel"
-  ref={panelRef}
-  className={`fsb-panel${isOpen ? "" : " closed"}`}
-  role="dialog"
-  aria-modal="false"
-  aria-label="Share this page"
-  aria-hidden={!isOpen}
-  {...(!isOpen ? { inert: true } : {})}
->
+      <div
+        id={panelId}
+        ref={panelRef}
+        className={`fsb-panel${isOpen ? "" : " closed"}`}
+        role="dialog"
+        aria-modal="false"
+        aria-label="Share this page"
+        {...inertProps}
+        data-reduced={reduced ? "1" : "0"}
+      >
         <div className="fsb-header">
           <div>
             <p className="fsb-header-eyebrow">SHARE THIS PAGE</p>
@@ -479,10 +504,7 @@ export default function FloatingShareButton({
             type="button"
             className="fsb-close-btn"
             aria-label="Close share menu"
-            onClick={() => {
-              setIsOpen(false);
-              triggerRef.current?.focus();
-            }}
+            onClick={() => closeMenu(true)}
           >
             <CloseIcon style={{ width: 12, height: 12 }} />
           </button>
@@ -498,23 +520,15 @@ export default function FloatingShareButton({
                 onClick={() => handleItemClick(item)}
               >
                 <span className="fsb-item-left">
-                  <span className="fsb-item-icon">
-                    {PLATFORM_ICONS[item.key]?.(11)}
-                  </span>
+                  <span className="fsb-item-icon">{PLATFORM_ICONS[item.key]?.(11)}</span>
 
                   <span className="fsb-item-text">
-                    <span className="fsb-item-label">
-                      {copiedKey === item.key ? "Copied" : item.label}
-                    </span>
-                    <span className="fsb-item-caption">
-                      {copiedKey === item.key ? "DONE" : item.sub}
-                    </span>
+                    <span className="fsb-item-label">{copiedKey === item.key ? "Copied" : item.label}</span>
+                    <span className="fsb-item-caption">{copiedKey === item.key ? "DONE" : item.sub}</span>
                   </span>
                 </span>
 
-                <span className="fsb-item-sub">
-                  {copiedKey === item.key ? "OK" : "→"}
-                </span>
+                <span className="fsb-item-sub">{copiedKey === item.key ? "OK" : "→"}</span>
               </button>
             </li>
           ))}
@@ -543,18 +557,13 @@ export default function FloatingShareButton({
         type="button"
         aria-label={isOpen ? "Close share menu" : "Open share menu"}
         aria-expanded={isOpen}
-        aria-controls="floating-share-panel"
+        aria-controls={panelId}
         onClick={handleTrigger}
         className={`fsb-trigger${isOpen ? " open" : ""}`}
       >
         <span className="fsb-trigger-icon">
-          {isOpen ? (
-            <CloseIcon style={{ width: 11, height: 11 }} />
-          ) : (
-            <LinkIcon style={{ width: 12, height: 12 }} />
-          )}
+          {isOpen ? <CloseIcon style={{ width: 11, height: 11 }} /> : <LinkIcon style={{ width: 12, height: 12 }} />}
         </span>
-
         <span className="fsb-trigger-label">{label}</span>
       </button>
     </div>

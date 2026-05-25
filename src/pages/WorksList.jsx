@@ -1,15 +1,40 @@
-import React, {
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
+import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Category from "../components/Category";
 import WorkItem from "../components/WorkItem";
 import CategoryTabs from "../components/CategoryTabs";
 import FloatingShareButton from "../components/FloatingShareButton";
 import { worksData } from "../data/worksData";
+
+function prefersReducedMotion() {
+  return (
+    typeof window !== "undefined" &&
+    window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches
+  );
+}
+
+function scrollToY(y) {
+  // ✅ Lenis 優先（PCのみ有効な想定）
+  const lenis = typeof window !== "undefined" ? window.__gd_lenis__ : null;
+
+  // reduced-motion は即時
+  const immediate = prefersReducedMotion();
+
+  if (lenis && typeof lenis.scrollTo === "function") {
+    try {
+      lenis.scrollTo(y, {
+        immediate,
+        // “ぬるぬる”じゃなく、君のサイトの“像が整う”寄り
+        duration: immediate ? 0 : 0.78,
+        easing: (t) => 1 - Math.pow(1 - t, 3),
+      });
+      return;
+    } catch (_) {
+      // fallthrough
+    }
+  }
+
+  window.scrollTo({ top: y, behavior: immediate ? "auto" : "smooth" });
+}
 
 export default function WorksList() {
   const rootRef = useRef(null);
@@ -66,7 +91,7 @@ export default function WorksList() {
     );
   }, [activeCategory, enrichedData]);
 
-  // TOP / TABS など、初回だけ出す静的フェード
+  // TOP / TABS など、初回だけ出す静的フェード（現状維持）
   useEffect(() => {
     const root = rootRef.current;
     if (!root) return undefined;
@@ -74,7 +99,9 @@ export default function WorksList() {
     const targets = Array.from(root.querySelectorAll('[data-reveal="static"]'));
     if (!targets.length) return undefined;
 
-    if (!("IntersectionObserver" in window)) {
+    const reduce = prefersReducedMotion();
+
+    if (reduce || !("IntersectionObserver" in window)) {
       targets.forEach((el) => el.classList.add("aq-show"));
       return undefined;
     }
@@ -83,75 +110,32 @@ export default function WorksList() {
       (entries) => {
         entries.forEach((entry) => {
           if (!entry.isIntersecting) return;
-
           entry.target.classList.add("aq-show");
           observer.unobserve(entry.target);
         });
       },
-      {
-        threshold: 0.12,
-        rootMargin: "0px 0px -6% 0px",
-      }
+      { threshold: 0.12, rootMargin: "0px 0px -6% 0px" }
     );
 
     targets.forEach((el) => observer.observe(el));
-
     return () => observer.disconnect();
   }, []);
-
-  // 作品カードだけ、カテゴリ変更時に綺麗に再フェード
-  useEffect(() => {
-    const root = rootRef.current;
-    if (!root) return undefined;
-
-    const cards = Array.from(root.querySelectorAll('[data-reveal="work"]'));
-    if (!cards.length) return undefined;
-
-    cards.forEach((card) => {
-      card.classList.remove("aq-show");
-    });
-
-    if (!("IntersectionObserver" in window)) {
-      cards.forEach((card) => card.classList.add("aq-show"));
-      return undefined;
-    }
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (!entry.isIntersecting) return;
-
-          entry.target.classList.add("aq-show");
-          observer.unobserve(entry.target);
-        });
-      },
-      {
-        threshold: 0.12,
-        rootMargin: "0px 0px -8% 0px",
-      }
-    );
-
-    cards.forEach((card) => observer.observe(card));
-
-    return () => observer.disconnect();
-  }, [activeCategory, filteredData]);
 
   const handleChangeCategory = useCallback((cat) => {
     setActiveCategory(cat);
 
-    const root = rootRef.current;
-    if (!root) return;
+    // ✅ 1フレーム後に “その時点のtop” へ移動（Lenis対応）
+    requestAnimationFrame(() => {
+      const root = rootRef.current;
+      if (!root) return;
 
-    const top = root.getBoundingClientRect().top + window.scrollY - 40;
-
-    window.scrollTo({
-      top,
-      behavior: "smooth",
+      const top = root.getBoundingClientRect().top + window.scrollY - 40;
+      scrollToY(top);
     });
   }, []);
 
   return (
-    <section className="min-h-screen overflow-x-hidden bg-[#070604] px-6 py-24 pb-32 md:px-10 lg:px-16">
+   <section className="min-h-screen overflow-x-hidden bg-[#070604] text-white px-6 py-24 pb-32 md:px-10 lg:px-16">
       <div className="ambient-glow" style={{ height: "1px" }} />
 
       <div ref={rootRef} className="mx-auto max-w-6xl lg:max-w-7xl">
@@ -167,10 +151,11 @@ export default function WorksList() {
             WORKS
           </h1>
 
-          <p className="mt-8 max-w-[580px] text-[0.95rem] leading-[1.95] tracking-[0.03em] text-white/48">
-            世界観・構造・技術の三つを軸に、
+          {/* ✅ クライアント目線に寄せた説明（“世界観/構造/技術”の内輪語を薄める） */}
+          <p className="mt-8 max-w-[620px] text-[0.95rem] leading-[1.95] tracking-[0.03em] text-white/48">
+            まず「印象」が伝わり、
             <br className="hidden sm:block" />
-            それぞれに核のある作品だけを掲載しています。
+            次に「迷わない順番」で理解できる。そんな設計の実例です。
           </p>
         </div>
 
@@ -198,13 +183,13 @@ export default function WorksList() {
             const showCategoryNewBadge = !hideNewBadgeForItems;
 
             return (
-              <div key={`${block.category}-${blockIndex}`}>
+              <div key={`${activeCategory}-${block.category}-${blockIndex}`}>
                 {block.items.some((item) => item.isOrigin) && (
-   <div className="mb-20 text-center md:mb-24">
-  <p className="text-[0.7rem] tracking-[0.42em] text-white/40">
-    — ORIGINALITY —
-  </p>
-</div>
+                  <div className="mb-20 text-center md:mb-24">
+                    <p className="text-[0.7rem] tracking-[0.42em] text-white/40">
+                      — ORIGINALITY —
+                    </p>
+                  </div>
                 )}
 
                 <Category
@@ -215,7 +200,8 @@ export default function WorksList() {
                 >
                   {block.items.map((item, itemIndex) => (
                     <WorkItem
-                      key={item.slug || `${block.category}-${itemIndex}`}
+                      // ✅ ここが肝：カテゴリ切替で確実に再マウント→再フェードが安定
+                      key={`${activeCategory}:${item.slug || `${block.category}-${itemIndex}`}`}
                       title={item.title}
                       desc={item.desc}
                       link={`/works/${item.slug}`}

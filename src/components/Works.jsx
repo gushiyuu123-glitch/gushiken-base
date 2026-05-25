@@ -1,5 +1,6 @@
 // src/components/Works.jsx
 import { useLayoutEffect, useMemo, useRef } from "react";
+import { Link } from "react-router-dom";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import styles from "./Works.module.css";
@@ -14,7 +15,9 @@ const WORKS = [
     title: "KOU RYUI",
     sub: "琉球衣装キャンペーンサイト",
     img: "/works/kouryui.webp",
+    to: "/works/kou-ryui",
     href: "https://kouryui.vercel.app/",
+    alt: "制作事例：KOU RYUI（琉球衣装キャンペーンサイト）",
   },
   {
     key: "vow",
@@ -23,7 +26,9 @@ const WORKS = [
     title: "Vow in Light",
     sub: "Wedding / Okinawa",
     img: "/works/vow-in-light-entryhero.webp",
+    to: "/works/vow-in-light",
     href: "https://vow-in-light.vercel.app/",
+    alt: "制作事例：Vow in Light（Wedding / Okinawa）",
   },
   {
     key: "umikaji",
@@ -32,7 +37,9 @@ const WORKS = [
     title: "UMIKAJI",
     sub: "Awamori Brand / Okinawa",
     img: "/works/umikaji-pc2.webp",
+    to: "/works/umikaji",
     href: "https://umikaji-awamori.vercel.app/",
+    alt: "制作事例：UMIKAJI（Awamori Brand / Okinawa）",
   },
   {
     key: "velmont",
@@ -41,7 +48,9 @@ const WORKS = [
     title: "VELMONT",
     sub: "Luxury Auto Showroom",
     img: "/works/velmonte222.webp",
+    to: "/works/velmont",
     href: "https://velmont-virid.vercel.app/",
+    alt: "制作事例：VELMONT（Luxury Auto Showroom）",
   },
 ];
 
@@ -50,59 +59,83 @@ function isExternal(url) {
 }
 
 function WorkCard({ item, kind = "duo", order = 0 }) {
-  const external = isExternal(item.href);
+  const hasInternal = typeof item.to === "string" && item.to.startsWith("/");
+  const externalLive = isExternal(item.href);
 
-  // mainだけ “maskごとフェード”（VOWの01文法）
+  const Wrapper = hasInternal ? Link : "a";
+  const wrapperProps = hasInternal
+    ? { to: item.to }
+    : {
+        href: item.href,
+        target: externalLive ? "_blank" : undefined,
+        rel: externalLive ? "noreferrer noopener" : undefined,
+      };
+
   const isFade = kind === "main";
+  const isEager = kind === "main" && order === 0;
 
   return (
-    <a
+    <article
       className={`${styles.card} ${styles[`card_${kind}`]}`}
       data-card
       data-kind={kind}
       data-order={order}
-      href={item.href}
-      target={external ? "_blank" : undefined}
-      rel={external ? "noreferrer noopener" : undefined}
-      aria-label={`${item.title} を開く`}
     >
-      <div
-        className={styles.imageMask}
-        data-mask
-        {...(isFade ? { "data-fade": "1" } : {})}
+      <Wrapper
+        className={styles.cardLink}
+        aria-label={`${item.title} の制作事例を見る`}
+        {...wrapperProps}
       >
-        {/* ✅ パララックス用：窓（mask）固定 / 中身（inner）だけ動かす */}
-        <div className={styles.imageInner} data-parallax>
-          <img
-            className={styles.image}
-            data-image
-            src={item.img}
-            alt={item.title}
-            decoding="async"
-          />
+        <div
+          className={styles.imageMask}
+          data-mask
+          {...(isFade ? { "data-fade": "1" } : {})}
+        >
+          <div className={styles.imageInner} data-parallax>
+            <img
+              className={styles.image}
+              data-image
+              src={item.img}
+              alt={item.alt || item.title}
+              decoding="async"
+              loading={isEager ? "eager" : "lazy"}
+              fetchPriority={isEager ? "high" : "auto"}
+            />
+          </div>
+
+          <div className={styles.veil} data-veil aria-hidden="true" />
+          <div className={styles.glint} data-glint aria-hidden="true" />
         </div>
 
-        <div className={styles.veil} data-veil aria-hidden="true" />
-        <div className={styles.glint} data-glint aria-hidden="true" />
-      </div>
-
-      {/* KOU寄せ：赤は“線”の代わりに“署名の縦罫” */}
-      <div className={styles.stamp} data-stamp aria-hidden="true">
-        <span className={styles.stampLine} />
-        <span className={styles.stampNo}>{item.no}</span>
-        <span className={styles.stampTag}>{item.tag}</span>
-      </div>
-
-      <div className={styles.caption} data-text>
-        <div className={styles.meta}>
-          <span className={styles.tag}>{item.tag}</span>
-          <span className={styles.no}>{item.no}</span>
+        <div className={styles.stamp} data-stamp aria-hidden="true">
+          <span className={styles.stampLine} />
+          <span className={styles.stampNo}>{item.no}</span>
+          <span className={styles.stampTag}>{item.tag}</span>
         </div>
-        <div className={styles.title}>{item.title}</div>
-        <div className={styles.sub}>{item.sub}</div>
-        <span className={styles.open}>OPEN →</span>
-      </div>
-    </a>
+
+        <div className={styles.caption} data-text>
+          <div className={styles.meta}>
+            <span className={styles.tag}>{item.tag}</span>
+            <span className={styles.no}>{item.no}</span>
+          </div>
+          <div className={styles.title}>{item.title}</div>
+          <div className={styles.sub}>{item.sub}</div>
+          <span className={styles.open}>DETAIL →</span>
+        </div>
+      </Wrapper>
+
+      {externalLive && (
+        <a
+          className={styles.live}
+          href={item.href}
+          target="_blank"
+          rel="noreferrer noopener"
+          aria-label={`${item.title} の公開サイトを新しいタブで開く`}
+        >
+          LIVE ↗
+        </a>
+      )}
+    </article>
   );
 }
 
@@ -130,7 +163,6 @@ export default function Works() {
     if (reduce || coarse || narrow) return;
 
     const ctx = gsap.context(() => {
-      // intro（VOWの導入文法）
       const intro = gsap.utils.toArray("[data-works-intro]");
       gsap.set(intro, { opacity: 0, y: 18, filter: "blur(0.32px)" });
 
@@ -147,7 +179,6 @@ export default function Works() {
           stagger: 0.11,
         });
 
-      // --- WORKSタイトルPNG：像が整うフェード（VOW文法） ---
       const head = root.querySelector(`.${styles.head}`);
       const titleMask = head?.querySelector("[data-works-title]");
       const titleImg = titleMask?.querySelector(`.${styles.h2Img}`);
@@ -159,10 +190,7 @@ export default function Works() {
           scale: 0.985,
           filter: "blur(0.22px)",
         });
-        gsap.set(titleImg, {
-          opacity: 0,
-          scale: 1.01,
-        });
+        gsap.set(titleImg, { opacity: 0, scale: 1.01 });
 
         const tlt = gsap.timeline({
           paused: true,
@@ -181,15 +209,7 @@ export default function Works() {
             },
             0
           )
-          .to(
-            titleImg,
-            {
-              opacity: 1,
-              scale: 1,
-              duration: 0.72,
-            },
-            0.06
-          );
+          .to(titleImg, { opacity: 1, scale: 1, duration: 0.72 }, 0.06);
 
         ScrollTrigger.create({
           trigger: head || root,
@@ -217,32 +237,20 @@ export default function Works() {
           const veil = card.querySelector("[data-veil]");
           const stamp = card.querySelector("[data-stamp]");
           const glint = card.querySelector("[data-glint]");
-
           if (!mask || !image) return;
 
-          gsap.set(texts, {
-            opacity: 0,
-            y: yText,
-            filter: `blur(${blurText}px)`,
-          });
+          gsap.set(texts, { opacity: 0, y: yText, filter: `blur(${blurText}px)` });
 
           const isFade = mask.hasAttribute("data-fade");
           if (isFade) {
-            gsap.set(mask, {
-              clipPath: "inset(0% 0% 0% 0%)",
-              opacity: 0,
-              y: 12,
-            });
+            gsap.set(mask, { clipPath: "inset(0% 0% 0% 0%)", opacity: 0, y: 12 });
           } else {
             gsap.set(mask, { clipPath: "inset(0% 0% 100% 0%)" });
           }
 
-          // ✅ parallax分の“逃げ”込みで少し大きめに（端が出ない）
           gsap.set(image, { scale: 1.09, yPercent: 0 });
-
           if (veil) gsap.set(veil, { opacity: 0 });
-          if (stamp)
-            gsap.set(stamp, { opacity: 0, y: 14, filter: "blur(0.18px)" });
+          if (stamp) gsap.set(stamp, { opacity: 0, y: 14, filter: "blur(0.18px)" });
           if (glint) gsap.set(glint, { opacity: 0, xPercent: -140 });
         });
 
@@ -256,19 +264,13 @@ export default function Works() {
           gsap
             .timeline()
             .set(glintEl, { opacity: strength, xPercent: -140 })
-            .to(glintEl, {
-              xPercent: 140,
-              duration: 0.92,
-              ease: [0.22, 1, 0.36, 1],
-              delay,
-            })
+            .to(glintEl, { xPercent: 140, duration: 0.92, ease: [0.22, 1, 0.36, 1], delay })
             .to(glintEl, { opacity: 0, duration: 0.18 }, delay + 0.7);
         };
 
         if (type === "main") {
           const card = cards[0];
           if (!card) return;
-
           const mask = card.querySelector("[data-mask]");
           const image = card.querySelector("[data-image]");
           const texts = card.querySelectorAll("[data-text]");
@@ -279,16 +281,8 @@ export default function Works() {
           tl.to(mask, { opacity: 1, y: 0, duration: 0.66 }, 0.02)
             .to(veil, { opacity: 1, duration: 0.72 }, 0.1)
             .to(image, { scale: 1.06, yPercent: -1, duration: 1.25 }, 0.02)
-            .to(
-              texts,
-              { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.62 },
-              0.2
-            )
-            .to(
-              stamp,
-              { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.62 },
-              0.24
-            );
+            .to(texts, { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.62 }, 0.2)
+            .to(stamp, { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.62 }, 0.24);
 
           ScrollTrigger.create({
             trigger: panel,
@@ -320,29 +314,13 @@ export default function Works() {
           tl.to(m1, { clipPath: "inset(0% 0% 0% 0%)", duration: 0.72 }, 0.02)
             .to(v1, { opacity: 1, duration: 0.72 }, 0.1)
             .to(i1, { scale: 1.06, yPercent: -2, duration: 1.3 }, 0.02)
-            .to(
-              t1,
-              { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.62 },
-              0.22
-            )
-            .to(
-              s1,
-              { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.62 },
-              0.26
-            )
+            .to(t1, { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.62 }, 0.22)
+            .to(s1, { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.62 }, 0.26)
             .to(m2, { clipPath: "inset(0% 0% 0% 0%)", duration: 0.72 }, 0.18)
             .to(v2, { opacity: 1, duration: 0.72 }, 0.26)
             .to(i2, { scale: 1.06, yPercent: 2, duration: 1.3 }, 0.18)
-            .to(
-              t2,
-              { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.62 },
-              0.38
-            )
-            .to(
-              s2,
-              { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.62 },
-              0.42
-            );
+            .to(t2, { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.62 }, 0.38)
+            .to(s2, { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.62 }, 0.42);
 
           ScrollTrigger.create({
             trigger: panel,
@@ -361,7 +339,6 @@ export default function Works() {
         if (type === "wide") {
           const card = cards[0];
           if (!card) return;
-
           const mask = card.querySelector("[data-mask]");
           const image = card.querySelector("[data-image]");
           const texts = card.querySelectorAll("[data-text]");
@@ -372,16 +349,8 @@ export default function Works() {
           tl.to(mask, { clipPath: "inset(0% 0% 0% 0%)", duration: 0.72 }, 0.02)
             .to(veil, { opacity: 1, duration: 0.72 }, 0.1)
             .to(image, { scale: 1.06, yPercent: 1, duration: 1.35 }, 0.02)
-            .to(
-              texts,
-              { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.62 },
-              0.22
-            )
-            .to(
-              stamp,
-              { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.62 },
-              0.26
-            );
+            .to(texts, { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.62 }, 0.22)
+            .to(stamp, { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.62 }, 0.26);
 
           ScrollTrigger.create({
             trigger: panel,
@@ -409,16 +378,15 @@ export default function Works() {
         }
       });
 
-      // --- Parallax（スクロールで“画像の中身が動く”必殺技） ---
-      // 窓（mask）を固定して、中身（inner）だけをスクロール連動で微移動させる
+      // Parallax（innerを動かす）
       const cardsForParallax = gsap.utils.toArray("[data-card]");
       cardsForParallax.forEach((card) => {
         const inner = card.querySelector("[data-parallax]");
         if (!inner) return;
 
         const kind = card.getAttribute("data-kind") || "";
-        const base = kind === "main" ? 4.6 : kind === "wide" ? 3.9 : 3.2; // ％（大きすぎ禁止）
-        const dir = kind === "duoB" ? -1 : 1; // 2枚は逆方向で“編集感”
+        const base = kind === "main" ? 4.6 : kind === "wide" ? 3.9 : 3.2;
+        const dir = kind === "duoB" ? -1 : 1;
         const amt = base * dir;
 
         gsap.fromTo(
@@ -438,35 +406,26 @@ export default function Works() {
           }
         );
       });
-
-      // refresh（測定安定）
-      const t = window.setTimeout(() => ScrollTrigger.refresh(), 240);
-      const onResize = () => ScrollTrigger.refresh();
-      window.addEventListener("resize", onResize);
-      return () => {
-        window.clearTimeout(t);
-        window.removeEventListener("resize", onResize);
-      };
     }, root);
 
-    return () => ctx.revert();
+    const t = window.setTimeout(() => ScrollTrigger.refresh(), 240);
+    const onResize = () => ScrollTrigger.refresh();
+    window.addEventListener("resize", onResize);
+
+    return () => {
+      window.clearTimeout(t);
+      window.removeEventListener("resize", onResize);
+      ctx.revert();
+    };
   }, [stages]);
 
   return (
-    <section
-      ref={rootRef}
-      className={styles.section}
-      id="works"
-      aria-label="Works"
-    >
+    <section ref={rootRef} className={styles.section} id="works" aria-label="Works">
       <header className={styles.head}>
-        <p className={styles.kicker} data-works-intro>
-          SELECTED
-        </p>
+        <p className={styles.kicker} data-works-intro>SELECTED</p>
 
         <h2 className={styles.h2}>
           <span className={styles.h2Sr}>WORKS</span>
-
           <span className={styles.h2Mask} data-works-title>
             <img
               className={styles.h2Img}
@@ -480,40 +439,29 @@ export default function Works() {
         </h2>
 
         <p className={styles.lead} data-works-intro>
-          並べない。編集する。
-          <br />
-          像が整うタイミングまで設計する。
+          事例は、判断しやすい順に。<br />
+          見た瞬間の印象と、迷わない導線まで。
         </p>
       </header>
 
       <div className={styles.runway}>
         {stages.map((s) => (
-          <article
-            key={s.key}
-            className={styles.panel}
-            data-stage
-            data-stage-type={s.type}
-          >
+          <article key={s.key} className={styles.panel} data-stage data-stage-type={s.type}>
             <div className={styles.stage}>
-              {/* 章の軸（KOU寄せの“基準線”） */}
               <div className={styles.axis} aria-hidden="true">
                 <span className={styles.axisLabel}>{s.label}</span>
                 <span className={styles.axisLine} />
               </div>
 
-              {/* VOW的：境界を溶かす（seam fade） */}
               <div className={styles.seamTop} aria-hidden="true" />
               <div className={styles.seamBottom} aria-hidden="true" />
 
-              {/* 背景の巨大番号（読むためじゃなく重心） */}
               <div className={styles.bgNo} aria-hidden="true">
                 {s.type === "main" ? "01" : s.type === "duo" ? "02–03" : "04"}
               </div>
 
               <div className={`${styles.inner} ${styles[`inner_${s.type}`]}`}>
-                {s.type === "main" && (
-                  <WorkCard item={s.items[0]} kind="main" order={0} />
-                )}
+                {s.type === "main" && <WorkCard item={s.items[0]} kind="main" order={0} />}
 
                 {s.type === "duo" && (
                   <div className={styles.duoWrap}>
@@ -522,22 +470,17 @@ export default function Works() {
                   </div>
                 )}
 
-                {s.type === "wide" && (
-                  <>
-                    <WorkCard item={s.items[0]} kind="wide" order={0} />
-                  </>
-                )}
+                {s.type === "wide" && <WorkCard item={s.items[0]} kind="wide" order={0} />}
               </div>
             </div>
           </article>
         ))}
       </div>
 
-      {/* ✅ VIEW ALL：最下部センター（出口として締める） */}
       <div className={styles.tail} aria-label="Works archive">
-        <a className={styles.all} href="/works" aria-label="すべての制作実績を見る">
+        <Link className={styles.all} to="/works" aria-label="すべての制作実績を見る">
           VIEW ALL WORKS
-        </a>
+        </Link>
       </div>
     </section>
   );

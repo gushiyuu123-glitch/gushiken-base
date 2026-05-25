@@ -61,6 +61,10 @@ function focusWithoutScroll(el) {
   }
 }
 
+function prefersReducedMotion() {
+  return window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches ?? false;
+}
+
 export default function FloatingFAQ() {
   const [isOpen, setIsOpen] = useState(false);
   const [activeIndex, setActiveIndex] = useState(null);
@@ -72,13 +76,22 @@ export default function FloatingFAQ() {
 
   const location = useLocation();
 
-  const closePanel = useCallback(() => {
+  const closePanel = useCallback((restoreFocus = false) => {
     setIsOpen(false);
+    setActiveIndex(null);
+    if (restoreFocus) {
+      requestAnimationFrame(() => focusWithoutScroll(toggleButtonRef.current));
+    }
+  }, []);
+
+  const openPanel = useCallback(() => {
+    setIsOpen(true);
     setActiveIndex(null);
   }, []);
 
   const togglePanel = useCallback(() => {
     setIsOpen((prev) => !prev);
+    setActiveIndex(null);
   }, []);
 
   const toggleItem = useCallback((index) => {
@@ -87,8 +100,25 @@ export default function FloatingFAQ() {
 
   // ルート変更時に閉じる
   useEffect(() => {
-    closePanel();
+    closePanel(false);
   }, [location.pathname, closePanel]);
+
+  // ✅ Lenisがいる環境は、開いてる間だけ stop（背景スクロールの事故防止）
+  useEffect(() => {
+    if (typeof window === "undefined") return undefined;
+
+    const lenis = window.__gd_lenis__;
+    if (!lenis) return undefined;
+
+    if (isOpen) {
+      try { lenis.stop?.(); } catch {}
+      return () => {
+        try { lenis.start?.(); } catch {}
+      };
+    }
+
+    return undefined;
+  }, [isOpen]);
 
   // スマホでFAQを開いた時、背景スクロールを固定する
   useLayoutEffect(() => {
@@ -117,8 +147,7 @@ export default function FloatingFAQ() {
     const previousBodyOverflow = body.style.overflow;
     const previousBodyScrollBehavior = body.style.scrollBehavior;
 
-    // scroll-behavior: smooth が復帰時に効くと、
-    // 上から高速で戻るように見えるため一時的に無効化
+    // 復帰時の“高速smooth戻り”を殺す
     html.style.scrollBehavior = "auto";
     body.style.scrollBehavior = "auto";
 
@@ -132,7 +161,6 @@ export default function FloatingFAQ() {
     body.style.overflow = "hidden";
 
     return () => {
-      // 復帰中だけ smooth を確実に切る
       html.style.scrollBehavior = "auto";
       body.style.scrollBehavior = "auto";
 
@@ -154,21 +182,17 @@ export default function FloatingFAQ() {
     };
   }, [isOpen]);
 
-  // 外側クリックで閉じる
+  // 外側クリックで閉じる（バックドロップでも閉じる）
   useEffect(() => {
     if (!isOpen) return undefined;
 
     const handler = (event) => {
       const wrap = wrapRef.current;
       if (!wrap) return;
-
-      if (!wrap.contains(event.target)) {
-        closePanel();
-      }
+      if (!wrap.contains(event.target)) closePanel(false);
     };
 
     document.addEventListener("pointerdown", handler, { capture: true });
-
     return () => {
       document.removeEventListener("pointerdown", handler, { capture: true });
     };
@@ -180,27 +204,20 @@ export default function FloatingFAQ() {
 
     const handleKeyDown = (event) => {
       if (event.key !== "Escape") return;
-
       event.preventDefault();
-      closePanel();
-      focusWithoutScroll(toggleButtonRef.current);
+      closePanel(true);
     };
 
     window.addEventListener("keydown", handleKeyDown);
-
-    return () => {
-      window.removeEventListener("keydown", handleKeyDown);
-    };
+    return () => window.removeEventListener("keydown", handleKeyDown);
   }, [isOpen, closePanel]);
 
-  // 開いたら最初の質問へ。ただしスクロールは動かさない
+  // 開いたら最初の質問へ（スクロールは動かさない）
   useEffect(() => {
     if (!isOpen) return undefined;
-
     const raf = requestAnimationFrame(() => {
       focusWithoutScroll(firstQuestionRef.current);
     });
-
     return () => cancelAnimationFrame(raf);
   }, [isOpen]);
 
@@ -223,37 +240,45 @@ export default function FloatingFAQ() {
       if (event.shiftKey && document.activeElement === first) {
         event.preventDefault();
         focusWithoutScroll(last);
-      }
-
-      if (!event.shiftKey && document.activeElement === last) {
+      } else if (!event.shiftKey && document.activeElement === last) {
         event.preventDefault();
         focusWithoutScroll(first);
       }
     };
 
     panel.addEventListener("keydown", onKeyDown);
+    return () => panel.removeEventListener("keydown", onKeyDown);
+  }, [isOpen]);
 
-    return () => {
-      panel.removeEventListener("keydown", onKeyDown);
+  const panelProps = useMemo(() => {
+    return {
+      "data-open": isOpen ? "true" : "false",
+      "data-reduced": prefersReducedMotion() ? "true" : "false",
+      "aria-hidden": !isOpen,
+      ...(!isOpen ? { inert: true } : {}),
     };
   }, [isOpen]);
 
-const panelProps = useMemo(() => {
-  return {
-    "data-open": isOpen ? "true" : "false",
-    "aria-hidden": !isOpen,
-    ...(!isOpen ? { inert: true } : {}),
-  };
-}, [isOpen]);
-
   return (
-    <div ref={wrapRef} className="floating-faq-wrap">
+    <div
+      ref={wrapRef}
+      className="floating-faq-wrap"
+      data-open={isOpen ? "true" : "false"}
+    >
+      {/* ✅ Backdrop（モバイル中心に効かせる / クリックで閉じる） */}
+      <button
+        type="button"
+        className={`floating-faq-backdrop ${isOpen ? "is-open" : ""}`}
+        aria-label="FAQを閉じる"
+        onClick={() => closePanel(true)}
+      />
+
       <div
         ref={panelRef}
         id="floating-faq-panel"
         className={`floating-faq-panel ${isOpen ? "is-open" : ""}`}
         role="dialog"
-        aria-modal={isOpen ? "true" : "false"}
+        aria-modal={isOpen ? "true" : undefined}
         aria-labelledby="floating-faq-title"
         {...panelProps}
       >
@@ -274,10 +299,7 @@ const panelProps = useMemo(() => {
               <button
                 type="button"
                 className="floating-faq-close"
-                onClick={() => {
-                  closePanel();
-                  focusWithoutScroll(toggleButtonRef.current);
-                }}
+                onClick={() => closePanel(true)}
                 aria-label="FAQを閉じる"
               >
                 <span aria-hidden="true" />
@@ -286,16 +308,15 @@ const panelProps = useMemo(() => {
             </div>
           </div>
 
-          <div className="floating-faq-list">
+          <div className="floating-faq-list" role="list">
             {faqData.map((item, index) => {
               const expanded = activeIndex === index;
 
               return (
                 <div
                   key={item.question}
-                  className={`floating-faq-item ${
-                    expanded ? "is-active" : ""
-                  }`}
+                  className={`floating-faq-item ${expanded ? "is-active" : ""}`}
+                  role="listitem"
                 >
                   <button
                     ref={index === 0 ? firstQuestionRef : null}
@@ -339,7 +360,7 @@ const panelProps = useMemo(() => {
             <Link
               to="/contact"
               className="floating-faq-link"
-              onClick={closePanel}
+              onClick={() => closePanel(false)}
             >
               <span>お問い合わせへ</span>
               <span aria-hidden="true">→</span>
@@ -352,27 +373,17 @@ const panelProps = useMemo(() => {
         ref={toggleButtonRef}
         type="button"
         className={`floating-faq-toggle ${isOpen ? "is-open" : ""}`}
-        onClick={togglePanel}
+        onClick={isOpen ? () => closePanel(true) : openPanel}
         aria-expanded={isOpen}
         aria-controls="floating-faq-panel"
         aria-haspopup="dialog"
         aria-label={isOpen ? "FAQを閉じる" : "FAQを開く"}
       >
         <span className="floating-faq-toggle-icon" aria-hidden="true">
-          <svg
-            viewBox="0 0 24 24"
-            className="floating-faq-toggle-svg"
-            fill="none"
-          >
+          <svg viewBox="0 0 24 24" className="floating-faq-toggle-svg" fill="none">
             <circle cx="12" cy="12" r="8.5" />
             <path d="M9.9 9.2a2.35 2.35 0 0 1 4.2 1.45c0 1.55-1.6 2.02-2.1 2.75-.22.32-.28.62-.28 1.1" />
-            <circle
-              cx="12"
-              cy="17.1"
-              r="0.7"
-              fill="currentColor"
-              stroke="none"
-            />
+            <circle cx="12" cy="17.1" r="0.7" fill="currentColor" stroke="none" />
           </svg>
         </span>
 

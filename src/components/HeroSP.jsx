@@ -1,12 +1,14 @@
 import { useLayoutEffect, useMemo, useRef, useState } from "react";
+import { Link } from "react-router-dom";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import styles from "./HeroSp.module.css";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const VOW_URL = "https://vow-in-light.vercel.app/";
-const KOU_URL = "https://kouryui.vercel.app/";
+// ✅ 内部導線（SEO/回遊/迷子防止）
+const VOW_PATH = "/works/vow-in-light";
+const KOU_PATH = "/works/kou-ryui";
 
 export default function HeroSP() {
   const rootRef = useRef(null);
@@ -18,7 +20,7 @@ export default function HeroSP() {
         key: "vow",
         title: "Vow in Light",
         sub: "Wedding / Okinawa",
-        href: VOW_URL,
+        to: VOW_PATH,
         img: "/works/vow-in-light-entryherosp.webp",
         alt: "制作事例：Vow in Light",
       },
@@ -26,7 +28,7 @@ export default function HeroSP() {
         key: "kou",
         title: "KOU RYUI",
         sub: "Ryukyu Costume / Naha / Okinawa",
-        href: KOU_URL,
+        to: KOU_PATH,
         img: "/works/kouryuisp.webp",
         alt: "制作事例：KOU RYUI",
       },
@@ -38,7 +40,8 @@ export default function HeroSP() {
     const root = rootRef.current;
     if (!root) return;
 
-    const reduce = window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches;
+    const reduce =
+      window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches ?? false;
 
     const ctx = gsap.context(() => {
       if (reduce) return;
@@ -49,7 +52,7 @@ export default function HeroSP() {
       gsap.set(q('[data-hero="bgPhoto"]'), { opacity: 0, y: 14 });
       gsap.set(q('[data-hero="bgType"]'), { opacity: 0 });
 
-      // 読める“場所”→文字→作品
+      // 読める“場所” → 文字 → 作品
       gsap.set(q('[data-hero="readPad"]'), { opacity: 0 });
 
       gsap.set(qa('[data-hero="leftItem"]'), {
@@ -82,6 +85,7 @@ export default function HeroSP() {
         start: "top top",
         end: "bottom top",
         scrub: 0.55,
+        invalidateOnRefresh: true,
         animation: gsap
           .timeline()
           .to(q('[data-hero="bgPhoto"]'), { y: -10 }, 0)
@@ -110,34 +114,42 @@ export default function HeroSP() {
       </div>
 
       <div className={styles.content}>
-        {/* テキストの下に可読性膜 */}
+        {/* テキストの下に可読性膜（箱に見せない） */}
         <div className={styles.readPad} data-hero="readPad" aria-hidden="true" />
 
-        {/* 左テキスト */}
+        {/* テキスト */}
         <div className={styles.left}>
           <p className={styles.kicker} data-hero="leftItem">
             QUIET / ORDER / IMPRESSION
           </p>
+
           <p className={styles.hook} data-hero="leftItem">
             空気から、設計する。
           </p>
 
           <h1 className={styles.h1} data-hero="leftItem">
-            Gushiken<br />
+            Gushiken
+            <br />
             Design
           </h1>
 
-    <p className={styles.copy} data-hero="leftItem">
-  <span className={styles.copyMeta}>沖縄の上質なWebデザイン・ホームページ制作</span>
-  <span className={styles.copyText}>
-    写真と余白で印象を整え、安っぽく見せないWebサイトへ。<br />
-    言葉と導線まで揃えて、迷わず相談できる形にします。
-  </span>
-</p>
+          <p className={styles.copy} data-hero="leftItem">
+            <span className={styles.copyMeta}>沖縄の上質なWebデザイン・ホームページ制作</span>
+            <span className={styles.copyText}>
+              写真が良いのに、サイトで安く見える。
+              <br />
+              そのギャップを埋めて、問い合わせまで迷わない形に整えます。
+            </span>
+          </p>
 
-<a className={styles.cta} href="#contact" data-hero="leftItem">
-  <span>相談する</span>
-</a>
+          <a className={styles.cta} href="#contact" data-hero="leftItem">
+            <span>相談する</span>
+          </a>
+
+          {/* ✅ SPでも「一行の安心」 */}
+          <p className={styles.ctaNote} data-hero="leftItem">
+            返信目安：24時間以内 / オンライン可
+          </p>
         </div>
 
         {/* 作品ステージ */}
@@ -148,13 +160,11 @@ export default function HeroSP() {
 
           <div className={styles.frames}>
             {/* Vow（奥・大） */}
-            <a
-              href={WORKS[0].href}
-              target="_blank"
-              rel="noreferrer"
+            <Link
+              to={WORKS[0].to}
               className={`${styles.frame} ${styles.lg}`}
               data-hero="frameVow"
-              aria-label="Vow in Light（外部サイトを開く）"
+              aria-label="制作事例：Vow in Light（詳細へ）"
             >
               <div className={styles.frameInner}>
                 <div className={styles.imgWrap}>
@@ -178,16 +188,14 @@ export default function HeroSP() {
                   <span className={styles.workSub}>{WORKS[0].sub}</span>
                 </div>
               </div>
-            </a>
+            </Link>
 
             {/* KOU（手前） */}
-            <a
-              href={WORKS[1].href}
-              target="_blank"
-              rel="noreferrer"
+            <Link
+              to={WORKS[1].to}
               className={`${styles.frame} ${styles.md}`}
               data-hero="frameKou"
-              aria-label="KOU RYUI（外部サイトを開く）"
+              aria-label="制作事例：KOU RYUI（詳細へ）"
             >
               <div className={styles.frameInner}>
                 <div className={styles.imgWrap}>
@@ -210,7 +218,7 @@ export default function HeroSP() {
                   <span className={styles.workSub}>{WORKS[1].sub}</span>
                 </div>
               </div>
-            </a>
+            </Link>
           </div>
 
           <div className={styles.scrollHint} aria-hidden="true" />

@@ -1,5 +1,5 @@
 /* ==========================================================
-   News List — GUSHIKEN DESIGN OS
+   News List — GUSHIKEN DESIGN OS (Readable Edition)
    Archive Shelf / Black Frame / Champagne Gold × Silver Line
 ========================================================== */
 
@@ -11,22 +11,14 @@
   padding: 112px 0 128px;
 
   background:
-    radial-gradient(
-      circle at 16% 0%,
-      rgba(201, 177, 138, 0.034),
-      transparent 30%
-    ),
-    linear-gradient(
-      180deg,
-      #0a0a0a 0%,
-      var(--main, #0b0b0b) 28%,
-      #090909 68%,
-      #0a0a0a 100%
-    );
+    radial-gradient(circle at 16% 0%, rgba(201, 177, 138, 0.030), transparent 30%),
+    radial-gradient(980px 520px at 62% 22%, rgba(255, 255, 255, 0.010), transparent 70%),
+    linear-gradient(180deg, #0a0a0a 0%, var(--main, #0b0b0b) 28%, #090909 68%, #0a0a0a 100%);
 
   color: rgba(255, 255, 255, 0.92);
 }
 
+/* ❌ 可読性を削る白膜を弱体化（“ほぼ消す”） */
 .wrapper::before {
   content: "";
   position: absolute;
@@ -34,15 +26,10 @@
   pointer-events: none;
 
   background:
-    linear-gradient(
-      180deg,
-      rgba(255, 255, 255, 0.014) 0%,
-      transparent 18%,
-      transparent 82%,
-      rgba(255, 255, 255, 0.01) 100%
-    );
+    radial-gradient(1200px 560px at 50% 18%, rgba(0,0,0,0.40), transparent 65%),
+    linear-gradient(180deg, rgba(255,255,255,0.006) 0%, transparent 22%, transparent 80%, rgba(255,255,255,0.006) 100%);
 
-  opacity: 0.9;
+  opacity: 0.34;
 }
 
 .wrapper::after {
@@ -51,12 +38,9 @@
   inset: 0;
   pointer-events: none;
 
-  background-image: radial-gradient(
-    rgba(255, 255, 255, 0.14) 0.42px,
-    transparent 0.42px
-  );
+  background-image: radial-gradient(rgba(255, 255, 255, 0.14) 0.42px, transparent 0.42px);
   background-size: 4px 4px;
-  opacity: 0.016;
+  opacity: 0.014;
 }
 
 .inner {
@@ -78,7 +62,7 @@
   background: linear-gradient(
     to bottom,
     rgba(201, 177, 138, 0.38),
-    rgba(220, 226, 235, 0.1),
+    rgba(220, 226, 235, 0.10),
     rgba(255, 255, 255, 0.05)
   );
 
@@ -120,7 +104,7 @@
   max-width: 620px;
   margin: 1.1rem 0 0;
 
-  color: rgba(255, 255, 255, 0.48);
+  color: rgba(255, 255, 255, 0.54);
   font-size: 0.86rem;
   line-height: 1.95;
   letter-spacing: 0.08em;
@@ -133,7 +117,7 @@
 .error {
   margin: 0 0 0 1rem;
 
-  color: rgba(255, 255, 255, 0.46);
+  color: rgba(255, 255, 255, 0.52);
   font-size: 0.86rem;
   line-height: 1.9;
   letter-spacing: 0.08em;
@@ -162,12 +146,7 @@
   border: 1px solid rgba(201, 177, 138, 0.22);
   border-radius: 999px;
 
-  background:
-    linear-gradient(
-      180deg,
-      rgba(201, 177, 138, 0.04),
-      rgba(255, 255, 255, 0.01)
-    );
+  background: linear-gradient(180deg, rgba(201, 177, 138, 0.04), rgba(255, 255, 255, 0.01));
 
   color: rgba(255, 255, 255, 0.78);
   font-size: 0.72rem;
@@ -176,7 +155,7 @@
   text-decoration: none;
 
   transition:
-    transform 0.35s var(--ease-silent, cubic-bezier(.22,.56,.18,1)),
+    transform 0.35s cubic-bezier(.22,.56,.18,1),
     border-color 0.35s ease,
     background 0.35s ease,
     color 0.35s ease;
@@ -219,9 +198,13 @@
 
   border-bottom: 1px solid rgba(255, 255, 255, 0.075);
 
+  /* heavy list optimization */
+  content-visibility: auto;
+  contain-intrinsic-size: 152px;
+
   transition:
     background 0.35s ease,
-    transform 0.45s var(--ease-silent, cubic-bezier(.22,.56,.18,1)),
+    transform 0.45s cubic-bezier(.22,.56,.18,1),
     border-color 0.35s ease;
 }
 
@@ -233,7 +216,6 @@
   bottom: 0;
 
   width: 1px;
-
   background: rgba(201, 177, 138, 0);
 
   transition: background 0.35s ease;
@@ -271,13 +253,7 @@
   border-top-color: rgba(201, 177, 138, 0.16);
   border-radius: 2px;
 
-  background:
-    linear-gradient(
-      180deg,
-      rgba(255, 255, 255, 0.018) 0%,
-      rgba(255, 255, 255, 0.008) 100%
-    ),
-    rgba(14, 14, 14, 0.96);
+  background: rgba(14, 14, 14, 0.96);
 
   box-shadow:
     0 16px 42px rgba(0, 0, 0, 0.22),
@@ -295,7 +271,7 @@
   transform: scale(1.006);
 
   transition:
-    transform 0.85s var(--ease-silent, cubic-bezier(.22,.56,.18,1)),
+    transform 0.85s cubic-bezier(.22,.56,.18,1),
     filter 0.55s ease;
 }
 
@@ -315,7 +291,7 @@
 .date {
   margin: 0 0 0.55rem;
 
-  color: rgba(201, 177, 138, 0.48);
+  color: rgba(201, 177, 138, 0.52);
   font-family: "Cormorant Garamond", Georgia, serif;
   font-size: 1rem;
   line-height: 1;
@@ -325,7 +301,7 @@
 .itemTitle {
   margin: 0;
 
-  color: rgba(255, 255, 255, 0.86);
+  color: rgba(255, 255, 255, 0.88);
   font-size: 1.05rem;
   font-weight: 300;
   line-height: 1.65;
@@ -349,21 +325,13 @@
 
   transition:
     color 0.35s ease,
-    transform 0.35s var(--ease-silent, cubic-bezier(.22,.56,.18,1));
+    transform 0.35s cubic-bezier(.22,.56,.18,1);
 }
 
 .item:hover .arrow,
 .item:focus-visible .arrow {
   color: rgba(201, 177, 138, 0.72);
   transform: translateX(3px);
-}
-
-/* ===============================
-   AQ SAFETY
-================================ */
-.wrapper :global(.aq-fade) {
-  filter: none !important;
-  backdrop-filter: none !important;
 }
 
 /* ===============================
@@ -414,15 +382,7 @@
     margin-left: 0.75rem;
   }
 
-  /*
-    SPは明確にエリア指定。
-    画像あり：
-      01 | image image
-         | meta  arrow
-
-    画像なし：
-      01 | meta  arrow
-  */
+  /* default: thumbあり想定 */
   .item {
     grid-template-columns: 2.2rem minmax(0, 1fr) auto;
     grid-template-areas:
@@ -436,6 +396,7 @@
     padding: 1.25rem 0;
 
     transform: none;
+    contain-intrinsic-size: 132px;
   }
 
   .item:hover,
@@ -446,15 +407,12 @@
   .itemNumber {
     grid-area: num;
     align-self: start;
-
     padding-top: 0.15rem;
-
     font-size: 1.2rem;
   }
 
   .thumbWrap {
     grid-area: thumb;
-
     width: 100%;
     height: auto;
     aspect-ratio: 16 / 9;
@@ -468,7 +426,6 @@
   .arrow {
     grid-area: arrow;
     align-self: center;
-
     font-size: 0.82rem;
   }
 
@@ -477,30 +434,19 @@
   }
 
   .itemTitle {
-    display: block;
-    min-width: 0;
-    max-width: 100%;
-
     font-size: 0.94rem;
     line-height: 1.65;
     letter-spacing: 0.035em;
-
-    overflow-wrap: anywhere;
-    word-break: break-word;
   }
 
-  /*
-    eyecatch がない記事にも対応。
-    thumb が存在しない場合は、余白行を作らず
-    num / meta / arrow を同じ行に並べる。
-  */
-  .item:not(:has(.thumbWrap)) {
+  /* ✅ thumbなし記事：:has() を使わず data 属性で分岐 */
+  .item[data-has-thumb="false"]{
     grid-template-areas: "num meta arrow";
     align-items: center;
+    contain-intrinsic-size: 96px;
   }
-
-  .item:not(:has(.thumbWrap)) .itemNumber,
-  .item:not(:has(.thumbWrap)) .arrow {
+  .item[data-has-thumb="false"] .itemNumber,
+  .item[data-has-thumb="false"] .arrow{
     align-self: center;
   }
 }
@@ -535,4 +481,35 @@
     transition: none !important;
     animation: none !important;
   }
+
+  .item:hover,
+  .item:focus-visible {
+    transform: none;
+  }
+
+  .thumb {
+    transform: none;
+  }
+}
+/* NEWS（SVG title）を白に */
+.svgTitle :global(.section-svg-text),
+.svgTitle :global(.section-svg-char){
+  fill: #fff !important;
+  opacity: 1 !important;
+  fill-opacity: 1 !important;
+}
+
+/* NEWS / ARCHIVE（kicker）も白寄せ */
+.svgTitle :global(.section-svg-kicker){
+  color: rgba(255,255,255,0.72) !important;
+}
+
+/* 下線も白寄せ（好みで） */
+.svgTitle :global(.section-svg-line){
+  background: linear-gradient(
+    90deg,
+    rgba(255,255,255,0.85),
+    rgba(255,255,255,0.18),
+    transparent
+  ) !important;
 }

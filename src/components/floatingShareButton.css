@@ -1,6 +1,9 @@
 /* ============================================================
-   Floating Share Button — GUSHIKEN DESIGN OS
+   Floating Share Button — GUSHIKEN DESIGN OS (STRONG)
    Quiet Share / Black Glass / Champagne Gold × Silver Line
+   - hoverはfine pointerのみ（タッチ誤爆ゼロ）
+   - open時の回転は廃止（気持ち悪さ排除）
+   - focus-visibleは常に効く（品＋操作性）
 ============================================================ */
 
 .fsb-root {
@@ -22,8 +25,6 @@
   --fsb-ease: var(--ease-silent, cubic-bezier(.22, .56, .18, 1));
 
   position: fixed;
-
-  /* 右下に自然に沈める：高すぎず、低すぎない位置 */
   right: var(--fsb-right, 24px);
   bottom: calc(var(--fsb-bottom, 40px) + env(safe-area-inset-bottom));
 
@@ -34,6 +35,7 @@
   align-items: flex-end;
   gap: 0.58rem;
 
+  /* rootは透過：子だけクリック */
   pointer-events: none;
 
   opacity: 1;
@@ -133,6 +135,7 @@
 
   transform-origin: bottom right;
 
+  /* ✅ 子はクリック可 */
   pointer-events: auto;
 
   opacity: 1;
@@ -255,13 +258,12 @@
     transform 0.28s var(--fsb-ease);
 }
 
-.fsb-close-btn:hover,
 .fsb-close-btn:focus-visible {
+  outline: none;
   transform: translateY(-1px);
   border-color: rgba(201, 177, 138, 0.24);
   background: rgba(201, 177, 138, 0.04);
   color: rgba(255, 255, 255, 0.84);
-  outline: none;
 }
 
 /* ------------------------------------------------------------
@@ -278,7 +280,6 @@
 
 .fsb-item {
   position: relative;
-
   width: 100%;
 
   display: flex;
@@ -326,7 +327,6 @@
   display: none;
 }
 
-.fsb-item:hover,
 .fsb-item:focus-visible {
   background: rgba(255, 255, 255, 0.026);
   outline: none;
@@ -353,7 +353,6 @@
   display: flex;
   align-items: center;
   gap: 10px;
-
   min-width: 0;
 }
 
@@ -387,7 +386,6 @@
     transform 0.28s var(--fsb-ease);
 }
 
-.fsb-item:hover .fsb-item-icon,
 .fsb-item:focus-visible .fsb-item-icon {
   color: rgba(238, 226, 204, 0.88);
   background: rgba(201, 177, 138, 0.055);
@@ -444,18 +442,15 @@
     transform 0.28s var(--fsb-ease);
 }
 
-.fsb-item:hover .fsb-item-label,
 .fsb-item:focus-visible .fsb-item-label {
   color: rgba(255, 255, 255, 0.86);
   letter-spacing: 0.095em;
 }
 
-.fsb-item:hover .fsb-item-caption,
 .fsb-item:focus-visible .fsb-item-caption {
   color: rgba(201, 177, 138, 0.38);
 }
 
-.fsb-item:hover .fsb-item-sub,
 .fsb-item:focus-visible .fsb-item-sub {
   color: rgba(201, 177, 138, 0.66);
   transform: translateX(2px);
@@ -503,7 +498,6 @@
   transition-delay: 0.28s;
 }
 
-.fsb-native:hover,
 .fsb-native:focus-visible {
   background: rgba(201, 177, 138, 0.055);
   border-color: rgba(201, 177, 138, 0.22);
@@ -579,7 +573,6 @@
   pointer-events: none;
 }
 
-.fsb-trigger:hover,
 .fsb-trigger:focus-visible {
   transform: translateY(-1px);
   border-color: rgba(201, 177, 138, 0.28);
@@ -594,7 +587,6 @@
   outline: none;
 }
 
-.fsb-trigger:hover::before,
 .fsb-trigger:focus-visible::before,
 .fsb-trigger.open::before {
   opacity: 1;
@@ -633,7 +625,6 @@
     transform 0.52s var(--fsb-ease);
 }
 
-.fsb-trigger:hover .fsb-trigger-icon,
 .fsb-trigger:focus-visible .fsb-trigger-icon,
 .fsb-trigger.open .fsb-trigger-icon {
   color: rgba(238, 226, 204, 0.86);
@@ -641,8 +632,9 @@
   background: rgba(201, 177, 138, 0.035);
 }
 
+/* ✅ open回転は廃止（CloseIcon回転の違和感を消す） */
 .fsb-trigger.open .fsb-trigger-icon {
-  transform: rotate(135deg);
+  transform: none;
 }
 
 .fsb-trigger-label {
@@ -660,7 +652,6 @@
     letter-spacing 0.36s var(--fsb-ease);
 }
 
-.fsb-trigger:hover .fsb-trigger-label,
 .fsb-trigger:focus-visible .fsb-trigger-label,
 .fsb-trigger.open .fsb-trigger-label {
   color: rgba(255, 255, 255, 0.78);
@@ -668,7 +659,81 @@
 }
 
 /* ------------------------------------------------------------
-   Focus
+   Hover（fine pointerだけに限定：タッチ誤爆ゼロ）
+------------------------------------------------------------ */
+@media (hover: hover) and (pointer: fine) {
+  .fsb-close-btn:hover {
+    transform: translateY(-1px);
+    border-color: rgba(201, 177, 138, 0.24);
+    background: rgba(201, 177, 138, 0.04);
+    color: rgba(255, 255, 255, 0.84);
+    outline: none;
+  }
+
+  .fsb-item:hover {
+    background: rgba(255, 255, 255, 0.026);
+    outline: none;
+  }
+
+  .fsb-item:hover .fsb-item-icon {
+    color: rgba(238, 226, 204, 0.88);
+    background: rgba(201, 177, 138, 0.055);
+    border-color: rgba(201, 177, 138, 0.22);
+    transform: translateY(-1px);
+  }
+
+  .fsb-item:hover .fsb-item-label {
+    color: rgba(255, 255, 255, 0.86);
+    letter-spacing: 0.095em;
+  }
+
+  .fsb-item:hover .fsb-item-caption {
+    color: rgba(201, 177, 138, 0.38);
+  }
+
+  .fsb-item:hover .fsb-item-sub {
+    color: rgba(201, 177, 138, 0.66);
+    transform: translateX(2px);
+  }
+
+  .fsb-native:hover {
+    background: rgba(201, 177, 138, 0.055);
+    border-color: rgba(201, 177, 138, 0.22);
+    outline: none;
+  }
+
+  .fsb-trigger:hover {
+    transform: translateY(-1px);
+    border-color: rgba(201, 177, 138, 0.28);
+    background: rgba(12, 12, 12, 0.9);
+    color: rgba(255, 255, 255, 0.82);
+
+    box-shadow:
+      0 0 0 0.5px rgba(201, 177, 138, 0.055),
+      0 18px 52px rgba(0, 0, 0, 0.42),
+      inset 0 1px 0 rgba(255, 255, 255, 0.05);
+
+    outline: none;
+  }
+
+  .fsb-trigger:hover::before {
+    opacity: 1;
+  }
+
+  .fsb-trigger:hover .fsb-trigger-icon {
+    color: rgba(238, 226, 204, 0.86);
+    border-color: rgba(201, 177, 138, 0.24);
+    background: rgba(201, 177, 138, 0.035);
+  }
+
+  .fsb-trigger:hover .fsb-trigger-label {
+    color: rgba(255, 255, 255, 0.78);
+    letter-spacing: 0.34em;
+  }
+}
+
+/* ------------------------------------------------------------
+   Focus ring（統一）
 ------------------------------------------------------------ */
 .fsb-item:focus-visible,
 .fsb-native:focus-visible,
@@ -695,8 +760,6 @@
 @media (max-width: 640px) {
   .fsb-root {
     right: 14px;
-
-    /* SPは親指で押しやすく、画面下に寄せる */
     bottom: calc(var(--fsb-bottom-sp, 20px) + env(safe-area-inset-bottom));
   }
 
@@ -737,10 +800,16 @@
     letter-spacing: 0.26em;
   }
 
-  .fsb-trigger:hover .fsb-trigger-label,
   .fsb-trigger:focus-visible .fsb-trigger-label,
   .fsb-trigger.open .fsb-trigger-label {
     letter-spacing: 0.29em;
+  }
+}
+
+/* タッチ環境の押し心地（activeだけ） */
+@media (hover: none) and (pointer: coarse) {
+  .fsb-item:active {
+    background: rgba(255, 255, 255, 0.022);
   }
 }
 

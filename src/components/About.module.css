@@ -12,6 +12,19 @@
   overflow: hidden;
 }
 
+/* ✅ SR ONLY */
+.srOnly{
+  position:absolute;
+  width:1px;
+  height:1px;
+  padding:0;
+  margin:-1px;
+  overflow:hidden;
+  clip:rect(0,0,0,0);
+  white-space:nowrap;
+  border:0;
+}
+
 .about-section {
   position: relative;
   overflow: hidden;
@@ -194,7 +207,18 @@
   letter-spacing: 0.04em;
 }
 
-.about-note-link {
+/* ✅ profile links row */
+.about-links{
+  display:flex;
+  flex-wrap:wrap;
+  gap: 14px 18px;
+  align-items:center;
+}
+
+/* 既存noteと同じ質感で統一 */
+.about-note-link,
+.about-works-link,
+.about-contact-link{
   position: relative;
   display: inline-flex;
   align-items: center;
@@ -206,7 +230,9 @@
   text-decoration: none;
 }
 
-.about-note-link::after {
+.about-note-link::after,
+.about-works-link::after,
+.about-contact-link::after{
   content: "";
   position: absolute;
   left: 0;
@@ -228,12 +254,21 @@
 }
 
 .about-note-link:hover,
-.about-note-link:focus-visible {
+.about-note-link:focus-visible,
+.about-works-link:hover,
+.about-works-link:focus-visible,
+.about-contact-link:hover,
+.about-contact-link:focus-visible{
   color: rgba(28, 28, 28, 0.82);
   outline: none;
 }
+
 .about-note-link:hover::after,
-.about-note-link:focus-visible::after {
+.about-note-link:focus-visible::after,
+.about-works-link:hover::after,
+.about-works-link:focus-visible::after,
+.about-contact-link:hover::after,
+.about-contact-link:focus-visible::after{
   transform: scaleX(1);
   opacity: 0.82;
 }
@@ -400,7 +435,10 @@
 }
 
 .qrow--clickable{ cursor:pointer; }
-.qrow--clickable:focus-visible{ outline:none; }
+.qrow--clickable:focus-visible{
+  outline: 2px solid rgba(184, 144, 90, 0.34);
+  outline-offset: 8px;
+}
 
 .qrow__icon{
   width: 26px;
@@ -410,6 +448,33 @@
   opacity: 0.9;
 }
 .qrow--learning .qrow__icon{ stroke: rgba(100, 80, 50, 0.34); }
+
+/* ✅ Responsive: QROW */
+@media (max-width: 860px){
+  .qrow{
+    grid-template-columns: 1fr;
+    gap: .65rem;
+    padding: 1rem .15rem;
+  }
+
+  .qrow__meta{
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: .45rem .75rem;
+    padding-left: .9rem;
+  }
+
+  .qrow__right{
+    align-items: flex-start;
+    padding-right: 0;
+  }
+
+  .qrow__note,
+  .qrow__action{
+    white-space: normal;
+  }
+}
 
 /* ---------- design approach ---------- */
 .about-style-block{ margin-bottom: 5rem; }
@@ -519,6 +584,14 @@
   grid-template-columns: repeat(5, 1fr);
   gap: 0.75rem;
   margin-bottom: 1.8rem;
+}
+
+/* ✅ Responsive: SWATCH */
+@media (max-width: 720px){
+  .site-swatch-grid{ grid-template-columns: repeat(3, 1fr); }
+}
+@media (max-width: 420px){
+  .site-swatch-grid{ grid-template-columns: repeat(2, 1fr); }
 }
 
 .site-swatch-item {
@@ -697,5 +770,44 @@
     opacity: 1 !important;
     transform: none !important;
     filter: none !important;
+  }
+}/* =======================================================
+   FIX: SPで本文が1文字改行になる問題（ABOUT / DESIGN APPROACH）
+======================================================= */
+@media (max-width: 860px){
+  /* DESIGN APPROACH の行：3カラム固定 → 2カラム＋2段 */
+  .about-style-item{
+    grid-template-columns: 40px 1fr;
+    grid-template-rows: auto auto;
+    gap: .65rem .9rem;
+    padding: 1rem .15rem;
+  }
+
+  .about-style-no{
+    grid-column: 1;
+    grid-row: 1 / span 2;
+    padding-left: .9rem;
+  }
+
+  .about-style-title{
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .about-style-text{
+    grid-column: 2;
+    grid-row: 2;
+
+    /* 念のため：細い幅でも読みやすく折り返す */
+    overflow-wrap: anywhere;
+    word-break: normal;
+  }
+}
+
+/* さらに小さい端末（iPhone SE等）は余白を少し締める */
+@media (max-width: 420px){
+  .about-style-item{
+    gap: .6rem .8rem;
+    padding: .9rem .1rem;
   }
 }

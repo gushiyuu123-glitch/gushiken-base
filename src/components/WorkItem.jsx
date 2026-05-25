@@ -46,16 +46,8 @@ export default function WorkItem({
     return diffDays <= 30;
   }, [tags, createdAt]);
 
-  /**
-   * PCは列ごとに軽くズラす。
-   * ただしCSS側を“ふわっ”寄りに長くしているので、
-   * JS側のdelayは少し短めにして重さを出しすぎない。
-   *
-   * SPは1カラムなので遅延なし。
-   */
   const revealDelay = useMemo(() => {
     const index = toSafeIndex(revealIndex);
-
     return {
       desktop: (index % 3) * 120,
       tablet: (index % 2) * 100,
@@ -76,9 +68,8 @@ export default function WorkItem({
       return undefined;
     }
 
-    const reduceMotion = window.matchMedia?.(
-      "(prefers-reduced-motion: reduce)"
-    )?.matches;
+    const reduceMotion =
+      window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches ?? false;
 
     if (reduceMotion || !("IntersectionObserver" in window)) {
       setVisible(true);
@@ -90,24 +81,18 @@ export default function WorkItem({
     let rafId = 0;
     let done = false;
 
+    // ✅ 念のため：再マウント直後の瞬間だけ “一回 false に戻す”
+    setVisible(false);
+
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (done || !entry?.isIntersecting) return;
 
         done = true;
-
-        rafId = window.requestAnimationFrame(() => {
-          setVisible(true);
-        });
-
+        rafId = window.requestAnimationFrame(() => setVisible(true));
         observer.disconnect();
       },
       {
-        /**
-         * CSS側のtransitionが長めなので、
-         * 少し早めに発火させて「出てきた瞬間」ではなく
-         * 「空気に浮かび上がってくる」感じにする。
-         */
         threshold: isMobile ? 0.04 : 0.14,
         rootMargin: isMobile ? "0px 0px 16% 0px" : "0px 0px -6% 0px",
       }
@@ -127,9 +112,7 @@ export default function WorkItem({
         target: "_blank",
         rel: "noopener noreferrer",
       }
-    : {
-        to: link,
-      };
+    : { to: link };
 
   return (
     <Tag
@@ -158,10 +141,7 @@ export default function WorkItem({
     >
       <span
         aria-hidden="true"
-        className="
-          pointer-events-none absolute left-0 top-0 z-20
-          h-px w-full opacity-70
-        "
+        className="pointer-events-none absolute left-0 top-0 z-20 h-px w-full opacity-70"
         style={{
           background:
             "linear-gradient(90deg, transparent, rgba(201,177,138,0.44), rgba(255,255,255,0.12), transparent)",
@@ -170,11 +150,7 @@ export default function WorkItem({
 
       <span
         aria-hidden="true"
-        className="
-          pointer-events-none absolute inset-0 z-10
-          opacity-[0.018]
-          mix-blend-normal
-        "
+        className="pointer-events-none absolute inset-0 z-10 opacity-[0.018] mix-blend-normal"
         style={{
           backgroundImage:
             "radial-gradient(rgba(255,255,255,0.16) 0.42px, transparent 0.42px)",
@@ -201,10 +177,7 @@ export default function WorkItem({
         ) : (
           <div
             aria-hidden="true"
-            className="
-              h-full w-full
-              bg-[linear-gradient(135deg,rgba(255,255,255,0.06),rgba(255,255,255,0.015))]
-            "
+            className="h-full w-full bg-[linear-gradient(135deg,rgba(255,255,255,0.06),rgba(255,255,255,0.015))]"
           />
         )}
 
@@ -219,40 +192,17 @@ export default function WorkItem({
       </div>
 
       <div className="relative z-20 p-5 pb-6 md:p-7 md:pb-9">
-        <h3
-          className="
-            mb-2 text-[0.96rem]
-            font-light leading-[1.38]
-            tracking-[0.13em] text-white/90
-            md:mb-3 md:text-[1.02rem] md:tracking-[0.16em]
-          "
-        >
+        <h3 className="mb-2 text-[0.96rem] font-light leading-[1.38] tracking-[0.13em] text-white/90 md:mb-3 md:text-[1.02rem] md:tracking-[0.16em]">
           {title}
         </h3>
 
         {desc && (
-          <p
-            className="
-              mb-4 max-w-[360px]
-              whitespace-pre-line text-[0.8rem]
-              leading-[1.78] text-white/54
-              md:mb-6 md:text-[0.85rem] md:leading-[1.9]
-            "
-          >
+          <p className="mb-4 max-w-[360px] whitespace-pre-line text-[0.8rem] leading-[1.78] text-white/54 md:mb-6 md:text-[0.85rem] md:leading-[1.9]">
             {desc}
           </p>
         )}
 
-        <span
-          className="
-            inline-flex items-center gap-2
-            text-[0.68rem] tracking-[0.18em]
-            text-[rgba(201,177,138,0.62)]
-            transition-colors duration-[420ms] ease-out
-            group-hover:text-[rgba(238,226,204,0.92)]
-            md:text-[0.74rem] md:tracking-[0.24em]
-          "
-        >
+        <span className="inline-flex items-center gap-2 text-[0.68rem] tracking-[0.18em] text-[rgba(201,177,138,0.62)] transition-colors duration-[420ms] ease-out group-hover:text-[rgba(238,226,204,0.92)] md:text-[0.74rem] md:tracking-[0.24em]">
           <span>作品詳細へ</span>
           <span className={revealStyles.arrow} aria-hidden="true">
             →

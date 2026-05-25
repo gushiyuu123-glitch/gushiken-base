@@ -15,152 +15,89 @@ export default function CategoryTabs({
 
   const isActive = (cat) => normalize(activeCategory) === normalize(cat);
 
+  const TabButton = ({ cat, size = "sp" }) => {
+    const active = isActive(cat);
+
+    const base =
+      size === "sp"
+        ? "text-[0.70rem] tracking-[0.22em] pb-3"
+        : "text-[0.78rem] tracking-[0.24em] pb-3";
+
+    return (
+      <button
+        key={cat}
+        type="button"
+        onClick={() => setActiveCategory(cat)}
+        aria-pressed={active}
+        className={`
+          relative shrink-0 whitespace-nowrap
+          ${base}
+          transition-[color] duration-[340ms] ease-[cubic-bezier(0.22,0.56,0.18,1)]
+          focus-visible:outline-none
+          focus-visible:ring-1
+          focus-visible:ring-[rgba(201,177,138,0.42)]
+          focus-visible:ring-offset-2
+          focus-visible:ring-offset-[#070707]
+          ${active ? "text-[rgba(238,226,204,0.95)]" : "text-white/48 hover:text-white/82"}
+          after:content-['']
+          after:absolute after:left-1/2 after:bottom-0 after:h-px
+          after:-translate-x-1/2
+          after:transition-[width,opacity,background-color] after:duration-[420ms]
+          after:ease-[cubic-bezier(0.22,0.56,0.18,1)]
+          ${active
+            ? "after:w-[86%] after:opacity-100 after:bg-[rgba(201,177,138,0.44)]"
+            : "after:w-[38%] after:opacity-30 after:bg-white/20 hover:after:opacity-60 hover:after:bg-[rgba(201,177,138,0.26)]"}
+        `}
+      >
+        {cat}
+      </button>
+    );
+  };
+
   return (
     <div className="mb-16">
-      {/* ================================
-          SP
-      ================================ */}
-      <div
-        className="
-          no-scrollbar flex gap-2.5 overflow-x-auto
-          px-3 py-2 md:hidden
-          [scroll-snap-type:x_mandatory]
-          [overscroll-behavior-x:contain]
-        "
-        style={{
-          WebkitOverflowScrolling: "touch",
-          touchAction: "pan-x",
-        }}
-        aria-label="作品カテゴリ"
-      >
-        {categoryList.map((cat) => {
-          const active = isActive(cat);
+      {/* ================= SP ================= */}
+      <div className="relative md:hidden" aria-label="作品カテゴリ">
+        {/* 端フェード（続きがある合図） */}
+        <div
+          className="pointer-events-none absolute left-0 top-0 z-10 h-full w-10 bg-gradient-to-r from-[#070707] via-[#070707]/55 to-transparent"
+          aria-hidden="true"
+        />
+        <div
+          className="pointer-events-none absolute right-0 top-0 z-10 h-full w-10 bg-gradient-to-l from-[#070707] via-[#070707]/55 to-transparent"
+          aria-hidden="true"
+        />
 
-          return (
-            <button
-              key={cat}
-              type="button"
-              onClick={() => setActiveCategory(cat)}
-              aria-pressed={active}
-              className={`
-                relative shrink-0 whitespace-nowrap overflow-hidden
-                rounded-full border px-4 py-[0.48rem]
-                text-[0.64rem] tracking-[0.18em]
-                transition-[color,border-color,background-color,box-shadow,transform]
-                duration-[360ms]
-                ease-[cubic-bezier(0.22,0.56,0.18,1)]
-                [scroll-snap-align:start]
-                focus-visible:outline-none
-                focus-visible:ring-1
-                focus-visible:ring-[rgba(201,177,138,0.42)]
-                focus-visible:ring-offset-2
-                focus-visible:ring-offset-[#070707]
-                ${
-                  active
-                    ? `
-                      border-[rgba(201,177,138,0.34)]
-                      bg-[rgba(201,177,138,0.065)]
-                      text-[rgba(238,226,204,0.94)]
-                      shadow-[0_0_18px_rgba(201,177,138,0.045)]
-                    `
-                    : `
-                      border-white/[0.12]
-                      bg-transparent
-                      text-white/50
-                      hover:border-[rgba(201,177,138,0.26)]
-                      hover:text-white/82
-                    `
-                }
-              `}
-            >
-              <span
-                aria-hidden="true"
-                className={`
-                  pointer-events-none absolute inset-0 rounded-full
-                  transition-opacity duration-[360ms]
-                  ease-[cubic-bezier(0.22,0.56,0.18,1)]
-                  ${active ? "opacity-100" : "opacity-0"}
-                `}
-                style={{
-                  background:
-                    "radial-gradient(circle at 50% 0%, rgba(201,177,138,0.10), transparent 58%)",
-                }}
-              />
-
-              <span className="relative z-10">{cat}</span>
-            </button>
-          );
-        })}
+        <div
+          className="
+            no-scrollbar flex gap-6 overflow-x-auto
+            px-4 pt-2
+            [scroll-snap-type:x_mandatory]
+            [overscroll-behavior-x:contain]
+            [scroll-padding-left:16px]
+            [scroll-padding-right:16px]
+            border-b border-white/10
+          "
+          style={{
+            WebkitOverflowScrolling: "touch",
+            touchAction: "pan-x",
+          }}
+        >
+          {categoryList.map((cat) => (
+            <div key={cat} className="[scroll-snap-align:start]">
+              <TabButton cat={cat} size="sp" />
+            </div>
+          ))}
+        </div>
       </div>
 
-      {/* ================================
-          PC
-      ================================ */}
-      <div
-        className="
-          hidden flex-wrap justify-center gap-3
-          px-2 pb-3 pt-2 md:flex
-        "
-        aria-label="作品カテゴリ"
-      >
-        {categoryList.map((cat) => {
-          const active = isActive(cat);
-
-          return (
-            <button
-              key={cat}
-              type="button"
-              onClick={() => setActiveCategory(cat)}
-              aria-pressed={active}
-              className={`
-                relative whitespace-nowrap overflow-hidden
-                rounded-full border px-6 py-[0.56rem]
-                text-[0.74rem] tracking-[0.22em]
-                transition-[color,border-color,background-color,box-shadow,transform]
-                duration-[380ms]
-                ease-[cubic-bezier(0.22,0.56,0.18,1)]
-                focus-visible:outline-none
-                focus-visible:ring-1
-                focus-visible:ring-[rgba(201,177,138,0.42)]
-                focus-visible:ring-offset-2
-                focus-visible:ring-offset-[#070707]
-                ${
-                  active
-                    ? `
-                      border-[rgba(201,177,138,0.36)]
-                      bg-[rgba(201,177,138,0.065)]
-                      text-[rgba(238,226,204,0.95)]
-                      shadow-[0_0_22px_rgba(201,177,138,0.05)]
-                    `
-                    : `
-                      border-white/[0.13]
-                      bg-transparent
-                      text-white/52
-                      hover:-translate-y-[1px]
-                      hover:border-[rgba(201,177,138,0.26)]
-                      hover:text-white/84
-                    `
-                }
-              `}
-            >
-              <span
-                aria-hidden="true"
-                className={`
-                  pointer-events-none absolute inset-0 rounded-full
-                  transition-opacity duration-[380ms]
-                  ease-[cubic-bezier(0.22,0.56,0.18,1)]
-                  ${active ? "opacity-100" : "opacity-0"}
-                `}
-                style={{
-                  background:
-                    "radial-gradient(circle at 50% 0%, rgba(201,177,138,0.10), transparent 58%)",
-                }}
-              />
-
-              <span className="relative z-10">{cat}</span>
-            </button>
-          );
-        })}
+      {/* ================= PC ================= */}
+      <div className="hidden md:block" aria-label="作品カテゴリ">
+        <div className="mx-auto flex max-w-5xl flex-wrap justify-center gap-x-8 gap-y-3 border-b border-white/10 px-2 pt-2">
+          {categoryList.map((cat) => (
+            <TabButton key={cat} cat={cat} size="pc" />
+          ))}
+        </div>
       </div>
     </div>
   );

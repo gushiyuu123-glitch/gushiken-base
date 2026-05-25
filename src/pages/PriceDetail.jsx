@@ -26,14 +26,8 @@ const PLANS = [
     detail:
       "サービスや商品の魅力を、1ページで端的に伝えるプランです。まず公開したい、必要最小限で“ちゃんと見える”状態を作りたい、という段階に向いています。",
     bestFor: "「まず一枚、上質に見せる土台を作りたい」という方へ。",
-    includes: [
-      "1ページ構成",
-      "オリジナルデザイン",
-      "スマホ対応",
-      "写真の軽い補正（明るさ・色）",
-      "公開初期設定",
-      "ドメイン / サーバー接続サポート",
-    ],
+    includes: ["1ページ構成", "構成提案（簡易）", "デザイン＋実装", "フォーム（簡易）"],
+    note: "※ ページ追加・撮影・長文ライティングは別途。",
   },
   {
     badge: "02",
@@ -41,16 +35,10 @@ const PLANS = [
     jp: "小規模サイト",
     price: "120,000",
     detail:
-      "トップページと下層ページで、必要な情報を整理しながら“迷わず伝わる”構成にします。サービス内容・料金・アクセスなど、判断材料をページ別にまとめたい方へ。",
-    bestFor: "「情報をページ別にまとめて、見え方も揃えたい」という方へ。",
-    includes: [
-      "トップ + 下層2〜4ページ",
-      "サービス内容の整理",
-      "スマホ対応",
-      "写真の軽い補正（明るさ・色）",
-      "公開初期設定",
-      "ドメイン / サーバー接続サポート",
-    ],
+      "事業の内容・強み・実績などを、複数ページで整理して伝えるプランです。「ちゃんとしてる感」「安心して問い合わせできる情報設計」を最優先に組み立てます。",
+    bestFor: "「紹介されても恥ずかしくない“名刺サイト”を作りたい」方へ。",
+    includes: ["複数ページ（目安 3〜5）", "情報設計", "デザイン＋実装", "基本SEO"],
+    note: "※ 規模により変動します（事前に総額提示）。",
   },
   {
     badge: "03",
@@ -58,38 +46,21 @@ const PLANS = [
     jp: "印象重視サイト",
     price: "240,000",
     detail:
-      "写真・色・余白・文字・導線まで一つのトーンに設計し、見た瞬間の印象で選ばれるサイトを作ります。安っぽく見せず、サービスの価値が自然に伝わる状態へ。",
-    bestFor: "「価格ではなく、印象で選ばれたい」という方へ。",
-    includes: [
-      "印象設計（全体のトーン・空気感の設計）",
-      "複数ページ対応",
-      "写真 / 色 / 余白のトーン調整",
-      "スマホ対応",
-      "公開初期設定 / 接続サポート",
-    ],
-    featured: true,
-    featuredLabel: "SIGNATURE",
+      "世界観と体験の“印象”を強く残すプランです。写真・余白・タイポ・動きの統合で、ブランドの気配を立ち上げます。",
+    bestFor: "「価格ではなく“雰囲気”で選ばれたい」ブランド・店舗向け。",
+    includes: ["世界観設計", "演出（軽量・酔いにくい）", "デザイン＋実装", "導線設計"],
+    note: "※ 企画密度が高いぶん、制作期間も長めです。",
+    signature: true,
   },
 ];
 
-const FLOW_STEPS = [
-  { n: "01", title: "ヒアリング", sub: "目的・雰囲気・予算感の確認" },
-  { n: "02", title: "構成と進め方のご提案", sub: "LP / 複数ページ / 必要範囲の整理" },
-  { n: "03", title: "お見積もり・着手金", sub: "内容確定後、着手金50%で制作開始" },
-  { n: "04", title: "方向性の確定", sub: "トーンを1案で確定してから本制作へ" },
-  { n: "05", title: "デザイン制作", sub: "印象・情報・導線を設計" },
-  { n: "06", title: "実装・確認", sub: "スマホ対応・表示調整・公開前確認" },
-  { n: "07", title: "公開・納品", sub: "公開完了後、最終確認して納品" },
+const ADDONS = [
+  { title: "写真の個別補正（まとめ）", price: "要相談", desc: "色味・トーンの揃え込み。必要な範囲で。", badge: "ADD" },
+  { title: "追加ページ", price: "要相談", desc: "ページ単位で増える場合。構造が変わると再見積。", badge: "ADD" },
+  { title: "文章の整理・調整", price: "要相談", desc: "読みやすさ優先で“伝わる順番”へ整えます。", badge: "ADD" },
+  { title: "運用サポート（月額）", price: "9,800〜", desc: "軽微な更新・NEWS追加など。", badge: "CARE" },
 ];
 
-const OPTIONS = [
-  { name: "お知らせ更新機能の導入", price: "¥30,000〜" },
-{ name: "写真の個別補正（こだわり調整）", price: "¥3,000 / 枚〜" },
-  { name: "追加ページ", price: "内容に応じてお見積もり" },
-  { name: "ロゴ / 印刷物 / 撮影", price: "内容に応じてご相談" },
-];
-
-/* ========= meta helpers ========= */
 function setMetaByName(name, content) {
   if (!content) return;
   let tag = document.querySelector(`meta[name="${name}"]`);
@@ -150,6 +121,12 @@ export default function PriceDetail() {
     setMetaByName("twitter:image", ogImage);
   }, []);
 
+  // ✅ index.css の膜/トーンが乗る事故を“このページだけ”無効化
+  useEffect(() => {
+    document.body.classList.add("is-price-detail");
+    return () => document.body.classList.remove("is-price-detail");
+  }, []);
+
   useEffect(() => {
     const root = rootRef.current;
     if (!root) return undefined;
@@ -176,6 +153,7 @@ export default function PriceDetail() {
       <div className="pd-container">
         <div className="pd-side-line" aria-hidden="true" />
 
+        {/* HERO（上だけ黒で世界観） */}
         <header className="pd-header pd-reveal">
           <SectionSvgTitle title="PRICE" sub="PRICE / DETAIL" className="pd-svg-title" />
 
@@ -188,7 +166,7 @@ export default function PriceDetail() {
           <p className="pd-lead">
             はじめてのご相談でも、内容が固まっていなくても大丈夫です。
             <br />
-            <span>目的・雰囲気・予算感をお聞きしながら</span>、必要な範囲と優先順位を一緒に整理していきます。
+            目的・雰囲気・ご予算感を聞きながら、必要な範囲と優先順位を一緒に整理していきます。
             <br />
             料金は事前に総額をご案内したうえで進めています。
           </p>
@@ -198,335 +176,141 @@ export default function PriceDetail() {
           </p>
         </header>
 
-        <SectionTitle main>プランと料金</SectionTitle>
-
-        <div className="pd-plans pd-reveal">
-          {PLANS.map((plan) => (
-            <PlanCard key={plan.badge} {...plan} />
-          ))}
-        </div>
-
-        {/* PLAN直後：見積フォーム */}
-        <DiagnosisCta />
-
-        <SectionTitle main>運用・保守</SectionTitle>
-
-        <div className="pd-reveal">
-          <MaintenanceCard />
-        </div>
-
-        <SectionTitle main>制作の流れ</SectionTitle>
-
-        <div className="pd-reveal">
-          <FlowTimeline />
-        </div>
-
-        <SectionTitle main>お支払いについて</SectionTitle>
-
-        <div className="pd-reveal">
-          <TextBlock>
-            <li>
-              <span className="pd-text-accent">着手金：50%</span>（入金確認後に制作開始）
-            </li>
-            <li>残金：公開完了・最終確認後、7日以内のお支払いをお願いしています。</li>
-            <li>内容の追加や変更がある場合は、必ず事前にご相談のうえで調整します。</li>
-          </TextBlock>
-        </div>
-
-        <SectionTitle main>ご確認いただきたいこと</SectionTitle>
-
-        <div className="pd-reveal">
-          <TextBlock>
-            <li>納期の目安は内容により2〜5週間前後です。</li>
-
-            <li>
-              素材のご提出が遅れた場合は、
-              <span className="pd-text-accent">納期も同じ日数分スライド</span>します。
-            </li>
-
-            <li>
-              “イメージ違い”を防ぐため、制作前に
-              <span className="pd-text-accent">方向性（トーン）を1案で確定</span>してから本制作へ進みます。
-            </li>
-
-            <li>
-              デザイン案（ラフを含む）の作成は制作業務のため、
-              <span className="pd-text-accent">着手金の入金確認後</span>に開始します。
-            </li>
-
-            <li>
-              修正は回数と範囲を事前にご案内します。
-              <span className="pd-text-muted">（1回＝まとめて1回分の修正指示）</span>
-            </li>
-
-            <li>
-              丁寧な仕上がりを優先しているため、
-              <span className="pd-text-accent">急ぎのみを優先されるご依頼とは合わない場合があります。</span>
-            </li>
-          </TextBlock>
-        </div>
-
-        <SectionTitle>写真・ビジュアルについて</SectionTitle>
-
-        <div className="pd-reveal">
-          <TextBlock>
-            <li>写真素材が不足している場合は、雰囲気に合う画像の選定も行います。</li>
-
-            <li>
-              お持ちの写真は、
-              <span className="pd-text-accent">明るさ・色の軽い補正は料金内</span>で対応します。
-              <span className="pd-text-muted">（個別補正はオプション）</span>
-            </li>
-
-            <li>
-              参考サイトの共有は歓迎です。ただし完全な再現ではなく、「どこが良いか」を読み取り、
-              <span className="pd-text-accent">目的と内容に合わせて最適化</span>します。
-            </li>
-
-            <li>
-              スムーズに進めるため、
-              <Link to={WORKS_PATH} className="pd-inline-link">
-                WORKS
-              </Link>
-              から近い雰囲気の作品を1〜2つ共有いただくと、方向性を合わせやすくなります。
-            </li>
-
-            <li className="pd-note">
-              ※ 参考は“好みの共有”として拝見します。再現ではなく、設計として仕上げます。
-            </li>
-          </TextBlock>
-        </div>
-
-        <SectionTitle>公開前の初期設定について</SectionTitle>
-
-        <div className="pd-reveal">
-          <TextBlock>
-            <li>タイトル・説明文・OGP画像・favicon などの初期設定は標準対応です。</li>
-            <li>画像の軽量化・表示速度の最適化も含まれます。</li>
-            <li>ドメイン・サーバー接続など、公開に必要な設定までサポートします。</li>
-          </TextBlock>
-        </div>
-
-        <SectionTitle>追加オプション</SectionTitle>
-
-        <div className="pd-reveal">
-          <OptionsGrid />
-        </div>
-
-        <div className="pd-cta-area pd-reveal">
-          <div className="pd-cta-ornament" aria-hidden="true">
-            <span />
-            <span className="pd-cta-ornament-dot" />
-            <span />
+        {/* BODY（紙＝安心・可読） */}
+        <section className="pd-section pd-reveal" aria-label="プランと料金">
+          <div className="pd-sec-head">
+            <div className="pd-sec-kicker">—</div>
+            <h2 className="pd-sec-title">プランと料金</h2>
           </div>
 
-          <p className="pd-thanks">
-            まだ内容が決まっていなくても、予算の目安だけ知りたい段階でも構いません。
-            <br />
-            ご相談ください。要点はこちらで整理しながら進めます。
-          </p>
+          <div className="pd-grid">
+            {PLANS.map((p) => (
+              <article key={p.badge} className={`pd-plan-card ${p.signature ? "is-signature" : ""}`}>
+                <div className="pd-plan-top">
+                  <div className="pd-plan-badge">PLAN {p.badge}</div>
+                  {p.signature && <div className="pd-signature">SIGNATURE</div>}
+                </div>
 
-          <Link to="/contact" className="pd-cta">
-            <span>CONTACT</span>
-            <span aria-hidden="true">→</span>
+                <div className="pd-plan-name">{p.title}</div>
+                <div className="pd-plan-jp">{p.jp}</div>
+
+                <div className="pd-plan-price">
+                  <span className="pd-yen">¥</span>
+                  <span className="pd-num">{p.price}</span>
+                  <span className="pd-tax">（税込）</span>
+                </div>
+
+                <p className="pd-plan-detail">{p.detail}</p>
+                <p className="pd-bestfor">{p.bestFor}</p>
+
+                <ul className="pd-list" aria-label="含まれる内容">
+                  {p.includes.map((t) => (
+                    <li key={t}>{t}</li>
+                  ))}
+                </ul>
+
+                {!!p.note && <p className="pd-note">{p.note}</p>}
+              </article>
+            ))}
+          </div>
+
+          <div className="pd-actions">
+            <a className="pd-btn primary" href={MITUMORI_BASE} target="_blank" rel="noreferrer">
+              見積・相談フォームへ
+            </a>
+
+            <a className="pd-btn ghost" href={MITUMORI_QUICK} target="_blank" rel="noreferrer">
+              30秒診断（簡易）
+            </a>
+
+            <Link className="pd-btn link" to={WORKS_PATH}>
+              実例を見る（WORKS）
+            </Link>
+          </div>
+        </section>
+
+        <section className="pd-section pd-reveal" aria-label="追加オプション">
+          <div className="pd-sec-head">
+            <div className="pd-sec-kicker">—</div>
+            <h2 className="pd-sec-title">追加オプション</h2>
+          </div>
+
+          <div className="pd-addon-grid">
+            {ADDONS.map((a) => (
+              <article key={a.title} className="pd-addon-card">
+                <div className="pd-addon-badge">{a.badge}</div>
+                <div className="pd-addon-title">{a.title}</div>
+                <div className="pd-addon-price">{a.price}</div>
+                <p className="pd-addon-desc">{a.desc}</p>
+              </article>
+            ))}
+          </div>
+
+          <p className="pd-footnote">
+            相談内容に応じて、追加ではなく「構造の組み替え」で解決する場合もあります。
+            まずは状況だけ教えてください。
+          </p>
+        </section>
+
+        <section className="pd-section pd-reveal" aria-label="進め方">
+          <div className="pd-sec-head">
+            <div className="pd-sec-kicker">—</div>
+            <h2 className="pd-sec-title">進め方</h2>
+          </div>
+
+          <div className="pd-steps">
+            <div className="pd-step">
+              <div className="pd-step-no">01</div>
+              <div className="pd-step-body">
+                <div className="pd-step-title">ヒアリング</div>
+                <p className="pd-step-desc">
+                  目的・対象・素材の有無・公開時期などを確認します。内容が固まっていなくてもOKです。
+                </p>
+              </div>
+            </div>
+
+            <div className="pd-step">
+              <div className="pd-step-no">02</div>
+              <div className="pd-step-body">
+                <div className="pd-step-title">構成／方向性の整理</div>
+                <p className="pd-step-desc">
+                  迷いが出やすいポイント（順番／載せ方／言い方）を整理し、まず“骨格”を決めます。
+                </p>
+              </div>
+            </div>
+
+            <div className="pd-step">
+              <div className="pd-step-no">03</div>
+              <div className="pd-step-body">
+                <div className="pd-step-title">制作（デザイン→実装）</div>
+                <p className="pd-step-desc">
+                  体験の気持ちよさを損なわない範囲で、必要な動き・余韻を設計します。
+                </p>
+              </div>
+            </div>
+
+            <div className="pd-step">
+              <div className="pd-step-no">04</div>
+              <div className="pd-step-body">
+                <div className="pd-step-title">公開／納品</div>
+                <p className="pd-step-desc">
+                  公開完了＋最終確認OKをもって納品です。必要があれば運用サポートへ移行します。
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <p className="pd-paynote">
+            着手金（50%）の入金確認後に制作を開始します。素材遅延は納期も同日数スライドします。
+          </p>
+        </section>
+
+        <footer className="pd-footer pd-reveal">
+          <Link className="pd-inline-link" to="/">
+            ← トップへ戻る
           </Link>
-        </div>
+        </footer>
       </div>
     </section>
   );
-}
-
-function DiagnosisCta() {
-  return (
-    <div className="pd-diag pd-reveal" aria-label="制作規模の目安">
-      <div className="pd-diag-kicker">OPTION</div>
-
-      <p className="pd-diag-lead">
-        まだ決まってない方へ。ページ数と更新の有無から、目安を確認できます。
-      </p>
-<div className="pd-diag-links" role="list">
-  <a
-    className="pd-diag-link is-primary"
-    href={MITUMORI_QUICK}
-    target="_blank"
-    rel="noreferrer"
-    role="listitem"
-  >
-    制作規模の目安を見る 
-  </a>
-
-  <span className="pd-diag-sep" aria-hidden="true">/</span>
-
-  <a
-    className="pd-diag-link"
-    href={MITUMORI_BASE}
-    target="_blank"
-    rel="noreferrer"
-    role="listitem"
-  >
-    詳細見積フォーム 
-  </a>
-</div>
-
-      <p className="pd-diag-note">※ これは目安です。確定はヒアリング後に総額をご案内します。</p>
-    </div>
-  );
-}
-
-function SectionTitle({ children, main = false }) {
-  return (
-    <h2 className={`pd-section-title ${main ? "is-main" : ""} pd-reveal`}>
-      <span className="pd-section-rule" aria-hidden="true" />
-      {children}
-    </h2>
-  );
-}
-
-function PlanCard({
-  badge,
-  title,
-  jp,
-  price,
-  detail,
-  bestFor,
-  includes = [],
-  featured = false,
-  featuredLabel = "RECOMMEND",
-}) {
-  return (
-    <article className={`pd-plan-card ${featured ? "is-featured" : ""}`}>
-      {featured && <span className="pd-plan-popular">{featuredLabel}</span>}
-
-      <p className="pd-plan-num">PLAN {badge}</p>
-      <h3 className="pd-plan-name">{title}</h3>
-      <p className="pd-plan-jp">{jp}</p>
-
-      <div className="pd-plan-price-wrap">
-        <p className="pd-plan-price-label">料金（税込）</p>
-        <p className="pd-plan-price">
-          <span className="pd-plan-currency">¥</span>
-          {price}
-          <span className="pd-plan-suffix">〜</span>
-        </p>
-      </div>
-
-      <p className="pd-plan-detail">{detail}</p>
-      <p className="pd-plan-best">{bestFor}</p>
-
-      {includes.length > 0 && (
-        <ul className="pd-plan-includes">
-          {includes.map((item) => (
-            <li key={item}>
-              <span className="pd-plan-dot" aria-hidden="true" />
-              <span>{item}</span>
-            </li>
-          ))}
-        </ul>
-      )}
-    </article>
-  );
-}
-
-function MaintenanceCard() {
-  const included = [
-    "文言の調整・メニューの差し替え",
-    "写真の軽い調整・差し替え",
-    "お知らせ・イベント情報の更新",
-    "営業時間 / Google Map の更新",
-    "バナーや見出しの軽微な調整",
-  ];
-
-  const extra = [
-    "新ページ / 新セクションの追加",
-    "大きなデザイン変更",
-    "写真撮影",
-    "長文のコピー制作",
-    "大規模な仕様変更",
-  ];
-
-  return (
-    <article className="pd-maintenance">
-      <div className="pd-maintenance-header">
-        <div className="pd-maintenance-info">
-          <p className="pd-maintenance-num">PLAN 04</p>
-          <h3 className="pd-maintenance-name">Maintenance / Subscription</h3>
-
-          <p className="pd-maintenance-detail">
-            公開後も、サイトの印象を保ちながら継続的に更新するための運用プランです。
-            <strong>月管理は必須ではなく、必要な時だけの都度対応も可能</strong>です。
-          </p>
-        </div>
-
-        <div className="pd-maintenance-price-wrap">
-          <p className="pd-maintenance-price-label">月額（税込）</p>
-          <p className="pd-maintenance-price">
-            <span className="pd-maintenance-currency">¥</span>
-            9,800
-            <span className="pd-maintenance-unit"> / 月</span>
-          </p>
-        </div>
-      </div>
-
-      <div className="pd-maintenance-cols">
-        <div>
-          <h4 className="pd-maintenance-col-title">月額に含まれる内容</h4>
-          <ul className="pd-maintenance-list">
-            {included.map((item) => (
-              <li key={item}>{item}</li>
-            ))}
-          </ul>
-        </div>
-
-        <div>
-          <h4 className="pd-maintenance-col-title pd-maintenance-col-title--extra">
-            別途ご相談となる内容
-          </h4>
-          <ul className="pd-maintenance-list pd-maintenance-list--extra">
-            {extra.map((item) => (
-              <li key={item}>{item}</li>
-            ))}
-          </ul>
-        </div>
-      </div>
-    </article>
-  );
-}
-
-function FlowTimeline() {
-  return (
-    <div className="pd-flow">
-      {FLOW_STEPS.map((step, index) => (
-        <div key={step.n} className="pd-flow-item">
-          <div className="pd-flow-marker">
-            <div className="pd-flow-dot">{step.n}</div>
-            {index < FLOW_STEPS.length - 1 && (
-              <div className="pd-flow-line" aria-hidden="true" />
-            )}
-          </div>
-
-          <div className="pd-flow-body">
-            <p className="pd-flow-title">{step.title}</p>
-            <p className="pd-flow-sub">{step.sub}</p>
-          </div>
-        </div>
-      ))}
-    </div>
-  );
-}
-
-function OptionsGrid() {
-  return (
-    <div className="pd-options">
-      {OPTIONS.map((option) => (
-        <div key={option.name} className="pd-option">
-          <p className="pd-option-name">{option.name}</p>
-          <p className="pd-option-price">{option.price}</p>
-        </div>
-      ))}
-    </div>
-  );
-}
-
-function TextBlock({ children }) {
-  return <ul className="pd-textblock">{children}</ul>;
 }

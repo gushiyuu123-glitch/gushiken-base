@@ -1,1199 +1,607 @@
 /* ============================================================
-   Price Detail — GUSHIKEN DESIGN OS
-   Estimate Guide / Black Frame / Champagne Gold × Silver Line
+   Price Detail — Hybrid Tone
+   TOP: Dark (world) / BODY: Paper (trust & readability)
+   Scope: this page only via body.is-price-detail + .pd-root
 ============================================================ */
 
-.pd-root {
-  --pd-gold: var(--accent, #d9b98a);
-  --pd-gold-soft: rgba(217, 185, 138, 0.06);
-  --pd-gold-border: rgba(217, 185, 138, 0.24);
-  --pd-silver: var(--subaccent, #dce2eb);
-  --pd-border: rgba(255, 255, 255, 0.075);
-  --pd-border-soft: rgba(255, 255, 255, 0.055);
-  --pd-white: rgba(255, 255, 255, 0.94);
-  --pd-w84: rgba(255, 255, 255, 0.84);
-  --pd-w64: rgba(255, 255, 255, 0.64);
-  --pd-w48: rgba(255, 255, 255, 0.48);
-  --pd-w34: rgba(255, 255, 255, 0.34);
-  --pd-w18: rgba(255, 255, 255, 0.18);
-  --pd-ease: var(--ease-silent, cubic-bezier(.22, .56, .18, 1));
+.pd-root{
+  --pd-gold: #d9b98a;
+  --pd-silver: #dce2eb;
 
+  --pd-paper: #f3efe7;
+  --pd-paper2: #f1eadf;
+  --pd-ink: rgba(11,11,11,.88);
+  --pd-ink-soft: rgba(11,11,11,.62);
+  --pd-ink-dim: rgba(11,11,11,.52);
+
+  --pd-white: rgba(255,255,255,.94);
+  --pd-w78: rgba(255,255,255,.78);
+  --pd-w62: rgba(255,255,255,.62);
+  --pd-w54: rgba(255,255,255,.54);
+
+  --pd-border-dark: rgba(255,255,255,.08);
+  --pd-border-ink: rgba(11,11,11,.10);
+
+  --pd-ease: cubic-bezier(.22,.56,.18,1);
+
+  isolation: isolate;
   position: relative;
   overflow: hidden;
 
   min-height: 100svh;
   padding: 112px 0 128px;
 
+  /* BODYは紙 */
   background:
-    radial-gradient(
-      circle at 16% 0%,
-      rgba(217, 185, 138, 0.034),
-      transparent 30%
-    ),
-    linear-gradient(
-      180deg,
-      #0a0a0a 0%,
-      var(--main, #0b0b0b) 28%,
-      #090909 68%,
-      #0a0a0a 100%
-    );
+    radial-gradient(900px 520px at 62% 18%, rgba(0,0,0,0.035), transparent 68%),
+    linear-gradient(180deg, var(--pd-paper) 0%, var(--pd-paper2) 70%, var(--pd-paper) 100%);
+  color: var(--pd-ink);
 
-  color: rgba(255, 255, 255, 0.92);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: geometricPrecision;
 }
 
-.pd-root::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
+/* ===============================
+   Scope guard (index.cssの膜殺し)
+=============================== */
+body.is-price-detail::before,
+body.is-price-detail::after{
+  opacity: 0 !important;
+  filter: none !important;
+}
 
+body.is-price-detail{
+  background: var(--pd-paper);
+}
+
+/* TOPだけ暗く落とす（黒の圧を“上だけ”に限定） */
+.pd-root::before{
+  content:"";
+  position:absolute;
+  left:0; right:0; top:0;
+  height: 520px;
+  pointer-events:none;
   background:
-    linear-gradient(
-      180deg,
-      rgba(255, 255, 255, 0.014) 0%,
-      transparent 18%,
-      transparent 82%,
-      rgba(255, 255, 255, 0.01) 100%
-    );
-
-  opacity: 0.9;
+    radial-gradient(1100px 520px at 40% 10%, rgba(0,0,0,.88), transparent 62%),
+    radial-gradient(900px 460px at 72% 18%, rgba(0,0,0,.78), transparent 66%),
+    linear-gradient(180deg, rgba(0,0,0,.86) 0%, rgba(0,0,0,.42) 60%, rgba(0,0,0,0) 100%);
+  opacity: 1;
 }
 
-.pd-root::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-
-  background-image: radial-gradient(
-    rgba(255, 255, 255, 0.14) 0.42px,
-    transparent 0.42px
-  );
-  background-size: 4px 4px;
-  opacity: 0.016;
-}
-
-.pd-grain {
-  display: none;
-}
-
-.pd-container {
+/* ===============================
+   Layout
+=============================== */
+.pd-container{
+  width: min(1100px, 92vw);
+  margin: 0 auto;
   position: relative;
   z-index: 1;
-
-  width: min(88vw, 1120px);
-  margin: 0 auto;
 }
 
-.pd-side-line {
+.pd-side-line{
   position: absolute;
   left: 0;
-  top: 2.2rem;
-
+  top: 0;
+  bottom: 0;
   width: 1px;
-  height: calc(100% - 4.4rem);
-
   background: linear-gradient(
-    to bottom,
-    rgba(217, 185, 138, 0.38),
-    rgba(220, 226, 235, 0.1),
-    rgba(255, 255, 255, 0.05)
+    180deg,
+    transparent 0%,
+    rgba(217,185,138,.34) 12%,
+    rgba(11,11,11,.10) 44%,
+    transparent 100%
   );
-
-  pointer-events: none;
-  opacity: 0.84;
+  opacity: .72;
 }
 
 /* ===============================
-   REVEAL
-================================ */
-.pd-reveal {
-  opacity: 0;
-  transform: translate3d(0, 20px, 0);
-
-  transition:
-    opacity 0.95s var(--pd-ease),
-    transform 0.95s var(--pd-ease);
-
-  will-change: opacity, transform;
-}
-
-.pd-reveal.pd-revealed {
-  opacity: 1;
-  transform: translate3d(0, 0, 0);
-}
-
-/* ===============================
-   HEADER
-================================ */
-.pd-header {
+   Header (Dark)
+=============================== */
+.pd-header{
   position: relative;
-
-  padding-left: 1rem;
-  padding-bottom: 4.2rem;
-  margin-bottom: 0;
+  padding: 0 0 78px 18px;
+  border-bottom: 1px solid rgba(255,255,255,.08);
+  color: rgba(255,255,255,.92);
 }
 
-.pd-svg-title {
-  max-width: 100%;
-}
-
-.pd-svg-title .section-svg {
-  width: min(100%, 760px);
-}
-
-.pd-svg-title .section-svg-text {
-  font-size: 122px;
-}
-
-.pd-hidden-heading {
+.pd-hidden-heading{
   position: absolute;
   width: 1px;
   height: 1px;
   overflow: hidden;
-  clip: rect(0, 0, 0, 0);
+  clip: rect(0,0,0,0);
   white-space: nowrap;
 }
 
-.pd-page-title {
-  margin: 1.05rem 0 0;
-
-  color: rgba(255, 255, 255, 0.42);
-  font-size: 0.82rem;
-  line-height: 1;
-  letter-spacing: 0.14em;
-}
-
-.pd-lead {
-  max-width: 760px;
-  margin: 2.35rem 0 0;
-
-  color: rgba(255, 255, 255, 0.62);
-  font-size: 0.96rem;
-  line-height: 2.1;
-  letter-spacing: 0.04em;
-}
-
-.pd-lead span,
-.pd-text-accent {
-  color: rgba(255, 255, 255, 0.92);
-}
-
-.pd-taxnote {
-  margin: 1.45rem 0 0;
-
-  color: rgba(255, 255, 255, 0.38);
-  font-size: 0.78rem;
-  line-height: 1.8;
-  letter-spacing: 0.08em;
-}
-
-/* ===============================
-   SECTION TITLE
-================================ */
-.pd-section-title {
-  position: relative;
-
-  display: flex;
-  align-items: center;
-  gap: 0.9rem;
-
-  margin: 4.8rem 0 1.8rem;
-  padding-left: 1rem;
-
-  color: rgba(255, 255, 255, 0.42);
-  font-size: 0.76rem;
-  font-weight: 400;
-  line-height: 1;
-  letter-spacing: 0.2em;
-}
-
-.pd-section-title.is-main {
-  margin-top: 5.4rem;
-  color: rgba(255, 255, 255, 0.62);
-}
-
-.pd-section-rule {
-  width: 26px;
-  height: 1px;
-
-  background: linear-gradient(
-    90deg,
-    rgba(217, 185, 138, 0.74),
-    rgba(220, 226, 235, 0.14),
-    transparent
-  );
-}
-
-/* ===============================
-   PLAN GRID
-================================ */
-.pd-plans {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 1rem;
-
-  padding-left: 1rem;
-}
-
-.pd-plan-card {
-  position: relative;
-  overflow: hidden;
-
-  display: flex;
-  flex-direction: column;
-
-  min-height: 100%;
-  padding: 1.85rem 1.45rem 1.55rem;
-
-  border: 1px solid var(--pd-border);
-  border-top-color: rgba(217, 185, 138, 0.16);
-  border-radius: 2px;
-
-  background:
-    radial-gradient(
-      circle at 16% 0%,
-      rgba(217, 185, 138, 0.04),
-      transparent 35%
-    ),
-    rgba(255, 255, 255, 0.012);
-
-  box-shadow:
-    0 0 0 0.5px rgba(217, 185, 138, 0.025),
-    0 18px 48px rgba(0, 0, 0, 0.24);
-
-  isolation: isolate;
-
-  transition:
-    transform 0.55s var(--pd-ease),
-    border-color 0.35s ease,
-    background 0.35s ease,
-    box-shadow 0.35s ease;
-}
-
-.pd-plan-card::before,
-.pd-maintenance::before,
-.pd-option::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-
-  pointer-events: none;
-
-  background-image: radial-gradient(
-    rgba(255, 255, 255, 0.13) 0.42px,
-    transparent 0.42px
-  );
-  background-size: 4px 4px;
-  opacity: 0.014;
-}
-
-.pd-plan-card::after,
-.pd-maintenance::after {
-  content: "";
-  position: absolute;
-  inset: 0 auto auto 0;
-
-  width: 100%;
-  height: 1px;
-
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(217, 185, 138, 0.5),
-    rgba(255, 255, 255, 0.12),
-    transparent
-  );
-
-  pointer-events: none;
-}
-
-.pd-plan-card:hover,
-.pd-plan-card:focus-within {
-  transform: translateY(-3px);
-  border-color: rgba(217, 185, 138, 0.26);
-
-  box-shadow:
-    0 0 0 0.5px rgba(217, 185, 138, 0.06),
-    0 24px 66px rgba(0, 0, 0, 0.34);
-}
-
-.pd-plan-card.is-featured {
-  border-color: rgba(217, 185, 138, 0.24);
-
-  background:
-    radial-gradient(
-      circle at 16% 0%,
-      rgba(217, 185, 138, 0.075),
-      transparent 36%
-    ),
-    rgba(255, 255, 255, 0.016);
-}
-
-.pd-plan-popular {
-  position: absolute;
-  top: 1.15rem;
-  right: 1.15rem;
-  z-index: 1;
-
-  padding: 0.28rem 0.5rem;
-
-  border: 1px solid rgba(217, 185, 138, 0.22);
-
-  background: rgba(217, 185, 138, 0.045);
-
-  color: rgba(238, 226, 204, 0.72);
-  font-size: 0.52rem;
-  line-height: 1;
-  letter-spacing: 0.14em;
-}
-
-.pd-plan-num {
-  position: relative;
-  z-index: 1;
-
-  margin: 0 0 0.75rem;
-
-  color: rgba(217, 185, 138, 0.56);
-  font-size: 0.62rem;
-  line-height: 1;
-  letter-spacing: 0.22em;
-}
-
-.pd-plan-name {
-  position: relative;
-  z-index: 1;
-
-  margin: 0;
-
-  color: rgba(255, 255, 255, 0.94);
-  font-family: "Cormorant Garamond", Georgia, serif;
-  font-size: 1.85rem;
-  font-weight: 300;
-  line-height: 1;
-  letter-spacing: 0.055em;
-}
-
-.pd-plan-jp {
-  position: relative;
-  z-index: 1;
-
-  margin: 0.55rem 0 1.3rem;
-
-  color: rgba(255, 255, 255, 0.38);
-  font-size: 0.74rem;
-  line-height: 1;
-  letter-spacing: 0.12em;
-}
-
-.pd-plan-price-wrap {
-  position: relative;
-  z-index: 1;
-
-  padding: 1.05rem 0;
-  margin-bottom: 1.15rem;
-
-  border-top: 1px solid var(--pd-border-soft);
-  border-bottom: 1px solid var(--pd-border-soft);
-}
-
-.pd-plan-price-label {
-  margin: 0 0 0.4rem;
-
-  color: rgba(255, 255, 255, 0.34);
-  font-size: 0.62rem;
-  line-height: 1;
-  letter-spacing: 0.16em;
-}
-
-.pd-plan-price {
-  margin: 0;
-
-  color: rgba(238, 226, 204, 0.94);
-  font-family: "Cormorant Garamond", Georgia, serif;
-  font-size: 2.15rem;
-  font-weight: 300;
-  line-height: 1;
-  letter-spacing: 0.02em;
-}
-
-.pd-plan-currency {
-  margin-right: 0.05em;
-  font-size: 1.15rem;
-  opacity: 0.82;
-}
-
-.pd-plan-suffix {
-  margin-left: 0.12em;
-  color: rgba(255, 255, 255, 0.34);
-  font-size: 0.9rem;
-}
-
-.pd-plan-detail {
-  position: relative;
-  z-index: 1;
-
-  flex: 1;
-
-  margin: 0 0 0.72rem;
-
-  color: rgba(255, 255, 255, 0.6);
-  font-size: 0.84rem;
-  line-height: 1.9;
-  letter-spacing: 0.035em;
-}
-
-.pd-plan-best {
-  position: relative;
-  z-index: 1;
-
-  margin: 0 0 1.25rem;
-
-  color: rgba(255, 255, 255, 0.38);
-  font-size: 0.74rem;
-  line-height: 1.75;
-  letter-spacing: 0.04em;
-}
-
-.pd-plan-includes {
-  position: relative;
-  z-index: 1;
-
-  display: grid;
-  gap: 0.62rem;
-
-  margin: 0;
-  padding: 1.1rem 0 0;
-
-  border-top: 1px solid var(--pd-border-soft);
-  list-style: none;
-}
-
-.pd-plan-includes li {
-  display: flex;
-  align-items: flex-start;
-  gap: 0.55rem;
-
-  color: rgba(255, 255, 255, 0.52);
-  font-size: 0.72rem;
-  line-height: 1.75;
-  letter-spacing: 0.06em;
-}
-
-.pd-plan-dot {
-  flex: 0 0 auto;
-
-  width: 3px;
-  height: 3px;
-  margin-top: 0.78em;
-
-  background: rgba(220, 226, 235, 0.42);
-}
-
-/* ===============================
-   MAINTENANCE
-================================ */
-.pd-maintenance {
-  position: relative;
-  overflow: hidden;
-
-  margin-left: 1rem;
-  padding: 1.95rem 1.65rem 1.75rem;
-
-  border: 1px solid var(--pd-border);
-  border-top-color: rgba(217, 185, 138, 0.16);
-  border-radius: 2px;
-
-  background:
-    radial-gradient(
-      circle at 16% 0%,
-      rgba(217, 185, 138, 0.045),
-      transparent 36%
-    ),
-    rgba(255, 255, 255, 0.012);
-
-  box-shadow:
-    0 0 0 0.5px rgba(217, 185, 138, 0.025),
-    0 18px 48px rgba(0, 0, 0, 0.22);
-}
-
-.pd-maintenance-header {
-  position: relative;
-  z-index: 1;
-
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 2.4rem;
-
-  padding-bottom: 1.75rem;
-  margin-bottom: 1.75rem;
-
-  border-bottom: 1px solid var(--pd-border-soft);
-}
-
-.pd-maintenance-num {
-  margin: 0 0 0.75rem;
-
-  color: rgba(217, 185, 138, 0.56);
-  font-size: 0.62rem;
-  line-height: 1;
-  letter-spacing: 0.22em;
-}
-
-.pd-maintenance-name {
-  margin: 0 0 0.85rem;
-
-  color: rgba(255, 255, 255, 0.94);
-  font-family: "Cormorant Garamond", Georgia, serif;
-  font-size: 1.7rem;
-  font-weight: 300;
-  line-height: 1.1;
-  letter-spacing: 0.05em;
-}
-
-.pd-maintenance-detail {
-  max-width: 560px;
-  margin: 0;
-
-  color: rgba(255, 255, 255, 0.6);
-  font-size: 0.86rem;
-  line-height: 1.95;
-  letter-spacing: 0.035em;
-}
-
-.pd-maintenance-detail strong {
-  color: rgba(255, 255, 255, 0.9);
-  font-weight: 500;
-}
-
-.pd-maintenance-price-wrap {
-  flex: 0 0 auto;
-  text-align: right;
-}
-
-.pd-maintenance-price-label {
-  margin: 0 0 0.4rem;
-
-  color: rgba(255, 255, 255, 0.34);
-  font-size: 0.62rem;
-  line-height: 1;
-  letter-spacing: 0.16em;
-}
-
-.pd-maintenance-price {
-  margin: 0;
-
-  color: rgba(238, 226, 204, 0.94);
-  font-family: "Cormorant Garamond", Georgia, serif;
-  font-size: 2.35rem;
-  font-weight: 300;
-  line-height: 1;
-}
-
-.pd-maintenance-currency {
-  margin-right: 0.05em;
-  font-size: 1.2rem;
-}
-
-.pd-maintenance-unit {
-  color: rgba(255, 255, 255, 0.34);
-  font-size: 0.92rem;
-}
-
-.pd-maintenance-cols {
-  position: relative;
-  z-index: 1;
-
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 2rem;
-}
-
-.pd-maintenance-col-title {
-  margin: 0 0 0.9rem;
-  padding-bottom: 0.65rem;
-
-  border-bottom: 1px solid var(--pd-border-soft);
-
-  color: rgba(255, 255, 255, 0.58);
-  font-size: 0.7rem;
-  font-weight: 400;
-  line-height: 1.5;
-  letter-spacing: 0.16em;
-}
-
-.pd-maintenance-col-title--extra {
-  color: rgba(255, 255, 255, 0.38);
-}
-
-.pd-maintenance-list {
-  display: grid;
-  gap: 0.48rem;
-
-  margin: 0;
-  padding: 0;
-
-  list-style: none;
-}
-
-.pd-maintenance-list li {
-  position: relative;
-
-  padding-left: 1.05rem;
-
-  color: rgba(255, 255, 255, 0.52);
-  font-size: 0.82rem;
-  line-height: 1.8;
-  letter-spacing: 0.04em;
-}
-
-.pd-maintenance-list li::before {
-  content: "—";
-  position: absolute;
-  left: 0;
-  top: 0.03em;
-
-  color: rgba(220, 226, 235, 0.22);
-}
-
-.pd-maintenance-list--extra li {
-  color: rgba(255, 255, 255, 0.34);
-}
-
-/* ===============================
-   FLOW
-================================ */
-.pd-flow {
-  display: grid;
-  gap: 0;
-
-  margin-left: 1rem;
-}
-
-.pd-flow-item {
-  display: flex;
-  gap: 1.25rem;
-  align-items: flex-start;
-}
-
-.pd-flow-marker {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  flex: 0 0 auto;
-}
-
-.pd-flow-dot {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  width: 38px;
-  height: 38px;
-
-  border: 1px solid rgba(217, 185, 138, 0.24);
-  border-radius: 999px;
-
-  background: rgba(217, 185, 138, 0.045);
-
-  color: rgba(238, 226, 204, 0.78);
-  font-family: "Cormorant Garamond", Georgia, serif;
-  font-size: 0.78rem;
-  line-height: 1;
-  letter-spacing: 0.04em;
-}
-
-.pd-flow-line {
-  width: 1px;
-  min-height: 2.4rem;
-  flex: 1;
-
-  margin: 0.3rem 0;
-
-  background: linear-gradient(
-    to bottom,
-    rgba(217, 185, 138, 0.22),
-    transparent
-  );
-}
-
-.pd-flow-body {
-  padding: 0.32rem 0 2.35rem;
-}
-
-.pd-flow-title {
-  margin: 0 0 0.35rem;
-
-  color: rgba(255, 255, 255, 0.82);
-  font-size: 0.92rem;
-  line-height: 1.55;
-  letter-spacing: 0.06em;
-}
-
-.pd-flow-sub {
-  margin: 0;
-
-  color: rgba(255, 255, 255, 0.38);
-  font-size: 0.78rem;
-  line-height: 1.7;
-  letter-spacing: 0.04em;
-}
-
-/* ===============================
-   TEXT BLOCK
-================================ */
-.pd-textblock {
-  display: grid;
-  gap: 0.62rem;
-
-  margin: 0 0 0 1rem;
-  padding: 0 0 0 1.2rem;
-
-  border-left: 1px solid rgba(217, 185, 138, 0.22);
-
-  list-style: none;
-}
-
-.pd-textblock li {
-  color: rgba(255, 255, 255, 0.64);
-  font-size: 0.9rem;
-  line-height: 1.95;
-  letter-spacing: 0.04em;
-}
-
-.pd-text-muted {
-  color: rgba(255, 255, 255, 0.38);
-}
-
-.pd-note {
-  color: rgba(255, 255, 255, 0.38) !important;
-  font-size: 0.82rem !important;
-}
-
-/* ===============================
-   OPTIONS
-================================ */
-.pd-options {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-
-  margin-left: 1rem;
-
-  border: 1px solid var(--pd-border);
-  border-radius: 2px;
-
-  overflow: hidden;
-}
-
-.pd-option {
-  position: relative;
-  overflow: hidden;
-
-  padding: 1.45rem 1.55rem;
-
-  border-right: 1px solid var(--pd-border-soft);
-  border-bottom: 1px solid var(--pd-border-soft);
-
-  background: rgba(255, 255, 255, 0.012);
-
-  transition:
-    background 0.35s ease,
-    border-color 0.35s ease;
-}
-
-.pd-option:nth-child(even) {
-  border-right: none;
-}
-
-.pd-option:nth-last-child(-n + 2) {
-  border-bottom: none;
-}
-
-.pd-option:hover {
-  background: rgba(217, 185, 138, 0.035);
-}
-
-.pd-option-name {
-  margin: 0 0 0.55rem;
-
-  color: rgba(255, 255, 255, 0.68);
-  font-size: 0.84rem;
-  line-height: 1.65;
-  letter-spacing: 0.045em;
-}
-
-.pd-option-price {
-  margin: 0;
-
-  color: rgba(238, 226, 204, 0.82);
-  font-family: "Cormorant Garamond", Georgia, serif;
-  font-size: 1.2rem;
-  line-height: 1.2;
-  letter-spacing: 0.03em;
-}
-
-/* ===============================
-   CTA
-================================ */
-.pd-cta-area {
-  margin: 5.4rem 0 0 1rem;
-  padding-top: 4rem;
-
-  border-top: 1px solid var(--pd-border-soft);
-
-  text-align: center;
-}
-
-.pd-cta-ornament {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.75rem;
-
-  margin-bottom: 2.15rem;
-}
-
-.pd-cta-ornament span {
-  display: block;
-
-  width: 32px;
-  height: 1px;
-
-  background: linear-gradient(90deg, transparent, rgba(217, 185, 138, 0.44));
-}
-
-.pd-cta-ornament span:last-child {
-  background: linear-gradient(90deg, rgba(217, 185, 138, 0.44), transparent);
-}
-
-.pd-cta-ornament-dot {
-  width: 5px !important;
-  height: 5px !important;
-
-  border: 1px solid rgba(217, 185, 138, 0.28) !important;
-  border-radius: 999px !important;
-
-  background: transparent !important;
-}
-
-.pd-thanks {
-  margin: 0 0 2.15rem;
-
-  color: rgba(255, 255, 255, 0.56);
-  font-size: 0.94rem;
-  line-height: 2;
-  letter-spacing: 0.04em;
-}
-
-.pd-cta {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.58rem;
-
-  min-height: 48px;
-  min-width: 210px;
-  padding: 0 1.8rem;
-
-  border: 1px solid rgba(217, 185, 138, 0.26);
-  border-radius: 999px;
-
-  background:
-    linear-gradient(
-      180deg,
-      rgba(217, 185, 138, 0.05),
-      rgba(255, 255, 255, 0.01)
-    );
-
-  color: rgba(238, 226, 204, 0.88);
-  font-size: 0.74rem;
-  line-height: 1;
-  letter-spacing: 0.18em;
-  text-decoration: none;
-
-  box-shadow:
-    0 14px 36px rgba(0, 0, 0, 0.22),
-    inset 0 1px 0 rgba(255, 255, 255, 0.035);
-
-  transition:
-    transform 0.35s var(--pd-ease),
-    border-color 0.35s ease,
-    background 0.35s ease,
-    color 0.35s ease,
-    box-shadow 0.35s ease;
-}
-
-.pd-cta:hover,
-.pd-cta:focus-visible {
-  transform: translateY(-2px);
-
-  border-color: rgba(217, 185, 138, 0.42);
-
-  background: rgba(217, 185, 138, 0.07);
-
-  color: rgba(255, 255, 255, 0.96);
-
-  box-shadow:
-    0 18px 48px rgba(0, 0, 0, 0.3),
-    0 0 0 0.5px rgba(217, 185, 138, 0.06);
-
-  outline: none;
-}
-
-/* ===============================
-   MOBILE
-================================ */
-@media (max-width: 980px) {
-  .pd-plans {
-    grid-template-columns: 1fr;
-  }
-
-  .pd-maintenance-header {
-    flex-direction: column;
-    gap: 1.4rem;
-  }
-
-  .pd-maintenance-price-wrap {
-    text-align: left;
-  }
-}
-
-@media (max-width: 768px) {
-  .pd-root {
-    padding: 88px 0 104px;
-  }
-
-  .pd-container {
-    width: calc(100% - 2rem);
-  }
-
-  .pd-side-line {
-    top: 1.6rem;
-    height: calc(100% - 3.2rem);
-    opacity: 0.76;
-  }
-
-  .pd-header,
-  .pd-section-title,
-  .pd-plans,
-  .pd-maintenance,
-  .pd-flow,
-  .pd-textblock,
-  .pd-options,
-  .pd-cta-area {
-    margin-left: 0;
-    padding-left: 0.75rem;
-  }
-
-  .pd-header {
-    padding-bottom: 3.2rem;
-  }
-
-  .pd-svg-title .section-svg {
-    width: min(100%, 560px);
-  }
-
-  .pd-svg-title .section-svg-text {
-    font-size: 114px;
-  }
-
-  .pd-page-title {
-    font-size: 0.74rem;
-  }
-
-  .pd-lead {
-    margin-top: 1.8rem;
-    font-size: 0.9rem;
-    line-height: 2;
-  }
-
-  .pd-section-title {
-    margin-top: 3.6rem;
-    margin-bottom: 1.45rem;
-    font-size: 0.72rem;
-    letter-spacing: 0.16em;
-  }
-
-  .pd-section-title.is-main {
-    margin-top: 4rem;
-  }
-
-  .pd-plan-card,
-  .pd-maintenance {
-    padding: 1.65rem 1.25rem 1.45rem;
-  }
-
-  .pd-maintenance-cols {
-    grid-template-columns: 1fr;
-    gap: 1.45rem;
-  }
-
-  .pd-maintenance-name {
-    font-size: 1.45rem;
-  }
-
-  .pd-maintenance-price {
-    font-size: 2rem;
-  }
-
-  .pd-options {
-    grid-template-columns: 1fr;
-  }
-
-  .pd-option,
-  .pd-option:nth-child(even),
-  .pd-option:nth-last-child(-n + 2) {
-    border-right: none;
-    border-bottom: 1px solid var(--pd-border-soft);
-  }
-
-  .pd-option:last-child {
-    border-bottom: none;
-  }
-
-  .pd-flow-dot {
-    width: 34px;
-    height: 34px;
-  }
-
-  .pd-flow-body {
-    padding-bottom: 2rem;
-  }
-
-  .pd-cta-area {
-    margin-top: 4.4rem;
-    padding-top: 3.2rem;
-  }
-
-  .pd-cta {
-    min-width: 190px;
-  }
-}
-
-@media (max-width: 390px) {
-  .pd-container {
-    width: calc(100% - 1.5rem);
-  }
-
-  .pd-plan-name {
-    font-size: 1.65rem;
-  }
-}
-
-/* ===============================
-   REDUCED MOTION
-================================ */
-@media (prefers-reduced-motion: reduce) {
-  .pd-root *,
-  .pd-root *::before,
-  .pd-root *::after {
-    transition: none !important;
-    animation: none !important;
-  }
-
-  .pd-reveal {
-    opacity: 1 !important;
-    transform: none !important;
-  }
-}
-/* =========================================
-   Minimalize: no "card lift"
-========================================= */
-.pd-plan-card:hover,
-.pd-plan-card:focus-within {
-  transform: none;
-}
-
-/* touch端末は hover を実質無効化 */
-@media (hover: none) and (pointer: coarse) {
-  .pd-plan-card:hover,
-  .pd-plan-card:focus-within {
-    transform: none;
-  }
-}
-/* =========================
-   PRICE: Diagnosis CTA (world-fit override)
-   追記で上書き
-========================= */
-.pd-root .pd-diag{
-  margin-top: clamp(18px, 3.2vw, 28px);
-  padding: clamp(16px, 2.2vw, 22px);
-  border-radius: 18px;
-
-  /* 白い箱を殺す */
-  background: rgba(8, 8, 8, .58);
-  border: 1px solid rgba(206, 184, 137, .16); /* 金の薄線 */
-  box-shadow: none;
-
-  /* PLANの余韻を壊さないために面積を沈める */
-  backdrop-filter: blur(10px);
-}
-
-.pd-root .pd-diag-kicker{
-  font-size: 11px;
-  letter-spacing: .28em;
-  color: rgba(206, 184, 137, .78);
-  margin-bottom: 10px;
-}
-
-.pd-root .pd-diag-lead{
-  margin: 0;
-  font-size: 14px;
-  line-height: 1.95;
-  color: rgba(235, 230, 220, .82);
-}
-
-.pd-root .pd-diag-links{
-  margin-top: 14px;
-  display: flex;
-  align-items: baseline;
-  gap: 12px;
-  flex-wrap: wrap;
-}
-
-/* ボタン→下線リンクに変える */
-.pd-root .pd-diag-link{
-  display: inline-block;
-  padding: 0;
-  border: 0;
-  background: transparent;
-
-  color: rgba(235, 230, 220, .86);
-  text-decoration: none;
-  border-bottom: 1px solid rgba(235, 230, 220, .36);
-  line-height: 1.6;
-  transition: border-color .18s ease, color .18s ease, transform .18s ease;
-}
-
-.pd-root .pd-diag-link:hover{
-  color: rgba(235, 230, 220, .96);
-  border-bottom-color: rgba(206, 184, 137, .68);
-  transform: translateY(-1px);
-}
-
-.pd-root .pd-diag-link.is-primary{
-  color: rgba(206, 184, 137, .92);
-  border-bottom-color: rgba(206, 184, 137, .46);
+.pd-page-title{
+  margin: 12px 0 10px;
+  font-size: 13px;
+  letter-spacing: .14em;
+  color: rgba(255,255,255,.74);
 }
 
-.pd-root .pd-diag-sep{
-  color: rgba(235, 230, 220, .28);
+.pd-lead{
+  margin: 22px 0 0;
+  font-size: 1.05rem;
+  line-height: 2.10;
+  color: rgba(255,255,255,.82);
 }
 
-.pd-root .pd-diag-note{
-  margin: 12px 0 0;
+.pd-taxnote{
+  margin: 18px 0 0;
   font-size: 12px;
-  line-height: 1.85;
-  color: rgba(235, 230, 220, .56);
+  line-height: 1.9;
+  color: rgba(255,255,255,.56);
 }
-/* priceDetail.css 末尾に追記 */
+
+/* SectionSvgTitle（このページのheaderだけ支配） */
+.pd-header .pd-svg-title.section-svg-title .section-svg-kicker{
+  color: rgba(255,255,255,.72) !important;
+}
+.pd-header .pd-svg-title.section-svg-title .section-svg-text,
+.pd-header .pd-svg-title.section-svg-title .section-svg-char{
+  fill: rgba(255,255,255,.92) !important; /* ここが“白すぎ”なら .84 まで落としてOK */
+}
+.pd-header .pd-svg-title.section-svg-title .section-svg-line{
+  background: linear-gradient(90deg, rgba(217,185,138,.58), rgba(255,255,255,.12), transparent) !important;
+}
+.pd-header .pd-svg-title.section-svg-title .section-svg{
+  mix-blend-mode: normal !important;
+  filter: none !important;
+}
+
+/* ===============================
+   Reveal
+=============================== */
+.pd-reveal{
+  opacity: 0;
+  transform: translate3d(0, 18px, 0);
+  filter: blur(0.18px);
+  transition:
+    opacity 680ms var(--pd-ease),
+    transform 820ms var(--pd-ease),
+    filter 680ms var(--pd-ease);
+}
+.pd-revealed{
+  opacity: 1;
+  transform: none;
+  filter: none;
+}
+
+/* ===============================
+   Sections (Paper)
+=============================== */
+.pd-section{
+  padding: 76px 0 0;
+  color: var(--pd-ink);
+}
+
+.pd-sec-head{
+  display:flex;
+  align-items: baseline;
+  gap: 14px;
+  margin: 0 0 26px 18px;
+}
+
+.pd-sec-kicker{
+  color: rgba(217,185,138,.92);
+  letter-spacing: .22em;
+  font-size: 12px;
+}
+
+.pd-sec-title{
+  margin: 0;
+  font-size: 15px;
+  letter-spacing: .18em;
+  font-weight: 300;
+  color: rgba(11,11,11,.90);
+}
+
+/* ===============================
+   Plans
+=============================== */
+.pd-grid{
+  display:grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+  margin-top: 18px;
+}
+
+.pd-plan-card{
+  border: 1px solid var(--pd-border-ink);
+  background: rgba(255,255,255,.72);
+  padding: 18px 16px 16px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 28px 90px rgba(0,0,0,.08);
+}
+
+.pd-plan-card::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  background: radial-gradient(640px 260px at 14% 0%, rgba(217,185,138,.10), transparent 62%);
+  opacity: .9;
+}
+
+.pd-plan-top{
+  display:flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  position: relative;
+  z-index: 1;
+}
+
+.pd-plan-badge{
+  font-size: 10px;
+  letter-spacing: .22em;
+  color: rgba(11,11,11,.60);
+}
+
+.pd-signature{
+  font-size: 10px;
+  letter-spacing: .22em;
+  color: rgba(80,60,28,.88);
+  border: 1px solid rgba(217,185,138,.48);
+  background: rgba(217,185,138,.10);
+  padding: 4px 8px 3px;
+}
+
+.pd-plan-name{
+  position: relative;
+  z-index: 1;
+  margin-top: 10px;
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-weight: 300;
+  letter-spacing: .06em;
+  font-size: 34px;
+  color: rgba(11,11,11,.92);
+}
+
+.pd-plan-jp{
+  position: relative;
+  z-index: 1;
+  margin-top: 6px;
+  font-size: 12px;
+  letter-spacing: .14em;
+  color: rgba(11,11,11,.58);
+}
+
+.pd-plan-price{
+  position: relative;
+  z-index: 1;
+  margin-top: 16px;
+  display:flex;
+  align-items: baseline;
+  gap: 6px;
+  color: rgba(11,11,11,.92);
+}
+
+.pd-yen{ font-size: 13px; color: rgba(80,60,28,.88); letter-spacing:.12em; }
+.pd-num{ font-size: 36px; letter-spacing:.06em; font-weight: 300; }
+.pd-tax{ font-size: 11px; letter-spacing:.14em; color: rgba(11,11,11,.50); }
+
+.pd-plan-detail{
+  position: relative;
+  z-index: 1;
+  margin-top: 12px;
+  font-size: 13px;
+  line-height: 2.0;
+  color: rgba(11,11,11,.74);
+}
+
+.pd-bestfor{
+  position: relative;
+  z-index: 1;
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(11,11,11,.10);
+  font-size: 12px;
+  line-height: 1.9;
+  color: rgba(80,60,28,.88);
+}
+
+.pd-list{
+  position: relative;
+  z-index: 1;
+  margin: 14px 0 0;
+  padding-left: 18px;
+  color: rgba(11,11,11,.74);
+  font-size: 12px;
+  line-height: 1.9;
+}
+
+.pd-note{
+  position: relative;
+  z-index: 1;
+  margin-top: 12px;
+  font-size: 11px;
+  line-height: 1.9;
+  color: rgba(11,11,11,.52);
+}
+
+/* ===============================
+   Actions
+=============================== */
+.pd-actions{
+  margin: 26px 0 0 18px;
+  display:flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.pd-btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap: 10px;
+  text-decoration:none;
+  letter-spacing: .18em;
+  font-size: 11px;
+  padding: 12px 14px 11px;
+  border: 1px solid rgba(11,11,11,.16);
+  color: rgba(11,11,11,.88);
+  background: rgba(255,255,255,.66);
+  transition: border-color .32s ease, background .32s ease, color .32s ease;
+}
+.pd-btn:hover{
+  border-color: rgba(11,11,11,.28);
+  background: rgba(255,255,255,.82);
+  color: rgba(11,11,11,.94);
+}
+
+.pd-btn.primary{
+  border-color: rgba(217,185,138,.56);
+  background: rgba(217,185,138,.12);
+  color: rgba(80,60,28,.92);
+}
+.pd-btn.primary:hover{
+  border-color: rgba(217,185,138,.78);
+  background: rgba(217,185,138,.18);
+}
+
+.pd-btn.ghost{
+  border-color: rgba(11,11,11,.14);
+  background: rgba(255,255,255,.52);
+}
+
+.pd-btn.link{
+  border-color: transparent;
+  background: transparent;
+  padding-left: 0;
+  padding-right: 0;
+  border-bottom: 1px solid rgba(11,11,11,.22);
+}
+.pd-btn.link:hover{
+  border-bottom-color: rgba(11,11,11,.44);
+}
+
+/* ===============================
+   Addons
+=============================== */
+.pd-addon-grid{
+  display:grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+  margin-top: 18px;
+}
+
+.pd-addon-card{
+  border: 1px solid rgba(11,11,11,.10);
+  background: rgba(255,255,255,.72);
+  padding: 16px 14px;
+  box-shadow: 0 18px 60px rgba(0,0,0,.06);
+}
+
+.pd-addon-badge{
+  font-size: 10px;
+  letter-spacing: .22em;
+  color: rgba(80,60,28,.82);
+}
+
+.pd-addon-title{
+  margin-top: 10px;
+  font-size: 13px;
+  letter-spacing: .10em;
+  color: rgba(11,11,11,.90);
+}
+
+.pd-addon-price{
+  margin-top: 10px;
+  font-size: 16px;
+  letter-spacing: .08em;
+  color: rgba(11,11,11,.92);
+}
+
+.pd-addon-desc{
+  margin-top: 10px;
+  font-size: 12px;
+  line-height: 1.9;
+  color: rgba(11,11,11,.64);
+}
+
+.pd-footnote{
+  margin: 18px 0 0 18px;
+  font-size: 12px;
+  line-height: 1.9;
+  color: rgba(11,11,11,.66);
+}
+
+/* ===============================
+   Steps
+=============================== */
+.pd-steps{
+  margin-top: 18px;
+  border-top: 1px solid rgba(11,11,11,.10);
+}
+
+.pd-step{
+  display:grid;
+  grid-template-columns: 54px 1fr;
+  gap: 14px;
+  padding: 18px 18px;
+  border-bottom: 1px solid rgba(11,11,11,.10);
+  background: rgba(255,255,255,.42);
+}
+
+.pd-step-no{
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: 24px;
+  letter-spacing: .08em;
+  color: rgba(80,60,28,.92);
+}
+
+.pd-step-title{
+  font-size: 13px;
+  letter-spacing: .12em;
+  color: rgba(11,11,11,.90);
+}
+
+.pd-step-desc{
+  margin-top: 8px;
+  font-size: 12px;
+  line-height: 1.9;
+  color: rgba(11,11,11,.70);
+}
+
+.pd-paynote{
+  margin: 18px 0 0 18px;
+  font-size: 12px;
+  line-height: 1.9;
+  color: rgba(11,11,11,.66);
+}
+
+/* ===============================
+   Footer
+=============================== */
+.pd-footer{
+  margin-top: 64px;
+  padding-left: 18px;
+}
+
 .pd-inline-link{
   text-decoration: underline;
   text-decoration-thickness: 1px;
   text-underline-offset: 3px;
-  text-decoration-color: rgba(20, 20, 20, 0.28);
+  text-decoration-color: rgba(11,11,11,.28);
 }
 .pd-inline-link:hover{
-  text-decoration-color: rgba(20, 20, 20, 0.56);
+  text-decoration-color: rgba(11,11,11,.46);
+}
+
+/* ===============================
+   Responsive
+=============================== */
+@media (max-width: 980px){
+  .pd-root{ padding: 92px 0 110px; }
+  .pd-grid{ grid-template-columns: 1fr; }
+  .pd-addon-grid{ grid-template-columns: 1fr; }
+
+  .pd-actions{ margin-left: 0; }
+  .pd-sec-head{ margin-left: 0; }
+  .pd-header{ padding-left: 0; }
+  .pd-side-line{ display:none; }
+
+  .pd-root::before{ height: 460px; }
+}
+
+@media (prefers-reduced-motion: reduce){
+  .pd-reveal{ opacity: 1; transform: none; filter:none; transition: none; }
+}
+/* ============================================================
+   PRICE — Paper × Black Ink (page-only hotfix)
+   - 白テキスト同化を解消
+   - PRICE / 料金見出しの重複表示を強制的に潰す
+============================================================ */
+
+/* 1) 上部の黒オーバーレイ（もし残ってたら）を無効化 */
+body.is-price-detail .pd-root::before{
+  opacity: 0 !important;
+}
+
+/* 2) Header を “紙×黒” へ */
+body.is-price-detail .pd-header{
+  color: rgba(11,11,11,.90) !important;
+  border-bottom: 1px solid rgba(11,11,11,.10) !important;
+}
+
+/* 3) Header内テキスト（同化してたやつ）を黒へ */
+body.is-price-detail .pd-page-title{
+  color: rgba(11,11,11,.64) !important;
+}
+
+body.is-price-detail .pd-lead{
+  color: rgba(11,11,11,.84) !important;
+}
+
+body.is-price-detail .pd-taxnote{
+  color: rgba(11,11,11,.56) !important;
+}
+
+/* 4) SectionSvgTitle（PRICE / DETAIL, PRICE）を黒インクに */
+body.is-price-detail .pd-svg-title.section-svg-title .section-svg-kicker{
+  color: rgba(11,11,11,.62) !important;
+}
+
+/* デカPRICE：黒で“読める薄さ”に（主張しすぎない） */
+body.is-price-detail .pd-svg-title.section-svg-title .section-svg-text,
+body.is-price-detail .pd-svg-title.section-svg-title .section-svg-char{
+  fill: rgba(11,11,11,.18) !important;   /* 0.14〜0.26で調整 */
+  opacity: 1 !important;
+  fill-opacity: 1 !important;
+}
+
+/* 下線 */
+body.is-price-detail .pd-svg-title.section-svg-title .section-svg-line{
+  background: linear-gradient(
+    90deg,
+    rgba(217,185,138,.58),
+    rgba(11,11,11,.14),
+    transparent
+  ) !important;
+}
+
+/* 5) 重複原因の“sr”と“隠しh1”をこのページだけ確実に隠す
+   - section-svg-sr が見えて PRICE が2回出てる可能性が高い
+   - pd-hidden-heading が効かず「料金の詳細と進め方」が2回出てる */
+body.is-price-detail .pd-svg-title .section-svg-sr{
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0,0,0,0) !important;
+  clip-path: inset(50%) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+  padding: 0 !important;
+}
+
+body.is-price-detail .pd-hidden-heading{
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0,0,0,0) !important;
+  clip-path: inset(50%) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+  padding: 0 !important;
+}
+/* ============================================================
+   PRICE page only — SVG「PRICE」を真っ黒に固定
+============================================================ */
+body.is-price-detail .pd-svg-title.section-svg-title .section-svg-text,
+body.is-price-detail .pd-svg-title.section-svg-title .section-svg-char{
+  fill: #000 !important;
+  opacity: 1 !important;
+  fill-opacity: 1 !important;
+}
+
+/* もし「PRICE / DETAIL」も黒に寄せたいなら（任意） */
+body.is-price-detail .pd-svg-title.section-svg-title .section-svg-kicker{
+  color: rgba(0,0,0,0.78) !important;
 }
