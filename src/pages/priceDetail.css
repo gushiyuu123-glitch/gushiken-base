@@ -31,7 +31,6 @@
   min-height: 100svh;
   padding: 112px 0 128px;
 
-  /* BODYは紙 */
   background:
     radial-gradient(900px 520px at 62% 18%, rgba(0,0,0,0.035), transparent 68%),
     linear-gradient(180deg, var(--pd-paper) 0%, var(--pd-paper2) 70%, var(--pd-paper) 100%);
@@ -42,7 +41,7 @@
 }
 
 /* ===============================
-   Scope guard (index.cssの膜殺し)
+   Scope guard
 =============================== */
 body.is-price-detail::before,
 body.is-price-detail::after{
@@ -54,7 +53,6 @@ body.is-price-detail{
   background: var(--pd-paper);
 }
 
-/* TOPだけ暗く落とす（黒の圧を“上だけ”に限定） */
 .pd-root::before{
   content:"";
   position:absolute;
@@ -66,6 +64,11 @@ body.is-price-detail{
     radial-gradient(900px 460px at 72% 18%, rgba(0,0,0,.78), transparent 66%),
     linear-gradient(180deg, rgba(0,0,0,.86) 0%, rgba(0,0,0,.42) 60%, rgba(0,0,0,0) 100%);
   opacity: 1;
+}
+
+/* is-price-detail では上部オーバーレイを無効化 */
+body.is-price-detail .pd-root::before{
+  opacity: 0 !important;
 }
 
 /* ===============================
@@ -95,59 +98,91 @@ body.is-price-detail{
 }
 
 /* ===============================
-   Header (Dark)
+   Header (Paper × Black Ink)
 =============================== */
 .pd-header{
   position: relative;
   padding: 0 0 78px 18px;
-  border-bottom: 1px solid rgba(255,255,255,.08);
-  color: rgba(255,255,255,.92);
+  border-bottom: 1px solid rgba(11,11,11,.10);
+  color: rgba(11,11,11,.90);
 }
 
 .pd-hidden-heading{
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
-  clip: rect(0,0,0,0);
-  white-space: nowrap;
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0,0,0,0) !important;
+  clip-path: inset(50%) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+  padding: 0 !important;
 }
 
 .pd-page-title{
   margin: 12px 0 10px;
   font-size: 13px;
   letter-spacing: .14em;
-  color: rgba(255,255,255,.74);
+  color: rgba(11,11,11,.64);
 }
 
 .pd-lead{
   margin: 22px 0 0;
   font-size: 1.05rem;
   line-height: 2.10;
-  color: rgba(255,255,255,.82);
+  color: rgba(11,11,11,.84);
 }
 
 .pd-taxnote{
   margin: 18px 0 0;
   font-size: 12px;
   line-height: 1.9;
-  color: rgba(255,255,255,.56);
+  color: rgba(11,11,11,.56);
 }
 
-/* SectionSvgTitle（このページのheaderだけ支配） */
-.pd-header .pd-svg-title.section-svg-title .section-svg-kicker{
-  color: rgba(255,255,255,.72) !important;
+/* SectionSvgTitle */
+.pd-header .pd-svg-title.section-svg-title .section-svg-kicker,
+body.is-price-detail .pd-svg-title.section-svg-title .section-svg-kicker{
+  color: rgba(0,0,0,.78) !important;
 }
+
 .pd-header .pd-svg-title.section-svg-title .section-svg-text,
-.pd-header .pd-svg-title.section-svg-title .section-svg-char{
-  fill: rgba(255,255,255,.92) !important; /* ここが“白すぎ”なら .84 まで落としてOK */
+.pd-header .pd-svg-title.section-svg-title .section-svg-char,
+body.is-price-detail .pd-svg-title.section-svg-title .section-svg-text,
+body.is-price-detail .pd-svg-title.section-svg-title .section-svg-char{
+  fill: #000 !important;
+  opacity: 1 !important;
+  fill-opacity: 1 !important;
 }
-.pd-header .pd-svg-title.section-svg-title .section-svg-line{
-  background: linear-gradient(90deg, rgba(217,185,138,.58), rgba(255,255,255,.12), transparent) !important;
+
+.pd-header .pd-svg-title.section-svg-title .section-svg-line,
+body.is-price-detail .pd-svg-title.section-svg-title .section-svg-line{
+  background: linear-gradient(
+    90deg,
+    rgba(217,185,138,.58),
+    rgba(11,11,11,.14),
+    transparent
+  ) !important;
 }
+
 .pd-header .pd-svg-title.section-svg-title .section-svg{
   mix-blend-mode: normal !important;
   filter: none !important;
+}
+
+/* sr-only（重複表示を防ぐ） */
+body.is-price-detail .pd-svg-title .section-svg-sr{
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0,0,0,0) !important;
+  clip-path: inset(50%) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+  padding: 0 !important;
 }
 
 /* ===============================
@@ -169,7 +204,7 @@ body.is-price-detail{
 }
 
 /* ===============================
-   Sections (Paper)
+   Sections
 =============================== */
 .pd-section{
   padding: 76px 0 0;
@@ -379,6 +414,46 @@ body.is-price-detail{
 }
 
 /* ===============================
+   Contact button（リンクスタイル）
+=============================== */
+.pd-btn.contact{
+  appearance: none;
+  font-family: inherit;
+  cursor: pointer;
+
+  background: transparent;
+  border: 0;
+  padding: 0;
+
+  color: rgba(11,11,11,.86);
+  letter-spacing: .16em;
+  font-size: 12px;
+  line-height: 1;
+
+  border-bottom: 1px solid rgba(11,11,11,.26);
+  padding-bottom: 3px;
+
+  transition: border-color .24s ease, color .24s ease, transform .24s ease;
+}
+
+.pd-btn.contact:hover{
+  color: rgba(11,11,11,.94);
+  border-bottom-color: rgba(11,11,11,.46);
+  transform: translateY(-1px);
+}
+
+.pd-btn.contact:focus-visible{
+  outline: 2px solid rgba(217,185,138,.70);
+  outline-offset: 4px;
+}
+
+.pd-btn.contact::after{
+  content: " →";
+  letter-spacing: 0;
+  opacity: .78;
+}
+
+/* ===============================
    Addons
 =============================== */
 .pd-addon-grid{
@@ -474,6 +549,35 @@ body.is-price-detail{
 }
 
 /* ===============================
+   Contact CTA (bottom)
+=============================== */
+.pd-contact-cta{
+  margin-top: 56px;
+  padding: 22px 18px 24px;
+  border-top: 1px solid rgba(11,11,11,.10);
+  border-bottom: 1px solid rgba(11,11,11,.10);
+  background: rgba(255,255,255,.42);
+}
+
+.pd-contact-ctaRow{
+  display:flex;
+  align-items:center;
+  justify-content:flex-start;
+  gap: 18px;
+  flex-wrap: wrap;
+}
+
+.pd-contact-ctaText{
+  flex: 1 1 520px;
+  max-width: 52ch;
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.9;
+  color: rgba(11,11,11,.66);
+  letter-spacing: .08em;
+}
+
+/* ===============================
    Footer
 =============================== */
 .pd-footer{
@@ -509,99 +613,4 @@ body.is-price-detail{
 
 @media (prefers-reduced-motion: reduce){
   .pd-reveal{ opacity: 1; transform: none; filter:none; transition: none; }
-}
-/* ============================================================
-   PRICE — Paper × Black Ink (page-only hotfix)
-   - 白テキスト同化を解消
-   - PRICE / 料金見出しの重複表示を強制的に潰す
-============================================================ */
-
-/* 1) 上部の黒オーバーレイ（もし残ってたら）を無効化 */
-body.is-price-detail .pd-root::before{
-  opacity: 0 !important;
-}
-
-/* 2) Header を “紙×黒” へ */
-body.is-price-detail .pd-header{
-  color: rgba(11,11,11,.90) !important;
-  border-bottom: 1px solid rgba(11,11,11,.10) !important;
-}
-
-/* 3) Header内テキスト（同化してたやつ）を黒へ */
-body.is-price-detail .pd-page-title{
-  color: rgba(11,11,11,.64) !important;
-}
-
-body.is-price-detail .pd-lead{
-  color: rgba(11,11,11,.84) !important;
-}
-
-body.is-price-detail .pd-taxnote{
-  color: rgba(11,11,11,.56) !important;
-}
-
-/* 4) SectionSvgTitle（PRICE / DETAIL, PRICE）を黒インクに */
-body.is-price-detail .pd-svg-title.section-svg-title .section-svg-kicker{
-  color: rgba(11,11,11,.62) !important;
-}
-
-/* デカPRICE：黒で“読める薄さ”に（主張しすぎない） */
-body.is-price-detail .pd-svg-title.section-svg-title .section-svg-text,
-body.is-price-detail .pd-svg-title.section-svg-title .section-svg-char{
-  fill: rgba(11,11,11,.18) !important;   /* 0.14〜0.26で調整 */
-  opacity: 1 !important;
-  fill-opacity: 1 !important;
-}
-
-/* 下線 */
-body.is-price-detail .pd-svg-title.section-svg-title .section-svg-line{
-  background: linear-gradient(
-    90deg,
-    rgba(217,185,138,.58),
-    rgba(11,11,11,.14),
-    transparent
-  ) !important;
-}
-
-/* 5) 重複原因の“sr”と“隠しh1”をこのページだけ確実に隠す
-   - section-svg-sr が見えて PRICE が2回出てる可能性が高い
-   - pd-hidden-heading が効かず「料金の詳細と進め方」が2回出てる */
-body.is-price-detail .pd-svg-title .section-svg-sr{
-  position: absolute !important;
-  width: 1px !important;
-  height: 1px !important;
-  margin: -1px !important;
-  overflow: hidden !important;
-  clip: rect(0,0,0,0) !important;
-  clip-path: inset(50%) !important;
-  white-space: nowrap !important;
-  border: 0 !important;
-  padding: 0 !important;
-}
-
-body.is-price-detail .pd-hidden-heading{
-  position: absolute !important;
-  width: 1px !important;
-  height: 1px !important;
-  margin: -1px !important;
-  overflow: hidden !important;
-  clip: rect(0,0,0,0) !important;
-  clip-path: inset(50%) !important;
-  white-space: nowrap !important;
-  border: 0 !important;
-  padding: 0 !important;
-}
-/* ============================================================
-   PRICE page only — SVG「PRICE」を真っ黒に固定
-============================================================ */
-body.is-price-detail .pd-svg-title.section-svg-title .section-svg-text,
-body.is-price-detail .pd-svg-title.section-svg-title .section-svg-char{
-  fill: #000 !important;
-  opacity: 1 !important;
-  fill-opacity: 1 !important;
-}
-
-/* もし「PRICE / DETAIL」も黒に寄せたいなら（任意） */
-body.is-price-detail .pd-svg-title.section-svg-title .section-svg-kicker{
-  color: rgba(0,0,0,0.78) !important;
 }

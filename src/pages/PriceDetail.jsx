@@ -1,6 +1,6 @@
 // src/pages/PriceDetail.jsx
 import React, { useEffect, useRef } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import SectionSvgTitle from "../components/SectionSvgTitle";
 import "./priceDetail.css";
 
@@ -16,6 +16,11 @@ const MITUMORI_QUICK = "https://mitumori-form.vercel.app/?mode=quick";
 
 // internal
 const WORKS_PATH = "/works";
+
+// contact（TOPの #contact へ流す）
+const CONTACT_ROUTE = "/#contact";
+const CONTACT_ID = "contact";
+const SCROLL_OFFSET = 84; // 固定ヘッダーぶん（被るなら調整）
 
 const PLANS = [
   {
@@ -96,6 +101,42 @@ function setCanonical(href) {
 
 export default function PriceDetail() {
   const rootRef = useRef(null);
+  const navigate = useNavigate();
+
+  const goContact = () => {
+    if (typeof window === "undefined") return;
+
+    const reduce =
+      window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches ?? false;
+    const behavior = reduce ? "auto" : "smooth";
+
+    const scrollTo = (el) => {
+      const top =
+        el.getBoundingClientRect().top + window.pageYOffset - SCROLL_OFFSET;
+      window.scrollTo({ top: Math.max(0, top), behavior });
+    };
+
+    // 同ページに #contact があれば即スクロール
+    const here = document.getElementById(CONTACT_ID);
+    if (here) {
+      scrollTo(here);
+      return;
+    }
+
+    // TOPへ遷移 → 要素が出たらスクロール（hash任せにしない）
+    navigate(CONTACT_ROUTE);
+
+    let tries = 0;
+    const tick = () => {
+      const target = document.getElementById(CONTACT_ID);
+      if (target) {
+        scrollTo(target);
+        return;
+      }
+      if (tries++ < 50) setTimeout(tick, 50);
+    };
+    setTimeout(tick, 0);
+  };
 
   useEffect(() => {
     document.title = PAGE_TITLE;
@@ -155,7 +196,11 @@ export default function PriceDetail() {
 
         {/* HERO（上だけ黒で世界観） */}
         <header className="pd-header pd-reveal">
-          <SectionSvgTitle title="PRICE" sub="PRICE / DETAIL" className="pd-svg-title" />
+          <SectionSvgTitle
+            title="PRICE"
+            sub="PRICE / DETAIL"
+            className="pd-svg-title"
+          />
 
           <h1 id="price-heading" className="pd-hidden-heading">
             料金の詳細と進め方
@@ -185,7 +230,10 @@ export default function PriceDetail() {
 
           <div className="pd-grid">
             {PLANS.map((p) => (
-              <article key={p.badge} className={`pd-plan-card ${p.signature ? "is-signature" : ""}`}>
+              <article
+                key={p.badge}
+                className={`pd-plan-card ${p.signature ? "is-signature" : ""}`}
+              >
                 <div className="pd-plan-top">
                   <div className="pd-plan-badge">PLAN {p.badge}</div>
                   {p.signature && <div className="pd-signature">SIGNATURE</div>}
@@ -214,12 +262,23 @@ export default function PriceDetail() {
             ))}
           </div>
 
+          {/* 上は “見積/診断/WORKS” だけにして、問い合わせは最下部に回す */}
           <div className="pd-actions">
-            <a className="pd-btn primary" href={MITUMORI_BASE} target="_blank" rel="noreferrer">
+            <a
+              className="pd-btn primary"
+              href={MITUMORI_BASE}
+              target="_blank"
+              rel="noreferrer"
+            >
               見積・相談フォームへ
             </a>
 
-            <a className="pd-btn ghost" href={MITUMORI_QUICK} target="_blank" rel="noreferrer">
+            <a
+              className="pd-btn ghost"
+              href={MITUMORI_QUICK}
+              target="_blank"
+              rel="noreferrer"
+            >
               30秒診断（簡易）
             </a>
 
@@ -303,6 +362,19 @@ export default function PriceDetail() {
           <p className="pd-paynote">
             着手金（50%）の入金確認後に制作を開始します。素材遅延は納期も同日数スライドします。
           </p>
+        </section>
+
+        {/* ✅ ここが “一番下の問い合わせ” */}
+        <section className="pd-contact-cta pd-reveal" aria-label="お問い合わせ">
+          <div className="pd-contact-ctaRow">
+            <p className="pd-contact-ctaText">
+              内容が固まっていなくても大丈夫です。状況だけ教えてください。
+            </p>
+
+            <button type="button" className="pd-btn contact" onClick={goContact}>
+              お問い合わせへ（CONTACT）
+            </button>
+          </div>
         </section>
 
         <footer className="pd-footer pd-reveal">
