@@ -10,7 +10,48 @@ export const worksData = [
 subtitle: "世界観と設計力の“核”を示す代表作",
   accent: true,
   items: [
-       // ✅ 01：KOU（PICK UP 1番）
+      {
+    title: "BLACK PAPILLON — Tattoo Studio",
+    slug: "BlackPapillonRoom",
+    desc: "写真は強い。でも、なんか怖い。そこで止まる人の不安を「見てみたい」に変えるために、治癒後の証拠・順番・余白で“頼める状態”を先に作ったタトゥースタジオサイト。",
+    link: "https://black-papillon.vercel.app/", // TODO: 実URLに合わせる
+    img: "/works/bp.webp", // TODO: works用画像を配置してパス合わせる
+    isNew: true,
+    createdAt: "2026-06-01",
+    tags: [
+      "NEW",
+      "PICKUP",
+      "Okinawa",
+      "Naha",
+      "Tattoo",
+      "Studio",
+      "Healed",
+      "Fine line",
+      "UI/UX",
+      "PC/SP 完全分離",
+    ],
+    detail: {
+      concept:
+        "タトゥー探しで止まりやすい『怖さ』を、言い訳ではなく設計で潰す。治癒後の仕上がり＝証拠を先に出し、料金・流れ・予約の不安を“使う順番”で回収して、迷わず連絡できる状態へ落とす。",
+      tech: [
+        "React",
+        "Vite",
+        "CSS Modules",
+        "GSAP",
+        "ScrollTrigger",
+        "IntersectionObserver",
+        "PC/SP 完全分離",
+      ],
+    },
+    seo: {
+      title: "BLACK PAPILLON｜“怖い”を“見てみたい”に変えるタトゥーサイト｜GUSHIKEN DESIGN",
+      description:
+        "BLACK PAPILLONは、タトゥー探しで止まりやすい心理的ハードルを、治癒後の証拠提示と情報の順番で解決するコンセプトサイト。世界観と選びやすさを両立した制作例。",
+      keywords:
+        "タトゥー スタジオ, 那覇 タトゥー, 治癒後, 予約導線, UI/UX, 世界観デザイン, React, GUSHIKEN DESIGN",
+      ogImage: "https://gushikendesign.com/ogp/black-papillon.png", // 任意（用意するなら）
+    },
+  },
     {
       title: "KOU RYUI — Ryukyu Costume Rental",
       slug: "kou-ryui",

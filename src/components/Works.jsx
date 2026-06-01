@@ -9,48 +9,53 @@ gsap.registerPlugin(ScrollTrigger);
 
 const WORKS = [
   {
-    key: "kou",
+    key: "papillon",
     no: "01",
     tag: "PICK UP / WEB",
-    title: "KOU RYUI",
-    sub: "琉球衣装キャンペーンサイト",
-    img: "/works/kouryui.webp",
-    to: "/works/kou-ryui",
-    href: "https://kouryui.vercel.app/",
-    alt: "制作事例：KOU RYUI（琉球衣装キャンペーンサイト）",
+    title: "BLACK PAPILLON",
+    sub: "Tattoo Studio / Naha, Okinawa",
+    // TODO: works用画像を配置してパスを合わせる
+    img: "/works/bp.webp",
+    // TODO: ルート名が違う場合はここだけ合わせる
+    to: "/works/black-papillon",
+    // TODO: 公開URLに差し替え
+    href: "https://black-papillon.vercel.app/",
+    alt: "制作事例：BLACK PAPILLON（Tattoo Studio / Naha, Okinawa）",
   },
   {
-    key: "vow",
+    key: "hare",
     no: "02",
+    tag: "PICK UP / EC",
+    title: "HARE KARIYUSHI",
+    sub: "Summer Wear EC / Okinawa",
+    img: "/works/hare-kariyushi.webp",
+    to: "/works/HareKariyushiRoom",
+    href: "https://hare-kariyushi.vercel.app/",
+    alt: "制作事例：HARE KARIYUSHI（Summer Wear EC / Okinawa）",
+  },
+  {
+    key: "auria",
+    no: "03",
     tag: "PICK UP / WEB",
-    title: "Vow in Light",
-    sub: "Wedding / Okinawa",
-    img: "/works/vow-in-light-works1.webp",
-    to: "/works/vow-in-light",
-    href: "https://vow-in-light.vercel.app/",
-    alt: "制作事例：Vow in Light（Wedding / Okinawa）",
+    title: "AURIA TONE",
+    sub: "Space Design & Supervision",
+    // TODO: works用画像を配置してパスを合わせる
+    img: "/works/auria-tone.webp",
+    // TODO: ルート名が違う場合はここだけ合わせる
+    to: "/works/AuriaTone",
+    href: "https://auria-tone.vercel.app/",
+    alt: "制作事例：AURIA TONE（Space Design & Supervision）",
   },
   {
     key: "umikaji",
-    no: "03",
+    no: "04",
     tag: "PICK UP / BRAND",
     title: "UMIKAJI",
     sub: "Awamori Brand / Okinawa",
-    img: "/works/umikaji-works.webp",
-    to: "/works/UmikajiRoom", // ✅ ROOMへ修正
+    img: "/works/umikaji-pc2.webp",
+    to: "/works/UmikajiRoom",
     href: "https://umikaji-awamori.vercel.app/",
     alt: "制作事例：UMIKAJI（Awamori Brand / Okinawa）",
-  },
-  {
-    key: "velmont",
-    no: "04",
-    tag: "PICK UP / BRAND",
-    title: "VELMONT",
-    sub: "Luxury Auto Showroom",
-    img: "/works/velmonte222.webp",
-    to: "/works/VelmontRoom", // ✅ ROOMへ修正
-    href: "https://velmont-virid.vercel.app/",
-    alt: "制作事例：VELMONT（Luxury Auto Showroom）",
   },
 ];
 
