@@ -8,20 +8,17 @@ import styles from "./Works.module.css";
 gsap.registerPlugin(ScrollTrigger);
 
 const WORKS = [
-  {
-    key: "papillon",
-    no: "01",
-    tag: "PICK UP / WEB",
-    title: "BLACK PAPILLON",
-    sub: "Tattoo Studio / Naha, Okinawa",
-    // TODO: works用画像を配置してパスを合わせる
-    img: "/works/bp.webp",
-    // TODO: ルート名が違う場合はここだけ合わせる
-    to: "/works/black-papillon",
-    // TODO: 公開URLに差し替え
-    href: "https://black-papillon.vercel.app/",
-    alt: "制作事例：BLACK PAPILLON（Tattoo Studio / Naha, Okinawa）",
-  },
+{
+  key: "papillon",
+  no: "01",
+  tag: "PICK UP / WEB",
+  title: "BLACK PAPILLON",
+  sub: "Tattoo Studio / Naha, Okinawa",
+  img: "/works/bp.webp",
+  to: "/works/BlackPapillonRoom",
+  href: "https://black-papillon.vercel.app/",
+  alt: "BLACK PAPILLON — Tattoo Studio / Naha, Okinawa（制作事例）",
+},
   {
     key: "hare",
     no: "02",
