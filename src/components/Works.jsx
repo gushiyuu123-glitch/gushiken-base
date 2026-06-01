@@ -28,7 +28,7 @@ const WORKS = [
     tag: "PICK UP / EC",
     title: "HARE KARIYUSHI",
     sub: "Summer Wear EC / Okinawa",
-    img: "/works/hare-kariyushi.webp",
+    img: "/works/hare-kariyushi1.webp",
     to: "/works/HareKariyushiRoom",
     href: "https://hare-kariyushi.vercel.app/",
     alt: "制作事例：HARE KARIYUSHI（Summer Wear EC / Okinawa）",
