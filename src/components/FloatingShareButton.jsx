@@ -1,3 +1,4 @@
+// src/components/FloatingShareButton.jsx
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
 import "./floatingShareButton.css";
@@ -259,7 +260,6 @@ export default function FloatingShareButton({
     const lenis = window.__gd_lenis__;
     if (lenis && typeof lenis.on === "function") {
       const onLenis = (e) => {
-        // Lenis v1: e.scroll / v0: e.animatedScroll など揺れるので全部吸収
         const y =
           typeof e === "number"
             ? e
@@ -269,7 +269,6 @@ export default function FloatingShareButton({
         raf = requestAnimationFrame(() => update(y));
       };
 
-      // 初期
       update(window.scrollY);
 
       lenis.on("scroll", onLenis);
@@ -330,9 +329,7 @@ export default function FloatingShareButton({
         await navigator.clipboard.writeText(text);
         return;
       }
-    } catch (_) {
-      // fallback
-    }
+    } catch (_) {}
 
     const textarea = document.createElement("textarea");
     textarea.value = text;
@@ -392,20 +389,17 @@ export default function FloatingShareButton({
         notify,
         setCopiedKey,
       }),
-    [shareUrl, shareText, encode, openWin, closeMenu, copyToClipboard, notify]
+    [shareUrl, shareText, encode, openWin, closeMenu, copyToClipboard, notify, setCopiedKey]
   );
 
-  const handleItemClick = useCallback(
-    async (item) => {
-      try {
-        await item.onClick();
-      } catch (error) {
-        console.error(error);
-        setNotice("Failed");
-      }
-    },
-    []
-  );
+  const handleItemClick = useCallback(async (item) => {
+    try {
+      await item.onClick();
+    } catch (error) {
+      console.error(error);
+      setNotice("Failed");
+    }
+  }, []);
 
   // open: outside click + esc + focus trap
   useEffect(() => {
@@ -465,15 +459,17 @@ export default function FloatingShareButton({
     return () => cancelAnimationFrame(raf);
   }, [isOpen]);
 
-  // inert fallback: closedのときフォーカス不能に
+  // ✅ inert: closedのときは inert=true（空文字はNG）
+  // さらに閉じてるときはフォーカス不能にする（保険）
   const inertProps = !isOpen
     ? {
         "aria-hidden": true,
         tabIndex: -1,
-        inert: "",
+        inert: true,
       }
     : {
         "aria-hidden": false,
+        inert: undefined, // 属性を消す
       };
 
   const reduced = typeof window !== "undefined" ? prefersReduced() : false;
@@ -523,8 +519,12 @@ export default function FloatingShareButton({
                   <span className="fsb-item-icon">{PLATFORM_ICONS[item.key]?.(11)}</span>
 
                   <span className="fsb-item-text">
-                    <span className="fsb-item-label">{copiedKey === item.key ? "Copied" : item.label}</span>
-                    <span className="fsb-item-caption">{copiedKey === item.key ? "DONE" : item.sub}</span>
+                    <span className="fsb-item-label">
+                      {copiedKey === item.key ? "Copied" : item.label}
+                    </span>
+                    <span className="fsb-item-caption">
+                      {copiedKey === item.key ? "DONE" : item.sub}
+                    </span>
                   </span>
                 </span>
 
@@ -562,7 +562,11 @@ export default function FloatingShareButton({
         className={`fsb-trigger${isOpen ? " open" : ""}`}
       >
         <span className="fsb-trigger-icon">
-          {isOpen ? <CloseIcon style={{ width: 11, height: 11 }} /> : <LinkIcon style={{ width: 12, height: 12 }} />}
+          {isOpen ? (
+            <CloseIcon style={{ width: 11, height: 11 }} />
+          ) : (
+            <LinkIcon style={{ width: 12, height: 12 }} />
+          )}
         </span>
         <span className="fsb-trigger-label">{label}</span>
       </button>

@@ -1,10 +1,9 @@
 /* ============================================================================
-   GUSHIKEN DESIGN Core Init v5.4
+   GUSHIKEN DESIGN Core Init v5.5 (Lenis separated)
    - FOUC Prevention / Ambient Glow / Stable SW Update / Dev Cache Clear
    - Helmet (SEO head per route)
-   - Lenis (PC only) + ScrollTrigger sync
    - ✅ Vercel Analytics: devでは “importしない” (/_vercel 404 を消す)
-   - ✅ window.__gd_lenis__ を Proxy API 化（ScrollManager等と噛み合う）
+   - ✅ Lenis/ScrollTrigger は Lenis.jsx（App直下）へ移管
 =========================================================================== */
 
 import { StrictMode, Suspense, lazy } from "react";
@@ -12,14 +11,8 @@ import { createRoot } from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
 
-import Lenis from "lenis";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-
 import "./index.css";
 import App from "./App.jsx";
-
-gsap.registerPlugin(ScrollTrigger);
 
 /* ============================================================================
    Helpers
@@ -58,10 +51,8 @@ function revealRoot() {
   const root = document.getElementById("root");
   if (!root) return;
 
+  // ✅ 1回で十分（二重実行は削除）
   requestAnimationFrame(() => root.classList.add("show"));
-
-  // 保険：初期描画が遅れた場合でも白画面感を残さない
-  window.setTimeout(() => root.classList.add("show"), 300);
 }
 
 if (document.readyState === "loading") {
@@ -217,181 +208,3 @@ function initServiceWorker() {
 }
 
 initServiceWorker();
-
-/* ============================================================================
-   5) Lenis (PC only) + Router / ScrollManager bridge
-   - window.__gd_lenis__ = Proxy API
-=========================================================================== */
-
-function initLenisPcOnly() {
-  if (typeof window === "undefined") return;
-
-  const mqReduce = window.matchMedia("(prefers-reduced-motion: reduce)");
-  const mqCoarse = window.matchMedia("(pointer: coarse)");
-  const mqNarrow = window.matchMedia("(max-width: 980px)");
-
-  const canUse = () => !mqReduce.matches && !mqCoarse.matches && !mqNarrow.matches;
-
-  // HMR/再実行でも二重起動しないように掃除
-  const prev = window.__gd_lenis__;
-  if (prev?.cleanup) {
-    try {
-      prev.cleanup();
-    } catch (_) {}
-  }
-
-  let lenis = null;
-  let tickerFn = null;
-
-  const start = () => {
-    if (lenis) return;
-
-    lenis = new Lenis({
-      lerp: 0.08,
-      smoothWheel: true,
-      wheelMultiplier: 1,
-    });
-
-    // Lenisのスクロール → ScrollTriggerに通知
-    lenis.on("scroll", ScrollTrigger.update);
-
-    // Lenisのrafをgsap tickerで回す
-    tickerFn = (time) => {
-      lenis?.raf?.(time * 1000);
-    };
-    gsap.ticker.add(tickerFn);
-    gsap.ticker.lagSmoothing(0);
-
-    requestAnimationFrame(() => ScrollTrigger.refresh());
-    console.info("[GD] Lenis enabled (PC only).");
-  };
-
-  const stop = () => {
-    if (!lenis) return;
-
-    try {
-      lenis.off?.("scroll", ScrollTrigger.update);
-    } catch (_) {}
-
-    if (tickerFn) gsap.ticker.remove(tickerFn);
-    tickerFn = null;
-
-    try {
-      lenis.destroy();
-    } catch (_) {}
-    lenis = null;
-
-    requestAnimationFrame(() => ScrollTrigger.refresh());
-    console.info("[GD] Lenis disabled.");
-  };
-
-  const sync = () => {
-    if (canUse()) start();
-    else stop();
-  };
-
-  const addMQ = (mq, fn) => {
-    if (mq.addEventListener) mq.addEventListener("change", fn);
-    else if (mq.addListener) mq.addListener(fn);
-  };
-  const removeMQ = (mq, fn) => {
-    if (mq.removeEventListener) mq.removeEventListener("change", fn);
-    else if (mq.removeListener) mq.removeListener(fn);
-  };
-
-  // ✅ Proxy API（インスタンス直出しはしない）
-  const api = {
-    cleanup: () => {},
-
-    // Router側から “確実なTOP復帰”
-    scrollToTop: () => {
-      api.scrollTo(0, { immediate: true });
-    },
-
-    // 汎用 scrollTo（ScrollManager / hash遷移 / 作品内導線で使える）
-    scrollTo: (y, opts = {}) => {
-      if (lenis?.scrollTo) {
-        try {
-          lenis.scrollTo(y, { immediate: true, ...opts });
-          requestAnimationFrame(() => ScrollTrigger.update());
-          return true;
-        } catch (_) {
-          // fallthrough
-        }
-      }
-      window.scrollTo({ top: y, left: 0, behavior: "auto" });
-      return false;
-    },
-
-    // 停止/再開（モーダル/FAQで背景スクロール殺す用途）
-    stop: () => {
-      try {
-        lenis?.stop?.();
-      } catch (_) {}
-    },
-    start: () => {
-      try {
-        lenis?.start?.();
-      } catch (_) {}
-    },
-
-    // イベント購読（必要な箇所だけ拾える）
-    on: (event, fn) => {
-      try {
-        lenis?.on?.(event, fn);
-      } catch (_) {}
-    },
-    off: (event, fn) => {
-      try {
-        lenis?.off?.(event, fn);
-      } catch (_) {}
-    },
-
-    // 現在スクロール値（ScrollManagerが参照できる）
-    get scroll() {
-      if (typeof lenis?.scroll === "number") return lenis.scroll;
-      if (typeof lenis?.animatedScroll === "number") return lenis.animatedScroll;
-      return window.scrollY || 0;
-    },
-    get animatedScroll() {
-      if (typeof lenis?.animatedScroll === "number") return lenis.animatedScroll;
-      if (typeof lenis?.scroll === "number") return lenis.scroll;
-      return window.scrollY || 0;
-    },
-
-    // 有効判定
-    isEnabled: () => !!lenis,
-
-    // デバッグ用（必要なら覗けるだけ）
-    get instance() {
-      return lenis;
-    },
-  };
-
-  // 初期判定
-  sync();
-
-  // 状態変化追従
-  const onChange = () => sync();
-  addMQ(mqReduce, onChange);
-  addMQ(mqCoarse, onChange);
-  addMQ(mqNarrow, onChange);
-
-  window.addEventListener("resize", onChange, { passive: true });
-  window.addEventListener("orientationchange", onChange, { passive: true });
-
-  api.cleanup = () => {
-    removeMQ(mqReduce, onChange);
-    removeMQ(mqCoarse, onChange);
-    removeMQ(mqNarrow, onChange);
-
-    window.removeEventListener("resize", onChange);
-    window.removeEventListener("orientationchange", onChange);
-
-    stop();
-  };
-
-  window.__gd_lenis__ = api;
-}
-
-initLenisPcOnly();

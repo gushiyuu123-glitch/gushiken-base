@@ -12,6 +12,7 @@ import Seo from "./components/Seo";
 import NavGlobal from "./components/NavGlobal";
 import Footer from "./components/FOOTER";
 import ScrollManager from "./components/ScrollManager";
+import LenisManager from "./components/Lenis"; // ✅ 追加：Lenis専用
 
 // Pages
 import Home from "./pages/Home";
@@ -183,7 +184,6 @@ function buildFaqJsonLd(faq) {
 function SeoBridge() {
   const { pathname } = useLocation();
 
-  // ✅ canonical / jsonLd URL の基準（Seo.jsx と完全一致）
   const origin = getOrigin();
   const canonicalUrl = `${origin}${normalizePathname(pathname)}`;
 
@@ -273,7 +273,6 @@ function SeoBridge() {
     noindex = true;
   }
 
-  // ✅ JSON-LD の URL も canonical と一致させる
   const pageJsonLd = buildWebPageJsonLd({
     url: canonicalUrl,
     name: title,
@@ -289,12 +288,12 @@ function SeoBridge() {
       title={title}
       description={description}
       path={path}
-      origin={origin}               // ✅ Seo.jsx の canonical基準を固定
-      canonicalUrl={canonicalUrl}   // ✅ canonicalを完全一致させる
+      origin={origin}
+      canonicalUrl={canonicalUrl}
       noindex={noindex}
       ogType={ogType}
       jsonLd={jsonLd}
-      titleMode="raw"               // ✅ ここで作った title をそのまま使う
+      titleMode="raw"
       imagePath="/ogp-v4.png"
     />
   );
@@ -307,16 +306,14 @@ function SeoBridge() {
 function Layout() {
   return (
     <>
+      {/* ✅ LenisはApp直下で1回だけ。ここでは置かない */}
       <ScrollManager />
-
       <SeoBridge />
       <NavGlobal />
 
-      {/* ✅ main の入れ子を避ける（ページ側が main を持っても壊れない） */}
       <div id="page-root" role="main">
         <Routes>
           <Route path="/" element={<Home />} />
-
           <Route path="/works" element={<WorksList />} />
 
           <Route path="/works/noir-lux" element={<NoirLux />} />
@@ -336,10 +333,7 @@ function Layout() {
           <Route path="/works/ActiveDays" element={<ActiveDays />} />
           <Route path="/works/FineOkinawa" element={<FineOkinawa />} />
           <Route path="/works/RyukaIntro" element={<RyukaIntro />} />
-          <Route
-            path="/works/OkinawaLightResortHotel"
-            element={<OkinawaLightResortHotel />}
-          />
+          <Route path="/works/OkinawaLightResortHotel" element={<OkinawaLightResortHotel />} />
           <Route path="/works/HorizonBlanc" element={<HorizonBlanc />} />
           <Route path="/works/TheCalmOkinawa" element={<TheCalmOkinawa />} />
           <Route path="/works/FlowOfTea" element={<FlowOfTea />} />
@@ -400,13 +394,19 @@ export default function App() {
 
   // aq-fade observer
   const observerRef = useRef(null);
-  const rafRef = useRef(0);
-  const timerRef = useRef(0);
 
   // ✅ ルート遷移でトップに戻す（hash遷移は維持）
   useEffect(() => {
     if (location.hash) return;
-    window.__gd_lenis__?.scrollToTop?.();
+
+    const api = window.__gd_lenis__;
+    if (api?.scrollToTop) {
+      api.scrollToTop({ duration: 0.9 });
+      return;
+    }
+
+    // Lenisが無い/停止中のフォールバック
+    window.scrollTo({ top: 0, behavior: "auto" });
   }, [location.pathname, location.search, location.hash]);
 
   useEffect(() => {
@@ -431,30 +431,32 @@ export default function App() {
         return;
       }
 
+      // ✅ ここは「戻す→出す」でOK（ただし二重実行しない）
       els.forEach((el) => el.classList.remove("aq-show"));
 
       const io = new IntersectionObserver(
         (entries) => {
-          entries.forEach((entry) => {
-            if (!entry.isIntersecting) return;
+          for (const entry of entries) {
+            if (!entry.isIntersecting) continue;
             const el = entry.target;
             el.classList.add("aq-show");
             io.unobserve(el);
-          });
+          }
         },
-        { threshold: 0.14, rootMargin: "0px 0px -10% 0px" }
+        // ✅ Lenis慣性と噛み合うように少し前倒し（遅れて出る感を減らす）
+        { threshold: 0.08, rootMargin: "0px 0px -18% 0px" }
       );
 
       els.forEach((el) => io.observe(el));
       observerRef.current = io;
     };
 
-    rafRef.current = requestAnimationFrame(setupFade);
-    timerRef.current = window.setTimeout(setupFade, 120);
+    // ✅ 二重実行（rAF+timeout）をやめる
+    // 初期の入力を邪魔しないように 1フレーム逃がすだけにする
+    const raf = requestAnimationFrame(setupFade);
 
     return () => {
-      cancelAnimationFrame(rafRef.current);
-      window.clearTimeout(timerRef.current);
+      cancelAnimationFrame(raf);
       cleanupObserver();
     };
   }, [location.pathname, location.search]);
@@ -474,5 +476,11 @@ export default function App() {
     return () => cancelAnimationFrame(id);
   }, [location.pathname, location.search]);
 
-  return <Layout />;
+  return (
+    <>
+      {/* ✅ Lenisはここで1回だけマウント */}
+      <LenisManager enabled={true} />
+      <Layout />
+    </>
+  );
 }

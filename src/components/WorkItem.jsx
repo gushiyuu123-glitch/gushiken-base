@@ -81,15 +81,15 @@ export default function WorkItem({
     let rafId = 0;
     let done = false;
 
-    // ✅ 念のため：再マウント直後の瞬間だけ “一回 false に戻す”
-    setVisible(false);
-
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (done || !entry?.isIntersecting) return;
-
         done = true;
+
+        // ✅ 1フレーム逃がして「像が整う」立ち上がりに寄せる
         rafId = window.requestAnimationFrame(() => setVisible(true));
+
+        // 1要素だけ監視なので disconnect でOK
         observer.disconnect();
       },
       {
@@ -107,11 +107,7 @@ export default function WorkItem({
   }, []);
 
   const commonProps = external
-    ? {
-        href: link,
-        target: "_blank",
-        rel: "noopener noreferrer",
-      }
+    ? { href: link, target: "_blank", rel: "noopener noreferrer" }
     : { to: link };
 
   return (
@@ -139,6 +135,7 @@ export default function WorkItem({
       `}
       aria-label={title ? `${title} の作品詳細へ` : "作品詳細へ"}
     >
+      {/* top hairline */}
       <span
         aria-hidden="true"
         className="pointer-events-none absolute left-0 top-0 z-20 h-px w-full opacity-70"
@@ -148,6 +145,7 @@ export default function WorkItem({
         }}
       />
 
+      {/* subtle grain */}
       <span
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 z-10 opacity-[0.018] mix-blend-normal"
@@ -158,8 +156,10 @@ export default function WorkItem({
         }}
       />
 
+      {/* hover light */}
       <span aria-hidden="true" className={revealStyles.hoverLight} />
 
+      {/* media */}
       <div className="relative w-full aspect-[16/9] overflow-hidden md:aspect-[16/10]">
         {isNew && <span className={revealStyles.newBadge}>NEW</span>}
 
@@ -181,6 +181,7 @@ export default function WorkItem({
           />
         )}
 
+        {/* image veil */}
         <span
           aria-hidden="true"
           className="pointer-events-none absolute inset-0"
@@ -191,6 +192,7 @@ export default function WorkItem({
         />
       </div>
 
+      {/* text */}
       <div className="relative z-20 p-5 pb-6 md:p-7 md:pb-9">
         <h3 className="mb-2 text-[0.96rem] font-light leading-[1.38] tracking-[0.13em] text-white/90 md:mb-3 md:text-[1.02rem] md:tracking-[0.16em]">
           {title}
