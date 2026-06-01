@@ -1,6 +1,6 @@
 // =====================================================
-//  GUSHIKEN DESIGN — Ultra-Stable Service Worker V5
-//  PWA Safe / No White Screen / Fresh JS / Safe Cache
+//  GUSHIKEN DESIGN — Ultra-Stable Service Worker V5 (patched)
+//  Fix: "Response body is already used" (cachePut clone timing)
 // =====================================================
 
 const CACHE_PREFIX = "gushiken-design-";
@@ -125,10 +125,24 @@ function isStaticAsset(req, url) {
   );
 }
 
+/**
+ * cachePut: 安定版
+ * - clone() を await の前に取る（bodyが消費された後にcloneしない）
+ * - 失敗してもSWを落とさない
+ */
 async function cachePut(request, response) {
-  if (!response || response.status !== 200 || response.type !== "basic") return;
-  const cache = await caches.open(CACHE_NAME);
-  await cache.put(request, response.clone());
+  try {
+    if (!response || response.status !== 200 || response.type !== "basic") return;
+
+    // ✅ awaitの前にclone（ここが修正の核）
+    const copy = response.clone();
+
+    const cache = await caches.open(CACHE_NAME);
+    await cache.put(request, copy);
+  } catch (err) {
+    // SWを壊さない（ログ荒れ防止）
+    console.warn("[SW] cachePut failed:", err);
+  }
 }
 
 async function cacheMatch(request, ignoreSearch = false) {
@@ -168,11 +182,10 @@ self.addEventListener("fetch", (event) => {
           const res = await fetch(req, { cache: "no-store" });
           event.waitUntil(cachePut(req, res));
           return res;
-        } catch (_) {
-          // 念のため ignoreSearch は false（ハッシュ名は一致させたい）
-          const cached = await cacheMatch(req, false);
+        } catch (err) {
+          const cached = await cacheMatch(req, false); // ハッシュ一致を優先
           if (cached) return cached;
-          throw _;
+          throw err;
         }
       })()
     );
@@ -200,8 +213,7 @@ self.addEventListener("fetch", (event) => {
     (async () => {
       try {
         return await fetch(req, { cache: "no-store" });
-      } catch (_) {
-        // その他は一致優先。必要なら true にしてもいいが、今は安全寄りで false。
+      } catch (err) {
         const cached = await cacheMatch(req, false);
         return cached || new Response("OFFLINE", { status: 503 });
       }
