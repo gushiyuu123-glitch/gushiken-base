@@ -232,6 +232,12 @@
   outline-offset: 8px;
 }
 
+/* GSAPは内側だけ触る（center崩れ防止） */
+.frameAnim{
+  display:block;
+  will-change: transform, opacity;
+}
+
 /* 額縁（影を“棚に密着”） */
 .frameInner{
   position: relative;
@@ -267,7 +273,8 @@
 /* KOU（手前・重なり） */
 .md{
   left: 66%;
-  transform: translateX(-50%) translateY(34px);
+  transform: translateX(-50%);
+  bottom: calc(var(--shelfTop) - 34px);
   z-index: 3;
 }
 .md .frameInner{
@@ -385,6 +392,6 @@
   .md .frameInner{ width: min(62vw, 286px); }
 
   /* 位置は“下げすぎると棚感が消える”ので微調整だけ */
-  .lg{ transform: translateX(-50%) translateY(8px); }
-  .md{ transform: translateX(-50%) translateY(44px); }
+  .lg{ bottom: calc(var(--shelfTop) - 8px); }
+  .md{ bottom: calc(var(--shelfTop) - 44px); }
 }

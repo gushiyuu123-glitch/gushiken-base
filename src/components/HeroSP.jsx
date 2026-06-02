@@ -62,7 +62,7 @@ export default function HeroSP() {
         filter: "blur(0.12px)",
       });
 
-      // ✅ selected（SELECTED WORKS）は削除したのでアニメも削除
+      // ✅ center崩れ防止：GSAPが触るのは内側（frameAnim）だけ
       gsap.set(q('[data-hero="frameVow"]'), { opacity: 0, y: 34, scale: 0.988 });
       gsap.set(q('[data-hero="frameKou"]'), { opacity: 0, y: 46, scale: 0.988 });
 
@@ -154,36 +154,36 @@ export default function HeroSP() {
 
         {/* 作品ステージ */}
         <div className={styles.stage}>
-          {/* ✅ SELECTED WORKS は削除 */}
-
           <div className={styles.frames}>
             {/* Vow（奥・大） */}
             <Link
               to={WORKS[0].to}
               className={`${styles.frame} ${styles.lg}`}
-              data-hero="frameVow"
               aria-label="制作事例：Vow in Light（詳細へ）"
             >
-              <div className={styles.frameInner}>
-                <div className={styles.imgWrap}>
-                  {!imgErr.vow ? (
-                    <img
-                      className={styles.workImg}
-                      src={WORKS[0].img}
-                      alt={WORKS[0].alt}
-                      loading="eager"
-                      decoding="async"
-                      fetchPriority="high"
-                      draggable="false"
-                      onError={() => setImgErr((s) => ({ ...s, vow: true }))}
-                    />
-                  ) : (
-                    <span className={`${styles.fallback} ${styles.fallbackVow}`} aria-hidden="true" />
-                  )}
-                </div>
-                <div className={styles.caption}>
-                  <span className={styles.workTitle}>{WORKS[0].title}</span>
-                  <span className={styles.workSub}>{WORKS[0].sub}</span>
+              {/* ✅ GSAPはここ（内側）だけを触る */}
+              <div className={styles.frameAnim} data-hero="frameVow">
+                <div className={styles.frameInner}>
+                  <div className={styles.imgWrap}>
+                    {!imgErr.vow ? (
+                      <img
+                        className={styles.workImg}
+                        src={WORKS[0].img}
+                        alt={WORKS[0].alt}
+                        loading="eager"
+                        decoding="async"
+                        fetchPriority="high"
+                        draggable="false"
+                        onError={() => setImgErr((s) => ({ ...s, vow: true }))}
+                      />
+                    ) : (
+                      <span className={`${styles.fallback} ${styles.fallbackVow}`} aria-hidden="true" />
+                    )}
+                  </div>
+                  <div className={styles.caption}>
+                    <span className={styles.workTitle}>{WORKS[0].title}</span>
+                    <span className={styles.workSub}>{WORKS[0].sub}</span>
+                  </div>
                 </div>
               </div>
             </Link>
@@ -192,28 +192,30 @@ export default function HeroSP() {
             <Link
               to={WORKS[1].to}
               className={`${styles.frame} ${styles.md}`}
-              data-hero="frameKou"
               aria-label="制作事例：KOU RYUI（詳細へ）"
             >
-              <div className={styles.frameInner}>
-                <div className={styles.imgWrap}>
-                  {!imgErr.kou ? (
-                    <img
-                      className={styles.workImg}
-                      src={WORKS[1].img}
-                      alt={WORKS[1].alt}
-                      loading="lazy"
-                      decoding="async"
-                      draggable="false"
-                      onError={() => setImgErr((s) => ({ ...s, kou: true }))}
-                    />
-                  ) : (
-                    <span className={`${styles.fallback} ${styles.fallbackKou}`} aria-hidden="true" />
-                  )}
-                </div>
-                <div className={styles.caption}>
-                  <span className={styles.workTitle}>{WORKS[1].title}</span>
-                  <span className={styles.workSub}>{WORKS[1].sub}</span>
+              {/* ✅ GSAPはここ（内側）だけを触る */}
+              <div className={styles.frameAnim} data-hero="frameKou">
+                <div className={styles.frameInner}>
+                  <div className={styles.imgWrap}>
+                    {!imgErr.kou ? (
+                      <img
+                        className={styles.workImg}
+                        src={WORKS[1].img}
+                        alt={WORKS[1].alt}
+                        loading="lazy"
+                        decoding="async"
+                        draggable="false"
+                        onError={() => setImgErr((s) => ({ ...s, kou: true }))}
+                      />
+                    ) : (
+                      <span className={`${styles.fallback} ${styles.fallbackKou}`} aria-hidden="true" />
+                    )}
+                  </div>
+                  <div className={styles.caption}>
+                    <span className={styles.workTitle}>{WORKS[1].title}</span>
+                    <span className={styles.workSub}>{WORKS[1].sub}</span>
+                  </div>
                 </div>
               </div>
             </Link>
