@@ -12,7 +12,7 @@ subtitle: "世界観と設計力の“核”を示す代表作",
   items: [
       {
     title: "BLACK PAPILLON — Tattoo Studio",
-    slug: "BlackPapillonRoom",
+    slug: "black-papillon",
     desc: "写真は強い。でも、なんか怖い。そこで止まる人の不安を「見てみたい」に変えるために、治癒後の証拠・順番・余白で“頼める状態”を先に作ったタトゥースタジオサイト。",
     link: "https://black-papillon.vercel.app/", // TODO: 実URLに合わせる
     img: "/works/bp.webp", // TODO: works用画像を配置してパス合わせる

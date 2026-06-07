@@ -1,6 +1,6 @@
 // src/pages/WorkDetail.jsx
 import React, { useEffect, useMemo, useRef } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import styles from "./WorkDetail.module.css";
 import { worksBySlug, normalizeWorkSlug } from "../data/worksIndex";
 
@@ -51,11 +51,15 @@ function scrollToTopStable() {
 export default function WorkDetail() {
   const { slug } = useParams();
   const rootRef = useRef(null);
+  const navigate = useNavigate();
 
   const normalizedSlug = normalizeWorkSlug(slug);
 
   // ✅ Map参照（重複・大小文字・空白差で事故らない）
-  const work = useMemo(() => worksBySlug.get(normalizedSlug) || null, [normalizedSlug]);
+  const work = useMemo(
+    () => worksBySlug.get(normalizedSlug) || null,
+    [normalizedSlug]
+  );
 
   // ✅ 作品詳細に入った瞬間、必ず上へ（Lenis導入後の事故対策）
   useEffect(() => {
@@ -93,6 +97,21 @@ export default function WorkDetail() {
     targets.forEach((el) => io.observe(el));
     return () => io.disconnect();
   }, [normalizedSlug]);
+
+  // ✅ 見た目は Link のまま、動作だけ「前のページへ」
+  const handleBackClick = (e) => {
+    e.preventDefault();
+
+    const idx =
+      typeof window !== "undefined" &&
+      window.history?.state &&
+      typeof window.history.state.idx === "number"
+        ? window.history.state.idx
+        : null;
+
+    if (idx !== null && idx > 0) navigate(-1);
+    else navigate("/works", { replace: true });
+  };
 
   if (!work) {
     return (
@@ -157,7 +176,8 @@ export default function WorkDetail() {
             data-reveal
             style={{ "--d": "280ms" }}
           >
-            <Link to="/works" className={styles.back}>
+            {/* ✅ 見た目そのまま、挙動だけ前ページへ */}
+            <Link to="/works" className={styles.back} onClick={handleBackClick}>
               ← BACK
             </Link>
 
@@ -238,13 +258,14 @@ export default function WorkDetail() {
             data-reveal
             style={{ "--d": "0ms" }}
           />
+          {/* これはそのままでOK */}
           <Link
             to="/works"
             className={`${styles.backText} ${styles.reveal}`}
             data-reveal
             style={{ "--d": "70ms" }}
           >
-            ← BACK TO WORKS LIST
+            ALL WORKS LIST →
           </Link>
         </div>
       </section>

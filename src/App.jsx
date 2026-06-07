@@ -1,12 +1,6 @@
 // src/App.jsx
 import { useEffect, useRef } from "react";
-import {
-  Routes,
-  Route,
-  useLocation,
-  matchPath,
-  Navigate,
-} from "react-router-dom";
+import { Routes, Route, useLocation, matchPath, Navigate } from "react-router-dom";
 import Seo from "./components/Seo";
 
 import NavGlobal from "./components/NavGlobal";
@@ -65,8 +59,11 @@ import Terms from "./pages/Terms";
 import Refund from "./pages/Refund";
 import Legal from "./pages/Legal";
 import Privacy from "./pages/Privacy";
-import OkinawaBridalWebsite from "./pages/OkinawaBridalWebsite";
-import KouRyuiEntry from "./pages/KouRyuiEntry";
+
+// Entry（子島）
+import OkinawaBridalWebsite from "./pages/entry/OkinawaBridalWebsite";
+import KouRyuiEntry from "./pages/entry/KouRyuiEntry";
+import BlackPapillonEntry from "./pages/entry/BlackPapillonEntry";
 
 // News
 import NewsList from "./pages/NewsList";
@@ -91,10 +88,19 @@ const WORK_SEO = {
     description:
       "着付け込み・手ぶらOKの琉球衣装（着物）体験を、那覇・国際通りエリアで“迷わず決められる順番”に再設計したコンセプトサイト。旅行中の不安（料金/持ち物/当日/場所）を先回りで消し、予約まで迷子にさせない導線を作った。",
   },
+
+  // ✅ VOW：子島（前室）として “制作入口” に寄せる
   "vow-in-light": {
-    title: "沖縄フォトウェディングのための世界観サイト｜Vow in Light｜GUSHIKEN DESIGN",
+    title: "沖縄のブライダル・フォトウェディング向けホームページ制作｜GUSHIKEN DESIGN",
     description:
-      "沖縄の光を軸に、写真・言葉・導線を一枚絵として統合したコンセプトサイト。結婚式/フォトウェディング/記念日の“期待→安心→決断”を崩さずに進める設計で、体験とブランドの記憶を同時に立てた。",
+      "写真は綺麗なのに、サイトで安く見える。そのギャップを埋めるのが仕事です。沖縄のブライダル・フォトウェディング・結婚式場向けに、世界観と問い合わせ導線を両立したWebサイトを制作します。",
+  },
+
+  // ✅ PAPILLON：子島（前室）
+  "black-papillon": {
+    title: "沖縄のバー・シーシャ・タトゥー向けホームページ制作｜GUSHIKEN DESIGN",
+    description:
+      "バー/シーシャ/タトゥースタジオなど夜の業態向けに、雰囲気を崩さず、予約・場所・料金が迷わず伝わる順番へ整える前室ページ。実績（Black Papillon）を軸に、世界観と導線を同時に成立させます。",
   },
 };
 
@@ -123,8 +129,7 @@ const BRIDAL_FAQ = [
 
 // ✅ Seo.jsx と同じ正規化（canonical / JSON-LD の URL を一致させる）
 const stripTrailingSlash = (s = "") => String(s).replace(/\/+$/, "");
-const ensureLeadingSlash = (p = "/") =>
-  String(p).startsWith("/") ? String(p) : `/${p}`;
+const ensureLeadingSlash = (p = "/") => (String(p).startsWith("/") ? String(p) : `/${p}`);
 
 /** / 以外の末尾スラッシュを落とす。?query/#hashも落とす。 */
 const normalizePathname = (p = "/") => {
@@ -216,13 +221,6 @@ function SeoBridge() {
     description = "制作プランと料金の目安。低価格化ではなく、スコープの最適化で合わせます。";
   }
 
-  if (pathname === "/okinawa-bridal-website") {
-    title = "沖縄のブライダル・フォトウェディング向けホームページ制作｜GUSHIKEN DESIGN";
-    description =
-      "写真は綺麗なのに、サイトで安く見える。そのギャップを埋めるのが仕事です。沖縄のブライダル・フォトウェディング・結婚式場向けに、世界観と問い合わせ導線を両立したWebサイトを制作します。";
-    attachBridalFaq = true;
-  }
-
   if (pathname === "/terms") {
     title = `TERMS｜${BASE_TITLE}`;
     description = "利用規約。";
@@ -244,14 +242,16 @@ function SeoBridge() {
   if (workMatch?.params?.slug) {
     const slug = workMatch.params.slug;
 
-    const isRoomLike =
-      /Room$/i.test(slug) || /Teaser$/i.test(slug) || /Intro$/i.test(slug);
+    const isRoomLike = /Room$/i.test(slug) || /Teaser$/i.test(slug) || /Intro$/i.test(slug);
     if (isRoomLike) noindex = true;
 
     const override = WORK_SEO[slug];
     if (override) {
       title = override.title;
       description = override.description;
+
+      // ✅ VOW（子島）は FAQ を付与
+      if (slug === "vow-in-light") attachBridalFaq = true;
     } else {
       const pretty = humanizeSlug(slug);
       title = `${pretty}｜WORKS｜${SITE_NAME}`;
@@ -279,9 +279,7 @@ function SeoBridge() {
     description,
   });
 
-  const jsonLd = attachBridalFaq
-    ? [pageJsonLd, buildFaqJsonLd(BRIDAL_FAQ)]
-    : pageJsonLd;
+  const jsonLd = attachBridalFaq ? [pageJsonLd, buildFaqJsonLd(BRIDAL_FAQ)] : pageJsonLd;
 
   return (
     <Seo
@@ -355,15 +353,26 @@ function Layout() {
           <Route path="/works/OriginRoom" element={<OriginRoom />} />
           <Route path="/works/NoahRoom" element={<NoahRoom />} />
 
+          {/* ✅ 子島（前室） */}
           <Route path="/works/vow-in-light" element={<OkinawaBridalWebsite />} />
           <Route path="/works/kou-ryui" element={<KouRyuiEntry />} />
+          <Route path="/works/black-papillon" element={<BlackPapillonEntry />} />
 
-          <Route path="/okinawa-bridal-website" element={<OkinawaBridalWebsite />} />
+          {/* ✅ “看板URL” → 正規URLへ集約（評価分散を防ぐ） */}
+          <Route
+            path="/okinawa-bridal-website"
+            element={<Navigate to="/works/vow-in-light" replace />}
+          />
           <Route
             path="/naha-ryukyu-costume-website"
             element={<Navigate to="/works/kou-ryui" replace />}
           />
+          <Route
+            path="/okinawa-night-website"
+            element={<Navigate to="/works/black-papillon" replace />}
+          />
 
+          {/* fallback */}
           <Route path="/works/:slug" element={<WorkDetail />} />
 
           <Route path="/price" element={<PriceDetail />} />

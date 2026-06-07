@@ -15,7 +15,7 @@ const WORKS = [
   title: "BLACK PAPILLON",
   sub: "Tattoo Studio / Naha, Okinawa",
   img: "/works/bp.webp",
-  to: "/works/BlackPapillonRoom",
+  to: "/works/black-papillon",
   href: "https://black-papillon.vercel.app/",
   alt: "BLACK PAPILLON — Tattoo Studio / Naha, Okinawa（制作事例）",
 },
