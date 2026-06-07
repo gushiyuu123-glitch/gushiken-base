@@ -1904,6 +1904,47 @@ subtitle: "世界観と設計力の“核”を示す代表作",
     ogImage: "https://gushikendesign.com/ogp/noah.png"
   }
 },
+{
+  title: "Expression Lab — 扉が映すもの",
+  slug: "ExpressionLabRoom",
+
+  desc:
+    "扉を開くたびに、違う表現に出会う。\n" +
+    "表現・奥行き・文字・光・感覚をめぐるアートサイト。",
+
+  link: "https://expression-lab.vercel.app/",
+  img: "/works/expression-lab.webp",
+
+  isNew: true,
+  createdAt: "2026-06-07",
+
+  tags: [
+    "NEW",
+    "Art",
+    "Art Site",
+    "Expression",
+    "Door",
+    "Worldview",
+    "Interactive",
+    "Light",
+    "Depth",
+  ],
+
+  detail: {
+    concept:
+      "扉を入口に、表現・奥行き・文字・光・感覚をめぐるアートサイト。説明を先に置くのではなく、開く前の期待と開いた先の空気の違いによって、見る体験を少しだけ“入る体験”に近づけた作品。",
+  },
+
+  seo: {
+    title:
+      "Expression Lab｜扉が映すもの。表現に出会うアートサイト｜GUSHIKEN DESIGN",
+    description:
+      "Expression Labは、扉を開くたびに違う表現に出会うアートサイト。表現・奥行き・文字・光・感覚を、ひとつずつ部屋としてめぐる作品。",
+    keywords:
+      "Expression Lab, アートサイト, 表現, 扉, Webアート, 世界観デザイン, GUSHIKEN DESIGN",
+    ogImage: "https://gushikendesign.com/ogp/expression-lab.png",
+  },
+},
     {
   title: "MEISHIKI — 命式メモ",
   slug: "MeishikiRoom",
