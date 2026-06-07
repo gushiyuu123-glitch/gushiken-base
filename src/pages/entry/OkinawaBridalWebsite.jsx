@@ -232,14 +232,14 @@ export default function OkinawaBridalWebsite() {
               それだけで、写真の価値が正しく伝わります。
             </p>
 
-            <div className="mt-[32px] grid grid-cols-2 max-[980px]:grid-cols-1 border-t border-black/10 border-l border-black/10 rounded-[6px] overflow-hidden">
+            <div className="mt-[32px] grid grid-cols-2 max-[980px]:grid-cols-1 border-tborder-l border-black/10 rounded-[6px] overflow-hidden">
               {[
                 ["─ 01", "写真の選定と見せ方", "枚数より選定基準。1枚の重みで世界観が決まります。"],
                 ["─ 02", "情報密度と余白", "詰め込みすぎず、抜きすぎず。迷わない量に整えます。"],
                 ["─ 03", "スマホの視線設計", "問い合わせはスマホから。最初にスマホで成立させます。"],
                 ["─ 04", "問い合わせへの導線", "CTAを増やさない。自然に手が動く一本道を作ります。"],
               ].map(([n, title, text]) => (
-                <div key={title} className="p-[24px_22px] bg-[rgba(255,252,248,.72)] border-r border-black/10 border-b border-black/10">
+                <div key={title} className="p-[24px_22px] bg-[rgba(255,252,248,.72)] border-rborder-b border-black/10">
                   <span className="block text-[10px] tracking-[.32em] text-[rgba(160,125,75,.55)] mb-[10px]">
                     {n}
                   </span>
