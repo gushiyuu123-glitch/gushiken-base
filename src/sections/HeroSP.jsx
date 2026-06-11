@@ -7,7 +7,6 @@ import styles from "./HeroSp.module.css";
 
 gsap.registerPlugin(ScrollTrigger);
 
-// ✅ 内部導線（SEO/回遊/迷子防止）
 const VOW_PATH = "/works/vow-in-light";
 const KOU_PATH = "/works/kou-ryui";
 
@@ -24,6 +23,8 @@ export default function HeroSP() {
         to: VOW_PATH,
         img: "/works/vow-in-light-entryherosp.webp",
         alt: "制作事例：Vow in Light",
+        w: 900,
+        h: 1200,
       },
       {
         key: "kou",
@@ -32,6 +33,8 @@ export default function HeroSP() {
         to: KOU_PATH,
         img: "/works/kouryuisp.webp",
         alt: "制作事例：KOU RYUI",
+        w: 900,
+        h: 1200,
       },
     ],
     []
@@ -52,17 +55,10 @@ export default function HeroSP() {
 
       gsap.set(q('[data-hero="bgPhoto"]'), { opacity: 0, y: 14 });
       gsap.set(q('[data-hero="bgType"]'), { opacity: 0 });
-
-      // 読める“場所” → 文字 → 作品
       gsap.set(q('[data-hero="readPad"]'), { opacity: 0 });
 
-      gsap.set(qa('[data-hero="leftItem"]'), {
-        opacity: 0,
-        y: 16,
-        filter: "blur(0.12px)",
-      });
+      gsap.set(qa('[data-hero="leftItem"]'), { opacity: 0, y: 16 });
 
-      // ✅ center崩れ防止：GSAPが触るのは内側（frameAnim）だけ
       gsap.set(q('[data-hero="frameVow"]'), { opacity: 0, y: 34, scale: 0.988 });
       gsap.set(q('[data-hero="frameKou"]'), { opacity: 0, y: 46, scale: 0.988 });
 
@@ -71,16 +67,10 @@ export default function HeroSP() {
       tl.to(q('[data-hero="bgType"]'), { opacity: 1, duration: 0.9 }, 0)
         .to(q('[data-hero="bgPhoto"]'), { opacity: 1, y: 0, duration: 0.82 }, 0.02)
         .to(q('[data-hero="readPad"]'), { opacity: 1, duration: 0.55 }, 0.10)
-        .to(
-          qa('[data-hero="leftItem"]'),
-          { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.66, stagger: 0.085 },
-          0.14
-        )
-        // ✅ 作品を少し早めに出して、“詰まり”を解く
+        .to(qa('[data-hero="leftItem"]'), { opacity: 1, y: 0, duration: 0.66, stagger: 0.085 }, 0.14)
         .to(q('[data-hero="frameVow"]'), { opacity: 1, y: 0, scale: 1, duration: 0.76 }, 0.40)
         .to(q('[data-hero="frameKou"]'), { opacity: 1, y: 0, scale: 1, duration: 0.76 }, 0.48);
 
-      // 深度だけ（動かし過ぎない）
       ScrollTrigger.create({
         trigger: root,
         start: "top top",
@@ -99,8 +89,12 @@ export default function HeroSP() {
   }, []);
 
   return (
-    <section id="hero-sp" ref={rootRef} className={styles.root} aria-label="GUSHIKEN DESIGN Hero (SP)">
-      {/* 背景：棚＋花瓶（右下） */}
+    <section
+      id="hero-sp"
+      ref={rootRef}
+      className={styles.root}
+      aria-label="GUSHIKEN DESIGN Hero (SP)"
+    >
       <div
         className={styles.bgPhoto}
         data-hero="bgPhoto"
@@ -108,17 +102,14 @@ export default function HeroSP() {
         style={{ backgroundImage: "url(/images/shelf-vase1.webp)" }}
       />
 
-      {/* 巨大タイポ（気配：主張落とす） */}
       <div className={styles.bgType} data-hero="bgType" aria-hidden="true">
         <span className={styles.bgWordTop}>GUSHIKEN</span>
         <span className={styles.bgWordBottom}>DESIGN</span>
       </div>
 
       <div className={styles.content}>
-        {/* テキストの下に可読性膜（箱に見せない） */}
         <div className={styles.readPad} data-hero="readPad" aria-hidden="true" />
 
-        {/* テキスト */}
         <div className={styles.left}>
           <p className={styles.kicker} data-hero="leftItem">
             QUIET / ORDER / IMPRESSION
@@ -132,10 +123,15 @@ export default function HeroSP() {
             Gushiken
             <br />
             Design
+            <span className="visually-hidden">
+              ｜沖縄のWebデザイン・ホームページ制作
+            </span>
           </h1>
 
           <p className={styles.copy} data-hero="leftItem">
-            <span className={styles.copyMeta}>沖縄の上質なWebデザイン・ホームページ制作</span>
+            <span className={styles.copyMeta}>
+              沖縄の上質なWebデザイン・ホームページ制作
+            </span>
             <span className={styles.copyText}>
               写真が良いのに、サイトで安く見える。
               <br />
@@ -143,25 +139,24 @@ export default function HeroSP() {
             </span>
           </p>
 
-          <a className={styles.cta} href="#contact" data-hero="leftItem">
-            <span>相談する</span>
-          </a>
+          <div className={styles.ctaRow} data-hero="leftItem">
+            <Link className={styles.cta} to="/contact" aria-label="お問い合わせへ">
+              <span>相談する</span>
+            </Link>
+          </div>
 
           <p className={styles.ctaNote} data-hero="leftItem">
             返信目安：24時間以内 / オンライン可
           </p>
         </div>
 
-        {/* 作品ステージ */}
         <div className={styles.stage}>
           <div className={styles.frames}>
-            {/* Vow（奥・大） */}
             <Link
               to={WORKS[0].to}
               className={`${styles.frame} ${styles.lg}`}
               aria-label="制作事例：Vow in Light（詳細へ）"
             >
-              {/* ✅ GSAPはここ（内側）だけを触る */}
               <div className={styles.frameAnim} data-hero="frameVow">
                 <div className={styles.frameInner}>
                   <div className={styles.imgWrap}>
@@ -174,12 +169,16 @@ export default function HeroSP() {
                         decoding="async"
                         fetchPriority="high"
                         draggable="false"
+                        width={WORKS[0].w}
+                        height={WORKS[0].h}
+                        sizes="(max-width: 420px) 76vw, 360px"
                         onError={() => setImgErr((s) => ({ ...s, vow: true }))}
                       />
                     ) : (
                       <span className={`${styles.fallback} ${styles.fallbackVow}`} aria-hidden="true" />
                     )}
                   </div>
+
                   <div className={styles.caption}>
                     <span className={styles.workTitle}>{WORKS[0].title}</span>
                     <span className={styles.workSub}>{WORKS[0].sub}</span>
@@ -188,13 +187,11 @@ export default function HeroSP() {
               </div>
             </Link>
 
-            {/* KOU（手前） */}
             <Link
               to={WORKS[1].to}
               className={`${styles.frame} ${styles.md}`}
               aria-label="制作事例：KOU RYUI（詳細へ）"
             >
-              {/* ✅ GSAPはここ（内側）だけを触る */}
               <div className={styles.frameAnim} data-hero="frameKou">
                 <div className={styles.frameInner}>
                   <div className={styles.imgWrap}>
@@ -206,12 +203,16 @@ export default function HeroSP() {
                         loading="lazy"
                         decoding="async"
                         draggable="false"
+                        width={WORKS[1].w}
+                        height={WORKS[1].h}
+                        sizes="(max-width: 420px) 66vw, 310px"
                         onError={() => setImgErr((s) => ({ ...s, kou: true }))}
                       />
                     ) : (
                       <span className={`${styles.fallback} ${styles.fallbackKou}`} aria-hidden="true" />
                     )}
                   </div>
+
                   <div className={styles.caption}>
                     <span className={styles.workTitle}>{WORKS[1].title}</span>
                     <span className={styles.workSub}>{WORKS[1].sub}</span>

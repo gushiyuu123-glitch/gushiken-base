@@ -395,3 +395,47 @@
   .lg{ bottom: calc(var(--shelfTop) - 8px); }
   .md{ bottom: calc(var(--shelfTop) - 44px); }
 }
+/* ====== LAYOUT：少しだけ空気 ====== */
+.content{
+  padding: 96px 18px 20px;   /* 88→96：上を少し広げる */
+  gap: 18px;                 /* 16→18：全体の呼吸 */
+}
+
+/* 読める膜：文字が増えるので少しだけ背を伸ばす */
+.readPad{
+  top: 66px;                 /* 70→66：上を少し拾う */
+  height: clamp(340px, 50vh, 590px); /* 320/48/560 → 少しだけ増 */
+}
+
+/* ====== TEXT GROUP：ここが本命 ====== */
+.kicker{
+  margin: 0 0 14px;          /* 10→14 */
+}
+
+.hook{
+  margin: 0 0 22px;          /* 18→22 */
+  line-height: 1.7;          /* ついでに息 */
+}
+
+.h1{
+  margin: 0 0 18px;          /* 14→18 */
+  line-height: .96;          /* .92→.96（詰まり解消） */
+}
+
+.copy{
+  margin: 0 0 18px;          /* 16→18 */
+  line-height: 2.0;          /* 1.9→2.0（読みやすさ） */
+}
+
+.copyMeta{
+  margin-bottom: 10px;       /* 8→10 */
+}
+
+/* CTA周りも少し呼吸 */
+.cta{
+  padding: 12px 0 10px;      /* 10/8 → 12/10 */
+}
+
+.ctaNote{
+  margin-top: 12px;          /* 10→12 */
+}

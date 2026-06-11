@@ -1,7 +1,12 @@
 <!doctype html>
-<html lang="ja">
+<html lang="ja" class="no-js">
 <head>
   <meta charset="UTF-8" />
+
+  <script>
+    document.documentElement.classList.remove("no-js");
+    document.documentElement.classList.add("js");
+  </script>
 
   <!-- Viewport -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
@@ -14,7 +19,7 @@
   <meta name="referrer" content="strict-origin-when-cross-origin" />
 
   <!-- UI -->
-  <meta name="color-scheme" content="light dark" />
+  <meta name="color-scheme" content="light" />
   <meta name="theme-color" content="#f7f4ee" />
   <meta name="msapplication-TileColor" content="#f7f4ee" />
 
@@ -35,68 +40,156 @@
   <link rel="manifest" href="/site.webmanifest" />
   <meta name="msapplication-config" content="/browserconfig.xml" />
 
-  <!-- Canonical（✅ JS非実行スクレイパー対策としてHTMLに固定で置く） -->
+  <!-- Canonical: home fallback -->
   <link rel="canonical" href="https://gushikendesign.com/" />
 
-  <!-- Title（fallback） -->
-  <title>GUSHIKEN DESIGN｜沖縄のWebデザイン・ホームページ制作</title>
+  <!-- Title -->
+  <title>GUSHIKEN DESIGN｜沖縄のホームページ制作・Webデザイン</title>
 
-  <!-- ✅ Fallback SEO（JS非実行対策） -->
+  <!-- Fallback SEO -->
   <meta
     name="description"
-    content="沖縄を拠点に、ブライダル・宿泊・美容・EC向けのWebデザイン／ホームページ制作を行っています。世界観と導線を一貫して設計し、公開まで丁寧に仕上げます。"
+    content="沖縄を拠点に、予約・問い合わせまで迷わせないホームページ／LPを制作。ブライダル・美容・宿泊・店舗向けに、構成・デザイン・実装・公開まで一貫して行います。"
   />
-  <!-- ✅ Seo.jsx(本番) と同じ思想に寄せる -->
   <meta
     name="robots"
     content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1"
   />
 
-  <!-- ✅ OGP（JS非実行対策：ここが本命） -->
+  <!-- OGP -->
   <meta property="og:site_name" content="GUSHIKEN DESIGN" />
   <meta property="og:locale" content="ja_JP" />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://gushikendesign.com/" />
-  <meta property="og:title" content="GUSHIKEN DESIGN｜沖縄のWebデザイン・ホームページ制作" />
+  <meta property="og:title" content="GUSHIKEN DESIGN｜沖縄のホームページ制作・Webデザイン" />
   <meta
     property="og:description"
-    content="沖縄を拠点に、ブライダル・宿泊・美容・EC向けのWebデザイン／ホームページ制作を行っています。世界観と導線を一貫して設計し、公開まで丁寧に仕上げます。"
+    content="沖縄を拠点に、予約・問い合わせまで迷わせないホームページ／LPを制作。構成・デザイン・実装・公開まで一貫して行います。"
   />
-
-  <!-- ✅ 重要：クエリ無しで安定（更新したい時はファイル名を切る） -->
   <meta property="og:image" content="https://gushikendesign.com/ogp-v4.png" />
   <meta property="og:image:secure_url" content="https://gushikendesign.com/ogp-v4.png" />
   <meta property="og:image:type" content="image/png" />
-  <meta property="og:image:alt" content="GUSHIKEN DESIGN" />
-  <!-- サイズは拾いが雑なスクレイパー対策で “image直後にも” 置く -->
+  <meta property="og:image:alt" content="GUSHIKEN DESIGN｜沖縄のWebデザイン・ホームページ制作" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
 
   <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="GUSHIKEN DESIGN｜沖縄のWebデザイン・ホームページ制作" />
+  <meta name="twitter:title" content="GUSHIKEN DESIGN｜沖縄のホームページ制作・Webデザイン" />
   <meta
     name="twitter:description"
-    content="沖縄を拠点に、ブライダル・宿泊・美容・EC向けのWebデザイン／ホームページ制作を行っています。世界観と導線を一貫して設計し、公開まで丁寧に仕上げます。"
+    content="沖縄を拠点に、予約・問い合わせまで迷わせないホームページ／LPを制作。構成・デザイン・実装・公開まで一貫して行います。"
   />
   <meta name="twitter:image" content="https://gushikendesign.com/ogp-v4.png" />
   <meta name="twitter:url" content="https://gushikendesign.com/" />
 
-  <!-- FOUC prevention -->
+  <!-- FOUC prevention + fallback content support -->
   <style>
     :root{
       --boot-bg: #f7f4ee;
       --boot-fg: #0b0b0b;
+      --boot-muted: rgba(11,11,11,.68);
+      --boot-line: rgba(11,11,11,.14);
     }
-    html { background: var(--boot-bg); }
-    body { margin: 0; background: var(--boot-bg); color: var(--boot-fg); }
 
-    #root{
+    html {
+      background: var(--boot-bg);
+    }
+
+    body {
+      margin: 0;
+      background: var(--boot-bg);
+      color: var(--boot-fg);
+      font-family:
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+    }
+
+    /*
+      JS有効時だけReact表示まで隠す。
+      JS無効/非実行スクレイパーではfallback本文を読めるようにする。
+    */
+    .js #root{
       min-height: 100svh;
       opacity: 0;
       transition: opacity 0.28s cubic-bezier(0.22, 0.1, 0.28, 1);
     }
-    #root.show{ opacity: 1; }
+
+    .js #root.show{
+      opacity: 1;
+    }
+
+    .no-js #root{
+      opacity: 1;
+    }
+
+    .seo-fallback{
+      min-height: 100svh;
+      box-sizing: border-box;
+      padding: clamp(32px, 6vw, 72px) clamp(20px, 5vw, 72px);
+      display: grid;
+      place-items: center;
+    }
+
+    .seo-fallback__inner{
+      width: min(100%, 920px);
+    }
+
+    .seo-fallback__label{
+      margin: 0 0 18px;
+      font-size: 12px;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--boot-muted);
+    }
+
+    .seo-fallback h1{
+      margin: 0;
+      font-size: clamp(34px, 7vw, 76px);
+      line-height: .98;
+      letter-spacing: -.055em;
+      font-weight: 600;
+    }
+
+    .seo-fallback__lead{
+      max-width: 680px;
+      margin: 24px 0 0;
+      color: var(--boot-muted);
+      font-size: clamp(15px, 2.1vw, 18px);
+      line-height: 1.9;
+    }
+
+    .seo-fallback__links{
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 34px;
+    }
+
+    .seo-fallback__links a{
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 44px;
+      padding: 0 18px;
+      border: 1px solid var(--boot-line);
+      border-radius: 999px;
+      color: var(--boot-fg);
+      text-decoration: none;
+      font-size: 14px;
+      line-height: 1;
+      background: rgba(255,255,255,.24);
+    }
+
+    .seo-fallback__note{
+      margin-top: 28px;
+      font-size: 13px;
+      line-height: 1.8;
+      color: rgba(11,11,11,.54);
+    }
 
     .visually-hidden{
       position: absolute;
@@ -128,7 +221,8 @@
       if (qs.get("internal") === "0") safeLS.del(KEY);
 
       if (qs.has("internal") || qs.has("k")) {
-        qs.delete("internal"); qs.delete("k");
+        qs.delete("internal");
+        qs.delete("k");
         const rest = qs.toString();
         const clean = location.pathname + (rest ? `?${rest}` : "") + location.hash;
         history.replaceState(null, "", clean);
@@ -146,12 +240,13 @@
         s.src = "https://www.googletagmanager.com/gtag/js?id=" + GA_ID;
         document.head.appendChild(s);
       }
+
       gtag("js", new Date());
       gtag("config", GA_ID, { send_page_view: false });
     })();
   </script>
 
-  <!-- JSON-LD (Organization only) -->
+  <!-- JSON-LD -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -163,7 +258,29 @@
         "name": "GUSHIKEN DESIGN",
         "alternateName": ["グシケンデザイン", "G Design"],
         "inLanguage": "ja",
-        "publisher": { "@id": "https://gushikendesign.com/#organization" }
+        "publisher": {
+          "@id": "https://gushikendesign.com/#organization"
+        }
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://gushikendesign.com/#webpage",
+        "url": "https://gushikendesign.com/",
+        "name": "GUSHIKEN DESIGN｜沖縄のホームページ制作・Webデザイン",
+        "description": "沖縄を拠点に、予約・問い合わせまで迷わせないホームページ／LPを制作。構成・デザイン・実装・公開まで一貫して行います。",
+        "isPartOf": {
+          "@id": "https://gushikendesign.com/#website"
+        },
+        "about": {
+          "@id": "https://gushikendesign.com/#organization"
+        },
+        "primaryImageOfPage": {
+          "@type": "ImageObject",
+          "url": "https://gushikendesign.com/ogp-v4.png",
+          "width": 1200,
+          "height": 630
+        },
+        "inLanguage": "ja"
       },
       {
         "@type": "ProfessionalService",
@@ -172,20 +289,63 @@
         "url": "https://gushikendesign.com/",
         "logo": "https://gushikendesign.com/android-chrome-512x512.png",
         "image": "https://gushikendesign.com/ogp-v4.png",
-        "founder": { "@id": "https://gushikendesign.com/#person" },
+        "description": "沖縄を拠点に、ホームページ制作・LP制作・Webデザイン・フロントエンド実装を行う個人制作スタジオです。",
+        "founder": {
+          "@id": "https://gushikendesign.com/#person"
+        },
         "areaServed": [
-          { "@type": "AdministrativeArea", "name": "沖縄県" },
-          { "@type": "Country", "name": "日本" }
+          {
+            "@type": "AdministrativeArea",
+            "name": "沖縄県"
+          },
+          {
+            "@type": "Country",
+            "name": "日本"
+          }
         ],
-        "serviceType": [
+        "knowsAbout": [
           "Webデザイン",
           "ホームページ制作",
-          "Web制作",
-          "ブランドサイト制作",
           "LP制作",
-          "UI/UXデザイン",
-          "フロントエンド実装"
-        ]
+          "ブランドサイト制作",
+          "UIデザイン",
+          "フロントエンド実装",
+          "SEO",
+          "導線設計"
+        ],
+        "hasOfferCatalog": {
+          "@type": "OfferCatalog",
+          "name": "Web制作サービス",
+          "itemListElement": [
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "name": "LP制作",
+                "serviceType": "LP制作",
+                "areaServed": "日本"
+              }
+            },
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "name": "ホームページ制作",
+                "serviceType": "ホームページ制作",
+                "areaServed": "日本"
+              }
+            },
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "name": "Webデザイン",
+                "serviceType": "Webデザイン",
+                "areaServed": "日本"
+              }
+            }
+          ]
+        }
       },
       {
         "@type": "Person",
@@ -194,7 +354,9 @@
         "alternateName": "具志堅 裕人",
         "jobTitle": "Web Designer / Art Director",
         "url": "https://gushikendesign.com/",
-        "worksFor": { "@id": "https://gushikendesign.com/#organization" }
+        "worksFor": {
+          "@id": "https://gushikendesign.com/#organization"
+        }
       }
     ]
   }
@@ -204,14 +366,37 @@
 <body>
   <noscript>
     <div
-      data-nosnippet
       style="color:#111;background:#f7f4ee;padding:16px;margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;"
     >
-      JavaScript が無効のため表示できません。
+      このサイトの一部表示にはJavaScriptを使用しています。主要ページへは下記リンクから移動できます。
     </div>
   </noscript>
 
-  <div id="root"></div>
+  <div id="root">
+    <main class="seo-fallback" aria-label="GUSHIKEN DESIGN">
+      <div class="seo-fallback__inner">
+        <p class="seo-fallback__label">GUSHIKEN DESIGN / OKINAWA</p>
+
+        <h1>沖縄のホームページ制作・Webデザイン</h1>
+
+        <p class="seo-fallback__lead">
+          GUSHIKEN DESIGNは、沖縄を拠点にホームページ制作・LP制作・Webデザインを行っています。
+          予約や問い合わせまで迷わせない構成を考え、デザインから実装、公開まで一貫して制作します。
+          ブライダル・美容・宿泊・店舗向けのWebサイト制作に対応しています。
+        </p>
+
+        <nav class="seo-fallback__links" aria-label="主要ページ">
+          <a href="/works">制作実績を見る</a>
+          <a href="/price">料金を見る</a>
+          <a href="/contact">相談する</a>
+        </nav>
+
+        <p class="seo-fallback__note">
+          料金は作る範囲によって調整します。必要な内容を先に整理し、無駄に膨らまない形で進めます。
+        </p>
+      </div>
+    </main>
+  </div>
 
   <!-- Vite entry -->
   <script type="module" src="/src/main.jsx"></script>

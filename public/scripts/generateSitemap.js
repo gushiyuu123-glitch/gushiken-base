@@ -3,13 +3,15 @@ import fs from "node:fs";
 import path from "node:path";
 import axios from "axios";
 import dotenv from "dotenv";
-import { worksData } from "../src/data/worksData.js";
 
 dotenv.config();
 
 const SITE =
-  String(process.env.SITE_URL || process.env.VITE_SITE_ORIGIN || "https://gushikendesign.com")
-    .replace(/\/+$/, ""); // ✅ 末尾スラッシュ除去
+  String(
+    process.env.SITE_URL ||
+      process.env.VITE_SITE_ORIGIN ||
+      "https://gushikendesign.com"
+  ).replace(/\/+$/, "");
 
 const TODAY = new Date().toISOString().split("T")[0];
 
@@ -21,6 +23,7 @@ const SERVICE_DOMAIN =
   process.env.MICROCMS_SERVICE_DOMAIN || process.env.VITE_MICROCMS_SERVICE_DOMAIN;
 const API_KEY = process.env.MICROCMS_API_KEY || process.env.VITE_MICROCMS_API_KEY;
 
+/* ---------------- utils ---------------- */
 function escapeXml(value) {
   return String(value)
     .replaceAll("&", "&amp;")
@@ -42,7 +45,13 @@ function formatDate(dateString) {
   return Number.isNaN(d.getTime()) ? TODAY : d.toISOString().split("T")[0];
 }
 
-// ✅ Room/Teaser/Intro は sitemap から除外（将来kebab化しても拾う）
+function newerDate(a, b) {
+  const da = new Date(formatDate(a)).getTime();
+  const db = new Date(formatDate(b)).getTime();
+  return db > da ? b : a;
+}
+
+// ✅ Room/Teaser/Intro は sitemap から除外
 function isRoomLikeSlug(slug = "") {
   const s = String(slug);
   return (
@@ -61,18 +70,14 @@ function urlXml({ loc, lastmod, changefreq, priority }) {
   </url>`;
 }
 
-function newerDate(a, b) {
-  const da = new Date(formatDate(a)).getTime();
-  const db = new Date(formatDate(b)).getTime();
-  return db > da ? b : a;
-}
-
-// ✅ 同じpathなら lastmod は新しい方へ寄せる
+// ✅ 同じpathは lastmod を新しい方へ
 function mergeUrl(map, item) {
   const key = normalizePath(item.path);
   const prev = map.get(key);
-  if (!prev) return map.set(key, { ...item, path: key });
-
+  if (!prev) {
+    map.set(key, { ...item, path: key });
+    return;
+  }
   map.set(key, {
     ...prev,
     ...item,
@@ -81,6 +86,7 @@ function mergeUrl(map, item) {
   });
 }
 
+/* ---------------- fetch news (limited) ---------------- */
 async function fetchNewsPages() {
   if (!SERVICE_DOMAIN || !API_KEY) return [];
 
@@ -128,35 +134,68 @@ async function fetchNewsPages() {
   return pages;
 }
 
+/* ---------------- works (prefer worksIndex) ---------------- */
+async function getWorkPages() {
+  // ✅ worksIndex があれば uniqueWorks を最優先
+  try {
+    const mod = await import("../src/data/worksIndex.js");
+    const uniqueWorks = Array.isArray(mod.uniqueWorks) ? mod.uniqueWorks : [];
+    return uniqueWorks
+      .filter((w) => w?.slug)
+      .filter((w) => !isRoomLikeSlug(w.slug))
+      .map((w) => ({
+        path: `/works/${encodeURIComponent(String(w.slug))}`,
+        changefreq: "monthly",
+        priority: "0.75",
+        lastmod: formatDate(w.updatedAt || w.createdAt || TODAY),
+      }));
+  } catch (_) {
+    // fallback: worksData
+  }
+
+  try {
+    const mod = await import("../src/data/worksData.js");
+    const worksData = Array.isArray(mod.worksData) ? mod.worksData : [];
+    const items = worksData.flatMap((c) => (Array.isArray(c?.items) ? c.items : []));
+    return items
+      .filter((w) => w?.slug)
+      .filter((w) => !isRoomLikeSlug(w.slug))
+      .map((w) => ({
+        path: `/works/${encodeURIComponent(String(w.slug))}`,
+        changefreq: "monthly",
+        priority: "0.75",
+        lastmod: formatDate(w.updatedAt || w.createdAt || TODAY),
+      }));
+  } catch (_) {
+    return [];
+  }
+}
+
+/* ---------------- generate ---------------- */
 async function generate() {
+  const workPages = await getWorkPages();
+  const newsPages = await fetchNewsPages();
+
+  const latestWork = workPages.reduce((acc, p) => newerDate(acc, p.lastmod), TODAY);
+  const latestNews = newsPages.reduce((acc, p) => newerDate(acc, p.lastmod), TODAY);
+
+  // ✅ 正規URLだけを載せる（リダイレクト用URLは載せない）
   const staticPages = [
     { path: "/", changefreq: "weekly", priority: "1.0", lastmod: TODAY },
-    { path: "/works", changefreq: "weekly", priority: "0.9", lastmod: TODAY },
-    { path: "/okinawa-bridal-website", changefreq: "weekly", priority: "0.95", lastmod: TODAY },
+    { path: "/works", changefreq: "weekly", priority: "0.9", lastmod: latestWork },
+
+    // ✅ 子島
+    { path: "/okinawa", changefreq: "weekly", priority: "0.9", lastmod: TODAY },
 
     { path: "/price", changefreq: "monthly", priority: "0.85", lastmod: TODAY },
     { path: "/contact", changefreq: "monthly", priority: "0.85", lastmod: TODAY },
-    { path: "/news", changefreq: "weekly", priority: "0.7", lastmod: TODAY },
+    { path: "/news", changefreq: "weekly", priority: "0.7", lastmod: latestNews },
 
     { path: "/terms", changefreq: "yearly", priority: "0.35", lastmod: TODAY },
     { path: "/privacy", changefreq: "yearly", priority: "0.35", lastmod: TODAY },
     { path: "/refund", changefreq: "yearly", priority: "0.35", lastmod: TODAY },
     { path: "/legal", changefreq: "yearly", priority: "0.35", lastmod: TODAY },
   ];
-
-  const workPages = (worksData || []).flatMap((category) => {
-    const items = Array.isArray(category?.items) ? category.items : [];
-    return items
-      .filter((item) => item?.slug && !isRoomLikeSlug(item.slug))
-      .map((item) => ({
-        path: `/works/${encodeURIComponent(String(item.slug))}`,
-        changefreq: "monthly",
-        priority: "0.75",
-        lastmod: formatDate(item.updatedAt || item.createdAt || TODAY),
-      }));
-  });
-
-  const newsPages = await fetchNewsPages();
 
   const all = [...staticPages, ...workPages, ...newsPages];
 

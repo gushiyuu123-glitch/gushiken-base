@@ -1,3 +1,4 @@
+// src/sections/Hero.jsx
 import { useLayoutEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import gsap from "gsap";
@@ -26,57 +27,24 @@ export default function Hero() {
 
     const ctx = gsap.context(() => {
       const q = (sel) => root.querySelector(sel);
-      const qa = (sel) => root.querySelectorAll(sel);
 
-      // 初期化（“像が整う”）
+      // 背景/フレームだけ初期化（文字は初期表示のまま）
       gsap.set(q('[data-hero="bgPhoto"]'), { opacity: 0, y: 18 });
       gsap.set(q('[data-hero="bgType"]'), { opacity: 0 });
       gsap.set(q('[data-hero="selected"]'), { opacity: 0, y: 10 });
 
-      gsap.set(qa('[data-hero="leftItem"]'), { opacity: 0, y: 18 });
-      gsap.set(q('[data-hero="frameVow"]'), {
-        opacity: 0,
-        y: 42,
-        scale: 0.985,
-      });
-      gsap.set(q('[data-hero="frameKou"]'), {
-        opacity: 0,
-        y: 54,
-        scale: 0.985,
-      });
+      gsap.set(q('[data-hero="frameVow"]'), { opacity: 0, y: 42, scale: 0.985 });
+      gsap.set(q('[data-hero="frameKou"]'), { opacity: 0, y: 54, scale: 0.985 });
 
-      const tl = gsap.timeline({
-        defaults: { ease: [0.22, 1, 0.36, 1] },
-      });
+      const tl = gsap.timeline({ defaults: { ease: [0.22, 1, 0.36, 1] } });
 
       tl.to(q('[data-hero="bgType"]'), { opacity: 1, duration: 0.9 }, 0)
         .to(q('[data-hero="bgPhoto"]'), { opacity: 1, y: 0, duration: 0.9 }, 0)
-        .to(
-          qa('[data-hero="leftItem"]'),
-          { opacity: 1, y: 0, duration: 0.66, stagger: 0.085 },
-          0.12
-        )
-        .to(
-          q('[data-hero="selected"]'),
-          { opacity: 1, y: 0, duration: 0.58 },
-          0.34
-        )
-        .to(
-          q('[data-hero="frameVow"]'),
-          { opacity: 1, y: 0, scale: 1, duration: 0.78 },
-          0.38
-        )
-        .to(
-          q('[data-hero="frameKou"]'),
-          { opacity: 1, y: 0, scale: 1, duration: 0.78 },
-          0.46
-        );
+        .to(q('[data-hero="selected"]'), { opacity: 1, y: 0, duration: 0.58 }, 0.18)
+        .to(q('[data-hero="frameVow"]'), { opacity: 1, y: 0, scale: 1, duration: 0.78 }, 0.22)
+        .to(q('[data-hero="frameKou"]'), { opacity: 1, y: 0, scale: 1, duration: 0.78 }, 0.30);
 
-      // =========================
       // Ken Burns（窓パララックス）
-      // 位置は触らず、中身(img)だけ動かす
-      // coarse（SP/タッチ）は弱める
-      // =========================
       const amt = coarse ? 3.5 : 7;
       const sc = coarse ? 1.035 : 1.055;
 
@@ -104,20 +72,10 @@ export default function Hero() {
         });
       };
 
-      bindKenBurns(
-        '[data-hero="shotVow"]',
-        '[data-hero="frameVow"]',
-        amt * 0.55,
-        -amt
-      );
-      bindKenBurns(
-        '[data-hero="shotKou"]',
-        '[data-hero="frameKou"]',
-        amt * 0.35,
-        -amt * 0.8
-      );
+      bindKenBurns('[data-hero="shotVow"]', '[data-hero="frameVow"]', amt * 0.55, -amt);
+      bindKenBurns('[data-hero="shotKou"]', '[data-hero="frameKou"]', amt * 0.35, -amt * 0.8);
 
-      // “深度”だけ足す
+      // 深度だけ
       ScrollTrigger.create({
         trigger: root,
         start: "top top",
@@ -138,62 +96,68 @@ export default function Hero() {
   }, []);
 
   return (
-    <section id="hero" ref={rootRef} className={styles.heroRoot} aria-label="Hero">
-      {/* Shelf photo background */}
+    <header
+      id="hero"
+      ref={rootRef}
+      className={styles.heroRoot}
+      aria-labelledby="hero-title"
+    >
       <div className={styles.bgPhoto} data-hero="bgPhoto" aria-hidden="true" />
 
-      {/* Background giant type */}
       <div className={styles.bgType} data-hero="bgType" aria-hidden="true">
         <div className={`${styles.bgWord} ${styles.bgWordTop}`} data-hero="wordTop">
           GUSHIKEN
         </div>
-        <div
-          className={`${styles.bgWord} ${styles.bgWordBottom}`}
-          data-hero="wordBottom"
-        >
+        <div className={`${styles.bgWord} ${styles.bgWordBottom}`} data-hero="wordBottom">
           DESIGN
         </div>
       </div>
 
-      {/* Main grid */}
       <div className={styles.grid}>
-        {/* LEFT */}
         <div className={styles.left}>
           <p className={styles.kicker} data-hero="leftItem">
             空気から、設計する。
           </p>
           <div className={styles.kickerRule} data-hero="leftItem" />
 
-          <h1 className={styles.h1} data-hero="leftItem">
+          {/* ✅ h1（常に1つだけ） */}
+          <h1 id="hero-title" className={styles.h1} data-hero="leftItem">
             Gushiken
             <br />
             Design
+            <span className="visually-hidden">
+              ｜沖縄のWebデザイン・ホームページ制作
+            </span>
           </h1>
 
           <div className={styles.copy} data-hero="leftItem">
-            <p className={styles.copyMeta}>沖縄の上質なWebデザイン・ホームページ制作</p>
-            <p>写真が良いのに、サイトで安く見える。</p>
-            <p>
-              そのギャップを埋めて、問い合わせまで
-              <br />
-              迷わない形に整えます。
+            <p className={styles.copyMeta}>
+              沖縄（浦添拠点）の実店舗向けに、HP/LPを設計→公開まで。
             </p>
+
+            <p>写真が良いのに、サイトで安く見える。</p>
+            <p>そのギャップを埋めて、問い合わせまで迷わない形に整えます。</p>
+
             <p className={styles.copySub}>
               見やすく、迷わず、判断しやすい。信頼感のある第一印象を設計します。
             </p>
           </div>
 
-          <a href="#contact" className={styles.cta} data-hero="leftItem">
-            <span>制作を相談する</span>
-          </a>
+          <div className={styles.ctaRow} data-hero="leftItem">
+            <Link
+              to="/contact"
+              className={styles.cta}
+              aria-label="制作の相談（お問い合わせページへ）"
+            >
+              <span>制作を相談する</span>
+            </Link>
+          </div>
 
-          {/* ✅ CTA直下：不安を潰す一行（短く） */}
           <p className={styles.ctaNote} data-hero="leftItem">
             返信目安：24時間以内 / オンライン可
           </p>
         </div>
 
-        {/* RIGHT */}
         <div className={styles.right}>
           <p className={styles.selectedLabel} data-hero="selected">
             SELECTED WORKS
@@ -201,7 +165,6 @@ export default function Hero() {
 
           <div className={styles.shelfWrap}>
             <div className={styles.frames}>
-              {/* Large — Vow (internal) */}
               <Link
                 to={VOW_PATH}
                 className={`${styles.frame} ${styles.lg}`}
@@ -219,6 +182,9 @@ export default function Hero() {
                         loading="eager"
                         decoding="async"
                         fetchPriority="high"
+                        width="900"
+                        height="1200"
+                        sizes="(max-width: 768px) 70vw, 420px"
                         onError={() => setImgErr((s) => ({ ...s, vow: true }))}
                       />
                     ) : (
@@ -229,6 +195,7 @@ export default function Hero() {
                       />
                     )}
                   </div>
+
                   <div className={styles.caption}>
                     <span className={styles.workTitle}>Vow in Light</span>
                     <span className={styles.workSub}>Wedding / Okinawa</span>
@@ -236,7 +203,6 @@ export default function Hero() {
                 </div>
               </Link>
 
-              {/* Medium — KOU (internal) */}
               <Link
                 to={KOU_PATH}
                 className={`${styles.frame} ${styles.md}`}
@@ -253,6 +219,9 @@ export default function Hero() {
                         alt="制作事例：KOU RYUI"
                         loading="lazy"
                         decoding="async"
+                        width="900"
+                        height="1200"
+                        sizes="(max-width: 768px) 60vw, 360px"
                         onError={() => setImgErr((s) => ({ ...s, kou: true }))}
                       />
                     ) : (
@@ -263,6 +232,7 @@ export default function Hero() {
                       />
                     )}
                   </div>
+
                   <div className={styles.caption}>
                     <span className={styles.workTitle}>KOU RYUI</span>
                     <span className={styles.workSub}>
@@ -279,6 +249,6 @@ export default function Hero() {
           </div>
         </div>
       </div>
-    </section>
+    </header>
   );
 }

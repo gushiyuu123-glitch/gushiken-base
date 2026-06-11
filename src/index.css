@@ -635,3 +635,27 @@ body::-webkit-scrollbar-corner,
 /* ✅ no-scrollbar は最優先で“完全無効化” */
 .no-scrollbar::-webkit-scrollbar { display: none !important; }
 .no-scrollbar { scrollbar-width: none !important; }
+/* 本拠地OSの上乗せを /okinawa だけ止める */
+:global(body.is-okinawa-page){
+  /* 本拠地の紙グレインを無効化（変数で止まる） */
+  --paper-grain-opacity: 0;
+
+  /* ブラウザの色設計も暗めに寄せる（任意だけど効く） */
+  color-scheme: dark;
+}
+
+/* 本拠地の body::before が残る場合の保険 */
+:global(body.is-okinawa-page)::before{
+  opacity: 0 !important;
+}
+.visually-hidden{
+  position:absolute !important;
+  width:1px !important;
+  height:1px !important;
+  padding:0 !important;
+  margin:-1px !important;
+  overflow:hidden !important;
+  clip:rect(0,0,0,0) !important;
+  white-space:nowrap !important;
+  border:0 !important;
+}

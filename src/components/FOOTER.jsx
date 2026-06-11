@@ -17,6 +17,9 @@ const MENU_LINKS = [
   { label: "POLICY", href: "/#philosophy" },
   { label: "PRICE", href: "/#price" },
   { label: "CONTACT", href: "/#contact" },
+
+  // ✅ 追加：/okinawa（フッター避難）
+  { label: "沖縄のHP制作", to: "/okinawa" },
 ];
 
 const PROJECT_LINKS = [
@@ -43,7 +46,11 @@ function InstagramIcon() {
 
 function NoteIcon() {
   return (
-    <svg viewBox="0 0 24 24" aria-hidden="true" className={cx(styles.snsIcon, styles.snsIconNote)}>
+    <svg
+      viewBox="0 0 24 24"
+      aria-hidden="true"
+      className={cx(styles.snsIcon, styles.snsIconNote)}
+    >
       <rect x="3.2" y="4.1" width="17.6" height="15.8" rx="3.2" />
       <path d="M7.2 15.8V8.2h2.1l3.8 5.1V8.2h2v7.6H13l-3.8-5.1v5.1z" />
       <path d="M6.6 18.3h10.8" className={styles.snsNoteLine} />
@@ -85,21 +92,35 @@ export default function Footer() {
   }, []);
 
   return (
-   <footer
-  id="footer"
-  ref={sectionRef}
-  className={styles.section}
-  aria-label="サイトフッター"
->
-      <div className={cx(styles.topLine, styles.reveal, styles.lineReveal)} data-footer-reveal aria-hidden="true" />
+    <footer
+      id="footer"
+      ref={sectionRef}
+      className={styles.section}
+      aria-label="サイトフッター"
+    >
+      <div
+        className={cx(styles.topLine, styles.reveal, styles.lineReveal)}
+        data-footer-reveal
+        aria-hidden="true"
+      />
 
       <div className={styles.container}>
         <div className={styles.grid}>
           {/* BRAND */}
-          <section className={cx(styles.brand, styles.reveal, styles.r1)} data-footer-reveal aria-label="GUSHIKEN DESIGN">
+          <section
+            className={cx(styles.brand, styles.reveal, styles.r1)}
+            data-footer-reveal
+            aria-label="GUSHIKEN DESIGN"
+          >
             <Link to="/" className={styles.logoLink} aria-label="GUSHIKEN DESIGN ホームへ">
               <span className={styles.logoFrame} aria-hidden="true">
-                <img src={LOGO_SRC} alt="" className={styles.logo} loading="lazy" decoding="async" />
+                <img
+                  src={LOGO_SRC}
+                  alt=""
+                  className={styles.logo}
+                  loading="lazy"
+                  decoding="async"
+                />
               </span>
 
               <span className={styles.brandText}>
@@ -134,20 +155,52 @@ export default function Footer() {
           </section>
 
           {/* MENU */}
-          <nav className={cx(styles.nav, styles.reveal, styles.r2)} data-footer-reveal aria-label="フッターメニュー">
+          <nav
+            className={cx(styles.nav, styles.reveal, styles.r2)}
+            data-footer-reveal
+            aria-label="フッターメニュー"
+          >
             <p className={styles.colLabel}>MENU</p>
 
             <div className={styles.linkList}>
-              {MENU_LINKS.map((item, index) => (
-                <a key={item.label} href={item.href} className={styles.link} style={{ "--link-index": index }}>
-                  {item.label}
-                </a>
-              ))}
+              {MENU_LINKS.map((item, index) => {
+                const key = `${item.label}-${item.to || item.href || index}`;
+
+                // ✅ SPA内リンク（/okinawa）
+                if (item.to) {
+                  return (
+                    <Link
+                      key={key}
+                      to={item.to}
+                      className={styles.link}
+                      style={{ "--link-index": index }}
+                    >
+                      {item.label}
+                    </Link>
+                  );
+                }
+
+                // ✅ 既存：ホーム内アンカー（/#works など）
+                return (
+                  <a
+                    key={key}
+                    href={item.href}
+                    className={styles.link}
+                    style={{ "--link-index": index }}
+                  >
+                    {item.label}
+                  </a>
+                );
+              })}
             </div>
           </nav>
 
           {/* PROJECTS / SOCIAL / LEGAL */}
-          <section className={cx(styles.side, styles.reveal, styles.r3)} data-footer-reveal aria-label="関連リンク">
+          <section
+            className={cx(styles.side, styles.reveal, styles.r3)}
+            data-footer-reveal
+            aria-label="関連リンク"
+          >
             <div className={styles.projects}>
               <p className={styles.colLabel}>EXPERIMENTAL PROJECTS</p>
 
@@ -206,7 +259,12 @@ export default function Footer() {
 
             <nav className={styles.legalList} aria-label="法務リンク">
               {LEGAL_LINKS.map((item, index) => (
-                <Link key={item.to} to={item.to} className={styles.legal} style={{ "--link-index": index }}>
+                <Link
+                  key={item.to}
+                  to={item.to}
+                  className={styles.legal}
+                  style={{ "--link-index": index }}
+                >
                   {item.label}
                 </Link>
               ))}

@@ -1,8 +1,7 @@
 // src/pages/Home.jsx
 import React, { useEffect, useState } from "react";
 
-import Hero from "../components/Hero";
-import HeroSP from "../components/HeroSP";
+import HeroGate from "../sections/HeroGate";
 
 import Works from "../components/Works";
 import WorksSP from "../components/WorksSP";
@@ -19,9 +18,6 @@ import NewsSection from "../components/NewsSection";
 
 import FloatingFAQ from "../components/FloatingFAQ";
 import FloatingFAQSP from "../components/FloatingFAQSP";
-
-// ✅ H1は「1つだけ」供給（表示はロゴでもOK）
-const H1_TEXT = "GUSHIKEN DESIGN｜沖縄のWebデザイン・ホームページ制作";
 
 function useMediaQuery(query, fallback = true) {
   const [matches, setMatches] = useState(() => {
@@ -49,7 +45,7 @@ function useMediaQuery(query, fallback = true) {
 }
 
 export default function Home() {
-  // ✅ PC/SP DOM分離：ここで完全に分岐して “片方だけ” を描画
+  // ✅ PC/SP DOM分離：ここで完全に分岐（判定はHomeだけに統一）
   const isDesktop = useMediaQuery("(min-width: 768px)", true);
 
   // ✅ WORKSは “PCでもタッチ大画面” をSP側へ落とす（既存ルール維持）
@@ -61,11 +57,8 @@ export default function Home() {
   return (
     <>
       <main id="top" className="home-wrapper">
-        {/* ✅ SEO/アクセシビリティ用のH1（見た目は変えない） */}
-        <h1 className="visually-hidden">{H1_TEXT}</h1>
-
-        {/* HERO */}
-        {isDesktop ? <Hero /> : <HeroSP />}
+        {/* ✅ HERO（h1はHero側に1つだけ存在） */}
+        <HeroGate isDesktop={isDesktop} />
 
         {/* ABOUT（共通） */}
         <About />
