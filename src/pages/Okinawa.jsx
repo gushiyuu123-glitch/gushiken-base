@@ -1,7 +1,7 @@
 // src/pages/Okinawa.jsx
 import React, { useLayoutEffect } from "react";
 import { Link } from "react-router-dom";
-import OkinawaThreeSea from "../components/OkinawaThreeSea";
+import OkinawaThreeSea from "../visuals/OkinawaThreeSea";
 import OkinawaWaveTitle from "../components/OkinawaWaveTitle";
 import styles from "./Okinawa.module.css";
 

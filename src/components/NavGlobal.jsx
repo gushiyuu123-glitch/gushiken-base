@@ -2,7 +2,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { createPortal } from "react-dom";
-import OkinawaThreeSea from "./OkinawaThreeSea";
+import OkinawaThreeSea from "../visuals/OkinawaThreeSea";
 import styles from "./Nav.module.css";
 
 const LOGO_SRC = "/logo-gd.png";
