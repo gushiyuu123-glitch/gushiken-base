@@ -2,6 +2,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { createPortal } from "react-dom";
+import OkinawaThreeSea from "./OkinawaThreeSea";
 import styles from "./Nav.module.css";
 
 const LOGO_SRC = "/logo-gd.png";
@@ -22,13 +23,74 @@ const GLOBAL_ITEMS = [
   { to: "/contact", label: "CONTACT", emphasis: true },
 ];
 
-// 監視専用（Heroは「下線を消す」判定にだけ使う）
-const OBSERVE_IDS = ["works", "about", "philosophy", "price", "news", "contact", "footer"];
+const OBSERVE_IDS = [
+  "works",
+  "about",
+  "philosophy",
+  "price",
+  "news",
+  "contact",
+  "footer",
+];
+
 const DARK_HASHES = new Set(["#works", "#news", "#footer"]);
 const DARK_ROUTES = new Set(["/works", "/news"]);
 
+const MOBILE_META = {
+  WORKS: {
+    title: "WORKS",
+    kana: "制作実績を見る",
+    desc: "まずは、作ったものを見てください。",
+  },
+  ABOUT: {
+    title: "ABOUT",
+    kana: "制作者について",
+    desc: "どんな人が作っているか。",
+  },
+  POLICY: {
+    title: "POLICY",
+    kana: "制作方針",
+    desc: "どう考えて作るか。",
+  },
+  PRICE: {
+    title: "PRICE",
+    kana: "料金の目安",
+    desc: "依頼前に確認できます。",
+  },
+  CONTACT: {
+    title: "CONTACT",
+    kana: "相談する",
+    desc: "制作の相談はこちら。",
+  },
+  NEWS: {
+    title: "NEWS",
+    kana: "制作記録",
+    desc: "更新と制作メモ。",
+  },
+};
+
 function cx(...classes) {
   return classes.filter(Boolean).join(" ");
+}
+
+function getMobileMeta(label) {
+  return (
+    MOBILE_META[label] || {
+      title: label,
+      kana: "",
+      desc: "",
+    }
+  );
+}
+
+function getItemKey(item) {
+  return item.href || item.to || item.label;
+}
+
+function isRouteActive(pathname, to) {
+  if (!to) return false;
+  if (pathname === to) return true;
+  return pathname.startsWith(`${to}/`);
 }
 
 function prefersReducedMotion() {
@@ -39,7 +101,7 @@ function prefersReducedMotion() {
 }
 
 /* =========================================================
-   Body Scroll Lock (fixed body)
+   Body Scroll Lock
 ========================================================= */
 function useBodyScrollLock(locked) {
   const scrollYRef = useRef(0);
@@ -71,7 +133,10 @@ function useBodyScrollLock(locked) {
     body.style.left = "0";
     body.style.right = "0";
     body.style.width = "100%";
-    if (scrollbarW) body.style.paddingRight = `${scrollbarW}px`;
+
+    if (scrollbarW) {
+      body.style.paddingRight = `${scrollbarW}px`;
+    }
 
     return () => {
       const prev = prevRef.current;
@@ -92,7 +157,7 @@ function useBodyScrollLock(locked) {
 }
 
 /* =========================================================
-   Scroll helpers (Lenis safe)
+   Scroll helpers
 ========================================================= */
 function scrollToY(y) {
   const safeY = Math.max(0, Math.round(y));
@@ -100,12 +165,22 @@ function scrollToY(y) {
   const lenis = window?.__gd_lenis;
 
   if (lenis?.scrollTo) {
-    if (reduce) lenis.scrollTo(safeY, { immediate: true });
-    else lenis.scrollTo(safeY, { duration: 0.78, easing: (t) => 1 - Math.pow(1 - t, 3) });
+    if (reduce) {
+      lenis.scrollTo(safeY, { immediate: true });
+    } else {
+      lenis.scrollTo(safeY, {
+        duration: 0.78,
+        easing: (t) => 1 - Math.pow(1 - t, 3),
+      });
+    }
+
     return;
   }
 
-  window.scrollTo({ top: safeY, behavior: reduce ? "auto" : "smooth" });
+  window.scrollTo({
+    top: safeY,
+    behavior: reduce ? "auto" : "smooth",
+  });
 }
 
 function scrollToHash(hash, offsetPx) {
@@ -114,7 +189,9 @@ function scrollToHash(hash, offsetPx) {
   const el = document.querySelector(hash);
   if (!el) return;
 
-  const top = el.getBoundingClientRect().top + (window.scrollY || 0) - offsetPx;
+  const top =
+    el.getBoundingClientRect().top + (window.scrollY || 0) - offsetPx;
+
   const safeTop = Math.max(0, Math.round(top));
 
   if (window.location.hash !== hash) {
@@ -126,7 +203,7 @@ function scrollToHash(hash, offsetPx) {
 
 /**
  * tone:
- * - "auto" (default): homeはhashで自動、下層はrouteで自動
+ * - "auto": homeはhashで自動、下層はrouteで自動
  * - "paper": 常に紙
  * - "dark": 常に黒
  */
@@ -151,18 +228,24 @@ export default function NavGlobal({ mode, tone = "auto" }) {
   const homeLinks = useMemo(() => HOME_ITEMS, []);
   const globalLinks = useMemo(() => GLOBAL_ITEMS, []);
 
+  const mobileItems = useMemo(
+    () => (isHome ? homeLinks : globalLinks),
+    [isHome, homeLinks, globalLinks]
+  );
+
   useBodyScrollLock(open);
 
   useEffect(() => setMounted(true), []);
+
   useEffect(() => {
     scrollOffsetRef.current = scrollOffset;
   }, [scrollOffset]);
 
-  /* ── measure nav height ── */
   useEffect(() => {
     const measure = () => {
       const h = navRef.current?.getBoundingClientRect?.().height;
       if (!h) return;
+
       const rounded = Math.round(h);
       setNavH((prev) => (prev === rounded ? prev : rounded));
     };
@@ -170,54 +253,68 @@ export default function NavGlobal({ mode, tone = "auto" }) {
     measure();
 
     let raf = 0;
+
     const onResize = () => {
       cancelAnimationFrame(raf);
       raf = requestAnimationFrame(measure);
     };
 
     window.addEventListener("resize", onResize);
+
     return () => {
       cancelAnimationFrame(raf);
       window.removeEventListener("resize", onResize);
     };
   }, []);
 
-  /* ── scroll → density ── */
   useEffect(() => {
     let raf = 0;
+
     const onScroll = () => {
       cancelAnimationFrame(raf);
-      raf = requestAnimationFrame(() => setScrolled(window.scrollY > 12));
+
+      raf = requestAnimationFrame(() => {
+        setScrolled(window.scrollY > 12);
+      });
     };
+
     window.addEventListener("scroll", onScroll, { passive: true });
     onScroll();
+
     return () => {
       cancelAnimationFrame(raf);
       window.removeEventListener("scroll", onScroll);
     };
   }, []);
 
-  /* ── route change closes menu ── */
   useEffect(() => {
     setOpen(false);
   }, [pathname]);
 
-  /* ── close if desktop ── */
   useEffect(() => {
     const mq = window.matchMedia("(min-width: 768px)");
+
     const closeIfDesktop = () => {
       if (mq.matches) setOpen(false);
     };
+
     closeIfDesktop();
-    if (mq.addEventListener) mq.addEventListener("change", closeIfDesktop);
-    else mq.addListener(closeIfDesktop);
+
+    if (mq.addEventListener) {
+      mq.addEventListener("change", closeIfDesktop);
+    } else {
+      mq.addListener(closeIfDesktop);
+    }
+
     return () => {
-      if (mq.removeEventListener) mq.removeEventListener("change", closeIfDesktop);
-      else mq.removeListener(closeIfDesktop);
+      if (mq.removeEventListener) {
+        mq.removeEventListener("change", closeIfDesktop);
+      } else {
+        mq.removeListener(closeIfDesktop);
+      }
     };
   }, []);
 
-  /* ── sync activeHash only on home ── */
   useEffect(() => {
     if (!isHome) return;
 
@@ -233,7 +330,6 @@ export default function NavGlobal({ mode, tone = "auto" }) {
     };
   }, [isHome]);
 
-  /* ── IntersectionObserver active follow (home) ── */
   useEffect(() => {
     if (!isHome) return;
 
@@ -243,22 +339,27 @@ export default function NavGlobal({ mode, tone = "auto" }) {
     const MAX_TRIES = 8;
 
     const setup = () => {
-      const targets = OBSERVE_IDS.map((id) => document.getElementById(id)).filter(Boolean);
+      const targets = OBSERVE_IDS.map((id) =>
+        document.getElementById(id)
+      ).filter(Boolean);
 
-      // Hero優先判定用（存在すれば最強に安定）
       const heroEl = document.getElementById("hero");
 
       if (!targets.length) {
         tries += 1;
-        if (tries <= MAX_TRIES) timer = window.setTimeout(setup, 180);
+
+        if (tries <= MAX_TRIES) {
+          timer = window.setTimeout(setup, 180);
+        }
+
         return;
       }
 
       observer = new IntersectionObserver(
         (entries) => {
-          // ✅ Hero が見えてる間は active を消す（ABOUTが先に反応するのを根絶）
           if (heroEl) {
             const r = heroEl.getBoundingClientRect();
+
             if (r.bottom > (scrollOffsetRef.current ?? 80)) {
               setActiveHash((prev) => (prev ? "" : prev));
               return;
@@ -269,9 +370,15 @@ export default function NavGlobal({ mode, tone = "auto" }) {
           if (!visible.length) return;
 
           visible.sort((a, b) => {
-            const ratio = (b.intersectionRatio || 0) - (a.intersectionRatio || 0);
+            const ratio =
+              (b.intersectionRatio || 0) - (a.intersectionRatio || 0);
+
             if (ratio) return ratio;
-            return Math.abs(a.boundingClientRect.top) - Math.abs(b.boundingClientRect.top);
+
+            return (
+              Math.abs(a.boundingClientRect.top) -
+              Math.abs(b.boundingClientRect.top)
+            );
           });
 
           const id = visible[0]?.target?.id;
@@ -297,35 +404,44 @@ export default function NavGlobal({ mode, tone = "auto" }) {
     };
   }, [isHome]);
 
-  /* ── esc close ── */
   useEffect(() => {
     if (!open) return;
 
     const onKey = (e) => {
       if (e.key !== "Escape") return;
+
       e.preventDefault();
       setOpen(false);
+
       window.setTimeout(() => buttonRef.current?.focus(), 0);
     };
 
     window.addEventListener("keydown", onKey);
+
     return () => window.removeEventListener("keydown", onKey);
   }, [open]);
 
-  /* ── focus first link on open ── */
   useEffect(() => {
     if (!open) return;
-    const t = window.setTimeout(() => firstLinkRef.current?.focus(), 90);
+
+    const t = window.setTimeout(() => {
+      firstLinkRef.current?.focus();
+    }, 120);
+
     return () => window.clearTimeout(t);
   }, [open]);
 
-  /* ── close → then scroll (home anchor) ── */
   useEffect(() => {
     if (open) return;
+
     const pending = pendingHashRef.current;
     if (!pending) return;
+
     pendingHashRef.current = null;
-    requestAnimationFrame(() => scrollToHash(pending, scrollOffsetRef.current));
+
+    requestAnimationFrame(() => {
+      scrollToHash(pending, scrollOffsetRef.current);
+    });
   }, [open]);
 
   const closeMenu = useCallback(() => setOpen(false), []);
@@ -334,6 +450,7 @@ export default function NavGlobal({ mode, tone = "auto" }) {
   const handleAnchorClick = useCallback(
     (href) => (e) => {
       if (!href?.startsWith("#")) return;
+
       e.preventDefault();
 
       setActiveHash((prev) => (prev === href ? prev : href));
@@ -356,13 +473,16 @@ export default function NavGlobal({ mode, tone = "auto" }) {
         return;
       }
 
-      // home上でロゴ → 必ずトップへ（hashも消す）
       e.preventDefault();
+
       if (open) setOpen(false);
 
-      // hash を消す（"ABOUTが残る"事故防止）
       if (window.location.hash) {
-        window.history.replaceState(null, "", window.location.pathname + window.location.search);
+        window.history.replaceState(
+          null,
+          "",
+          window.location.pathname + window.location.search
+        );
       }
 
       requestAnimationFrame(() => {
@@ -373,26 +493,108 @@ export default function NavGlobal({ mode, tone = "auto" }) {
     [isHome, open, closeMenu]
   );
 
+  const renderMobileSeaLink = useCallback(
+    (item, index) => {
+      const meta = getMobileMeta(item.label);
+      const isHash = Boolean(item.href);
+
+      const active = isHash
+        ? activeHash === item.href
+        : isRouteActive(pathname, item.to);
+
+      const variant =
+        item.label === "WORKS"
+          ? "primary"
+          : ["PRICE", "CONTACT"].includes(item.label)
+            ? "action"
+            : "minor";
+
+      const className = cx(
+        styles.mobileSeaLink,
+        variant === "primary" && styles.mobileSeaLinkPrimary,
+        variant === "action" && styles.mobileSeaLinkAction,
+        variant === "minor" && styles.mobileSeaLinkMinor,
+        active && styles.mobileSeaLinkActive,
+        item.emphasis && styles.mobileSeaLinkEmphasis
+      );
+
+      const content = (
+        <>
+          <span className={styles.mobileSeaLinkNo}>
+            {String(index + 1).padStart(2, "0")}
+          </span>
+
+          <span className={styles.mobileSeaLinkBody}>
+            <span className={styles.mobileSeaLinkTitle}>{meta.title}</span>
+            <span className={styles.mobileSeaLinkKana}>{meta.kana}</span>
+            <span className={styles.mobileSeaLinkDesc}>{meta.desc}</span>
+          </span>
+
+          <span className={styles.mobileSeaLinkLine} aria-hidden="true" />
+        </>
+      );
+
+      if (isHash) {
+        return (
+          <a
+            key={getItemKey(item)}
+            href={item.href}
+            ref={index === 0 ? firstLinkRef : null}
+            tabIndex={open ? 0 : -1}
+            onClick={handleAnchorClick(item.href)}
+            aria-current={active ? "location" : undefined}
+            data-emphasis={item.emphasis ? "true" : "false"}
+            className={className}
+            style={{ "--i": index }}
+          >
+            {content}
+          </a>
+        );
+      }
+
+      return (
+        <Link
+          key={getItemKey(item)}
+          to={item.to}
+          ref={index === 0 ? firstLinkRef : null}
+          tabIndex={open ? 0 : -1}
+          onClick={() => setOpen(false)}
+          aria-current={active ? "page" : undefined}
+          data-emphasis={item.emphasis ? "true" : "false"}
+          className={className}
+          style={{ "--i": index }}
+        >
+          {content}
+        </Link>
+      );
+    },
+    [activeHash, handleAnchorClick, open, pathname]
+  );
+
   if (!mounted) return null;
 
-  // ── theme decision（上のバーだけ） ──
   let theme = "paper";
-  if (tone === "dark") theme = "dark";
-  else if (tone === "paper") theme = "paper";
-  else {
-    if (isHome) theme = DARK_HASHES.has(activeHash) ? "dark" : "paper";
-    else theme = DARK_ROUTES.has(pathname) ? "dark" : "paper";
+
+  if (tone === "dark") {
+    theme = "dark";
+  } else if (tone === "paper") {
+    theme = "paper";
+  } else {
+    if (isHome) {
+      theme = DARK_HASHES.has(activeHash) ? "dark" : "paper";
+    } else {
+      theme = DARK_ROUTES.has(pathname) ? "dark" : "paper";
+    }
   }
 
-  // ✅ スマホで開くメニューは常に “dark”
   const menuTheme = "dark";
 
   const ui = (
     <>
-      {/* ===== TOP BAR ===== */}
       <nav
         ref={navRef}
         data-theme={theme}
+        data-open={open ? "true" : "false"}
         className={cx(styles.navRoot, scrolled ? styles.navActive : styles.navIdle)}
         aria-label="Global Navigation"
       >
@@ -414,21 +616,27 @@ export default function NavGlobal({ mode, tone = "auto" }) {
             />
 
             <span className={styles.navLogoText}>
-              <span className={cx(styles.navLogoMain, styles.sharpIn)} style={{ "--nav-delay": "0.10s" }}>
+              <span
+                className={cx(styles.navLogoMain, styles.sharpIn)}
+                style={{ "--nav-delay": "0.10s" }}
+              >
                 GUSHIKEN DESIGN
               </span>
 
-              <span className={cx(styles.navLogoSub, styles.sharpIn)} style={{ "--nav-delay": "0.16s" }}>
+              <span
+                className={cx(styles.navLogoSub, styles.sharpIn)}
+                style={{ "--nav-delay": "0.16s" }}
+              >
                 Web Design / Okinawa
               </span>
             </span>
           </Link>
 
-          {/* ===== PC LINKS ===== */}
           <div className={styles.navPc}>
             {isHome
               ? homeLinks.map((item, index) => {
                   const active = activeHash === item.href;
+
                   return (
                     <a
                       key={item.href}
@@ -442,14 +650,18 @@ export default function NavGlobal({ mode, tone = "auto" }) {
                         active && styles.navItemActive,
                         item.emphasis && styles.navItemEmphasis
                       )}
-                      style={{ "--nav-delay": `${0.22 + index * 0.06}s`, "--i": index }}
+                      style={{
+                        "--nav-delay": `${0.22 + index * 0.06}s`,
+                        "--i": index,
+                      }}
                     >
                       <span className={styles.navItemText}>{item.label}</span>
                     </a>
                   );
                 })
               : globalLinks.map((item, index) => {
-                  const active = pathname === item.to;
+                  const active = isRouteActive(pathname, item.to);
+
                   return (
                     <Link
                       key={item.to}
@@ -462,7 +674,10 @@ export default function NavGlobal({ mode, tone = "auto" }) {
                         active && styles.navItemActive,
                         item.emphasis && styles.navItemEmphasis
                       )}
-                      style={{ "--nav-delay": `${0.22 + index * 0.06}s`, "--i": index }}
+                      style={{
+                        "--nav-delay": `${0.22 + index * 0.06}s`,
+                        "--i": index,
+                      }}
                     >
                       <span className={styles.navItemText}>{item.label}</span>
                     </Link>
@@ -470,7 +685,6 @@ export default function NavGlobal({ mode, tone = "auto" }) {
                 })}
           </div>
 
-          {/* ===== HAMBURGER ===== */}
           <button
             ref={buttonRef}
             type="button"
@@ -487,7 +701,6 @@ export default function NavGlobal({ mode, tone = "auto" }) {
         </div>
       </nav>
 
-      {/* ===== MOBILE OVERLAY ===== */}
       <div
         data-theme={menuTheme}
         className={cx(styles.mobileOverlay, open && styles.mobileOverlayOpen)}
@@ -495,7 +708,6 @@ export default function NavGlobal({ mode, tone = "auto" }) {
         aria-hidden="true"
       />
 
-      {/* ===== MOBILE NAV ===== */}
       <div
         id="global-mobile-navigation"
         data-theme={menuTheme}
@@ -505,9 +717,28 @@ export default function NavGlobal({ mode, tone = "auto" }) {
         aria-hidden={!open}
         aria-label="Navigation menu"
       >
-        <div className={styles.mobileNavInner}>
-          <div className={styles.mobileNavTop}>
-            <p className={styles.mobileNavLabel}>MENU</p>
+        <div className={styles.mobileSeaLayer} aria-hidden="true">
+          {open && (
+            <OkinawaThreeSea
+              className={styles.mobileSeaCanvas}
+              variant="whiteWave"
+            />
+          )}
+          <span className={styles.mobileSeaWhite} />
+          <span className={styles.mobileSeaVeil} />
+          <span className={styles.mobileSeaDepth} />
+        </div>
+
+        <div className={styles.mobileSeaShell}>
+          <div className={styles.mobileSeaTop}>
+            <div className={styles.mobileSeaIdentity}>
+              <span className={styles.mobileSeaIdentityKicker}>
+                GUSHIKEN DESIGN
+              </span>
+              <span className={styles.mobileSeaIdentityText}>
+                OKINAWA / WEB DESIGN
+              </span>
+            </div>
 
             <button
               type="button"
@@ -517,69 +748,40 @@ export default function NavGlobal({ mode, tone = "auto" }) {
               }}
               aria-label="Close navigation"
               tabIndex={open ? 0 : -1}
-              className={styles.mobileClose}
+              className={styles.mobileSeaClose}
             >
               <span />
               <span />
             </button>
           </div>
 
-          <div className={styles.mobileNavLinks}>
-            {isHome
-              ? homeLinks.map((item, index) => {
-                  const active = activeHash === item.href;
-                  return (
-                    <a
-                      key={item.href}
-                      href={item.href}
-                      ref={index === 0 ? firstLinkRef : null}
-                      tabIndex={open ? 0 : -1}
-                      onClick={handleAnchorClick(item.href)}
-                      aria-current={active ? "location" : undefined}
-                      data-emphasis={item.emphasis ? "true" : "false"}
-                      className={cx(
-                        styles.mobileNavItem,
-                        active && styles.mobileNavItemActive,
-                        item.emphasis && styles.mobileNavItemEmphasis
-                      )}
-                      style={{ "--i": index }}
-                    >
-                      <span className={styles.mobileNavText}>{item.label}</span>
-                      <span className={styles.mobileNavArrow} aria-hidden="true">
-                        →
-                      </span>
-                    </a>
-                  );
-                })
-              : globalLinks.map((item, index) => {
-                  const active = pathname === item.to;
-                  return (
-                    <Link
-                      key={item.to}
-                      to={item.to}
-                      ref={index === 0 ? firstLinkRef : null}
-                      tabIndex={open ? 0 : -1}
-                      onClick={() => setOpen(false)}
-                      aria-current={active ? "page" : undefined}
-                      data-emphasis={item.emphasis ? "true" : "false"}
-                      className={cx(
-                        styles.mobileNavItem,
-                        active && styles.mobileNavItemActive,
-                        item.emphasis && styles.mobileNavItemEmphasis
-                      )}
-                      style={{ "--i": index }}
-                    >
-                      <span className={styles.mobileNavText}>{item.label}</span>
-                      <span className={styles.mobileNavArrow} aria-hidden="true">
-                        →
-                      </span>
-                    </Link>
-                  );
-                })}
+          <div className={styles.mobileSeaCommand}>
+<section className={styles.mobileSeaStatement}>
+  <p className={styles.mobileSeaStatementEyebrow}>
+    PORTFOLIO / OKINAWA
+  </p>
+
+  <h2 className={styles.mobileSeaStatementTitle}>
+    つくったものを、
+    <br />
+    見てください。
+  </h2>
+
+  <p className={styles.mobileSeaStatementBody}>
+    Works / Price / Contact
+  </p>
+</section>
+
+            <nav className={styles.mobileSeaMenu} aria-label="Site sections">
+              {mobileItems.map((item, index) => renderMobileSeaLink(item, index))}
+            </nav>
           </div>
 
-          <div className={styles.mobileNavFooter}>
-            <p className={styles.mobileNavNote}>Structure, atmosphere, and trust.</p>
+          <div className={styles.mobileSeaFooter}>
+            <p className={styles.mobileSeaFooterText}>
+              Structure, atmosphere, and trust.
+            </p>
+            <p className={styles.mobileSeaFooterCode}>GD / WHITE WAVE</p>
           </div>
         </div>
       </div>

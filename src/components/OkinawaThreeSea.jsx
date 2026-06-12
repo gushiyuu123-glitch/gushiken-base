@@ -13,11 +13,9 @@ function createFallbackNormalTexture(THREE) {
 
   const ctx = canvas.getContext("2d");
 
-  // normal map base
   ctx.fillStyle = "rgb(128,128,255)";
   ctx.fillRect(0, 0, size, size);
 
-  // soft shallow-water strokes
   for (let y = 0; y < size; y += 14) {
     ctx.beginPath();
 
@@ -37,7 +35,6 @@ function createFallbackNormalTexture(THREE) {
     ctx.stroke();
   }
 
-  // tiny shallow shimmer
   for (let i = 0; i < 38; i += 1) {
     const x = (i * 31) % size;
     const y = (i * 47) % size;
@@ -69,19 +66,23 @@ function loadWaterNormals(THREE) {
       },
       undefined,
       () => {
-        // public/textures/waternormals.jpg が無くても動く保険
         resolve(createFallbackNormalTexture(THREE));
       }
     );
   });
 }
 
-export default function OkinawaThreeSea({ className = "" }) {
+export default function OkinawaThreeSea({
+  className = "",
+  variant = "okinawa",
+}) {
   const mountRef = useRef(null);
 
   useEffect(() => {
     const mount = mountRef.current;
     if (!mount) return undefined;
+
+    const whiteWave = variant === "whiteWave";
 
     const reduce =
       window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches ?? false;
@@ -146,12 +147,8 @@ export default function OkinawaThreeSea({ className = "" }) {
       } = THREE;
 
       scene = new Scene();
-
-      /*
-       * 幻想感を削るため fog は使わない。
-       * 沖縄の昼：霞より、強い日差しと浅瀬の透明感。
-       */
       scene.fog = null;
+      scene.background = null;
 
       const aspect =
         Math.max(1, mount.clientWidth) / Math.max(1, mount.clientHeight);
@@ -178,9 +175,7 @@ export default function OkinawaThreeSea({ className = "" }) {
 
       renderer.setSize(mount.clientWidth, mount.clientHeight, false);
       renderer.toneMapping = THREE.ACESFilmicToneMapping;
-
-      // 幻想感を削るため、露出は少し抑える
-      renderer.toneMappingExposure = 0.78;
+      renderer.toneMappingExposure = whiteWave ? 0.62 : 0.78;
 
       if ("outputColorSpace" in renderer && THREE.SRGBColorSpace) {
         renderer.outputColorSpace = THREE.SRGBColorSpace;
@@ -194,24 +189,20 @@ export default function OkinawaThreeSea({ className = "" }) {
 
       mount.appendChild(renderer.domElement);
 
-      /*
-       * SKY
-       * 低い夕景ではなく、昼の沖縄寄り。
-       */
       sky = new Sky();
       sky.scale.setScalar(10000);
       scene.add(sky);
 
       const skyUniforms = sky.material.uniforms;
-      skyUniforms.turbidity.value = 2.7;
-      skyUniforms.rayleigh.value = 1.05;
-      skyUniforms.mieCoefficient.value = 0.0025;
-      skyUniforms.mieDirectionalG.value = 0.68;
+
+      skyUniforms.turbidity.value = whiteWave ? 1.35 : 2.7;
+      skyUniforms.rayleigh.value = whiteWave ? 0.42 : 1.05;
+      skyUniforms.mieCoefficient.value = whiteWave ? 0.0016 : 0.0025;
+      skyUniforms.mieDirectionalG.value = whiteWave ? 0.58 : 0.68;
 
       const sun = new Vector3();
 
-      // 幻想的な低い太陽をやめて、昼寄りに上げる
-      const elevation = 18;
+      const elevation = whiteWave ? 24 : 18;
       const azimuth = 118;
 
       const phi = MathUtils.degToRad(90 - elevation);
@@ -224,10 +215,10 @@ export default function OkinawaThreeSea({ className = "" }) {
       envRT = pmremGenerator.fromScene(sky);
       scene.environment = envRT.texture;
 
-      /*
-       * WATER
-       * 深海ではなく、浅瀬寄りの青緑。
-       */
+      if (whiteWave) {
+        sky.visible = false;
+      }
+
       const waterGeometry = new PlaneGeometry(10000, 10000);
       waterNormals = await loadWaterNormals(THREE);
 
@@ -238,9 +229,9 @@ export default function OkinawaThreeSea({ className = "" }) {
         textureHeight: coarse ? 512 : 1024,
         waterNormals,
         sunDirection: sun.clone().normalize(),
-        sunColor: 0xfff0c8,
-        waterColor: 0x0b6f82,
-        distortionScale: 1.65,
+        sunColor: whiteWave ? 0xffffff : 0xfff0c8,
+        waterColor: whiteWave ? 0xe8e1d6 : 0x0b6f82,
+        distortionScale: whiteWave ? 0.72 : 1.65,
         fog: false,
       });
 
@@ -248,16 +239,12 @@ export default function OkinawaThreeSea({ className = "" }) {
       water.position.y = 0;
       scene.add(water);
 
-      /*
-       * SHALLOW LAYER
-       * 白っぽい浅瀬の膜。強くしすぎると幻想になるので薄め。
-       */
       shallow = new Mesh(
         new PlaneGeometry(10000, 10000),
         new MeshBasicMaterial({
-          color: 0x8fded6,
+          color: whiteWave ? 0xf7f2e8 : 0x8fded6,
           transparent: true,
-          opacity: coarse ? 0.035 : 0.045,
+          opacity: whiteWave ? 0.022 : coarse ? 0.035 : 0.045,
           depthWrite: false,
         })
       );
@@ -266,11 +253,6 @@ export default function OkinawaThreeSea({ className = "" }) {
       shallow.position.y = 0.62;
       scene.add(shallow);
 
-      /*
-       * POINTER RIPPLE
-       * 透明Plane + Shaderで、水面の波紋だけを薄く出す。
-       * 発光させすぎない。
-       */
       raycaster = new Raycaster();
       pointer = new Vector2();
       rippleGroup = new THREE.Group();
@@ -288,8 +270,12 @@ export default function OkinawaThreeSea({ className = "" }) {
             uProgress: { value: 0 },
             uPower: { value: 1 },
             uSeed: { value: seed },
-            uColor: { value: new Color("#f4f0df") },
-            uWater: { value: new Color("#d5f4ee") },
+            uColor: {
+              value: new Color(whiteWave ? "#fffaf0" : "#f4f0df"),
+            },
+            uWater: {
+              value: new Color(whiteWave ? "#e8e1d6" : "#d5f4ee"),
+            },
           },
           vertexShader: /* glsl */ `
             varying vec2 vUv;
@@ -327,12 +313,10 @@ export default function OkinawaThreeSea({ className = "" }) {
               float p = clamp(uProgress, 0.0, 1.0);
               float fade = pow(1.0 - p, 1.7);
 
-              // main ripple
               float r1 = mix(0.05, 0.45, p);
               float w1 = mix(0.016, 0.009, p);
               float mainRing = ring(d, r1, w1);
 
-              // sub ripples
               float r2 = r1 * 0.70;
               float r3 = r1 * 0.42;
 
@@ -340,10 +324,8 @@ export default function OkinawaThreeSea({ className = "" }) {
                 ring(d, r2, w1 * 0.66) * 0.30 +
                 ring(d, r3, w1 * 0.52) * 0.16;
 
-              // 発光を抑えた中心の水面押し出し
               float softGlow = smoothstep(0.46, 0.0, d) * fade * 0.06;
 
-              // CGの完全な円感を消す
               float n = hash(floor((vUv + uSeed) * 42.0));
               float broken = mix(0.86, 1.06, n);
 
@@ -380,11 +362,8 @@ export default function OkinawaThreeSea({ className = "" }) {
         const ripple = new Mesh(rippleGeometry, material);
         ripple.position.copy(hit.point);
         ripple.position.y = 1.05;
-
-        // PlaneGeometryはXY面なので、海面XZに寝かせる
         ripple.rotation.x = -Math.PI / 2;
 
-        // 派手に広げすぎない
         const baseSize = 22 + Math.random() * 8;
         ripple.scale.set(baseSize, baseSize, baseSize);
 
@@ -431,8 +410,13 @@ export default function OkinawaThreeSea({ className = "" }) {
       }
 
       if (!reduce) {
-        window.addEventListener("pointermove", onPointerMove, { passive: true });
-        window.addEventListener("pointerdown", onPointerDown, { passive: true });
+        window.addEventListener("pointermove", onPointerMove, {
+          passive: true,
+        });
+
+        window.addEventListener("pointerdown", onPointerDown, {
+          passive: true,
+        });
 
         cleanupFns.push(() =>
           window.removeEventListener("pointermove", onPointerMove)
@@ -479,7 +463,9 @@ export default function OkinawaThreeSea({ className = "" }) {
       } else {
         resizeFallback = resize;
         window.addEventListener("resize", resizeFallback);
-        cleanupFns.push(() => window.removeEventListener("resize", resizeFallback));
+        cleanupFns.push(() =>
+          window.removeEventListener("resize", resizeFallback)
+        );
       }
 
       const clock = new THREE.Clock();
@@ -487,10 +473,12 @@ export default function OkinawaThreeSea({ className = "" }) {
       function renderFrame() {
         const elapsed = clock.getElapsedTime();
 
-        // 波はゆっくり。幻想的なうねりではなく、浅瀬の静かな揺れ。
-        water.material.uniforms.time.value += reduce ? 0.0 : 0.24 / 60;
+        water.material.uniforms.time.value += reduce
+          ? 0.0
+          : whiteWave
+            ? 0.15 / 60
+            : 0.24 / 60;
 
-        // カメラ呼吸はかなり弱め
         pointerState.x += (pointerState.tx - pointerState.x) * 0.035;
         pointerState.y += (pointerState.ty - pointerState.y) * 0.035;
 
@@ -498,8 +486,7 @@ export default function OkinawaThreeSea({ className = "" }) {
         const baseZ = camera.aspect < 0.75 ? 132 : 118;
 
         camera.position.x =
-          Math.sin(elapsed * 0.055) * 0.7 +
-          pointerState.x * 0.8;
+          Math.sin(elapsed * 0.055) * 0.7 + pointerState.x * 0.8;
 
         camera.position.y =
           baseY +
@@ -517,7 +504,6 @@ export default function OkinawaThreeSea({ className = "" }) {
 
           r.mesh.material.uniforms.uProgress.value = p;
 
-          // 水面にほんの少し流される
           r.mesh.position.x += r.driftX;
           r.mesh.position.z += r.driftZ;
 
@@ -585,7 +571,7 @@ export default function OkinawaThreeSea({ className = "" }) {
       renderer?.forceContextLoss?.();
       renderer?.domElement?.remove?.();
     };
-  }, []);
+  }, [variant]);
 
   return <div ref={mountRef} className={className} aria-hidden="true" />;
 }
