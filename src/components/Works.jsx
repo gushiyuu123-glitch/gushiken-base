@@ -3,22 +3,26 @@ import { useLayoutEffect, useMemo, useRef } from "react";
 import { Link } from "react-router-dom";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+import WorksCurtainImage from "../visuals/WorksCurtainImage";
+import WorksVantaFog from "../visuals/WorksVantaFog";
+
 import styles from "./Works.module.css";
 
 gsap.registerPlugin(ScrollTrigger);
 
 const WORKS = [
-{
-  key: "papillon",
-  no: "01",
-  tag: "PICK UP / WEB",
-  title: "BLACK PAPILLON",
-  sub: "Tattoo Studio / Naha, Okinawa",
-  img: "/works/bp.webp",
-  to: "/works/black-papillon",
-  href: "https://black-papillon.vercel.app/",
-  alt: "BLACK PAPILLON — Tattoo Studio / Naha, Okinawa（制作事例）",
-},
+  {
+    key: "papillon",
+    no: "01",
+    tag: "PICK UP / WEB",
+    title: "BLACK PAPILLON",
+    sub: "Tattoo Studio / Naha, Okinawa",
+    img: "/works/bp.webp",
+    to: "/works/black-papillon",
+    href: "https://black-papillon.vercel.app/",
+    alt: "BLACK PAPILLON — Tattoo Studio / Naha, Okinawa（制作事例）",
+  },
   {
     key: "hare",
     no: "02",
@@ -36,9 +40,7 @@ const WORKS = [
     tag: "PICK UP / WEB",
     title: "AURIA TONE",
     sub: "Space Design & Supervision",
-    // TODO: works用画像を配置してパスを合わせる
     img: "/works/auria-tone.webp",
-    // TODO: ルート名が違う場合はここだけ合わせる
     to: "/works/AuriaTone",
     href: "https://auria-tone.vercel.app/",
     alt: "制作事例：AURIA TONE（Space Design & Supervision）",
@@ -60,11 +62,18 @@ function isExternal(url) {
   return /^https?:\/\//i.test(url);
 }
 
+function getCurtainStrength(kind) {
+  if (kind === "main") return 1.0;
+  if (kind === "wide") return 0.85;
+  return 0.72;
+}
+
 function WorkCard({ item, kind = "duo", order = 0 }) {
   const hasInternal = typeof item.to === "string" && item.to.startsWith("/");
   const externalLive = isExternal(item.href);
 
   const Wrapper = hasInternal ? Link : "a";
+
   const wrapperProps = hasInternal
     ? { to: item.to }
     : {
@@ -103,6 +112,12 @@ function WorkCard({ item, kind = "duo", order = 0 }) {
               loading={isEager ? "eager" : "lazy"}
               fetchPriority={isEager ? "high" : "auto"}
             />
+
+            <WorksCurtainImage
+              src={item.img}
+              className={styles.curtainPlane}
+              strength={getCurtainStrength(kind)}
+            />
           </div>
 
           <div className={styles.veil} data-veil aria-hidden="true" />
@@ -120,8 +135,10 @@ function WorkCard({ item, kind = "duo", order = 0 }) {
             <span className={styles.tag}>{item.tag}</span>
             <span className={styles.no}>{item.no}</span>
           </div>
+
           <div className={styles.title}>{item.title}</div>
           <div className={styles.sub}>{item.sub}</div>
+
           <span className={styles.open}>DETAIL →</span>
         </div>
       </Wrapper>
@@ -154,24 +171,35 @@ export default function Works() {
 
   useLayoutEffect(() => {
     const root = rootRef.current;
-    if (!root) return;
+    if (!root) return undefined;
 
     const reduce =
       window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches ?? false;
     const coarse = window.matchMedia?.("(pointer: coarse)")?.matches ?? false;
     const narrow = window.matchMedia?.("(max-width: 980px)")?.matches ?? false;
 
-    // PCのみ（SP/タブレットは成立優先で静的に）
-    if (reduce || coarse || narrow) return;
+    // PCのみ。SP/タブレットは成立優先で静的。
+    if (reduce || coarse || narrow) return undefined;
 
     const ctx = gsap.context(() => {
       const intro = gsap.utils.toArray("[data-works-intro]");
-      gsap.set(intro, { opacity: 0, y: 18, filter: "blur(0.32px)" });
+
+      gsap.set(intro, {
+        opacity: 0,
+        y: 18,
+        filter: "blur(0.32px)",
+      });
 
       gsap
         .timeline({
-          scrollTrigger: { trigger: root, start: "top 72%", once: true },
-          defaults: { ease: "power3.out" },
+          scrollTrigger: {
+            trigger: root,
+            start: "top 72%",
+            once: true,
+          },
+          defaults: {
+            ease: "power3.out",
+          },
         })
         .to(intro, {
           opacity: 1,
@@ -192,14 +220,20 @@ export default function Works() {
           scale: 0.985,
           filter: "blur(0.22px)",
         });
-        gsap.set(titleImg, { opacity: 0, scale: 1.01 });
 
-        const tlt = gsap.timeline({
-          paused: true,
-          defaults: { ease: [0.22, 1, 0.36, 1] },
+        gsap.set(titleImg, {
+          opacity: 0,
+          scale: 1.01,
         });
 
-        tlt
+        const titleTimeline = gsap.timeline({
+          paused: true,
+          defaults: {
+            ease: [0.22, 1, 0.36, 1],
+          },
+        });
+
+        titleTimeline
           .to(
             titleMask,
             {
@@ -211,13 +245,21 @@ export default function Works() {
             },
             0
           )
-          .to(titleImg, { opacity: 1, scale: 1, duration: 0.72 }, 0.06);
+          .to(
+            titleImg,
+            {
+              opacity: 1,
+              scale: 1,
+              duration: 0.72,
+            },
+            0.06
+          );
 
         ScrollTrigger.create({
           trigger: head || root,
           start: "top 82%",
           onEnter: (self) => {
-            tlt.play(0);
+            titleTimeline.play(0);
             self.kill();
           },
         });
@@ -225,7 +267,7 @@ export default function Works() {
 
       const panels = gsap.utils.toArray("[data-stage]");
 
-      panels.forEach((panel, pIndex) => {
+      panels.forEach((panel, panelIndex) => {
         const type = panel.getAttribute("data-stage-type") || "duo";
         const cards = Array.from(panel.querySelectorAll("[data-card]"));
 
@@ -239,6 +281,7 @@ export default function Works() {
           const veil = card.querySelector("[data-veil]");
           const stamp = card.querySelector("[data-stamp]");
           const glint = card.querySelector("[data-glint]");
+
           if (!mask || !image) return;
 
           gsap.set(texts, {
@@ -248,6 +291,7 @@ export default function Works() {
           });
 
           const isFade = mask.hasAttribute("data-fade");
+
           if (isFade) {
             gsap.set(mask, {
               clipPath: "inset(0% 0% 0% 0%)",
@@ -255,38 +299,74 @@ export default function Works() {
               y: 12,
             });
           } else {
-            gsap.set(mask, { clipPath: "inset(0% 0% 100% 0%)" });
+            gsap.set(mask, {
+              clipPath: "inset(0% 0% 100% 0%)",
+            });
           }
 
-          gsap.set(image, { scale: 1.09, yPercent: 0 });
-          if (veil) gsap.set(veil, { opacity: 0 });
-          if (stamp)
-            gsap.set(stamp, { opacity: 0, y: 14, filter: "blur(0.18px)" });
-          if (glint) gsap.set(glint, { opacity: 0, xPercent: -140 });
+          gsap.set(image, {
+            scale: 1.09,
+            yPercent: 0,
+          });
+
+          if (veil) {
+            gsap.set(veil, {
+              opacity: 0,
+            });
+          }
+
+          if (stamp) {
+            gsap.set(stamp, {
+              opacity: 0,
+              y: 14,
+              filter: "blur(0.18px)",
+            });
+          }
+
+          if (glint) {
+            gsap.set(glint, {
+              opacity: 0,
+              xPercent: -140,
+            });
+          }
         });
 
         const tl = gsap.timeline({
           paused: true,
-          defaults: { ease: [0.22, 1, 0.36, 1] },
+          defaults: {
+            ease: [0.22, 1, 0.36, 1],
+          },
         });
 
         const runGlint = (glintEl, strength = 0.75, delay = 0) => {
           if (!glintEl) return;
+
           gsap
             .timeline()
-            .set(glintEl, { opacity: strength, xPercent: -140 })
+            .set(glintEl, {
+              opacity: strength,
+              xPercent: -140,
+            })
             .to(glintEl, {
               xPercent: 140,
               duration: 0.92,
               ease: [0.22, 1, 0.36, 1],
               delay,
             })
-            .to(glintEl, { opacity: 0, duration: 0.18 }, delay + 0.7);
+            .to(
+              glintEl,
+              {
+                opacity: 0,
+                duration: 0.18,
+              },
+              delay + 0.7
+            );
         };
 
         if (type === "main") {
           const card = cards[0];
           if (!card) return;
+
           const mask = card.querySelector("[data-mask]");
           const image = card.querySelector("[data-image]");
           const texts = card.querySelectorAll("[data-text]");
@@ -294,17 +374,50 @@ export default function Works() {
           const stamp = card.querySelector("[data-stamp]");
           const glint = card.querySelector("[data-glint]");
 
-          tl.to(mask, { opacity: 1, y: 0, duration: 0.66 }, 0.02)
-            .to(veil, { opacity: 1, duration: 0.72 }, 0.1)
-            .to(image, { scale: 1.06, yPercent: -1, duration: 1.25 }, 0.02)
+          tl.to(
+            mask,
+            {
+              opacity: 1,
+              y: 0,
+              duration: 0.66,
+            },
+            0.02
+          )
+            .to(
+              veil,
+              {
+                opacity: 1,
+                duration: 0.72,
+              },
+              0.1
+            )
+            .to(
+              image,
+              {
+                scale: 1.06,
+                yPercent: -1,
+                duration: 1.25,
+              },
+              0.02
+            )
             .to(
               texts,
-              { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.62 },
+              {
+                opacity: 1,
+                y: 0,
+                filter: "blur(0px)",
+                duration: 0.62,
+              },
               0.2
             )
             .to(
               stamp,
-              { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.62 },
+              {
+                opacity: 1,
+                y: 0,
+                filter: "blur(0px)",
+                duration: 0.62,
+              },
               0.24
             );
 
@@ -317,48 +430,113 @@ export default function Works() {
         }
 
         if (type === "duo") {
-          const c1 = cards[0];
-          const c2 = cards[1];
-          if (!c1 || !c2) return;
+          const firstCard = cards[0];
+          const secondCard = cards[1];
 
-          const m1 = c1.querySelector("[data-mask]");
-          const i1 = c1.querySelector("[data-image]");
-          const t1 = c1.querySelectorAll("[data-text]");
-          const v1 = c1.querySelector("[data-veil]");
-          const s1 = c1.querySelector("[data-stamp]");
-          const g1 = c1.querySelector("[data-glint]");
+          if (!firstCard || !secondCard) return;
 
-          const m2 = c2.querySelector("[data-mask]");
-          const i2 = c2.querySelector("[data-image]");
-          const t2 = c2.querySelectorAll("[data-text]");
-          const v2 = c2.querySelector("[data-veil]");
-          const s2 = c2.querySelector("[data-stamp]");
-          const g2 = c2.querySelector("[data-glint]");
+          const m1 = firstCard.querySelector("[data-mask]");
+          const i1 = firstCard.querySelector("[data-image]");
+          const t1 = firstCard.querySelectorAll("[data-text]");
+          const v1 = firstCard.querySelector("[data-veil]");
+          const s1 = firstCard.querySelector("[data-stamp]");
+          const g1 = firstCard.querySelector("[data-glint]");
 
-          tl.to(m1, { clipPath: "inset(0% 0% 0% 0%)", duration: 0.72 }, 0.02)
-            .to(v1, { opacity: 1, duration: 0.72 }, 0.1)
-            .to(i1, { scale: 1.06, yPercent: -2, duration: 1.3 }, 0.02)
+          const m2 = secondCard.querySelector("[data-mask]");
+          const i2 = secondCard.querySelector("[data-image]");
+          const t2 = secondCard.querySelectorAll("[data-text]");
+          const v2 = secondCard.querySelector("[data-veil]");
+          const s2 = secondCard.querySelector("[data-stamp]");
+          const g2 = secondCard.querySelector("[data-glint]");
+
+          tl.to(
+            m1,
+            {
+              clipPath: "inset(0% 0% 0% 0%)",
+              duration: 0.72,
+            },
+            0.02
+          )
+            .to(
+              v1,
+              {
+                opacity: 1,
+                duration: 0.72,
+              },
+              0.1
+            )
+            .to(
+              i1,
+              {
+                scale: 1.06,
+                yPercent: -2,
+                duration: 1.3,
+              },
+              0.02
+            )
             .to(
               t1,
-              { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.62 },
+              {
+                opacity: 1,
+                y: 0,
+                filter: "blur(0px)",
+                duration: 0.62,
+              },
               0.22
             )
             .to(
               s1,
-              { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.62 },
+              {
+                opacity: 1,
+                y: 0,
+                filter: "blur(0px)",
+                duration: 0.62,
+              },
               0.26
             )
-            .to(m2, { clipPath: "inset(0% 0% 0% 0%)", duration: 0.72 }, 0.18)
-            .to(v2, { opacity: 1, duration: 0.72 }, 0.26)
-            .to(i2, { scale: 1.06, yPercent: 2, duration: 1.3 }, 0.18)
+            .to(
+              m2,
+              {
+                clipPath: "inset(0% 0% 0% 0%)",
+                duration: 0.72,
+              },
+              0.18
+            )
+            .to(
+              v2,
+              {
+                opacity: 1,
+                duration: 0.72,
+              },
+              0.26
+            )
+            .to(
+              i2,
+              {
+                scale: 1.06,
+                yPercent: 2,
+                duration: 1.3,
+              },
+              0.18
+            )
             .to(
               t2,
-              { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.62 },
+              {
+                opacity: 1,
+                y: 0,
+                filter: "blur(0px)",
+                duration: 0.62,
+              },
               0.38
             )
             .to(
               s2,
-              { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.62 },
+              {
+                opacity: 1,
+                y: 0,
+                filter: "blur(0px)",
+                duration: 0.62,
+              },
               0.42
             );
 
@@ -379,6 +557,7 @@ export default function Works() {
         if (type === "wide") {
           const card = cards[0];
           if (!card) return;
+
           const mask = card.querySelector("[data-mask]");
           const image = card.querySelector("[data-image]");
           const texts = card.querySelectorAll("[data-text]");
@@ -386,17 +565,49 @@ export default function Works() {
           const stamp = card.querySelector("[data-stamp]");
           const glint = card.querySelector("[data-glint]");
 
-          tl.to(mask, { clipPath: "inset(0% 0% 0% 0%)", duration: 0.72 }, 0.02)
-            .to(veil, { opacity: 1, duration: 0.72 }, 0.1)
-            .to(image, { scale: 1.06, yPercent: 1, duration: 1.35 }, 0.02)
+          tl.to(
+            mask,
+            {
+              clipPath: "inset(0% 0% 0% 0%)",
+              duration: 0.72,
+            },
+            0.02
+          )
+            .to(
+              veil,
+              {
+                opacity: 1,
+                duration: 0.72,
+              },
+              0.1
+            )
+            .to(
+              image,
+              {
+                scale: 1.06,
+                yPercent: 1,
+                duration: 1.35,
+              },
+              0.02
+            )
             .to(
               texts,
-              { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.62 },
+              {
+                opacity: 1,
+                y: 0,
+                filter: "blur(0px)",
+                duration: 0.62,
+              },
               0.22
             )
             .to(
               stamp,
-              { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.62 },
+              {
+                opacity: 1,
+                y: 0,
+                filter: "blur(0px)",
+                duration: 0.62,
+              },
               0.26
             );
 
@@ -415,10 +626,12 @@ export default function Works() {
           onEnterBack: () => tl.restart(true),
         });
 
-        if (pIndex === 0) {
+        if (panelIndex === 0) {
           requestAnimationFrame(() => {
             try {
-              if (ScrollTrigger.isInViewport(panel, 0.65)) tl.play(0);
+              if (ScrollTrigger.isInViewport(panel, 0.65)) {
+                tl.play(0);
+              }
             } catch (_) {
               tl.play(0);
             }
@@ -426,8 +639,8 @@ export default function Works() {
         }
       });
 
-      // Parallax（innerを動かす）
       const cardsForParallax = gsap.utils.toArray("[data-card]");
+
       cardsForParallax.forEach((card) => {
         const inner = card.querySelector("[data-parallax]");
         if (!inner) return;
@@ -435,13 +648,15 @@ export default function Works() {
         const kind = card.getAttribute("data-kind") || "";
         const base = kind === "main" ? 4.6 : kind === "wide" ? 3.9 : 3.2;
         const dir = kind === "duoB" ? -1 : 1;
-        const amt = base * dir;
+        const amount = base * dir;
 
         gsap.fromTo(
           inner,
-          { yPercent: -amt },
           {
-            yPercent: amt,
+            yPercent: -amount,
+          },
+          {
+            yPercent: amount,
             ease: "none",
             immediateRender: false,
             scrollTrigger: {
@@ -456,12 +671,18 @@ export default function Works() {
       });
     }, root);
 
-    const t = window.setTimeout(() => ScrollTrigger.refresh(), 240);
-    const onResize = () => ScrollTrigger.refresh();
+    const refreshTimer = window.setTimeout(() => {
+      ScrollTrigger.refresh();
+    }, 240);
+
+    const onResize = () => {
+      ScrollTrigger.refresh();
+    };
+
     window.addEventListener("resize", onResize);
 
     return () => {
-      window.clearTimeout(t);
+      window.clearTimeout(refreshTimer);
       window.removeEventListener("resize", onResize);
       ctx.revert();
     };
@@ -474,6 +695,8 @@ export default function Works() {
       id="works"
       aria-label="Works"
     >
+      <WorksVantaFog className={styles.worksFogBg} />
+
       <header className={styles.head}>
         <p className={styles.kicker} data-works-intro>
           SELECTED
@@ -481,6 +704,7 @@ export default function Works() {
 
         <h2 className={styles.h2}>
           <span className={styles.h2Sr}>WORKS</span>
+
           <span className={styles.h2Mask} data-works-title>
             <img
               className={styles.h2Img}
@@ -493,23 +717,24 @@ export default function Works() {
           </span>
         </h2>
 
-        <p className={styles.lead} data-works-intro>
-          事例は、判断しやすい順に。<br />
-          見た瞬間の印象と、迷わない導線まで。
-        </p>
+   <p className={styles.lead} data-works-intro>
+  デザインだけで終わらせず、
+  <br />
+  伝わるところまで作り込んだ制作事例。
+</p>
       </header>
 
       <div className={styles.runway}>
-        {stages.map((s) => (
+        {stages.map((stage) => (
           <article
-            key={s.key}
+            key={stage.key}
             className={styles.panel}
             data-stage
-            data-stage-type={s.type}
+            data-stage-type={stage.type}
           >
             <div className={styles.stage}>
               <div className={styles.axis} aria-hidden="true">
-                <span className={styles.axisLabel}>{s.label}</span>
+                <span className={styles.axisLabel}>{stage.label}</span>
                 <span className={styles.axisLine} />
               </div>
 
@@ -517,27 +742,29 @@ export default function Works() {
               <div className={styles.seamBottom} aria-hidden="true" />
 
               <div className={styles.bgNo} aria-hidden="true">
-                {s.type === "main"
+                {stage.type === "main"
                   ? "01"
-                  : s.type === "duo"
-                  ? "02–03"
-                  : "04"}
+                  : stage.type === "duo"
+                    ? "02–03"
+                    : "04"}
               </div>
 
-              <div className={`${styles.inner} ${styles[`inner_${s.type}`]}`}>
-                {s.type === "main" && (
-                  <WorkCard item={s.items[0]} kind="main" order={0} />
+              <div
+                className={`${styles.inner} ${styles[`inner_${stage.type}`]}`}
+              >
+                {stage.type === "main" && (
+                  <WorkCard item={stage.items[0]} kind="main" order={0} />
                 )}
 
-                {s.type === "duo" && (
+                {stage.type === "duo" && (
                   <div className={styles.duoWrap}>
-                    <WorkCard item={s.items[0]} kind="duoA" order={0} />
-                    <WorkCard item={s.items[1]} kind="duoB" order={1} />
+                    <WorkCard item={stage.items[0]} kind="duoA" order={0} />
+                    <WorkCard item={stage.items[1]} kind="duoB" order={1} />
                   </div>
                 )}
 
-                {s.type === "wide" && (
-                  <WorkCard item={s.items[0]} kind="wide" order={0} />
+                {stage.type === "wide" && (
+                  <WorkCard item={stage.items[0]} kind="wide" order={0} />
                 )}
               </div>
             </div>
@@ -546,7 +773,11 @@ export default function Works() {
       </div>
 
       <div className={styles.tail} aria-label="Works archive">
-        <Link className={styles.all} to="/works" aria-label="すべての制作実績を見る">
+        <Link
+          className={styles.all}
+          to="/works"
+          aria-label="すべての制作実績を見る"
+        >
           VIEW ALL WORKS
         </Link>
       </div>
