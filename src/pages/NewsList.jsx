@@ -1,5 +1,11 @@
 // src/pages/NewsList.jsx
-import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { Link, useLocation } from "react-router-dom";
 import { getNewsList } from "../lib/microcms";
 import SectionSvgTitle from "../components/SectionSvgTitle";
@@ -10,54 +16,88 @@ const PAGE_TITLE = `NEWS｜${SITE_NAME}`;
 const PAGE_DESC = "制作の更新やお知らせをまとめています。";
 const FALLBACK_OG = "/ogp.png";
 
+const NEWS_PAGE_SIZE = 12;
+
 function setMetaByName(name, content) {
   if (!content) return;
+
   let tag = document.querySelector(`meta[name="${name}"]`);
+
   if (!tag) {
     tag = document.createElement("meta");
     tag.setAttribute("name", name);
     document.head.appendChild(tag);
   }
+
   tag.setAttribute("content", content);
 }
 
 function setMetaByProperty(property, content) {
   if (!content) return;
+
   let tag = document.querySelector(`meta[property="${property}"]`);
+
   if (!tag) {
     tag = document.createElement("meta");
     tag.setAttribute("property", property);
     document.head.appendChild(tag);
   }
+
   tag.setAttribute("content", content);
 }
 
 function setCanonical(href) {
   if (!href) return;
+
   let tag = document.querySelector('link[rel="canonical"]');
+
   if (!tag) {
     tag = document.createElement("link");
     tag.setAttribute("rel", "canonical");
     document.head.appendChild(tag);
   }
+
   tag.setAttribute("href", href);
 }
 
 function scrollTopSafe() {
-  // Lenis がいる場合も事故らないように
   try {
-    const gdLenis = window?.__gd_lenis;
+    const gdLenis = window?.__gd_lenis__ || window?.__gd_lenis;
+
     if (gdLenis?.scrollTo) {
       gdLenis.scrollTo(0, { immediate: true });
       return;
     }
-  } catch {}
+  } catch (_) {
+    // fallback
+  }
+
   window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+}
+
+function mergeNews(prev = [], next = []) {
+  const seen = new Set();
+  const merged = [];
+
+  [...prev, ...next].forEach((item) => {
+    const key = item?.id || `${item?.title || "untitled"}-${item?.createdAt || ""}`;
+
+    if (seen.has(key)) return;
+
+    seen.add(key);
+    merged.push(item);
+  });
+
+  return merged;
 }
 
 export default function NewsList() {
   const [news, setNews] = useState([]);
+  const [totalCount, setTotalCount] = useState(0);
+  const [hasMore, setHasMore] = useState(false);
+
   const [loading, setLoading] = useState(true);
+  const [loadingMore, setLoadingMore] = useState(false);
   const [error, setError] = useState(false);
 
   const mountedRef = useRef(false);
@@ -85,40 +125,64 @@ export default function NewsList() {
     };
   }, []);
 
-  const fetchNews = useCallback(async ({ silent = false } = {}) => {
-    const requestId = requestIdRef.current + 1;
-    requestIdRef.current = requestId;
+  const fetchNews = useCallback(
+    async ({ offset = 0, append = false, silent = false } = {}) => {
+      const requestId = requestIdRef.current + 1;
+      requestIdRef.current = requestId;
 
-    try {
-      if (!silent || newsRef.current.length === 0) setLoading(true);
-      setError(false);
+      try {
+        if (append) {
+          setLoadingMore(true);
+        } else if (!silent || newsRef.current.length === 0) {
+          setLoading(true);
+        }
 
-      const res = await getNewsList({ limit: 50 });
+        setError(false);
 
-      if (!mountedRef.current) return;
-      if (requestId !== requestIdRef.current) return;
+        const res = await getNewsList({
+          limit: NEWS_PAGE_SIZE,
+          offset,
+        });
 
-      const items = Array.isArray(res?.contents) ? res.contents : [];
-      setNews(items);
-      setError(false);
-    } catch (err) {
-      console.error("❌ NEWS一覧表示エラー:", err);
+        if (!mountedRef.current) return;
+        if (requestId !== requestIdRef.current) return;
 
-      if (!mountedRef.current) return;
-      if (requestId !== requestIdRef.current) return;
+        const items = Array.isArray(res?.contents) ? res.contents : [];
+        const nextTotal =
+          Number.isFinite(Number(res?.totalCount)) && Number(res?.totalCount) >= 0
+            ? Number(res.totalCount)
+            : offset + items.length;
 
-      if (newsRef.current.length === 0) {
-        setNews([]);
-        setError(true);
+        const nextNews = append ? mergeNews(newsRef.current, items) : items;
+
+        setNews(nextNews);
+        setTotalCount(nextTotal);
+        setHasMore(nextTotal > 0 ? nextNews.length < nextTotal : items.length === NEWS_PAGE_SIZE);
+        setError(false);
+      } catch (err) {
+        console.error("❌ NEWS一覧表示エラー:", err);
+
+        if (!mountedRef.current) return;
+        if (requestId !== requestIdRef.current) return;
+
+        if (newsRef.current.length === 0) {
+          setNews([]);
+          setTotalCount(0);
+          setHasMore(false);
+          setError(true);
+        }
+      } finally {
+        if (!mountedRef.current) return;
+        if (requestId !== requestIdRef.current) return;
+
+        setLoading(false);
+        setLoadingMore(false);
       }
-    } finally {
-      if (!mountedRef.current) return;
-      if (requestId !== requestIdRef.current) return;
-      setLoading(false);
-    }
-  }, []);
+    },
+    []
+  );
 
-  // SEO/OGP
+  // SEO / OGP
   useEffect(() => {
     document.title = PAGE_TITLE;
 
@@ -142,11 +206,12 @@ export default function NewsList() {
     setMetaByName("twitter:image", ogImage);
   }, []);
 
-  // ✅ /news 遷移時：スクロール残り対策（Lenis含む）
+  // /news 遷移時：スクロール残り対策
   useEffect(() => {
-    if (location.hash) return;
+    if (location.hash) return undefined;
 
     const goTop = () => scrollTopSafe();
+
     goTop();
 
     const raf = requestAnimationFrame(goTop);
@@ -156,27 +221,36 @@ export default function NewsList() {
       cancelAnimationFrame(raf);
       window.clearTimeout(timer);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location.pathname, location.search, location.hash]);
 
   useEffect(() => {
     mountedRef.current = true;
-    fetchNews();
+
+    fetchNews({
+      offset: 0,
+      append: false,
+      silent: false,
+    });
+
     return () => {
       mountedRef.current = false;
     };
   }, [fetchNews]);
 
-  // PWA/復帰時の再取得
+  // PWA / 復帰時：空なら再取得。読み込み済みを勝手に巻き戻さない。
   useEffect(() => {
     const handleVisible = () => {
       if (document.visibilityState !== "visible") return;
-      fetchNews({ silent: true });
+      if (newsRef.current.length > 0) return;
+
+      fetchNews({ offset: 0, append: false, silent: true });
     };
 
     const handlePageShow = (event) => {
       if (!event.persisted) return;
-      fetchNews({ silent: true });
+      if (newsRef.current.length > 0) return;
+
+      fetchNews({ offset: 0, append: false, silent: true });
     };
 
     document.addEventListener("visibilitychange", handleVisible);
@@ -188,7 +262,19 @@ export default function NewsList() {
     };
   }, [fetchNews]);
 
+  const handleLoadMore = useCallback(() => {
+    if (loadingMore || loading || !hasMore) return;
+
+    fetchNews({
+      offset: newsRef.current.length,
+      append: true,
+      silent: true,
+    });
+  }, [fetchNews, hasMore, loading, loadingMore]);
+
   const hasNews = news.length > 0;
+  const remainingCount = Math.max(0, totalCount - news.length);
+  const countLabel = totalCount > 0 ? `${news.length} / ${totalCount}` : `${news.length}`;
 
   return (
     <section
@@ -200,13 +286,28 @@ export default function NewsList() {
         <div className={styles.sideLine} aria-hidden="true" />
 
         <header className={styles.header}>
-          <SectionSvgTitle title="NEWS" sub="NEWS / ARCHIVE" className={styles.svgTitle} />
+          <SectionSvgTitle
+            title="NEWS"
+            sub="NEWS / ARCHIVE"
+            className={styles.svgTitle}
+          />
 
           <h1 id="news-list-heading" className={styles.hiddenHeading}>
             お知らせ
           </h1>
 
-          <p className={styles.lead}>制作の更新やお知らせをまとめています。</p>
+          <p className={styles.lead}>
+            制作の更新、公開の記録、
+            <br />
+            考えたことを残しています。
+          </p>
+
+          {!loading && !error && hasNews && (
+            <div className={styles.archiveMeta} aria-label="表示件数">
+              <span className={styles.archiveMetaLine} aria-hidden="true" />
+              <span className={styles.archiveMetaText}>{countLabel}</span>
+            </div>
+          )}
         </header>
 
         {loading && (
@@ -232,48 +333,92 @@ export default function NewsList() {
         )}
 
         {!loading && !error && hasNews && (
-          <div className={styles.list}>
-            {news.map((item, index) => {
-              const date = item.publishedAt || item.createdAt || item.updatedAt || null;
-              const hasThumb = Boolean(item.eyecatch?.url);
+          <>
+            <div className={styles.list}>
+              {news.map((item, index) => {
+                const date =
+                  item.publishedAt || item.createdAt || item.updatedAt || null;
 
-              return (
-                <Link
-                  to={`/news/${item.id}`}
-                  key={item.id}
-                  className={styles.item}
-                  data-has-thumb={hasThumb ? "true" : "false"}
-                  aria-label={`お知らせ: ${item.title || "無題"}`}
-                >
-                  <span className={styles.itemNumber} aria-hidden="true">
-                    {String(index + 1).padStart(2, "0")}
-                  </span>
+                const title = item.title || "Untitled";
+                const hasThumb = Boolean(item.eyecatch?.url);
 
-                  {hasThumb && (
-                    <div className={styles.thumbWrap} aria-hidden="true">
-                      <img
-                        src={item.eyecatch.url}
-                        className={styles.thumb}
-                        alt=""
-                        loading="lazy"
-                        decoding="async"
-                        draggable="false"
-                      />
+                return (
+                  <Link
+                    to={`/news/${item.id}`}
+                    key={item.id}
+                    className={styles.item}
+                    data-has-thumb={hasThumb ? "true" : "false"}
+                    style={{ "--item-index": index }}
+                    aria-label={`お知らせ: ${title}`}
+                  >
+                    <span className={styles.itemNumber} aria-hidden="true">
+                      {String(index + 1).padStart(2, "0")}
+                    </span>
+
+                    {hasThumb && (
+                      <div className={styles.thumbWrap} aria-hidden="true">
+                        <img
+                          src={item.eyecatch.url}
+                          className={styles.thumb}
+                          alt=""
+                          loading="lazy"
+                          decoding="async"
+                          draggable="false"
+                          width={item.eyecatch.width || undefined}
+                          height={item.eyecatch.height || undefined}
+                        />
+
+                        <span className={styles.thumbVeil} aria-hidden="true" />
+                      </div>
+                    )}
+
+                    <div className={styles.meta}>
+                      <p className={styles.date}>{formatDate(date)}</p>
+                      <h2 className={styles.itemTitle}>{title}</h2>
                     </div>
-                  )}
 
-                  <div className={styles.meta}>
-                    <p className={styles.date}>{formatDate(date)}</p>
-                    <h2 className={styles.itemTitle}>{item.title || "Untitled"}</h2>
-                  </div>
+                    <span className={styles.arrow} aria-hidden="true">
+                      →
+                    </span>
+                  </Link>
+                );
+              })}
+            </div>
 
-                  <span className={styles.arrow} aria-hidden="true">
-                    →
+            {hasMore ? (
+              <div className={styles.loadMoreWrap}>
+                <button
+                  type="button"
+                  className={styles.loadMore}
+                  onClick={handleLoadMore}
+                  disabled={loadingMore}
+                  aria-label="さらにニュースを読み込む"
+                >
+                  <span className={styles.loadMoreLine} aria-hidden="true" />
+
+                  <span>
+                    {loadingMore
+                      ? "LOADING"
+                      : `LOAD MORE ${String(Math.min(remainingCount, NEWS_PAGE_SIZE)).padStart(
+                          2,
+                          "0"
+                        )}`}
                   </span>
-                </Link>
-              );
-            })}
-          </div>
+
+                  <span
+                    className={styles.loadMoreIcon}
+                    aria-hidden="true"
+                  >
+                    ↓
+                  </span>
+                </button>
+
+                <p className={styles.countText}>{countLabel}</p>
+              </div>
+            ) : (
+              <p className={styles.endText}>END OF ARCHIVE</p>
+            )}
+          </>
         )}
       </div>
     </section>

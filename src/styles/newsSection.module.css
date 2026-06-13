@@ -1,6 +1,8 @@
+/* src/styles/newsSection.module.css */
+
 /* =====================================================
-   NEWS SECTION — Paper Archive
-   paper base × ink × champagne line
+   NEWS SECTION — Black Archive Journal
+   黒い編集ログ / 制作記録 / 静かな更新履歴
 ===================================================== */
 
 .wrapper {
@@ -8,59 +10,92 @@
   overflow: hidden;
   isolation: isolate;
 
-  padding: 12vh 0 11vh;
+  padding: 11vh 0 10vh;
 
   background:
-    radial-gradient(900px 600px at 18% 14%, rgba(255,255,255,.70), rgba(255,255,255,0) 66%),
-    radial-gradient(1100px 700px at 82% 42%, rgba(255,255,255,.42), rgba(255,255,255,0) 68%),
-    radial-gradient(circle at 20% 0%, rgba(184,144,90,0.06), transparent 30%),
-    linear-gradient(180deg, #f5f0e7 0%, #f4efe6 26%, #f2ece3 62%, #f4efe6 100%);
+    radial-gradient(
+      900px 620px at 16% 0%,
+      rgba(201, 177, 138, 0.055),
+      transparent 64%
+    ),
+    radial-gradient(
+      1000px 720px at 82% 46%,
+      rgba(220, 226, 235, 0.034),
+      transparent 66%
+    ),
+    radial-gradient(
+      760px 520px at 50% 100%,
+      rgba(0, 0, 0, 0.26),
+      transparent 70%
+    ),
+    linear-gradient(180deg, #080807 0%, #050505 46%, #070707 100%);
 
-  color: rgba(12,12,12,.86);
+  color: rgba(255, 255, 255, 0.92);
+
+  border-top: 1px solid rgba(255, 255, 255, 0.065);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.065);
 }
 
-/* 光膜 */
-.wrapper::before{
-  content:"";
-  position:absolute;
-  inset:0;
-  pointer-events:none;
+/* 黒い光膜 */
+.wrapper::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+
+  pointer-events: none;
+
   background:
     linear-gradient(
       180deg,
-      rgba(245, 240, 231, 0.92) 0%,
-      rgba(245, 240, 231, 0.40) 12%,
-      transparent 30%,
-      transparent 82%,
-      rgba(0, 0, 0, 0.06) 100%
+      rgba(244, 239, 230, 0.035) 0%,
+      rgba(244, 239, 230, 0.012) 18%,
+      transparent 36%,
+      transparent 76%,
+      rgba(0, 0, 0, 0.36) 100%
+    ),
+    radial-gradient(
+      620px 320px at 52% 0%,
+      rgba(244, 239, 230, 0.04),
+      transparent 72%
     );
-  opacity: .92;
+
+  opacity: 0.92;
 }
 
-/* 粒（紙質感） */
-.wrapper::after{
-  content:"";
-  position:absolute;
-  inset:0;
-  pointer-events:none;
-  background-image: radial-gradient(rgba(0,0,0,0.16) 0.42px, transparent 0.42px);
+/* 微粒子 */
+.wrapper::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+
+  pointer-events: none;
+
+  background-image:
+    radial-gradient(
+      rgba(255, 255, 255, 0.15) 0.38px,
+      transparent 0.38px
+    );
   background-size: 4px 4px;
-  opacity: 0.022;
-  mix-blend-mode: multiply;
+
+  opacity: 0.016;
+  mix-blend-mode: screen;
 }
 
 /* ------------------------------------------------------------
    INNER / SIDE LINE
 ------------------------------------------------------------ */
 
-.inner{
+.inner {
   position: relative;
   z-index: 1;
+
   width: min(88vw, 980px);
   margin: 0 auto;
 }
 
-.sideLine{
+.sideLine {
   position: absolute;
   left: 0;
   top: 2.2rem;
@@ -68,12 +103,14 @@
   width: 1px;
   height: calc(100% - 4.4rem);
 
-  background: linear-gradient(
-    to bottom,
-    rgba(201,177,138,0.58),
-    rgba(12,12,12,0.12),
-    transparent
-  );
+  background:
+    linear-gradient(
+      to bottom,
+      rgba(201, 177, 138, 0.5),
+      rgba(220, 226, 235, 0.12),
+      rgba(255, 255, 255, 0.04),
+      transparent
+    );
 
   pointer-events: none;
   opacity: 0.9;
@@ -83,93 +120,124 @@
    HEADER
 ------------------------------------------------------------ */
 
-.header{
+.header {
   position: relative;
-  padding-left: 1rem;
+
   margin-bottom: 3.2rem;
+  padding-left: 1rem;
+
   text-align: left;
 }
 
-.svgTitle{ max-width: 100%; }
+.svgTitle {
+  max-width: 100%;
+}
 
-.svgTitle :global(.section-svg){
+.svgTitle :global(.section-svg) {
   width: min(100%, 620px);
 }
 
-/* SVGテキストの巨大さはそのまま活かす */
-.svgTitle :global(.section-svg-text){
+.svgTitle :global(.section-svg-text) {
   font-size: 122px;
 }
 
-.lead{
+.lead {
   max-width: 620px;
   margin: 1.1rem 0 0;
 
-  color: rgba(12,12,12,0.52);
+  color: rgba(255, 255, 255, 0.56);
   font-size: 0.84rem;
   line-height: 1.95;
   letter-spacing: 0.09em;
 }
 
-.hiddenHeading{
+.hiddenHeading {
   position: absolute;
+
   width: 1px;
   height: 1px;
   overflow: hidden;
+
   clip: rect(0, 0, 0, 0);
   white-space: nowrap;
 }
 
 /* ------------------------------------------------------------
-   PANEL（“カード”じゃなく、編集パネル）
+   PANEL
 ------------------------------------------------------------ */
 
-.panel{
+.panel {
   position: relative;
+
   margin-left: 1rem;
   overflow: hidden;
 
-  border: 1px solid rgba(12,12,12,0.10);
-  border-top-color: rgba(201,177,138,0.32);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-top-color: rgba(201, 177, 138, 0.24);
 
   background:
-    radial-gradient(circle at 16% 0%, rgba(201,177,138,0.05), transparent 42%),
-    rgba(255,255,255,0.26);
+    radial-gradient(
+      circle at 16% 0%,
+      rgba(201, 177, 138, 0.052),
+      transparent 40%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.028),
+      rgba(255, 255, 255, 0.01)
+    ),
+    rgba(0, 0, 0, 0.24);
 
-  box-shadow: 0 18px 52px rgba(0,0,0,0.08);
+  box-shadow:
+    0 24px 72px rgba(0, 0, 0, 0.38),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04);
 }
 
-.panel::before{
-  content:"";
-  position:absolute;
-  inset:0;
-  pointer-events:none;
-  background-image: radial-gradient(rgba(0,0,0,0.16) 0.42px, transparent 0.42px);
+.panel::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+
+  pointer-events: none;
+
+  background-image:
+    radial-gradient(
+      rgba(255, 255, 255, 0.15) 0.38px,
+      transparent 0.38px
+    );
   background-size: 4px 4px;
+
   opacity: 0.012;
-  mix-blend-mode: multiply;
 }
 
-.panel::after{
-  content:"";
-  position:absolute;
-  left:0; right:0; top:0;
-  height:1px;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(201,177,138,0.78),
-    rgba(12,12,12,0.14),
-    transparent
-  );
-  pointer-events:none;
+.panel::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  z-index: 2;
+
+  height: 1px;
+
+  pointer-events: none;
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      rgba(201, 177, 138, 0.72),
+      rgba(255, 255, 255, 0.12),
+      transparent
+    );
 }
 
 /* ------------------------------------------------------------
    STATE
 ------------------------------------------------------------ */
 
-.stateBox{
+.stateBox {
   position: relative;
   z-index: 1;
 
@@ -177,56 +245,70 @@
   align-items: center;
   gap: 0.75rem;
 
-  min-height: 82px; /* 少しだけ呼吸 */
+  min-height: 78px;
   padding: 0 1.35rem;
 }
 
-.stateMark{
+.stateMark {
   position: relative;
+
   display: inline-block;
   width: 7px;
   height: 7px;
 
-  border: 1px solid rgba(201,177,138,0.52);
-  background: rgba(201,177,138,0.10);
+  border: 1px solid rgba(201, 177, 138, 0.52);
+  background: rgba(201, 177, 138, 0.1);
 
   animation: newsStatePulse 2.6s ease-in-out infinite;
 }
 
-.stateMarkError{
-  border-color: rgba(220, 90, 90, 0.55);
-  background: rgba(220, 90, 90, 0.10);
+.stateMarkError {
+  border-color: rgba(220, 90, 90, 0.58);
+  background: rgba(220, 90, 90, 0.12);
 }
 
-.stateText{
+.stateText {
   margin: 0;
-  color: rgba(12,12,12,0.56);
+
+  color: rgba(255, 255, 255, 0.64);
   font-size: 0.82rem;
   line-height: 1.8;
   letter-spacing: 0.08em;
 }
 
-.stateMarkError + .stateText{
-  color: rgba(140, 40, 40, 0.78);
+.stateMarkError + .stateText {
+  color: rgba(255, 128, 128, 0.82);
 }
 
-@keyframes newsStatePulse{
-  0%   { opacity: .44; box-shadow: 0 0 0 rgba(201,177,138,0); }
-  50%  { opacity: 1;   box-shadow: 0 0 12px rgba(201,177,138,0.18); }
-  100% { opacity: .44; box-shadow: 0 0 0 rgba(201,177,138,0); }
+@keyframes newsStatePulse {
+  0% {
+    opacity: 0.42;
+    box-shadow: 0 0 0 rgba(201, 177, 138, 0);
+  }
+
+  50% {
+    opacity: 1;
+    box-shadow: 0 0 12px rgba(201, 177, 138, 0.18);
+  }
+
+  100% {
+    opacity: 0.42;
+    box-shadow: 0 0 0 rgba(201, 177, 138, 0);
+  }
 }
 
 /* ------------------------------------------------------------
    LIST
 ------------------------------------------------------------ */
 
-.list{
+.list {
   position: relative;
   z-index: 1;
+
   display: block;
 }
 
-.item{
+.item {
   position: relative;
 
   display: grid;
@@ -234,13 +316,13 @@
   align-items: center;
   gap: 1.25rem;
 
-  min-height: 86px;        /* ✅ 帯感を消す：ちょい増し */
-  padding: 0 1.35rem;      /* ✅ 余白ちょい増し */
+  min-height: 78px;
+  padding: 0 1.35rem;
 
   color: inherit;
   text-decoration: none;
 
-  border-bottom: 1px solid rgba(12,12,12,0.10);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.075);
 
   transition:
     background 360ms ease,
@@ -248,57 +330,96 @@
     border-color 360ms ease;
 }
 
-.item:last-child{ border-bottom: none; }
+.item:last-child {
+  border-bottom: none;
+}
 
-.item::before{
-  content:"";
-  position:absolute;
-  left:0; top:0; bottom:0;
-  width:1px;
-  background: rgba(201,177,138,0);
-  transition: background 360ms ease;
+.item::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+
+  width: 1px;
+
+  background: rgba(201, 177, 138, 0);
+
+  transition:
+    background 360ms ease,
+    box-shadow 360ms ease;
+}
+
+.item::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+
+  pointer-events: none;
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(201, 177, 138, 0.045),
+      transparent 38%
+    );
+
+  opacity: 0;
+  transition: opacity 420ms ease;
 }
 
 .item:hover,
-.item:focus-visible{
-  background: rgba(0,0,0,0.02);
+.item:focus-visible {
+  background: rgba(255, 255, 255, 0.022);
   transform: translateX(2px);
   outline: none;
 }
 
 .item:hover::before,
-.item:focus-visible::before{
-  background: rgba(201,177,138,0.62);
+.item:focus-visible::before {
+  background: rgba(201, 177, 138, 0.7);
+  box-shadow: 0 0 18px rgba(201, 177, 138, 0.18);
 }
 
-.itemMeta{
+.item:hover::after,
+.item:focus-visible::after {
+  opacity: 1;
+}
+
+.itemMeta {
   display: flex;
   align-items: baseline;
   justify-content: space-between;
   gap: 0.8rem;
+
   min-width: 0;
 }
 
-.date{
+.date {
   margin: 0;
-  color: rgba(201,177,138,0.78);
+
+  color: rgba(201, 177, 138, 0.68);
   font-family: "Cormorant Garamond", Georgia, serif;
-  font-size: 1.08rem;
+  font-size: 1.06rem;
   line-height: 1;
   letter-spacing: 0.06em;
   white-space: nowrap;
 }
 
-.number{
-  color: rgba(12,12,12,0.14);
+.number {
+  color: rgba(255, 255, 255, 0.18);
   font-family: "Cormorant Garamond", Georgia, serif;
-  font-size: 1.1rem;
+  font-size: 1.06rem;
   line-height: 1;
 }
 
-.itemTitle{
+.itemTitle {
+  position: relative;
+  z-index: 1;
+
   margin: 0;
-  color: rgba(12,12,12,0.76);
+
+  color: rgba(255, 255, 255, 0.82);
   font-size: 0.88rem;
   font-weight: 300;
   line-height: 1.7;
@@ -311,12 +432,15 @@
 }
 
 .item:hover .itemTitle,
-.item:focus-visible .itemTitle{
-  color: rgba(12,12,12,0.92);
+.item:focus-visible .itemTitle {
+  color: rgba(255, 255, 255, 0.96);
 }
 
-.arrow{
-  color: rgba(12,12,12,0.28);
+.arrow {
+  position: relative;
+  z-index: 1;
+
+  color: rgba(220, 226, 235, 0.38);
   font-size: 0.88rem;
   line-height: 1;
 
@@ -326,36 +450,40 @@
 }
 
 .item:hover .arrow,
-.item:focus-visible .arrow{
-  color: rgba(201,177,138,0.82);
+.item:focus-visible .arrow {
+  color: rgba(201, 177, 138, 0.82);
   transform: translateX(3px);
 }
 
 /* ------------------------------------------------------------
-   MORE（pillやめて、編集リンク）
+   MORE
 ------------------------------------------------------------ */
 
-.moreWrap{
+.moreWrap {
   margin-top: 2.8rem;
   padding-left: 1rem;
+
   text-align: left;
 }
 
-.more{
+.more,
+.more:visited {
+  position: relative;
+
   display: inline-flex;
   align-items: center;
-  gap: .55rem;
+  gap: 0.65rem;
 
   min-height: 44px;
-  padding: 0 .2rem .65rem;
+  padding: 0 0.15rem 0.65rem;
 
-  color: rgba(12,12,12,0.72);
+  color: rgba(255, 255, 255, 0.86);
   font-size: 0.72rem;
   line-height: 1;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.16em;
   text-decoration: none;
 
-  border-bottom: 1px solid rgba(12,12,12,0.18);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.18);
 
   transition:
     color 360ms ease,
@@ -363,23 +491,44 @@
     transform 360ms cubic-bezier(0.18, 0.72, 0.18, 1);
 }
 
+.more::before {
+  content: "";
+  display: block;
+
+  width: 28px;
+  height: 1px;
+
+  background: rgba(255, 255, 255, 0.16);
+
+  transition:
+    width 420ms cubic-bezier(0.18, 0.72, 0.18, 1),
+    background 360ms ease;
+}
+
 .more:hover,
-.more:focus-visible{
-  color: rgba(12,12,12,0.92);
-  border-color: rgba(12,12,12,0.36);
+.more:focus-visible {
+  color: rgba(255, 255, 255, 0.96);
+  border-color: rgba(201, 177, 138, 0.36);
   transform: translateY(-1px);
   outline: none;
 }
 
+.more:hover::before,
+.more:focus-visible::before {
+  width: 42px;
+  background: rgba(201, 177, 138, 0.42);
+}
+
 /* ------------------------------------------------------------
-   REVEAL（そのまま）
+   REVEAL
 ------------------------------------------------------------ */
 
 .reveal,
-.itemReveal{
+.itemReveal {
   opacity: 0;
   transform: translate3d(0, 18px, 0) scale(0.998);
   filter: blur(0.1px);
+
   will-change: opacity, transform, filter;
   backface-visibility: hidden;
 
@@ -390,13 +539,13 @@
 }
 
 .reveal.isIn,
-.itemReveal.isIn{
+.itemReveal.isIn {
   opacity: 1;
   transform: translate3d(0, 0, 0) scale(1);
   filter: blur(0);
 }
 
-.lineReveal{
+.lineReveal {
   opacity: 0;
   transform: scaleY(0.72);
   transform-origin: top;
@@ -407,58 +556,82 @@
     transform 1040ms cubic-bezier(0.16, 0.72, 0.16, 1);
 }
 
-.lineReveal.isIn{
-  opacity: 0.82;
+.lineReveal.isIn {
+  opacity: 0.84;
   transform: scaleY(1);
 }
 
-.reveal1{ transition-delay: 40ms; }
-.reveal2{ transition-delay: 110ms; }
-.reveal3{ transition-delay: 80ms; }
-.itemReveal{ transition-delay: calc(80ms + (var(--item-index, 0) * 90ms)); }
+.reveal1 {
+  transition-delay: 40ms;
+}
+
+.reveal2 {
+  transition-delay: 110ms;
+}
+
+.reveal3 {
+  transition-delay: 80ms;
+}
+
+.itemReveal {
+  transition-delay: calc(80ms + (var(--item-index, 0) * 90ms));
+}
 
 /* ------------------------------------------------------------
    MOBILE
 ------------------------------------------------------------ */
 
-@media (max-width: 768px){
-  .wrapper{ padding: 10vh 0 9vh; }
-  .inner{ width: calc(100% - 2rem); }
+@media (max-width: 768px) {
+  .wrapper {
+    padding: 10vh 0 9vh;
+  }
 
-  .sideLine{
+  .inner {
+    width: calc(100% - 2rem);
+  }
+
+  .sideLine {
     top: 1.6rem;
     height: calc(100% - 3.2rem);
     opacity: 0.82;
   }
 
-  .header{
-    padding-left: 0.75rem;
+  .header {
     margin-bottom: 2.7rem;
+    padding-left: 0.75rem;
   }
 
-  .svgTitle :global(.section-svg){ width: min(100%, 520px); }
-  .svgTitle :global(.section-svg-text){ font-size: 114px; }
+  .svgTitle :global(.section-svg) {
+    width: min(100%, 520px);
+  }
 
-  .lead{
+  .svgTitle :global(.section-svg-text) {
+    font-size: 114px;
+  }
+
+  .lead {
     margin-top: 1rem;
+
     font-size: 0.78rem;
     line-height: 1.9;
     letter-spacing: 0.08em;
   }
 
-  .panel{ margin-left: 0.75rem; }
+  .panel {
+    margin-left: 0.75rem;
+  }
 
-  .stateBox{
+  .stateBox {
     min-height: 74px;
     padding: 0 1rem;
   }
 
-  .stateText{
+  .stateText {
     font-size: 0.78rem;
     line-height: 1.8;
   }
 
-  .item{
+  .item {
     display: grid;
     grid-template-columns: 1fr;
     align-items: start;
@@ -466,26 +639,38 @@
 
     min-height: auto;
     padding: 1.05rem 0.95rem;
+
     transform: none;
   }
 
   .item:hover,
-  .item:focus-visible{ transform: none; }
+  .item:focus-visible {
+    transform: none;
+  }
 
-  .itemMeta{
+  .itemMeta {
     grid-column: 1 / -1;
+
     display: flex;
     align-items: baseline;
     justify-content: flex-start;
     gap: 0.75rem;
+
     min-width: 0;
   }
 
-  .date{ font-size: 0.95rem; white-space: nowrap; }
-  .number{ font-size: 0.95rem; }
+  .date {
+    font-size: 0.95rem;
+    white-space: nowrap;
+  }
 
-  .itemTitle{
+  .number {
+    font-size: 0.95rem;
+  }
+
+  .itemTitle {
     grid-column: 1 / -1;
+
     max-width: calc(100% - 1.8rem);
 
     font-size: 0.82rem;
@@ -493,131 +678,56 @@
     letter-spacing: 0.055em;
   }
 
-  .arrow{
+  .arrow {
     position: absolute;
     right: 0.95rem;
     top: 1.15rem;
+
     font-size: 0.82rem;
   }
 
-  .moreWrap{
+  .moreWrap {
     margin-top: 2.2rem;
     padding-left: 0.75rem;
   }
 
-  .more{
+  .more {
     font-size: 0.68rem;
     letter-spacing: 0.1em;
   }
 
+  .more::before {
+    width: 22px;
+  }
+
   .reveal,
-  .itemReveal{
+  .itemReveal {
     transform: translate3d(0, 15px, 0) scale(0.998);
     filter: blur(0.08px);
   }
 
-  .itemReveal{
+  .itemReveal {
     transition-delay: calc(40ms + (var(--item-index, 0) * 70ms));
   }
 }
 
-@media (prefers-reduced-motion: reduce){
+/* ------------------------------------------------------------
+   REDUCED MOTION
+------------------------------------------------------------ */
+
+@media (prefers-reduced-motion: reduce) {
   .wrapper *,
   .wrapper *::before,
-  .wrapper *::after{
+  .wrapper *::after {
     transition: none !important;
     animation: none !important;
   }
 
   .reveal,
   .itemReveal,
-  .lineReveal{
+  .lineReveal {
     opacity: 1 !important;
     transform: none !important;
     filter: none !important;
   }
-}
-/* ===== NEWS: BAND OVERRIDE（このブロックを末尾に追記） ===== */
-
-/* 帯の背景は固定ブラックにする（paperの影響を受けない） */
-.wrapper{
-  padding: 9vh 0 9vh; /* 帯感：少し薄め */
-
-  background:
-    radial-gradient(circle at 16% 0%, rgba(201,177,138,0.04), transparent 32%),
-    radial-gradient(1000px 720px at 78% 46%, rgba(255,255,255,0.03), transparent 62%),
-    #070707;
-
-  color: rgba(255,255,255,.92);
-
-  border-top: 1px solid rgba(255,255,255,0.06);
-  border-bottom: 1px solid rgba(255,255,255,0.06);
-}
-
-/* 紙用の粒（黒上で濁るなら）を黒用に最適化 */
-.wrapper::after{
-  background-image: radial-gradient(rgba(255,255,255,0.16) 0.42px, transparent 0.42px);
-  opacity: 0.018;
-  mix-blend-mode: normal;
-}
-
-/* ヘッダー周り：黒上で読める色へ */
-.lead{
-  color: rgba(255,255,255,0.54);
-}
-.sideLine{
-  background: linear-gradient(
-    to bottom,
-    rgba(201,177,138,0.46),
-    rgba(220,226,235,0.12),
-    rgba(255,255,255,0.05)
-  );
-}
-
-/* パネル：黒上の“ガラス”に寄せる（でもカード臭くしない） */
-.panel{
-  border: 1px solid rgba(255,255,255,0.075);
-  border-top-color: rgba(201,177,138,0.18);
-  background:
-    radial-gradient(circle at 16% 0%, rgba(201,177,138,0.045), transparent 36%),
-    rgba(255,255,255,0.012);
-  box-shadow: 0 18px 48px rgba(0,0,0,0.22);
-}
-
-/* 状態バー */
-.stateText{
-  color: rgba(255,255,255,0.62);
-}
-
-/* リストの帯感：余白は“増やす”じゃなく“締める” */
-.item{
-  border-bottom: 1px solid rgba(255,255,255,0.07);
-  min-height: 76px;
-}
-.item:hover,
-.item:focus-visible{
-  background: rgba(255,255,255,0.02);
-}
-
-/* タイポ色 */
-.date{ color: rgba(201,177,138,0.64); }
-.number{ color: rgba(255,255,255,0.18); }
-.itemTitle{ color: rgba(255,255,255,0.82); }
-.arrow{ color: rgba(220,226,235,0.36); }
-.item:hover .arrow,
-.item:focus-visible .arrow{
-  color: rgba(201,177,138,0.78);
-}
-/* NEWS：もっと見る（黒帯上は白で勝たせる） */
-.more,
-.more:visited{
-  color: rgba(255,255,255,0.86);
-  border-bottom-color: rgba(255,255,255,0.18);
-}
-
-.more:hover,
-.more:focus-visible{
-  color: rgba(255,255,255,0.96);
-  border-bottom-color: rgba(201,177,138,0.32); /* ここ白固定にしたいなら rgba(255,255,255,0.32) */
-  outline: none;
 }

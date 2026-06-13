@@ -1,14 +1,14 @@
 // src/pages/NewsDetail.jsx
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
+import { Link, useLocation, useParams } from "react-router-dom";
 import { getNewsDetail } from "../lib/microcms";
 import styles from "../styles/newsDetail.module.css";
-import { Link, useParams, useLocation } from "react-router-dom";
 
 const SITE_NAME = "GUSHIKEN DESIGN";
 const FALLBACK_OG = "/ogp.png";
 
 function stripHtml(html = "") {
-  return html
+  return String(html)
     .replace(/<script[\s\S]*?>[\s\S]*?<\/script>/gi, "")
     .replace(/<style[\s\S]*?>[\s\S]*?<\/style>/gi, "")
     .replace(/<[^>]+>/g, " ")
@@ -23,52 +23,68 @@ function clampText(text = "", max = 120) {
 
 function setMetaByName(name, content) {
   if (!content) return;
+
   let tag = document.querySelector(`meta[name="${name}"]`);
+
   if (!tag) {
     tag = document.createElement("meta");
     tag.setAttribute("name", name);
     document.head.appendChild(tag);
   }
+
   tag.setAttribute("content", content);
 }
 
 function setMetaByProperty(property, content) {
   if (!content) return;
+
   let tag = document.querySelector(`meta[property="${property}"]`);
+
   if (!tag) {
     tag = document.createElement("meta");
     tag.setAttribute("property", property);
     document.head.appendChild(tag);
   }
+
   tag.setAttribute("content", content);
 }
 
 function setCanonical(href) {
   if (!href) return;
+
   let tag = document.querySelector('link[rel="canonical"]');
+
   if (!tag) {
     tag = document.createElement("link");
     tag.setAttribute("rel", "canonical");
     document.head.appendChild(tag);
   }
+
   tag.setAttribute("href", href);
 }
 
 function scrollTopSafe() {
-  // Lenis がいる場合も事故らないように
   try {
-    const gdLenis = window?.__gd_lenis;
+    const gdLenis = window?.__gd_lenis__ || window?.__gd_lenis;
+
     if (gdLenis?.scrollTo) {
       gdLenis.scrollTo(0, { immediate: true });
       return;
     }
-  } catch {}
+  } catch (_) {
+    // fallback
+  }
+
   window.scrollTo({ top: 0, left: 0, behavior: "auto" });
 }
 
 export default function NewsDetail() {
   const { id } = useParams();
   const location = useLocation();
+
+  const rootRef = useRef(null);
+  const mountedRef = useRef(false);
+  const requestIdRef = useRef(0);
 
   const [article, setArticle] = useState(null);
   const [error, setError] = useState(false);
@@ -88,14 +104,32 @@ export default function NewsDetail() {
     };
   }, []);
 
-  // ✅ ルート遷移で必ずトップへ（「クリックしたあとトップに移動しない」事故対策）
   useEffect(() => {
+    if (location.hash) return;
     scrollTopSafe();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [location.pathname]);
+
+    const raf = requestAnimationFrame(scrollTopSafe);
+    const timer = window.setTimeout(scrollTopSafe, 80);
+
+    return () => {
+      cancelAnimationFrame(raf);
+      window.clearTimeout(timer);
+    };
+  }, [location.pathname, location.hash]);
 
   useEffect(() => {
-    let mounted = true;
+    mountedRef.current = true;
+
+    return () => {
+      mountedRef.current = false;
+    };
+  }, []);
+
+  useEffect(() => {
+    let ignore = false;
+
+    const requestId = requestIdRef.current + 1;
+    requestIdRef.current = requestId;
 
     setError(false);
     setArticle(null);
@@ -103,11 +137,17 @@ export default function NewsDetail() {
     async function fetchArticle() {
       try {
         const res = await getNewsDetail(id);
-        if (!mounted) return;
+
+        if (ignore) return;
+        if (!mountedRef.current) return;
+        if (requestId !== requestIdRef.current) return;
 
         setArticle(res);
 
-        const title = res?.title ? `${res.title}｜${SITE_NAME}` : `NEWS｜${SITE_NAME}`;
+        const title = res?.title
+          ? `${res.title}｜${SITE_NAME}`
+          : `NEWS｜${SITE_NAME}`;
+
         document.title = title;
 
         const bodyText = clampText(stripHtml(res?.body || ""), 120);
@@ -128,12 +168,25 @@ export default function NewsDetail() {
         setMetaByProperty("og:url", canonical);
         setMetaByProperty("og:image", ogImage);
 
+        if (res?.publishedAt) {
+          setMetaByProperty("article:published_time", res.publishedAt);
+        }
+
+        if (res?.updatedAt) {
+          setMetaByProperty("article:modified_time", res.updatedAt);
+        }
+
         setMetaByName("twitter:card", "summary_large_image");
         setMetaByName("twitter:title", title);
         setMetaByName("twitter:description", desc);
         setMetaByName("twitter:image", ogImage);
-      } catch {
-        if (!mounted) return;
+      } catch (err) {
+        console.error("❌ NEWS詳細表示エラー:", err);
+
+        if (ignore) return;
+        if (!mountedRef.current) return;
+        if (requestId !== requestIdRef.current) return;
+
         setError(true);
         document.title = `NEWS｜${SITE_NAME}`;
 
@@ -145,23 +198,68 @@ export default function NewsDetail() {
     fetchArticle();
 
     return () => {
-      mounted = false;
+      ignore = true;
     };
   }, [id]);
 
+  useEffect(() => {
+    const root = rootRef.current;
+    if (!root) return undefined;
+
+    const targets = Array.from(root.querySelectorAll("[data-news-detail-reveal]"));
+
+    if (!targets.length) return undefined;
+
+    const reduce =
+      window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches ?? false;
+
+    if (reduce || !("IntersectionObserver" in window)) {
+      targets.forEach((target) => target.classList.add(styles.isIn));
+      return undefined;
+    }
+
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+
+          entry.target.classList.add(styles.isIn);
+          io.unobserve(entry.target);
+        });
+      },
+      {
+        threshold: 0.14,
+        rootMargin: "0px 0px -8% 0px",
+      }
+    );
+
+    targets.forEach((target) => io.observe(target));
+
+    return () => {
+      io.disconnect();
+    };
+  }, [article, error]);
+
   if (error) {
     return (
-      <section className={styles.wrapper} aria-busy="false">
+      <section
+        ref={rootRef}
+        className={styles.wrapper}
+        aria-busy="false"
+        aria-labelledby="news-error-heading"
+      >
         <div className={styles.inner}>
           <div className={styles.sideLine} aria-hidden="true" />
 
           <div className={styles.stateBox}>
-            <p className={styles.error} role="alert">
+            <p className={styles.kicker}>NEWS / ERROR</p>
+
+            <h1 id="news-error-heading" className={styles.stateTitle}>
               記事を読み込めませんでした。
-            </p>
+            </h1>
 
             <Link to="/news" className={styles.backLink}>
-              一覧へ戻る
+              BACK TO NEWS
             </Link>
           </div>
         </div>
@@ -171,53 +269,110 @@ export default function NewsDetail() {
 
   if (!article) {
     return (
-      <section className={styles.wrapper} aria-busy="true">
+      <section
+        ref={rootRef}
+        className={styles.wrapper}
+        aria-busy="true"
+        aria-labelledby="news-loading-heading"
+      >
         <div className={styles.inner}>
           <div className={styles.sideLine} aria-hidden="true" />
 
-          <p className={styles.loading} aria-live="polite">
-            読み込み中…
-          </p>
+          <div className={styles.loadingBox}>
+            <p className={styles.kicker}>NEWS / JOURNAL</p>
+
+            <h1 id="news-loading-heading" className={styles.stateTitle}>
+              LOADING
+            </h1>
+
+            <p className={styles.loading} aria-live="polite">
+              読み込み中…
+            </p>
+          </div>
         </div>
       </section>
     );
   }
 
-  const date = article.publishedAt || article.createdAt || article.updatedAt || null;
+  const date =
+    article.publishedAt || article.createdAt || article.updatedAt || null;
+
+  const title = article.title || "Untitled";
+  const bodyHtml = article.body || "";
+  const hasEyecatch = Boolean(article.eyecatch?.url);
 
   return (
-    <article className={`${styles.wrapper} aq-fade aq-show`} aria-busy="false">
+    <article
+      ref={rootRef}
+      className={styles.wrapper}
+      aria-busy="false"
+      aria-labelledby="news-detail-heading"
+    >
       <div className={styles.inner}>
         <div className={styles.sideLine} aria-hidden="true" />
 
-        <header className={styles.header}>
+        <header
+          className={`${styles.header} ${styles.reveal}`}
+          data-news-detail-reveal
+          style={{ "--d": "0ms" }}
+        >
           <p className={styles.kicker}>NEWS / JOURNAL</p>
 
-          <h1 className={styles.title}>{article.title}</h1>
+          <h1 id="news-detail-heading" className={styles.title}>
+            {title}
+          </h1>
 
-          {date && <p className={styles.date}>{formatDate(date)}</p>}
+          <div className={styles.articleMeta}>
+            {date && <time dateTime={date}>{formatDate(date)}</time>}
+            <span aria-hidden="true">GUSHIKEN DESIGN</span>
+          </div>
         </header>
 
-        {article.eyecatch?.url && (
-          <figure className={styles.figure}>
+        {hasEyecatch && (
+          <figure
+            className={`${styles.figure} ${styles.reveal}`}
+            data-news-detail-reveal
+            style={{ "--d": "90ms" }}
+          >
+            <div className={styles.figureTop} aria-hidden="true">
+              <span>VISUAL</span>
+              <span>NEWS</span>
+            </div>
+
             <img
               src={article.eyecatch.url}
-              alt={article.title}
+              alt={title}
               className={styles.eyecatch}
               loading="eager"
               decoding="async"
               draggable="false"
+              width={article.eyecatch.width || undefined}
+              height={article.eyecatch.height || undefined}
             />
+
+            <span className={styles.figureVeil} aria-hidden="true" />
           </figure>
         )}
 
-        <div className={styles.body} dangerouslySetInnerHTML={{ __html: article.body || "" }} />
+        <div
+          className={`${styles.body} ${styles.reveal}`}
+          data-news-detail-reveal
+          style={{ "--d": hasEyecatch ? "160ms" : "90ms" }}
+          dangerouslySetInnerHTML={{ __html: bodyHtml }}
+        />
 
-        <div className={styles.backWrap}>
-          <Link to="/news" className={styles.backLink}>
-            一覧へ戻る
+        <footer
+          className={`${styles.backWrap} ${styles.reveal}`}
+          data-news-detail-reveal
+          style={{ "--d": "120ms" }}
+        >
+          <div className={styles.footRule} aria-hidden="true" />
+
+          <Link to="/news" className={styles.backText}>
+            <span aria-hidden="true">←</span>
+            <span>BACK TO NEWS</span>
           </Link>
-        </div>
+        </footer>
       </div>
     </article>
   );

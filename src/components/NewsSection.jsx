@@ -1,3 +1,4 @@
+// src/components/NewsSection.jsx
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { getNewsList } from "../lib/microcms";
@@ -16,7 +17,6 @@ export default function NewsSection() {
   const requestIdRef = useRef(0);
   const newsRef = useRef([]);
 
-  // ✅ reveal observer を 1回だけ作るために保持
   const revealObserverRef = useRef(null);
 
   useEffect(() => {
@@ -32,8 +32,10 @@ export default function NewsSection() {
 
     return (dateStr) => {
       if (!dateStr) return "UPDATE";
+
       const date = new Date(dateStr);
       if (Number.isNaN(date.getTime())) return "UPDATE";
+
       return formatter.format(date);
     };
   }, []);
@@ -52,6 +54,7 @@ export default function NewsSection() {
       if (requestId !== requestIdRef.current) return;
 
       const items = Array.isArray(res?.contents) ? res.contents : [];
+
       setNews(items);
       setError(false);
     } catch (err) {
@@ -68,7 +71,6 @@ export default function NewsSection() {
       if (!mountedRef.current) return;
       if (requestId !== requestIdRef.current) return;
 
-      // ✅ silent時は loading を触らない（無音化）
       if (!silent) setLoading(false);
       if (silent && newsRef.current.length === 0) setLoading(false);
     }
@@ -77,6 +79,7 @@ export default function NewsSection() {
   useEffect(() => {
     mountedRef.current = true;
     fetchNews();
+
     return () => {
       mountedRef.current = false;
     };
@@ -102,7 +105,6 @@ export default function NewsSection() {
     };
   }, [fetchNews]);
 
-  // ✅ reveal observer：作成は1回、news更新後に observe だけ追加
   useEffect(() => {
     const root = sectionRef.current;
     if (!root) return undefined;
@@ -111,18 +113,17 @@ export default function NewsSection() {
       target.classList.add(styles.isIn);
     };
 
-    // IOなし環境
     if (typeof IntersectionObserver === "undefined") {
       Array.from(root.querySelectorAll("[data-news-reveal]")).forEach(reveal);
       return undefined;
     }
 
-    // 1回だけ作る
     if (!revealObserverRef.current) {
       const observer = new IntersectionObserver(
         (entries) => {
           entries.forEach((entry) => {
             if (!entry.isIntersecting) return;
+
             reveal(entry.target);
             observer.unobserve(entry.target);
           });
@@ -136,17 +137,18 @@ export default function NewsSection() {
       revealObserverRef.current = observer;
     }
 
-    // newsの増減に応じて、未revealの要素だけ observe
     const observer = revealObserverRef.current;
     const targets = Array.from(root.querySelectorAll("[data-news-reveal]"));
-    targets.forEach((t) => {
-      if (!t.classList.contains(styles.isIn)) observer.observe(t);
+
+    targets.forEach((target) => {
+      if (!target.classList.contains(styles.isIn)) {
+        observer.observe(target);
+      }
     });
 
     return () => undefined;
   }, [news.length, loading, error]);
 
-  // unmount cleanup
   useEffect(() => {
     return () => {
       if (revealObserverRef.current) {
@@ -159,13 +161,13 @@ export default function NewsSection() {
   const hasNews = news.length > 0;
 
   return (
-<section
-  id="news"
-  ref={sectionRef}
-  className={styles.wrapper}
-  aria-labelledby="news-heading"
-  aria-busy={loading ? "true" : "false"}
->
+    <section
+      id="news"
+      ref={sectionRef}
+      className={styles.wrapper}
+      aria-labelledby="news-heading"
+      aria-busy={loading ? "true" : "false"}
+    >
       <div className={styles.inner}>
         <div
           className={cx(styles.sideLine, styles.reveal, styles.lineReveal)}
@@ -173,20 +175,31 @@ export default function NewsSection() {
           aria-hidden="true"
         />
 
-        <header className={cx(styles.header, styles.reveal, styles.reveal1)} data-news-reveal>
-       <SectionSvgTitle
-  title="NEWS"
-  sub="UPDATE / JOURNAL"
-  className="is-dark"
-/>
-          <h2 id="news-heading" className={styles.hiddenHeading}>お知らせ</h2>
+        <header
+          className={cx(styles.header, styles.reveal, styles.reveal1)}
+          data-news-reveal
+        >
+          <SectionSvgTitle
+            title="NEWS"
+            sub="UPDATE / JOURNAL"
+            className="is-dark"
+          />
+
+          <h2 id="news-heading" className={styles.hiddenHeading}>
+            お知らせ
+          </h2>
 
           <p className={styles.lead}>
-            制作の更新や、設計の記録をまとめています。
+            制作の更新、公開の記録、
+            <br />
+            考えたことを残しています。
           </p>
         </header>
 
-        <div className={cx(styles.panel, styles.reveal, styles.reveal2)} data-news-reveal>
+        <div
+          className={cx(styles.panel, styles.reveal, styles.reveal2)}
+          data-news-reveal
+        >
           {loading && (
             <div className={styles.stateBox} aria-live="polite">
               <span className={styles.stateMark} aria-hidden="true" />
@@ -196,8 +209,13 @@ export default function NewsSection() {
 
           {error && !loading && (
             <div className={styles.stateBox} aria-live="assertive">
-              <span className={cx(styles.stateMark, styles.stateMarkError)} aria-hidden="true" />
-              <p className={styles.stateText}>お知らせを読み込めませんでした。</p>
+              <span
+                className={cx(styles.stateMark, styles.stateMarkError)}
+                aria-hidden="true"
+              />
+              <p className={styles.stateText}>
+                お知らせを読み込めませんでした。
+              </p>
             </div>
           )}
 
@@ -225,6 +243,7 @@ export default function NewsSection() {
                   >
                     <span className={styles.itemMeta}>
                       <span className={styles.date}>{formatDate(date)}</span>
+
                       <span className={styles.number} aria-hidden="true">
                         {String(index + 1).padStart(2, "0")}
                       </span>
@@ -232,7 +251,9 @@ export default function NewsSection() {
 
                     <h3 className={styles.itemTitle}>{title}</h3>
 
-                    <span className={styles.arrow} aria-hidden="true">→</span>
+                    <span className={styles.arrow} aria-hidden="true">
+                      →
+                    </span>
                   </Link>
                 );
               })}
@@ -241,9 +262,12 @@ export default function NewsSection() {
         </div>
 
         {!loading && !error && hasNews && (
-          <div className={cx(styles.moreWrap, styles.reveal, styles.reveal3)} data-news-reveal>
+          <div
+            className={cx(styles.moreWrap, styles.reveal, styles.reveal3)}
+            data-news-reveal
+          >
             <Link to="/news" className={styles.more}>
-              <span>もっと見る</span>
+              <span>VIEW ALL NEWS</span>
               <span aria-hidden="true">→</span>
             </Link>
           </div>

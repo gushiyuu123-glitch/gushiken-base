@@ -11,16 +11,18 @@ import Category from "../components/Category";
 import WorkItem from "../components/WorkItem";
 import CategoryTabs from "../components/CategoryTabs";
 import FloatingShareButton from "../components/FloatingShareButton";
-import WorksRippleSurface from "../visuals/WorksRippleSurface";
+import WorksBlackLightField from "../visuals/WorksBlackLightField";
 
 import { worksData } from "../data/worksData";
 
+const INITIAL_VISIBLE_COUNT = 6;
+
 const ARCHIVE_OVERLAY_STYLE = {
   background: `
-    radial-gradient(900px 560px at 50% 0%, rgba(244,239,230,0.032), transparent 70%),
-    radial-gradient(720px 520px at 86% 22%, rgba(244,239,230,0.018), transparent 74%),
-    radial-gradient(620px 520px at 14% 76%, rgba(201,177,138,0.012), transparent 72%),
-    linear-gradient(180deg, rgba(0,0,0,0.24), rgba(0,0,0,0.62) 42%, rgba(0,0,0,0.96))
+    radial-gradient(780px 540px at 50% -4%, rgba(244,239,230,0.035), transparent 72%),
+    radial-gradient(620px 460px at 50% 14%, rgba(142,182,255,0.018), transparent 76%),
+    radial-gradient(900px 760px at 50% 68%, rgba(0,0,0,0.025), rgba(0,0,0,0.36) 62%, rgba(0,0,0,0.72)),
+    linear-gradient(180deg, rgba(0,0,0,0.02), rgba(0,0,0,0.24) 42%, rgba(0,0,0,0.72))
   `,
 };
 
@@ -58,9 +60,15 @@ function scrollToY(y) {
   });
 }
 
+function makeExpandKey(activeCategory, blockCategory, blockIndex) {
+  return `${normalize(activeCategory)}:${normalize(blockCategory)}:${blockIndex}`;
+}
+
 export default function WorksList() {
   const rootRef = useRef(null);
+
   const [activeCategory, setActiveCategory] = useState("ALL");
+  const [expandedMap, setExpandedMap] = useState({});
 
   const isNewItem = useCallback((item) => {
     if (!item?.createdAt) return false;
@@ -109,11 +117,17 @@ export default function WorksList() {
 
   const hasWorks = filteredData.some((block) => block.items.length > 0);
 
+  // カテゴリ切替時は展開状態をリセット
+  useEffect(() => {
+    setExpandedMap({});
+  }, [activeCategory]);
+
   useEffect(() => {
     const root = rootRef.current;
     if (!root) return undefined;
 
     const targets = Array.from(root.querySelectorAll('[data-reveal="static"]'));
+
     if (!targets.length) return undefined;
 
     const reduce = prefersReducedMotion();
@@ -157,18 +171,28 @@ export default function WorksList() {
     });
   }, []);
 
+  const toggleExpand = useCallback((key) => {
+    setExpandedMap((prev) => ({
+      ...prev,
+      [key]: !prev[key],
+    }));
+  }, []);
+
   return (
     <section className="relative isolate min-h-screen overflow-x-hidden bg-[#000000] px-6 py-24 pb-32 text-white md:px-10 lg:px-16">
-      <WorksRippleSurface className="pointer-events-none fixed inset-0 z-0 hidden opacity-[0.58] lg:block" />
+      {/* ================= WEBGL BLACK LIGHT ================= */}
+      <WorksBlackLightField className="pointer-events-none fixed inset-0 z-0 opacity-100" />
 
+      {/* ================= BLACK VEIL ================= */}
       <div
         className="pointer-events-none fixed inset-0 z-[1]"
         style={ARCHIVE_OVERLAY_STYLE}
         aria-hidden="true"
       />
 
+      {/* ================= SUBTLE GRAIN ================= */}
       <div
-        className="pointer-events-none fixed inset-0 z-[2] opacity-[0.04]"
+        className="pointer-events-none fixed inset-0 z-[2] opacity-[0.012]"
         aria-hidden="true"
         style={{
           backgroundImage:
@@ -178,12 +202,13 @@ export default function WorksList() {
         }}
       />
 
+      {/* ================= SIDE DEPTH ================= */}
       <div
         className="pointer-events-none fixed inset-0 z-[3]"
         aria-hidden="true"
         style={{
           background:
-            "linear-gradient(90deg, rgba(0,0,0,0.54), transparent 20%, transparent 80%, rgba(0,0,0,0.54))",
+            "linear-gradient(90deg, rgba(0,0,0,0.36), transparent 24%, transparent 76%, rgba(0,0,0,0.36))",
         }}
       />
 
@@ -228,6 +253,25 @@ export default function WorksList() {
         <div className="space-y-36 md:space-y-40">
           {hasWorks ? (
             filteredData.map((block, blockIndex) => {
+              const allItems = Array.isArray(block.items) ? block.items : [];
+
+              const expandKey = makeExpandKey(
+                activeCategory,
+                block.category,
+                blockIndex
+              );
+
+              const isExpanded = Boolean(expandedMap[expandKey]);
+
+              const visibleItems = isExpanded
+                ? allItems
+                : allItems.slice(0, INITIAL_VISIBLE_COUNT);
+
+              const totalCount = allItems.length;
+              const visibleCount = visibleItems.length;
+              const hiddenCount = Math.max(0, totalCount - visibleCount);
+              const canToggle = totalCount > INITIAL_VISIBLE_COUNT;
+
               const hideNewBadgeForItems =
                 block.category === "HOTEL" ||
                 block.category === "FOOD / FURNITURE / BRAND";
@@ -239,7 +283,7 @@ export default function WorksList() {
                   key={`${activeCategory}-${block.category}-${blockIndex}`}
                   className="relative"
                 >
-                  {block.items.some((item) => item.isOrigin) && (
+                  {allItems.some((item) => item.isOrigin) && (
                     <div className="mb-20 text-center md:mb-24">
                       <p className="text-[0.7rem] tracking-[0.42em] text-white/40">
                         — ORIGINALITY —
@@ -250,11 +294,11 @@ export default function WorksList() {
                   <Category
                     title={block.category}
                     subtitle={block.subtitle}
-                    itemsRaw={block.items}
+                    itemsRaw={allItems}
                     showNewBadge={showCategoryNewBadge}
                     index={blockIndex}
                   >
-                    {block.items.map((item, itemIndex) => (
+                    {visibleItems.map((item, itemIndex) => (
                       <WorkItem
                         key={`${
                           activeCategory
@@ -269,6 +313,62 @@ export default function WorksList() {
                       />
                     ))}
                   </Category>
+
+                  {canToggle && (
+                    <div className="mt-10 flex justify-center md:mt-12">
+                      <button
+                        type="button"
+                        onClick={() => toggleExpand(expandKey)}
+                        aria-expanded={isExpanded}
+                        className="
+                          group relative inline-flex items-center gap-4
+                          border border-white/10
+                          bg-black/28
+                          px-5 py-3
+                          text-[0.72rem] tracking-[0.22em]
+                          text-white/52
+                          backdrop-blur-[2px]
+                          transition
+                          duration-500
+                          ease-[cubic-bezier(0.22,0.56,0.18,1)]
+                          hover:border-[rgba(201,177,138,0.28)]
+                          hover:bg-white/[0.035]
+                          hover:text-white/82
+                          focus-visible:outline-none
+                          focus-visible:ring-1
+                          focus-visible:ring-[rgba(201,177,138,0.42)]
+                          focus-visible:ring-offset-2
+                          focus-visible:ring-offset-black
+                        "
+                      >
+                        <span
+                          className="
+                            block h-px w-8 bg-white/18
+                            transition-all duration-500
+                            group-hover:w-12
+                            group-hover:bg-[rgba(201,177,138,0.42)]
+                          "
+                          aria-hidden="true"
+                        />
+
+                        <span>
+                          {isExpanded
+                            ? "CLOSE"
+                            : `MORE ${String(hiddenCount).padStart(2, "0")}`}
+                        </span>
+
+                        <span
+                          className={[
+                            "inline-block transition-transform duration-500",
+                            isExpanded ? "rotate-180" : "rotate-0",
+                          ].join(" ")}
+                          aria-hidden="true"
+                        >
+                          ↓
+                        </span>
+                      </button>
+                    </div>
+                  )}
                 </div>
               );
             })
@@ -277,6 +377,7 @@ export default function WorksList() {
               <p className="text-[0.72rem] tracking-[0.32em] text-white/32">
                 NO WORKS
               </p>
+
               <p className="mt-5 text-[0.92rem] leading-[1.9] text-white/44">
                 このカテゴリの制作事例は、まだありません。
               </p>
