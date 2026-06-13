@@ -38,7 +38,11 @@ function normalize(str = "") {
 }
 
 function scrollToY(y) {
-  const lenis = typeof window !== "undefined" ? window.__gd_lenis__ : null;
+  const lenis =
+    typeof window !== "undefined"
+      ? window.__gd_lenis__ || window.__gd_lenis
+      : null;
+
   const immediate = prefersReducedMotion();
 
   if (lenis && typeof lenis.scrollTo === "function") {
@@ -62,6 +66,145 @@ function scrollToY(y) {
 
 function makeExpandKey(activeCategory, blockCategory, blockIndex) {
   return `${normalize(activeCategory)}:${normalize(blockCategory)}:${blockIndex}`;
+}
+
+function SwipeMoreCard({
+  isExpanded,
+  hiddenCount,
+  totalCount,
+  visibleCount,
+  onClick,
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      aria-expanded={isExpanded}
+      className="
+        group relative flex min-h-[260px] w-[74vw] max-w-[320px]
+        shrink-0 flex-col justify-between overflow-hidden
+        border border-white/10 bg-black/36
+        px-5 py-5 text-left
+        backdrop-blur-[2px]
+        transition duration-500
+        ease-[cubic-bezier(0.22,0.56,0.18,1)]
+        hover:border-[rgba(201,177,138,0.28)]
+        hover:bg-white/[0.035]
+        focus-visible:outline-none
+        focus-visible:ring-1
+        focus-visible:ring-[rgba(201,177,138,0.42)]
+        focus-visible:ring-offset-2
+        focus-visible:ring-offset-black
+        md:hidden
+      "
+    >
+      <span
+        className="
+          pointer-events-none absolute inset-0 opacity-0
+          transition duration-500
+          group-hover:opacity-100
+        "
+        style={{
+          background:
+            "radial-gradient(320px 220px at 20% 0%, rgba(201,177,138,0.11), transparent 68%)",
+        }}
+        aria-hidden="true"
+      />
+
+      <span className="relative z-10 block">
+        <span className="mb-5 block h-px w-10 bg-white/18 transition-all duration-500 group-hover:w-16 group-hover:bg-[rgba(201,177,138,0.42)]" />
+
+        <span className="block text-[0.62rem] tracking-[0.28em] text-white/34">
+          {isExpanded ? "CLOSE ARCHIVE" : "CONTINUE"}
+        </span>
+      </span>
+
+      <span className="relative z-10 block">
+        <span className="block text-[1.55rem] font-light tracking-[0.18em] text-white/78">
+          {isExpanded ? "CLOSE" : "MORE"}
+        </span>
+
+        <span className="mt-3 block text-[0.72rem] leading-[1.8] tracking-[0.12em] text-white/42">
+          {isExpanded
+            ? `${String(visibleCount).padStart(2, "0")} / ${String(
+                totalCount
+              ).padStart(2, "0")}`
+            : `あと ${String(hiddenCount).padStart(2, "0")} 件`}
+        </span>
+      </span>
+
+      <span
+        className={[
+          "relative z-10 inline-block self-end text-white/42 transition duration-500 group-hover:text-[rgba(201,177,138,0.82)]",
+          isExpanded ? "rotate-180" : "rotate-0",
+        ].join(" ")}
+        aria-hidden="true"
+      >
+        ↓
+      </span>
+    </button>
+  );
+}
+
+function DesktopMoreButton({
+  isExpanded,
+  hiddenCount,
+  expandKey,
+  toggleExpand,
+}) {
+  return (
+    <div className="mt-10 hidden justify-center md:mt-12 md:flex">
+      <button
+        type="button"
+        onClick={() => toggleExpand(expandKey)}
+        aria-expanded={isExpanded}
+        className="
+          group relative inline-flex items-center gap-4
+          border border-white/10
+          bg-black/28
+          px-5 py-3
+          text-[0.72rem] tracking-[0.22em]
+          text-white/52
+          backdrop-blur-[2px]
+          transition
+          duration-500
+          ease-[cubic-bezier(0.22,0.56,0.18,1)]
+          hover:border-[rgba(201,177,138,0.28)]
+          hover:bg-white/[0.035]
+          hover:text-white/82
+          focus-visible:outline-none
+          focus-visible:ring-1
+          focus-visible:ring-[rgba(201,177,138,0.42)]
+          focus-visible:ring-offset-2
+          focus-visible:ring-offset-black
+        "
+      >
+        <span
+          className="
+            block h-px w-8 bg-white/18
+            transition-all duration-500
+            group-hover:w-12
+            group-hover:bg-[rgba(201,177,138,0.42)]
+          "
+          aria-hidden="true"
+        />
+
+        <span>
+          {isExpanded ? "CLOSE" : `MORE ${String(hiddenCount).padStart(2, "0")}`}
+        </span>
+
+        <span
+          className={[
+            "inline-block transition-transform duration-500",
+            isExpanded ? "rotate-180" : "rotate-0",
+          ].join(" ")}
+          aria-hidden="true"
+        >
+          ↓
+        </span>
+      </button>
+    </div>
+  );
 }
 
 export default function WorksList() {
@@ -117,7 +260,6 @@ export default function WorksList() {
 
   const hasWorks = filteredData.some((block) => block.items.length > 0);
 
-  // カテゴリ切替時は展開状態をリセット
   useEffect(() => {
     setExpandedMap({});
   }, [activeCategory]);
@@ -312,62 +454,25 @@ export default function WorksList() {
                         revealIndex={itemIndex}
                       />
                     ))}
+
+                    {canToggle && (
+                      <SwipeMoreCard
+                        isExpanded={isExpanded}
+                        hiddenCount={hiddenCount}
+                        totalCount={totalCount}
+                        visibleCount={visibleCount}
+                        onClick={() => toggleExpand(expandKey)}
+                      />
+                    )}
                   </Category>
 
                   {canToggle && (
-                    <div className="mt-10 flex justify-center md:mt-12">
-                      <button
-                        type="button"
-                        onClick={() => toggleExpand(expandKey)}
-                        aria-expanded={isExpanded}
-                        className="
-                          group relative inline-flex items-center gap-4
-                          border border-white/10
-                          bg-black/28
-                          px-5 py-3
-                          text-[0.72rem] tracking-[0.22em]
-                          text-white/52
-                          backdrop-blur-[2px]
-                          transition
-                          duration-500
-                          ease-[cubic-bezier(0.22,0.56,0.18,1)]
-                          hover:border-[rgba(201,177,138,0.28)]
-                          hover:bg-white/[0.035]
-                          hover:text-white/82
-                          focus-visible:outline-none
-                          focus-visible:ring-1
-                          focus-visible:ring-[rgba(201,177,138,0.42)]
-                          focus-visible:ring-offset-2
-                          focus-visible:ring-offset-black
-                        "
-                      >
-                        <span
-                          className="
-                            block h-px w-8 bg-white/18
-                            transition-all duration-500
-                            group-hover:w-12
-                            group-hover:bg-[rgba(201,177,138,0.42)]
-                          "
-                          aria-hidden="true"
-                        />
-
-                        <span>
-                          {isExpanded
-                            ? "CLOSE"
-                            : `MORE ${String(hiddenCount).padStart(2, "0")}`}
-                        </span>
-
-                        <span
-                          className={[
-                            "inline-block transition-transform duration-500",
-                            isExpanded ? "rotate-180" : "rotate-0",
-                          ].join(" ")}
-                          aria-hidden="true"
-                        >
-                          ↓
-                        </span>
-                      </button>
-                    </div>
+                    <DesktopMoreButton
+                      isExpanded={isExpanded}
+                      hiddenCount={hiddenCount}
+                      expandKey={expandKey}
+                      toggleExpand={toggleExpand}
+                    />
                   )}
                 </div>
               );
