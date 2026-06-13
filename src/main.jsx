@@ -1,8 +1,9 @@
 // src/main.jsx
 /* ============================================================================
-   GUSHIKEN DESIGN Core Init v5.6
+   GUSHIKEN DESIGN Core Init v5.7
    - FOUC Prevention
    - Helmet Provider
+   - Browser Scroll Restoration: manual before React render
    - Vercel Analytics: production only
    - Lenis / route scroll: App.jsx 側で管理
    - Stable Service Worker
@@ -38,6 +39,20 @@ function isLocalHost() {
 function isProductionHost() {
   return import.meta.env.PROD && !isLocalHost();
 }
+
+/* ============================================================================
+   Browser Scroll Restoration
+   - PCブラウザの戻る/進むUIで前回スクロール位置へ飛ぶのを止める
+   - App.jsx の useEffect より前、React render 前に必ず設定する
+=========================================================================== */
+
+if (isBrowser() && "scrollRestoration" in window.history) {
+  window.history.scrollRestoration = "manual";
+}
+
+/* ============================================================================
+   Analytics
+=========================================================================== */
 
 const ENABLE_VERCEL_ANALYTICS = isProductionHost();
 
@@ -156,9 +171,7 @@ async function clearDevServiceWorkersAndCaches() {
     if ("caches" in window) {
       const keys = await caches.keys();
 
-      await Promise.all(
-        keys.map((key) => caches.delete(key).catch(() => false))
-      );
+      await Promise.all(keys.map((key) => caches.delete(key).catch(() => false)));
     }
 
     console.info("[GD] Dev: cleared Service Worker + caches.");

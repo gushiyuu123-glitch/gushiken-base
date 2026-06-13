@@ -20,7 +20,7 @@ const MENU_LINKS = [
 
   // Entry / SEO islands
   { type: "route", label: "沖縄のHP制作", to: "/okinawa" },
-  { type: "route", label: "全国オンライン制作", to: "/online" },
+  { type: "route", label: "全国対応のWeb制作", to: "/online" },
 ];
 
 const PROJECT_LINKS = [
@@ -40,6 +40,10 @@ const LEGAL_LINKS = [
   { label: "返金規約", to: "/refund" },
   { label: "PRIVACY", to: "/privacy" },
 ];
+
+/* =========================================================
+   Icons
+========================================================= */
 
 function InstagramIcon() {
   return (
@@ -65,7 +69,22 @@ function NoteIcon() {
   );
 }
 
+/* =========================================================
+   Helpers
+========================================================= */
+
+function normalizePathname(pathname = "/") {
+  const raw = String(pathname || "/").split("?")[0].split("#")[0];
+
+  if (!raw || raw === "/") return "/";
+
+  const withSlash = raw.startsWith("/") ? raw : `/${raw}`;
+  return withSlash.replace(/\/+$/, "") || "/";
+}
+
 function getLenisLike() {
+  if (typeof window === "undefined") return null;
+
   const api = window.__gd_lenis__;
 
   if (api?.lenis?.scrollTo) return api.lenis;
@@ -74,7 +93,35 @@ function getLenisLike() {
   return null;
 }
 
+function forceTop() {
+  if (typeof window === "undefined") return;
+
+  const lenis = getLenisLike();
+
+  window.scrollTo({
+    top: 0,
+    left: 0,
+    behavior: "auto",
+  });
+
+  document.documentElement.scrollTop = 0;
+  document.body.scrollTop = 0;
+
+  if (lenis?.scrollTo) {
+    lenis.scrollTo(0, {
+      immediate: true,
+      force: true,
+      duration: 0,
+    });
+  }
+
+  if (lenis?.resize) {
+    lenis.resize();
+  }
+}
+
 function scrollToHash(hash, options = {}) {
+  if (typeof document === "undefined") return false;
   if (!hash) return false;
 
   const id = String(hash).replace("#", "");
@@ -101,6 +148,10 @@ function scrollToHash(hash, options = {}) {
   return true;
 }
 
+/* =========================================================
+   Component
+========================================================= */
+
 export default function Footer() {
   const sectionRef = useRef(null);
   const navigate = useNavigate();
@@ -112,9 +163,21 @@ export default function Footer() {
 
       if (!hash) return;
 
-      // Home上ならその場でスクロール
-      if (location.pathname === "/") {
-        window.history.replaceState(null, "", `/${hash}`);
+      const currentPath = normalizePathname(location.pathname);
+
+      // Home上なら、React Router経由でURLだけ置き換えてスクロール
+      // window.history.replaceState は使わない
+      if (currentPath === "/") {
+        navigate(
+          {
+            pathname: "/",
+            hash,
+          },
+          {
+            replace: true,
+            state: null,
+          }
+        );
 
         requestAnimationFrame(() => {
           scrollToHash(hash);
@@ -140,19 +203,84 @@ export default function Footer() {
     [location.pathname, navigate]
   );
 
-  const handleRouteClick = useCallback(() => {
-    // 念のため、過去に残った古いグローバル値を消す
-    if (typeof window !== "undefined") {
-      window.__gd_footer_pending_hash__ = "";
-    }
-  }, []);
+  const handleRouteClick = useCallback(
+    (event, to = "/") => {
+      event.preventDefault();
+
+      if (typeof window !== "undefined") {
+        window.__gd_footer_pending_hash__ = "";
+      }
+
+      const currentPath = normalizePathname(location.pathname);
+      const targetPath = normalizePathname(to);
+      const isHomeHashState = currentPath === "/" && Boolean(location.hash);
+
+      // Homeロゴなど、/ へ戻るリンク
+      if (targetPath === "/") {
+        navigate(
+          {
+            pathname: "/",
+          },
+          {
+            replace: currentPath === "/",
+            state: null,
+          }
+        );
+
+        requestAnimationFrame(() => {
+          forceTop();
+        });
+
+        return;
+      }
+
+      // /#contact などの状態から /online へ行く時は、
+      // 戻る履歴に /#contact を残さないため、まず / にreplaceしてから遷移する。
+      if (isHomeHashState) {
+        navigate(
+          {
+            pathname: "/",
+          },
+          {
+            replace: true,
+            state: null,
+          }
+        );
+
+        requestAnimationFrame(() => {
+          navigate(targetPath, {
+            replace: false,
+            state: null,
+          });
+
+          requestAnimationFrame(() => {
+            forceTop();
+          });
+        });
+
+        return;
+      }
+
+      navigate(targetPath, {
+        replace: false,
+        state: null,
+      });
+
+      requestAnimationFrame(() => {
+        forceTop();
+      });
+    },
+    [location.pathname, location.hash, navigate]
+  );
 
   // 他ページ → Home hash 遷移後、1回クリックで確実に対象へ寄せる
   useEffect(() => {
     const hashFromState = location.state?.gdScrollHash;
     const targetHash = hashFromState || location.hash;
 
-    if (location.pathname !== "/" || !targetHash) return undefined;
+    if (normalizePathname(location.pathname) !== "/" || !targetHash) {
+      return undefined;
+    }
 
     let raf1 = 0;
     let raf2 = 0;
@@ -258,7 +386,7 @@ export default function Footer() {
               to="/"
               className={styles.logoLink}
               aria-label="GUSHIKEN DESIGN ホームへ"
-              onClick={handleRouteClick}
+              onClick={(event) => handleRouteClick(event, "/")}
             >
               <span className={styles.logoFrame} aria-hidden="true">
                 <img
@@ -296,7 +424,11 @@ export default function Footer() {
               世界観と導線を設計するWeb制作を行っています。
             </p>
 
-            <Link to="/layer0" className={styles.lab} onClick={handleRouteClick}>
+            <Link
+              to="/layer0"
+              className={styles.lab}
+              onClick={(event) => handleRouteClick(event, "/layer0")}
+            >
               HIDDEN LABORATORY
             </Link>
           </section>
@@ -335,7 +467,7 @@ export default function Footer() {
                     to={item.to}
                     className={styles.link}
                     style={{ "--link-index": index }}
-                    onClick={handleRouteClick}
+                    onClick={(event) => handleRouteClick(event, item.to)}
                   >
                     {item.label}
                   </Link>
@@ -413,7 +545,7 @@ export default function Footer() {
                   to={item.to}
                   className={styles.legal}
                   style={{ "--link-index": index }}
-                  onClick={handleRouteClick}
+                  onClick={(event) => handleRouteClick(event, item.to)}
                 >
                   {item.label}
                 </Link>

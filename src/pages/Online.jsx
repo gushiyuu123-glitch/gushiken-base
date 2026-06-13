@@ -1,5 +1,5 @@
-import { useEffect, useRef } from "react";
-import { Link } from "react-router-dom";
+import { useCallback, useEffect, useMemo, useRef } from "react";
+import { Link, useLocation } from "react-router-dom";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Seo from "../components/Seo";
@@ -8,11 +8,6 @@ import styles from "./Online.module.css";
 import heroCoast from "../assets/online/online-hero-coast.png";
 import workspaceImg from "../assets/online/online-workspace.png";
 import beachPalmImg from "../assets/online/online-beach-palm.png";
-import hotelImg from "../assets/online/work-hotel.png";
-import salonImg from "../assets/online/work-salon.png";
-import tourismImg from "../assets/online/work-tourism.png";
-import cafeImg from "../assets/online/work-cafe.png";
-import brandImg from "../assets/online/work-brand.png";
 import nightSeaImg from "../assets/online/online-night-sea.png";
 
 /* =========================================================
@@ -81,6 +76,7 @@ const signatureItems = [
   "スマホで崩れない読みやすさ",
   "検索とAIに伝わるページ構造",
 ];
+
 const works = [
   {
     title: "BLACK PAPILLON",
@@ -118,6 +114,7 @@ const works = [
     position: "center",
   },
 ];
+
 const priceRows = [
   {
     name: "LP制作",
@@ -142,22 +139,85 @@ const priceRows = [
 ];
 
 /* =========================================================
+   HELPERS
+========================================================= */
+
+const normalizePathname = (pathname = "/") => {
+  const raw = String(pathname || "/").split("?")[0].split("#")[0];
+
+  if (!raw || raw === "/") return "/";
+
+  const withSlash = raw.startsWith("/") ? raw : `/${raw}`;
+  return withSlash.replace(/\/+$/, "") || "/";
+};
+
+const getLenisLike = () => {
+  const api = window.__gd_lenis__;
+
+  if (api?.lenis?.scrollTo) return api.lenis;
+  if (api?.scrollTo) return api;
+
+  return null;
+};
+
+/* =========================================================
    PAGE COMPONENT
 ========================================================= */
 
 export default function Online() {
   const pageRef = useRef(null);
+  const location = useLocation();
 
-  useEffect(() => {
-    document.body.classList.add("is-online-page");
-    return () => document.body.classList.remove("is-online-page");
+  const pathname = useMemo(
+    () => normalizePathname(location.pathname),
+    [location.pathname]
+  );
+
+  const isOnlineRoute = pathname === "/online";
+
+  const handleSectionJump = useCallback((event, id) => {
+    event.preventDefault();
+
+    const target = document.getElementById(id);
+    if (!target) return;
+
+    const lenis = getLenisLike();
+
+    if (lenis?.scrollTo) {
+      lenis.scrollTo(target, {
+        offset: 0,
+        duration: 0.9,
+      });
+      return;
+    }
+
+    target.scrollIntoView({
+      behavior: "smooth",
+      block: "start",
+    });
   }, []);
 
   useEffect(() => {
+    if (!isOnlineRoute) {
+      document.body.classList.remove("is-online-page");
+      return undefined;
+    }
+
+    document.body.classList.add("is-online-page");
+
+    return () => {
+      document.body.classList.remove("is-online-page");
+    };
+  }, [isOnlineRoute]);
+
+  useEffect(() => {
+    if (!isOnlineRoute) return undefined;
+
     const root = pageRef.current;
     if (!root) return undefined;
 
-    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const reduceMotion =
+      window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches ?? false;
 
     if (reduceMotion) {
       root.querySelectorAll("[data-online-reveal]").forEach((node) => {
@@ -166,12 +226,46 @@ export default function Online() {
         node.style.clipPath = "none";
         node.style.filter = "none";
       });
-      return undefined;
+
+      return () => {
+        root.querySelectorAll("[data-online-reveal]").forEach((node) => {
+          node.style.opacity = "";
+          node.style.transform = "";
+          node.style.clipPath = "";
+          node.style.filter = "";
+        });
+      };
     }
 
     gsap.registerPlugin(ScrollTrigger);
 
-    const ctx = gsap.context(() => {
+    let ctx;
+
+    const cleanupOnlineGsap = () => {
+      if (!root) return;
+
+      if (ctx) {
+        ctx.revert();
+        ctx = null;
+      }
+
+      ScrollTrigger.getAll().forEach((trigger) => {
+        const triggerEl = trigger.trigger;
+
+        if (triggerEl && root.contains(triggerEl)) {
+          trigger.kill(true);
+        }
+      });
+
+      gsap.killTweensOf(root);
+      gsap.killTweensOf(root.querySelectorAll("*"));
+
+      requestAnimationFrame(() => {
+        ScrollTrigger.refresh();
+      });
+    };
+
+    ctx = gsap.context(() => {
       const revealNodes = gsap.utils.toArray("[data-online-reveal]");
 
       revealNodes.forEach((node) => {
@@ -247,8 +341,13 @@ export default function Online() {
       );
     }, root);
 
-    return () => ctx.revert();
-  }, []);
+    return cleanupOnlineGsap;
+  }, [isOnlineRoute]);
+
+  // Router / Outlet 側で万が一 Online が残っても、URLが /online 以外なら自分で消える
+  if (!isOnlineRoute) {
+    return null;
+  }
 
   return (
     <>
@@ -264,7 +363,12 @@ export default function Online() {
         ========================================================= */}
         <section className={styles.hero} aria-labelledby="online-hero-title">
           <div className={styles.heroPhoto} data-online-parallax data-speed="-6">
-            <img src={heroCoast} alt="沖縄の海と朝の光" loading="eager" decoding="async" />
+            <img
+              src={heroCoast}
+              alt="沖縄の海と朝の光"
+              loading="eager"
+              decoding="async"
+            />
           </div>
 
           <div className={styles.heroTone} aria-hidden="true" />
@@ -276,8 +380,6 @@ export default function Online() {
               <span>GUSHIKEN DESIGN</span>
               <small>Web Design / Okinawa</small>
             </Link>
-
-
           </header>
 
           <p className={styles.heroVertical} aria-hidden="true">
@@ -305,7 +407,12 @@ export default function Online() {
               <span className={styles.titleTo}>全国へ。</span>
             </h1>
 
-            <div className={styles.heroFlow} aria-hidden="true" data-online-reveal="hero" data-delay="0.16">
+            <div
+              className={styles.heroFlow}
+              aria-hidden="true"
+              data-online-reveal="hero"
+              data-delay="0.16"
+            >
               <div className={styles.heroSvgFlow} data-online-parallax data-speed="-3">
                 <svg className={styles.networkSvg} viewBox="0 0 980 640" aria-hidden="true">
                   <defs>
@@ -361,7 +468,11 @@ export default function Online() {
                   相談する
                 </Link>
 
-                <a href="#route" className={styles.textLink}>
+                <a
+                  href="#route"
+                  className={styles.textLink}
+                  onClick={(event) => handleSectionJump(event, "route")}
+                >
                   進め方を見る
                 </a>
               </div>
@@ -457,10 +568,14 @@ export default function Online() {
             <h2 id="scope-title">
               作れるもの。
               <br />
-              整えるだけでは  <br />終わらせない。
+              整えるだけでは
+              <br />
+              終わらせない。
             </h2>
             <p>
-              必要なページ数や機能を並べるだけではなく、  <br />見る人がどう受け取るかまで考えて設計します。
+              必要なページ数や機能を並べるだけではなく、
+              <br />
+              見る人がどう受け取るかまで考えて設計します。
             </p>
           </div>
 
@@ -492,8 +607,10 @@ export default function Online() {
             <p className={styles.sectionKicker}>Style / Strength</p>
             <h2 id="signature-title">印象を設計する。</h2>
             <p>
-              Webサイトは、情報を置くだけでは選ばれません。<br />
-              写真の明るさ、文字の位置、余白の呼吸、スクロールした時の間。<br />
+              Webサイトは、情報を置くだけでは選ばれません。
+              <br />
+              写真の明るさ、文字の位置、余白の呼吸、スクロールした時の間。
+              <br />
               その細部が、事業の印象を決めます。
             </p>
           </div>
@@ -516,40 +633,39 @@ export default function Online() {
 
           <div className={styles.workGallery}>
             {works.map((work, index) => (
-      <a
-  href={work.link}
-  target="_blank"
-  rel="noreferrer"
-  className={`${styles.workCard} ${index === 0 ? styles.workFeatured : ""}`}
-  key={work.title}
-  data-online-reveal="image"
-  data-delay={index * 0.04}
->
-<figure
-  className={styles.workThumb}
-  style={{ "--work-image": `url(${work.image})` }}
->
-  <img
-    src={work.image}
-    alt={`${work.title} の制作実績`}
-    loading="lazy"
-    decoding="async"
-    style={{ objectPosition: work.position }}
-  />
-</figure>
+              <a
+                href={work.link}
+                target="_blank"
+                rel="noreferrer"
+                className={`${styles.workCard} ${index === 0 ? styles.workFeatured : ""}`}
+                key={work.title}
+                data-online-reveal="image"
+                data-delay={index * 0.04}
+              >
+                <figure
+                  className={styles.workThumb}
+                  style={{ "--work-image": `url(${work.image})` }}
+                >
+                  <img
+                    src={work.image}
+                    alt={`${work.title} の制作実績`}
+                    loading="lazy"
+                    decoding="async"
+                    style={{ objectPosition: work.position }}
+                  />
+                </figure>
 
-  <div className={styles.workMeta}>
-    <h3>{work.title}</h3>
-    <p>{work.type}</p>
-  </div>
-</a>
+                <div className={styles.workMeta}>
+                  <h3>{work.title}</h3>
+                  <p>{work.type}</p>
+                </div>
+              </a>
             ))}
           </div>
 
           <div className={styles.worksAction} data-online-reveal="fade">
             <Link to="/works" className={styles.worksButton}>
               制作事例を全て見る
-        
             </Link>
           </div>
         </section>
@@ -564,7 +680,9 @@ export default function Online() {
             <p>
               表示価格は税込の目安です。
               <br />
-              目的・ページ数・必要な導線を整理した上で<br />正式にお見積もりします。
+              目的・ページ数・必要な導線を整理した上で
+              <br />
+              正式にお見積もりします。
             </p>
           </div>
 
@@ -593,15 +711,21 @@ export default function Online() {
         ========================================================= */}
         <section className={styles.cta} aria-labelledby="cta-title">
           <div className={styles.ctaBg} data-online-parallax data-speed="-5">
-            <img src={nightSeaImg} alt="月光に照らされた沖縄の海" loading="lazy" decoding="async" />
+            <img
+              src={nightSeaImg}
+              alt="月光に照らされた沖縄の海"
+              loading="lazy"
+              decoding="async"
+            />
           </div>
 
           <div className={styles.ctaText} data-online-reveal="fade">
             <p className={styles.sectionKicker}>Contact</p>
-        <h2 id="cta-title">
-  画面越しに、<br />
-  まず聞かせてください。
-</h2>
+            <h2 id="cta-title">
+              画面越しに、
+              <br />
+              まず聞かせてください。
+            </h2>
             <p>
               作りたいものが明確でなくても構いません。
               <br />
@@ -611,7 +735,6 @@ export default function Online() {
 
           <Link to="/contact" className={styles.ctaButton} data-online-reveal="fade" data-delay="0.08">
             相談する
-      
           </Link>
         </section>
       </main>

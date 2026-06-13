@@ -1,5 +1,5 @@
 // src/App.jsx
-import { useEffect, useRef } from "react";
+import { useEffect, useLayoutEffect, useRef } from "react";
 import {
   Routes,
   Route,
@@ -242,6 +242,35 @@ function isRoomLikeSlug(slug = "") {
   return /Room$/i.test(slug) || /Teaser$/i.test(slug) || /Intro$/i.test(slug);
 }
 
+function getLenisLike() {
+  const api = window.__gd_lenis__;
+
+  if (api?.lenis?.scrollTo) return api.lenis;
+  if (api?.scrollTo) return api;
+
+  return null;
+}
+
+function forceScrollTop() {
+  const lenis = getLenisLike();
+
+  window.scrollTo(0, 0);
+  document.documentElement.scrollTop = 0;
+  document.body.scrollTop = 0;
+
+  if (lenis?.scrollTo) {
+    lenis.scrollTo(0, {
+      immediate: true,
+      force: true,
+      duration: 0,
+    });
+  }
+
+  if (lenis?.resize) {
+    lenis.resize();
+  }
+}
+
 function SeoBridge() {
   const location = useLocation();
   const pathname = normalizePathname(location.pathname);
@@ -321,17 +350,19 @@ function Layout() {
 
       {!hideChrome && <NavGlobal />}
 
-      <div id="page-root" role="main">
-        <Routes>
+      <div id="page-root" key={pathname} role="main">
+        <Routes location={location} key={pathname}>
           <Route path="/" element={<Home />} />
           <Route path="/works" element={<WorksList />} />
 
           <Route path="/works/noir-lux" element={<NoirLux />} />
           <Route path="/works/resonance" element={<Resonance />} />
+
           <Route
             path="/works/still"
             element={<Navigate to="/works/stillRoom" replace />}
           />
+
           <Route path="/works/BlueShoreHotel" element={<BlueShoreHotel />} />
           <Route path="/works/CapeOkinawa" element={<CapeOkinawa />} />
           <Route path="/works/OkinawaWhiteSpa" element={<OkinawaWhiteSpa />} />
@@ -339,23 +370,28 @@ function Layout() {
           <Route path="/works/GoldenVeil" element={<GoldenVeil />} />
           <Route path="/works/OkiLato" element={<OkiLato />} />
           <Route path="/works/Lucent" element={<Lucent />} />
+
           <Route
             path="/works/OkinawaSelectTeaser"
             element={<OkinawaSelectTeaser />}
           />
+
           <Route
             path="/works/NeutralObjectsTeaser"
             element={<NeutralObjectsTeaser />}
           />
+
           <Route path="/works/AburiyaItto" element={<AburiyaItto />} />
           <Route path="/works/Koti" element={<Koti />} />
           <Route path="/works/ActiveDays" element={<ActiveDays />} />
           <Route path="/works/FineOkinawa" element={<FineOkinawa />} />
           <Route path="/works/RyukaIntro" element={<RyukaIntro />} />
+
           <Route
             path="/works/OkinawaLightResortHotel"
             element={<OkinawaLightResortHotel />}
           />
+
           <Route path="/works/HorizonBlanc" element={<HorizonBlanc />} />
           <Route path="/works/TheCalmOkinawa" element={<TheCalmOkinawa />} />
           <Route path="/works/FlowOfTea" element={<FlowOfTea />} />
@@ -368,10 +404,12 @@ function Layout() {
           <Route path="/works/ReCamp" element={<ReCamp />} />
           <Route path="/works/MiyahiraDental" element={<MiyahiraDental />} />
           <Route path="/works/SakuraiDerm" element={<SakuraiDerm />} />
+
           <Route
             path="/works/WhiteDarkCacao"
             element={<WhiteDarkCacao />}
           />
+
           <Route path="/works/AxisRoom" element={<AxisRoom />} />
           <Route path="/works/TakumiRoom" element={<TakumiRoom />} />
           <Route path="/works/RoseRoom" element={<RoseRoom />} />
@@ -439,31 +477,47 @@ export default function App() {
   const location = useLocation();
   const observerRef = useRef(null);
 
-  // ルート遷移でトップに戻す。hash移動はブラウザに任せる。
+  // ブラウザ戻る/進む時のスクロール位置復元を止める
   useEffect(() => {
+    if (!("scrollRestoration" in window.history)) return undefined;
+
+    const previous = window.history.scrollRestoration;
+    window.history.scrollRestoration = "manual";
+
+    return () => {
+      window.history.scrollRestoration = previous;
+    };
+  }, []);
+
+  // ルート遷移でトップに戻す。
+  // PCブラウザ左上の戻るUIでも、Lenis / ブラウザ復元に負けないように複数回補正。
+  useLayoutEffect(() => {
     if (location.hash) return undefined;
 
-    const raf = requestAnimationFrame(() => {
-      const api = window.__gd_lenis__;
-      const lenis = api?.lenis || api;
+    let raf = 0;
+    let timerA = 0;
+    let timerB = 0;
 
-      if (lenis?.scrollTo) {
-        lenis.scrollTo(0, {
-          immediate: true,
-          duration: 0,
-        });
-        return;
-      }
+    forceScrollTop();
 
-      window.scrollTo({
-        top: 0,
-        left: 0,
-        behavior: "auto",
-      });
+    raf = requestAnimationFrame(() => {
+      forceScrollTop();
     });
 
-    return () => cancelAnimationFrame(raf);
-  }, [location.pathname, location.search]);
+    timerA = window.setTimeout(() => {
+      forceScrollTop();
+    }, 80);
+
+    timerB = window.setTimeout(() => {
+      forceScrollTop();
+    }, 220);
+
+    return () => {
+      cancelAnimationFrame(raf);
+      window.clearTimeout(timerA);
+      window.clearTimeout(timerB);
+    };
+  }, [location.key, location.pathname, location.search]);
 
   // aq-fade observer
   useEffect(() => {
