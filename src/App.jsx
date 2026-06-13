@@ -10,8 +10,7 @@ import {
 import Seo from "./components/Seo";
 
 import NavGlobal from "./components/NavGlobal";
-import Footer from "./components/FOOTER";
-import ScrollManager from "./components/ScrollManager";
+import Footer from "./components/Footer";
 import LenisManager from "./components/Lenis";
 
 // Pages
@@ -66,12 +65,13 @@ import Refund from "./pages/Refund";
 import Legal from "./pages/Legal";
 import Privacy from "./pages/Privacy";
 
-// Entry（子島）
+// Entry pages
 import OkinawaBridalWebsite from "./pages/entry/OkinawaBridalWebsite";
 import KouRyuiEntry from "./pages/entry/KouRyuiEntry";
 import BlackPapillonEntry from "./pages/entry/BlackPapillonEntry";
 
 import Okinawa from "./pages/Okinawa";
+import Online from "./pages/Online";
 
 // News
 import NewsList from "./pages/NewsList";
@@ -82,261 +82,226 @@ import Layer0 from "./pages/Layer0";
 
 /* ============================================================================
    SEO Bridge
+   - head専用
+   - JSON-LDは各ページ側に置く
+   - Footer/Linkのクリック挙動には触らない
 =========================================================================== */
 
 const SITE_NAME = "GUSHIKEN DESIGN";
+const SITE_ORIGIN = "https://gushikendesign.com";
+
 const BASE_TITLE = `${SITE_NAME}｜沖縄のWebデザイン・ホームページ制作`;
 const BASE_DESC =
-  "沖縄を拠点に、ブライダル・宿泊・美容・EC向けのWebデザイン／ホームページ制作を行っています。世界観と導線を一貫して設計し、公開まで丁寧に仕上げます。";
+  "沖縄を拠点に、世界観と導線を設計するWeb制作を行っています。LP制作・ホームページ制作・Webデザインを、構成から公開まで一貫して仕上げます。";
 
-const WORK_SEO = {
-  "kou-ryui": {
-    title:
-      "那覇・国際通りの琉球衣装（着物）レンタルを迷わず予約できるサイト｜紅琉衣（KOU RYUI）｜GUSHIKEN DESIGN",
-    description:
-      "着付け込み・手ぶらOKの琉球衣装（着物）体験を、那覇・国際通りエリアで“迷わず決められる順番”に再設計したコンセプトサイト。旅行中の不安（料金/持ち物/当日/場所）を先回りで消し、予約まで迷子にさせない導線を作った。",
+const PAGE_SEO = {
+  "/": {
+    title: BASE_TITLE,
+    description: BASE_DESC,
+    imagePath: "/ogp-v4.png",
   },
 
-  // ✅ VOW：子島（前室）として “制作入口” に寄せる
-  "vow-in-light": {
-    title:
-      "沖縄のブライダル・フォトウェディング向けホームページ制作｜GUSHIKEN DESIGN",
+  "/works": {
+    title: `WORKS｜${BASE_TITLE}`,
     description:
-      "写真は綺麗なのに、サイトで安く見える。そのギャップを埋めるのが仕事です。沖縄のブライダル・フォトウェディング・結婚式場向けに、世界観と問い合わせ導線を両立したWebサイトを制作します。",
+      "制作したWebサイトの事例一覧。ブライダル・美容・飲食・観光・アパレルなど、世界観と導線を両立したWebデザインをまとめています。",
+    imagePath: "/ogp-v4.png",
   },
 
-  // ✅ PAPILLON：子島（前室）
-  "black-papillon": {
-    title: "沖縄のバー・シーシャ・タトゥー向けホームページ制作｜GUSHIKEN DESIGN",
+  "/news": {
+    title: `NEWS｜${BASE_TITLE}`,
     description:
-      "バー/シーシャ/タトゥースタジオなど夜の業態向けに、雰囲気を崩さず、予約・場所・料金が迷わず伝わる順番へ整える前室ページ。実績（Black Papillon）を軸に、世界観と導線を同時に成立させます。",
+      "制作の更新・設計の記録。作品の背景や判断の文脈を短く残しています。",
+    imagePath: "/ogp-v4.png",
+  },
+
+  "/contact": {
+    title: `CONTACT｜${BASE_TITLE}`,
+    description:
+      "ホームページ制作・LP制作・Webデザインの相談窓口。目的・必要な内容・素材の有無を元に、最適なスコープで提案します。",
+    imagePath: "/ogp-v4.png",
+  },
+
+  "/price": {
+    title: `PRICE｜${BASE_TITLE}`,
+    description:
+      "制作プランと料金の目安。LP制作・小規模サイト・印象重視のWebサイト制作など、目的に合わせて制作範囲を整理します。",
+    imagePath: "/ogp-v4.png",
+  },
+
+  "/okinawa": {
+    title: "沖縄の店舗・サロン向けホームページ制作",
+    description:
+      "GUSHIKEN DESIGNは、沖縄県内の店舗・サロン・個人事業主向けにLP制作・ホームページ制作・Webデザインを行う個人制作スタジオです。浦添を拠点に、予約・問い合わせにつながる構成・デザイン・実装まで一貫して対応します。",
+    imagePath: "/ogp-v4.png",
+  },
+
+  "/online": {
+    title: "全国オンライン対応のLP・Webサイト制作",
+    description:
+      "GUSHIKEN DESIGNは、全国オンライン対応でLP制作・ホームページ制作・Webデザインを行う個人制作スタジオです。美容室・ブライダル・アパレル・アーティスト・個人ブランドなど、世界観や印象で選ばれる業種向けに、構成・デザイン・実装まで一貫して制作します。",
+    imagePath: "/ogp-v4.png",
+  },
+
+  "/terms": {
+    title: `TERMS｜${BASE_TITLE}`,
+    description: "利用規約。",
+    imagePath: "/ogp-v4.png",
+  },
+
+  "/privacy": {
+    title: `PRIVACY｜${BASE_TITLE}`,
+    description: "プライバシーポリシー。",
+    imagePath: "/ogp-v4.png",
+  },
+
+  "/legal": {
+    title: `LEGAL｜${BASE_TITLE}`,
+    description: "特定商取引法に基づく表記。",
+    imagePath: "/ogp-v4.png",
+  },
+
+  "/refund": {
+    title: `REFUND｜${BASE_TITLE}`,
+    description: "返金ポリシー。",
+    imagePath: "/ogp-v4.png",
+  },
+
+  "/layer0": {
+    title: `Layer0｜${SITE_NAME}`,
+    description: "Experiment.",
+    imagePath: "/ogp-v4.png",
+    noindex: true,
   },
 };
 
-const BRIDAL_FAQ = [
-  {
-    q: "沖縄のブライダル・フォトウェディング向けのホームページ制作は対応していますか？",
-    a: "はい。沖縄を拠点に、ブライダルサロン・フォトウェディングスタジオ・結婚式場向けのWebサイト制作を行っています。",
+const WORK_SEO = {
+  "vow-in-light": {
+    title: "ブライダル・フォトウェディング向けWebサイト制作",
+    description:
+      "Vow in Lightは、ブライダル・フォトウェディング向けのWebサイト制作事例です。写真の上質さ、余白、スマホ導線、問い合わせまでの流れを整え、比較検討中のユーザーが相談しやすい構成にしています。",
+    imagePath: "/works/vow-in-light-entry.webp",
   },
-  {
-    q: "写真素材がない場合でも制作できますか？",
-    a: "ご相談ください。既存写真の整理から進める、撮影タイミングに合わせて仕上げる、どちらも対応できます。",
-  },
-  {
-    q: "制作期間はどのくらいかかりますか？",
-    a: "内容によりますが通常4〜8週間です。素材が揃っているほど短縮できます。",
-  },
-  {
-    q: "料金の目安を教えてください。",
-    a: "ページ数・素材の有無・機能で変わります。まずは状況を伺って、現実的なスコープで提案します。",
-  },
-  {
-    q: "沖縄以外からも依頼できますか？",
-    a: "はい、全国対応しています。オンラインでのやり取りが中心です。",
-  },
-];
 
-// ✅ /okinawa 子島FAQ
-const OKINAWA_FAQ = [
-  {
-    q: "沖縄のHP制作・LP制作はどんな業種が多いですか？",
-    a: "飲食・美容室・サロン・スタジオ・観光など、雰囲気で選ばれる実店舗のご相談が多いです。",
+  "kou-ryui": {
+    title: "琉装・沖縄文化体験向けWebサイト制作",
+    description:
+      "KOU RYUIは、琉装体験・沖縄文化体験・観光体験向けのWebサイト制作事例です。旅行中の不安を減らし、料金・所要時間・持ち物・アクセス・予約導線を分かりやすく整理しています。",
+    imagePath: "/works/kouryui.webp",
   },
-  {
-    q: "LPとホームページはどちらが向いていますか？",
-    a: "予約・問い合わせなど目的がひとつならLP、店舗紹介やメニュー、実績、記事などを広げたい場合は複数ページのHPが向いています。",
-  },
-  {
-    q: "料金はどう決まりますか？",
-    a: "ページ数・掲載内容・導線・必要な機能を整理して「作る範囲」で決めます。後から無駄に膨らまないよう先に範囲を決めて進めます。",
-  },
-  {
-    q: "沖縄以外からも依頼できますか？",
-    a: "はい。オンラインでのやり取りで全国対応しています。",
-  },
-];
 
-// ✅ Seo.jsx と同じ正規化（canonical / JSON-LD の URL を一致させる）
-const stripTrailingSlash = (s = "") => String(s).replace(/\/+$/, "");
-const ensureLeadingSlash = (p = "/") =>
-  String(p).startsWith("/") ? String(p) : `/${p}`;
+  "black-papillon": {
+    title: "タトゥースタジオ向けホームページ制作",
+    description:
+      "BLACK PAPILLONは、タトゥースタジオ向けのWebサイト制作事例です。施術スタイル、治癒後の仕上がり、料金目安、相談導線、アフターケアを、世界観を崩さずに整理しています。",
+    imagePath: "/works1/BlackPapillonRoom2.png",
+  },
+};
 
-/** / 以外の末尾スラッシュを落とす。?query/#hashも落とす。 */
-const normalizePathname = (p = "/") => {
-  const raw = ensureLeadingSlash(String(p || "/"));
+const HIDE_CHROME_PATHS = new Set([
+  "/okinawa",
+  "/online",
+  "/works/vow-in-light",
+  "/works/kou-ryui",
+  "/works/black-papillon",
+]);
+
+const stripTrailingSlash = (value = "") => String(value).replace(/\/+$/, "");
+
+const ensureLeadingSlash = (path = "/") =>
+  String(path).startsWith("/") ? String(path) : `/${path}`;
+
+function normalizePathname(pathname = "/") {
+  const raw = ensureLeadingSlash(String(pathname || "/"));
   const noHash = raw.split("#")[0];
   const noQuery = noHash.split("?")[0];
   const cleaned = noQuery === "/" ? "/" : stripTrailingSlash(noQuery);
   return cleaned || "/";
-};
+}
 
 function getOrigin() {
   const env = import.meta.env.VITE_SITE_ORIGIN;
-  if (env) return stripTrailingSlash(env);
-  if (typeof window !== "undefined")
-    return stripTrailingSlash(window.location.origin);
-  return "https://gushikendesign.com";
+  return stripTrailingSlash(env || SITE_ORIGIN);
 }
 
 function humanizeSlug(slug = "") {
-  const s = String(slug)
+  const text = String(slug)
     .replace(/[-_]+/g, " ")
     .replace(/([a-z])([A-Z])/g, "$1 $2")
     .trim();
 
-  if (!s) return "Work";
-  return s
+  if (!text) return "Work";
+
+  return text
     .split(" ")
-    .map((w) => (w ? w[0].toUpperCase() + w.slice(1) : w))
+    .map((word) => (word ? word[0].toUpperCase() + word.slice(1) : word))
     .join(" ");
 }
 
-function buildWebPageJsonLd({ url, name, description }) {
-  return {
-    "@context": "https://schema.org",
-    "@type": "WebPage",
-    "@id": `${url}#webpage`,
-    url,
-    name,
-    description,
-    inLanguage: "ja",
-    isPartOf: { "@id": "https://gushikendesign.com/#website" },
-    about: { "@id": "https://gushikendesign.com/#organization" },
-  };
-}
-
-function buildFaqJsonLd(faq) {
-  return {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    mainEntity: faq.map(({ q, a }) => ({
-      "@type": "Question",
-      name: q,
-      acceptedAnswer: { "@type": "Answer", text: a },
-    })),
-  };
+function isRoomLikeSlug(slug = "") {
+  return /Room$/i.test(slug) || /Teaser$/i.test(slug) || /Intro$/i.test(slug);
 }
 
 function SeoBridge() {
-  const { pathname } = useLocation();
+  const location = useLocation();
+  const pathname = normalizePathname(location.pathname);
 
   const origin = getOrigin();
-  const canonicalUrl = `${origin}${normalizePathname(pathname)}`;
+  const canonicalUrl = `${origin}${pathname}`;
 
-  let title = BASE_TITLE;
-  let description = BASE_DESC;
-  let path = pathname;
-  let noindex = false;
+  let seo = PAGE_SEO[pathname] || {
+    title: BASE_TITLE,
+    description: BASE_DESC,
+    imagePath: "/ogp-v4.png",
+  };
+
+  let noindex = Boolean(seo.noindex);
   let ogType = "website";
-
-  // ✅ “付与するFAQ”を1本化（子島ごとに差し替え）
-  let faqToAttach = null;
-
-  if (pathname === "/works") {
-    title = `WORKS｜${BASE_TITLE}`;
-    description =
-      "制作したWebサイトの事例一覧。ブライダル・宿泊・美容・ECなど、世界観と導線を両立した設計で、価値がきちんと伝わる見せ方を制作しています。";
-  }
-
-  if (pathname === "/news") {
-    title = `NEWS｜${BASE_TITLE}`;
-    description = "制作の更新・設計の記録。作品の背景や判断の文脈を短く残しています。";
-  }
-
-  if (pathname === "/contact") {
-    title = `CONTACT｜${BASE_TITLE}`;
-    description =
-      "沖縄のホームページ制作・Webデザインの相談窓口。目的・必要な内容・素材の有無を元に、最適なスコープで提案します。";
-  }
-
-  if (pathname === "/price") {
-    title = `PRICE｜${BASE_TITLE}`;
-    description = "制作プランと料金の目安。低価格化ではなく、スコープの最適化で合わせます。";
-  }
-
-  // ✅ /okinawa を子島として最適化（title/desc + FAQ）
-  if (pathname === "/okinawa") {
-    title = "沖縄のHP制作・LP制作｜GUSHIKEN DESIGN";
-    description =
-      "沖縄を拠点に、実店舗向けのHP制作・LP制作を行っています。写真・言葉・導線を“決まる順番”に整え、予約・問い合わせまで迷わせない入口を設計します。";
-    faqToAttach = OKINAWA_FAQ;
-  }
-
-  if (pathname === "/terms") {
-    title = `TERMS｜${BASE_TITLE}`;
-    description = "利用規約。";
-  }
-  if (pathname === "/privacy") {
-    title = `PRIVACY｜${BASE_TITLE}`;
-    description = "プライバシーポリシー。";
-  }
-  if (pathname === "/legal") {
-    title = `LEGAL｜${BASE_TITLE}`;
-    description = "特定商取引法に基づく表記。";
-  }
-  if (pathname === "/refund") {
-    title = `REFUND｜${BASE_TITLE}`;
-    description = "返金ポリシー。";
-  }
 
   const workMatch = matchPath({ path: "/works/:slug", end: true }, pathname);
   if (workMatch?.params?.slug) {
     const slug = workMatch.params.slug;
-
-    const isRoomLike =
-      /Room$/i.test(slug) || /Teaser$/i.test(slug) || /Intro$/i.test(slug);
-    if (isRoomLike) noindex = true;
-
     const override = WORK_SEO[slug];
-    if (override) {
-      title = override.title;
-      description = override.description;
 
-      // ✅ VOW（子島）は FAQ を付与
-      if (slug === "vow-in-light") faqToAttach = BRIDAL_FAQ;
+    if (override) {
+      seo = override;
     } else {
       const pretty = humanizeSlug(slug);
-      title = `${pretty}｜WORKS｜${SITE_NAME}`;
-      description =
-        "制作事例。世界観と導線を一貫して設計し、印象がきちんと伝わる見せ方を制作しています。";
+
+      seo = {
+        title: `${pretty}｜WORKS｜${SITE_NAME}`,
+        description:
+          "制作事例。世界観と導線を一貫して設計し、印象がきちんと伝わる見せ方を制作しています。",
+        imagePath: "/ogp-v4.png",
+      };
+    }
+
+    if (isRoomLikeSlug(slug)) {
+      noindex = true;
     }
   }
 
   const newsMatch = matchPath({ path: "/news/:id", end: true }, pathname);
   if (newsMatch?.params?.id) {
-    title = `NEWS｜${BASE_TITLE}`;
-    description = "更新記事。制作の背景や判断の文脈を短く残しています。";
+    seo = {
+      title: `NEWS｜${BASE_TITLE}`,
+      description: "更新記事。制作の背景や判断の文脈を短く残しています。",
+      imagePath: "/ogp-v4.png",
+    };
     ogType = "article";
   }
 
-  if (pathname === "/layer0") {
-    title = `Layer0｜${SITE_NAME}`;
-    description = "Experiment.";
-    noindex = true;
-  }
-
-  const pageJsonLd = buildWebPageJsonLd({
-    url: canonicalUrl,
-    name: title,
-    description,
-  });
-
-  const jsonLd = faqToAttach
-    ? [pageJsonLd, buildFaqJsonLd(faqToAttach)]
-    : pageJsonLd;
-
   return (
     <Seo
-      title={title}
-      description={description}
-      path={path}
+      title={seo.title}
+      description={seo.description}
+      path={pathname}
       origin={origin}
       canonicalUrl={canonicalUrl}
       noindex={noindex}
       ogType={ogType}
-      jsonLd={jsonLd}
       titleMode="raw"
-      imagePath="/ogp-v4.png"
+      imagePath={seo.imagePath || "/ogp-v4.png"}
     />
   );
 }
@@ -346,15 +311,12 @@ function SeoBridge() {
 =========================================================================== */
 
 function Layout() {
-  const { pathname } = useLocation();
-
-  // ✅ /okinawa は子島として “本拠地Chrome” を出さない（DOMを描画しない）
-  const hideChrome = pathname === "/okinawa";
+  const location = useLocation();
+  const pathname = normalizePathname(location.pathname);
+  const hideChrome = HIDE_CHROME_PATHS.has(pathname);
 
   return (
     <>
-      {/* ✅ LenisはApp直下で1回だけ。ここでは置かない */}
-      <ScrollManager />
       <SeoBridge />
 
       {!hideChrome && <NavGlobal />}
@@ -366,7 +328,10 @@ function Layout() {
 
           <Route path="/works/noir-lux" element={<NoirLux />} />
           <Route path="/works/resonance" element={<Resonance />} />
-          <Route path="/works/still" element={<Navigate to="/works/stillRoom" replace />} />
+          <Route
+            path="/works/still"
+            element={<Navigate to="/works/stillRoom" replace />}
+          />
           <Route path="/works/BlueShoreHotel" element={<BlueShoreHotel />} />
           <Route path="/works/CapeOkinawa" element={<CapeOkinawa />} />
           <Route path="/works/OkinawaWhiteSpa" element={<OkinawaWhiteSpa />} />
@@ -374,14 +339,23 @@ function Layout() {
           <Route path="/works/GoldenVeil" element={<GoldenVeil />} />
           <Route path="/works/OkiLato" element={<OkiLato />} />
           <Route path="/works/Lucent" element={<Lucent />} />
-          <Route path="/works/OkinawaSelectTeaser" element={<OkinawaSelectTeaser />} />
-          <Route path="/works/NeutralObjectsTeaser" element={<NeutralObjectsTeaser />} />
+          <Route
+            path="/works/OkinawaSelectTeaser"
+            element={<OkinawaSelectTeaser />}
+          />
+          <Route
+            path="/works/NeutralObjectsTeaser"
+            element={<NeutralObjectsTeaser />}
+          />
           <Route path="/works/AburiyaItto" element={<AburiyaItto />} />
           <Route path="/works/Koti" element={<Koti />} />
           <Route path="/works/ActiveDays" element={<ActiveDays />} />
           <Route path="/works/FineOkinawa" element={<FineOkinawa />} />
           <Route path="/works/RyukaIntro" element={<RyukaIntro />} />
-          <Route path="/works/OkinawaLightResortHotel" element={<OkinawaLightResortHotel />} />
+          <Route
+            path="/works/OkinawaLightResortHotel"
+            element={<OkinawaLightResortHotel />}
+          />
           <Route path="/works/HorizonBlanc" element={<HorizonBlanc />} />
           <Route path="/works/TheCalmOkinawa" element={<TheCalmOkinawa />} />
           <Route path="/works/FlowOfTea" element={<FlowOfTea />} />
@@ -394,7 +368,10 @@ function Layout() {
           <Route path="/works/ReCamp" element={<ReCamp />} />
           <Route path="/works/MiyahiraDental" element={<MiyahiraDental />} />
           <Route path="/works/SakuraiDerm" element={<SakuraiDerm />} />
-          <Route path="/works/WhiteDarkCacao" element={<WhiteDarkCacao />} />
+          <Route
+            path="/works/WhiteDarkCacao"
+            element={<WhiteDarkCacao />}
+          />
           <Route path="/works/AxisRoom" element={<AxisRoom />} />
           <Route path="/works/TakumiRoom" element={<TakumiRoom />} />
           <Route path="/works/RoseRoom" element={<RoseRoom />} />
@@ -403,18 +380,34 @@ function Layout() {
           <Route path="/works/OriginRoom" element={<OriginRoom />} />
           <Route path="/works/NoahRoom" element={<NoahRoom />} />
 
-          {/* ✅ 子島（前室） */}
-          <Route path="/works/vow-in-light" element={<OkinawaBridalWebsite />} />
+          {/* 専門ページ */}
+          <Route
+            path="/works/vow-in-light"
+            element={<OkinawaBridalWebsite />}
+          />
           <Route path="/works/kou-ryui" element={<KouRyuiEntry />} />
-          <Route path="/works/black-papillon" element={<BlackPapillonEntry />} />
+          <Route
+            path="/works/black-papillon"
+            element={<BlackPapillonEntry />}
+          />
 
-          {/* ✅ OKINAWA 子島 */}
+          {/* 集客ページ */}
           <Route path="/okinawa" element={<Okinawa />} />
+          <Route path="/online" element={<Online />} />
 
-          {/* ✅ “看板URL” → 正規URLへ集約 */}
-          <Route path="/okinawa-bridal-website" element={<Navigate to="/works/vow-in-light" replace />} />
-          <Route path="/naha-ryukyu-costume-website" element={<Navigate to="/works/kou-ryui" replace />} />
-          <Route path="/okinawa-night-website" element={<Navigate to="/works/black-papillon" replace />} />
+          {/* 旧URL・別名URLは正規URLへ集約 */}
+          <Route
+            path="/okinawa-bridal-website"
+            element={<Navigate to="/works/vow-in-light" replace />}
+          />
+          <Route
+            path="/naha-ryukyu-costume-website"
+            element={<Navigate to="/works/kou-ryui" replace />}
+          />
+          <Route
+            path="/okinawa-night-website"
+            element={<Navigate to="/works/black-papillon" replace />}
+          />
 
           {/* fallback */}
           <Route path="/works/:slug" element={<WorkDetail />} />
@@ -444,23 +437,35 @@ function Layout() {
 
 export default function App() {
   const location = useLocation();
-
-  // aq-fade observer
   const observerRef = useRef(null);
 
-  // ✅ ルート遷移でトップに戻す（hash遷移は維持）
+  // ルート遷移でトップに戻す。hash移動はブラウザに任せる。
   useEffect(() => {
-    if (location.hash) return;
+    if (location.hash) return undefined;
 
-    const api = window.__gd_lenis__;
-    if (api?.scrollToTop) {
-      api.scrollToTop({ duration: 0.9 });
-      return;
-    }
+    const raf = requestAnimationFrame(() => {
+      const api = window.__gd_lenis__;
+      const lenis = api?.lenis || api;
 
-    window.scrollTo({ top: 0, behavior: "auto" });
-  }, [location.pathname, location.search, location.hash]);
+      if (lenis?.scrollTo) {
+        lenis.scrollTo(0, {
+          immediate: true,
+          duration: 0,
+        });
+        return;
+      }
 
+      window.scrollTo({
+        top: 0,
+        left: 0,
+        behavior: "auto",
+      });
+    });
+
+    return () => cancelAnimationFrame(raf);
+  }, [location.pathname, location.search]);
+
+  // aq-fade observer
   useEffect(() => {
     const prefersReducedMotion =
       window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches ?? false;
@@ -475,29 +480,33 @@ export default function App() {
     const setupFade = () => {
       cleanupObserver();
 
-      const els = Array.from(document.querySelectorAll(".aq-fade"));
-      if (!els.length) return;
+      const elements = Array.from(document.querySelectorAll(".aq-fade"));
+      if (!elements.length) return;
 
       if (prefersReducedMotion || !("IntersectionObserver" in window)) {
-        els.forEach((el) => el.classList.add("aq-show"));
+        elements.forEach((el) => el.classList.add("aq-show"));
         return;
       }
 
-      els.forEach((el) => el.classList.remove("aq-show"));
+      elements.forEach((el) => el.classList.remove("aq-show"));
 
       const io = new IntersectionObserver(
         (entries) => {
           for (const entry of entries) {
             if (!entry.isIntersecting) continue;
+
             const el = entry.target;
             el.classList.add("aq-show");
             io.unobserve(el);
           }
         },
-        { threshold: 0.08, rootMargin: "0px 0px -18% 0px" }
+        {
+          threshold: 0.08,
+          rootMargin: "0px 0px -18% 0px",
+        }
       );
 
-      els.forEach((el) => io.observe(el));
+      elements.forEach((el) => io.observe(el));
       observerRef.current = io;
     };
 
@@ -511,7 +520,7 @@ export default function App() {
 
   // page_view（本番のみ）
   useEffect(() => {
-    if (!import.meta.env.PROD) return;
+    if (!import.meta.env.PROD) return undefined;
 
     const id = requestAnimationFrame(() => {
       window.gtag?.("event", "page_view", {
@@ -526,7 +535,6 @@ export default function App() {
 
   return (
     <>
-      {/* ✅ Lenisはここで1回だけマウント */}
       <LenisManager enabled={true} />
       <Layout />
     </>

@@ -5,7 +5,7 @@
    ===================================================== */
 
 .pageFx {
-  --ink:    rgba(248, 252, 250, 0.92);
+  --ink: rgba(248, 252, 250, 0.92);
   --shadow: rgba(0, 38, 52, 0.34);
 
   background:
@@ -22,30 +22,35 @@
   pointer-events: none;
 
   background:
-    linear-gradient(180deg,
+    linear-gradient(
+      180deg,
       rgba(80, 170, 210, 0.055),
       rgba(20, 105, 150, 0.075)
     ),
-    radial-gradient(circle at 18% 6%,
-      rgba(255, 248, 221, 0.42)   0%,
-      rgba(245, 207, 135, 0.14)  22%,
+    radial-gradient(
+      circle at 18% 6%,
+      rgba(255, 248, 221, 0.42) 0%,
+      rgba(245, 207, 135, 0.14) 22%,
       rgba(245, 207, 135, 0.035) 42%,
-      transparent                62%
+      transparent 62%
     ),
-    linear-gradient(90deg,
-      rgba(247, 244, 238, 0.12)  0%,
+    linear-gradient(
+      90deg,
+      rgba(247, 244, 238, 0.12) 0%,
       rgba(247, 244, 238, 0.065) 28%,
       rgba(247, 244, 238, 0.018) 52%,
-      transparent                76%
+      transparent 76%
     ),
-    linear-gradient(180deg,
-      rgba(225, 242, 246, 0.14)  0%,
+    linear-gradient(
+      180deg,
+      rgba(225, 242, 246, 0.14) 0%,
       rgba(225, 242, 246, 0.055) 24%,
-      transparent                52%
+      transparent 52%
     ),
-    linear-gradient(180deg,
-      transparent          0%,
-      transparent         52%,
+    linear-gradient(
+      180deg,
+      transparent 0%,
+      transparent 52%,
       rgba(0, 45, 70, 0.16) 78%,
       rgba(0, 32, 54, 0.34) 100%
     );
@@ -55,7 +60,7 @@
   animation: okinawaLightBreath 12s ease-in-out infinite alternate;
 }
 
-/* Film grain  ─  opacity tuned down to reduce muddiness */
+/* Film grain / depth */
 .pageFx::after {
   content: "";
   position: fixed;
@@ -64,16 +69,17 @@
   pointer-events: none;
 
   background:
-    radial-gradient(ellipse at center,
-      transparent          0%,
-      transparent         42%,
+    radial-gradient(
+      ellipse at center,
+      transparent 0%,
+      transparent 42%,
       rgba(0, 24, 34, 0.10) 76%,
       rgba(0, 14, 22, 0.22) 100%
     ),
     radial-gradient(rgba(255, 255, 255, 0.36) 0.34px, transparent 0.34px),
-    radial-gradient(rgba(0, 0, 0, 0.10)       0.32px, transparent 0.32px);
+    radial-gradient(rgba(0, 0, 0, 0.10) 0.32px, transparent 0.32px);
 
-  background-size:     auto, 4px 4px, 12px 12px;
+  background-size: auto, 4px 4px, 12px 12px;
   background-position: center, 0 0, 3px 7px;
 
   opacity: 0.022;
@@ -81,8 +87,15 @@
 }
 
 @keyframes okinawaLightBreath {
-  0%   { opacity: 0.62; transform: translate3d(-0.35%, -0.18%, 0) scale(1);    }
-  100% { opacity: 0.74; transform: translate3d( 0.45%,  0.24%, 0) scale(1.01); }
+  0% {
+    opacity: 0.62;
+    transform: translate3d(-0.35%, -0.18%, 0) scale(1);
+  }
+
+  100% {
+    opacity: 0.74;
+    transform: translate3d(0.45%, 0.24%, 0) scale(1.01);
+  }
 }
 
 /* =====================================================
@@ -95,10 +108,10 @@
   background:
     linear-gradient(
       180deg,
-      transparent           0%,
-      rgba(0, 38, 52, 0.06) 18%,
-      rgba(0, 38, 52, 0.12) 74%,
-      transparent          100%
+      transparent 0%,
+      rgba(0, 38, 52, 0.045) 18%,
+      rgba(0, 38, 52, 0.11) 74%,
+      transparent 100%
     );
 }
 
@@ -110,11 +123,13 @@
   transform: translateX(-50%);
   width: clamp(80px, 14vw, 160px);
   height: 1px;
-  background: linear-gradient(90deg,
-    transparent,
-    rgba(248, 252, 250, 0.48),
-    transparent
-  );
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      rgba(248, 252, 250, 0.48),
+      transparent
+    );
   pointer-events: none;
 }
 
@@ -125,24 +140,33 @@
 .faqItem summary {
   list-style: none;
 }
+
 .faqItem summary::-webkit-details-marker {
   display: none;
 }
+
 .faqItem summary:focus-visible {
   outline: 2px solid rgba(248, 252, 250, 0.45);
   outline-offset: 3px;
   border-radius: 2px;
 }
+
 .faqItem summary::after {
   content: "+";
   float: right;
   color: rgba(248, 252, 250, 0.50);
   font-size: 18px;
   line-height: 1.65;
+  margin-left: 18px;
 }
+
 .faqItem[open] summary::after {
   content: "−";
 }
+
+/* =====================================================
+   Body override for this island
+   ===================================================== */
 
 :global(body.is-okinawa-page) {
   background: #063744;
@@ -150,9 +174,17 @@
   --paper-grain-opacity: 0;
   color-scheme: dark;
 }
+
 :global(body.is-okinawa-page)::before {
   opacity: 0 !important;
 }
+
+/* Three/canvas click safety */
+:global(body.is-okinawa-page canvas) {
+  pointer-events: none !important;
+  touch-action: none !important;
+}
+
 /* =====================================================
    Reduced motion
    ===================================================== */
@@ -163,30 +195,24 @@
     transform: none !important;
   }
 }
-/* ✅ クリック2回問題：Three/canvas が上でクリックを吸うのを強制で無効化 */
-:global(body.is-okinawa-page canvas){
-  pointer-events: none !important;
-  touch-action: none !important;
-}
-.navLink{
-  color: rgba(255,255,255,.80);
-  font-size: 10px;
-  letter-spacing: .18em;
-  text-decoration: none;
-  transition: opacity .25s ease, transform .25s ease, color .25s ease;
-}
 
-.navLinkHideSm{
-  display:none;
-}
-@media (min-width: 640px){
-  .navLinkHideSm{ display:inline; }
-}
+/* =====================================================
+   Small screen tuning
+   ===================================================== */
 
-/* ✅ hoverできる環境だけhoverを発動 */
-@media (hover:hover) and (pointer:fine){
-  .navLink:hover{
-    color: rgba(255,255,255,.95);
-    transform: translateY(-1px);
+@media (max-width: 480px) {
+  .sectionFx {
+    background:
+      linear-gradient(
+        180deg,
+        transparent 0%,
+        rgba(0, 38, 52, 0.035) 20%,
+        rgba(0, 38, 52, 0.09) 74%,
+        transparent 100%
+      );
+  }
+
+  .faqItem summary::after {
+    font-size: 16px;
   }
 }

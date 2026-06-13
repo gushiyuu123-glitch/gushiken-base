@@ -19,6 +19,10 @@ import NewsSection from "../components/NewsSection";
 import FloatingFAQ from "../components/FloatingFAQ";
 import FloatingFAQSP from "../components/FloatingFAQSP";
 
+const ANCHOR_STYLE = {
+  scrollMarginTop: "84px",
+};
+
 function useMediaQuery(query, fallback = true) {
   const [matches, setMatches] = useState(() => {
     if (typeof window === "undefined") return fallback;
@@ -30,6 +34,7 @@ function useMediaQuery(query, fallback = true) {
 
     const media = window.matchMedia(query);
     const update = () => setMatches(media.matches);
+
     update();
 
     if (media.addEventListener) {
@@ -45,10 +50,10 @@ function useMediaQuery(query, fallback = true) {
 }
 
 export default function Home() {
-  // ✅ PC/SP DOM分離：ここで完全に分岐（判定はHomeだけに統一）
+  // PC/SP DOM分離：判定はHomeだけに統一
   const isDesktop = useMediaQuery("(min-width: 768px)", true);
 
-  // ✅ WORKSは “PCでもタッチ大画面” をSP側へ落とす（既存ルール維持）
+  // WORKSはPCでもタッチ大画面をSP側へ落とす
   const isWorksDesktop = useMediaQuery(
     "(min-width: 981px) and (pointer: fine)",
     true
@@ -57,26 +62,36 @@ export default function Home() {
   return (
     <>
       <main id="top" className="home-wrapper">
-        {/* ✅ HERO（h1はHero側に1つだけ存在） */}
+        {/* HERO：h1はHero側に1つだけ */}
         <HeroGate isDesktop={isDesktop} />
 
-        {/* ABOUT（共通） */}
-        <About />
+        {/* ABOUT：Footer /#about の着地点 */}
+        <div id="about" style={ANCHOR_STYLE}>
+          <About />
+        </div>
 
-        {/* WORKS（委ねたい） */}
-        {isDesktop ? (isWorksDesktop ? <Works /> : <WorksSP />) : <WorksSP />}
+        {/* WORKS：Footer /#works の着地点 */}
+        <div id="works" style={ANCHOR_STYLE}>
+          {isDesktop ? (isWorksDesktop ? <Works /> : <WorksSP />) : <WorksSP />}
+        </div>
 
-        {/* PHILOSOPHY（安心） */}
-        {isDesktop ? <Philosophy /> : <PhilosophySP />}
+        {/* PHILOSOPHY：Footer /#philosophy の着地点 */}
+        <div id="philosophy" style={ANCHOR_STYLE}>
+          {isDesktop ? <Philosophy /> : <PhilosophySP />}
+        </div>
 
-        {/* PRICE（決断） */}
-        {isDesktop ? <Price /> : <PriceSP />}
+        {/* PRICE：Footer /#price の着地点 */}
+        <div id="price" style={ANCHOR_STYLE}>
+          {isDesktop ? <Price /> : <PriceSP />}
+        </div>
 
-        {/* NEWS（共通） */}
+        {/* NEWS：更新・判断ログ */}
         <NewsSection />
 
-        {/* CONTACT（共通） */}
-        <Contact />
+        {/* CONTACT：Footer /#contact の着地点 */}
+        <div id="contact" style={ANCHOR_STYLE}>
+          <Contact />
+        </div>
       </main>
 
       {/* 浮遊UIもDOM分離 */}

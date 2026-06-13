@@ -8,99 +8,201 @@ const ROOM_PATH = "/works/BlackPapillonRoom";
 const LIVE_URL = "https://black-papillon.vercel.app/";
 const LOGO_SVG = "/BLACKPAPILLON.svg";
 
+const GUSHIKEN_URL = "https://gushikendesign.com";
+const PAGE_PATH = "/works/black-papillon";
+
 /* ================================
    Copy (PC/SPで完全共有)
+   BLACK PAPILLON = タトゥースタジオ向けに固定
 ================================ */
 const COPY = {
   overview: {
-    h1: "沖縄・那覇のバー／シーシャバー／タトゥースタジオ向け ホームページ制作（Webサイト制作）。",
-    p1: "夜の店は“雰囲気”で選ばれるのに、サイトで「予約」「料金の目安」「場所」が探しづらいだけで取りこぼします。",
-    p2: "世界観は崩さず、必要な情報を“使う順番”に並べ替えて、スマホで開いた瞬間に予約まで一本道にする。",
-    p3: "このページは、夜業態（バー／ラウンジ／シーシャ／タトゥー）の店舗サイトを「迷わせずに決まる形」にするための入口です。",
+    h1: "タトゥースタジオ向けホームページ制作。仕上がりで選ばれるためのWebサイトへ。",
+    p1: "タトゥーは、施術前に不安が残りやすいサービスです。施術スタイル、料金目安、相談方法、治癒後の仕上がりが見えないだけで、問い合わせ前に止まります。",
+    p2: "BLACK PAPILLONでは、世界観を壊さずに、初めての人が知りたい情報を“見る順番”に整理しています。",
+    p3: "このページは、タトゥースタジオの魅力を伝えながら、相談・予約まで迷わず進めるWebサイト制作の事例です。",
     cta: "本サイトを見る",
   },
 
   target: {
-    h2: "こういう業態のホームページ（Webサイト）制作を想定しています",
+    h2: "こういうタトゥースタジオのホームページ制作を想定しています",
     list: [
-      "那覇・沖縄のバー / ラウンジ / ナイトバー（予約導線が弱い）",
-      "シーシャ / シーシャバー（メニュー・料金・ルールが散らばっている）",
-      "タトゥースタジオ（不安が残って問い合わせまで行かない）",
-      "夜営業のサロン・スタジオ（“雰囲気”はあるのに決め手が弱い）",
+      "Fine line / Black & Grey など、施術スタイルを明確に見せたいスタジオ",
+      "Coverup / リワーク相談を受けたいが、説明がSNSだけでは足りないスタジオ",
+      "治癒後の仕上がりやアフターケアまで伝えたいスタジオ",
+      "世界観はあるのに、料金・相談方法・予約導線が分かりにくいスタジオ",
     ],
     note:
-      "検索では「沖縄 バー ホームページ制作」「那覇 シーシャ Web制作」「タトゥースタジオ ホームページ」など、“業態名 × 沖縄（那覇） × HP/サイト制作” で探されやすい領域です。ここに対して、依頼側が知りたい情報を“順番”で出すことが重要になります。",
+      "タトゥースタジオのWebサイトでは、雰囲気だけでなく、施術スタイル、料金の目安、相談時に必要な情報、注意点、アフターケアまで整理されていることが重要です。",
   },
 
   problem: {
-    h2: "雰囲気はあるのに、予約まで届かない原因",
+    h2: "世界観はあるのに、問い合わせまで届かない原因",
     list: [
-      "予約の入口が散っている（SNS／地図／フォームがバラバラ）",
-      "料金の目安がなくて、聞く前に止まる",
-      "場所・営業時間が一発で出ない",
-      "初めての不安が残ったまま（ルール／流れ／注意点）",
+      "施術スタイルの違いが伝わらない",
+      "料金やサイズ感の目安が見えない",
+      "治癒後の仕上がりを想像できない",
+      "相談時に何を送ればいいか分からない",
+      "衛生面・注意点・アフターケアが見つけにくい",
     ],
     note1:
-      "夜業態は「初めての不安」が強いぶん、迷う要素が1つあるだけで離脱します。",
+      "タトゥーは、見た目の好みだけでなく、不安を減らせるかどうかで問い合わせ率が変わります。",
     note2:
-      "サイトは“雰囲気”だけでなく、予約に必要な判断材料が最短で揃うかまで含めて評価されます。",
+      "サイトは作品を見せる場所であり、相談前の迷いを減らす場所でもあります。",
   },
 
   approach: {
-    h2: "迷わせないために、やることは3つ",
+    h2: "予約前の不安を減らすために、やることは4つ",
     items: [
       [
-        "予約の入口を一本化する",
-        "CTAの位置と言葉を固定。どこを見ていても「次に押す場所」が迷子にならないようにする。",
+        "施術スタイルを先に見せる",
+        "Fine line、Black & Grey、Coverupなど、得意な施術スタイルが最初に伝わる構成にする。",
       ],
       [
-        "料金・場所・ルールを先に出す",
-        "雰囲気は壊さず、判断材料だけは“探させない順番”に置く。",
+        "料金目安とサイズ感を出す",
+        "すべての料金を細かく出す必要はない。ワンポイント、標準サイズ、大きめ、Coverupなど、相談前の目安を見せる。",
       ],
       [
-        "暗い写真でも沈まない見せ方にする",
-        "写真の並びと文字量で、暗さを“品”に変える（チープにしない）。",
+        "治癒後の仕上がりを伝える",
+        "施術直後だけでなく、時間が経った後の印象やアフターケアへの安心感も伝える。",
+      ],
+      [
+        "相談導線を一本化する",
+        "Instagram、LINE、フォームなどを増やしすぎず、迷わず相談できる入口に整える。",
       ],
     ],
-    note1: "派手に作るより、迷わせない。",
-    note2: "夜の空気を保ったまま「予約できる状態」にするのが、この設計です。",
+    note1: "派手に作るより、信じられるように整える。",
+    note2:
+      "タトゥースタジオの空気を保ったまま、相談前の不安をひとつずつ減らす設計です。",
   },
 
   case: {
-    h2: "実例：BLACK PAPILLON（世界観を壊さず、予約導線を一本化する）",
-    p1: "ロゴや写真の空気はそのままに、予約・料金・アクセスが迷子にならない構造で組んでいます。",
-    p2: "“見たい”を作ってから、必要な情報に自然に辿り着く流れを体験できます。",
+    h2: "実例：BLACK PAPILLON",
+    p1: "BLACK PAPILLONは、タトゥースタジオを想定したコンセプトサイトです。",
+    p2: "ロゴ、写真、余白、黒の空気感を軸にしながら、施術スタイル・料金目安・相談導線へ自然につながる構成にしています。",
   },
 
   faq: {
-    h2: "よくある質問（夜の店のWeb制作）",
+    h2: "よくある質問：タトゥースタジオ向けWeb制作",
     list: [
       [
-        "沖縄（那覇）の店舗でも依頼できますか？",
-        "はい。沖縄・那覇を含めて対応しています。",
+        "タトゥースタジオのホームページ制作に対応できますか？",
+        "はい。施術スタイル、料金目安、予約導線、注意点、アフターケアまで整理したWebサイト制作に対応できます。",
       ],
       [
-        "写真が暗い/少ないのですが大丈夫ですか？",
-        "大丈夫です。写真の順番と文字量、見せ方で成立させます。",
+        "Instagramだけでは足りませんか？",
+        "Instagramは作品を見せるには強いですが、料金目安、相談方法、注意点、アフターケアなどを整理して伝えるにはWebサイトがあると補完できます。",
       ],
       [
-        "予約の入口はどこに置くのが正解ですか？",
-        "“探させない位置”に固定します。ページ内で迷わせません。",
+        "写真が暗めでもサイトとして成立しますか？",
+        "成立します。暗い写真は、余白・文字量・背景とのバランスを整えることで、重さではなく世界観として見せられます。",
       ],
       [
-        "何を用意すれば相談できますか？",
-        "SNSや既存URL（なくてもOK）、営業時間、場所（地図）、料金の目安が分かれば進められます。写真は後からでも大丈夫です。",
+        "料金をすべて公開しないといけませんか？",
+        "すべてを細かく公開する必要はありません。ただし、ワンポイント、標準サイズ、大きめ、Coverupなど、相談前の目安はある方が不安を減らせます。",
       ],
       [
-        "予約はLINEとフォーム、どちらがいいですか？",
-        "業態と運用で最適が変わります。現状の導線を見て、入口が増えすぎない形に一本化します。",
+        "予約導線はLINE、Instagram、フォームのどれがいいですか？",
+        "運用方法によって変わります。重要なのは入口を増やしすぎず、ユーザーが迷わない形に一本化することです。",
       ],
       [
-        "バー/シーシャ/タトゥー以外でも相談できますか？",
-        "夜の業態であれば相談可能です。まずは内容を見て判断します。",
+        "沖縄以外のタトゥースタジオでも相談できますか？",
+        "はい。全国オンラインで対応できます。写真やSNS、現在の導線を確認しながら、必要な範囲を整理できます。",
       ],
     ],
   },
+};
+
+const JSON_LD = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebPage",
+      "@id": `${GUSHIKEN_URL}${PAGE_PATH}#webpage`,
+      url: `${GUSHIKEN_URL}${PAGE_PATH}`,
+      name: "タトゥースタジオ向けホームページ制作｜BLACK PAPILLON",
+      description:
+        "BLACK PAPILLONは、タトゥースタジオ向けのWebサイト制作事例です。施術スタイル、治癒後の仕上がり、料金目安、相談導線、アフターケアを、世界観を崩さずに整理しています。",
+      inLanguage: "ja",
+      isPartOf: {
+        "@id": `${GUSHIKEN_URL}/#website`,
+      },
+      about: {
+        "@id": `${GUSHIKEN_URL}${PAGE_PATH}#service`,
+      },
+      breadcrumb: {
+        "@id": `${GUSHIKEN_URL}${PAGE_PATH}#breadcrumb`,
+      },
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": `${GUSHIKEN_URL}${PAGE_PATH}#breadcrumb`,
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: "ホーム",
+          item: `${GUSHIKEN_URL}/`,
+        },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: "制作実績",
+          item: `${GUSHIKEN_URL}/works`,
+        },
+        {
+          "@type": "ListItem",
+          position: 3,
+          name: "BLACK PAPILLON",
+          item: `${GUSHIKEN_URL}${PAGE_PATH}`,
+        },
+      ],
+    },
+    {
+      "@type": "Service",
+      "@id": `${GUSHIKEN_URL}${PAGE_PATH}#service`,
+      name: "タトゥースタジオ向けホームページ制作",
+      serviceType: "ホームページ制作・LP制作・Webデザイン",
+      provider: {
+        "@id": `${GUSHIKEN_URL}/#organization`,
+      },
+      areaServed: {
+        "@type": "Country",
+        name: "日本",
+      },
+      audience: {
+        "@type": "Audience",
+        audienceType:
+          "タトゥースタジオ、ボディアート系サロン、施術系ブランド",
+      },
+      description:
+        "タトゥースタジオ向けに、施術スタイル、治癒後の仕上がり、料金目安、相談導線、注意点、アフターケアを整理したWebサイト制作です。",
+    },
+    {
+      "@type": "CreativeWork",
+      "@id": `${GUSHIKEN_URL}${PAGE_PATH}#black-papillon`,
+      name: "BLACK PAPILLON",
+      creator: {
+        "@id": `${GUSHIKEN_URL}/#person`,
+      },
+      url: LIVE_URL,
+      genre: "Web Design / Tattoo Studio Website",
+      description:
+        "BLACK PAPILLONは、タトゥースタジオ向けのコンセプトサイトです。世界観と予約前の不安解消を両立するWebデザイン事例です。",
+    },
+    {
+      "@type": "FAQPage",
+      "@id": `${GUSHIKEN_URL}${PAGE_PATH}#faq`,
+      mainEntity: COPY.faq.list.map(([q, a]) => ({
+        "@type": "Question",
+        name: q,
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: a,
+        },
+      })),
+    },
+  ],
 };
 
 export default function BlackPapillonEntry() {
@@ -201,6 +303,13 @@ export default function BlackPapillonEntry() {
 
   return (
     <main className="min-h-screen bg-[#f6f2ea] text-[#171614]">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(JSON_LD).replace(/</g, "\\u003c"),
+        }}
+      />
+
       {/* =========================
           HERO：画像 + SVG だけ（他は置かない）
       ========================= */}
@@ -337,7 +446,9 @@ export default function BlackPapillonEntry() {
         <section className="aq-fade max-w-[1120px] mx-auto px-6 sm:px-8 py-16 sm:py-20">
           <div className="grid grid-cols-12 gap-10">
             <div className="col-span-3">
-              <p className="text-[12px] tracking-[0.22em] text-black/45">OVERVIEW</p>
+              <p className="text-[12px] tracking-[0.22em] text-black/45">
+                OVERVIEW
+              </p>
             </div>
 
             <div className="col-span-9">
@@ -371,7 +482,9 @@ export default function BlackPapillonEntry() {
         <section className="aq-fade max-w-[1120px] mx-auto px-6 sm:px-8 pb-16 sm:pb-20">
           <div className="grid grid-cols-12 gap-10">
             <div className="col-span-3">
-              <p className="text-[12px] tracking-[0.22em] text-black/45">TARGET</p>
+              <p className="text-[12px] tracking-[0.22em] text-black/45">
+                TARGET
+              </p>
             </div>
 
             <div className="col-span-9">
@@ -388,7 +501,9 @@ export default function BlackPapillonEntry() {
                     <span className="text-[12px] tracking-[0.18em] text-black/45">
                       {String(i + 1).padStart(2, "0")}
                     </span>
-                    <p className="text-[16px] leading-[2.0] text-black/70">{t}</p>
+                    <p className="text-[16px] leading-[2.0] text-black/70">
+                      {t}
+                    </p>
                   </div>
                 ))}
               </div>
@@ -404,7 +519,9 @@ export default function BlackPapillonEntry() {
         <section className="aq-fade max-w-[1120px] mx-auto px-6 sm:px-8 pb-16 sm:pb-20">
           <div className="grid grid-cols-12 gap-10">
             <div className="col-span-3">
-              <p className="text-[12px] tracking-[0.22em] text-black/45">PROBLEM</p>
+              <p className="text-[12px] tracking-[0.22em] text-black/45">
+                PROBLEM
+              </p>
             </div>
 
             <div className="col-span-9">
@@ -421,7 +538,9 @@ export default function BlackPapillonEntry() {
                     <span className="text-[12px] tracking-[0.18em] text-black/45">
                       {String(i + 1).padStart(2, "0")}
                     </span>
-                    <p className="text-[16px] leading-[2.0] text-black/70">{t}</p>
+                    <p className="text-[16px] leading-[2.0] text-black/70">
+                      {t}
+                    </p>
                   </div>
                 ))}
               </div>
@@ -439,7 +558,9 @@ export default function BlackPapillonEntry() {
         <section className="aq-fade max-w-[1120px] mx-auto px-6 sm:px-8 pb-16 sm:pb-20">
           <div className="grid grid-cols-12 gap-10">
             <div className="col-span-3">
-              <p className="text-[12px] tracking-[0.22em] text-black/45">APPROACH</p>
+              <p className="text-[12px] tracking-[0.22em] text-black/45">
+                APPROACH
+              </p>
             </div>
 
             <div className="col-span-9">
@@ -476,7 +597,9 @@ export default function BlackPapillonEntry() {
         <section className="aq-fade max-w-[1120px] mx-auto px-6 sm:px-8 pb-16 sm:pb-20">
           <div className="grid grid-cols-12 gap-10">
             <div className="col-span-3">
-              <p className="text-[12px] tracking-[0.22em] text-black/45">CASE</p>
+              <p className="text-[12px] tracking-[0.22em] text-black/45">
+                CASE
+              </p>
             </div>
 
             <div className="col-span-9">
@@ -497,7 +620,9 @@ export default function BlackPapillonEntry() {
         <section className="aq-fade max-w-[1120px] mx-auto px-6 sm:px-8 pb-20 sm:pb-24">
           <div className="grid grid-cols-12 gap-10">
             <div className="col-span-3">
-              <p className="text-[12px] tracking-[0.22em] text-black/45">FAQ</p>
+              <p className="text-[12px] tracking-[0.22em] text-black/45">
+                FAQ
+              </p>
             </div>
 
             <div className="col-span-9">
@@ -508,8 +633,12 @@ export default function BlackPapillonEntry() {
               <div className="mt-6 border-t border-black/10">
                 {COPY.faq.list.map(([q, a]) => (
                   <div key={q} className="py-4 border-b border-black/10">
-                    <p className="text-[15px] tracking-[0.02em] text-black/92">{q}</p>
-                    <p className="mt-2 text-[15px] leading-[2.0] text-black/62">{a}</p>
+                    <p className="text-[15px] tracking-[0.02em] text-black/92">
+                      {q}
+                    </p>
+                    <p className="mt-2 text-[15px] leading-[2.0] text-black/62">
+                      {a}
+                    </p>
                   </div>
                 ))}
               </div>
@@ -524,7 +653,9 @@ export default function BlackPapillonEntry() {
       <div className="md:hidden">
         {/* OVERVIEW */}
         <section className="aq-fade max-w-[1120px] mx-auto px-6 py-14">
-          <p className="text-[12px] tracking-[0.22em] text-black/45">OVERVIEW</p>
+          <p className="text-[12px] tracking-[0.22em] text-black/45">
+            OVERVIEW
+          </p>
 
           <h1 className="mt-4 text-[24px] leading-[1.35] tracking-[0.02em] text-[#171614]">
             {COPY.overview.h1}
@@ -608,7 +739,9 @@ export default function BlackPapillonEntry() {
 
         {/* APPROACH */}
         <section className="aq-fade max-w-[1120px] mx-auto px-6 pb-14">
-          <p className="text-[12px] tracking-[0.22em] text-black/45">APPROACH</p>
+          <p className="text-[12px] tracking-[0.22em] text-black/45">
+            APPROACH
+          </p>
 
           <h2 className="mt-4 text-[20px] leading-[1.45] tracking-[0.02em] text-[#171614]">
             {COPY.approach.h2}
@@ -663,8 +796,12 @@ export default function BlackPapillonEntry() {
           <div className="mt-6 border-t border-black/10">
             {COPY.faq.list.map(([q, a]) => (
               <div key={q} className="py-4 border-b border-black/10">
-                <p className="text-[15px] tracking-[0.02em] text-black/92">{q}</p>
-                <p className="mt-2 text-[15px] leading-[2.05] text-black/62">{a}</p>
+                <p className="text-[15px] tracking-[0.02em] text-black/92">
+                  {q}
+                </p>
+                <p className="mt-2 text-[15px] leading-[2.05] text-black/62">
+                  {a}
+                </p>
               </div>
             ))}
           </div>

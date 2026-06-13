@@ -1,6 +1,6 @@
 // src/components/Footer.jsx
-import React, { useEffect, useRef } from "react";
-import { Link } from "react-router-dom";
+import React, { useCallback, useEffect, useRef } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import styles from "./Footer.module.css";
 
 const cx = (...a) => a.filter(Boolean).join(" ");
@@ -12,19 +12,26 @@ const INSTAGRAM_URL = "https://www.instagram.com/";
 const NOTE_URL = "https://note.com/noahgushi123";
 
 const MENU_LINKS = [
-  { label: "WORKS", href: "/#works" },
-  { label: "ABOUT", href: "/#about" },
-  { label: "POLICY", href: "/#philosophy" },
-  { label: "PRICE", href: "/#price" },
-  { label: "CONTACT", href: "/#contact" },
+  { type: "hash", label: "WORKS", hash: "#works" },
+  { type: "hash", label: "ABOUT", hash: "#about" },
+  { type: "hash", label: "POLICY", hash: "#philosophy" },
+  { type: "hash", label: "PRICE", hash: "#price" },
+  { type: "hash", label: "CONTACT", hash: "#contact" },
 
-  // ✅ 追加：/okinawa（フッター避難）
-  { label: "沖縄のHP制作", to: "/okinawa" },
+  // Entry / SEO islands
+  { type: "route", label: "沖縄のHP制作", to: "/okinawa" },
+  { type: "route", label: "全国オンライン制作", to: "/online" },
 ];
 
 const PROJECT_LINKS = [
-  { label: "Quiet AI Image Library", href: "https://quiet-ai.gushikendesign.com/" },
-  { label: "Minimal Website Templates", href: "https://atelierquiet.gushikendesign.com/" },
+  {
+    label: "Quiet AI Image Library",
+    href: "https://quiet-ai.gushikendesign.com/",
+  },
+  {
+    label: "Minimal Website Templates",
+    href: "https://atelierquiet.gushikendesign.com/",
+  },
 ];
 
 const LEGAL_LINKS = [
@@ -58,8 +65,139 @@ function NoteIcon() {
   );
 }
 
+function getLenisLike() {
+  const api = window.__gd_lenis__;
+
+  if (api?.lenis?.scrollTo) return api.lenis;
+  if (api?.scrollTo) return api;
+
+  return null;
+}
+
+function scrollToHash(hash, options = {}) {
+  if (!hash) return false;
+
+  const id = String(hash).replace("#", "");
+  if (!id) return false;
+
+  const el = document.getElementById(id);
+  if (!el) return false;
+
+  const lenis = getLenisLike();
+
+  if (lenis?.scrollTo) {
+    lenis.scrollTo(el, {
+      offset: options.offset ?? 0,
+      duration: options.duration ?? 0.9,
+    });
+    return true;
+  }
+
+  el.scrollIntoView({
+    behavior: options.behavior ?? "smooth",
+    block: "start",
+  });
+
+  return true;
+}
+
 export default function Footer() {
   const sectionRef = useRef(null);
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const handleHashClick = useCallback(
+    (event, hash) => {
+      event.preventDefault();
+
+      if (!hash) return;
+
+      // Home上ならその場でスクロール
+      if (location.pathname === "/") {
+        window.history.replaceState(null, "", `/${hash}`);
+
+        requestAnimationFrame(() => {
+          scrollToHash(hash);
+        });
+
+        return;
+      }
+
+      // 他ページからHomeへ戻る時だけ state で一回渡す
+      navigate(
+        {
+          pathname: "/",
+          hash,
+        },
+        {
+          replace: false,
+          state: {
+            gdScrollHash: hash,
+          },
+        }
+      );
+    },
+    [location.pathname, navigate]
+  );
+
+  const handleRouteClick = useCallback(() => {
+    // 念のため、過去に残った古いグローバル値を消す
+    if (typeof window !== "undefined") {
+      window.__gd_footer_pending_hash__ = "";
+    }
+  }, []);
+
+  // 他ページ → Home hash 遷移後、1回クリックで確実に対象へ寄せる
+  useEffect(() => {
+    const hashFromState = location.state?.gdScrollHash;
+    const targetHash = hashFromState || location.hash;
+
+    if (location.pathname !== "/" || !targetHash) return undefined;
+
+    let raf1 = 0;
+    let raf2 = 0;
+    let timer = 0;
+
+    const clearState = () => {
+      if (!location.state?.gdScrollHash) return;
+
+      navigate(
+        {
+          pathname: "/",
+          hash: targetHash,
+        },
+        {
+          replace: true,
+          state: null,
+        }
+      );
+    };
+
+    const run = () => {
+      const ok = scrollToHash(targetHash);
+
+      if (ok) {
+        clearState();
+        return;
+      }
+
+      // HomeのDOM描画が遅れた時の保険
+      timer = window.setTimeout(() => {
+        scrollToHash(targetHash);
+        clearState();
+      }, 160);
+    };
+
+    raf1 = requestAnimationFrame(() => {
+      raf2 = requestAnimationFrame(run);
+    });
+
+    return () => {
+      cancelAnimationFrame(raf1);
+      cancelAnimationFrame(raf2);
+      window.clearTimeout(timer);
+    };
+  }, [location.pathname, location.hash, location.state, navigate]);
 
   useEffect(() => {
     const root = sectionRef.current;
@@ -84,10 +222,14 @@ export default function Footer() {
           observer.unobserve(entry.target);
         });
       },
-      { threshold: 0.12, rootMargin: "0px 0px -6% 0px" }
+      {
+        threshold: 0.12,
+        rootMargin: "0px 0px -6% 0px",
+      }
     );
 
     targets.forEach((t) => observer.observe(t));
+
     return () => observer.disconnect();
   }, []);
 
@@ -112,7 +254,12 @@ export default function Footer() {
             data-footer-reveal
             aria-label="GUSHIKEN DESIGN"
           >
-            <Link to="/" className={styles.logoLink} aria-label="GUSHIKEN DESIGN ホームへ">
+            <Link
+              to="/"
+              className={styles.logoLink}
+              aria-label="GUSHIKEN DESIGN ホームへ"
+              onClick={handleRouteClick}
+            >
               <span className={styles.logoFrame} aria-hidden="true">
                 <img
                   src={LOGO_SRC}
@@ -146,10 +293,10 @@ export default function Footer() {
             <p className={styles.brandCopy}>
               沖縄を拠点に、
               <br />
-              空気から設計するWeb制作を行っています。
+              世界観と導線を設計するWeb制作を行っています。
             </p>
 
-            <Link to="/layer0" className={styles.lab}>
+            <Link to="/layer0" className={styles.lab} onClick={handleRouteClick}>
               HIDDEN LABORATORY
             </Link>
           </section>
@@ -164,32 +311,34 @@ export default function Footer() {
 
             <div className={styles.linkList}>
               {MENU_LINKS.map((item, index) => {
-                const key = `${item.label}-${item.to || item.href || index}`;
+                const key = `${item.type}-${item.label}-${
+                  item.to || item.hash || index
+                }`;
 
-                // ✅ SPA内リンク（/okinawa）
-                if (item.to) {
+                if (item.type === "hash") {
                   return (
                     <Link
                       key={key}
-                      to={item.to}
+                      to={`/${item.hash}`}
                       className={styles.link}
                       style={{ "--link-index": index }}
+                      onClick={(event) => handleHashClick(event, item.hash)}
                     >
                       {item.label}
                     </Link>
                   );
                 }
 
-                // ✅ 既存：ホーム内アンカー（/#works など）
                 return (
-                  <a
+                  <Link
                     key={key}
-                    href={item.href}
+                    to={item.to}
                     className={styles.link}
                     style={{ "--link-index": index }}
+                    onClick={handleRouteClick}
                   >
                     {item.label}
-                  </a>
+                  </Link>
                 );
               })}
             </div>
@@ -264,6 +413,7 @@ export default function Footer() {
                   to={item.to}
                   className={styles.legal}
                   style={{ "--link-index": index }}
+                  onClick={handleRouteClick}
                 >
                   {item.label}
                 </Link>
@@ -273,7 +423,10 @@ export default function Footer() {
         </div>
 
         {/* BOTTOM */}
-        <div className={cx(styles.bottom, styles.reveal, styles.r4)} data-footer-reveal>
+        <div
+          className={cx(styles.bottom, styles.reveal, styles.r4)}
+          data-footer-reveal
+        >
           <p className={styles.guideText}>
             このサイトのデザインや文章は、
             <span>紹介・引用の範囲であれば歓迎しています。</span>

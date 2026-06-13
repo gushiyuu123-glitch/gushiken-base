@@ -129,7 +129,7 @@ export default function Contact() {
         <div className={cx(styles.actions, styles.reveal, styles.r5)} data-contact-reveal>
           <Link to="/contact" className={styles.btn}>
             <span>お問い合わせはこちら</span>
-            <span aria-hidden="true">→</span>
+        
           </Link>
         </div>
 

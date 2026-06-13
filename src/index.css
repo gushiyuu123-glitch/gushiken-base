@@ -1,7 +1,7 @@
 /* ============================================================
-   GUSHIKEN DESIGN Core Index v9
+   GUSHIKEN DESIGN Core Index v10
    Paper Frame × Champagne Gold × Hairline × Silent Motion
-   Hero（棚×フレーム展示）に合わせた全ページ共通OS
+   全ページ共通OS
 ============================================================ */
 
 @tailwind base;
@@ -9,14 +9,14 @@
 @tailwind utilities;
 
 /* ------------------------------------------------------------
-   ROOT TOKENS （既存変数名は維持：中身だけ“紙”に反転）
+   ROOT TOKENS
 ------------------------------------------------------------ */
 :root {
   /* ===== Core / Main ===== */
-  --main: #f6f1e8;                    /* paper */
-  --main-deep: #efe7db;               /* deeper paper */
+  --main: #f6f1e8;
+  --main-deep: #efe7db;
   --main-soft: rgba(246, 241, 232, 0.92);
-  --main-panel: rgba(255, 255, 255, 0.74); /* milk panel */
+  --main-panel: rgba(255, 255, 255, 0.74);
 
   /* ===== Assort / Ink ===== */
   --assort: rgba(18, 18, 18, 0.88);
@@ -36,13 +36,13 @@
   --accent-border: rgba(201, 177, 138, 0.30);
   --accent-glow: rgba(201, 177, 138, 0.06);
 
-  /* ===== Subaccent / Steel (控えめ) ===== */
+  /* ===== Subaccent / Steel ===== */
   --subaccent: rgba(38, 50, 66, 0.62);
   --subaccent-dim: rgba(38, 50, 66, 0.18);
   --subaccent-border: rgba(38, 50, 66, 0.22);
   --subaccent-glow: rgba(38, 50, 66, 0.045);
 
-  /* ===== Legacy aliases（既存コード互換） ===== */
+  /* ===== Legacy aliases ===== */
   --black-900: rgba(10, 10, 10, 0.98);
   --black-880: rgba(12, 12, 12, 0.94);
   --black-850: rgba(16, 16, 16, 0.90);
@@ -65,7 +65,7 @@
   --accent-faint: var(--assort-line-faint);
   --nav-silver: var(--subaccent);
 
-  /* ===== Motion（裕人の速め帯に寄せる） ===== */
+  /* ===== Motion ===== */
   --ease-silent: cubic-bezier(0.22, 0.72, 0.18, 1);
   --ease-float: cubic-bezier(0.16, 1, 0.24, 1);
   --ease-sharp: cubic-bezier(0.22, 0.61, 0.36, 1);
@@ -77,13 +77,11 @@
   --fade-scale: 0.995;
   --fade-blur: 0px;
 
-  /* ===== Shadow（棚に“置いてある感”の核） ===== */
+  /* ===== Shadow ===== */
   --shadow-soft: 0 14px 34px rgba(0, 0, 0, 0.10);
   --shadow-medium: 0 20px 50px rgba(0, 0, 0, 0.12);
   --shadow-deep: 0 34px 78px rgba(0, 0, 0, 0.16);
   --shadow-heavy: 0 60px 110px rgba(0, 0, 0, 0.20);
-
-  /* フレーム専用（Heroが欲しい“密着”の深さ） */
   --shadow-frame: 0 60px 100px rgba(0, 0, 0, 0.20);
 
   /* ===== Lines ===== */
@@ -102,7 +100,7 @@
     transparent
   );
 
-  /* ===== Paper Grain（署名：紙の気配を1枚だけ） ===== */
+  /* ===== Paper Grain ===== */
   --paper-grain-opacity: 0.035;
 }
 
@@ -114,6 +112,7 @@ html {
   scroll-behavior: smooth;
   scroll-padding-top: 84px;
   color-scheme: light;
+  scrollbar-gutter: stable;
 }
 
 body {
@@ -133,10 +132,11 @@ body::before {
   content: "";
   position: fixed;
   inset: 0;
+  z-index: 999999;
   pointer-events: none;
   opacity: var(--paper-grain-opacity);
   background-image:
-    radial-gradient(rgba(0,0,0,0.22) 0.42px, transparent 0.42px);
+    radial-gradient(rgba(0, 0, 0, 0.22) 0.42px, transparent 0.42px);
   background-size: 4px 4px;
   mix-blend-mode: multiply;
 }
@@ -158,7 +158,9 @@ body::before {
 }
 
 @keyframes rootFailsafe {
-  to { opacity: 1; }
+  to {
+    opacity: 1;
+  }
 }
 
 img,
@@ -170,22 +172,33 @@ svg {
   max-width: 100%;
 }
 
-a { color: inherit; }
+a {
+  color: inherit;
+}
 
 button,
 input,
 select,
-textarea { font: inherit; }
+textarea {
+  font: inherit;
+}
 
-button { color: inherit; }
+button {
+  color: inherit;
+}
 
 :focus-visible {
   outline: 1px solid rgba(201, 177, 138, 0.46);
   outline-offset: 3px;
 }
 
-.no-scrollbar::-webkit-scrollbar { display: none; }
-.no-scrollbar { scrollbar-width: none; }
+.no-scrollbar::-webkit-scrollbar {
+  display: none !important;
+}
+
+.no-scrollbar {
+  scrollbar-width: none !important;
+}
 
 /* ------------------------------------------------------------
    SCROLL LOCK
@@ -198,8 +211,24 @@ body.scroll-lock {
 }
 
 /* ------------------------------------------------------------
+   LENIS
+   Lenis使用時はブラウザ側smoothと競合させない
+------------------------------------------------------------ */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+/* ------------------------------------------------------------
    1) Silent Fade / AQ Fade
-   blurは基本0。必要な時だけ --aq-blur を“極薄”で指定。
 ------------------------------------------------------------ */
 .aq-fade {
   --aq-y: var(--fade-distance);
@@ -224,21 +253,39 @@ body.scroll-lock {
   backface-visibility: hidden;
 }
 
-/* “ここぞ”だけ遅く（ギャラリー/大写真用） */
 .aq-fade.lux {
   --aq-opacity-time: 0.96s;
   --aq-transform-time: 1.05s;
   --aq-y: 14px;
 }
 
-/* Delay tokens */
-.aq-fade.delay-1 { --aq-delay: 0.10s; }
-.aq-fade.delay-2 { --aq-delay: 0.18s; }
-.aq-fade.delay-3 { --aq-delay: 0.26s; }
-.aq-fade.delay-4 { --aq-delay: 0.34s; }
-.aq-fade.delay-5 { --aq-delay: 0.42s; }
-.aq-fade.delay-6 { --aq-delay: 0.50s; }
-.aq-fade.delay-7 { --aq-delay: 0.58s; }
+.aq-fade.delay-1 {
+  --aq-delay: 0.10s;
+}
+
+.aq-fade.delay-2 {
+  --aq-delay: 0.18s;
+}
+
+.aq-fade.delay-3 {
+  --aq-delay: 0.26s;
+}
+
+.aq-fade.delay-4 {
+  --aq-delay: 0.34s;
+}
+
+.aq-fade.delay-5 {
+  --aq-delay: 0.42s;
+}
+
+.aq-fade.delay-6 {
+  --aq-delay: 0.50s;
+}
+
+.aq-fade.delay-7 {
+  --aq-delay: 0.58s;
+}
 
 .aq-show,
 .aq-fade.is-visible {
@@ -248,7 +295,6 @@ body.scroll-lock {
   backdrop-filter: none !important;
 }
 
-/* blur強制禁止（事故防止） */
 .gd-no-blur,
 .animate-fadeUp {
   filter: none !important;
@@ -256,7 +302,7 @@ body.scroll-lock {
 }
 
 /* ------------------------------------------------------------
-   2) Sharp Reveal（小さな導線用）
+   2) Sharp Reveal
 ------------------------------------------------------------ */
 .gd-sharp {
   opacity: 0;
@@ -274,7 +320,12 @@ body.scroll-lock {
     filter: brightness(0.94);
     clip-path: inset(0 100% 0 0);
   }
-  68% { opacity: 1; filter: brightness(1.02); }
+
+  68% {
+    opacity: 1;
+    filter: brightness(1.02);
+  }
+
   100% {
     opacity: 1;
     transform: translate3d(0, 0, 0) scale(1);
@@ -284,7 +335,7 @@ body.scroll-lock {
 }
 
 /* ------------------------------------------------------------
-   3) Common Surface / Panel（紙のパネル）
+   3) Common Surface / Panel
 ------------------------------------------------------------ */
 .gd-panel {
   background:
@@ -298,8 +349,15 @@ body.scroll-lock {
     inset 0 1px 0 rgba(255, 255, 255, 0.62);
 }
 
-.gd-hairline { height: 1px; background: var(--line-gold); }
-.gd-silver-line { height: 1px; background: var(--line-silver); }
+.gd-hairline {
+  height: 1px;
+  background: var(--line-gold);
+}
+
+.gd-silver-line {
+  height: 1px;
+  background: var(--line-silver);
+}
 
 .gd-caption {
   font-size: 0.72rem;
@@ -317,7 +375,7 @@ body.scroll-lock {
 }
 
 /* ------------------------------------------------------------
-   4) Ambient Glow（控えめ）
+   4) Ambient Glow
 ------------------------------------------------------------ */
 .ambient-glow {
   position: relative;
@@ -351,10 +409,12 @@ body.scroll-lock {
   background: rgba(201, 177, 138, 0.10);
 }
 
-body.scrolled .ambient-glow { opacity: 1; }
+body.scrolled .ambient-glow {
+  opacity: 1;
+}
 
 /* ------------------------------------------------------------
-   5) Elevated Card Motion（丸角にしない前提）
+   5) Elevated Card Motion
 ------------------------------------------------------------ */
 .elevated-card {
   position: relative;
@@ -386,14 +446,14 @@ body.scrolled .ambient-glow { opacity: 1; }
 }
 
 /* ------------------------------------------------------------
-   6) Surface Grain（紙面の粒）
+   6) Surface Grain
 ------------------------------------------------------------ */
 .surface-grain,
 .dior-grain {
   position: absolute;
   inset: 0;
   background-image: radial-gradient(
-    rgba(0,0,0,0.22) 0.42px,
+    rgba(0, 0, 0, 0.22) 0.42px,
     transparent 0.42px
   );
   background-size: 4px 4px;
@@ -403,7 +463,7 @@ body.scrolled .ambient-glow { opacity: 1; }
 }
 
 /* ------------------------------------------------------------
-   7) Horizontal Rail（既存互換）
+   7) Horizontal Rail
 ------------------------------------------------------------ */
 .works-rail {
   scroll-snap-type: x mandatory;
@@ -429,9 +489,10 @@ body.scrolled .ambient-glow { opacity: 1; }
   box-shadow: 0 14px 34px rgba(0, 0, 0, 0.12);
 }
 
-.works-card:hover { opacity: 1; }
+.works-card:hover {
+  opacity: 1;
+}
 
-/* rail内はinview制御しない（ガタつき防止） */
 .works-rail .aq-fade,
 .works-rail [class*="aq-"] {
   opacity: 1 !important;
@@ -460,48 +521,25 @@ body.scrolled .ambient-glow { opacity: 1; }
 }
 
 @keyframes scrollPulse {
-  0% { opacity: 0.16; transform: translateY(-5px) scaleY(0.96); }
-  45% { opacity: 0.42; transform: translateY(0) scaleY(1); }
-  100% { opacity: 0.16; transform: translateY(7px) scaleY(0.96); }
+  0% {
+    opacity: 0.16;
+    transform: translateY(-5px) scaleY(0.96);
+  }
+
+  45% {
+    opacity: 0.42;
+    transform: translateY(0) scaleY(1);
+  }
+
+  100% {
+    opacity: 0.16;
+    transform: translateY(7px) scaleY(0.96);
+  }
 }
 
 /* ------------------------------------------------------------
-   9) Reduced Motion
+   9) WORKS LIST CARD REVEAL
 ------------------------------------------------------------ */
-@media (prefers-reduced-motion: reduce) {
-  html { scroll-behavior: auto; }
-
-  #root {
-    transition: none !important;
-    animation: none !important;
-    opacity: 1 !important;
-  }
-
-  .aq-fade,
-  .aq-show,
-  .aq-fade.is-visible,
-  .gd-sharp,
-  .ambient-glow,
-  .ambient-glow::before,
-  .ambient-glow::after,
-  .elevated-card,
-  .card-image,
-  .works-card,
-  .scroll-hint {
-    transition: none !important;
-    animation: none !important;
-    transform: none !important;
-  }
-
-  .aq-fade,
-  .aq-show,
-  .aq-fade.is-visible,
-  .gd-sharp { opacity: 1 !important; }
-}
-
-/* ============================================================
-   WORKS LIST CARD REVEAL（既存互換）
-============================================================ */
 .work-list-card.work-rise {
   opacity: 0;
   transform: translate3d(0, 24px, 0) scale(0.995);
@@ -531,40 +569,20 @@ body.scrolled .ambient-glow { opacity: 1; }
   transform: translate3d(0, -3px, 0) scale(1.004);
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .work-list-card.work-rise {
-    opacity: 1 !important;
-    transform: none !important;
-    filter: none !important;
-    transition: none !important;
-  }
-}
-/* Lenis */
-html.lenis, html.lenis body { height: auto; }
-.lenis.lenis-smooth { scroll-behavior: auto !important; }
-.lenis.lenis-stopped { overflow: hidden; }
 /* ------------------------------------------------------------
    10) Scrollbar — Paper × Champagne Gold
-   - 全体スクロールバーを“細い金の芯”にする
-   - no-scrollbar は既存通り完全無効化
 ------------------------------------------------------------ */
-
-/* レイアウトのガタつき防止（Windows系で効く） */
-html { scrollbar-gutter: stable; }
-
-/* Firefox（+ 一部ブラウザ） */
-html, body {
+html,
+body {
   scrollbar-width: thin;
   scrollbar-color: rgba(201, 177, 138, 0.42) rgba(18, 18, 18, 0.06);
 }
 
-/* 追加：中でスクロールする要素（panel内など）も同じ気配に */
 * {
   scrollbar-width: thin;
   scrollbar-color: rgba(201, 177, 138, 0.38) rgba(18, 18, 18, 0.06);
 }
 
-/* WebKit（Chrome / Edge / Safari系） */
 html::-webkit-scrollbar,
 body::-webkit-scrollbar,
 *::-webkit-scrollbar {
@@ -593,11 +611,8 @@ body::-webkit-scrollbar-thumb,
       rgba(201, 177, 138, 0.22)
     );
   border-radius: 999px;
-
-  /* “細い芯”に見せる（太さは維持しつつ中身だけ細く） */
-  border: 3px solid rgba(246, 241, 232, 0.72); /* paperに馴染ませる */
+  border: 3px solid rgba(246, 241, 232, 0.72);
   background-clip: padding-box;
-
   box-shadow:
     inset 0 0 0 1px rgba(18, 18, 18, 0.10),
     0 2px 10px rgba(201, 177, 138, 0.10);
@@ -620,42 +635,92 @@ body::-webkit-scrollbar-thumb:active,
   background:
     linear-gradient(
       180deg,
-      rgba(143, 118, 80, 0.70),   /* --accent-deep寄り */
+      rgba(143, 118, 80, 0.70),
       rgba(201, 177, 138, 0.32)
     );
 }
 
-/* 角（両方向スクロールの交差部） */
 html::-webkit-scrollbar-corner,
 body::-webkit-scrollbar-corner,
 *::-webkit-scrollbar-corner {
   background: rgba(18, 18, 18, 0.04);
 }
 
-/* ✅ no-scrollbar は最優先で“完全無効化” */
-.no-scrollbar::-webkit-scrollbar { display: none !important; }
-.no-scrollbar { scrollbar-width: none !important; }
-/* 本拠地OSの上乗せを /okinawa だけ止める */
-:global(body.is-okinawa-page){
-  /* 本拠地の紙グレインを無効化（変数で止まる） */
-  --paper-grain-opacity: 0;
+/* no-scrollbar は最優先 */
+.no-scrollbar::-webkit-scrollbar {
+  display: none !important;
+}
 
-  /* ブラウザの色設計も暗めに寄せる（任意だけど効く） */
+.no-scrollbar {
+  scrollbar-width: none !important;
+}
+
+/* ------------------------------------------------------------
+   11) Page-specific body classes
+------------------------------------------------------------ */
+
+/* /okinawa だけ本拠地OSの紙グレインを止める */
+body.is-okinawa-page {
+  --paper-grain-opacity: 0;
   color-scheme: dark;
 }
 
-/* 本拠地の body::before が残る場合の保険 */
-:global(body.is-okinawa-page)::before{
+body.is-okinawa-page::before {
   opacity: 0 !important;
 }
-.visually-hidden{
-  position:absolute !important;
-  width:1px !important;
-  height:1px !important;
-  padding:0 !important;
-  margin:-1px !important;
-  overflow:hidden !important;
-  clip:rect(0,0,0,0) !important;
-  white-space:nowrap !important;
-  border:0 !important;
+
+/* ------------------------------------------------------------
+   12) Accessibility
+------------------------------------------------------------ */
+.visually-hidden {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+/* ------------------------------------------------------------
+   13) Reduced Motion
+------------------------------------------------------------ */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  #root {
+    transition: none !important;
+    animation: none !important;
+    opacity: 1 !important;
+  }
+
+  .aq-fade,
+  .aq-show,
+  .aq-fade.is-visible,
+  .gd-sharp,
+  .ambient-glow,
+  .ambient-glow::before,
+  .ambient-glow::after,
+  .elevated-card,
+  .card-image,
+  .works-card,
+  .work-list-card.work-rise,
+  .scroll-hint {
+    transition: none !important;
+    animation: none !important;
+    transform: none !important;
+    filter: none !important;
+  }
+
+  .aq-fade,
+  .aq-show,
+  .aq-fade.is-visible,
+  .gd-sharp,
+  .work-list-card.work-rise {
+    opacity: 1 !important;
+  }
 }

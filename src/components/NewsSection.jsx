@@ -268,7 +268,7 @@ export default function NewsSection() {
           >
             <Link to="/news" className={styles.more}>
               <span>VIEW ALL NEWS</span>
-              <span aria-hidden="true">→</span>
+           
             </Link>
           </div>
         )}
