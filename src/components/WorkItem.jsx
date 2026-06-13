@@ -7,7 +7,7 @@ const DAY_MS = 86_400_000;
 
 function isExternalLink(link = "") {
   return (
-    /^https?:\/\//.test(link) ||
+    /^https?:\/\//i.test(link) ||
     link.startsWith("mailto:") ||
     link.startsWith("tel:")
   );
@@ -16,6 +16,11 @@ function isExternalLink(link = "") {
 function toSafeIndex(value) {
   const n = Number(value);
   return Number.isFinite(n) ? Math.max(0, n) : 0;
+}
+
+function cleanTags(tags = []) {
+  if (!Array.isArray(tags)) return [];
+  return tags.filter((tag) => String(tag).toUpperCase() !== "NEW").slice(0, 4);
 }
 
 export default function WorkItem({
@@ -46,8 +51,11 @@ export default function WorkItem({
     return diffDays <= 30;
   }, [tags, createdAt]);
 
+  const visibleTags = useMemo(() => cleanTags(tags), [tags]);
+
   const revealDelay = useMemo(() => {
     const index = toSafeIndex(revealIndex);
+
     return {
       desktop: (index % 3) * 120,
       tablet: (index % 2) * 100,
@@ -84,12 +92,13 @@ export default function WorkItem({
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (done || !entry?.isIntersecting) return;
+
         done = true;
 
-        // ✅ 1フレーム逃がして「像が整う」立ち上がりに寄せる
-        rafId = window.requestAnimationFrame(() => setVisible(true));
+        rafId = window.requestAnimationFrame(() => {
+          setVisible(true);
+        });
 
-        // 1要素だけ監視なので disconnect でOK
         observer.disconnect();
       },
       {
@@ -107,8 +116,14 @@ export default function WorkItem({
   }, []);
 
   const commonProps = external
-    ? { href: link, target: "_blank", rel: "noopener noreferrer" }
-    : { to: link };
+    ? {
+        href: link,
+        target: "_blank",
+        rel: "noopener noreferrer",
+      }
+    : {
+        to: link,
+      };
 
   return (
     <Tag
@@ -123,44 +138,14 @@ export default function WorkItem({
         ${revealStyles.card}
         ${visible ? revealStyles.isVisible : ""}
         ${imageLoaded ? revealStyles.imageLoaded : ""}
-        group relative block
-        overflow-hidden
-        border border-white/[0.075]
-        border-t-[rgba(201,177,138,0.16)]
-        bg-[rgba(8,8,8,0.96)]
-        text-white no-underline
-        shadow-[0_18px_48px_rgba(0,0,0,0.34)]
-        hover:border-[rgba(201,177,138,0.28)]
-        hover:shadow-[0_26px_70px_rgba(0,0,0,0.46)]
       `}
       aria-label={title ? `${title} の作品詳細へ` : "作品詳細へ"}
     >
-      {/* top hairline */}
-      <span
-        aria-hidden="true"
-        className="pointer-events-none absolute left-0 top-0 z-20 h-px w-full opacity-70"
-        style={{
-          background:
-            "linear-gradient(90deg, transparent, rgba(201,177,138,0.44), rgba(255,255,255,0.12), transparent)",
-        }}
-      />
+      <span className={revealStyles.topLine} aria-hidden="true" />
+      <span className={revealStyles.grain} aria-hidden="true" />
+      <span className={revealStyles.hoverLight} aria-hidden="true" />
 
-      {/* subtle grain */}
-      <span
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 z-10 opacity-[0.018] mix-blend-normal"
-        style={{
-          backgroundImage:
-            "radial-gradient(rgba(255,255,255,0.16) 0.42px, transparent 0.42px)",
-          backgroundSize: "4px 4px",
-        }}
-      />
-
-      {/* hover light */}
-      <span aria-hidden="true" className={revealStyles.hoverLight} />
-
-      {/* media */}
-      <div className="relative w-full aspect-[16/9] overflow-hidden md:aspect-[16/10]">
+      <div className={revealStyles.media}>
         {isNew && <span className={revealStyles.newBadge}>NEW</span>}
 
         {img ? (
@@ -175,41 +160,56 @@ export default function WorkItem({
             className={revealStyles.image}
           />
         ) : (
-          <div
-            aria-hidden="true"
-            className="h-full w-full bg-[linear-gradient(135deg,rgba(255,255,255,0.06),rgba(255,255,255,0.015))]"
-          />
+          <div className={revealStyles.noImage} aria-hidden="true" />
         )}
 
-        {/* image veil */}
+        <span className={revealStyles.imageVeil} aria-hidden="true" />
+        <span className={revealStyles.imageDepth} aria-hidden="true" />
+        <span className={revealStyles.imageScan} aria-hidden="true" />
+        <span className={revealStyles.imageGlint} aria-hidden="true" />
+
         <span
+          className={`${revealStyles.corner} ${revealStyles.cornerA}`}
           aria-hidden="true"
-          className="pointer-events-none absolute inset-0"
-          style={{
-            background:
-              "linear-gradient(to top, rgba(0,0,0,0.38), rgba(0,0,0,0.08) 44%, rgba(0,0,0,0.10))",
-          }}
+        />
+        <span
+          className={`${revealStyles.corner} ${revealStyles.cornerB}`}
+          aria-hidden="true"
         />
       </div>
 
-      {/* text */}
-      <div className="relative z-20 p-5 pb-6 md:p-7 md:pb-9">
-        <h3 className="mb-2 text-[0.96rem] font-light leading-[1.38] tracking-[0.13em] text-white/90 md:mb-3 md:text-[1.02rem] md:tracking-[0.16em]">
-          {title}
-        </h3>
+      <div className={revealStyles.body}>
+        <div className={revealStyles.headRow}>
+          <h3 className={revealStyles.title}>{title}</h3>
 
-        {desc && (
-          <p className="mb-4 max-w-[360px] whitespace-pre-line text-[0.8rem] leading-[1.78] text-white/54 md:mb-6 md:text-[0.85rem] md:leading-[1.9]">
-            {desc}
-          </p>
+          <span className={revealStyles.index} aria-hidden="true">
+            {String(toSafeIndex(revealIndex) + 1).padStart(2, "0")}
+          </span>
+        </div>
+
+        {desc && <p className={revealStyles.desc}>{desc}</p>}
+
+        {visibleTags.length > 0 && (
+          <div className={revealStyles.tags} aria-label="制作タグ">
+            {visibleTags.map((tag) => (
+              <span className={revealStyles.tag} key={tag}>
+                {tag}
+              </span>
+            ))}
+          </div>
         )}
 
-        <span className="inline-flex items-center gap-2 text-[0.68rem] tracking-[0.18em] text-[rgba(201,177,138,0.62)] transition-colors duration-[420ms] ease-out group-hover:text-[rgba(238,226,204,0.92)] md:text-[0.74rem] md:tracking-[0.24em]">
-          <span>作品詳細へ</span>
+        <div className={revealStyles.bottom}>
+          <span className={revealStyles.detailLine} aria-hidden="true" />
+
+          <span className={revealStyles.detailText}>
+            {external ? "VISIT SITE" : "作品詳細へ"}
+          </span>
+
           <span className={revealStyles.arrow} aria-hidden="true">
             →
           </span>
-        </span>
+        </div>
       </div>
     </Tag>
   );

@@ -1,9 +1,28 @@
-import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
+// src/pages/WorksList.jsx
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
+
 import Category from "../components/Category";
 import WorkItem from "../components/WorkItem";
 import CategoryTabs from "../components/CategoryTabs";
 import FloatingShareButton from "../components/FloatingShareButton";
+import WorksRippleSurface from "../visuals/WorksRippleSurface";
+
 import { worksData } from "../data/worksData";
+
+const ARCHIVE_OVERLAY_STYLE = {
+  background: `
+    radial-gradient(900px 560px at 50% 0%, rgba(244,239,230,0.032), transparent 70%),
+    radial-gradient(720px 520px at 86% 22%, rgba(244,239,230,0.018), transparent 74%),
+    radial-gradient(620px 520px at 14% 76%, rgba(201,177,138,0.012), transparent 72%),
+    linear-gradient(180deg, rgba(0,0,0,0.24), rgba(0,0,0,0.62) 42%, rgba(0,0,0,0.96))
+  `,
+};
 
 function prefersReducedMotion() {
   return (
@@ -12,36 +31,36 @@ function prefersReducedMotion() {
   );
 }
 
-function scrollToY(y) {
-  // ✅ Lenis 優先（PCのみ有効な想定）
-  const lenis = typeof window !== "undefined" ? window.__gd_lenis__ : null;
+function normalize(str = "") {
+  return String(str).replace(/\s+/g, "").replace(/／/g, "/").toLowerCase();
+}
 
-  // reduced-motion は即時
+function scrollToY(y) {
+  const lenis = typeof window !== "undefined" ? window.__gd_lenis__ : null;
   const immediate = prefersReducedMotion();
 
   if (lenis && typeof lenis.scrollTo === "function") {
     try {
       lenis.scrollTo(y, {
         immediate,
-        // “ぬるぬる”じゃなく、君のサイトの“像が整う”寄り
         duration: immediate ? 0 : 0.78,
         easing: (t) => 1 - Math.pow(1 - t, 3),
       });
       return;
     } catch (_) {
-      // fallthrough
+      // fallback
     }
   }
 
-  window.scrollTo({ top: y, behavior: immediate ? "auto" : "smooth" });
+  window.scrollTo({
+    top: y,
+    behavior: immediate ? "auto" : "smooth",
+  });
 }
 
 export default function WorksList() {
   const rootRef = useRef(null);
   const [activeCategory, setActiveCategory] = useState("ALL");
-
-  const normalize = (str = "") =>
-    String(str).replace(/\s+/g, "").replace(/／/g, "/").toLowerCase();
 
   const isNewItem = useCallback((item) => {
     if (!item?.createdAt) return false;
@@ -52,24 +71,21 @@ export default function WorksList() {
     return (Date.now() - created) / 86_400_000 <= 30;
   }, []);
 
-  const enrichedData = useMemo(
-    () =>
-      worksData.map((block) => ({
-        ...block,
-        items: Array.isArray(block.items)
-          ? block.items.map((item) => ({
-              ...item,
-              isNew: Boolean(item.isNew || isNewItem(item)),
-            }))
-          : [],
-      })),
-    [isNewItem]
-  );
+  const enrichedData = useMemo(() => {
+    return worksData.map((block) => ({
+      ...block,
+      items: Array.isArray(block.items)
+        ? block.items.map((item) => ({
+            ...item,
+            isNew: Boolean(item.isNew || isNewItem(item)),
+          }))
+        : [],
+    }));
+  }, [isNewItem]);
 
-  const categoryList = useMemo(
-    () => ["ALL", "NEW", ...enrichedData.map((block) => block.category)],
-    [enrichedData]
-  );
+  const categoryList = useMemo(() => {
+    return ["ALL", "NEW", ...enrichedData.map((block) => block.category)];
+  }, [enrichedData]);
 
   const filteredData = useMemo(() => {
     if (activeCategory === "ALL") return enrichedData;
@@ -91,7 +107,8 @@ export default function WorksList() {
     );
   }, [activeCategory, enrichedData]);
 
-  // TOP / TABS など、初回だけ出す静的フェード（現状維持）
+  const hasWorks = filteredData.some((block) => block.items.length > 0);
+
   useEffect(() => {
     const root = rootRef.current;
     if (!root) return undefined;
@@ -110,21 +127,27 @@ export default function WorksList() {
       (entries) => {
         entries.forEach((entry) => {
           if (!entry.isIntersecting) return;
+
           entry.target.classList.add("aq-show");
           observer.unobserve(entry.target);
         });
       },
-      { threshold: 0.12, rootMargin: "0px 0px -6% 0px" }
+      {
+        threshold: 0.12,
+        rootMargin: "0px 0px -6% 0px",
+      }
     );
 
     targets.forEach((el) => observer.observe(el));
-    return () => observer.disconnect();
+
+    return () => {
+      observer.disconnect();
+    };
   }, []);
 
   const handleChangeCategory = useCallback((cat) => {
     setActiveCategory(cat);
 
-    // ✅ 1フレーム後に “その時点のtop” へ移動（Lenis対応）
     requestAnimationFrame(() => {
       const root = rootRef.current;
       if (!root) return;
@@ -135,15 +158,44 @@ export default function WorksList() {
   }, []);
 
   return (
-   <section className="min-h-screen overflow-x-hidden bg-[#070604] text-white px-6 py-24 pb-32 md:px-10 lg:px-16">
-      <div className="ambient-glow" style={{ height: "1px" }} />
+    <section className="relative isolate min-h-screen overflow-x-hidden bg-[#000000] px-6 py-24 pb-32 text-white md:px-10 lg:px-16">
+      <WorksRippleSurface className="pointer-events-none fixed inset-0 z-0 hidden opacity-[0.58] lg:block" />
 
-      <div ref={rootRef} className="mx-auto max-w-6xl lg:max-w-7xl">
+      <div
+        className="pointer-events-none fixed inset-0 z-[1]"
+        style={ARCHIVE_OVERLAY_STYLE}
+        aria-hidden="true"
+      />
+
+      <div
+        className="pointer-events-none fixed inset-0 z-[2] opacity-[0.04]"
+        aria-hidden="true"
+        style={{
+          backgroundImage:
+            "radial-gradient(rgba(255,255,255,0.12) 0.35px, transparent 0.35px)",
+          backgroundSize: "4px 4px",
+          mixBlendMode: "screen",
+        }}
+      />
+
+      <div
+        className="pointer-events-none fixed inset-0 z-[3]"
+        aria-hidden="true"
+        style={{
+          background:
+            "linear-gradient(90deg, rgba(0,0,0,0.54), transparent 20%, transparent 80%, rgba(0,0,0,0.54))",
+        }}
+      />
+
+      <div
+        ref={rootRef}
+        className="relative z-10 mx-auto max-w-6xl lg:max-w-7xl"
+      >
         {/* ================= TOP ================= */}
         <div data-reveal="static" className="aq-fade delay-1 mb-24 md:mb-28">
           <div className="mb-6 h-px w-12 bg-gradient-to-r from-white/20 to-white/5" />
 
-          <p className="mb-3 text-[0.74rem] tracking-[0.30em] text-white/30">
+          <p className="mb-3 text-[0.74rem] tracking-[0.30em] text-white/32">
             SELECTED WORKS
           </p>
 
@@ -151,11 +203,10 @@ export default function WorksList() {
             WORKS
           </h1>
 
-          {/* ✅ クライアント目線に寄せた説明（“世界観/構造/技術”の内輪語を薄める） */}
-          <p className="mt-8 max-w-[620px] text-[0.95rem] leading-[1.95] tracking-[0.03em] text-white/48">
-            まず「印象」が伝わり、
+          <p className="mt-8 max-w-[660px] text-[0.95rem] leading-[1.95] tracking-[0.035em] text-white/52">
+            制作したWebサイトを、ここにまとめています。
             <br className="hidden sm:block" />
-            次に「迷わない順番」で理解できる。そんな設計の実例です。
+            見た目だけで終わらせず、伝わるところまで作り込んだもの。
           </p>
         </div>
 
@@ -175,59 +226,75 @@ export default function WorksList() {
 
         {/* ================= BLOCKS ================= */}
         <div className="space-y-36 md:space-y-40">
-          {filteredData.map((block, blockIndex) => {
-            const hideNewBadgeForItems =
-              block.category === "HOTEL" ||
-              block.category === "FOOD / FURNITURE / BRAND";
+          {hasWorks ? (
+            filteredData.map((block, blockIndex) => {
+              const hideNewBadgeForItems =
+                block.category === "HOTEL" ||
+                block.category === "FOOD / FURNITURE / BRAND";
 
-            const showCategoryNewBadge = !hideNewBadgeForItems;
+              const showCategoryNewBadge = !hideNewBadgeForItems;
 
-            return (
-              <div key={`${activeCategory}-${block.category}-${blockIndex}`}>
-                {block.items.some((item) => item.isOrigin) && (
-                  <div className="mb-20 text-center md:mb-24">
-                    <p className="text-[0.7rem] tracking-[0.42em] text-white/40">
-                      — ORIGINALITY —
-                    </p>
-                  </div>
-                )}
-
-                <Category
-                  title={block.category}
-                  subtitle={block.subtitle}
-                  itemsRaw={block.items}
-                  showNewBadge={showCategoryNewBadge}
+              return (
+                <div
+                  key={`${activeCategory}-${block.category}-${blockIndex}`}
+                  className="relative"
                 >
-                  {block.items.map((item, itemIndex) => (
-                    <WorkItem
-                      // ✅ ここが肝：カテゴリ切替で確実に再マウント→再フェードが安定
-                      key={`${activeCategory}:${item.slug || `${block.category}-${itemIndex}`}`}
-                      title={item.title}
-                      desc={item.desc}
-                      link={`/works/${item.slug}`}
-                      img={item.img}
-                      tags={item.tags}
-                      createdAt={!item.isOrigin ? item.createdAt : null}
-                      revealIndex={itemIndex}
-                    />
-                  ))}
-                </Category>
-              </div>
-            );
-          })}
-        </div>
-      </div>
+                  {block.items.some((item) => item.isOrigin) && (
+                    <div className="mb-20 text-center md:mb-24">
+                      <p className="text-[0.7rem] tracking-[0.42em] text-white/40">
+                        — ORIGINALITY —
+                      </p>
+                    </div>
+                  )}
 
-      {/* ================= FOOT LINKS ================= */}
-      <div className="mt-28 text-center md:mt-32">
-        <a
-          href="https://note.com/noahgushi123"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-block border-b border-white/14 pb-[4px] text-[0.84rem] tracking-[0.12em] text-white/42 transition hover:text-white/76"
-        >
-          note — 制作の裏側
-        </a>
+                  <Category
+                    title={block.category}
+                    subtitle={block.subtitle}
+                    itemsRaw={block.items}
+                    showNewBadge={showCategoryNewBadge}
+                    index={blockIndex}
+                  >
+                    {block.items.map((item, itemIndex) => (
+                      <WorkItem
+                        key={`${
+                          activeCategory
+                        }:${item.slug || `${block.category}-${itemIndex}`}`}
+                        title={item.title}
+                        desc={item.desc}
+                        link={`/works/${item.slug}`}
+                        img={item.img}
+                        tags={item.tags}
+                        createdAt={!item.isOrigin ? item.createdAt : null}
+                        revealIndex={itemIndex}
+                      />
+                    ))}
+                  </Category>
+                </div>
+              );
+            })
+          ) : (
+            <div className="py-28 text-center">
+              <p className="text-[0.72rem] tracking-[0.32em] text-white/32">
+                NO WORKS
+              </p>
+              <p className="mt-5 text-[0.92rem] leading-[1.9] text-white/44">
+                このカテゴリの制作事例は、まだありません。
+              </p>
+            </div>
+          )}
+        </div>
+
+        {/* ================= FOOT LINKS ================= */}
+        <div className="mt-28 text-center md:mt-32">
+          <a
+            href="https://note.com/noahgushi123"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-block border-b border-white/14 pb-[4px] text-[0.84rem] tracking-[0.12em] text-white/42 transition hover:text-white/76"
+          >
+            note — 制作の裏側
+          </a>
+        </div>
       </div>
 
       <FloatingShareButton
