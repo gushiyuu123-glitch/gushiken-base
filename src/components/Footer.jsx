@@ -6,9 +6,6 @@ import styles from "./Footer.module.css";
 const cx = (...a) => a.filter(Boolean).join(" ");
 
 const LOGO_SRC = "/logo-gd.png";
-
-// TODO: あとで自分のURLに差し替え
-const INSTAGRAM_URL = "https://www.instagram.com/";
 const NOTE_URL = "https://note.com/noahgushi123";
 
 const MENU_LINKS = [
@@ -17,10 +14,11 @@ const MENU_LINKS = [
   { type: "hash", label: "POLICY", hash: "#philosophy" },
   { type: "hash", label: "PRICE", hash: "#price" },
   { type: "hash", label: "CONTACT", hash: "#contact" },
+];
 
-  // Entry / SEO islands
-  { type: "route", label: "沖縄のHP制作", to: "/okinawa" },
-  { type: "route", label: "全国対応のWeb制作", to: "/online" },
+const AREA_LINKS = [
+  { label: "沖縄のHP制作", to: "/okinawa" },
+  { label: "全国対応のWeb制作", to: "/online" },
 ];
 
 const PROJECT_LINKS = [
@@ -44,16 +42,6 @@ const LEGAL_LINKS = [
 /* =========================================================
    Icons
 ========================================================= */
-
-function InstagramIcon() {
-  return (
-    <svg viewBox="0 0 24 24" aria-hidden="true" className={styles.snsIcon}>
-      <rect x="3.25" y="3.25" width="17.5" height="17.5" rx="5.2" />
-      <circle cx="12" cy="12" r="4.15" />
-      <circle cx="17.2" cy="6.9" r="1.05" className={styles.snsDot} />
-    </svg>
-  );
-}
 
 function NoteIcon() {
   return (
@@ -165,8 +153,6 @@ export default function Footer() {
 
       const currentPath = normalizePathname(location.pathname);
 
-      // Home上なら、React Router経由でURLだけ置き換えてスクロール
-      // window.history.replaceState は使わない
       if (currentPath === "/") {
         navigate(
           {
@@ -186,7 +172,6 @@ export default function Footer() {
         return;
       }
 
-      // 他ページからHomeへ戻る時だけ state で一回渡す
       navigate(
         {
           pathname: "/",
@@ -215,7 +200,6 @@ export default function Footer() {
       const targetPath = normalizePathname(to);
       const isHomeHashState = currentPath === "/" && Boolean(location.hash);
 
-      // Homeロゴなど、/ へ戻るリンク
       if (targetPath === "/") {
         navigate(
           {
@@ -234,8 +218,6 @@ export default function Footer() {
         return;
       }
 
-      // /#contact などの状態から /online へ行く時は、
-      // 戻る履歴に /#contact を残さないため、まず / にreplaceしてから遷移する。
       if (isHomeHashState) {
         navigate(
           {
@@ -273,7 +255,6 @@ export default function Footer() {
     [location.pathname, location.hash, navigate]
   );
 
-  // 他ページ → Home hash 遷移後、1回クリックで確実に対象へ寄せる
   useEffect(() => {
     const hashFromState = location.state?.gdScrollHash;
     const targetHash = hashFromState || location.hash;
@@ -309,7 +290,6 @@ export default function Footer() {
         return;
       }
 
-      // HomeのDOM描画が遅れた時の保険
       timer = window.setTimeout(() => {
         scrollToHash(targetHash);
         clearState();
@@ -356,7 +336,7 @@ export default function Footer() {
       }
     );
 
-    targets.forEach((t) => observer.observe(t));
+    targets.forEach((target) => observer.observe(target));
 
     return () => observer.disconnect();
   }, []);
@@ -376,7 +356,6 @@ export default function Footer() {
 
       <div className={styles.container}>
         <div className={styles.grid}>
-          {/* BRAND */}
           <section
             className={cx(styles.brand, styles.reveal, styles.r1)}
             data-footer-reveal
@@ -433,7 +412,6 @@ export default function Footer() {
             </Link>
           </section>
 
-          {/* MENU */}
           <nav
             className={cx(styles.nav, styles.reveal, styles.r2)}
             data-footer-reveal
@@ -442,48 +420,45 @@ export default function Footer() {
             <p className={styles.colLabel}>MENU</p>
 
             <div className={styles.linkList}>
-              {MENU_LINKS.map((item, index) => {
-                const key = `${item.type}-${item.label}-${
-                  item.to || item.hash || index
-                }`;
+              {MENU_LINKS.map((item, index) => (
+                <Link
+                  key={`${item.label}-${item.hash}`}
+                  to={`/${item.hash}`}
+                  className={styles.link}
+                  style={{ "--link-index": index }}
+                  onClick={(event) => handleHashClick(event, item.hash)}
+                >
+                  {item.label}
+                </Link>
+              ))}
+            </div>
 
-                if (item.type === "hash") {
-                  return (
-                    <Link
-                      key={key}
-                      to={`/${item.hash}`}
-                      className={styles.link}
-                      style={{ "--link-index": index }}
-                      onClick={(event) => handleHashClick(event, item.hash)}
-                    >
-                      {item.label}
-                    </Link>
-                  );
-                }
+            <div className={styles.areaBlock}>
+              <p className={styles.colSubLabel}>ENTRY</p>
 
-                return (
+              <div className={styles.areaList}>
+                {AREA_LINKS.map((item, index) => (
                   <Link
-                    key={key}
+                    key={item.to}
                     to={item.to}
-                    className={styles.link}
-                    style={{ "--link-index": index }}
+                    className={styles.areaLink}
+                    style={{ "--link-index": index + MENU_LINKS.length }}
                     onClick={(event) => handleRouteClick(event, item.to)}
                   >
                     {item.label}
                   </Link>
-                );
-              })}
+                ))}
+              </div>
             </div>
           </nav>
 
-          {/* PROJECTS / SOCIAL / LEGAL */}
           <section
             className={cx(styles.side, styles.reveal, styles.r3)}
             data-footer-reveal
             aria-label="関連リンク"
           >
             <div className={styles.projects}>
-              <p className={styles.colLabel}>EXPERIMENTAL PROJECTS</p>
+              <p className={styles.colLabel}>SIDE PROJECTS</p>
 
               <div className={styles.projectList}>
                 {PROJECT_LINKS.map((item, index) => (
@@ -506,28 +481,13 @@ export default function Footer() {
 
             <div className={styles.snsRow} aria-label="SNSリンク">
               <a
-                href={INSTAGRAM_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={cx(styles.sns, styles.snsWithIcon)}
-                translate="no"
-                aria-label="Instagramを開く"
-                style={{ "--link-index": 0 }}
-              >
-                <span className={styles.snsIconWrap} aria-hidden="true">
-                  <InstagramIcon />
-                </span>
-                <span className={styles.snsLabel}>Instagram</span>
-              </a>
-
-              <a
                 href={NOTE_URL}
                 target="_blank"
                 rel="noopener noreferrer"
                 className={cx(styles.sns, styles.snsWithIcon)}
                 translate="no"
                 aria-label="noteを開く"
-                style={{ "--link-index": 1 }}
+                style={{ "--link-index": 0 }}
               >
                 <span className={styles.snsIconWrap} aria-hidden="true">
                   <NoteIcon />
@@ -554,7 +514,6 @@ export default function Footer() {
           </section>
         </div>
 
-        {/* BOTTOM */}
         <div
           className={cx(styles.bottom, styles.reveal, styles.r4)}
           data-footer-reveal

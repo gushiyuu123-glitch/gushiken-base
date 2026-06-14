@@ -17,36 +17,38 @@ const QUALIFICATIONS = [
     note: "証明書あり",
     image: "/images/certificates/web-expert-certificate-site-final1.webp",
     tier: "acquired",
+    action: "証明を見る →",
   },
   {
-    id: "color-2",
-    status: "学習中",
-    statusEn: "IN PROGRESS",
-    title: "色彩検定2級",
-    org: "基礎〜実務感覚を強化中",
+    id: "color-design",
+    status: "強化領域",
+    statusEn: "FOCUS",
+    title: "色彩設計 / 配色理論",
+    org: "色彩検定2級の範囲をベースに、配色・トーン設計を強化",
     year: "",
-    note: "現在学習中",
+    note: "実務反映",
     image: null,
-    tier: "learning",
+    tier: "focus",
+    action: "設計に反映中",
   },
 ];
 
 const STYLE_ITEMS = [
   {
-    title: "伝わる順序を設計する",
-    text: "必要な情報が自然に入るよう、見せる順序と区切りを整えます。",
+    title: "印象の入口を設計する",
+    text: "最初に何を見せるか、どこで止めるかを整理し、サービスの空気が伝わる入口を作ります。",
   },
   {
     title: "見え方のトーンを揃える",
-    text: "写真や色の温度を合わせ、全体の印象をひとつにまとめます。",
+    text: "写真・色・文字・余白の温度を合わせ、全体の印象がばらつかないよう整えます。",
   },
   {
-    title: "迷いを減らす",
-    text: "初めての方でも戸惑わないよう、導線とUIの分かりやすさに配慮します。",
+    title: "迷わない導線をつくる",
+    text: "初めて見る人が、内容を理解し、比較し、問い合わせまで進みやすい流れを設計します。",
   },
   {
-    title: "公開まで丁寧に進める",
-    text: "デザインから実装まで一貫して対応し、公開まで進行します。",
+    title: "公開まで一貫して進める",
+    text: "構成・デザイン・実装・公開までを分断せず、目的に合わせて最後まで整えます。",
   },
 ];
 
@@ -67,14 +69,7 @@ function CrownIcon({ className = "" }) {
       xmlns="http://www.w3.org/2000/svg"
       aria-hidden="true"
     >
-      <line
-        x1="4"
-        y1="22"
-        x2="36"
-        y2="22"
-        strokeWidth="1"
-        strokeLinecap="round"
-      />
+      <line x1="4" y1="22" x2="36" y2="22" strokeWidth="1" strokeLinecap="round" />
       <polyline
         points="4,22 4,10 13,17 20,4 27,17 36,10 36,22"
         strokeWidth="1"
@@ -82,35 +77,14 @@ function CrownIcon({ className = "" }) {
         strokeLinecap="round"
         fill="none"
       />
-      <rect
-        x="18.2"
-        y="2"
-        width="3.6"
-        height="3.6"
-        transform="rotate(45 20 3.8)"
-        strokeWidth="0.85"
-      />
-      <rect
-        x="2.2"
-        y="8"
-        width="3.6"
-        height="3.6"
-        transform="rotate(45 4 9.8)"
-        strokeWidth="0.85"
-      />
-      <rect
-        x="34.2"
-        y="8"
-        width="3.6"
-        height="3.6"
-        transform="rotate(45 36 9.8)"
-        strokeWidth="0.85"
-      />
+      <rect x="18.2" y="2" width="3.6" height="3.6" transform="rotate(45 20 3.8)" strokeWidth="0.85" />
+      <rect x="2.2" y="8" width="3.6" height="3.6" transform="rotate(45 4 9.8)" strokeWidth="0.85" />
+      <rect x="34.2" y="8" width="3.6" height="3.6" transform="rotate(45 36 9.8)" strokeWidth="0.85" />
     </svg>
   );
 }
 
-function StudyIcon({ className = "" }) {
+function FocusIcon({ className = "" }) {
   return (
     <svg
       className={className}
@@ -119,30 +93,11 @@ function StudyIcon({ className = "" }) {
       xmlns="http://www.w3.org/2000/svg"
       aria-hidden="true"
     >
-      <circle
-        cx="20"
-        cy="20"
-        r="14"
-        strokeWidth="0.8"
-        strokeDasharray="2.5 3"
-      />
+      <circle cx="20" cy="20" r="14" strokeWidth="0.8" strokeDasharray="2.5 3" />
+      <circle cx="20" cy="20" r="5.5" strokeWidth="0.8" />
       <circle cx="20" cy="20" r="1.6" strokeWidth="0.9" />
-      <line
-        x1="20"
-        y1="18.4"
-        x2="20"
-        y2="7"
-        strokeWidth="0.9"
-        strokeLinecap="round"
-      />
-      <line
-        x1="20"
-        y1="21.6"
-        x2="26"
-        y2="30"
-        strokeWidth="0.9"
-        strokeLinecap="round"
-      />
+      <line x1="20" y1="18.4" x2="20" y2="7" strokeWidth="0.9" strokeLinecap="round" />
+      <line x1="21.4" y1="20.8" x2="30" y2="25.5" strokeWidth="0.9" strokeLinecap="round" />
     </svg>
   );
 }
@@ -180,11 +135,13 @@ function QualificationRow({ item, index, onOpen }) {
         <span className={styles["qrow__no"]}>
           {String(index + 1).padStart(2, "0")}
         </span>
+
         {isAcquired ? (
           <CrownIcon className={styles["qrow__icon"]} />
         ) : (
-          <StudyIcon className={styles["qrow__icon"]} />
+          <FocusIcon className={styles["qrow__icon"]} />
         )}
+
         <span className={styles["qrow__status"]}>{item.status}</span>
         <span className={styles["qrow__statusEn"]}>{item.statusEn}</span>
       </div>
@@ -205,7 +162,7 @@ function QualificationRow({ item, index, onOpen }) {
       <div className={styles["qrow__right"]}>
         <span className={styles["qrow__note"]}>{item.note}</span>
         <span className={styles["qrow__action"]} aria-hidden="true">
-          <span>{clickable ? "証明を見る →" : "学習を継続中"}</span>
+          <span>{clickable ? "証明を見る →" : item.action || "設計に反映中"}</span>
         </span>
       </div>
     </div>
@@ -279,6 +236,7 @@ function CertificateModal({ item, onClose }) {
               {item.title}
             </h4>
           </div>
+
           <button
             type="button"
             className={styles["certificate-modal__close"]}
@@ -339,6 +297,7 @@ export default function About() {
       },
       { threshold: 0.12, rootMargin: "0px 0px -8% 0px" }
     );
+
     revealTargets.forEach((t) => flowObserver.observe(t));
 
     let styleObserver;
@@ -395,7 +354,6 @@ export default function About() {
               styles["about-flow-1"]
             )}
           >
-            {/* ✅ 視覚はそのまま、構造だけ強化 */}
             <h2 className={styles.srOnly}>ABOUT</h2>
 
             <SectionSvgTitle
@@ -403,6 +361,7 @@ export default function About() {
               sub="ABOUT / CREATOR"
               className={styles["about-svg-title"]}
             />
+
             <p className={styles["about-sub"]}>制作者について</p>
           </header>
 
@@ -414,11 +373,9 @@ export default function About() {
                 styles["about-flow-2"]
               )}
             >
-              上質に見えて、読みやすい。
+              その空気が、
               <br />
-              <span>商品・空間・サービスの印象</span>が、きちんと伝わるWebサイトへ。
-              <br />
-              目的と不安を先回りで整理し、問い合わせまで迷わない流れに整えます。
+              <span>選ばれる理由になる。</span>
             </p>
 
             <p
@@ -428,9 +385,9 @@ export default function About() {
                 styles["about-flow-3"]
               )}
             >
-              大切にしているのは、<span>必要な情報が迷わず入ること</span>。
+              写真、言葉、余白、導線。
               <br />
-              写真の見え方、文章の温度、導線の分かりやすさを揃えて、印象をひとつにします。
+              ひとつずつ整えることで、商品・空間・サービスの印象は変わります。
               <br />
               見た目だけで終わらせず、<span>読み手が判断しやすい流れ</span>まで設計します。
             </p>
@@ -446,16 +403,26 @@ export default function About() {
             <h3 className={styles["about-name"]} translate="no">
               Gushiken Yuto
             </h3>
-            <p className={styles["about-role"]}>Web Design / Art Direction</p>
 
-            <p className={styles["about-text"]}>
-              沖縄を拠点に、Web制作・Webデザインを行っています。
-              <br />
-              デザインから実装まで一貫して対応し、<span>印象と使いやすさ</span>を両立しながら公開まで進めます。
+            <p className={styles["about-role"]}>
+              Web Design / Art Direction / Frontend
             </p>
 
-            {/* ✅ About内の回遊/成約導線（静かに） */}
+            <p className={styles["about-text"]}>
+              沖縄を拠点に、ホームページ制作・LP制作・Webデザインを行っています。
+              <br />
+              構成からデザイン、実装、公開まで一貫して対応し、
+              <span>印象と使いやすさ</span>を両立したWebサイトへ整えます。
+            </p>
+
             <div className={styles["about-links"]}>
+              <Link to="/works" className={styles["about-works-link"]}>
+                制作事例を見る
+              </Link>
+
+              <Link to="/contact" className={styles["about-contact-link"]}>
+                相談する
+              </Link>
 
               <a
                 href="https://note.com/noahgushi123"
@@ -463,9 +430,8 @@ export default function About() {
                 rel="noopener noreferrer"
                 className={styles["about-note-link"]}
               >
-                制作の裏側（note）
+                制作の裏側
               </a>
-           
             </div>
           </div>
 
@@ -476,11 +442,14 @@ export default function About() {
               styles["about-flow-5"]
             )}
           >
-            <h3 className={styles["qualifications-label"]}>QUALIFICATIONS</h3>
+            <h3 className={styles["qualifications-label"]}>
+              QUALIFICATIONS / FOCUS
+            </h3>
+
             <p className={styles["qualifications-intro"]}>
-              制作の信頼性を高めるため、
+              証明できる資格と、
               <br />
-              基礎学習と資格取得も継続しています。
+              制作に反映している設計領域を掲載しています。
             </p>
 
             <div className={styles["qualifications-list"]}>
@@ -543,6 +512,7 @@ export default function About() {
             >
               SITE TONE
             </p>
+
             <p
               className={cx(styles["site-tone-text"], styles["site-flow"])}
               style={{ "--site-index": 1 }}
@@ -559,7 +529,10 @@ export default function About() {
                   className={cx(styles["site-swatch-item"], styles["site-flow"])}
                   style={{ "--site-index": index + 2 }}
                 >
-                  <div className={styles["site-swatch"]} style={{ background: bg }} />
+                  <div
+                    className={styles["site-swatch"]}
+                    style={{ background: bg }}
+                  />
                   <p>{label}</p>
                 </div>
               ))}
@@ -607,7 +580,7 @@ export default function About() {
           >
             <p>
               あなたのサービスの魅力を、
-              <span>見やすく、上質に伝わるWebサイト</span>として形にします。
+              <span>選ばれる入口として機能するWebサイト</span>へ整えます。
             </p>
           </div>
         </div>

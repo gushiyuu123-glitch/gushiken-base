@@ -45,7 +45,7 @@ function restoreScrollInstant(scrollY, scrollX = 0) {
 function focusWithoutScroll(el) {
   if (!el || typeof el.focus !== "function") return;
 
-  if (typeof window === "undefined") {
+  if (typeof window === "undefined" || typeof document === "undefined") {
     el.focus();
     return;
   }
@@ -62,10 +62,31 @@ function focusWithoutScroll(el) {
 }
 
 function prefersReducedMotion() {
-  return window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches ?? false;
+  if (typeof window === "undefined") return false;
+
+  return (
+    window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches ?? false
+  );
 }
 
-export default function FloatingFAQ() {
+function isCoarsePointer() {
+  if (typeof window === "undefined") return false;
+
+  return window.matchMedia?.("(pointer: coarse)")?.matches ?? false;
+}
+
+function getLenisLike() {
+  if (typeof window === "undefined") return null;
+
+  const api = window.__gd_lenis__;
+
+  if (api?.lenis) return api.lenis;
+  if (api?.scrollTo || api?.stop || api?.start) return api;
+
+  return null;
+}
+
+export default function FloatingFAQ({ variant = "default" }) {
   const [isOpen, setIsOpen] = useState(false);
   const [activeIndex, setActiveIndex] = useState(null);
 
@@ -79,18 +100,17 @@ export default function FloatingFAQ() {
   const closePanel = useCallback((restoreFocus = false) => {
     setIsOpen(false);
     setActiveIndex(null);
-    if (restoreFocus) {
-      requestAnimationFrame(() => focusWithoutScroll(toggleButtonRef.current));
+
+    // iOS / タッチ端末はフォーカス移動でジャンプ・固まりが出やすいので戻さない
+    if (restoreFocus && !isCoarsePointer()) {
+      requestAnimationFrame(() => {
+        focusWithoutScroll(toggleButtonRef.current);
+      });
     }
   }, []);
 
   const openPanel = useCallback(() => {
     setIsOpen(true);
-    setActiveIndex(null);
-  }, []);
-
-  const togglePanel = useCallback(() => {
-    setIsOpen((prev) => !prev);
     setActiveIndex(null);
   }, []);
 
@@ -103,24 +123,31 @@ export default function FloatingFAQ() {
     closePanel(false);
   }, [location.pathname, closePanel]);
 
-  // ✅ Lenisがいる環境は、開いてる間だけ stop（背景スクロールの事故防止）
+  // Lenis がいる場合は、FAQを開いている間だけ背景スクロールを止める
   useEffect(() => {
     if (typeof window === "undefined") return undefined;
 
-    const lenis = window.__gd_lenis__;
+    const lenis = getLenisLike();
     if (!lenis) return undefined;
 
-    if (isOpen) {
-      try { lenis.stop?.(); } catch {}
-      return () => {
-        try { lenis.start?.(); } catch {}
-      };
+    if (!isOpen) return undefined;
+
+    try {
+      lenis.stop?.();
+    } catch {
+      // noop
     }
 
-    return undefined;
+    return () => {
+      try {
+        lenis.start?.();
+      } catch {
+        // noop
+      }
+    };
   }, [isOpen]);
 
-  // スマホでFAQを開いた時、背景スクロールを固定する
+  // スマホで開いた時、背景スクロール固定
   useLayoutEffect(() => {
     if (!isOpen) return undefined;
     if (typeof window === "undefined" || typeof document === "undefined") {
@@ -147,7 +174,6 @@ export default function FloatingFAQ() {
     const previousBodyOverflow = body.style.overflow;
     const previousBodyScrollBehavior = body.style.scrollBehavior;
 
-    // 復帰時の“高速smooth戻り”を殺す
     html.style.scrollBehavior = "auto";
     body.style.scrollBehavior = "auto";
 
@@ -182,17 +208,20 @@ export default function FloatingFAQ() {
     };
   }, [isOpen]);
 
-  // 外側クリックで閉じる（バックドロップでも閉じる）
+  // 外側クリックで閉じる
   useEffect(() => {
     if (!isOpen) return undefined;
 
     const handler = (event) => {
       const wrap = wrapRef.current;
       if (!wrap) return;
-      if (!wrap.contains(event.target)) closePanel(false);
+      if (!wrap.contains(event.target)) {
+        closePanel(false);
+      }
     };
 
     document.addEventListener("pointerdown", handler, { capture: true });
+
     return () => {
       document.removeEventListener("pointerdown", handler, { capture: true });
     };
@@ -204,20 +233,27 @@ export default function FloatingFAQ() {
 
     const handleKeyDown = (event) => {
       if (event.key !== "Escape") return;
+
       event.preventDefault();
       closePanel(true);
     };
 
     window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
   }, [isOpen, closePanel]);
 
-  // 開いたら最初の質問へ（スクロールは動かさない）
+  // 開いたら最初の質問へ。タッチ端末ではやらない
   useEffect(() => {
     if (!isOpen) return undefined;
+    if (isCoarsePointer()) return undefined;
+
     const raf = requestAnimationFrame(() => {
       focusWithoutScroll(firstQuestionRef.current);
     });
+
     return () => cancelAnimationFrame(raf);
   }, [isOpen]);
 
@@ -240,14 +276,20 @@ export default function FloatingFAQ() {
       if (event.shiftKey && document.activeElement === first) {
         event.preventDefault();
         focusWithoutScroll(last);
-      } else if (!event.shiftKey && document.activeElement === last) {
+        return;
+      }
+
+      if (!event.shiftKey && document.activeElement === last) {
         event.preventDefault();
         focusWithoutScroll(first);
       }
     };
 
     panel.addEventListener("keydown", onKeyDown);
-    return () => panel.removeEventListener("keydown", onKeyDown);
+
+    return () => {
+      panel.removeEventListener("keydown", onKeyDown);
+    };
   }, [isOpen]);
 
   const panelProps = useMemo(() => {
@@ -255,7 +297,7 @@ export default function FloatingFAQ() {
       "data-open": isOpen ? "true" : "false",
       "data-reduced": prefersReducedMotion() ? "true" : "false",
       "aria-hidden": !isOpen,
-      ...(!isOpen ? { inert: true } : {}),
+      inert: !isOpen ? "" : undefined,
     };
   }, [isOpen]);
 
@@ -264,8 +306,8 @@ export default function FloatingFAQ() {
       ref={wrapRef}
       className="floating-faq-wrap"
       data-open={isOpen ? "true" : "false"}
+      data-variant={variant}
     >
-      {/* ✅ Backdrop（モバイル中心に効かせる / クリックで閉じる） */}
       <button
         type="button"
         className={`floating-faq-backdrop ${isOpen ? "is-open" : ""}`}
@@ -291,6 +333,7 @@ export default function FloatingFAQ() {
                 <p id="floating-faq-title" className="floating-faq-title">
                   よくあるご質問
                 </p>
+
                 <p className="floating-faq-subtitle">
                   ご依頼前の不安を、整理します。
                 </p>
@@ -315,7 +358,9 @@ export default function FloatingFAQ() {
               return (
                 <div
                   key={item.question}
-                  className={`floating-faq-item ${expanded ? "is-active" : ""}`}
+                  className={`floating-faq-item ${
+                    expanded ? "is-active" : ""
+                  }`}
                   role="listitem"
                 >
                   <button
@@ -380,10 +425,20 @@ export default function FloatingFAQ() {
         aria-label={isOpen ? "FAQを閉じる" : "FAQを開く"}
       >
         <span className="floating-faq-toggle-icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24" className="floating-faq-toggle-svg" fill="none">
+          <svg
+            viewBox="0 0 24 24"
+            className="floating-faq-toggle-svg"
+            fill="none"
+          >
             <circle cx="12" cy="12" r="8.5" />
             <path d="M9.9 9.2a2.35 2.35 0 0 1 4.2 1.45c0 1.55-1.6 2.02-2.1 2.75-.22.32-.28.62-.28 1.1" />
-            <circle cx="12" cy="17.1" r="0.7" fill="currentColor" stroke="none" />
+            <circle
+              cx="12"
+              cy="17.1"
+              r="0.7"
+              fill="currentColor"
+              stroke="none"
+            />
           </svg>
         </span>
 

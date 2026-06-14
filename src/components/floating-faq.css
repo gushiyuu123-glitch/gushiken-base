@@ -1,70 +1,74 @@
 /* src/components/floating-faq.css */
 
-/* ==============================
+/* =========================================================
    Floating FAQ — Strong & Quiet
-   - hoverは (hover:hover) & (pointer:fine) のみ（タッチ誤爆ゼロ）
-   - 回転/派手さを削って、像が整う方向へ
-   - backdrop追加（特にSPで迷いゼロ）
-   - iOSフリーズ対策：gridアコーディオン廃止 / iOSだけブラー・慣性スクロール弱め
-============================== */
+   GUSHIKEN DESIGN
+========================================================= */
 
 .floating-faq-wrap {
   position: fixed;
   right: 28px;
   bottom: 28px;
   z-index: 9999;
+
   pointer-events: none;
   font-family: inherit;
 }
 
-/* ==============================
+/* =========================================================
    Backdrop
-============================== */
+========================================================= */
 
-.floating-faq-backdrop{
+.floating-faq-backdrop {
   position: fixed;
   inset: 0;
+
   border: 0;
-  background: rgba(0,0,0,0.0);
+  background: rgba(0, 0, 0, 0);
   opacity: 0;
   pointer-events: none;
-  transition: opacity 0.24s ease, background 0.24s ease;
+
+  transition:
+    opacity 0.24s ease,
+    background 0.24s ease;
 }
 
-.floating-faq-backdrop.is-open{
+.floating-faq-backdrop.is-open {
   opacity: 1;
   pointer-events: auto;
-  background: rgba(0,0,0,0.26);
+  background: rgba(0, 0, 0, 0.26);
 }
 
-/* ==============================
+/* =========================================================
    Panel
-============================== */
+========================================================= */
 
 .floating-faq-panel {
   position: fixed;
   right: 28px;
   bottom: 96px;
+
   width: min(430px, calc(100vw - 40px));
   max-height: min(720px, calc(100svh - 132px));
   overflow: hidden;
 
   color: #f7f3ea;
+
   background:
     radial-gradient(
       circle at 18% 0%,
-      rgba(255, 236, 190, 0.09),
+      rgba(255, 236, 190, 0.08),
       transparent 34%
     ),
     linear-gradient(
       145deg,
-      rgba(19, 17, 14, 0.96),
-      rgba(7, 7, 7, 0.98)
+      rgba(19, 17, 14, 0.965),
+      rgba(7, 7, 7, 0.985)
     );
 
   border: 1px solid rgba(255, 244, 216, 0.16);
   border-top-color: rgba(255, 244, 216, 0.22);
-  border-radius: 28px;
+  border-radius: 22px;
 
   box-shadow:
     0 28px 80px rgba(0, 0, 0, 0.48),
@@ -90,7 +94,9 @@
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
+
   transform: translate3d(0, 0, 0) scale(1);
+
   transition:
     opacity 0.28s ease,
     transform 0.34s cubic-bezier(0.22, 1, 0.36, 1),
@@ -102,22 +108,29 @@
   overflow-y: auto;
   overscroll-behavior: contain;
   -webkit-overflow-scrolling: touch;
+
   padding: 28px 26px 24px;
 
   scrollbar-width: thin;
   scrollbar-color: rgba(255, 244, 216, 0.25) transparent;
 }
 
-.floating-faq-panel-inner::-webkit-scrollbar { width: 6px; }
-.floating-faq-panel-inner::-webkit-scrollbar-track { background: transparent; }
+.floating-faq-panel-inner::-webkit-scrollbar {
+  width: 6px;
+}
+
+.floating-faq-panel-inner::-webkit-scrollbar-track {
+  background: transparent;
+}
+
 .floating-faq-panel-inner::-webkit-scrollbar-thumb {
   background: rgba(255, 244, 216, 0.22);
   border-radius: 999px;
 }
 
-/* ==============================
+/* =========================================================
    Head
-============================== */
+========================================================= */
 
 .floating-faq-head {
   padding-bottom: 20px;
@@ -126,9 +139,11 @@
 
 .floating-faq-label {
   margin: 0 0 12px;
-  font-size: 10px;
-  letter-spacing: 0.24em;
+
   color: rgba(247, 243, 234, 0.52);
+  font-size: 10px;
+  line-height: 1;
+  letter-spacing: 0.24em;
 }
 
 .floating-faq-head-row {
@@ -140,6 +155,7 @@
 
 .floating-faq-title {
   margin: 0;
+
   font-size: 21px;
   line-height: 1.45;
   letter-spacing: 0.06em;
@@ -148,24 +164,28 @@
 
 .floating-faq-subtitle {
   margin: 8px 0 0;
+
+  color: rgba(247, 243, 234, 0.58);
   font-size: 12px;
   line-height: 1.8;
   letter-spacing: 0.08em;
-  color: rgba(247, 243, 234, 0.58);
 }
 
-/* ==============================
-   Close Button
-============================== */
+/* =========================================================
+   Close
+========================================================= */
 
 .floating-faq-close {
   position: relative;
   flex: 0 0 auto;
+
   width: 38px;
   height: 38px;
+
   border: 1px solid rgba(255, 244, 216, 0.14);
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.035);
+
   cursor: pointer;
 
   transition:
@@ -178,14 +198,21 @@
   position: absolute;
   left: 50%;
   top: 50%;
+
   width: 14px;
   height: 1px;
+
   background: rgba(247, 243, 234, 0.78);
   transform-origin: center;
 }
 
-.floating-faq-close span:first-child { transform: translate(-50%, -50%) rotate(45deg); }
-.floating-faq-close span:last-child  { transform: translate(-50%, -50%) rotate(-45deg); }
+.floating-faq-close span:first-child {
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.floating-faq-close span:last-child {
+  transform: translate(-50%, -50%) rotate(-45deg);
+}
 
 @media (hover: hover) and (pointer: fine) {
   .floating-faq-close:hover {
@@ -195,13 +222,14 @@
   }
 }
 
-/* ==============================
+/* =========================================================
    List
-============================== */
+========================================================= */
 
 .floating-faq-list {
   display: grid;
   gap: 0;
+
   margin-top: 14px;
 }
 
@@ -215,28 +243,32 @@
   align-items: center;
   justify-content: space-between;
   gap: 18px;
+
   padding: 18px 0;
 
   border: 0;
   background: transparent;
   color: inherit;
   text-align: left;
+
   cursor: pointer;
   touch-action: manipulation;
 }
 
 .floating-faq-question-text {
+  color: rgba(247, 243, 234, 0.86);
   font-size: 13px;
   line-height: 1.75;
   letter-spacing: 0.06em;
-  color: rgba(247, 243, 234, 0.86);
 }
 
 .floating-faq-icon {
   position: relative;
   flex: 0 0 auto;
+
   width: 18px;
   height: 18px;
+
   opacity: 0.68;
 }
 
@@ -244,10 +276,13 @@
   position: absolute;
   left: 50%;
   top: 50%;
+
   width: 14px;
   height: 1px;
+
   background: currentColor;
   transform: translate(-50%, -50%);
+
   transition:
     transform 0.22s ease,
     opacity 0.22s ease;
@@ -262,10 +297,9 @@
   transform: translate(-50%, -50%) rotate(0deg);
 }
 
-/* ==============================
-   Answer (iOSフリーズ回避)
-   - grid-template-rows は iOSで固まりやすいので廃止
-============================== */
+/* =========================================================
+   Answer
+========================================================= */
 
 .floating-faq-answer-wrap {
   overflow: hidden;
@@ -276,7 +310,7 @@
 
   transition:
     max-height 0.32s cubic-bezier(0.22, 1, 0.36, 1),
-    opacity 0.20s ease,
+    opacity 0.2s ease,
     transform 0.32s cubic-bezier(0.22, 1, 0.36, 1);
 
   will-change: max-height, opacity, transform;
@@ -284,50 +318,57 @@
 }
 
 .floating-faq-item.is-active .floating-faq-answer-wrap {
-  max-height: 900px; /* 余裕を持たせる */
+  max-height: 900px;
   opacity: 1;
   transform: translate3d(0, 0, 0);
 }
 
-.floating-faq-answer-inner { overflow: visible; }
+.floating-faq-answer-inner {
+  overflow: visible;
+}
 
 .floating-faq-answer {
   margin: 0;
   padding: 0 0 18px;
+
+  color: rgba(247, 243, 234, 0.66);
   font-size: 12.5px;
   line-height: 2;
   letter-spacing: 0.055em;
-  color: rgba(247, 243, 234, 0.66);
 }
 
-/* ==============================
+/* =========================================================
    Footer
-============================== */
+========================================================= */
 
-.floating-faq-footer { padding-top: 22px; }
+.floating-faq-footer {
+  padding-top: 22px;
+}
 
 .floating-faq-note {
   margin: 0 0 16px;
+
+  color: rgba(247, 243, 234, 0.52);
   font-size: 11.5px;
   line-height: 1.9;
   letter-spacing: 0.06em;
-  color: rgba(247, 243, 234, 0.52);
 }
 
-/* ✅ CTA：ピル感を弱めて“編集的”に */
 .floating-faq-link {
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  min-height: 44px;
-  padding: 0 16px;
+
+  min-height: 42px;
+  padding: 0 14px;
 
   color: rgba(247, 243, 234, 0.86);
-  background: rgba(255, 255, 255, 0.04);
+  background: rgba(255, 255, 255, 0.035);
   border: 1px solid rgba(255, 244, 216, 0.16);
-  border-radius: 14px;
+  border-radius: 10px;
 
   font-size: 12px;
+  line-height: 1;
   letter-spacing: 0.12em;
   text-decoration: none;
 
@@ -347,9 +388,9 @@
   }
 }
 
-/* ==============================
-   Toggle Button
-============================== */
+/* =========================================================
+   Toggle
+========================================================= */
 
 .floating-faq-toggle {
   pointer-events: auto;
@@ -362,13 +403,14 @@
   padding: 0 17px 0 14px;
 
   color: #f7f3ea;
+
   background:
     radial-gradient(
       circle at 20% 10%,
-      rgba(255, 239, 201, 0.18),
+      rgba(255, 239, 201, 0.16),
       transparent 36%
     ),
-    rgba(15, 14, 12, 0.88);
+    rgba(15, 14, 12, 0.9);
 
   border: 1px solid rgba(255, 244, 216, 0.18);
   border-radius: 999px;
@@ -392,6 +434,7 @@
 .floating-faq-toggle-icon {
   display: grid;
   place-items: center;
+
   width: 24px;
   height: 24px;
 }
@@ -399,6 +442,7 @@
 .floating-faq-toggle-svg {
   width: 24px;
   height: 24px;
+
   color: rgba(247, 243, 234, 0.86);
   stroke: currentColor;
   stroke-width: 1.35;
@@ -412,7 +456,9 @@
   letter-spacing: 0.18em;
 }
 
-.floating-faq-toggle.is-open { opacity: 0.86; }
+.floating-faq-toggle.is-open {
+  opacity: 0.86;
+}
 
 @media (hover: hover) and (pointer: fine) {
   .floating-faq-toggle:hover {
@@ -422,9 +468,9 @@
   }
 }
 
-/* ==============================
+/* =========================================================
    Focus
-============================== */
+========================================================= */
 
 .floating-faq-toggle:focus-visible,
 .floating-faq-close:focus-visible,
@@ -434,9 +480,9 @@
   outline-offset: 4px;
 }
 
-/* ==============================
+/* =========================================================
    Mobile
-============================== */
+========================================================= */
 
 @media (max-width: 767px) {
   .floating-faq-wrap {
@@ -444,6 +490,10 @@
     bottom: calc(18px + env(safe-area-inset-bottom));
   }
 
+ .floating-faq-wrap {
+    right: 18px;
+    bottom: calc(18px + env(safe-area-inset-bottom));
+  }
   .floating-faq-panel {
     left: 50%;
     right: auto;
@@ -453,7 +503,7 @@
     width: min(92vw, 430px);
     max-height: min(74svh, 620px);
 
-    border-radius: 26px;
+    border-radius: 20px;
 
     transform: translate3d(-50%, -46%, 0) scale(0.966);
     transform-origin: center center;
@@ -466,6 +516,7 @@
 
   .floating-faq-panel.is-open {
     transform: translate3d(-50%, -50%, 0) scale(1);
+
     transition:
       opacity 0.24s ease,
       transform 0.34s cubic-bezier(0.22, 1, 0.36, 1),
@@ -477,31 +528,59 @@
     padding: 24px 20px;
   }
 
-  .floating-faq-title { font-size: 19px; }
-  .floating-faq-subtitle { font-size: 11.5px; }
+  .floating-faq-title {
+    font-size: 19px;
+  }
 
-  .floating-faq-question { padding: 17px 0; }
-  .floating-faq-question-text { font-size: 12.5px; line-height: 1.75; }
+  .floating-faq-subtitle {
+    font-size: 11.5px;
+  }
 
-  .floating-faq-answer { font-size: 12px; line-height: 1.95; }
+  .floating-faq-question {
+    padding: 17px 0;
+  }
 
-  .floating-faq-toggle { min-height: 46px; padding: 0 15px 0 13px; }
+  .floating-faq-question-text {
+    font-size: 12.5px;
+    line-height: 1.75;
+  }
+
+  .floating-faq-answer {
+    font-size: 12px;
+    line-height: 1.95;
+  }
+
+  .floating-faq-toggle {
+    min-height: 46px;
+    padding: 0 15px 0 13px;
+  }
 }
 
-/* ==============================
+/* =========================================================
    Very Small
-============================== */
+========================================================= */
 
 @media (max-width: 380px) {
-  .floating-faq-panel-inner { padding-inline: 18px; }
-  .floating-faq-title { font-size: 18px; }
-  .floating-faq-question-text { font-size: 12px; }
-  .floating-faq-answer { font-size: 11.8px; }
+  .floating-faq-panel-inner {
+    padding-inline: 18px;
+  }
+
+  .floating-faq-title {
+    font-size: 18px;
+  }
+
+  .floating-faq-question-text {
+    font-size: 12px;
+  }
+
+  .floating-faq-answer {
+    font-size: 11.8px;
+  }
 }
 
-/* ==============================
-   iOS Safari: フリーズ対策（ブラー + 慣性スクロールを弱める）
-============================== */
+/* =========================================================
+   iOS Safari
+========================================================= */
 
 @supports (-webkit-touch-callout: none) {
   .floating-faq-panel {
@@ -510,13 +589,23 @@
   }
 
   .floating-faq-panel-inner {
-    -webkit-overflow-scrolling: auto; /* touch を切る */
+    -webkit-overflow-scrolling: auto;
   }
 }
 
-/* ==============================
-   Reduced Motion
-============================== */
+/* =========================================================
+   Desktop backdrop
+========================================================= */
+
+@media (min-width: 768px) {
+  .floating-faq-backdrop.is-open {
+    background: rgba(0, 0, 0, 0.14);
+  }
+}
+
+/* =========================================================
+   Reduced motion
+========================================================= */
 
 @media (prefers-reduced-motion: reduce) {
   .floating-faq-backdrop,
@@ -530,19 +619,9 @@
     transition: none !important;
   }
 }
-
-/* ✅ Desktopはbackdropを極薄に（邪魔しない） */
-@media (min-width: 768px) {
-  .floating-faq-backdrop.is-open {
-    background: rgba(0,0,0,0.14);
-  }
-}
-
-/* ✅ SP: 左下に置く（SHAREと干渉しない） */
-@media (max-width: 767px){
-  .floating-faq-wrap[data-variant="sp"]{
-    left: 18px;
-    right: auto;
+@media (max-width: 767px) {
+  .floating-faq-wrap {
+    right: 18px;
     bottom: calc(18px + env(safe-area-inset-bottom));
   }
 }

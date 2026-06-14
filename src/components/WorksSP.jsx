@@ -11,7 +11,7 @@ const WORKS = [
     title: "BLACK PAPILLON",
     sub: "Tattoo Studio / Naha, Okinawa",
     img: "/works/bp.webp",
-    to: "/works/BlackPapillonRoom",
+    to: "/works/black-papillon",
     href: "https://black-papillon.vercel.app/",
     alt: "BLACK PAPILLON — Tattoo Studio / Naha, Okinawa（制作事例）",
     pos: "56% 50%",
@@ -59,17 +59,17 @@ function isExternal(url) {
 }
 
 function WorkItemSP({ item, index }) {
-  const external = isExternal(item.href);
-  const Wrapper = external ? "a" : Link;
+  const externalLive = isExternal(item.href);
+  const hasInternal = typeof item.to === "string" && item.to.startsWith("/");
 
-  const wrapperProps = external
-    ? {
-        href: item.href,
-        target: "_blank",
-        rel: "noreferrer noopener",
-      }
+  const Wrapper = hasInternal ? Link : "a";
+
+  const wrapperProps = hasInternal
+    ? { to: item.to }
     : {
-        to: item.to,
+        href: item.href,
+        target: externalLive ? "_blank" : undefined,
+        rel: externalLive ? "noreferrer noopener" : undefined,
       };
 
   return (
@@ -83,7 +83,7 @@ function WorkItemSP({ item, index }) {
     >
       <Wrapper
         className={styles.itemLink}
-        aria-label={`${item.title} を開く`}
+        aria-label={`${item.title} の制作事例を見る`}
         {...wrapperProps}
       >
         <div className={styles.itemTop} aria-hidden="true">
@@ -129,13 +129,23 @@ function WorkItemSP({ item, index }) {
 
             <div className={styles.open}>
               <span className={styles.openLine} aria-hidden="true" />
-              <span className={styles.openText}>
-                {external ? "VISIT SITE" : "DETAIL"}
-              </span>
+              <span className={styles.openText}>DETAIL</span>
             </div>
           </div>
         </div>
       </Wrapper>
+
+      {externalLive && (
+        <a
+          className={styles.live}
+          href={item.href}
+          target="_blank"
+          rel="noreferrer noopener"
+          aria-label={`${item.title} の公開サイトを新しいタブで開く`}
+        >
+          LIVE ↗
+        </a>
+      )}
     </article>
   );
 }
@@ -184,7 +194,7 @@ export default function WorksSP() {
       ref={rootRef}
       className={styles.section}
       id="works"
-      aria-label="Works"
+      aria-labelledby="works-sp-title"
     >
       <div className={styles.bg} aria-hidden="true" />
 
@@ -193,13 +203,19 @@ export default function WorksSP() {
           SELECTED
         </p>
 
-        <h2 className={styles.h2} data-reveal style={{ "--d": "70ms" }}>
+        <h2
+          id="works-sp-title"
+          className={styles.h2}
+          data-reveal
+          style={{ "--d": "70ms" }}
+        >
           <span className={styles.sr}>WORKS</span>
 
           <span className={styles.h2Mask}>
             <img
               className={styles.h2Img}
               src="/typography/works.png"
+              srcSet="/typography/works.png 1x, /typography/works@2x.png 2x"
               alt=""
               aria-hidden="true"
               decoding="async"
@@ -207,11 +223,16 @@ export default function WorksSP() {
           </span>
         </h2>
 
-      <p className={styles.lead} data-reveal style={{ "--d": "140ms" }}>
-  ただ作っただけではなく、
-  <br />
-  印象まで設計した制作物。
-</p>
+        <p className={styles.lead} data-reveal style={{ "--d": "140ms" }}>
+          見た瞬間の印象から、
+          <br />
+          相談したくなる流れまで設計した制作事例。
+        </p>
+
+        <p className={styles.leadSub} data-reveal style={{ "--d": "180ms" }}>
+          美容・飲食・観光・ブライダル・ブランドサイトなど、
+          印象で選ばれる業種を中心に制作しています。
+        </p>
       </header>
 
       <div className={styles.list} aria-label="Works list">
@@ -225,13 +246,21 @@ export default function WorksSP() {
         data-reveal
         style={{ "--d": `${260 + WORKS.length * 80}ms` }}
       >
-        <Link
-          className={styles.all}
-          to="/works"
-          aria-label="すべての制作実績を見る"
-        >
-          VIEW ALL WORKS
-        </Link>
+        <p className={styles.tailCopy}>
+          作品全体を見たあと、今のサイトやSNSで損している部分も整理できます。
+        </p>
+
+        <div className={styles.tailLinks}>
+          <Link
+            className={styles.all}
+            to="/works"
+            aria-label="すべての制作実績を見る"
+          >
+            VIEW ALL WORKS
+          </Link>
+
+
+        </div>
       </div>
     </section>
   );

@@ -1,6 +1,7 @@
 // src/pages/Okinawa.jsx
-import React, { useLayoutEffect } from "react";
+import { useLayoutEffect } from "react";
 import { Link } from "react-router-dom";
+
 import OkinawaThreeSea from "../visuals/OkinawaThreeSea";
 import OkinawaWaveTitle from "../components/OkinawaWaveTitle";
 import styles from "./Okinawa.module.css";
@@ -13,28 +14,57 @@ const AREAS = ["URASOE", "NAHA", "GINOWAN", "CHATAN", "OKINAWA CITY"];
 const TARGETS = [
   {
     name: "美容室・理容室",
-    text: "新規予約、メニュー、雰囲気、スタッフの魅力を伝えるサイト設計。",
+    text: "メニュー、雰囲気、スタッフの人柄を整理し、新規予約につながる入口へ。",
   },
   {
     name: "飲食・カフェ・バー",
-    text: "料理・空間・場所の印象を、来店や予約につながる入口へ整える。",
+    text: "料理、空間、場所の印象を、来店前に伝わる順番へ整える。",
   },
   {
     name: "サロン・施術系店舗",
-    text: "世界観、施術内容、不安解消を一つの流れで伝える。",
+    text: "施術内容、料金、不安解消、予約導線をひとつの流れで見せる。",
   },
   {
     name: "観光・体験サービス",
-    text: "沖縄らしさ、写真、体験価値を、問い合わせにつながる形にする。",
+    text: "沖縄らしさ、写真、所要時間、予約前の判断材料を分かりやすく伝える。",
+  },
+];
+
+const PROBLEMS = [
+  {
+    title: "良い店なのに、第一印象で伝わっていない",
+    text: "写真、言葉、余白、導線が揃っていないと、実際の魅力より弱く見えてしまいます。",
+  },
+  {
+    title: "SNSはあるけど、予約前の不安が残る",
+    text: "営業時間、料金、メニュー、駐車場、場所、流れが見つからないだけで、問い合わせは後回しになります。",
+  },
+  {
+    title: "テンプレート感が強く、選ばれる理由が見えない",
+    text: "沖縄の店舗は、人・空間・地域性・雰囲気が強みになることが多い。そこを薄めない設計が必要です。",
+  },
+];
+
+const FLOW = [
+  {
+    title: "目的を整理する",
+    text: "予約、問い合わせ、来店、採用、実績掲載など、何を増やしたいのかを先に決めます。",
+  },
+  {
+    title: "伝える順番を決める",
+    text: "初めて見る人が、店の雰囲気、料金、場所、安心材料、予約方法へ迷わず進めるように整理します。",
+  },
+  {
+    title: "世界観を作る",
+    text: "写真、余白、文字、色、動きを合わせて、店の空気が伝わる見た目にします。",
+  },
+  {
+    title: "スマホで確認する",
+    text: "沖縄の店舗サイトはスマホで見られる場面が多いため、スマホでの読みやすさと導線を重視します。",
   },
 ];
 
 const FEATURED_WORKS = [
-  {
-    name: "YORISOI Hair & Spa",
-    label: "浦添・メンズ専門理容室",
-    to: "/works/yorisoi",
-  },
   {
     name: "KOU RYUI",
     label: "琉装・沖縄文化体験",
@@ -45,20 +75,29 @@ const FEATURED_WORKS = [
     label: "ブライダル・フォトウェディング",
     to: "/works/vow-in-light",
   },
+  {
+    name: "BLACK PAPILLON",
+    label: "タトゥースタジオ",
+    to: "/works/black-papillon",
+  },
 ];
 
 const FAQS = [
   {
-    q: "沖縄県内で対面の打ち合わせはできますか？",
-    a: "はい。浦添を拠点に、那覇・宜野湾・北谷・沖縄市など沖縄本島内の事業者さまを想定しています。内容によってはオンライン相談と組み合わせて進めることもできます。",
+    q: "沖縄県内でホームページ制作の相談はできますか？",
+    a: "はい。浦添を拠点に、那覇・宜野湾・北谷・沖縄市など沖縄本島内の店舗・サロン・個人事業主さまを想定しています。内容によってはオンライン相談と組み合わせて進めることもできます。",
   },
   {
     q: "LPとホームページ、どちらが向いていますか？",
-    a: "予約・問い合わせ・キャンペーンなど目的がひとつならLP、店舗紹介・メニュー・実績・記事など情報を広げたい場合は複数ページのホームページが向いています。最初に目的を整理してから提案します。",
+    a: "予約・問い合わせ・キャンペーンなど目的がひとつならLP、店舗紹介・メニュー・実績・お知らせまで広げたい場合は複数ページのホームページが向いています。最初に目的を整理してから提案します。",
   },
   {
     q: "写真や文章がまだ揃っていなくても相談できますか？",
     a: "相談できます。必要な写真・文章・掲載情報を先に整理し、足りない素材がある場合は優先順位を決めながら進めます。SNSや既存サイトがある場合は、そこから現状を確認できます。",
+  },
+  {
+    q: "沖縄の店舗サイトでは何が大事ですか？",
+    a: "店の雰囲気、料金、場所、駐車場、予約方法、安心材料がすぐ分かることです。特にスマホで見た時に、初めての人が迷わず問い合わせできる導線が重要です。",
   },
   {
     q: "料金はどう決まりますか？",
@@ -89,6 +128,9 @@ const JSON_LD = {
       },
       breadcrumb: {
         "@id": `${SITE_URL}${PAGE_PATH}#breadcrumb`,
+      },
+      mainEntity: {
+        "@id": `${SITE_URL}${PAGE_PATH}#faq`,
       },
     },
     {
@@ -167,38 +209,151 @@ const JSON_LD = {
 };
 
 const WRAP = "mx-auto w-full max-w-[1040px] px-6 sm:px-8";
-const READ = "mx-auto w-full max-w-[720px]";
+const READ = "mx-auto w-full max-w-[760px]";
 const SECTION_PAD = "py-20 sm:py-28";
 
 const H2_T =
-  "text-white/95 font-semibold tracking-[-0.025em] text-[clamp(22px,2.4vw,32px)] leading-[1.32]";
+  "text-[#F7FBFF] font-semibold tracking-[-0.025em] text-[clamp(23px,2.5vw,34px)] leading-[1.32]";
+
 const BODY_T =
-  "text-white/80 text-[clamp(14px,1.1vw,16px)] leading-[2.15] tracking-[0.01em]";
+  "text-[#DCEFF5]/85 text-[clamp(14px,1.1vw,16px)] leading-[2.15] tracking-[0.01em]";
 
 const BTN_PRIMARY =
-  "inline-flex items-center justify-center h-11 px-7 no-underline text-[12px] tracking-[0.14em] transition bg-white/12 border border-white/24 text-white/95 md:hover:bg-white/18 md:hover:border-white/38";
+  "inline-flex items-center justify-center h-11 px-7 no-underline text-[12px] tracking-[0.14em] transition bg-[#F7FBFF]/13 border border-[#F7FBFF]/28 text-[#F7FBFF] md:hover:bg-[#F7FBFF]/20 md:hover:border-[#F7FBFF]/42";
 
 const BTN_SECONDARY =
-  "inline-flex items-center justify-center h-11 px-7 no-underline text-[12px] tracking-[0.14em] transition bg-transparent border border-white/18 text-white/80 md:hover:text-white/95 md:hover:border-white/34";
+  "inline-flex items-center justify-center h-11 px-7 no-underline text-[12px] tracking-[0.14em] transition bg-transparent border border-[#DCEFF5]/22 text-[#DCEFF5]/84 md:hover:text-[#F7FBFF] md:hover:border-[#F7FBFF]/38";
 
-const Eyebrow = ({ children }) => (
-  <p
-    className="m-0 text-[11px] tracking-[0.28em] text-white/50"
-    aria-hidden="true"
-  >
-    {children}
-  </p>
-);
+function stringifyJsonLd(obj) {
+  return JSON.stringify(obj)
+    .replace(/</g, "\\u003c")
+    .replace(/\u2028/g, "\\u2028")
+    .replace(/\u2029/g, "\\u2029");
+}
 
-const Prose = ({ paragraphs }) => (
-  <div className={`mt-7 ${READ} ${BODY_T} space-y-5`}>
-    {paragraphs.map((t, i) => (
-      <p key={i} className="m-0">
-        {t}
-      </p>
-    ))}
-  </div>
-);
+function Eyebrow({ children }) {
+  return (
+    <p
+      className="m-0 text-[11px] tracking-[0.28em] text-[#B8DDE8]/62"
+      aria-hidden="true"
+    >
+      {children}
+    </p>
+  );
+}
+
+function Prose({ paragraphs }) {
+  return (
+    <div className={`mt-7 ${READ} ${BODY_T} space-y-5`}>
+      {paragraphs.map((text) => (
+        <p key={text} className="m-0">
+          {text}
+        </p>
+      ))}
+    </div>
+  );
+}
+
+function NumberRows({ items }) {
+  return (
+    <div className="mt-10 mx-auto w-full max-w-[820px] border-t border-[#DCEFF5]/18 text-left">
+      {items.map((item, index) => (
+        <div
+          key={item.title}
+          className="grid grid-cols-[54px_1fr] gap-4 border-b border-[#DCEFF5]/14 py-5 sm:grid-cols-[72px_1fr]"
+        >
+          <p className="m-0 text-[11px] tracking-[0.24em] text-[#F2C77A]/78">
+            {String(index + 1).padStart(2, "0")}
+          </p>
+
+          <div>
+            <h3 className="m-0 text-[15px] leading-[1.75] tracking-[0.04em] text-[#F7FBFF] sm:text-[16px]">
+              {item.title}
+            </h3>
+
+            <p className="mt-2 mb-0 text-[14px] leading-[2] text-[#DCEFF5]/68">
+              {item.text}
+            </p>
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function TargetCards() {
+  return (
+    <ul
+      className="mt-12 mx-auto w-full max-w-[900px] grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 list-none p-0 text-left"
+      aria-label="対応業種"
+    >
+      {TARGETS.map(({ name, text }) => (
+        <li
+          key={name}
+          className="border border-[#DCEFF5]/18 bg-[#F7FBFF]/7 backdrop-blur-[3px] px-5 py-5 min-h-[158px]"
+        >
+          <h3 className="m-0 text-[#F7FBFF] text-[14px] tracking-[0.08em] leading-[1.6]">
+            {name}
+          </h3>
+
+          <p className="mt-4 mb-0 text-[#DCEFF5]/70 text-[13px] leading-[1.85]">
+            {text}
+          </p>
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+function FeaturedWorks() {
+  return (
+    <div className="mt-10 mx-auto w-full max-w-[780px] grid grid-cols-1 sm:grid-cols-3 gap-3 text-left">
+      {FEATURED_WORKS.map(({ name, label, to }) => (
+        <Link
+          key={name}
+          to={to}
+          className="group block no-underline border border-[#DCEFF5]/18 bg-[#F7FBFF]/7 px-5 py-5 transition md:hover:bg-[#F7FBFF]/11 md:hover:border-[#F7FBFF]/34"
+        >
+          <p className="m-0 text-[#F7FBFF] text-[14px] tracking-[0.08em] leading-[1.5]">
+            {name}
+          </p>
+
+          <p className="mt-3 mb-0 text-[#B8DDE8]/62 text-[12px] leading-[1.7]">
+            {label}
+          </p>
+
+          <span className="mt-5 inline-block text-[#F2C77A]/78 text-[11px] tracking-[0.16em] underline decoration-[#F2C77A]/30 underline-offset-[6px] group-hover:decoration-[#F2C77A]/65">
+            VIEW
+          </span>
+        </Link>
+      ))}
+    </div>
+  );
+}
+
+function FaqBlock() {
+  return (
+    <div
+      id="faq"
+      className="mt-12 mx-auto w-full max-w-[780px] border-t border-[#DCEFF5]/20 text-left"
+    >
+      {FAQS.map(({ q, a }) => (
+        <details
+          key={q}
+          className={`${styles.faqItem} border-b border-[#DCEFF5]/15`}
+        >
+          <summary className="py-6 cursor-pointer text-[#F7FBFF] text-[15px] leading-[1.65] tracking-[0.01em]">
+            {q}
+          </summary>
+
+          <p className="pb-7 m-0 text-[#DCEFF5]/74 text-[14px] leading-[2] tracking-[0.01em]">
+            {a}
+          </p>
+        </details>
+      ))}
+    </div>
+  );
+}
 
 export default function Okinawa() {
   useLayoutEffect(() => {
@@ -213,25 +368,21 @@ export default function Okinawa() {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: JSON.stringify(JSON_LD).replace(/</g, "\\u003c"),
+          __html: stringifyJsonLd(JSON_LD),
         }}
       />
 
-      {/* Three背景 */}
       <div className="fixed inset-0 z-0 pointer-events-none" aria-hidden="true">
         <OkinawaThreeSea className="h-[100svh] w-full" />
       </div>
 
-      {/* ページ内ナビ */}
       <nav
-        className="fixed z-30 top-5 left-5 right-5 sm:top-7 sm:left-9 sm:right-9
-                   flex items-center justify-between pointer-events-auto
-                   drop-shadow-[0_2px_18px_rgba(0,38,52,0.34)]"
+        className="fixed z-30 top-5 left-5 right-5 sm:top-7 sm:left-9 sm:right-9 flex items-center justify-between pointer-events-auto drop-shadow-[0_2px_18px_rgba(0,38,52,0.34)]"
         aria-label="ページナビゲーション"
       >
         <Link
           to="/"
-          className="text-[11px] tracking-[0.22em] text-white/88 no-underline md:hover:text-white transition"
+          className="text-[11px] tracking-[0.22em] text-[#F7FBFF]/90 no-underline md:hover:text-[#F7FBFF] transition"
         >
           GUSHIKEN DESIGN
         </Link>
@@ -239,43 +390,47 @@ export default function Okinawa() {
         <div className="flex items-center gap-4 sm:gap-6">
           <Link
             to="/works"
-            className="text-[10px] tracking-[0.18em] text-white/80 md:hover:text-white/95 transition"
+            className="text-[10px] tracking-[0.18em] text-[#DCEFF5]/82 md:hover:text-[#F7FBFF] transition"
           >
             WORKS
           </Link>
 
           <Link
             to="/price"
-            className="hidden sm:inline text-[10px] tracking-[0.18em] text-white/80 md:hover:text-white/95 transition"
+            className="hidden sm:inline text-[10px] tracking-[0.18em] text-[#DCEFF5]/82 md:hover:text-[#F7FBFF] transition"
           >
             PRICE
           </Link>
 
           <Link
             to="/contact"
-            className="text-[10px] tracking-[0.18em] text-white/80 md:hover:text-white/95 transition"
+            className="text-[10px] tracking-[0.18em] text-[#F2C77A]/82 md:hover:text-[#F2C77A] transition"
           >
             CONTACT
           </Link>
         </div>
       </nav>
 
-      {/* Hero */}
       <section
         className={`relative z-10 ${WRAP} pt-28 sm:pt-32 pb-24 sm:pb-28 text-center`}
         aria-labelledby="okinawa-title"
       >
         <Eyebrow>OKINAWA / LOCAL WEB DESIGN</Eyebrow>
 
-        <div id="okinawa-title" className="mt-4">
+        <h1 className="sr-only">
+          沖縄の店舗・サロン向けホームページ制作
+        </h1>
+
+        <div id="okinawa-title" className="mt-4" aria-hidden="true">
           <OkinawaWaveTitle />
         </div>
 
         <div className={`mt-7 ${READ} ${BODY_T} space-y-5`}>
           <p className="m-0">
-            沖縄県内の店舗・サロン・個人事業主向けに、予約・問い合わせにつながる
-            ホームページ制作・LP制作を行っています。
+            沖縄県内の店舗・サロン・個人事業主向けに、
+            予約・問い合わせにつながるホームページ制作・LP制作を行っています。
           </p>
+
           <p className="m-0">
             浦添を拠点に、写真・言葉・導線を「伝わる順番」に整え、
             初めて見る人が迷わず相談できる入口をつくります。
@@ -292,22 +447,38 @@ export default function Okinawa() {
           </Link>
         </div>
 
-        <div className="mt-10 flex flex-wrap justify-center gap-x-3 gap-y-2 text-[10px] tracking-[0.22em] text-white/50">
-          {AREAS.map((a, i) => (
-            <span key={a} className="flex items-center gap-2">
-              {i !== 0 && (
+        <div className="mt-10 flex flex-wrap justify-center gap-x-3 gap-y-2 text-[10px] tracking-[0.22em] text-[#B8DDE8]/62">
+          {AREAS.map((area, index) => (
+            <span key={area} className="flex items-center gap-2">
+              {index !== 0 ? (
                 <span
                   aria-hidden="true"
-                  className="inline-block size-[2px] rounded-full bg-white/35"
+                  className="inline-block size-[2px] rounded-full bg-[#F2C77A]/45"
                 />
-              )}
-              <span>{a}</span>
+              ) : null}
+              <span>{area}</span>
             </span>
           ))}
         </div>
       </section>
 
-      {/* 01 */}
+      <section
+        className={`${styles.sectionFx} relative z-10 ${WRAP} ${SECTION_PAD} text-center`}
+      >
+        <Eyebrow>ANSWER / LOCAL SERVICE</Eyebrow>
+
+        <h2 className={`mt-5 ${READ} ${H2_T}`}>
+          沖縄でホームページ制作を依頼できますか？
+        </h2>
+
+        <Prose
+          paragraphs={[
+            "はい。GUSHIKEN DESIGNでは、沖縄県内の店舗・サロン・個人事業主向けにホームページ制作・LP制作を行っています。",
+            "浦添を拠点に、那覇・宜野湾・北谷・沖縄市など沖縄本島内の事業者さまを想定し、予約・問い合わせにつながる構成、デザイン、実装まで対応します。",
+          ]}
+        />
+      </section>
+
       <section
         className={`${styles.sectionFx} relative z-10 ${WRAP} ${SECTION_PAD} text-center`}
       >
@@ -324,9 +495,10 @@ export default function Okinawa() {
             "GUSHIKEN DESIGNでは、写真・コピー・余白・導線を整理し、初めて見る人が予約や問い合わせまで進みやすい入口を設計します。",
           ]}
         />
+
+        <NumberRows items={PROBLEMS} />
       </section>
 
-      {/* 02 */}
       <section
         className={`${styles.sectionFx} relative z-10 ${WRAP} ${SECTION_PAD} text-center`}
       >
@@ -343,9 +515,10 @@ export default function Okinawa() {
             "最初に目的、必要なページ、掲載内容、導線を整理し、設計・デザイン・実装・公開まで一貫して進めます。",
           ]}
         />
+
+        <NumberRows items={FLOW} />
       </section>
 
-      {/* 03 */}
       <section
         className={`${styles.sectionFx} relative z-10 ${WRAP} ${SECTION_PAD} text-center`}
       >
@@ -362,30 +535,9 @@ export default function Okinawa() {
           ]}
         />
 
-        <ul
-          className="mt-12 mx-auto w-full max-w-[880px]
-                     grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3
-                     list-none p-0 text-left"
-          aria-label="対応業種"
-        >
-          {TARGETS.map(({ name, text }) => (
-            <li
-              key={name}
-              className="border border-white/15 bg-white/[0.055] backdrop-blur-[2px]
-                         px-5 py-5 min-h-[154px]"
-            >
-              <h3 className="m-0 text-white/90 text-[14px] tracking-[0.08em] leading-[1.6]">
-                {name}
-              </h3>
-              <p className="mt-4 mb-0 text-white/63 text-[13px] leading-[1.85]">
-                {text}
-              </p>
-            </li>
-          ))}
-        </ul>
+        <TargetCards />
       </section>
 
-      {/* 04 */}
       <section
         className={`${styles.sectionFx} relative z-10 ${WRAP} ${SECTION_PAD} text-center`}
       >
@@ -398,53 +550,22 @@ export default function Okinawa() {
         <Prose
           paragraphs={[
             "言葉で説明するより、制作例を見る方が早い場合があります。",
-            "沖縄らしい文化表現、ブライダルの空気感、店舗の予約導線など、目的に合わせて見せ方を変えています。",
+            "沖縄らしい文化表現、ブライダルの空気感、施術系店舗の不安解消など、目的に合わせて見せ方を変えています。",
           ]}
         />
 
-        <div
-          className="mt-10 mx-auto w-full max-w-[760px]
-                     grid grid-cols-1 sm:grid-cols-3 gap-3 text-left"
-        >
-          {FEATURED_WORKS.map(({ name, label, to }) => (
-            <Link
-              key={name}
-              to={to}
-              className="group block no-underline border border-white/15 bg-white/[0.055]
-                         px-5 py-5 transition md:hover:bg-white/[0.09] md:hover:border-white/28"
-            >
-              <p className="m-0 text-white/92 text-[14px] tracking-[0.08em] leading-[1.5]">
-                {name}
-              </p>
-
-              <p className="mt-3 mb-0 text-white/50 text-[12px] leading-[1.7]">
-                {label}
-              </p>
-
-              <span
-                className="mt-5 inline-block text-white/70 text-[11px] tracking-[0.16em]
-                           underline decoration-white/25 underline-offset-[6px]
-                           group-hover:decoration-white/55"
-              >
-                VIEW
-              </span>
-            </Link>
-          ))}
-        </div>
+        <FeaturedWorks />
 
         <div className="mt-10">
           <Link
             to="/works"
-            className="text-white/85 text-[12px] tracking-[0.14em]
-                       underline decoration-white/35 underline-offset-[7px]
-                       md:hover:decoration-white/60 transition"
+            className="text-[#F2C77A]/84 text-[12px] tracking-[0.14em] underline decoration-[#F2C77A]/35 underline-offset-[7px] md:hover:decoration-[#F2C77A]/70 transition"
           >
             すべての制作例を見る
           </Link>
         </div>
       </section>
 
-      {/* 05 FAQ */}
       <section
         className={`${styles.sectionFx} relative z-10 ${WRAP} ${SECTION_PAD} text-center`}
         aria-labelledby="faq-title"
@@ -455,34 +576,15 @@ export default function Okinawa() {
           相談前の不安だけ、先にほどく。
         </h2>
 
-        <div className="mt-12 mx-auto w-full max-w-[760px] border-t border-white/20 text-left">
-          {FAQS.map(({ q, a }) => (
-            <details
-              key={q}
-              className={`${styles.faqItem} border-b border-white/15`}
-            >
-              <summary className="py-6 cursor-pointer text-white/90 text-[15px] leading-[1.65] tracking-[0.01em]">
-                {q}
-              </summary>
-
-              <p className="pb-7 m-0 text-white/70 text-[14px] leading-[2] tracking-[0.01em]">
-                {a}
-              </p>
-            </details>
-          ))}
-        </div>
+        <FaqBlock />
       </section>
 
-      {/* CONTACT */}
       <section
         className={`${styles.sectionFx} relative z-10 ${WRAP} py-24 sm:py-32 text-center`}
       >
         <Eyebrow>CONTACT</Eyebrow>
 
-        <h2
-          className={`mt-5 ${READ} text-white/95 font-semibold tracking-[-0.025em]
-                      text-[clamp(24px,2.8vw,38px)] leading-[1.25]`}
-        >
+        <h2 className="mt-5 mx-auto w-full max-w-[760px] text-[#F7FBFF] font-semibold tracking-[-0.025em] text-[clamp(25px,2.9vw,40px)] leading-[1.25]">
           沖縄の店に、選ばれる入口を。
         </h2>
 

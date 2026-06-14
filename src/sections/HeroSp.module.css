@@ -1,19 +1,20 @@
 /* src/sections/HeroSp.module.css */
 /* =========================================
-   HERO (SP) — Paper / Shelf / Frames
-   - SELECTED WORKS は削除（.selected も無し）
-   - 上の詰まり：.content / .readPad をSEで戻す
-   - 作品は「stageY」で丸ごと下げる（ノブ）
-   - shelfTop は“接地”のノブ（小さいほど下がる）
+   HERO SP — Paper / Shelf / Frames
+   Short Copy × Strong Visual
 ========================================= */
 
-.root{
-  --paper: rgba(246,241,232,1);
-  --ink: rgba(22,22,22,.88);
-  --faint: rgba(90,75,55,.55);
-  --hair: rgba(120,95,65,.18);
+.root {
+  --paper: rgba(246, 241, 232, 1);
+  --ink: rgba(22, 22, 22, 0.9);
+  --ink-strong: rgba(16, 16, 16, 0.96);
+  --muted: rgba(28, 28, 28, 0.62);
+  --faint: rgba(90, 75, 55, 0.55);
+  --hair: rgba(120, 95, 65, 0.18);
+  --gold: #b8905a;
+  --gold-soft: rgba(184, 144, 90, 0.34);
+  --ease-out: cubic-bezier(0.22, 0.1, 0.28, 1);
 
-  /* 棚の天面（小さいほどフレームが下がる） */
   --shelfTop: clamp(44px, 6.2vh, 92px);
 
   position: relative;
@@ -24,70 +25,113 @@
   isolation: isolate;
 }
 
-/* うっすい紙の光 */
-.root::before{
-  content:"";
-  position:absolute;
-  inset:0;
-  pointer-events:none;
-  z-index:0;
+.root *,
+.root *::before,
+.root *::after {
+  box-sizing: border-box;
+}
+
+.root a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+.root::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
   background:
-    radial-gradient(520px 360px at 18% 12%, rgba(255,255,255,.62), rgba(255,255,255,0)),
-    radial-gradient(620px 420px at 76% 34%, rgba(255,255,255,.34), rgba(255,255,255,0));
+    radial-gradient(
+      520px 360px at 18% 12%,
+      rgba(255, 255, 255, 0.62),
+      rgba(255, 255, 255, 0)
+    ),
+    radial-gradient(
+      620px 420px at 76% 34%,
+      rgba(255, 255, 255, 0.34),
+      rgba(255, 255, 255, 0)
+    );
+}
+
+.root::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.018;
+  background-image: radial-gradient(
+    rgba(0, 0, 0, 0.22) 0.4px,
+    transparent 0.42px
+  );
+  background-size: 4px 4px;
+  mix-blend-mode: multiply;
 }
 
 /* =========================
-   BG PHOTO (shelf + vase)
+   BG PHOTO
 ========================= */
-.bgPhoto{
-  position:absolute;
-  inset:0;
-  z-index:0;
+.bgPhoto {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
   background-size: cover;
   background-repeat: no-repeat;
   background-position: 82% 100%;
-  opacity: .92;
-  filter: saturate(.96) contrast(.95) brightness(1.06);
+  opacity: 0.9;
+  filter: saturate(0.96) contrast(0.95) brightness(1.06);
   transform: translateZ(0);
 }
-.bgPhoto::after{
-  content:"";
-  position:absolute;
-  inset:0;
-  pointer-events:none;
-  /* 棚の上に薄い白膜：写真立ての“置かれてる感” */
-  background: linear-gradient(
-    to top,
-    rgba(244,239,230,.92) 0%,
-    rgba(244,239,230,.64) 26%,
-    rgba(244,239,230,0) 68%
-  );
+
+.bgPhoto::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(
+      to bottom,
+      rgba(246, 241, 232, 0.88) 0%,
+      rgba(246, 241, 232, 0.62) 34%,
+      rgba(246, 241, 232, 0.18) 58%,
+      rgba(246, 241, 232, 0.72) 100%
+    ),
+    linear-gradient(
+      to top,
+      rgba(244, 239, 230, 0.9) 0%,
+      rgba(244, 239, 230, 0.62) 26%,
+      rgba(244, 239, 230, 0) 68%
+    );
 }
 
 /* =========================
-   BIG TYPE (air)
+   BIG TYPE
 ========================= */
-.bgType{
-  position:absolute;
-  inset:-8% -8% auto -8%;
-  pointer-events:none;
-  user-select:none;
+.bgType {
+  position: absolute;
+  inset: -8% -8% auto -8%;
   z-index: 1;
+  pointer-events: none;
+  user-select: none;
 }
+
 .bgWordTop,
-.bgWordBottom{
-  display:block;
+.bgWordBottom {
+  display: block;
   font-family: "Cormorant Garamond", serif;
-  letter-spacing: .06em;
-  line-height: .88;
-  color: rgba(140,120,90,.055);
+  letter-spacing: 0.06em;
+  line-height: 0.88;
+  color: rgba(140, 120, 90, 0.052);
   text-transform: uppercase;
 }
-.bgWordTop{
+
+.bgWordTop {
   font-size: clamp(120px, 28vw, 220px);
   transform: translate(-6vw, 5vh);
 }
-.bgWordBottom{
+
+.bgWordBottom {
   font-size: clamp(120px, 28vw, 220px);
   transform: translate(-2vw, 24vh);
 }
@@ -95,347 +139,456 @@
 /* =========================
    LAYOUT
 ========================= */
-.content{
+.content {
   position: relative;
   z-index: 2;
-  padding: 88px 18px 18px;
   display: flex;
   flex-direction: column;
-  gap: 16px;
   min-height: 100svh;
+  gap: 18px;
+  padding: 92px 18px 20px;
 }
 
-/* 可読性だけ上げる“白膜”（箱に見せない） */
-.readPad{
-  position:absolute;
+/* 箱に見せない白膜 */
+.readPad {
+  position: absolute;
   left: -18px;
-  top: 70px;
-  width: min(82vw, 470px);
-  height: clamp(320px, 48vh, 560px);
-  pointer-events:none;
+  top: 62px;
   z-index: 0;
+  width: min(84vw, 470px);
+  height: clamp(340px, 49vh, 580px);
+  pointer-events: none;
 
   background:
-    radial-gradient(120% 90% at 0% 0%,
-      rgba(246,241,232,.98) 0%,
-      rgba(246,241,232,.86) 44%,
-      rgba(246,241,232,0) 78%
+    radial-gradient(
+      120% 90% at 0% 0%,
+      rgba(246, 241, 232, 0.99) 0%,
+      rgba(246, 241, 232, 0.88) 44%,
+      rgba(246, 241, 232, 0) 78%
     ),
-    linear-gradient(to bottom,
-      rgba(246,241,232,.72) 0%,
-      rgba(246,241,232,.62) 58%,
-      rgba(246,241,232,0) 100%
+    linear-gradient(
+      to bottom,
+      rgba(246, 241, 232, 0.76) 0%,
+      rgba(246, 241, 232, 0.62) 58%,
+      rgba(246, 241, 232, 0) 100%
     );
 }
 
-.left{
+.left {
+  position: relative;
+  z-index: 6;
   width: 100%;
   max-width: 420px;
-  position: relative;
-  z-index: 6; /* 文字は常に上 */
 }
 
-.kicker{
-  font-size: 11px;
-  letter-spacing: .18em;
+.kicker {
+  margin: 0 0 12px;
   color: var(--faint);
-  margin: 0 0 10px;
+  font-size: 9.5px;
+  line-height: 1.7;
+  letter-spacing: 0.2em;
 }
-.hook{
-  font-size: 14px;
-  letter-spacing: .08em;
+
+.hook {
+  margin: 0 0 20px;
+  color: rgba(22, 22, 22, 0.86);
+  font-size: 13px;
+  line-height: 1.75;
+  letter-spacing: 0.08em;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.38);
+}
+
+.h1 {
   margin: 0 0 18px;
-  color: rgba(22,22,22,.86);
-  text-shadow: 0 1px 0 rgba(255,255,255,.38);
-}
-.h1{
-  margin: 0 0 14px;
+  color: var(--ink-strong);
   font-family: "Cormorant Garamond", serif;
   font-weight: 400;
-  font-size: clamp(56px, 12.6vw, 84px);
-  letter-spacing: .02em;
-  line-height: .92;
-  text-shadow: 0 1px 0 rgba(255,255,255,.32);
-}
-
-.copy{
-  margin: 0 0 16px;
-  font-size: 13px;
-  line-height: 1.9;
-  color: rgba(22,22,22,.84);
-  text-shadow: 0 1px 0 rgba(255,255,255,.34);
-}
-.copyMeta{
-  display:block;
-  font-size: 11px;
-  letter-spacing: .10em;
-  color: rgba(70,55,40,.60);
-  margin-bottom: 8px;
-}
-.copyText{ display:block; }
-
-.cta{
-  display:inline-flex;
-  align-items:center;
-  gap: 10px;
-  padding: 10px 0 8px;
-  font-size: 12px;
-  letter-spacing: .14em;
-  color: rgba(22,22,22,.86);
-  text-decoration: none;
-  border-bottom: 1px solid rgba(110,85,55,.22);
-}
-
-.ctaNote{
-  margin-top: 10px;
-  font-size: 10px;
-  letter-spacing: .12em;
-  color: rgba(70,55,40,.52);
+  font-size: clamp(54px, 14.4vw, 82px);
+  letter-spacing: 0.02em;
+  line-height: 0.96;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.32);
 }
 
 /* =========================
-   STAGE (frames on shelf)
-   - stageYで“作品全体”を下げる
+   COPY
 ========================= */
-.stage{
-  margin-top: auto;
+.copy {
   position: relative;
-  width: 100%;
-  z-index: 2;
-
-  /* ✅ 作品群をまとめて下げる量（強め） */
-  --stageY: clamp(56px, 7.4svh, 148px);
-
-  /* 下げた分が見切れないように床を足す */
-  padding-top: 10px;
-  padding-bottom: calc(14px + var(--stageY));
+  max-width: 350px;
+  margin: 0 0 18px;
+  padding-left: 15px;
+  color: var(--muted);
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.34);
 }
 
-.frames{
+.copy::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 4px;
+  width: 1px;
+  height: calc(100% - 8px);
+  background: linear-gradient(
+    180deg,
+    rgba(184, 144, 90, 0.58),
+    rgba(184, 144, 90, 0.18),
+    rgba(184, 144, 90, 0)
+  );
+}
+
+.copyMeta {
+  display: block;
+  margin: 0 0 12px;
+  color: rgba(70, 55, 40, 0.6);
+  font-size: 8.8px;
+  line-height: 1.75;
+  letter-spacing: 0.14em;
+}
+
+.copyLead {
+  margin: 0;
+  color: rgba(18, 18, 18, 0.82);
+  font-family: "Shippori Mincho", "Yu Mincho", "Hiragino Mincho ProN", serif;
+  font-size: clamp(14px, 3.9vw, 16px);
+  line-height: 1.82;
+  letter-spacing: 0.08em;
+}
+
+.copyLead::after {
+  content: "";
+  display: block;
+  width: 34px;
+  height: 1px;
+  margin: 12px 0 11px;
+  background: rgba(184, 144, 90, 0.42);
+}
+
+.copySub {
+  margin: 0;
+  color: rgba(28, 28, 28, 0.58);
+  font-size: 11px;
+  line-height: 1.95;
+  letter-spacing: 0.035em;
+}
+
+.ctaRow {
+  margin-top: 4px;
+}
+
+.cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 11px 0 9px;
+  color: rgba(22, 22, 22, 0.88);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(110, 85, 55, 0.3);
+  font-size: 11px;
+  line-height: 1;
+  letter-spacing: 0.14em;
+}
+
+.cta::after {
+  content: "";
+  width: 24px;
+  height: 1px;
+  background: currentColor;
+  opacity: 0.36;
+}
+
+.cta:focus-visible {
+  outline: 2px solid rgba(100, 80, 50, 0.36);
+  outline-offset: 8px;
+}
+
+.ctaNote {
+  margin: 11px 0 0;
+  color: rgba(70, 55, 40, 0.52);
+  font-size: 9px;
+  line-height: 1.75;
+  letter-spacing: 0.12em;
+}
+
+/* =========================
+   STAGE
+========================= */
+.stage {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  margin-top: auto;
+
+  --stageY: clamp(54px, 7svh, 136px);
+
+  padding-top: 10px;
+  padding-bottom: calc(16px + var(--stageY));
+}
+
+.frames {
   position: relative;
   height: min(58svh, 520px);
   transform: translateY(var(--stageY));
   will-change: transform;
 }
 
-/* base frame */
-.frame{
-  position:absolute;
+.frame {
+  position: absolute;
   bottom: var(--shelfTop);
-  text-decoration:none;
   color: inherit;
+  text-decoration: none;
   outline: none;
   transform: translateZ(0);
 }
-.frame:focus-visible{
-  outline: 2px solid rgba(100,80,50,.36);
+
+.frame:focus-visible {
+  outline: 2px solid rgba(100, 80, 50, 0.36);
   outline-offset: 8px;
 }
 
-/* GSAPは内側だけ触る（center崩れ防止） */
-.frameAnim{
-  display:block;
+.frameAnim {
+  display: block;
   will-change: transform, opacity;
 }
 
-/* 額縁（影を“棚に密着”） */
-.frameInner{
+.frameInner {
   position: relative;
-  background: rgba(255,255,255,.72);
-  border: 1px solid rgba(180,165,145,.36);
+  background: rgba(255, 255, 255, 0.76);
+  border: 1px solid rgba(180, 165, 145, 0.38);
   box-shadow:
-    0 60px 100px rgba(0,0,0,.20),
-    0 18px 34px rgba(0,0,0,.10),
-    0 1px 0 rgba(255,255,255,.86) inset;
+    0 60px 100px rgba(0, 0, 0, 0.2),
+    0 18px 34px rgba(0, 0, 0, 0.1),
+    0 1px 0 rgba(255, 255, 255, 0.86) inset;
 }
-.frameInner::after{
-  content:"";
-  position:absolute;
+
+.frameInner::after {
+  content: "";
+  position: absolute;
   left: 12%;
   right: 12%;
   bottom: -18px;
   height: 22px;
-  background: radial-gradient(ellipse 60% 80% at 50% 20%, rgba(0,0,0,.16), rgba(0,0,0,0));
+  background: radial-gradient(
+    ellipse 60% 80% at 50% 20%,
+    rgba(0, 0, 0, 0.16),
+    rgba(0, 0, 0, 0)
+  );
   filter: blur(0.2px);
-  pointer-events:none;
+  pointer-events: none;
 }
 
-/* Vow（奥・大） */
-.lg{
+.lg {
   left: 44%;
-  transform: translateX(-50%);
   z-index: 2;
+  transform: translateX(-50%);
 }
-.lg .frameInner{
+
+.lg .frameInner {
   width: min(76vw, 360px);
 }
 
-/* KOU（手前・重なり） */
-.md{
+.md {
   left: 66%;
-  transform: translateX(-50%);
   bottom: calc(var(--shelfTop) - 34px);
   z-index: 3;
+  transform: translateX(-50%);
 }
-.md .frameInner{
+
+.md .frameInner {
   width: min(66vw, 310px);
 }
 
-.imgWrap{
+.imgWrap {
+  position: relative;
   width: 100%;
   aspect-ratio: 3 / 4;
   overflow: hidden;
-  position: relative;
-  background: rgba(240,235,225,.60);
-  padding: 14px; /* マット */
+  padding: 14px;
+  background: rgba(240, 235, 225, 0.6);
 }
-.workImg{
+
+.workImg {
+  display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+.fallback {
+  position: absolute;
+  inset: 14px;
   display: block;
 }
 
-/* fallback */
-.fallback{
-  position:absolute;
-  inset:14px;
-  display:block;
-}
-.fallbackVow{
-  background: linear-gradient(155deg, rgba(185,205,220,.75) 0%, rgba(155,185,210,.55) 45%, rgba(230,225,218,.45) 100%);
-}
-.fallbackKou{
-  background: linear-gradient(155deg, rgba(170,35,35,.70) 0%, rgba(130,25,25,.55) 50%, rgba(185,140,100,.35) 100%);
+.fallbackVow {
+  background: linear-gradient(
+    155deg,
+    rgba(185, 205, 220, 0.75) 0%,
+    rgba(155, 185, 210, 0.55) 45%,
+    rgba(230, 225, 218, 0.45) 100%
+  );
 }
 
-.caption{
-  display:flex;
-  flex-direction:column;
+.fallbackKou {
+  background: linear-gradient(
+    155deg,
+    rgba(170, 35, 35, 0.7) 0%,
+    rgba(130, 25, 25, 0.55) 50%,
+    rgba(185, 140, 100, 0.35) 100%
+  );
+}
+
+.caption {
+  display: flex;
+  flex-direction: column;
   gap: 3px;
   padding: 9px 12px 11px;
-  border-top: 1px solid rgba(100,80,50,.10);
-  background: rgba(255,255,255,.58);
+  border-top: 1px solid rgba(100, 80, 50, 0.1);
+  background: rgba(255, 255, 255, 0.58);
 }
-.workTitle{
-  font-size: 11px;
-  letter-spacing: .14em;
-  color: rgba(28,28,28,.86);
+
+.workTitle {
+  color: rgba(28, 28, 28, 0.86);
+  font-size: 10.5px;
+  line-height: 1.4;
+  letter-spacing: 0.14em;
 }
-.workSub{
-  font-size: 9.5px;
-  letter-spacing: .10em;
+
+.workSub {
   color: var(--faint);
+  font-size: 9px;
+  line-height: 1.45;
+  letter-spacing: 0.1em;
 }
 
-/* subtle hint */
-.scrollHint{
-  margin-top: 10px;
-  height: 1px;
+.scrollHint {
   width: 42px;
-  background: rgba(110,85,55,.18);
-  opacity: .6;
-}
-
-/* reduced motion */
-@media (prefers-reduced-motion: reduce){
-  .bgPhoto{ transform:none; }
-  .frames{ transform:none; }
+  height: 1px;
+  margin-top: 10px;
+  background: rgba(110, 85, 55, 0.18);
+  opacity: 0.6;
 }
 
 /* =========================
-   SHORT VIEWPORT (iPhone SEなど)
-   - 上の詰まりを解く（content/readPad）
-   - 作品をさらに下へ（stageY / shelfTop）
+   SHORT VIEWPORT
 ========================= */
-@media (max-height: 720px), (max-width: 390px){
-  /* ✅ ここが詰まりの原因だったので戻す（70px→92px） */
-  .content{
-    padding: 92px 14px 12px;
+@media (max-height: 720px), (max-width: 390px) {
+  .content {
     gap: 12px;
+    padding: 84px 14px 12px;
   }
 
-  .readPad{
-    top: 78px;
-    width: min(86vw, 470px);
+  .readPad {
+    top: 66px;
+    width: min(89vw, 470px);
     height: clamp(300px, 48vh, 500px);
   }
 
-  .kicker{ margin: 0 0 8px; font-size: 10px; }
-  .hook{ margin: 0 0 14px; font-size: 13px; }
-
-  .h1{
-    margin: 0 0 10px;
-    font-size: clamp(48px, 12.2vw, 72px);
+  .kicker {
+    margin-bottom: 8px;
+    font-size: 8.8px;
+    line-height: 1.6;
   }
 
-  .copy{
-    margin: 0 0 12px;
+  .hook {
+    margin-bottom: 13px;
     font-size: 12px;
-    line-height: 1.75;
+    line-height: 1.65;
   }
 
-  .cta{ padding: 8px 0 6px; }
-  .ctaNote{ margin-top: 8px; }
+  .h1 {
+    margin-bottom: 12px;
+    font-size: clamp(48px, 14vw, 70px);
+    line-height: 0.96;
+  }
 
-  /* ✅ さらに下げる（SE専用） */
-  .root{ --shelfTop: 34px; }
+  .copy {
+    max-width: 320px;
+    margin-bottom: 12px;
+  }
 
-  .stage{
-    --stageY: clamp(68px, 9.2svh, 176px);
+  .copyMeta {
+    margin-bottom: 8px;
+    font-size: 8.2px;
+    line-height: 1.7;
+  }
+
+  .copyLead {
+    font-size: 13px;
+    line-height: 1.72;
+  }
+
+  .copyLead::after {
+    margin: 10px 0 9px;
+  }
+
+  .copySub {
+    font-size: 10.2px;
+    line-height: 1.78;
+  }
+
+  .cta {
+    padding: 8px 0 6px;
+    font-size: 10px;
+  }
+
+  .ctaNote {
+    margin-top: 8px;
+    font-size: 8.4px;
+  }
+
+  .root {
+    --shelfTop: 34px;
+  }
+
+  .stage {
+    --stageY: clamp(66px, 9svh, 166px);
     padding-bottom: calc(10px + var(--stageY));
   }
 
-  .frames{ height: min(56svh, 460px); }
+  .frames {
+    height: min(56svh, 460px);
+  }
 
-  .lg .frameInner{ width: min(74vw, 332px); }
-  .md .frameInner{ width: min(62vw, 286px); }
+  .lg {
+    bottom: calc(var(--shelfTop) - 8px);
+  }
 
-  /* 位置は“下げすぎると棚感が消える”ので微調整だけ */
-  .lg{ bottom: calc(var(--shelfTop) - 8px); }
-  .md{ bottom: calc(var(--shelfTop) - 44px); }
-}
-/* ====== LAYOUT：少しだけ空気 ====== */
-.content{
-  padding: 96px 18px 20px;   /* 88→96：上を少し広げる */
-  gap: 18px;                 /* 16→18：全体の呼吸 */
-}
+  .md {
+    bottom: calc(var(--shelfTop) - 44px);
+  }
 
-/* 読める膜：文字が増えるので少しだけ背を伸ばす */
-.readPad{
-  top: 66px;                 /* 70→66：上を少し拾う */
-  height: clamp(340px, 50vh, 590px); /* 320/48/560 → 少しだけ増 */
-}
+  .lg .frameInner {
+    width: min(74vw, 332px);
+  }
 
-/* ====== TEXT GROUP：ここが本命 ====== */
-.kicker{
-  margin: 0 0 14px;          /* 10→14 */
-}
+  .md .frameInner {
+    width: min(62vw, 286px);
+  }
 
-.hook{
-  margin: 0 0 22px;          /* 18→22 */
-  line-height: 1.7;          /* ついでに息 */
-}
+  .caption {
+    padding: 8px 10px 9px;
+  }
 
-.h1{
-  margin: 0 0 18px;          /* 14→18 */
-  line-height: .96;          /* .92→.96（詰まり解消） */
+  .workTitle {
+    font-size: 10px;
+  }
+
+  .workSub {
+    font-size: 8.5px;
+  }
 }
 
-.copy{
-  margin: 0 0 18px;          /* 16→18 */
-  line-height: 2.0;          /* 1.9→2.0（読みやすさ） */
-}
+@media (prefers-reduced-motion: reduce) {
+  .bgPhoto {
+    transform: none;
+  }
 
-.copyMeta{
-  margin-bottom: 10px;       /* 8→10 */
-}
+  .frames {
+    transform: none;
+  }
 
-/* CTA周りも少し呼吸 */
-.cta{
-  padding: 12px 0 10px;      /* 10/8 → 12/10 */
-}
-
-.ctaNote{
-  margin-top: 12px;          /* 10→12 */
+  .frameAnim,
+  .workImg {
+    will-change: auto;
+  }
 }

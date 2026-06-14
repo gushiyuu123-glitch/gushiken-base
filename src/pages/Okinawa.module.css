@@ -216,3 +216,38 @@
     font-size: 16px;
   }
 }
+.pageFx {
+  color: #f7fbff;
+}
+
+.pageFx :where(p, h1, h2, h3, h4, span, summary, li, a) {
+  color: inherit;
+}
+
+.pageFx :where(a) {
+  text-decoration-color: rgba(242, 199, 122, 0.35);
+}
+
+.pageFx :where(svg) {
+  color: #f7fbff;
+}
+.pageFx {
+  --oki-main: #f7fbff;
+  --oki-body: #dceff5;
+  --oki-muted: #b8dde8;
+  --oki-accent: #f2c77a;
+
+  color: var(--oki-main);
+}
+
+.pageFx :where(p) {
+  color: var(--oki-body);
+}
+
+.pageFx :where(h1, h2, h3, summary) {
+  color: var(--oki-main);
+}
+
+.pageFx :where(a) {
+  color: inherit;
+}

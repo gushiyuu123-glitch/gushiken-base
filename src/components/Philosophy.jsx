@@ -1,5 +1,6 @@
 // src/sections/Philosophy.jsx
 import React, { useEffect, useMemo, useRef } from "react";
+import { Link } from "react-router-dom";
 import SectionSvgTitle from "../components/SectionSvgTitle";
 import styles from "./Philosophy.module.css";
 
@@ -8,40 +9,40 @@ const cx = (...a) => a.filter(Boolean).join(" ");
 const PRINCIPLES = [
   {
     number: "01",
-    title: "迷わない設計",
+    title: "最初に迷わせない",
     en: "CLARITY",
     type: "clarity",
     text: (
       <>
-        最初の数秒で「何をしているか」が伝わる。
+        何をしているか、誰に向いているか。
         <br />
-        読み返さなくていい順序に整えます。
+        最初の数秒で判断できる順序へ整えます。
       </>
     ),
   },
   {
     number: "02",
-    title: "印象の統一",
+    title: "印象を編集する",
     en: "ATMOSPHERE",
     type: "atmosphere",
     text: (
       <>
-        写真の見え方と余白の温度を揃える。
+        写真・言葉・余白の温度を揃える。
         <br />
-        上質さが“静かに”残る状態へ。
+        見た後に、静かに残る空気を作ります。
       </>
     ),
   },
   {
     number: "03",
-    title: "相談までの導線",
+    title: "相談までつなげる",
     en: "FLOW",
     type: "flow",
     text: (
       <>
-        不安が出る前に答えを置く。
+        不安が出る前に、必要な答えを置く。
         <br />
-        迷わず相談できる流れを作ります。
+        迷わず問い合わせへ進める流れを設計します。
       </>
     ),
   },
@@ -86,7 +87,10 @@ function VisualPrinciples() {
       <div className={styles.principlesInner}>
         <div className={styles.vpAxis} aria-hidden="true" />
 
-        <p className={cx(styles.principlesLabel, styles.principleReveal)} style={{ "--d": "40ms" }}>
+        <p
+          className={cx(styles.principlesLabel, styles.principleReveal)}
+          style={{ "--d": "40ms" }}
+        >
           HOW I DESIGN
         </p>
 
@@ -160,7 +164,12 @@ export default function Philosophy() {
   }, [reduceMotion]);
 
   return (
-    <section id="philosophy" ref={sectionRef} className={styles.section} aria-label="制作方針">
+    <section
+      id="philosophy"
+      ref={sectionRef}
+      className={styles.section}
+      aria-label="制作方針"
+    >
       <div className={styles.seamTop} aria-hidden="true" />
       <div className={styles.seamBottom} aria-hidden="true" />
 
@@ -175,29 +184,37 @@ export default function Philosophy() {
           aria-hidden="true"
         />
 
-        <header className={cx(styles.header, styles.flow, styles.flow1)} data-reveal-flow>
-          <SectionSvgTitle title="POLICY" sub="DESIGN POLICY" className={styles.svgTitle} />
+        <header
+          className={cx(styles.header, styles.flow, styles.flow1)}
+          data-reveal-flow
+        >
+          <SectionSvgTitle
+            title="POLICY"
+            sub="DESIGN POLICY"
+            className={styles.svgTitle}
+          />
+
           <p className={styles.sub}>制作で大切にしていること</p>
         </header>
 
         <div className={styles.copy}>
           <p className={cx(styles.lead, styles.flow, styles.flow2)} data-reveal-flow>
-            <span>見た瞬間に伝わり</span>、読み進めても迷わない。
+            <span>見た瞬間に伝わり</span>、
             <br />
-            その上で、写真と余白の印象を整えて
+            読み進めても迷わない。
             <br />
-            <span>「相談したくなる」</span>までつなげます。
+            その先で、<span>相談したくなる流れ</span>まで整えます。
           </p>
 
           <p className={cx(styles.body, styles.flow, styles.flow3)} data-reveal-flow>
-            Webサイトは、じっくり読まれる前に“印象”で判断されます。
+            Webサイトは、じっくり読まれる前に印象で判断されます。
             <br />
-            だからこそ、情報の順序・文字量・写真の見え方を編集して、
+            だからこそ、情報の順序、文字量、写真の見え方、余白の温度を編集し、
             <span>何をしているか／誰に向いているか</span>が自然に入る状態を作ります。
             <br />
             <br />
-            きれいに整えるだけで終わらず、
-            <span>不安を先回りで潰し</span>、問い合わせまでの流れも一緒に設計します。
+            きれいに整えるだけで終わらせず、
+            <span>不安を先回りで潰し</span>、問い合わせまでの導線も一緒に設計します。
           </p>
 
           <VisualPrinciples />
@@ -206,10 +223,12 @@ export default function Philosophy() {
             <span>
               迷わない。伝わる。決められる。
               <br />
-              この3つが揃うと、サイトは“強く”なります。
+              この3つが揃うと、サイトは強くなります。
             </span>
             <br />
-            <em>「ここなら任せやすそう」と感じてもらえることを、成果の前提に置いています。</em>
+            <em>
+              「ここなら任せやすそう」と感じてもらえることを、成果の前提に置いています。
+            </em>
           </p>
 
         </div>

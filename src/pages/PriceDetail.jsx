@@ -1,6 +1,6 @@
 // src/pages/PriceDetail.jsx
 import React, { useEffect, useRef } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import SectionSvgTitle from "../components/SectionSvgTitle";
 import "./priceDetail.css";
 
@@ -10,17 +10,8 @@ const PAGE_DESCRIPTION =
 
 const CANONICAL_URL = "https://gushikendesign.com/price";
 
-// 見積フォーム（外部URL）
-const MITUMORI_BASE = "https://mitumori-form.vercel.app/";
-const MITUMORI_QUICK = "https://mitumori-form.vercel.app/?mode=quick";
-
-// internal
 const WORKS_PATH = "/works";
-
-// contact（TOPの #contact へ流す）
-const CONTACT_ROUTE = "/#contact";
-const CONTACT_ID = "contact";
-const SCROLL_OFFSET = 84; // 固定ヘッダーぶん（被るなら調整）
+const CONTACT_PATH = "/contact";
 
 const PLANS = [
   {
@@ -60,83 +51,73 @@ const PLANS = [
 ];
 
 const ADDONS = [
-  { title: "写真の個別補正（まとめ）", price: "要相談", desc: "色味・トーンの揃え込み。必要な範囲で。", badge: "ADD" },
-  { title: "追加ページ", price: "要相談", desc: "ページ単位で増える場合。構造が変わると再見積。", badge: "ADD" },
-  { title: "文章の整理・調整", price: "要相談", desc: "読みやすさ優先で“伝わる順番”へ整えます。", badge: "ADD" },
-  { title: "運用サポート（月額）", price: "9,800〜", desc: "軽微な更新・NEWS追加など。", badge: "CARE" },
+  {
+    title: "写真の個別補正（まとめ）",
+    price: "要相談",
+    desc: "色味・トーンの揃え込み。必要な範囲で。",
+    badge: "ADD",
+  },
+  {
+    title: "追加ページ",
+    price: "要相談",
+    desc: "ページ単位で増える場合。構造が変わると再見積。",
+    badge: "ADD",
+  },
+  {
+    title: "文章の整理・調整",
+    price: "要相談",
+    desc: "読みやすさ優先で“伝わる順番”へ整えます。",
+    badge: "ADD",
+  },
+  {
+    title: "運用サポート（月額）",
+    price: "9,800〜",
+    desc: "軽微な更新・NEWS追加など。",
+    badge: "CARE",
+  },
 ];
 
 function setMetaByName(name, content) {
-  if (!content) return;
+  if (!content || typeof document === "undefined") return;
+
   let tag = document.querySelector(`meta[name="${name}"]`);
   if (!tag) {
     tag = document.createElement("meta");
     tag.setAttribute("name", name);
     document.head.appendChild(tag);
   }
+
   tag.setAttribute("content", content);
 }
 
 function setMetaByProperty(property, content) {
-  if (!content) return;
+  if (!content || typeof document === "undefined") return;
+
   let tag = document.querySelector(`meta[property="${property}"]`);
   if (!tag) {
     tag = document.createElement("meta");
     tag.setAttribute("property", property);
     document.head.appendChild(tag);
   }
+
   tag.setAttribute("content", content);
 }
 
 function setCanonical(href) {
-  if (!href) return;
+  if (!href || typeof document === "undefined") return;
+
   let tag = document.querySelector('link[rel="canonical"]');
   if (!tag) {
     tag = document.createElement("link");
     tag.setAttribute("rel", "canonical");
     document.head.appendChild(tag);
   }
+
   tag.setAttribute("href", href);
 }
 
 export default function PriceDetail() {
   const rootRef = useRef(null);
-  const navigate = useNavigate();
-
-  const goContact = () => {
-    if (typeof window === "undefined") return;
-
-    const reduce =
-      window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches ?? false;
-    const behavior = reduce ? "auto" : "smooth";
-
-    const scrollTo = (el) => {
-      const top =
-        el.getBoundingClientRect().top + window.pageYOffset - SCROLL_OFFSET;
-      window.scrollTo({ top: Math.max(0, top), behavior });
-    };
-
-    // 同ページに #contact があれば即スクロール
-    const here = document.getElementById(CONTACT_ID);
-    if (here) {
-      scrollTo(here);
-      return;
-    }
-
-    // TOPへ遷移 → 要素が出たらスクロール（hash任せにしない）
-    navigate(CONTACT_ROUTE);
-
-    let tries = 0;
-    const tick = () => {
-      const target = document.getElementById(CONTACT_ID);
-      if (target) {
-        scrollTo(target);
-        return;
-      }
-      if (tries++ < 50) setTimeout(tick, 50);
-    };
-    setTimeout(tick, 0);
-  };
 
   useEffect(() => {
     document.title = PAGE_TITLE;
@@ -148,6 +129,7 @@ export default function PriceDetail() {
       typeof window !== "undefined"
         ? window.location.origin
         : "https://gushikendesign.com";
+
     const ogImage = `${origin}/ogp.png`;
 
     setMetaByProperty("og:title", PAGE_TITLE);
@@ -162,10 +144,12 @@ export default function PriceDetail() {
     setMetaByName("twitter:image", ogImage);
   }, []);
 
-  // ✅ index.css の膜/トーンが乗る事故を“このページだけ”無効化
   useEffect(() => {
     document.body.classList.add("is-price-detail");
-    return () => document.body.classList.remove("is-price-detail");
+
+    return () => {
+      document.body.classList.remove("is-price-detail");
+    };
   }, []);
 
   useEffect(() => {
@@ -173,6 +157,14 @@ export default function PriceDetail() {
     if (!root) return undefined;
 
     const targets = Array.from(root.querySelectorAll(".pd-reveal"));
+
+    const reduce =
+      window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches ?? false;
+
+    if (reduce || typeof IntersectionObserver === "undefined") {
+      targets.forEach((el) => el.classList.add("pd-revealed"));
+      return undefined;
+    }
 
     const observer = new IntersectionObserver(
       (entries) => {
@@ -182,10 +174,14 @@ export default function PriceDetail() {
           observer.unobserve(entry.target);
         });
       },
-      { threshold: 0.1, rootMargin: "0px 0px -10% 0px" }
+      {
+        threshold: 0.1,
+        rootMargin: "0px 0px -10% 0px",
+      }
     );
 
     targets.forEach((el) => observer.observe(el));
+
     return () => observer.disconnect();
   }, []);
 
@@ -194,7 +190,6 @@ export default function PriceDetail() {
       <div className="pd-container">
         <div className="pd-side-line" aria-hidden="true" />
 
-        {/* HERO（上だけ黒で世界観） */}
         <header className="pd-header pd-reveal">
           <SectionSvgTitle
             title="PRICE"
@@ -221,7 +216,6 @@ export default function PriceDetail() {
           </p>
         </header>
 
-        {/* BODY（紙＝安心・可読） */}
         <section className="pd-section pd-reveal" aria-label="プランと料金">
           <div className="pd-sec-head">
             <div className="pd-sec-kicker">—</div>
@@ -229,59 +223,42 @@ export default function PriceDetail() {
           </div>
 
           <div className="pd-grid">
-            {PLANS.map((p) => (
+            {PLANS.map((plan) => (
               <article
-                key={p.badge}
-                className={`pd-plan-card ${p.signature ? "is-signature" : ""}`}
+                key={plan.badge}
+                className={`pd-plan-card ${
+                  plan.signature ? "is-signature" : ""
+                }`}
               >
                 <div className="pd-plan-top">
-                  <div className="pd-plan-badge">PLAN {p.badge}</div>
-                  {p.signature && <div className="pd-signature">SIGNATURE</div>}
+                  <div className="pd-plan-badge">PLAN {plan.badge}</div>
+                  {plan.signature && <div className="pd-signature">SIGNATURE</div>}
                 </div>
 
-                <div className="pd-plan-name">{p.title}</div>
-                <div className="pd-plan-jp">{p.jp}</div>
+                <div className="pd-plan-name">{plan.title}</div>
+                <div className="pd-plan-jp">{plan.jp}</div>
 
                 <div className="pd-plan-price">
                   <span className="pd-yen">¥</span>
-                  <span className="pd-num">{p.price}</span>
+                  <span className="pd-num">{plan.price}</span>
                   <span className="pd-tax">（税込）</span>
                 </div>
 
-                <p className="pd-plan-detail">{p.detail}</p>
-                <p className="pd-bestfor">{p.bestFor}</p>
+                <p className="pd-plan-detail">{plan.detail}</p>
+                <p className="pd-bestfor">{plan.bestFor}</p>
 
                 <ul className="pd-list" aria-label="含まれる内容">
-                  {p.includes.map((t) => (
-                    <li key={t}>{t}</li>
+                  {plan.includes.map((item) => (
+                    <li key={item}>{item}</li>
                   ))}
                 </ul>
 
-                {!!p.note && <p className="pd-note">{p.note}</p>}
+                {plan.note && <p className="pd-note">{plan.note}</p>}
               </article>
             ))}
           </div>
 
-          {/* 上は “見積/診断/WORKS” だけにして、問い合わせは最下部に回す */}
           <div className="pd-actions">
-            <a
-              className="pd-btn primary"
-              href={MITUMORI_BASE}
-              target="_blank"
-              rel="noreferrer"
-            >
-              見積・相談フォームへ
-            </a>
-
-            <a
-              className="pd-btn ghost"
-              href={MITUMORI_QUICK}
-              target="_blank"
-              rel="noreferrer"
-            >
-              30秒診断（簡易）
-            </a>
-
             <Link className="pd-btn link" to={WORKS_PATH}>
               実例を見る（WORKS）
             </Link>
@@ -295,12 +272,12 @@ export default function PriceDetail() {
           </div>
 
           <div className="pd-addon-grid">
-            {ADDONS.map((a) => (
-              <article key={a.title} className="pd-addon-card">
-                <div className="pd-addon-badge">{a.badge}</div>
-                <div className="pd-addon-title">{a.title}</div>
-                <div className="pd-addon-price">{a.price}</div>
-                <p className="pd-addon-desc">{a.desc}</p>
+            {ADDONS.map((addon) => (
+              <article key={addon.title} className="pd-addon-card">
+                <div className="pd-addon-badge">{addon.badge}</div>
+                <div className="pd-addon-title">{addon.title}</div>
+                <div className="pd-addon-price">{addon.price}</div>
+                <p className="pd-addon-desc">{addon.desc}</p>
               </article>
             ))}
           </div>
@@ -364,16 +341,15 @@ export default function PriceDetail() {
           </p>
         </section>
 
-        {/* ✅ ここが “一番下の問い合わせ” */}
         <section className="pd-contact-cta pd-reveal" aria-label="お問い合わせ">
           <div className="pd-contact-ctaRow">
             <p className="pd-contact-ctaText">
               内容が固まっていなくても大丈夫です。状況だけ教えてください。
             </p>
 
-            <button type="button" className="pd-btn contact" onClick={goContact}>
+            <Link className="pd-btn contact" to={CONTACT_PATH}>
               お問い合わせへ（CONTACT）
-            </button>
+            </Link>
           </div>
         </section>
 

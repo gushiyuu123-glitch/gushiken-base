@@ -103,7 +103,7 @@
 
   width: min(560px, 92vw);
   margin: 0 auto;
-  padding: 48px 0 18px;
+  padding: 48px 0 20px;
 }
 
 .kicker {
@@ -151,11 +151,12 @@
 
   margin: 0;
   padding-left: 12px;
+  max-width: 370px;
 
-  font-size: 13px;
-  line-height: 1.9;
+  font-size: 12.5px;
+  line-height: 1.95;
   letter-spacing: 0.04em;
-  color: rgba(255, 255, 255, 0.66);
+  color: rgba(255, 255, 255, 0.68);
 }
 
 .lead::before {
@@ -174,6 +175,19 @@
   );
 }
 
+.leadSub {
+  position: relative;
+
+  margin: 12px 0 0;
+  padding-left: 12px;
+  max-width: 390px;
+
+  font-size: 10px;
+  line-height: 2;
+  letter-spacing: 0.075em;
+  color: rgba(255, 255, 255, 0.4);
+}
+
 /* =========================
    List
 ========================= */
@@ -184,10 +198,10 @@
 
   width: min(560px, 92vw);
   margin: 0 auto;
-  padding: 12px 0 22px;
+  padding: 12px 0 24px;
 
   display: grid;
-  gap: 16px;
+  gap: 18px;
 }
 
 /* =========================
@@ -229,6 +243,11 @@
   color: inherit;
   text-decoration: none;
   outline: none;
+}
+
+.itemLink:focus-visible {
+  outline: 2px solid rgba(244, 239, 230, 0.34);
+  outline-offset: 7px;
 }
 
 .itemLink:active .media {
@@ -500,6 +519,35 @@
   letter-spacing: 0.22em;
 }
 
+/* LIVE button */
+.live {
+  position: absolute;
+  top: 31px;
+  right: 10px;
+  z-index: 8;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-height: 32px;
+  padding: 8px 10px 7px;
+
+  color: rgba(255, 255, 255, 0.78);
+  font-size: 9px;
+  line-height: 1;
+  letter-spacing: 0.18em;
+  text-decoration: none;
+
+  background: rgba(7, 7, 7, 0.48);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+}
+
+.live:active {
+  color: rgba(255, 255, 255, 0.96);
+  border-color: rgba(244, 239, 230, 0.34);
+}
+
 /* =========================
    Reveal
 ========================= */
@@ -507,6 +555,7 @@
 .kicker,
 .h2,
 .lead,
+.leadSub,
 .tail {
   opacity: 0;
   transform: translate3d(0, 16px, 0) scale(0.996);
@@ -546,7 +595,7 @@
 }
 
 /* =========================
-   View all
+   View all / Contact
 ========================= */
 
 .tail {
@@ -555,15 +604,36 @@
 
   width: min(560px, 92vw);
   margin: 0 auto;
-  padding: 22px 0 calc(48px + env(safe-area-inset-bottom));
+  padding: 24px 0 calc(54px + env(safe-area-inset-bottom));
 
   border-top: 1px solid rgba(255, 255, 255, 0.08);
 
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  gap: 17px;
 }
 
-.all {
+.tailCopy {
+  margin: 0;
+  max-width: 360px;
+
+  color: rgba(255, 255, 255, 0.46);
+  font-size: 10.5px;
+  line-height: 2;
+  letter-spacing: 0.075em;
+  text-align: center;
+}
+
+.tailLinks {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 16px 20px;
+}
+
+.all,
+.contact {
   position: relative;
 
   padding: 10px 0;
@@ -571,10 +641,15 @@
   color: rgba(255, 255, 255, 0.82);
   text-decoration: none;
   letter-spacing: 0.22em;
-  font-size: 11px;
+  font-size: 10.5px;
 }
 
-.all::after {
+.contact {
+  color: rgba(217, 185, 138, 0.88);
+}
+
+.all::after,
+.contact::after {
   content: "";
   position: absolute;
   left: 50%;
@@ -591,9 +666,17 @@
     background 0.35s ease;
 }
 
-.all:active::after {
+.contact::after {
+  background: rgba(217, 185, 138, 0.32);
+}
+
+.all:active::after,
+.contact:active::after {
   width: 100%;
-  background: rgba(255, 255, 255, 0.44);
+}
+
+.contact:active::after {
+  background: rgba(217, 185, 138, 0.62);
 }
 
 /* =========================
@@ -605,6 +688,14 @@
   .list,
   .tail {
     width: min(560px, 90vw);
+  }
+
+  .lead {
+    font-size: 12px;
+  }
+
+  .leadSub {
+    font-size: 9.5px;
   }
 
   .caption {
@@ -620,6 +711,16 @@
   .open {
     margin-top: 8px;
   }
+
+  .live {
+    right: 9px;
+    top: 30px;
+    font-size: 8.5px;
+  }
+
+  .tailCopy {
+    font-size: 10px;
+  }
 }
 
 /* =========================
@@ -631,6 +732,7 @@
   .kicker,
   .h2,
   .lead,
+  .leadSub,
   .tail {
     opacity: 1 !important;
     transform: none !important;

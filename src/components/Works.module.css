@@ -151,10 +151,22 @@
 
 .lead {
   margin: 0;
+  max-width: 560px;
 
   font-size: 13px;
   line-height: 2;
-  color: rgba(255, 255, 255, 0.62);
+  letter-spacing: 0.04em;
+  color: rgba(255, 255, 255, 0.68);
+}
+
+.leadSub {
+  margin: 14px 0 0;
+  max-width: 640px;
+
+  color: rgba(255, 255, 255, 0.38);
+  font-size: 11px;
+  line-height: 2;
+  letter-spacing: 0.08em;
 }
 
 /* =========================================================
@@ -285,19 +297,14 @@
   width: min(1400px, 94vw);
 }
 
-.inner_main {
-  display: grid;
-  place-items: center;
-}
-
-.inner_duo {
+.inner_main,
+.inner_duo,
+.inner_wide {
   display: grid;
   place-items: center;
 }
 
 .inner_wide {
-  display: grid;
-  place-items: center;
   gap: 22px;
 }
 
@@ -316,6 +323,11 @@
   color: inherit;
   text-decoration: none;
   outline: none;
+}
+
+.cardLink:focus-visible {
+  outline: 2px solid rgba(217, 185, 138, 0.36);
+  outline-offset: 10px;
 }
 
 /* external live */
@@ -340,9 +352,11 @@
   border: 1px solid rgba(255, 255, 255, 0.14);
 }
 
-.live:hover {
+.live:hover,
+.live:focus-visible {
   color: rgba(255, 255, 255, 0.92);
   border-color: rgba(255, 255, 255, 0.32);
+  outline: none;
 }
 
 /* image */
@@ -442,7 +456,11 @@
   inset: 0;
   z-index: 2;
 
-  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.02), rgba(0, 0, 0, 0.76));
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.02),
+    rgba(0, 0, 0, 0.76)
+  );
   opacity: 0;
   pointer-events: none;
 }
@@ -701,6 +719,35 @@
     display: none;
   }
 
+  .head {
+    width: min(92vw, 560px);
+    padding: 54px 0 28px;
+  }
+
+  .kicker {
+    margin-bottom: 12px;
+    font-size: 10px;
+  }
+
+  .h2 {
+    margin-bottom: 14px;
+  }
+
+  .h2Mask {
+    width: min(100%, 420px);
+  }
+
+  .lead {
+    font-size: 12px;
+    line-height: 2;
+  }
+
+  .leadSub {
+    margin-top: 12px;
+    font-size: 10px;
+    line-height: 2;
+  }
+
   .panel {
     min-height: auto;
     padding: 26px 0 56px;
@@ -782,6 +829,23 @@
     border: none;
   }
 
+  .meta {
+    margin-bottom: 8px;
+  }
+
+  .title {
+    font-size: 17px;
+  }
+
+  .sub {
+    font-size: 11.5px;
+  }
+
+  .open {
+    margin-top: 10px;
+    font-size: 10px;
+  }
+
   .stamp {
     position: relative;
     bottom: auto;
@@ -796,6 +860,14 @@
     display: none;
   }
 
+  .stampNo {
+    font-size: 18px;
+  }
+
+  .stampTag {
+    font-size: 9px;
+  }
+
   .live {
     position: relative;
     top: auto;
@@ -807,7 +879,7 @@
 }
 
 /* =========================================================
-   View all
+   View all / Contact
 ========================================================= */
 
 .tail {
@@ -822,10 +894,31 @@
   border-top: 1px solid rgba(255, 255, 255, 0.08);
 
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
 }
 
-.all {
+.tailCopy {
+  margin: 0;
+  max-width: 620px;
+
+  color: rgba(255, 255, 255, 0.46);
+  font-size: 12px;
+  line-height: 2;
+  letter-spacing: 0.08em;
+  text-align: center;
+}
+
+.tailLinks {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 18px 24px;
+}
+
+.all,
+.contact {
   position: relative;
   display: inline-block;
 
@@ -837,7 +930,12 @@
   font-size: 11px;
 }
 
-.all::after {
+.contact {
+  color: rgba(217, 185, 138, 0.86);
+}
+
+.all::after,
+.contact::after {
   content: "";
   position: absolute;
   left: 50%;
@@ -854,13 +952,33 @@
     background 0.35s ease;
 }
 
-.all:hover {
-  color: rgba(255, 255, 255, 0.94);
+.contact::after {
+  background: rgba(217, 185, 138, 0.32);
 }
 
-.all:hover::after {
+.all:hover,
+.all:focus-visible {
+  color: rgba(255, 255, 255, 0.94);
+  outline: none;
+}
+
+.contact:hover,
+.contact:focus-visible {
+  color: rgba(217, 185, 138, 1);
+  outline: none;
+}
+
+.all:hover::after,
+.all:focus-visible::after,
+.contact:hover::after,
+.contact:focus-visible::after {
   width: 100%;
   background: rgba(255, 255, 255, 0.46);
+}
+
+.contact:hover::after,
+.contact:focus-visible::after {
+  background: rgba(217, 185, 138, 0.62);
 }
 
 @media (min-width: 981px) {
@@ -871,16 +989,35 @@
   .tail {
     margin-top: 0;
     padding: 6px 0 clamp(140px, 20vh, 320px);
-    min-height: clamp(260px, 28vh, 520px);
+    min-height: clamp(300px, 32vh, 560px);
 
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
+    justify-content: flex-start;
   }
 
-  .all {
-    align-self: flex-start;
-    margin-top: clamp(32px, 2.2vh, 54px);
+  .tailCopy {
+    margin-top: clamp(28px, 2vh, 46px);
+  }
+}
+
+@media (max-width: 980px) {
+  .tail {
+    width: min(92vw, 560px);
+    margin-top: 0;
+    padding: 12px 0 70px;
+  }
+
+  .tailCopy {
+    font-size: 10.5px;
+    line-height: 2;
+  }
+
+  .tailLinks {
+    gap: 16px 20px;
+  }
+
+  .all,
+  .contact {
+    font-size: 10px;
   }
 }
 

@@ -29,7 +29,7 @@ const PLANS = [
     jp: "1ページ構成",
     price: "¥60,000〜",
     desc:
-      "サービスや商品の魅力を、1ページで伝えるプランです。「まず公開したい」「費用を抑えたい」という段階に向いています。",
+      "商品・サービスの魅力を、1ページで伝えるプランです。まず公開したい方や、必要な情報を絞って見せたい段階に向いています。",
     includes: [
       "1ページ構成",
       "オリジナルデザイン",
@@ -44,7 +44,7 @@ const PLANS = [
     jp: "小規模サイト",
     price: "¥120,000〜",
     desc:
-      "トップページと下層ページで、お店やサービスの印象と情報をまとめるプランです。何をしているか、どこに連絡するかが自然に伝わる構成にします。",
+      "トップページと下層ページで、お店やサービスの印象と情報を整理するプランです。はじめて見る人が迷わず理解できる構成に整えます。",
     includes: [
       "トップ + 下層2〜4ページ",
       "サービス内容の整理",
@@ -59,9 +59,9 @@ const PLANS = [
     jp: "印象重視サイト",
     price: "¥240,000〜",
     desc:
-      "写真・色・余白・言葉・導線までトーンを揃え、見た瞬間に「上質」が伝わるサイトを制作します。安っぽく見せず、印象で選ばれたい方へ。",
+      "写真・色・余白・言葉・導線までトーンを揃え、見た瞬間の印象から相談までつなげるプランです。世界観で選ばれたい方へ。",
     includes: [
-      "印象設計（全体のトーン・空気感の設計）",
+      "印象設計",
       "複数ページ対応",
       "写真 / 色 / 余白のトーン調整",
       "スマホ対応",
@@ -73,7 +73,11 @@ const PLANS = [
 
 function PriceVisual() {
   return (
-    <div className={cx(styles.visual, styles.reveal)} data-reveal style={{ "--d": "220ms" }}>
+    <div
+      className={cx(styles.visual, styles.reveal)}
+      data-reveal
+      style={{ "--d": "220ms" }}
+    >
       <div className={styles.flow}>
         <p className={styles.visualLabel}>制作の流れ</p>
 
@@ -82,13 +86,14 @@ function PriceVisual() {
         <div className={styles.flowList}>
           {FLOW.map((item, index) => {
             const active = index === FLOW.length - 1;
+
             return (
               <div
                 key={item.num}
                 className={cx(styles.flowItem, active && styles.final)}
                 style={{ "--flow-index": index }}
               >
-                <span className={styles.flowDot} />
+                <span className={styles.flowDot} aria-hidden="true" />
                 <p className={styles.flowNum}>{item.num}</p>
                 <p className={styles.flowLabel}>{item.label}</p>
                 <p className={styles.flowSub}>{item.sub}</p>
@@ -107,7 +112,10 @@ function PriceVisual() {
           {INCLUDES.map((item, index) => (
             <div
               key={item.label}
-              className={cx(styles.includeRow, item.optional ? styles.option : styles.included)}
+              className={cx(
+                styles.includeRow,
+                item.optional ? styles.option : styles.included
+              )}
               style={{ "--include-index": index }}
             >
               <span className={styles.includeCheck} aria-hidden="true">
@@ -136,7 +144,11 @@ const PriceCard = React.memo(function PriceCard({
 }) {
   return (
     <article
-      className={cx(styles.card, styles.reveal, featured && styles.cardFeatured)}
+      className={cx(
+        styles.card,
+        styles.reveal,
+        featured && styles.cardFeatured
+      )}
       data-reveal
       style={{ "--d": `${320 + revealIndex * 110}ms` }}
     >
@@ -146,7 +158,7 @@ const PriceCard = React.memo(function PriceCard({
         <p className={styles.cardLabel}>{label}</p>
 
         {featured && (
-          <span className={styles.badge} aria-label="おすすめ">
+          <span className={styles.badge} aria-label="おすすめプラン">
             RECOMMEND
           </span>
         )}
@@ -175,23 +187,26 @@ const PriceCard = React.memo(function PriceCard({
 
 function MaintenancePlan() {
   return (
-    <div className={cx(styles.specialWrap, styles.reveal)} data-reveal style={{ "--d": "720ms" }}>
+    <div
+      className={cx(styles.specialWrap, styles.reveal)}
+      data-reveal
+      style={{ "--d": "720ms" }}
+    >
       <article className={cx(styles.card, styles.cardSpecial)}>
         <span className={styles.cardLine} aria-hidden="true" />
 
         <div className={styles.cardHead}>
           <p className={styles.cardLabel}>PLAN 04</p>
-
           <span className={cx(styles.badge, styles.badgeMuted)}>OPTIONAL</span>
         </div>
 
-        <h3 className={styles.cardTitle}>Maintenance / Subscription</h3>
+        <h3 className={styles.cardTitle}>Maintenance</h3>
         <p className={styles.cardJp}>運用・保守</p>
 
         <p className={styles.cardPrice}>¥9,800 / 月</p>
 
         <p className={styles.cardDesc}>
-          公開後も、印象の品質を保ちながら更新・調整できる運用プランです。
+          公開後も、文章の差し替え・軽微な調整・表示確認などを継続できる運用プランです。
           <strong>月管理は必須ではなく、必要な時だけの都度対応も可能</strong>
           です。
         </p>
@@ -220,21 +235,27 @@ export default function Price() {
 
     const io = new IntersectionObserver(
       (entries) => {
-        entries.forEach((e) => {
-          if (!e.isIntersecting) return;
-          reveal(e.target);
-          io.unobserve(e.target);
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          reveal(entry.target);
+          io.unobserve(entry.target);
         });
       },
       { threshold: 0.12, rootMargin: "0px 0px -8% 0px" }
     );
 
-    targets.forEach((t) => io.observe(t));
+    targets.forEach((target) => io.observe(target));
+
     return () => io.disconnect();
   }, []);
 
   return (
-    <section id="price" ref={sectionRef} className={styles.section}>
+    <section
+      id="price"
+      ref={sectionRef}
+      className={styles.section}
+      aria-labelledby="price-title"
+    >
       <div className={styles.container}>
         <div
           className={cx(styles.sideLine, styles.reveal, styles.lineReveal)}
@@ -243,28 +264,48 @@ export default function Price() {
           aria-hidden="true"
         />
 
-        <header className={cx(styles.header, styles.reveal)} data-reveal style={{ "--d": "40ms" }}>
+        <header
+          className={cx(styles.header, styles.reveal)}
+          data-reveal
+          style={{ "--d": "40ms" }}
+        >
+          <h2 id="price-title" className={styles.srOnly}>
+            料金プラン
+          </h2>
+
           <SectionSvgTitle
             title="PRICE"
             sub="PLANS / ESTIMATE"
             className={styles.svgTitle}
           />
-          <p className={styles.sectionTitle}>料金プラン / 制作プラン（任意の運用サポート）</p>
+
+          <p className={styles.sectionTitle}>
+            料金プラン / 制作プラン
+          </p>
         </header>
 
         <div className={styles.intro}>
-          <p className={cx(styles.philosophy, styles.reveal)} data-reveal style={{ "--d": "90ms" }}>
+          <p
+            className={cx(styles.philosophy, styles.reveal)}
+            data-reveal
+            style={{ "--d": "90ms" }}
+          >
             はじめての方でも、
             <br />
             内容が固まっていない段階からご相談いただけます。
             <br />
-            まずは<strong>「印象の方向」と「伝わる順序」</strong>を一緒に整理します。
+            まずは<strong>印象の方向</strong>と
+            <strong>伝わる順序</strong>を整理します。
           </p>
 
-          <p className={cx(styles.lead, styles.reveal)} data-reveal style={{ "--d": "130ms" }}>
+          <p
+            className={cx(styles.lead, styles.reveal)}
+            data-reveal
+            style={{ "--d": "130ms" }}
+          >
             ご相談前に、
-            <strong>「総額」「制作範囲」「公開までの流れ」</strong>
-            を事前にご確認いただけます。
+            <strong>総額・制作範囲・公開までの流れ</strong>
+            を確認できるよう、目安価格を掲載しています。
             <br />
             <span className={styles.leadNote}>
               ※ 表示価格は税込の目安です。内容により正式なお見積もりをご案内します。
@@ -282,15 +323,23 @@ export default function Price() {
 
         <MaintenancePlan />
 
-        <p className={cx(styles.note, styles.reveal)} data-reveal style={{ "--d": "820ms" }}>
-          ドメイン代・サーバー代は実費です。
+        <p
+          className={cx(styles.note, styles.reveal)}
+          data-reveal
+          style={{ "--d": "820ms" }}
+        >
+          ドメイン代は実費です。
           <br />
           公開に必要な初期設定や接続サポートは、料金内で対応します。
           <br />
           内容の追加や変更がある場合は、事前にご相談のうえで調整します。
         </p>
 
-        <div className={cx(styles.cta, styles.reveal)} data-reveal style={{ "--d": "920ms" }}>
+        <div
+          className={cx(styles.cta, styles.reveal)}
+          data-reveal
+          style={{ "--d": "920ms" }}
+        >
           <Link to="/price" className={styles.btn}>
             <span>料金の詳細を見る</span>
             <span aria-hidden="true">→</span>

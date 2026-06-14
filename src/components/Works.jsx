@@ -309,11 +309,7 @@ export default function Works() {
             yPercent: 0,
           });
 
-          if (veil) {
-            gsap.set(veil, {
-              opacity: 0,
-            });
-          }
+          if (veil) gsap.set(veil, { opacity: 0 });
 
           if (stamp) {
             gsap.set(stamp, {
@@ -374,32 +370,9 @@ export default function Works() {
           const stamp = card.querySelector("[data-stamp]");
           const glint = card.querySelector("[data-glint]");
 
-          tl.to(
-            mask,
-            {
-              opacity: 1,
-              y: 0,
-              duration: 0.66,
-            },
-            0.02
-          )
-            .to(
-              veil,
-              {
-                opacity: 1,
-                duration: 0.72,
-              },
-              0.1
-            )
-            .to(
-              image,
-              {
-                scale: 1.06,
-                yPercent: -1,
-                duration: 1.25,
-              },
-              0.02
-            )
+          tl.to(mask, { opacity: 1, y: 0, duration: 0.66 }, 0.02)
+            .to(veil, { opacity: 1, duration: 0.72 }, 0.1)
+            .to(image, { scale: 1.06, yPercent: -1, duration: 1.25 }, 0.02)
             .to(
               texts,
               {
@@ -449,31 +422,9 @@ export default function Works() {
           const s2 = secondCard.querySelector("[data-stamp]");
           const g2 = secondCard.querySelector("[data-glint]");
 
-          tl.to(
-            m1,
-            {
-              clipPath: "inset(0% 0% 0% 0%)",
-              duration: 0.72,
-            },
-            0.02
-          )
-            .to(
-              v1,
-              {
-                opacity: 1,
-                duration: 0.72,
-              },
-              0.1
-            )
-            .to(
-              i1,
-              {
-                scale: 1.06,
-                yPercent: -2,
-                duration: 1.3,
-              },
-              0.02
-            )
+          tl.to(m1, { clipPath: "inset(0% 0% 0% 0%)", duration: 0.72 }, 0.02)
+            .to(v1, { opacity: 1, duration: 0.72 }, 0.1)
+            .to(i1, { scale: 1.06, yPercent: -2, duration: 1.3 }, 0.02)
             .to(
               t1,
               {
@@ -494,31 +445,9 @@ export default function Works() {
               },
               0.26
             )
-            .to(
-              m2,
-              {
-                clipPath: "inset(0% 0% 0% 0%)",
-                duration: 0.72,
-              },
-              0.18
-            )
-            .to(
-              v2,
-              {
-                opacity: 1,
-                duration: 0.72,
-              },
-              0.26
-            )
-            .to(
-              i2,
-              {
-                scale: 1.06,
-                yPercent: 2,
-                duration: 1.3,
-              },
-              0.18
-            )
+            .to(m2, { clipPath: "inset(0% 0% 0% 0%)", duration: 0.72 }, 0.18)
+            .to(v2, { opacity: 1, duration: 0.72 }, 0.26)
+            .to(i2, { scale: 1.06, yPercent: 2, duration: 1.3 }, 0.18)
             .to(
               t2,
               {
@@ -544,11 +473,11 @@ export default function Works() {
             trigger: panel,
             start: "top 82%",
             onEnter: () => {
-              runGlint(g1, 0.72, 0.0);
+              runGlint(g1, 0.72, 0);
               runGlint(g2, 0.68, 0.1);
             },
             onEnterBack: () => {
-              runGlint(g1, 0.72, 0.0);
+              runGlint(g1, 0.72, 0);
               runGlint(g2, 0.68, 0.1);
             },
           });
@@ -565,31 +494,9 @@ export default function Works() {
           const stamp = card.querySelector("[data-stamp]");
           const glint = card.querySelector("[data-glint]");
 
-          tl.to(
-            mask,
-            {
-              clipPath: "inset(0% 0% 0% 0%)",
-              duration: 0.72,
-            },
-            0.02
-          )
-            .to(
-              veil,
-              {
-                opacity: 1,
-                duration: 0.72,
-              },
-              0.1
-            )
-            .to(
-              image,
-              {
-                scale: 1.06,
-                yPercent: 1,
-                duration: 1.35,
-              },
-              0.02
-            )
+          tl.to(mask, { clipPath: "inset(0% 0% 0% 0%)", duration: 0.72 }, 0.02)
+            .to(veil, { opacity: 1, duration: 0.72 }, 0.1)
+            .to(image, { scale: 1.06, yPercent: 1, duration: 1.35 }, 0.02)
             .to(
               texts,
               {
@@ -652,9 +559,7 @@ export default function Works() {
 
         gsap.fromTo(
           inner,
-          {
-            yPercent: -amount,
-          },
+          { yPercent: -amount },
           {
             yPercent: amount,
             ease: "none",
@@ -693,7 +598,7 @@ export default function Works() {
       ref={rootRef}
       className={styles.section}
       id="works"
-      aria-label="Works"
+      aria-labelledby="works-title"
     >
       <WorksVantaFog className={styles.worksFogBg} />
 
@@ -702,7 +607,7 @@ export default function Works() {
           SELECTED
         </p>
 
-        <h2 className={styles.h2}>
+        <h2 id="works-title" className={styles.h2}>
           <span className={styles.h2Sr}>WORKS</span>
 
           <span className={styles.h2Mask} data-works-title>
@@ -717,11 +622,16 @@ export default function Works() {
           </span>
         </h2>
 
-   <p className={styles.lead} data-works-intro>
-  デザインだけで終わらせず、
-  <br />
-  伝わるところまで作り込んだ制作事例。
-</p>
+        <p className={styles.lead} data-works-intro>
+          見た瞬間の印象から、
+          <br />
+          相談したくなる流れまで設計した制作事例。
+        </p>
+
+        <p className={styles.leadSub} data-works-intro>
+          美容・飲食・観光・ブライダル・ブランドサイトなど、
+          印象で選ばれる業種を中心に制作しています。
+        </p>
       </header>
 
       <div className={styles.runway}>
@@ -773,13 +683,21 @@ export default function Works() {
       </div>
 
       <div className={styles.tail} aria-label="Works archive">
-        <Link
-          className={styles.all}
-          to="/works"
-          aria-label="すべての制作実績を見る"
-        >
-          VIEW ALL WORKS
-        </Link>
+        <p className={styles.tailCopy}>
+          作品全体を見たあと、今のサイトやSNSで損している部分も整理できます。
+        </p>
+
+        <div className={styles.tailLinks}>
+          <Link
+            className={styles.all}
+            to="/works"
+            aria-label="すべての制作実績を見る"
+          >
+            VIEW ALL WORKS
+          </Link>
+
+
+        </div>
       </div>
     </section>
   );

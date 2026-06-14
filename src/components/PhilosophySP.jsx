@@ -1,4 +1,4 @@
-// Philosophy.jsx
+// src/sections/PhilosophySP.jsx
 import React, { useEffect, useRef } from "react";
 import SectionSvgTitle from "../components/SectionSvgTitle";
 import styles from "./PhilosophySP.module.css";
@@ -8,40 +8,40 @@ const cx = (...a) => a.filter(Boolean).join(" ");
 const PRINCIPLES = [
   {
     number: "01",
-    title: "見やすさ",
+    title: "最初に迷わせない",
     en: "CLARITY",
     type: "clarity",
     text: (
       <>
-        必要な情報が自然に目に入り、
+        何をしているか、誰に向いているか。
         <br />
-        迷わず読み進められる画面へ。
+        最初の数秒で判断できる順序へ。
       </>
     ),
   },
   {
     number: "02",
-    title: "印象",
+    title: "印象を編集する",
     en: "ATMOSPHERE",
     type: "atmosphere",
     text: (
       <>
-        写真・色・余白の温度を合わせ、
+        写真・言葉・余白の温度を揃え、
         <br />
-        魅力が静かに伝わる空気へ。
+        見た後に残る空気を作ります。
       </>
     ),
   },
   {
     number: "03",
-    title: "相談への流れ",
+    title: "相談までつなげる",
     en: "FLOW",
     type: "flow",
     text: (
       <>
-        不安を減らし、問い合わせまで
+        不安が出る前に答えを置き、
         <br />
-        無理なく進める導線へ。
+        問い合わせまで迷わない流れへ。
       </>
     ),
   },
@@ -50,7 +50,10 @@ const PRINCIPLES = [
 function PrincipleVisual({ type }) {
   if (type === "atmosphere") {
     return (
-      <div className={cx(styles.vpVisual, styles.vpAtmosphere)} aria-hidden="true">
+      <div
+        className={cx(styles.vpVisual, styles.vpAtmosphere)}
+        aria-hidden="true"
+      >
         <span className={styles.vpGoldBar} />
         <div className={styles.vpLines}>
           <span className={cx(styles.vpGoldLine, styles.vpGoldStrong)} />
@@ -124,7 +127,7 @@ export default function PhilosophySP() {
 
   useEffect(() => {
     const root = sectionRef.current;
-    if (!root) return;
+    if (!root) return undefined;
 
     const reduce =
       window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches ?? false;
@@ -137,28 +140,33 @@ export default function PhilosophySP() {
     if (reduce || typeof IntersectionObserver === "undefined") {
       flowTargets.forEach(reveal);
       if (principlesTarget) reveal(principlesTarget);
-      return;
+      return undefined;
     }
 
     const io = new IntersectionObserver(
       (entries) => {
-        entries.forEach((e) => {
-          if (!e.isIntersecting) return;
-          reveal(e.target);
-          io.unobserve(e.target);
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          reveal(entry.target);
+          io.unobserve(entry.target);
         });
       },
       { threshold: 0.12, rootMargin: "0px 0px -8% 0px" }
     );
 
-    flowTargets.forEach((t) => io.observe(t));
+    flowTargets.forEach((target) => io.observe(target));
     if (principlesTarget) io.observe(principlesTarget);
 
     return () => io.disconnect();
   }, []);
 
   return (
-    <section id="philosophy" ref={sectionRef} className={styles.section}>
+    <section
+      id="philosophy"
+      ref={sectionRef}
+      className={styles.section}
+      aria-labelledby="philosophy-sp-title"
+    >
       <div className={styles.seamTop} aria-hidden="true" />
       <div className={styles.seamBottom} aria-hidden="true" />
 
@@ -168,54 +176,75 @@ export default function PhilosophySP() {
         </div>
 
         <div
-          className={cx(styles.sideLine, styles.flow, styles.flowLine, styles.flow1)}
+          className={cx(
+            styles.sideLine,
+            styles.flow,
+            styles.flowLine,
+            styles.flow1
+          )}
           data-reveal-flow
           aria-hidden="true"
         />
 
-        <header className={cx(styles.header, styles.flow, styles.flow1)} data-reveal-flow>
+        <header
+          className={cx(styles.header, styles.flow, styles.flow1)}
+          data-reveal-flow
+        >
+          <h2 id="philosophy-sp-title" className={styles.srOnly}>
+            制作方針
+          </h2>
+
           <SectionSvgTitle
             title="POLICY"
             sub="DESIGN POLICY"
             className={styles.svgTitle}
           />
+
           <p className={styles.sub}>制作で大切にしていること</p>
         </header>
 
         <div className={styles.copy}>
-          <p className={cx(styles.lead, styles.flow, styles.flow2)} data-reveal-flow>
-            商品・空間・サービスの印象を、
+          <p
+            className={cx(styles.lead, styles.flow, styles.flow2)}
+            data-reveal-flow
+          >
+            <span>見た瞬間に伝わり</span>、
             <br />
-            <span>上質に、きちんと伝える</span>ために。
+            読み進めても迷わない。
             <br />
-            まずは、見やすさと安心感の土台から設計します。
+            その先で、<span>相談したくなる流れ</span>まで整えます。
           </p>
 
-          <p className={cx(styles.body, styles.flow, styles.flow3)} data-reveal-flow>
-            Webサイトは、最初から丁寧に読まれるとは限りません。
+          <p
+            className={cx(styles.body, styles.flow, styles.flow3)}
+            data-reveal-flow
+          >
+            Webサイトは、じっくり読まれる前に印象で判断されます。
             <br />
-            だからこそ、情報の順序・余白・文字量・写真の見え方を整え、
-            <span>何をしているのか、誰に向いているのか</span>
-            が自然に伝わる状態を目指します。
+            だからこそ、情報の順序、文字量、写真の見え方、余白の温度を編集し、
+            <span>何をしているか／誰に向いているか</span>
+            が自然に入る状態を作ります。
             <br />
             <br />
-            見た目だけで終わらせず、読み手の不安を減らし、
-            <span>問い合わせにつながる流れ</span>
-            まで設計することを大切にしています。
+            きれいに整えるだけで終わらせず、
+            <span>不安を先回りで潰し</span>、問い合わせまでの導線も一緒に設計します。
           </p>
 
           <VisualPrinciples />
 
-          <p className={cx(styles.last, styles.flow, styles.flow5)} data-reveal-flow>
+          <p
+            className={cx(styles.last, styles.flow, styles.flow5)}
+            data-reveal-flow
+          >
             <span>
-              見やすさと印象の両方を整え、
+              迷わない。伝わる。決められる。
               <br />
-              魅力が自然に伝わるサイトを。
+              この3つが揃うと、サイトは強くなります。
             </span>
             <br />
             <em>
-              「ここなら相談しやすそう」と感じてもらえることも、
-              制作の大切な役割だと考えています。
+              「ここなら任せやすそう」と感じてもらえることを、
+              成果の前提に置いています。
             </em>
           </p>
         </div>

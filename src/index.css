@@ -1,6 +1,6 @@
 /* ============================================================
-   GUSHIKEN DESIGN Core Index v10
-   Paper Frame × Champagne Gold × Hairline × Silent Motion
+   GUSHIKEN DESIGN Core Index v11
+   Paper Frame × Champagne Gold × Island Safe Mode
    全ページ共通OS
 ============================================================ */
 
@@ -65,6 +65,14 @@
   --accent-faint: var(--assort-line-faint);
   --nav-silver: var(--subaccent);
 
+  /* ===== Island aliases ===== */
+  --island-main: #f7fbff;
+  --island-body: #dceff5;
+  --island-muted: #b8dde8;
+  --island-accent: #f2c77a;
+  --island-coral: #ffb39a;
+  --island-deep: #05283a;
+
   /* ===== Motion ===== */
   --ease-silent: cubic-bezier(0.22, 0.72, 0.18, 1);
   --ease-float: cubic-bezier(0.16, 1, 0.24, 1);
@@ -118,9 +126,21 @@ html {
 body {
   margin: 0;
   background:
-    radial-gradient(1100px 680px at 18% 12%, rgba(255, 255, 255, 0.86), transparent 56%),
-    radial-gradient(920px 620px at 74% 18%, rgba(201, 177, 138, 0.09), transparent 58%),
-    linear-gradient(180deg, rgba(246, 241, 232, 0.88), rgba(239, 231, 219, 0.78)),
+    radial-gradient(
+      1100px 680px at 18% 12%,
+      rgba(255, 255, 255, 0.86),
+      transparent 56%
+    ),
+    radial-gradient(
+      920px 620px at 74% 18%,
+      rgba(201, 177, 138, 0.09),
+      transparent 58%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(246, 241, 232, 0.88),
+      rgba(239, 231, 219, 0.78)
+    ),
     var(--main);
   color: var(--assort);
   overflow-x: hidden;
@@ -135,8 +155,10 @@ body::before {
   z-index: 999999;
   pointer-events: none;
   opacity: var(--paper-grain-opacity);
-  background-image:
-    radial-gradient(rgba(0, 0, 0, 0.22) 0.42px, transparent 0.42px);
+  background-image: radial-gradient(
+    rgba(0, 0, 0, 0.22) 0.42px,
+    transparent 0.42px
+  );
   background-size: 4px 4px;
   mix-blend-mode: multiply;
 }
@@ -287,17 +309,17 @@ html.lenis body {
   --aq-delay: 0.58s;
 }
 
+.gd-no-blur,
+.animate-fadeUp {
+  filter: none !important;
+  backdrop-filter: none !important;
+}
+
 .aq-show,
 .aq-fade.is-visible {
   opacity: 1 !important;
   transform: translate3d(0, 0, 0) scale(1) !important;
   filter: blur(0) !important;
-  backdrop-filter: none !important;
-}
-
-.gd-no-blur,
-.animate-fadeUp {
-  filter: none !important;
   backdrop-filter: none !important;
 }
 
@@ -339,8 +361,16 @@ html.lenis body {
 ------------------------------------------------------------ */
 .gd-panel {
   background:
-    radial-gradient(circle at 14% 0%, rgba(201, 177, 138, 0.06), transparent 34%),
-    linear-gradient(180deg, rgba(255, 255, 255, 0.78), rgba(250, 247, 241, 0.72));
+    radial-gradient(
+      circle at 14% 0%,
+      rgba(201, 177, 138, 0.06),
+      transparent 34%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.78),
+      rgba(250, 247, 241, 0.72)
+    );
   border: 1px solid rgba(18, 18, 18, 0.08);
   border-top: 1px solid rgba(201, 177, 138, 0.34);
   box-shadow:
@@ -380,7 +410,7 @@ html.lenis body {
 .ambient-glow {
   position: relative;
   opacity: 0;
-  transition: opacity 2.0s ease;
+  transition: opacity 2s ease;
 }
 
 .ambient-glow::before,
@@ -543,7 +573,7 @@ body.scrolled .ambient-glow {
 .work-list-card.work-rise {
   opacity: 0;
   transform: translate3d(0, 24px, 0) scale(0.995);
-  filter: brightness(0.98) saturate(0.98) blur(0px);
+  filter: brightness(0.98) saturate(0.98) blur(0);
   will-change: opacity, transform, filter;
 
   transition:
@@ -593,23 +623,21 @@ body::-webkit-scrollbar,
 html::-webkit-scrollbar-track,
 body::-webkit-scrollbar-track,
 *::-webkit-scrollbar-track {
-  background:
-    linear-gradient(
-      180deg,
-      rgba(18, 18, 18, 0.04),
-      rgba(18, 18, 18, 0.06)
-    );
+  background: linear-gradient(
+    180deg,
+    rgba(18, 18, 18, 0.04),
+    rgba(18, 18, 18, 0.06)
+  );
 }
 
 html::-webkit-scrollbar-thumb,
 body::-webkit-scrollbar-thumb,
 *::-webkit-scrollbar-thumb {
-  background:
-    linear-gradient(
-      180deg,
-      rgba(201, 177, 138, 0.58),
-      rgba(201, 177, 138, 0.22)
-    );
+  background: linear-gradient(
+    180deg,
+    rgba(201, 177, 138, 0.58),
+    rgba(201, 177, 138, 0.22)
+  );
   border-radius: 999px;
   border: 3px solid rgba(246, 241, 232, 0.72);
   background-clip: padding-box;
@@ -621,23 +649,21 @@ body::-webkit-scrollbar-thumb,
 html::-webkit-scrollbar-thumb:hover,
 body::-webkit-scrollbar-thumb:hover,
 *::-webkit-scrollbar-thumb:hover {
-  background:
-    linear-gradient(
-      180deg,
-      rgba(201, 177, 138, 0.74),
-      rgba(201, 177, 138, 0.30)
-    );
+  background: linear-gradient(
+    180deg,
+    rgba(201, 177, 138, 0.74),
+    rgba(201, 177, 138, 0.30)
+  );
 }
 
 html::-webkit-scrollbar-thumb:active,
 body::-webkit-scrollbar-thumb:active,
 *::-webkit-scrollbar-thumb:active {
-  background:
-    linear-gradient(
-      180deg,
-      rgba(143, 118, 80, 0.70),
-      rgba(201, 177, 138, 0.32)
-    );
+  background: linear-gradient(
+    180deg,
+    rgba(143, 118, 80, 0.70),
+    rgba(201, 177, 138, 0.32)
+  );
 }
 
 html::-webkit-scrollbar-corner,
@@ -659,14 +685,48 @@ body::-webkit-scrollbar-corner,
    11) Page-specific body classes
 ------------------------------------------------------------ */
 
-/* /okinawa だけ本拠地OSの紙グレインを止める */
+/* /okinawa だけ本拠地OSの紙グレインと黒インクを止める */
 body.is-okinawa-page {
   --paper-grain-opacity: 0;
+
+  background: var(--island-deep);
+  color: var(--island-main);
   color-scheme: dark;
+
+  scrollbar-color: rgba(242, 199, 122, 0.50) rgba(4, 32, 48, 0.62);
 }
 
 body.is-okinawa-page::before {
   opacity: 0 !important;
+}
+
+body.is-okinawa-page ::selection {
+  color: rgba(4, 32, 48, 0.96);
+  background: rgba(242, 199, 122, 0.72);
+}
+
+body.is-okinawa-page :focus-visible {
+  outline-color: rgba(242, 199, 122, 0.72);
+}
+
+/* 沖縄ページ内の継承色の保険。Tailwindの個別指定はそのまま優先される */
+body.is-okinawa-page a,
+body.is-okinawa-page button {
+  color: inherit;
+}
+
+/* /okinawa のスクロールバーだけ海側へ寄せる */
+body.is-okinawa-page::-webkit-scrollbar-track {
+  background: rgba(4, 32, 48, 0.62);
+}
+
+body.is-okinawa-page::-webkit-scrollbar-thumb {
+  background: linear-gradient(
+    180deg,
+    rgba(242, 199, 122, 0.66),
+    rgba(184, 221, 232, 0.30)
+  );
+  border-color: rgba(4, 32, 48, 0.72);
 }
 
 /* ------------------------------------------------------------
@@ -723,16 +783,4 @@ body.is-okinawa-page::before {
   .work-list-card.work-rise {
     opacity: 1 !important;
   }
-}
-.aq-fade {
-  opacity: 0;
-  transform: translateY(24px);
-  transition:
-    opacity 0.8s ease,
-    transform 0.8s ease;
-}
-
-.aq-fade.aq-show {
-  opacity: 1;
-  transform: translateY(0);
 }

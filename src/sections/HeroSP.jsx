@@ -19,20 +19,20 @@ export default function HeroSP() {
       {
         key: "vow",
         title: "Vow in Light",
-        sub: "Wedding / Okinawa",
+        sub: "Bridal / Photowedding",
         to: VOW_PATH,
         img: "/works/vow-in-light-entryherosp.webp",
-        alt: "制作事例：Vow in Light",
+        alt: "Vow in Light ブライダル・フォトウェディング向けWebサイト制作事例",
         w: 900,
         h: 1200,
       },
       {
         key: "kou",
         title: "KOU RYUI",
-        sub: "Ryukyu Costume / Naha / Okinawa",
+        sub: "Ryukyu Costume / Culture",
         to: KOU_PATH,
         img: "/works/kouryuisp.webp",
-        alt: "制作事例：KOU RYUI",
+        alt: "KOU RYUI 琉装・沖縄文化体験向けWebサイト制作事例",
         w: 900,
         h: 1200,
       },
@@ -56,20 +56,49 @@ export default function HeroSP() {
       gsap.set(q('[data-hero="bgPhoto"]'), { opacity: 0, y: 14 });
       gsap.set(q('[data-hero="bgType"]'), { opacity: 0 });
       gsap.set(q('[data-hero="readPad"]'), { opacity: 0 });
-
       gsap.set(qa('[data-hero="leftItem"]'), { opacity: 0, y: 16 });
 
-      gsap.set(q('[data-hero="frameVow"]'), { opacity: 0, y: 34, scale: 0.988 });
-      gsap.set(q('[data-hero="frameKou"]'), { opacity: 0, y: 46, scale: 0.988 });
+      gsap.set(q('[data-hero="frameVow"]'), {
+        opacity: 0,
+        y: 34,
+        scale: 0.988,
+      });
+
+      gsap.set(q('[data-hero="frameKou"]'), {
+        opacity: 0,
+        y: 46,
+        scale: 0.988,
+      });
 
       const tl = gsap.timeline({ defaults: { ease: [0.22, 1, 0.36, 1] } });
 
       tl.to(q('[data-hero="bgType"]'), { opacity: 1, duration: 0.9 }, 0)
-        .to(q('[data-hero="bgPhoto"]'), { opacity: 1, y: 0, duration: 0.82 }, 0.02)
-        .to(q('[data-hero="readPad"]'), { opacity: 1, duration: 0.55 }, 0.10)
-        .to(qa('[data-hero="leftItem"]'), { opacity: 1, y: 0, duration: 0.66, stagger: 0.085 }, 0.14)
-        .to(q('[data-hero="frameVow"]'), { opacity: 1, y: 0, scale: 1, duration: 0.76 }, 0.40)
-        .to(q('[data-hero="frameKou"]'), { opacity: 1, y: 0, scale: 1, duration: 0.76 }, 0.48);
+        .to(
+          q('[data-hero="bgPhoto"]'),
+          { opacity: 1, y: 0, duration: 0.82 },
+          0.02
+        )
+        .to(q('[data-hero="readPad"]'), { opacity: 1, duration: 0.55 }, 0.1)
+        .to(
+          qa('[data-hero="leftItem"]'),
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.66,
+            stagger: 0.085,
+          },
+          0.14
+        )
+        .to(
+          q('[data-hero="frameVow"]'),
+          { opacity: 1, y: 0, scale: 1, duration: 0.76 },
+          0.4
+        )
+        .to(
+          q('[data-hero="frameKou"]'),
+          { opacity: 1, y: 0, scale: 1, duration: 0.76 },
+          0.48
+        );
 
       ScrollTrigger.create({
         trigger: root,
@@ -93,7 +122,7 @@ export default function HeroSP() {
       id="hero-sp"
       ref={rootRef}
       className={styles.root}
-      aria-label="GUSHIKEN DESIGN Hero (SP)"
+      aria-labelledby="hero-sp-title"
     >
       <div
         className={styles.bgPhoto}
@@ -112,41 +141,56 @@ export default function HeroSP() {
 
         <div className={styles.left}>
           <p className={styles.kicker} data-hero="leftItem">
-            QUIET / ORDER / IMPRESSION
+            OKINAWA / ONLINE WEB DESIGN
           </p>
 
           <p className={styles.hook} data-hero="leftItem">
-            空気から、設計する。
+            選ばれる入口を、空気から設計する。
           </p>
 
-          <h1 className={styles.h1} data-hero="leftItem">
+          <h1 id="hero-sp-title" className={styles.h1} data-hero="leftItem">
             Gushiken
             <br />
             Design
             <span className="visually-hidden">
-              ｜沖縄のWebデザイン・ホームページ制作
+              ｜沖縄県浦添市を拠点に、沖縄県内・全国対応でホームページ制作・LP制作・Webデザインを行う個人制作スタジオ
             </span>
           </h1>
 
-          <p className={styles.copy} data-hero="leftItem">
-            <span className={styles.copyMeta}>
-              沖縄の上質なWebデザイン・ホームページ制作
-            </span>
-            <span className={styles.copyText}>
-              写真が良いのに、サイトで安く見える。
+          <div className={styles.copy} data-hero="leftItem">
+            <p className={styles.copyMeta}>
+              沖縄拠点 / 全国オンライン対応 / HP・LP制作
+            </p>
+
+            <p className={styles.copyLead}>
+              その空気が、
               <br />
-              そのギャップを埋めて、問い合わせまで迷わない形に整えます。
-            </span>
-          </p>
+              選ばれる理由になる。
+            </p>
+
+            <p className={styles.copySub}>
+              写真・言葉・余白・導線を整え、
+              <br />
+              予約・問い合わせにつながるWebへ。
+            </p>
+
+            <p className="visually-hidden">
+              沖縄県内・全国オンライン対応で、ホームページ制作・LP制作・Webデザインを行います。美容室、飲食店、ブライダル、観光体験、タトゥースタジオなど、印象で選ばれる業種に向けて、構成・デザイン・実装まで一貫して制作します。
+            </p>
+          </div>
 
           <div className={styles.ctaRow} data-hero="leftItem">
-            <Link className={styles.cta} to="/contact" aria-label="お問い合わせへ">
+            <Link
+              className={styles.cta}
+              to="/contact"
+              aria-label="ホームページ制作・LP制作の相談をする"
+            >
               <span>相談する</span>
             </Link>
           </div>
 
           <p className={styles.ctaNote} data-hero="leftItem">
-            返信目安：24時間以内 / オンライン可
+            返信目安：24時間以内 / 沖縄県内・全国オンライン対応
           </p>
         </div>
 
@@ -155,7 +199,7 @@ export default function HeroSP() {
             <Link
               to={WORKS[0].to}
               className={`${styles.frame} ${styles.lg}`}
-              aria-label="制作事例：Vow in Light（詳細へ）"
+              aria-label="制作事例：Vow in Light ブライダル・フォトウェディング向けWebサイト制作事例へ"
             >
               <div className={styles.frameAnim} data-hero="frameVow">
                 <div className={styles.frameInner}>
@@ -172,10 +216,15 @@ export default function HeroSP() {
                         width={WORKS[0].w}
                         height={WORKS[0].h}
                         sizes="(max-width: 420px) 76vw, 360px"
-                        onError={() => setImgErr((s) => ({ ...s, vow: true }))}
+                        onError={() =>
+                          setImgErr((s) => ({ ...s, vow: true }))
+                        }
                       />
                     ) : (
-                      <span className={`${styles.fallback} ${styles.fallbackVow}`} aria-hidden="true" />
+                      <span
+                        className={`${styles.fallback} ${styles.fallbackVow}`}
+                        aria-hidden="true"
+                      />
                     )}
                   </div>
 
@@ -190,7 +239,7 @@ export default function HeroSP() {
             <Link
               to={WORKS[1].to}
               className={`${styles.frame} ${styles.md}`}
-              aria-label="制作事例：KOU RYUI（詳細へ）"
+              aria-label="制作事例：KOU RYUI 琉装・沖縄文化体験向けWebサイト制作事例へ"
             >
               <div className={styles.frameAnim} data-hero="frameKou">
                 <div className={styles.frameInner}>
@@ -206,10 +255,15 @@ export default function HeroSP() {
                         width={WORKS[1].w}
                         height={WORKS[1].h}
                         sizes="(max-width: 420px) 66vw, 310px"
-                        onError={() => setImgErr((s) => ({ ...s, kou: true }))}
+                        onError={() =>
+                          setImgErr((s) => ({ ...s, kou: true }))
+                        }
                       />
                     ) : (
-                      <span className={`${styles.fallback} ${styles.fallbackKou}`} aria-hidden="true" />
+                      <span
+                        className={`${styles.fallback} ${styles.fallbackKou}`}
+                        aria-hidden="true"
+                      />
                     )}
                   </div>
 

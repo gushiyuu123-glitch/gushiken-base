@@ -1,480 +1,635 @@
-/* Philosophy.module.css */
+/* src/sections/PhilosophySP.module.css */
 
-/* JS付与用（Modulesでclassが生成されるための置き場） */
+/* JS付与用 */
 .isIn {}
 
-/* ========= paper tokens ========= */
-:root{
+/* =======================================================
+   POLICY SP — paper / editorial / no CTA
+======================================================= */
+
+.section {
   --paper-a: #f5f0e7;
   --paper-b: #f4efe6;
   --paper-c: #f2ece3;
 
-  --ink-1: rgba(12,12,12,.86);
-  --ink-2: rgba(12,12,12,.70);
-  --ink-3: rgba(12,12,12,.46);
-  --line:  rgba(12,12,12,.12);
+  --ink-1: rgba(12, 12, 12, 0.88);
+  --ink-2: rgba(12, 12, 12, 0.68);
+  --ink-3: rgba(12, 12, 12, 0.44);
 
-  --gold-1: rgba(201,177,138,.86);
-  --gold-2: rgba(201,177,138,.56);
-}
+  --line: rgba(12, 12, 12, 0.12);
+  --line-soft: rgba(12, 12, 12, 0.07);
 
-/* =======================================================
-   POLICY (paper base)
-======================================================= */
+  --gold-1: rgba(201, 177, 138, 0.86);
+  --gold-2: rgba(201, 177, 138, 0.56);
+  --gold-3: rgba(201, 177, 138, 0.28);
 
-.section{
   position: relative;
   overflow: hidden;
-  padding: 9vh 0 12vh;
+  padding: 10vh 0 11vh;
   isolation: isolate;
 
-  /* Aboutの“紙＋光”文法に寄せる（濁りグラデ禁止） */
   background:
-    radial-gradient(900px 600px at 18% 14%, rgba(255,255,255,.70), rgba(255,255,255,0) 66%),
-    radial-gradient(1100px 700px at 82% 42%, rgba(255,255,255,.42), rgba(255,255,255,0) 68%),
-    radial-gradient(circle at 20% 0%, rgba(184,144,90,0.06), transparent 30%),
-    linear-gradient(180deg, var(--paper-a) 0%, var(--paper-b) 26%, var(--paper-c) 62%, var(--paper-b) 100%);
+    radial-gradient(
+      760px 520px at 14% 8%,
+      rgba(255, 255, 255, 0.72),
+      rgba(255, 255, 255, 0) 68%
+    ),
+    radial-gradient(
+      840px 580px at 86% 40%,
+      rgba(255, 255, 255, 0.42),
+      rgba(255, 255, 255, 0) 70%
+    ),
+    radial-gradient(
+      circle at 18% 0%,
+      rgba(184, 144, 90, 0.06),
+      transparent 32%
+    ),
+    linear-gradient(
+      180deg,
+      var(--paper-a) 0%,
+      var(--paper-b) 28%,
+      var(--paper-c) 64%,
+      var(--paper-b) 100%
+    );
 }
 
-/* 光膜（上だけ少し持ち上げ、下は薄い影で締める） */
-.section::before{
-  content:"";
-  position:absolute;
-  inset:0;
-  pointer-events:none;
+.section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+
   background:
     linear-gradient(
       180deg,
-      rgba(245, 240, 231, 0.92) 0%,
-      rgba(245, 240, 231, 0.40) 12%,
+      rgba(245, 240, 231, 0.94) 0%,
+      rgba(245, 240, 231, 0.44) 12%,
       transparent 30%,
       transparent 82%,
-      rgba(0, 0, 0, 0.06) 100%
+      rgba(0, 0, 0, 0.055) 100%
     );
-  opacity: .92;
+  opacity: 0.92;
 }
 
-/* 粒（紙質感） */
-.section::after{
-  content:"";
-  position:absolute;
-  inset:0;
-  pointer-events:none;
-  background-image: radial-gradient(rgba(0,0,0,0.16) 0.42px, transparent 0.42px);
+.section::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+
+  background-image: radial-gradient(
+    rgba(0, 0, 0, 0.16) 0.42px,
+    transparent 0.42px
+  );
   background-size: 4px 4px;
   opacity: 0.022;
   mix-blend-mode: multiply;
 }
 
-/* 隣接セクションの境界を“うっすら”溶かす（白ベースなので控えめ） */
 .seamTop,
-.seamBottom{
-  position:absolute;
-  left:0; right:0;
-  height: clamp(52px, 8vh, 110px);
-  pointer-events:none;
+.seamBottom {
+  position: absolute;
+  left: 0;
+  right: 0;
   z-index: 2;
-}
-.seamTop{
-  top:0;
-  background: linear-gradient(to bottom, rgba(245,240,231,1), rgba(245,240,231,0));
-}
-.seamBottom{
-  bottom:0;
-  background: linear-gradient(to top, rgba(244,239,230,1), rgba(244,239,230,0));
+  height: clamp(52px, 8vh, 110px);
+  pointer-events: none;
 }
 
-.container{
+.seamTop {
+  top: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(245, 240, 231, 1),
+    rgba(245, 240, 231, 0)
+  );
+}
+
+.seamBottom {
+  bottom: 0;
+  background: linear-gradient(
+    to top,
+    rgba(244, 239, 230, 1),
+    rgba(244, 239, 230, 0)
+  );
+}
+
+.container {
   position: relative;
   z-index: 3;
-  width: min(88vw, 980px);
+  width: calc(100% - 2rem);
   margin: 0 auto;
 }
 
-/* 背景語：読むためじゃない、重心だけ */
-.bgWord{
-  position:absolute;
-  right: -0.02em;
-  bottom: -0.08em;
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.bgWord {
+  position: absolute;
+  right: -0.04em;
+  bottom: -0.1em;
+  z-index: -1;
+
+  color: rgba(12, 12, 12, 0.05);
   font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: clamp(86px, 24vw, 150px);
   font-weight: 300;
-  letter-spacing: .12em;
-  font-size: clamp(92px, 14vw, 220px);
   line-height: 1;
-  color: rgba(12,12,12,0.055);
-  user-select:none;
-  pointer-events:none;
+  letter-spacing: 0.12em;
+
+  user-select: none;
+  pointer-events: none;
   mix-blend-mode: multiply;
 }
 
-/* side line（紙に刺す一本） */
-.sideLine{
-  position:absolute;
-  left:0;
-  top: 2.2rem;
+.sideLine {
+  position: absolute;
+  left: 0;
+  top: 1.6rem;
   width: 1px;
-  height: calc(100% - 4.4rem);
+  height: calc(100% - 3.2rem);
+  pointer-events: none;
+
   background: linear-gradient(
     to bottom,
-    rgba(201,177,138,0.52),
-    rgba(12,12,12,0.10),
+    rgba(201, 177, 138, 0.52),
+    rgba(12, 12, 12, 0.1),
     transparent
   );
-  pointer-events:none;
 }
 
-/* header */
-.header{
+/* =======================================================
+   Header
+======================================================= */
+
+.header {
   position: relative;
-  padding-left: 1rem;
-  margin-bottom: 3.2rem;
+  padding-left: 0.75rem;
+  margin-bottom: 2.75rem;
 }
 
-.svgTitle{ max-width: 100%; }
-.svgTitle :global(.section-svg){
-  width: min(100%, 780px);
+.svgTitle {
+  max-width: 100%;
 }
 
-/* 見出し直下のルール（カードじゃなく編集） */
-.header::after{
-  content:"";
-  display:block;
-  margin-top: 22px;
-  width: min(640px, 68vw);
+.svgTitle :global(.section-svg) {
+  width: min(100%, 560px);
+}
+
+.header::after {
+  content: "";
+  display: block;
+  width: min(100%, 460px);
   height: 1px;
+  margin-top: 20px;
+
   background: var(--line);
-  opacity: .8;
+  opacity: 0.78;
 }
 
-.sub{
-  margin: 1.05rem 0 0;
+.sub {
+  margin: 1rem 0 0;
   color: var(--ink-3);
-  font-size: 0.82rem;
+  font-size: 0.75rem;
   line-height: 1;
   letter-spacing: 0.14em;
 }
 
-/* copy */
-.copy{ padding-left: 1rem; }
+/* =======================================================
+   Copy
+======================================================= */
 
-/* 読ませる本文は“常に黒で勝つ” */
-.lead{
-  max-width: 640px;
-  margin: 0 0 2.0rem;
-  color: var(--ink-1);
-  font-size: 1rem;
-  line-height: 2.10;
-  letter-spacing: 0.045em;
+.copy {
+  padding-left: 0.75rem;
 }
-.body{
-  max-width: 680px;
-  margin: 0 0 2.8rem;
+
+.lead {
+  max-width: 340px;
+  margin: 0 0 1.85rem;
+
+  color: var(--ink-1);
+  font-family: "Shippori Mincho", "Yu Mincho", "Hiragino Mincho ProN", serif;
+  font-size: clamp(0.98rem, 4.25vw, 1.14rem);
+  line-height: 2.02;
+  letter-spacing: 0.055em;
+}
+
+.body {
+  max-width: 350px;
+  margin: 0 0 2.55rem;
+
   color: var(--ink-2);
-  font-size: 0.96rem;
-  line-height: 2.08;
+  font-size: 0.9rem;
+  line-height: 2.02;
   letter-spacing: 0.04em;
 }
+
 .lead span,
-.body span{
-  color: rgba(12,12,12,.92);
+.body span {
+  color: rgba(12, 12, 12, 0.94);
 }
 
-/* 締めも暗落ちさせず、紙の上で成立させる */
-.last{
-  max-width: 720px;
-  margin: 4.2rem 0 0;
-  color: rgba(12,12,12,.78);
-  font-size: 1rem;
+.last {
+  max-width: 350px;
+  margin: 3.7rem 0 0;
+
+  color: rgba(12, 12, 12, 0.76);
+  font-size: 0.94rem;
   font-weight: 300;
-  line-height: 2.05;
+  line-height: 2.02;
   letter-spacing: 0.035em;
 }
-.last span{ color: rgba(12,12,12,.90); }
-.last em{
-  display:inline-block;
-  margin-top: .2rem;
-  color: rgba(12,12,12,.62);
+
+.last span {
+  color: rgba(12, 12, 12, 0.9);
+}
+
+.last em {
+  display: inline-block;
+  margin-top: 0.28rem;
+
+  color: rgba(12, 12, 12, 0.62);
   font-style: normal;
 }
 
 /* =======================================================
-   Visual Principles (paper)
+   Visual Principles
 ======================================================= */
 
-.principles{ margin: 3.6rem 0 0; }
-
-.principlesInner{
-  position: relative;
-  padding: 0.2rem 0 0.2rem 2rem;
+.principles {
+  margin: 3.25rem 0 0;
 }
 
-.principlesLabel{
-  margin: 0 0 2.0rem;
+.principlesInner {
+  position: relative;
+  padding: 0.2rem 0 0.2rem 1.55rem;
+}
+
+.principlesLabel {
+  margin: 0 0 1.8rem;
+
   color: var(--ink-3);
-  font-size: 0.66rem;
+  font-size: 0.62rem;
   line-height: 1;
-  letter-spacing: 0.24em;
+  letter-spacing: 0.22em;
   text-transform: uppercase;
 }
 
-.principlesList{
+.principlesList {
   display: grid;
-  gap: 2.1rem;
+  gap: 2.05rem;
 }
 
-.vpAxis{
-  position:absolute;
-  left: 10px;
-  top: 2.2rem;
+.vpAxis {
+  position: absolute;
+  left: 7px;
+  top: 2.05rem;
   bottom: 0.4rem;
   width: 1px;
+
   background: linear-gradient(
     to bottom,
-    rgba(12,12,12,0.16),
-    rgba(12,12,12,0.08) 60%,
+    rgba(12, 12, 12, 0.16),
+    rgba(12, 12, 12, 0.08) 60%,
     transparent
   );
-  pointer-events:none;
+  pointer-events: none;
 }
 
-/* item */
-.vpItem{
+.vpItem {
   position: relative;
   display: grid;
   grid-template-columns: auto 1fr;
-  gap: 1.05rem;
+  gap: 0.75rem;
 }
 
-.vpNum{
-  width: 2.4rem;
-  color: rgba(12,12,12,0.10);
+.vpNum {
+  width: 2rem;
+
+  color: rgba(12, 12, 12, 0.1);
   font-family: "Cormorant Garamond", Georgia, serif;
-  font-size: 2.8rem;
+  font-size: 2.25rem;
   font-weight: 300;
   line-height: 0.86;
   letter-spacing: 0.04em;
-  user-select:none;
+
+  user-select: none;
 }
 
-.vpContent{ min-width:0; }
+.vpContent {
+  min-width: 0;
+}
 
-.vpHeading{
-  display:flex;
+.vpHeading {
+  display: flex;
   align-items: baseline;
   flex-wrap: wrap;
-  gap: .9rem;
-  margin-bottom: .85rem;
+  gap: 0.65rem;
+  margin-bottom: 0.82rem;
 }
 
-.vpHeading h3{
+.vpHeading h3 {
   margin: 0;
+
   color: var(--ink-1);
-  font-size: 1.48rem;
+  font-size: 1.28rem;
   font-weight: 300;
   line-height: 1.28;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.12em;
 }
 
-.vpHeading p{
+.vpHeading p {
   margin: 0;
-  color: rgba(201,177,138,0.72);
-  font-size: 0.62rem;
+
+  color: rgba(201, 177, 138, 0.74);
+  font-size: 0.56rem;
   line-height: 1;
   letter-spacing: 0.2em;
 }
 
-.vpText{
+.vpText {
   margin: 0;
-  color: rgba(12,12,12,0.62);
-  font-size: 0.72rem;
-  line-height: 1.9;
-  letter-spacing: 0.12em;
+
+  color: rgba(12, 12, 12, 0.62);
+  font-size: 0.68rem;
+  line-height: 1.86;
+  letter-spacing: 0.1em;
 }
 
-/* visuals */
-.vpVisual{ margin-bottom: .9rem; }
+.vpVisual {
+  margin-bottom: 0.88rem;
+}
 
 /* clarity */
-.vpClarity{ display:flex; flex-direction:column; gap: 5px; }
-.vpLine{ height: 1.5px; border-radius: 999px; background: rgba(12,12,12,0.10); }
-.vpStrong{ width: 100%; background: rgba(12,12,12,0.28); }
-.vpMid{ width: 76%; background: rgba(12,12,12,0.14); }
-.vpThin{ width: 50%; background: rgba(12,12,12,0.08); }
+.vpClarity {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
 
-/* atmosphere */
-.vpAtmosphere{ display:flex; align-items: stretch; gap: 10px; }
-.vpGoldBar{ width: 3px; border-radius: 999px; background: rgba(201,177,138,0.86); }
-.vpLines{ flex:1; display:flex; flex-direction:column; gap: 5px; }
-.vpGoldLine{ height: 1px; border-radius: 999px; background: rgba(201,177,138,0.12); }
-.vpGoldStrong{ width:100%; background: rgba(201,177,138,0.34); }
-.vpGoldMid{ width:68%; background: rgba(201,177,138,0.16); }
-.vpGoldThin{ width:44%; background: rgba(201,177,138,0.08); }
-
-/* flow */
-.vpFlow{ display:grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
-.vpFlow span{
+.vpLine {
   height: 1.5px;
   border-radius: 999px;
-  background: linear-gradient(90deg, rgba(12,12,12,0.22), rgba(12,12,12,0.10));
+  background: rgba(12, 12, 12, 0.1);
+}
+
+.vpStrong {
+  width: 100%;
+  background: rgba(12, 12, 12, 0.28);
+}
+
+.vpMid {
+  width: 76%;
+  background: rgba(12, 12, 12, 0.14);
+}
+
+.vpThin {
+  width: 50%;
+  background: rgba(12, 12, 12, 0.08);
+}
+
+/* atmosphere */
+.vpAtmosphere {
+  display: flex;
+  align-items: stretch;
+  gap: 10px;
+}
+
+.vpGoldBar {
+  width: 3px;
+  border-radius: 999px;
+  background: rgba(201, 177, 138, 0.86);
+}
+
+.vpLines {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.vpGoldLine {
+  height: 1px;
+  border-radius: 999px;
+  background: rgba(201, 177, 138, 0.12);
+}
+
+.vpGoldStrong {
+  width: 100%;
+  background: rgba(201, 177, 138, 0.34);
+}
+
+.vpGoldMid {
+  width: 68%;
+  background: rgba(201, 177, 138, 0.16);
+}
+
+.vpGoldThin {
+  width: 44%;
+  background: rgba(201, 177, 138, 0.08);
+}
+
+/* flow */
+.vpFlow {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+}
+
+.vpFlow span {
+  height: 1.5px;
+  border-radius: 999px;
+  background: linear-gradient(
+    90deg,
+    rgba(12, 12, 12, 0.22),
+    rgba(12, 12, 12, 0.1)
+  );
 }
 
 /* =======================================================
-   Reveal (像が整う：軽め/速め)
+   Reveal
 ======================================================= */
 
-.flow{
+.flow {
   opacity: 0;
   transform: translate3d(0, 16px, 0) scale(0.998);
   filter: blur(0.12px);
   will-change: opacity, transform, filter;
 
   transition:
-    opacity 680ms cubic-bezier(.22,.56,.18,1),
-    transform 720ms cubic-bezier(.22,.56,.18,1),
-    filter 680ms cubic-bezier(.22,.56,.18,1);
+    opacity 680ms cubic-bezier(0.22, 0.56, 0.18, 1),
+    transform 720ms cubic-bezier(0.22, 0.56, 0.18, 1),
+    filter 680ms cubic-bezier(0.22, 0.56, 0.18, 1);
 }
 
-.flowLine{
+.flowLine {
   opacity: 0;
   transform: scaleY(0.72);
   transform-origin: top;
-  filter:none;
+  filter: none;
 
   transition:
-    opacity 640ms cubic-bezier(.22,.56,.18,1),
-    transform 760ms cubic-bezier(.22,.56,.18,1);
+    opacity 640ms cubic-bezier(0.22, 0.56, 0.18, 1),
+    transform 760ms cubic-bezier(0.22, 0.56, 0.18, 1);
 }
 
-.flow.isIn{
+.flow.isIn {
   opacity: 1;
-  transform: translate3d(0,0,0) scale(1);
+  transform: translate3d(0, 0, 0) scale(1);
   filter: blur(0);
 }
-.flowLine.isIn{
+
+.flowLine.isIn {
   opacity: 0.88;
   transform: scaleY(1);
 }
 
-.flow1{ transition-delay: 40ms; }
-.flow2{ transition-delay: 90ms; }
-.flow3{ transition-delay: 140ms; }
-.flow5{ transition-delay: 180ms; }
+.flow1 {
+  transition-delay: 40ms;
+}
 
-/* principles wrapper */
-.principles{
+.flow2 {
+  transition-delay: 90ms;
+}
+
+.flow3 {
+  transition-delay: 140ms;
+}
+
+.flow5 {
+  transition-delay: 180ms;
+}
+
+.principles {
   opacity: 0;
   transform: translate3d(0, 16px, 0) scale(0.998);
   filter: blur(0.12px);
   will-change: opacity, transform, filter;
 
   transition:
-    opacity 720ms cubic-bezier(.22,.56,.18,1),
-    transform 780ms cubic-bezier(.22,.56,.18,1),
-    filter 720ms cubic-bezier(.22,.56,.18,1);
+    opacity 720ms cubic-bezier(0.22, 0.56, 0.18, 1),
+    transform 780ms cubic-bezier(0.22, 0.56, 0.18, 1),
+    filter 720ms cubic-bezier(0.22, 0.56, 0.18, 1);
 }
-.principles.isIn{
+
+.principles.isIn {
   opacity: 1;
-  transform: translate3d(0,0,0) scale(1);
+  transform: translate3d(0, 0, 0) scale(1);
   filter: blur(0);
 }
 
-/* inside reveal */
-.principleReveal{
+.principleReveal {
   opacity: 0;
   transform: translate3d(0, 12px, 0) scale(0.998);
   filter: blur(0.08px);
   will-change: opacity, transform, filter;
 
   transition:
-    opacity 620ms cubic-bezier(.22,.56,.18,1),
-    transform 680ms cubic-bezier(.22,.56,.18,1),
-    filter 620ms cubic-bezier(.22,.56,.18,1);
+    opacity 620ms cubic-bezier(0.22, 0.56, 0.18, 1),
+    transform 680ms cubic-bezier(0.22, 0.56, 0.18, 1),
+    filter 620ms cubic-bezier(0.22, 0.56, 0.18, 1);
 }
-.principles.isIn .principleReveal{
+
+.principles.isIn .principleReveal {
   opacity: 1;
-  transform: translate3d(0,0,0) scale(1);
+  transform: translate3d(0, 0, 0) scale(1);
   filter: blur(0);
 }
-.principles.isIn .principlesLabel{ transition-delay: 40ms; }
-.principles.isIn .vpItem{
+
+.principles.isIn .principlesLabel {
+  transition-delay: 40ms;
+}
+
+.principles.isIn .vpItem {
   transition-delay: calc(140ms + (var(--vp-index) * 105ms));
 }
 
-/* axis reveal */
-.principles .vpAxis{
+.principles .vpAxis {
   opacity: 0;
   transform: scaleY(0.76);
   transform-origin: top;
+
   transition:
-    opacity 620ms cubic-bezier(.22,.56,.18,1),
-    transform 760ms cubic-bezier(.22,.56,.18,1);
+    opacity 620ms cubic-bezier(0.22, 0.56, 0.18, 1),
+    transform 760ms cubic-bezier(0.22, 0.56, 0.18, 1);
 }
-.principles.isIn .vpAxis{
+
+.principles.isIn .vpAxis {
   opacity: 1;
   transform: scaleY(1);
   transition-delay: 90ms;
 }
 
 /* =======================================================
-   Mobile
+   Small phones
 ======================================================= */
 
-@media (max-width: 768px){
-  .section{ padding: 10vh 0 11vh; }
-  .container{ width: calc(100% - 2rem); }
-
-  .sideLine{
-    top: 1.6rem;
-    height: calc(100% - 3.2rem);
+@media (max-width: 380px) {
+  .container {
+    width: calc(100% - 1.65rem);
   }
 
   .header,
-  .copy{ padding-left: .75rem; }
-
-  .header{ margin-bottom: 2.8rem; }
-
-  .svgTitle :global(.section-svg){
-    width: min(100%, 560px);
+  .copy {
+    padding-left: 0.65rem;
   }
 
-  .sub{ font-size: .75rem; }
-
-  .lead{
-    margin-bottom: 1.8rem;
-    font-size: .94rem;
-    line-height: 2.02;
-    letter-spacing: .035em;
-  }
-
-  .body{
-    margin-bottom: 2.5rem;
-    font-size: .9rem;
+  .lead {
+    font-size: 0.94rem;
     line-height: 2;
   }
 
-  .principles{ margin-top: 3.2rem; }
-  .principlesInner{ padding-left: 1.55rem; }
-  .principlesLabel{ margin-bottom: 1.8rem; font-size: .62rem; letter-spacing: .22em; }
-  .principlesList{ gap: 2.0rem; }
-  .vpAxis{ left: 7px; }
-  .vpItem{ gap: .75rem; }
-  .vpNum{ width: 2rem; font-size: 2.25rem; }
-  .vpHeading{ gap: .65rem; }
-  .vpHeading h3{ font-size: 1.28rem; letter-spacing: .12em; }
-  .vpHeading p{ font-size: .56rem; }
-  .vpText{ font-size: .68rem; line-height: 1.85; letter-spacing: .10em; }
+  .body {
+    font-size: 0.86rem;
+    line-height: 1.98;
+  }
 
-  .last{ margin-top: 3.6rem; font-size: .94rem; line-height: 2; }
+  .principlesInner {
+    padding-left: 1.42rem;
+  }
+
+  .vpHeading h3 {
+    font-size: 1.18rem;
+  }
+
+  .vpText {
+    font-size: 0.66rem;
+  }
+
+  .last {
+    font-size: 0.9rem;
+  }
 }
 
-@media (prefers-reduced-motion: reduce){
-  .section *,.section *::before,.section *::after{
-    transition:none !important;
-    animation:none !important;
+/* =======================================================
+   Reduced motion
+======================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .section *,
+  .section *::before,
+  .section *::after {
+    transition: none !important;
+    animation: none !important;
   }
-  .flow,.principles,.principleReveal,.vpAxis{
+
+  .flow,
+  .principles,
+  .principleReveal,
+  .vpAxis {
     opacity: 1 !important;
-    transform:none !important;
-    filter:none !important;
+    transform: none !important;
+    filter: none !important;
   }
 }
