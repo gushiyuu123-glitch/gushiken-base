@@ -11,7 +11,7 @@ import {
 import Seo from "./components/Seo";
 
 import NavGlobal from "./components/NavGlobal";
-import Footer from "./components/Footer";
+import Footer from "./components/footer";
 import LenisManager from "./components/Lenis";
 
 // Pages
