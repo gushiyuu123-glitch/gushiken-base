@@ -31,11 +31,10 @@
 
   pointer-events: none;
 
-  background-image:
-    radial-gradient(
-      rgba(255, 255, 255, 0.12) 0.35px,
-      transparent 0.35px
-    );
+  background-image: radial-gradient(
+    rgba(255, 255, 255, 0.12) 0.35px,
+    transparent 0.35px
+  );
   background-size: 4px 4px;
 
   opacity: 0.055;
@@ -103,7 +102,7 @@
 
   width: min(560px, 92vw);
   margin: 0 auto;
-  padding: 48px 0 20px;
+  padding: 48px 0 18px;
 }
 
 .kicker {
@@ -116,7 +115,11 @@
 
 .h2 {
   position: relative;
+  display: block;
+  width: fit-content;
+  max-width: 100%;
   margin: 0 0 12px;
+  line-height: 1;
 }
 
 .sr {
@@ -124,15 +127,18 @@
 
   width: 1px;
   height: 1px;
-  overflow: hidden;
+  margin: -1px;
 
+  overflow: hidden;
   clip: rect(0, 0, 0, 0);
+  clip-path: inset(50%);
   white-space: nowrap;
 }
 
 .h2Mask {
   display: block;
   width: min(560px, 88vw);
+  max-width: 100%;
   overflow: hidden;
 
   filter: drop-shadow(0 24px 42px rgba(0, 0, 0, 0.48));
@@ -142,8 +148,15 @@
   display: block;
   width: 100%;
   height: auto;
+  max-width: none;
 
+  opacity: 1;
+  visibility: visible;
   transform: translateZ(0);
+  filter: none;
+
+  pointer-events: none;
+  user-select: none;
 }
 
 .lead {
@@ -151,12 +164,11 @@
 
   margin: 0;
   padding-left: 12px;
-  max-width: 370px;
 
-  font-size: 12.5px;
-  line-height: 1.95;
+  font-size: 13px;
+  line-height: 1.9;
   letter-spacing: 0.04em;
-  color: rgba(255, 255, 255, 0.68);
+  color: rgba(255, 255, 255, 0.66);
 }
 
 .lead::before {
@@ -175,19 +187,6 @@
   );
 }
 
-.leadSub {
-  position: relative;
-
-  margin: 12px 0 0;
-  padding-left: 12px;
-  max-width: 390px;
-
-  font-size: 10px;
-  line-height: 2;
-  letter-spacing: 0.075em;
-  color: rgba(255, 255, 255, 0.4);
-}
-
 /* =========================
    List
 ========================= */
@@ -198,10 +197,10 @@
 
   width: min(560px, 92vw);
   margin: 0 auto;
-  padding: 12px 0 24px;
+  padding: 12px 0 22px;
 
   display: grid;
-  gap: 18px;
+  gap: 16px;
 }
 
 /* =========================
@@ -243,11 +242,6 @@
   color: inherit;
   text-decoration: none;
   outline: none;
-}
-
-.itemLink:focus-visible {
-  outline: 2px solid rgba(244, 239, 230, 0.34);
-  outline-offset: 7px;
 }
 
 .itemLink:active .media {
@@ -519,33 +513,55 @@
   letter-spacing: 0.22em;
 }
 
-/* LIVE button */
+/* =========================
+   LIVE link
+========================= */
+
 .live {
   position: absolute;
-  top: 31px;
-  right: 10px;
+  right: 12px;
+  top: 33px;
   z-index: 8;
 
   display: inline-flex;
   align-items: center;
   justify-content: center;
 
-  min-height: 32px;
-  padding: 8px 10px 7px;
+  min-height: 30px;
+  padding: 0 10px;
 
-  color: rgba(255, 255, 255, 0.78);
-  font-size: 9px;
+  color: rgba(255, 255, 255, 0.82);
+  background: rgba(8, 8, 8, 0.62);
+  border: 1px solid rgba(244, 239, 230, 0.18);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+
+  text-decoration: none;
+  font-size: 9.5px;
   line-height: 1;
   letter-spacing: 0.18em;
-  text-decoration: none;
 
-  background: rgba(7, 7, 7, 0.48);
-  border: 1px solid rgba(255, 255, 255, 0.14);
+  box-shadow:
+    0 12px 34px rgba(0, 0, 0, 0.34),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+
+  opacity: 0.86;
+
+  transition:
+    opacity 0.25s ease,
+    border-color 0.25s ease,
+    background 0.25s ease,
+    transform 0.25s cubic-bezier(0.22, 0.56, 0.18, 1);
 }
 
 .live:active {
-  color: rgba(255, 255, 255, 0.96);
-  border-color: rgba(244, 239, 230, 0.34);
+  transform: translateY(1px);
+}
+
+.live:focus-visible {
+  opacity: 1;
+  outline: 1px solid rgba(244, 239, 230, 0.62);
+  outline-offset: 3px;
 }
 
 /* =========================
@@ -555,7 +571,6 @@
 .kicker,
 .h2,
 .lead,
-.leadSub,
 .tail {
   opacity: 0;
   transform: translate3d(0, 16px, 0) scale(0.996);
@@ -595,7 +610,7 @@
 }
 
 /* =========================
-   View all / Contact
+   View all
 ========================= */
 
 .tail {
@@ -604,36 +619,15 @@
 
   width: min(560px, 92vw);
   margin: 0 auto;
-  padding: 24px 0 calc(54px + env(safe-area-inset-bottom));
+  padding: 22px 0 calc(48px + env(safe-area-inset-bottom));
 
   border-top: 1px solid rgba(255, 255, 255, 0.08);
 
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 17px;
-}
-
-.tailCopy {
-  margin: 0;
-  max-width: 360px;
-
-  color: rgba(255, 255, 255, 0.46);
-  font-size: 10.5px;
-  line-height: 2;
-  letter-spacing: 0.075em;
-  text-align: center;
-}
-
-.tailLinks {
-  display: flex;
   justify-content: center;
-  flex-wrap: wrap;
-  gap: 16px 20px;
 }
 
-.all,
-.contact {
+.all {
   position: relative;
 
   padding: 10px 0;
@@ -641,15 +635,10 @@
   color: rgba(255, 255, 255, 0.82);
   text-decoration: none;
   letter-spacing: 0.22em;
-  font-size: 10.5px;
+  font-size: 11px;
 }
 
-.contact {
-  color: rgba(217, 185, 138, 0.88);
-}
-
-.all::after,
-.contact::after {
+.all::after {
   content: "";
   position: absolute;
   left: 50%;
@@ -666,17 +655,9 @@
     background 0.35s ease;
 }
 
-.contact::after {
-  background: rgba(217, 185, 138, 0.32);
-}
-
-.all:active::after,
-.contact:active::after {
+.all:active::after {
   width: 100%;
-}
-
-.contact:active::after {
-  background: rgba(217, 185, 138, 0.62);
+  background: rgba(255, 255, 255, 0.44);
 }
 
 /* =========================
@@ -690,12 +671,8 @@
     width: min(560px, 90vw);
   }
 
-  .lead {
-    font-size: 12px;
-  }
-
-  .leadSub {
-    font-size: 9.5px;
+  .h2Mask {
+    width: min(560px, 90vw);
   }
 
   .caption {
@@ -713,13 +690,8 @@
   }
 
   .live {
-    right: 9px;
-    top: 30px;
-    font-size: 8.5px;
-  }
-
-  .tailCopy {
-    font-size: 10px;
+    top: 32px;
+    right: 10px;
   }
 }
 
@@ -732,7 +704,6 @@
   .kicker,
   .h2,
   .lead,
-  .leadSub,
   .tail {
     opacity: 1 !important;
     transform: none !important;
@@ -752,6 +723,10 @@
   }
 
   .media {
+    transition: none !important;
+  }
+
+  .live {
     transition: none !important;
   }
 }

@@ -416,13 +416,6 @@ export default function About() {
             </p>
 
             <div className={styles["about-links"]}>
-              <Link to="/works" className={styles["about-works-link"]}>
-                制作事例を見る
-              </Link>
-
-              <Link to="/contact" className={styles["about-contact-link"]}>
-                相談する
-              </Link>
 
               <a
                 href="https://note.com/noahgushi123"

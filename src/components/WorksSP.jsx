@@ -59,18 +59,8 @@ function isExternal(url) {
 }
 
 function WorkItemSP({ item, index }) {
-  const externalLive = isExternal(item.href);
   const hasInternal = typeof item.to === "string" && item.to.startsWith("/");
-
-  const Wrapper = hasInternal ? Link : "a";
-
-  const wrapperProps = hasInternal
-    ? { to: item.to }
-    : {
-        href: item.href,
-        target: externalLive ? "_blank" : undefined,
-        rel: externalLive ? "noreferrer noopener" : undefined,
-      };
+  const hasLive = isExternal(item.href);
 
   return (
     <article
@@ -81,10 +71,10 @@ function WorkItemSP({ item, index }) {
         "--pos": item.pos || "50% 50%",
       }}
     >
-      <Wrapper
+      <Link
         className={styles.itemLink}
+        to={hasInternal ? item.to : "/works"}
         aria-label={`${item.title} の制作事例を見る`}
-        {...wrapperProps}
       >
         <div className={styles.itemTop} aria-hidden="true">
           <span>{item.no}</span>
@@ -133,9 +123,9 @@ function WorkItemSP({ item, index }) {
             </div>
           </div>
         </div>
-      </Wrapper>
+      </Link>
 
-      {externalLive && (
+      {hasLive && (
         <a
           className={styles.live}
           href={item.href}
@@ -211,27 +201,21 @@ export default function WorksSP() {
         >
           <span className={styles.sr}>WORKS</span>
 
-          <span className={styles.h2Mask}>
+          <span className={styles.h2Mask} aria-hidden="true">
             <img
               className={styles.h2Img}
               src="/typography/works.png"
-              srcSet="/typography/works.png 1x, /typography/works@2x.png 2x"
               alt=""
-              aria-hidden="true"
               decoding="async"
+              loading="eager"
             />
           </span>
         </h2>
 
         <p className={styles.lead} data-reveal style={{ "--d": "140ms" }}>
-          見た瞬間の印象から、
+          ただ作っただけではなく、
           <br />
-          相談したくなる流れまで設計した制作事例。
-        </p>
-
-        <p className={styles.leadSub} data-reveal style={{ "--d": "180ms" }}>
-          美容・飲食・観光・ブライダル・ブランドサイトなど、
-          印象で選ばれる業種を中心に制作しています。
+          印象まで設計した制作物。
         </p>
       </header>
 
@@ -246,21 +230,13 @@ export default function WorksSP() {
         data-reveal
         style={{ "--d": `${260 + WORKS.length * 80}ms` }}
       >
-        <p className={styles.tailCopy}>
-          作品全体を見たあと、今のサイトやSNSで損している部分も整理できます。
-        </p>
-
-        <div className={styles.tailLinks}>
-          <Link
-            className={styles.all}
-            to="/works"
-            aria-label="すべての制作実績を見る"
-          >
-            VIEW ALL WORKS
-          </Link>
-
-
-        </div>
+        <Link
+          className={styles.all}
+          to="/works"
+          aria-label="すべての制作実績を見る"
+        >
+          VIEW ALL WORKS
+        </Link>
       </div>
     </section>
   );
