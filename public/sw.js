@@ -4,7 +4,7 @@
 // =====================================================
 
 const CACHE_PREFIX = "gushiken-design-";
-const CACHE_STAMP = "v20260614035230"; // ← scripts/bump-sw-stamp.cjs が置換
+const CACHE_STAMP = "v20260614040110"; // ← scripts/bump-sw-stamp.cjs が置換
 const CACHE_NAME = `${CACHE_PREFIX}${CACHE_STAMP}`;
 
 const OFFLINE_URL = "/offline.html";
