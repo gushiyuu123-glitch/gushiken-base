@@ -5,7 +5,7 @@
 User-agent: *
 Allow: /
 
-# Avoid crawling sourcemaps (if they exist)
+# Avoid crawling sourcemaps if they exist.
 Disallow: /*.map$
 Disallow: /assets/*.map$
 

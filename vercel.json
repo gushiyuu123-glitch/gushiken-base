@@ -1,6 +1,30 @@
 {
-  "routes": [
-    { "handle": "filesystem" },
-    { "src": "/(.*)", "dest": "/index.html" }
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+
+  "trailingSlash": false,
+
+  "redirects": [
+    {
+      "source": "/okinawa-bridal-website",
+      "destination": "/works/vow-in-light",
+      "permanent": true
+    },
+    {
+      "source": "/naha-ryukyu-costume-website",
+      "destination": "/works/kou-ryui",
+      "permanent": true
+    },
+    {
+      "source": "/okinawa-night-website",
+      "destination": "/works/black-papillon",
+      "permanent": true
+    }
+  ],
+
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
   ]
 }

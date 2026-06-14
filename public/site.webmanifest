@@ -2,9 +2,9 @@
   "id": "/",
   "name": "GUSHIKEN DESIGN",
   "short_name": "GUSHIKEN",
-  "description": "沖縄を拠点に、上品で伝わりやすいWebサイトを制作するGUSHIKEN DESIGNの公式サイトです。",
+  "description": "沖縄を拠点に、全国対応で店舗・ブランド向けのWebサイト、LP、ポートフォリオ型サイトを制作するGUSHIKEN DESIGNの公式サイトです。",
   "lang": "ja",
-  "start_url": "/?source=pwa",
+  "start_url": "/",
   "scope": "/",
   "display": "standalone",
   "display_override": ["standalone", "browser"],
@@ -22,12 +22,6 @@
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any"
-    },
-    {
-      "src": "/android-chrome-512x512.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "maskable"
     }
   ]
 }

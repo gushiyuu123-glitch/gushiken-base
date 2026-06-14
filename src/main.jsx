@@ -1,13 +1,13 @@
 // src/main.jsx
 /* ============================================================================
-   GUSHIKEN DESIGN Core Init v5.7
+   GUSHIKEN DESIGN Core Init v5.8
    - FOUC Prevention
    - Helmet Provider
    - Browser Scroll Restoration: manual before React render
-   - Vercel Analytics: production only
+   - Vercel Analytics: live domain only
    - Lenis / route scroll: App.jsx 側で管理
-   - Stable Service Worker
-   - Dev Cache Clear
+   - Stable Service Worker: live domain only
+   - Non-live Cache Clear
 =========================================================================== */
 
 import { StrictMode, Suspense, lazy } from "react";
@@ -26,18 +26,15 @@ function isBrowser() {
   return typeof window !== "undefined" && typeof document !== "undefined";
 }
 
-function isLocalHost() {
+const LIVE_HOSTS = new Set([
+  "gushikendesign.com",
+  "www.gushikendesign.com",
+]);
+
+function isLiveSiteHost() {
   if (!isBrowser()) return false;
 
-  return (
-    window.location.hostname === "localhost" ||
-    window.location.hostname === "127.0.0.1" ||
-    window.location.hostname === "[::1]"
-  );
-}
-
-function isProductionHost() {
-  return import.meta.env.PROD && !isLocalHost();
+  return import.meta.env.PROD && LIVE_HOSTS.has(window.location.hostname);
 }
 
 /* ============================================================================
@@ -52,9 +49,11 @@ if (isBrowser() && "scrollRestoration" in window.history) {
 
 /* ============================================================================
    Analytics
+   - gushikendesign.com / www.gushikendesign.com のみ有効
+   - Vercel Preview URL / localhost では読み込まない
 =========================================================================== */
 
-const ENABLE_VERCEL_ANALYTICS = isProductionHost();
+const ENABLE_VERCEL_ANALYTICS = isLiveSiteHost();
 
 const AnalyticsLazy = ENABLE_VERCEL_ANALYTICS
   ? lazy(() =>
@@ -154,9 +153,11 @@ if (document.readyState === "loading") {
 
 /* ============================================================================
    3) Service Worker
+   - 本番独自ドメインだけ登録
+   - Preview / localhost では古いSWとCacheを掃除
 =========================================================================== */
 
-async function clearDevServiceWorkersAndCaches() {
+async function clearNonLiveServiceWorkersAndCaches() {
   try {
     if ("serviceWorker" in navigator) {
       const registrations = await navigator.serviceWorker.getRegistrations();
@@ -171,12 +172,14 @@ async function clearDevServiceWorkersAndCaches() {
     if ("caches" in window) {
       const keys = await caches.keys();
 
-      await Promise.all(keys.map((key) => caches.delete(key).catch(() => false)));
+      await Promise.all(
+        keys.map((key) => caches.delete(key).catch(() => false))
+      );
     }
 
-    console.info("[GD] Dev: cleared Service Worker + caches.");
+    console.info("[GD] Non-live: cleared Service Worker + caches.");
   } catch (error) {
-    console.warn("[GD] Dev cache clear failed:", error);
+    console.warn("[GD] Non-live cache clear failed:", error);
   }
 }
 
@@ -184,10 +187,10 @@ function initServiceWorker() {
   if (!isBrowser()) return;
   if (!("serviceWorker" in navigator)) return;
 
-  const shouldRegister = isProductionHost();
+  const shouldRegister = isLiveSiteHost();
 
   if (!shouldRegister) {
-    clearDevServiceWorkersAndCaches();
+    clearNonLiveServiceWorkersAndCaches();
     return;
   }
 

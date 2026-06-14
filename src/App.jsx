@@ -7,6 +7,7 @@ import {
   useNavigationType,
   matchPath,
   Navigate,
+  Link,
 } from "react-router-dom";
 import Seo from "./components/Seo";
 
@@ -95,109 +96,140 @@ const BASE_TITLE = `${SITE_NAME}｜沖縄のWebデザイン・ホームページ
 const BASE_DESC =
   "沖縄を拠点に、世界観と導線を設計するWeb制作を行っています。LP制作・ホームページ制作・Webデザインを、構成から公開まで一貫して仕上げます。";
 
+const DEFAULT_IMAGE_PATH = "/ogp-v4.png";
+
 const PAGE_SEO = {
   "/": {
     title: BASE_TITLE,
     description: BASE_DESC,
-    imagePath: "/ogp-v4.png",
+    imagePath: DEFAULT_IMAGE_PATH,
   },
 
   "/works": {
     title: `WORKS｜${BASE_TITLE}`,
     description:
       "制作したWebサイトの事例一覧。ブライダル・美容・飲食・観光・アパレルなど、世界観と導線を両立したWebデザインをまとめています。",
-    imagePath: "/ogp-v4.png",
+    imagePath: DEFAULT_IMAGE_PATH,
   },
 
   "/news": {
     title: `NEWS｜${BASE_TITLE}`,
     description:
       "制作の更新・設計の記録。作品の背景や判断の文脈を短く残しています。",
-    imagePath: "/ogp-v4.png",
+    imagePath: DEFAULT_IMAGE_PATH,
   },
 
   "/contact": {
     title: `CONTACT｜${BASE_TITLE}`,
     description:
       "ホームページ制作・LP制作・Webデザインの相談窓口。目的・必要な内容・素材の有無を元に、最適なスコープで提案します。",
-    imagePath: "/ogp-v4.png",
+    imagePath: DEFAULT_IMAGE_PATH,
   },
 
   "/price": {
     title: `PRICE｜${BASE_TITLE}`,
     description:
       "制作プランと料金の目安。LP制作・小規模サイト・印象重視のWebサイト制作など、目的に合わせて制作範囲を整理します。",
-    imagePath: "/ogp-v4.png",
+    imagePath: DEFAULT_IMAGE_PATH,
   },
 
   "/okinawa": {
-    title: "沖縄の店舗・サロン向けホームページ制作",
+    title: "沖縄の店舗・サロン向けホームページ制作｜GUSHIKEN DESIGN",
     description:
       "GUSHIKEN DESIGNは、沖縄県内の店舗・サロン・個人事業主向けにLP制作・ホームページ制作・Webデザインを行う個人制作スタジオです。浦添を拠点に、予約・問い合わせにつながる構成・デザイン・実装まで一貫して対応します。",
-    imagePath: "/ogp-v4.png",
+    imagePath: DEFAULT_IMAGE_PATH,
   },
 
   "/online": {
-    title: "全国オンライン対応のLP・Webサイト制作",
+    title: "全国対応のLP制作・ホームページ制作｜GUSHIKEN DESIGN",
     description:
       "GUSHIKEN DESIGNは、全国オンライン対応でLP制作・ホームページ制作・Webデザインを行う個人制作スタジオです。美容室・ブライダル・アパレル・アーティスト・個人ブランドなど、世界観や印象で選ばれる業種向けに、構成・デザイン・実装まで一貫して制作します。",
-    imagePath: "/ogp-v4.png",
+    imagePath: DEFAULT_IMAGE_PATH,
   },
 
   "/terms": {
     title: `TERMS｜${BASE_TITLE}`,
     description: "利用規約。",
-    imagePath: "/ogp-v4.png",
+    imagePath: DEFAULT_IMAGE_PATH,
   },
 
   "/privacy": {
     title: `PRIVACY｜${BASE_TITLE}`,
     description: "プライバシーポリシー。",
-    imagePath: "/ogp-v4.png",
+    imagePath: DEFAULT_IMAGE_PATH,
   },
 
   "/legal": {
     title: `LEGAL｜${BASE_TITLE}`,
     description: "特定商取引法に基づく表記。",
-    imagePath: "/ogp-v4.png",
+    imagePath: DEFAULT_IMAGE_PATH,
   },
 
   "/refund": {
     title: `REFUND｜${BASE_TITLE}`,
     description: "返金ポリシー。",
-    imagePath: "/ogp-v4.png",
+    imagePath: DEFAULT_IMAGE_PATH,
   },
 
   "/layer0": {
     title: `Layer0｜${SITE_NAME}`,
     description: "Experiment.",
-    imagePath: "/ogp-v4.png",
+    imagePath: DEFAULT_IMAGE_PATH,
     noindex: true,
   },
 };
 
 const WORK_SEO = {
   "vow-in-light": {
-    title: "ブライダル・フォトウェディング向けWebサイト制作",
+    title:
+      "Vow in Light｜ブライダル・フォトウェディング向けWebサイト制作",
     description:
       "Vow in Lightは、ブライダル・フォトウェディング向けのWebサイト制作事例です。写真の上質さ、余白、スマホ導線、問い合わせまでの流れを整え、比較検討中のユーザーが相談しやすい構成にしています。",
     imagePath: "/works/vow-in-light-entry.webp",
   },
 
   "kou-ryui": {
-    title: "琉装・沖縄文化体験向けWebサイト制作",
+    title: "KOU RYUI｜琉装・沖縄文化体験向けWebサイト制作",
     description:
       "KOU RYUIは、琉装体験・沖縄文化体験・観光体験向けのWebサイト制作事例です。旅行中の不安を減らし、料金・所要時間・持ち物・アクセス・予約導線を分かりやすく整理しています。",
     imagePath: "/works/kouryui.webp",
   },
 
   "black-papillon": {
-    title: "タトゥースタジオ向けホームページ制作",
+    title: "BLACK PAPILLON｜タトゥースタジオ向けホームページ制作",
     description:
       "BLACK PAPILLONは、タトゥースタジオ向けのWebサイト制作事例です。施術スタイル、治癒後の仕上がり、料金目安、相談導線、アフターケアを、世界観を崩さずに整理しています。",
     imagePath: "/works1/BlackPapillonRoom2.png",
   },
 };
+
+// 検索に出す代表作品だけを明示。
+// 他の作品ページは作品一覧から見せつつ、薄い個別ページのindex競合を避ける。
+const INDEXED_WORK_SLUGS = new Set([
+  "vow-in-light",
+  "kou-ryui",
+  "black-papillon",
+]);
+
+const STATIC_ROUTE_PATHS = new Set([
+  "/",
+  "/works",
+  "/news",
+  "/contact",
+  "/price",
+  "/okinawa",
+  "/online",
+  "/terms",
+  "/privacy",
+  "/legal",
+  "/refund",
+  "/layer0",
+
+  // 旧URL・別名URL。React上ではNavigateで正規URLへ寄せる。
+  "/okinawa-bridal-website",
+  "/naha-ryukyu-costume-website",
+  "/okinawa-night-website",
+]);
 
 const HIDE_CHROME_PATHS = new Set([
   "/okinawa",
@@ -253,7 +285,12 @@ function normalizePathname(pathname = "/") {
   const noHash = raw.split("#")[0];
   const noQuery = noHash.split("?")[0];
   const cleaned = noQuery === "/" ? "/" : stripTrailingSlash(noQuery);
+
   return cleaned || "/";
+}
+
+function normalizeSlugKey(slug = "") {
+  return String(slug || "").trim().toLowerCase();
 }
 
 function getOrigin() {
@@ -358,19 +395,25 @@ function SeoBridge() {
   const origin = getOrigin();
   const canonicalUrl = `${origin}${pathname}`;
 
+  const workMatch = matchPath({ path: "/works/:slug", end: true }, pathname);
+  const newsMatch = matchPath({ path: "/news/:id", end: true }, pathname);
+
   let seo = PAGE_SEO[pathname] || {
     title: BASE_TITLE,
     description: BASE_DESC,
-    imagePath: "/ogp-v4.png",
+    imagePath: DEFAULT_IMAGE_PATH,
   };
 
   let noindex = Boolean(seo.noindex);
   let ogType = "website";
 
-  const workMatch = matchPath({ path: "/works/:slug", end: true }, pathname);
+  const isKnownRoute =
+    STATIC_ROUTE_PATHS.has(pathname) || Boolean(workMatch) || Boolean(newsMatch);
+
   if (workMatch?.params?.slug) {
     const slug = workMatch.params.slug;
-    const override = WORK_SEO[slug];
+    const slugKey = normalizeSlugKey(slug);
+    const override = WORK_SEO[slug] || WORK_SEO[slugKey];
 
     if (override) {
       seo = override;
@@ -381,23 +424,32 @@ function SeoBridge() {
         title: `${pretty}｜WORKS｜${SITE_NAME}`,
         description:
           "制作事例。世界観と導線を一貫して設計し、印象がきちんと伝わる見せ方を制作しています。",
-        imagePath: "/ogp-v4.png",
+        imagePath: DEFAULT_IMAGE_PATH,
       };
     }
 
-    if (isRoomLikeSlug(slug)) {
+    if (isRoomLikeSlug(slug) || !INDEXED_WORK_SLUGS.has(slugKey)) {
       noindex = true;
     }
   }
 
-  const newsMatch = matchPath({ path: "/news/:id", end: true }, pathname);
   if (newsMatch?.params?.id) {
     seo = {
       title: `NEWS｜${BASE_TITLE}`,
       description: "更新記事。制作の背景や判断の文脈を短く残しています。",
-      imagePath: "/ogp-v4.png",
+      imagePath: DEFAULT_IMAGE_PATH,
     };
     ogType = "article";
+  }
+
+  if (!isKnownRoute) {
+    seo = {
+      title: `ページが見つかりません｜${SITE_NAME}`,
+      description:
+        "お探しのページは見つかりませんでした。制作実績、料金、相談ページから目的のページをご確認ください。",
+      imagePath: DEFAULT_IMAGE_PATH,
+    };
+    noindex = true;
   }
 
   return (
@@ -410,8 +462,124 @@ function SeoBridge() {
       noindex={noindex}
       ogType={ogType}
       titleMode="raw"
-      imagePath={seo.imagePath || "/ogp-v4.png"}
+      imagePath={seo.imagePath || DEFAULT_IMAGE_PATH}
     />
+  );
+}
+
+/* ============================================================================
+   404
+=========================================================================== */
+
+function NotFound() {
+  return (
+    <main
+      style={{
+        minHeight: "70svh",
+        padding: "clamp(72px, 12vw, 144px) clamp(20px, 6vw, 72px)",
+        display: "grid",
+        placeItems: "center",
+        background: "#f7f4ee",
+        color: "#111",
+      }}
+    >
+      <div style={{ width: "min(100%, 760px)" }}>
+        <p
+          style={{
+            margin: "0 0 16px",
+            fontSize: 12,
+            letterSpacing: "0.18em",
+            color: "rgba(17,17,17,.58)",
+          }}
+        >
+          404 / NOT FOUND
+        </p>
+
+        <h1
+          style={{
+            margin: 0,
+            fontSize: "clamp(34px, 7vw, 72px)",
+            lineHeight: 1,
+            letterSpacing: "-0.055em",
+          }}
+        >
+          ページが見つかりません。
+        </h1>
+
+        <p
+          style={{
+            maxWidth: 620,
+            margin: "24px 0 0",
+            fontSize: "clamp(15px, 2vw, 17px)",
+            lineHeight: 1.9,
+            color: "rgba(17,17,17,.66)",
+          }}
+        >
+          URLが変更されたか、ページが削除された可能性があります。
+          制作実績・料金・相談ページから目的のページをご確認ください。
+        </p>
+
+        <div
+          style={{
+            display: "flex",
+            flexWrap: "wrap",
+            gap: 10,
+            marginTop: 32,
+          }}
+        >
+          <Link
+            to="/works"
+            style={{
+              minHeight: 44,
+              padding: "0 18px",
+              borderRadius: 999,
+              display: "inline-flex",
+              alignItems: "center",
+              justifyContent: "center",
+              background: "#111",
+              color: "#f7f4ee",
+              textDecoration: "none",
+            }}
+          >
+            制作実績を見る
+          </Link>
+
+          <Link
+            to="/price"
+            style={{
+              minHeight: 44,
+              padding: "0 18px",
+              borderRadius: 999,
+              display: "inline-flex",
+              alignItems: "center",
+              justifyContent: "center",
+              border: "1px solid rgba(17,17,17,.16)",
+              color: "#111",
+              textDecoration: "none",
+            }}
+          >
+            料金を見る
+          </Link>
+
+          <Link
+            to="/contact"
+            style={{
+              minHeight: 44,
+              padding: "0 18px",
+              borderRadius: 999,
+              display: "inline-flex",
+              alignItems: "center",
+              justifyContent: "center",
+              border: "1px solid rgba(17,17,17,.16)",
+              color: "#111",
+              textDecoration: "none",
+            }}
+          >
+            相談する
+          </Link>
+        </div>
+      </div>
+    </main>
   );
 }
 
@@ -532,7 +700,7 @@ function Layout() {
             element={<Navigate to="/works/black-papillon" replace />}
           />
 
-          {/* fallback */}
+          {/* fallback works */}
           <Route path="/works/:slug" element={<WorkDetail />} />
 
           <Route path="/price" element={<PriceDetail />} />
@@ -546,6 +714,9 @@ function Layout() {
           <Route path="/news/:id" element={<NewsDetail />} />
 
           <Route path="/layer0" element={<Layer0 />} />
+
+          {/* 404 */}
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </div>
 
@@ -567,6 +738,10 @@ export default function App() {
   const currentScrollKeyRef = useRef("");
 
   const pathname = normalizePathname(location.pathname);
+
+  // index.html 側の FOUC 対策に対応。
+  // #root.show が付かない事故をApp側でも防ぐ。
+
 
   // ブラウザ戻る/進む時のネイティブ復元を止める。
   // 復元はLenis込みでApp側が管理する。
@@ -659,7 +834,6 @@ export default function App() {
     let rafB = 0;
     let timerA = 0;
     let timerB = 0;
-    let timerC = 0;
 
     const applyScroll = () => {
       forceScrollToY(targetY);
@@ -676,14 +850,12 @@ export default function App() {
     timerA = window.setTimeout(applyScroll, 120);
     timerB = window.setTimeout(applyScroll, 360);
 
-
     return () => {
       cancelAnimationFrame(rafA);
       cancelAnimationFrame(rafB);
 
       window.clearTimeout(timerA);
       window.clearTimeout(timerB);
-
     };
   }, [
     location.key,
@@ -808,18 +980,19 @@ export default function App() {
   }, [location.pathname, location.search]);
 
   // page_view（本番のみ）
+  // index.html側で send_page_view:false にしているため、SPA遷移はこちらで送る。
   useEffect(() => {
     if (!import.meta.env.PROD) return undefined;
 
-    const id = requestAnimationFrame(() => {
+    const timer = window.setTimeout(() => {
       window.gtag?.("event", "page_view", {
         page_path: location.pathname + location.search,
         page_location: window.location.href,
         page_title: document.title,
       });
-    });
+    }, 0);
 
-    return () => cancelAnimationFrame(id);
+    return () => window.clearTimeout(timer);
   }, [location.pathname, location.search]);
 
   return (

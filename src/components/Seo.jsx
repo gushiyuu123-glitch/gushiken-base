@@ -4,6 +4,7 @@ import { Helmet } from "react-helmet-async";
 
 const SITE_NAME = "GUSHIKEN DESIGN";
 const FALLBACK_ORIGIN = "https://gushikendesign.com";
+const DEFAULT_IMAGE_PATH = "/ogp-v4.png";
 
 const ensureLeadingSlash = (path = "/") =>
   String(path).startsWith("/") ? String(path) : `/${path}`;
@@ -23,11 +24,24 @@ const normalizePathname = (path = "/") => {
   return cleaned || "/";
 };
 
+const isAbsoluteHttpUrl = (value = "") => /^https?:\/\//i.test(String(value));
+
+const normalizeOrigin = (value) => {
+  if (!value) return FALLBACK_ORIGIN;
+
+  try {
+    const url = new URL(String(value));
+    return url.origin;
+  } catch {
+    return stripTrailingSlash(String(value || FALLBACK_ORIGIN));
+  }
+};
+
 const getOrigin = (origin) => {
-  if (origin) return stripTrailingSlash(origin);
+  if (origin) return normalizeOrigin(origin);
 
   const env = import.meta.env.VITE_SITE_ORIGIN;
-  if (env) return stripTrailingSlash(env);
+  if (env) return normalizeOrigin(env);
 
   /**
    * SEOでは本番ドメインを正規URLに固定する。
@@ -36,12 +50,28 @@ const getOrigin = (origin) => {
   return FALLBACK_ORIGIN;
 };
 
-const isAbsoluteHttpUrl = (value = "") => /^https?:\/\//i.test(String(value));
+const normalizeAbsoluteCanonicalUrl = (value) => {
+  if (!value || !isAbsoluteHttpUrl(value)) return null;
+
+  try {
+    const url = new URL(String(value));
+    const pathname = normalizePathname(url.pathname);
+
+    return pathname === "/" ? `${url.origin}/` : `${url.origin}${pathname}`;
+  } catch {
+    const cleaned = String(value).split("#")[0].split("?")[0];
+    const normalized = cleaned.replace(/\/+$/, "");
+
+    return normalized || FALLBACK_ORIGIN;
+  }
+};
 
 const toAbsoluteUrl = (origin, maybeUrl) => {
   if (!maybeUrl) return null;
 
-  const value = String(maybeUrl);
+  const value = String(maybeUrl).trim();
+  if (!value) return null;
+
   if (isAbsoluteHttpUrl(value)) return value;
 
   return `${origin}${ensureLeadingSlash(value)}`;
@@ -57,7 +87,11 @@ const normalizeJsonLd = (jsonLd) => {
 /**
  * JSON-LD内で </script> 事故を避ける。
  */
-const stringifyJsonLd = (obj) => JSON.stringify(obj).replace(/</g, "\\u003c");
+const stringifyJsonLd = (obj) =>
+  JSON.stringify(obj)
+    .replace(/</g, "\\u003c")
+    .replace(/\u2028/g, "\\u2028")
+    .replace(/\u2029/g, "\\u2029");
 
 /* --------------------------------------------------------------------------
    JS実行後：index.html側フォールバックSEOとの二重を潰す
@@ -87,7 +121,8 @@ export default function Seo({
   path = "/",
 
   /** OGP画像。相対パスOK。 */
-  imagePath = "/ogp-v4.png",
+  imagePath = DEFAULT_IMAGE_PATH,
+  imageAlt = null,
 
   /**
    * keywords は現代SEOでは基本使わない。
@@ -101,8 +136,16 @@ export default function Seo({
   lang = "ja",
 
   noindex = false,
+  nofollow = false,
   ogType = "website",
   jsonLd = null,
+
+  // Article / News 用
+  publishedTime = null,
+  modifiedTime = null,
+  articleAuthor = null,
+  articleSection = null,
+  articleTags = null,
 
   // Twitter
   twitterSite = null,
@@ -137,12 +180,9 @@ export default function Seo({
   );
 
   const canonical = useMemo(() => {
-    if (canonicalUrl && isAbsoluteHttpUrl(canonicalUrl)) {
-      const cleaned = canonicalUrl.split("#")[0].split("?")[0];
-      const normalized = cleaned.replace(/\/+$/, "");
+    const absoluteCanonical = normalizeAbsoluteCanonicalUrl(canonicalUrl);
 
-      return normalized || FALLBACK_ORIGIN;
-    }
+    if (absoluteCanonical) return absoluteCanonical;
 
     const url = `${siteOrigin}${canonPath}`;
     return canonPath === "/" ? `${siteOrigin}/` : url;
@@ -152,12 +192,6 @@ export default function Seo({
     () => toAbsoluteUrl(siteOrigin, imagePath),
     [siteOrigin, imagePath]
   );
-
-  const robots = noindex
-    ? "noindex,follow"
-    : "index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1";
-
-  const scripts = useMemo(() => normalizeJsonLd(jsonLd), [jsonLd]);
 
   const fullTitle = useMemo(() => {
     if (titleMode === "raw") return safeTitle;
@@ -172,12 +206,34 @@ export default function Seo({
     return `${safeTitle}${titleSeparator}${SITE_NAME}`;
   }, [safeTitle, titleMode, titleSeparator]);
 
+  const safeImageAlt = imageAlt ? String(imageAlt).trim() : fullTitle;
+
+  const robots = useMemo(() => {
+    if (noindex) {
+      return nofollow ? "noindex,nofollow" : "noindex,follow";
+    }
+
+    return nofollow
+      ? "index,nofollow,max-image-preview:large,max-snippet:-1,max-video-preview:-1"
+      : "index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1";
+  }, [noindex, nofollow]);
+
+  const scripts = useMemo(() => normalizeJsonLd(jsonLd), [jsonLd]);
+
   const hasOgSize =
     ogImage &&
     Number.isFinite(Number(ogImageWidth)) &&
     Number.isFinite(Number(ogImageHeight)) &&
     Number(ogImageWidth) > 0 &&
     Number(ogImageHeight) > 0;
+
+  const normalizedArticleTags = useMemo(() => {
+    if (!articleTags) return [];
+
+    return Array.isArray(articleTags)
+      ? articleTags.filter(Boolean).map((tag) => String(tag))
+      : [String(articleTags)];
+  }, [articleTags]);
 
   useEffect(() => {
     if (!import.meta.env.DEV) return;
@@ -204,13 +260,17 @@ export default function Seo({
     removeNonHelmet('meta[property^="og:"]');
     removeNonHelmet('meta[name^="twitter:"]');
 
+    if (themeColor) {
+      removeNonHelmet('meta[name="theme-color"]');
+    }
+
     /**
      * JSON-LDは消さない。
      *
      * index.htmlには全ページ共通で成立する
      * WebSite / ProfessionalService / Person だけを置く。
      *
-     * ページ固有の WebPage / FAQPage / Service は、
+     * ページ固有の WebPage / FAQPage / Service / Article は、
      * 各ページ側、またはこの Seo.jsx の jsonLd prop から追加する。
      */
   }, [
@@ -220,9 +280,11 @@ export default function Seo({
     robots,
     ogType,
     ogImage,
+    safeImageAlt,
     ogImageWidth,
     ogImageHeight,
     ogImageType,
+    themeColor,
   ]);
 
   return (
@@ -267,7 +329,9 @@ export default function Seo({
         <meta property="og:image:type" content={ogImageType} />
       ) : null}
 
-      {ogImage ? <meta property="og:image:alt" content={fullTitle} /> : null}
+      {ogImage ? (
+        <meta property="og:image:alt" content={safeImageAlt} />
+      ) : null}
 
       {hasOgSize ? (
         <meta property="og:image:width" content={String(ogImageWidth)} />
@@ -276,6 +340,29 @@ export default function Seo({
       {hasOgSize ? (
         <meta property="og:image:height" content={String(ogImageHeight)} />
       ) : null}
+
+      {/* Article OGP */}
+      {ogType === "article" && publishedTime ? (
+        <meta property="article:published_time" content={publishedTime} />
+      ) : null}
+
+      {ogType === "article" && modifiedTime ? (
+        <meta property="article:modified_time" content={modifiedTime} />
+      ) : null}
+
+      {ogType === "article" && articleAuthor ? (
+        <meta property="article:author" content={articleAuthor} />
+      ) : null}
+
+      {ogType === "article" && articleSection ? (
+        <meta property="article:section" content={articleSection} />
+      ) : null}
+
+      {ogType === "article" && normalizedArticleTags.length
+        ? normalizedArticleTags.map((tag) => (
+            <meta key={`article-tag-${tag}`} property="article:tag" content={tag} />
+          ))
+        : null}
 
       {/* Twitter */}
       <meta name="twitter:card" content="summary_large_image" />
@@ -286,7 +373,10 @@ export default function Seo({
       ) : null}
 
       {ogImage ? <meta name="twitter:image" content={ogImage} /> : null}
-      {ogImage ? <meta name="twitter:image:alt" content={fullTitle} /> : null}
+
+      {ogImage ? (
+        <meta name="twitter:image:alt" content={safeImageAlt} />
+      ) : null}
 
       {twitterSite ? <meta name="twitter:site" content={twitterSite} /> : null}
 

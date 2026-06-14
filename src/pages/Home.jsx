@@ -1,5 +1,5 @@
 // src/pages/Home.jsx
-import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
 
 import HeroGate from "../sections/HeroGate";
@@ -23,6 +23,8 @@ import FloatingFAQSP from "../components/FloatingFAQSP";
 const ANCHOR_STYLE = {
   scrollMarginTop: "84px",
 };
+
+const HOME_PATH = "/";
 
 const ISLAND_BODY_CLASSES = [
   "is-island-page",
@@ -75,6 +77,7 @@ function useMediaQuery(query, fallback = true) {
 
     if (media.addEventListener) {
       media.addEventListener("change", update);
+
       return () => {
         active = false;
         media.removeEventListener("change", update);
@@ -101,10 +104,19 @@ function isInView(el, buffer = 0.18) {
   return rect.top < viewH * (1 + buffer) && rect.bottom > -viewH * buffer;
 }
 
-function revealVisibleFadeNodes(root) {
-  if (!root) return;
+function getHomeRoot() {
+  if (typeof document === "undefined") return null;
+  return document.querySelector(".home-wrapper");
+}
 
-  const nodes = Array.from(root.querySelectorAll(".aq-fade"));
+function getFadeNodes(root) {
+  if (!root) return [];
+  return Array.from(root.querySelectorAll(".aq-fade"));
+}
+
+function revealVisibleFadeNodes(root) {
+  const nodes = getFadeNodes(root);
+  if (!nodes.length) return;
 
   nodes.forEach((el) => {
     if (isInView(el, 0.24)) {
@@ -114,9 +126,7 @@ function revealVisibleFadeNodes(root) {
 }
 
 function forceFirstViewVisible(root) {
-  if (!root) return;
-
-  const nodes = Array.from(root.querySelectorAll(".aq-fade"));
+  const nodes = getFadeNodes(root);
   if (!nodes.length) return;
 
   const shownCount = root.querySelectorAll(".aq-fade.aq-show").length;
@@ -131,22 +141,29 @@ function forceFirstViewVisible(root) {
   }
 }
 
+function clearIslandBodyClasses() {
+  if (typeof document === "undefined") return;
+
+  ISLAND_BODY_CLASSES.forEach((className) => {
+    document.body.classList.remove(className);
+  });
+}
+
 function useHomeRevealSafety(pathname) {
   const observerRef = useRef(null);
 
   useLayoutEffect(() => {
-    if (pathname !== "/") return undefined;
+    if (pathname !== HOME_PATH) return undefined;
 
-    // Online / Okinawa など島ページのbody class残留をHome側でも潰す
-    ISLAND_BODY_CLASSES.forEach((className) => {
-      document.body.classList.remove(className);
-    });
+    // Online / Okinawa / 代表作品ページのbody class残留をHome側でも潰す
+    clearIslandBodyClasses();
 
     return undefined;
   }, [pathname]);
 
   useEffect(() => {
-    if (pathname !== "/") return undefined;
+    if (pathname !== HOME_PATH) return undefined;
+    if (typeof window === "undefined") return undefined;
 
     let raf1 = 0;
     let raf2 = 0;
@@ -166,18 +183,19 @@ function useHomeRevealSafety(pathname) {
     const setupHomeFade = () => {
       if (!active) return;
 
-      const root = document.querySelector(".home-wrapper");
+      const root = getHomeRoot();
       if (!root) return;
 
       // 万が一、親側でvisibility/opacityが残ってもHomeを殺さない
       root.style.visibility = "";
       root.style.opacity = "";
 
-      const nodes = Array.from(root.querySelectorAll(".aq-fade"));
+      const nodes = getFadeNodes(root);
       if (!nodes.length) return;
 
       const prefersReducedMotion =
-        window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches ?? false;
+        window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches ??
+        false;
 
       cleanupObserver();
 
@@ -220,24 +238,22 @@ function useHomeRevealSafety(pathname) {
           setupHomeFade();
 
           raf3 = requestAnimationFrame(() => {
-            const root = document.querySelector(".home-wrapper");
+            const root = getHomeRoot();
             revealVisibleFadeNodes(root);
           });
         });
       });
 
       // 戻るボタン時のDOM生成遅延・Lenis/GSAP後処理ズレへの保険
-      timerA = window.setTimeout(() => {
-        setupHomeFade();
-      }, 180);
+      timerA = window.setTimeout(setupHomeFade, 180);
 
       timerB = window.setTimeout(() => {
-        const root = document.querySelector(".home-wrapper");
+        const root = getHomeRoot();
         revealVisibleFadeNodes(root);
       }, 520);
 
       timerC = window.setTimeout(() => {
-        const root = document.querySelector(".home-wrapper");
+        const root = getHomeRoot();
         forceFirstViewVisible(root);
       }, 950);
     };
@@ -248,7 +264,7 @@ function useHomeRevealSafety(pathname) {
     const handlePageShow = () => {
       setupHomeFade();
 
-      const root = document.querySelector(".home-wrapper");
+      const root = getHomeRoot();
       revealVisibleFadeNodes(root);
       forceFirstViewVisible(root);
     };
