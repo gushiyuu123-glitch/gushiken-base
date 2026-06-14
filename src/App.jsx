@@ -1,9 +1,10 @@
 // src/App.jsx
-import { useEffect, useLayoutEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import {
   Routes,
   Route,
   useLocation,
+  useNavigationType,
   matchPath,
   Navigate,
 } from "react-router-dom";
@@ -206,6 +207,42 @@ const HIDE_CHROME_PATHS = new Set([
   "/works/black-papillon",
 ]);
 
+const ROUTE_BODY_CLASSES = [
+  "is-online-page",
+  "is-okinawa-page",
+  "is-vow-page",
+  "is-kou-page",
+  "is-papillon-page",
+  "is-island-page",
+];
+
+function cleanupRouteBodyClasses(activePathname = "/") {
+  const body = document.body;
+  const activeIsland = HIDE_CHROME_PATHS.has(activePathname);
+
+  body.classList.toggle("is-island-page", activeIsland);
+
+  if (activePathname !== "/online") {
+    body.classList.remove("is-online-page");
+  }
+
+  if (activePathname !== "/okinawa") {
+    body.classList.remove("is-okinawa-page");
+  }
+
+  if (activePathname !== "/works/vow-in-light") {
+    body.classList.remove("is-vow-page");
+  }
+
+  if (activePathname !== "/works/kou-ryui") {
+    body.classList.remove("is-kou-page");
+  }
+
+  if (activePathname !== "/works/black-papillon") {
+    body.classList.remove("is-papillon-page");
+  }
+}
+
 const stripTrailingSlash = (value = "") => String(value).replace(/\/+$/, "");
 
 const ensureLeadingSlash = (path = "/") =>
@@ -242,28 +279,71 @@ function isRoomLikeSlug(slug = "") {
   return /Room$/i.test(slug) || /Teaser$/i.test(slug) || /Intro$/i.test(slug);
 }
 
-function getLenisLike() {
-  const api = window.__gd_lenis__;
+function getLenisApi() {
+  return window.__gd_lenis__ || null;
+}
 
-  if (api?.lenis?.scrollTo) return api.lenis;
+function getLenisInstance() {
+  const api = getLenisApi();
+
+  if (api?.lenis) return api.lenis;
+  if (api?.instance) return api.instance;
   if (api?.scrollTo) return api;
 
   return null;
 }
 
-function forceScrollTop() {
-  const lenis = getLenisLike();
+function getScrollStorageKey(location) {
+  const pathname = normalizePathname(location.pathname);
+  const search = location.search || "";
+  const routeKey = location.key || "default";
 
-  window.scrollTo(0, 0);
-  document.documentElement.scrollTop = 0;
-  document.body.scrollTop = 0;
+  return `${routeKey}:${pathname}${search}`;
+}
+
+function getCurrentScrollY() {
+  const lenis = getLenisInstance();
+
+  if (typeof lenis?.scroll === "number") {
+    return lenis.scroll;
+  }
+
+  if (typeof lenis?.animatedScroll === "number") {
+    return lenis.animatedScroll;
+  }
+
+  if (typeof lenis?.targetScroll === "number") {
+    return lenis.targetScroll;
+  }
+
+  return (
+    window.scrollY ||
+    document.documentElement.scrollTop ||
+    document.body.scrollTop ||
+    0
+  );
+}
+
+function forceScrollToY(value = 0) {
+  const y = Math.max(0, Math.round(Number(value) || 0));
+
+  const api = getLenisApi();
+  const lenis = getLenisInstance();
+
+  window.scrollTo(0, y);
+  document.documentElement.scrollTop = y;
+  document.body.scrollTop = y;
 
   if (lenis?.scrollTo) {
-    lenis.scrollTo(0, {
+    lenis.scrollTo(y, {
       immediate: true,
       force: true,
       duration: 0,
     });
+  }
+
+  if (api?.resize) {
+    api.resize();
   }
 
   if (lenis?.resize) {
@@ -350,8 +430,13 @@ function Layout() {
 
       {!hideChrome && <NavGlobal />}
 
-      <div id="page-root" key={pathname} role="main">
-        <Routes location={location} key={pathname}>
+      <div
+        id="page-root"
+        role="main"
+        data-route={pathname}
+        data-hide-chrome={hideChrome ? "true" : "false"}
+      >
+        <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/works" element={<WorksList />} />
 
@@ -475,9 +560,16 @@ function Layout() {
 
 export default function App() {
   const location = useLocation();
-  const observerRef = useRef(null);
+  const navigationType = useNavigationType();
 
-  // ブラウザ戻る/進む時のスクロール位置復元を止める
+  const observerRef = useRef(null);
+  const scrollPositionsRef = useRef(new Map());
+  const currentScrollKeyRef = useRef("");
+
+  const pathname = normalizePathname(location.pathname);
+
+  // ブラウザ戻る/進む時のネイティブ復元を止める。
+  // 復元はLenis込みでApp側が管理する。
   useEffect(() => {
     if (!("scrollRestoration" in window.history)) return undefined;
 
@@ -489,40 +581,129 @@ export default function App() {
     };
   }, []);
 
-  // ルート遷移でトップに戻す。
-  // PCブラウザ左上の戻るUIでも、Lenis / ブラウザ復元に負けないように複数回補正。
-  useLayoutEffect(() => {
-    if (location.hash) return undefined;
+  // 現在の履歴エントリ用keyを保持
+  useEffect(() => {
+    currentScrollKeyRef.current = getScrollStorageKey(location);
+  }, [location.key, location.pathname, location.search]);
+
+  // スクロール中に現在位置を常に保存。
+  // これでroute cleanupのタイミングに依存しない。
+  useEffect(() => {
+    const saveCurrentScroll = () => {
+      const key = currentScrollKeyRef.current;
+      if (!key) return;
+
+      scrollPositionsRef.current.set(key, getCurrentScrollY());
+    };
 
     let raf = 0;
-    let timerA = 0;
-    let timerB = 0;
 
-    forceScrollTop();
+    const requestSave = () => {
+      if (raf) return;
 
-    raf = requestAnimationFrame(() => {
-      forceScrollTop();
-    });
+      raf = requestAnimationFrame(() => {
+        raf = 0;
+        saveCurrentScroll();
+      });
+    };
 
-    timerA = window.setTimeout(() => {
-      forceScrollTop();
-    }, 80);
-
-    timerB = window.setTimeout(() => {
-      forceScrollTop();
-    }, 220);
+    window.addEventListener("scroll", requestSave, { passive: true });
+    window.addEventListener("resize", requestSave);
+    window.addEventListener("pagehide", saveCurrentScroll);
 
     return () => {
       cancelAnimationFrame(raf);
-      window.clearTimeout(timerA);
-      window.clearTimeout(timerB);
+      window.removeEventListener("scroll", requestSave);
+      window.removeEventListener("resize", requestSave);
+      window.removeEventListener("pagehide", saveCurrentScroll);
+    };
+  }, []);
+
+  // ページを離れる直前にも保存。
+  // 戻る/進むで前の位置に戻すための保険。
+  useEffect(() => {
+    const key = getScrollStorageKey(location);
+
+    return () => {
+      scrollPositionsRef.current.set(key, getCurrentScrollY());
     };
   }, [location.key, location.pathname, location.search]);
 
+  // ルートごとのbody class残留をApp側でも潰す
+  useEffect(() => {
+    cleanupRouteBodyClasses(pathname);
+
+    return () => {
+      ROUTE_BODY_CLASSES.forEach((className) => {
+        document.body.classList.remove(className);
+      });
+    };
+  }, [pathname]);
+
+  // 本拠地標準スクロール制御
+  // 通常リンク遷移: トップへ
+  // ブラウザ戻る/進む: 前回のscroll位置へ復元
+  // hash遷移: #about / #works などを邪魔しない
+  useEffect(() => {
+    if (location.hash) return undefined;
+
+    const key = getScrollStorageKey(location);
+    const savedY = scrollPositionsRef.current.get(key);
+
+    const shouldRestoreScroll =
+      navigationType === "POP" && typeof savedY === "number";
+
+    const targetY = shouldRestoreScroll ? savedY : 0;
+
+    let rafA = 0;
+    let rafB = 0;
+    let timerA = 0;
+    let timerB = 0;
+    let timerC = 0;
+
+    const applyScroll = () => {
+      forceScrollToY(targetY);
+    };
+
+    rafA = requestAnimationFrame(() => {
+      applyScroll();
+
+      rafB = requestAnimationFrame(() => {
+        applyScroll();
+      });
+    });
+
+    timerA = window.setTimeout(applyScroll, 120);
+    timerB = window.setTimeout(applyScroll, 360);
+
+
+    return () => {
+      cancelAnimationFrame(rafA);
+      cancelAnimationFrame(rafB);
+
+      window.clearTimeout(timerA);
+      window.clearTimeout(timerB);
+
+    };
+  }, [
+    location.key,
+    location.pathname,
+    location.search,
+    location.hash,
+    navigationType,
+  ]);
+
   // aq-fade observer
+  // 戻るボタン時に背景だけ出て文字がopacity:0のまま残る事故を防ぐ安全版。
   useEffect(() => {
     const prefersReducedMotion =
       window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches ?? false;
+
+    let rafA = 0;
+    let rafB = 0;
+    let timerA = 0;
+    let timerB = 0;
+    let safetyTimer = 0;
 
     const cleanupObserver = () => {
       if (observerRef.current) {
@@ -531,10 +712,27 @@ export default function App() {
       }
     };
 
+    const isInView = (el) => {
+      const rect = el.getBoundingClientRect();
+
+      return rect.top < window.innerHeight * 0.94 && rect.bottom > 0;
+    };
+
+    const revealVisibleNow = (elements) => {
+      elements.forEach((el) => {
+        if (isInView(el)) {
+          el.classList.add("aq-show");
+        }
+      });
+    };
+
     const setupFade = () => {
       cleanupObserver();
 
-      const elements = Array.from(document.querySelectorAll(".aq-fade"));
+      const root = document.getElementById("page-root");
+      if (!root) return;
+
+      const elements = Array.from(root.querySelectorAll(".aq-fade"));
       if (!elements.length) return;
 
       if (prefersReducedMotion || !("IntersectionObserver" in window)) {
@@ -542,7 +740,13 @@ export default function App() {
         return;
       }
 
-      elements.forEach((el) => el.classList.remove("aq-show"));
+      // すでに表示済みの要素を無理に透明へ戻さない。
+      // 戻る/進む時の白抜け対策。
+      elements.forEach((el) => {
+        if (!el.classList.contains("aq-show")) {
+          el.classList.remove("aq-show");
+        }
+      });
 
       const io = new IntersectionObserver(
         (entries) => {
@@ -560,14 +764,45 @@ export default function App() {
         }
       );
 
-      elements.forEach((el) => io.observe(el));
+      elements.forEach((el) => {
+        io.observe(el);
+      });
+
+      // ファーストビュー内はIntersectionObserver待ちにしない。
+      revealVisibleNow(elements);
+
       observerRef.current = io;
     };
 
-    const raf = requestAnimationFrame(setupFade);
+    rafA = requestAnimationFrame(() => {
+      rafB = requestAnimationFrame(setupFade);
+    });
+
+    timerA = window.setTimeout(setupFade, 180);
+    timerB = window.setTimeout(setupFade, 520);
+
+    safetyTimer = window.setTimeout(() => {
+      const root = document.getElementById("page-root");
+      if (!root) return;
+
+      const elements = Array.from(root.querySelectorAll(".aq-fade"));
+      if (!elements.length) return;
+
+      const visibleCount = elements.filter((el) =>
+        el.classList.contains("aq-show")
+      ).length;
+
+      if (visibleCount === 0) {
+        revealVisibleNow(elements);
+      }
+    }, 900);
 
     return () => {
-      cancelAnimationFrame(raf);
+      cancelAnimationFrame(rafA);
+      cancelAnimationFrame(rafB);
+      window.clearTimeout(timerA);
+      window.clearTimeout(timerB);
+      window.clearTimeout(safetyTimer);
       cleanupObserver();
     };
   }, [location.pathname, location.search]);

@@ -1,8 +1,6 @@
+// src/pages/Online.jsx
 import { useCallback, useEffect, useMemo, useRef } from "react";
 import { Link, useLocation } from "react-router-dom";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import Seo from "../components/Seo";
 import styles from "./Online.module.css";
 
 import heroCoast from "../assets/online/online-hero-coast.png";
@@ -160,6 +158,143 @@ const getLenisLike = () => {
   return null;
 };
 
+const shouldReduceMotion = () =>
+  window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches ?? false;
+
+const getRevealInitialState = (node) => {
+  const type = node.dataset.onlineReveal || "fade";
+  const isImage = type === "image" || type === "mask";
+
+  return {
+    y: type === "hero" ? 36 : 30,
+    clipPath: isImage ? "inset(0% 0% 100% 0%)" : "inset(0% 0% 0% 0%)",
+    duration: type === "hero" ? 1250 : 1050,
+  };
+};
+
+const prepareRevealNode = (node) => {
+  if (!node) return;
+
+  const delay = Number(node.dataset.delay || 0);
+  const state = getRevealInitialState(node);
+
+  node.style.opacity = "0";
+  node.style.visibility = "hidden";
+  node.style.transform = `translate3d(0, ${state.y}px, 0)`;
+  node.style.filter = "blur(12px)";
+  node.style.clipPath = state.clipPath;
+  node.style.willChange = "transform, opacity, filter, clip-path";
+  node.style.transitionProperty =
+    "opacity, visibility, transform, filter, clip-path";
+  node.style.transitionDuration = `${state.duration}ms`;
+  node.style.transitionTimingFunction = "cubic-bezier(0.22, 1, 0.36, 1)";
+  node.style.transitionDelay = `${delay}s`;
+};
+
+const revealNode = (node) => {
+  if (!node) return;
+
+  node.style.opacity = "1";
+  node.style.visibility = "visible";
+  node.style.transform = "translate3d(0, 0, 0)";
+  node.style.filter = "blur(0px)";
+  node.style.clipPath = "inset(0% 0% 0% 0%)";
+};
+
+const prepareNetworkMotion = (root, schedule) => {
+  const arcs = Array.from(root.querySelectorAll(`.${styles.arc}`));
+  const nodes = Array.from(root.querySelectorAll(`.${styles.node}`));
+
+  arcs.forEach((arc, index) => {
+    arc.style.opacity = "0";
+    arc.style.visibility = "hidden";
+    arc.style.strokeDashoffset = "420";
+    arc.style.transitionProperty = "opacity, visibility, stroke-dashoffset";
+    arc.style.transitionDuration = "2200ms";
+    arc.style.transitionTimingFunction = "cubic-bezier(0.22, 1, 0.36, 1)";
+    arc.style.transitionDelay = `${0.42 + index * 0.13}s`;
+  });
+
+  nodes.forEach((node, index) => {
+    node.style.opacity = "0";
+    node.style.visibility = "hidden";
+    node.style.transformBox = "fill-box";
+    node.style.transformOrigin = "center center";
+    node.style.transform = "scale(0)";
+    node.style.transitionProperty = "opacity, visibility, transform";
+    node.style.transitionDuration = "720ms";
+    node.style.transitionTimingFunction = "cubic-bezier(0.34, 1.56, 0.64, 1)";
+    node.style.transitionDelay = `${0.72 + index * 0.075}s`;
+  });
+
+  schedule(() => {
+    arcs.forEach((arc) => {
+      arc.style.opacity = "1";
+      arc.style.visibility = "visible";
+      arc.style.strokeDashoffset = "0";
+    });
+
+    nodes.forEach((node) => {
+      node.style.opacity = "1";
+      node.style.visibility = "visible";
+      node.style.transform = "scale(1)";
+    });
+  });
+};
+
+const revealNetworkImmediately = (root) => {
+  const arcs = Array.from(root.querySelectorAll(`.${styles.arc}`));
+  const nodes = Array.from(root.querySelectorAll(`.${styles.node}`));
+
+  arcs.forEach((arc) => {
+    arc.style.opacity = "1";
+    arc.style.visibility = "visible";
+    arc.style.strokeDashoffset = "0";
+  });
+
+  nodes.forEach((node) => {
+    node.style.opacity = "1";
+    node.style.visibility = "visible";
+    node.style.transform = "none";
+  });
+};
+
+const isInView = (node) => {
+  if (!node) return false;
+
+  const rect = node.getBoundingClientRect();
+  const vh = window.innerHeight || document.documentElement.clientHeight || 0;
+
+  return rect.top < vh * 0.92 && rect.bottom > 0;
+};
+
+const prepareWorkCard = (card, index) => {
+  if (!card) return;
+
+  card.style.opacity = "0";
+  card.style.visibility = "hidden";
+  card.style.transform = "translate3d(-34px, 18px, 0) scale(0.985)";
+  card.style.filter = "blur(14px)";
+  card.style.willChange = "transform, opacity, filter";
+  card.style.transitionProperty = "opacity, visibility, transform, filter";
+  card.style.transitionDuration = "980ms";
+  card.style.transitionTimingFunction = "cubic-bezier(0.16, 1, 0.3, 1)";
+  card.style.transitionDelay = `${index * 0.12}s`;
+};
+
+const revealWorkCard = (card) => {
+  if (!card) return;
+
+  card.style.opacity = "1";
+  card.style.visibility = "visible";
+  card.style.transform = "translate3d(0, 0, 0) scale(1)";
+  card.style.filter = "blur(0px)";
+};
+
+const revealWorkCards = (cards) => {
+  cards.forEach(revealWorkCard);
+};
+
 /* =========================================================
    PAGE COMPONENT
 ========================================================= */
@@ -216,133 +351,177 @@ export default function Online() {
     const root = pageRef.current;
     if (!root) return undefined;
 
-    const reduceMotion =
-      window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches ?? false;
+    let active = true;
+    let observer = null;
+    let worksObserver = null;
+    let scrollRaf = 0;
+    let workFallbackTimer = 0;
+    const rafIds = [];
 
-    if (reduceMotion) {
-      root.querySelectorAll("[data-online-reveal]").forEach((node) => {
-        node.style.opacity = 1;
-        node.style.transform = "none";
-        node.style.clipPath = "none";
-        node.style.filter = "none";
+    const schedule = (fn) => {
+      const id = requestAnimationFrame(() => {
+        if (!active) return;
+        fn();
       });
 
+      rafIds.push(id);
+      return id;
+    };
+
+    const revealNodes = Array.from(root.querySelectorAll("[data-online-reveal]"));
+    const parallaxNodes = Array.from(root.querySelectorAll("[data-online-parallax]"));
+    const workCards = Array.from(root.querySelectorAll("[data-online-work-card]"));
+    const worksSection = root.querySelector(`.${styles.works}`);
+
+    if (shouldReduceMotion()) {
+      revealNodes.forEach(revealNode);
+
+      parallaxNodes.forEach((node) => {
+        node.style.transform = "translate3d(0, 0, 0)";
+      });
+
+      revealNetworkImmediately(root);
+      revealWorkCards(workCards);
+
       return () => {
-        root.querySelectorAll("[data-online-reveal]").forEach((node) => {
-          node.style.opacity = "";
-          node.style.transform = "";
-          node.style.clipPath = "";
-          node.style.filter = "";
-        });
+        active = false;
+        rafIds.forEach((id) => cancelAnimationFrame(id));
+        cancelAnimationFrame(scrollRaf);
+        window.clearTimeout(workFallbackTimer);
       };
     }
 
-    gsap.registerPlugin(ScrollTrigger);
+    revealNodes.forEach(prepareRevealNode);
+    workCards.forEach(prepareWorkCard);
+    prepareNetworkMotion(root, schedule);
 
-    let ctx;
+    schedule(() => {
+      if (!active) return;
 
-    const cleanupOnlineGsap = () => {
-      if (!root) return;
+      observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (!entry.isIntersecting) return;
 
-      if (ctx) {
-        ctx.revert();
-        ctx = null;
+            revealNode(entry.target);
+            observer?.unobserve(entry.target);
+          });
+        },
+        {
+          threshold: 0.08,
+          rootMargin: "0px 0px -14% 0px",
+        }
+      );
+
+      revealNodes.forEach((node) => {
+        if (isInView(node)) {
+          revealNode(node);
+          return;
+        }
+
+        observer.observe(node);
+      });
+    });
+
+    if (worksSection && workCards.length) {
+      worksObserver = new IntersectionObserver(
+        (entries) => {
+          const entry = entries[0];
+          if (!entry?.isIntersecting) return;
+
+          revealWorkCards(workCards);
+
+          worksObserver?.disconnect();
+          worksObserver = null;
+        },
+        {
+          threshold: 0.16,
+          rootMargin: "0px 0px -12% 0px",
+        }
+      );
+
+      worksObserver.observe(worksSection);
+
+      if (isInView(worksSection)) {
+        revealWorkCards(workCards);
+        worksObserver.disconnect();
+        worksObserver = null;
       }
 
-      ScrollTrigger.getAll().forEach((trigger) => {
-        const triggerEl = trigger.trigger;
+      workFallbackTimer = window.setTimeout(() => {
+        if (!active) return;
+        if (!worksSection) return;
 
-        if (triggerEl && root.contains(triggerEl)) {
-          trigger.kill(true);
+        const hiddenCount = workCards.filter(
+          (card) => card.style.opacity === "0"
+        ).length;
+
+        if (hiddenCount === workCards.length && isInView(worksSection)) {
+          revealWorkCards(workCards);
         }
-      });
+      }, 1200);
+    }
 
-      gsap.killTweensOf(root);
-      gsap.killTweensOf(root.querySelectorAll("*"));
+    const updateParallax = () => {
+      if (!active) return;
 
-      requestAnimationFrame(() => {
-        ScrollTrigger.refresh();
+      scrollRaf = 0;
+
+      const vh = window.innerHeight || 1;
+
+      parallaxNodes.forEach((node) => {
+        const speed = Number(node.dataset.speed || -6);
+        const section = node.closest("section") || node;
+        const rect = section.getBoundingClientRect();
+
+        const progress = Math.min(
+          1,
+          Math.max(0, (vh - rect.top) / (vh + rect.height))
+        );
+
+        const y = (progress - 0.5) * speed * 18;
+
+        node.style.transform = `translate3d(0, ${y}px, 0)`;
       });
     };
 
-    ctx = gsap.context(() => {
-      const revealNodes = gsap.utils.toArray("[data-online-reveal]");
+    const requestParallax = () => {
+      if (scrollRaf) return;
+      scrollRaf = requestAnimationFrame(updateParallax);
+    };
 
-      revealNodes.forEach((node) => {
-        const type = node.dataset.onlineReveal || "fade";
-        const delay = Number(node.dataset.delay || 0);
-        const isImage = type === "image" || type === "mask";
+    requestParallax();
 
-        gsap.fromTo(
-          node,
-          {
-            autoAlpha: 0,
-            y: type === "hero" ? 36 : 30,
-            filter: "blur(12px)",
-            clipPath: isImage ? "inset(0% 0% 100% 0%)" : "inset(0% 0% 0% 0%)",
-          },
-          {
-            autoAlpha: 1,
-            y: 0,
-            filter: "blur(0px)",
-            clipPath: "inset(0% 0% 0% 0%)",
-            duration: type === "hero" ? 1.25 : 1.05,
-            delay,
-            ease: "power3.out",
-            scrollTrigger: {
-              trigger: node,
-              start: "top 86%",
-              once: true,
-            },
-          }
-        );
-      });
+    window.addEventListener("scroll", requestParallax, { passive: true });
+    window.addEventListener("resize", requestParallax);
 
-      gsap.utils.toArray("[data-online-parallax]").forEach((node) => {
-        const speed = Number(node.dataset.speed || -6);
-        const section = node.closest("section") || node;
+    return () => {
+      active = false;
 
-        gsap.to(node, {
-          yPercent: speed,
-          ease: "none",
-          scrollTrigger: {
-            trigger: section,
-            start: "top bottom",
-            end: "bottom top",
-            scrub: 0.9,
-          },
-        });
-      });
+      if (observer) {
+        observer.disconnect();
+        observer = null;
+      }
 
-      gsap.fromTo(
-        `.${styles.arc}`,
-        { strokeDashoffset: 420, autoAlpha: 0 },
-        {
-          strokeDashoffset: 0,
-          autoAlpha: 1,
-          duration: 2.2,
-          stagger: 0.13,
-          ease: "power2.out",
-          delay: 0.42,
-        }
-      );
+      if (worksObserver) {
+        worksObserver.disconnect();
+        worksObserver = null;
+      }
 
-      gsap.fromTo(
-        `.${styles.node}`,
-        { scale: 0, transformOrigin: "center center", autoAlpha: 0 },
-        {
-          scale: 1,
-          autoAlpha: 1,
-          duration: 0.72,
-          stagger: 0.075,
-          ease: "back.out(1.7)",
-          delay: 0.72,
-        }
-      );
-    }, root);
+      rafIds.forEach((id) => cancelAnimationFrame(id));
+      cancelAnimationFrame(scrollRaf);
+      window.clearTimeout(workFallbackTimer);
 
-    return cleanupOnlineGsap;
-  }, [isOnlineRoute]);
+      window.removeEventListener("scroll", requestParallax);
+      window.removeEventListener("resize", requestParallax);
+
+      /*
+        cleanupではReact管理DOMのstyle復元をしない。
+        ここでDOMを触ると、Reactのunmount削除と衝突して
+        removeChild null系の事故が起きやすい。
+      */
+    };
+  }, [isOnlineRoute, pathname]);
 
   // Router / Outlet 側で万が一 Online が残っても、URLが /online 以外なら自分で消える
   if (!isOnlineRoute) {
@@ -351,12 +530,6 @@ export default function Online() {
 
   return (
     <>
-      <Seo
-        title="全国対応のWeb制作｜沖縄からオンラインでつながるWebデザイン"
-        description="沖縄を拠点に、全国の事業者様へオンラインでWebサイト制作を行います。Zoom・LINE・メールで相談から公開まで対応。世界観設計、LP制作、小規模サイト制作、スマホ対応、SEO/AEOまでご相談ください。"
-        path="/online"
-      />
-
       <main className={styles.page} ref={pageRef}>
         {/* =========================================================
             01 / HERO
@@ -639,8 +812,8 @@ export default function Online() {
                 rel="noreferrer"
                 className={`${styles.workCard} ${index === 0 ? styles.workFeatured : ""}`}
                 key={work.title}
-                data-online-reveal="image"
-                data-delay={index * 0.04}
+                data-online-work-card
+                data-work-index={index}
               >
                 <figure
                   className={styles.workThumb}

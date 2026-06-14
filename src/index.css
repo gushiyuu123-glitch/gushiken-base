@@ -724,3 +724,15 @@ body.is-okinawa-page::before {
     opacity: 1 !important;
   }
 }
+.aq-fade {
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity 0.8s ease,
+    transform 0.8s ease;
+}
+
+.aq-fade.aq-show {
+  opacity: 1;
+  transform: translateY(0);
+}
