@@ -287,7 +287,7 @@
 .body {
   padding-left: 1rem;
 
-  color: rgba(255, 255, 255, 0.82);
+  color: rgba(255, 255, 255, 0.84);
   font-size: 1rem;
   line-height: 2.08;
   letter-spacing: 0.035em;
@@ -296,8 +296,24 @@
   word-break: break-word;
 }
 
+/* microCMS rich text safety:
+   本文内の span style="color:#000" などを黒背景で潰さない */
+.body,
+.body * {
+  color: rgba(255, 255, 255, 0.84) !important;
+  visibility: visible !important;
+}
+
 .body > *:first-child {
   margin-top: 0;
+}
+
+.body p,
+.body div,
+.body span,
+.body li,
+.body dd {
+  color: rgba(255, 255, 255, 0.82) !important;
 }
 
 .body p {
@@ -310,7 +326,7 @@
   margin: 3em 0 1em;
   padding-top: 1.15rem;
 
-  color: rgba(255, 255, 255, 0.96);
+  color: rgba(255, 255, 255, 0.96) !important;
   font-size: 1.42rem;
   font-weight: 300;
   line-height: 1.55;
@@ -338,7 +354,7 @@
 .body h3 {
   margin: 2.4em 0 0.8em;
 
-  color: rgba(255, 255, 255, 0.9);
+  color: rgba(255, 255, 255, 0.92) !important;
   font-size: 1.12rem;
   font-weight: 400;
   line-height: 1.6;
@@ -348,7 +364,7 @@
 .body h4 {
   margin: 2em 0 0.7em;
 
-  color: rgba(255, 255, 255, 0.86);
+  color: rgba(255, 255, 255, 0.88) !important;
   font-size: 1rem;
   font-weight: 400;
   line-height: 1.6;
@@ -383,24 +399,32 @@
     ),
     rgba(255, 255, 255, 0.014);
 
-  color: rgba(255, 255, 255, 0.74);
+  color: rgba(255, 255, 255, 0.76) !important;
+}
+
+.body blockquote * {
+  color: rgba(255, 255, 255, 0.76) !important;
 }
 
 .body a {
-  color: rgba(238, 226, 204, 0.94);
+  color: rgba(238, 226, 204, 0.96) !important;
   text-decoration: underline;
   text-underline-offset: 4px;
-  text-decoration-color: rgba(201, 177, 138, 0.34);
+  text-decoration-color: rgba(201, 177, 138, 0.38);
 
   transition:
     color 0.28s ease,
     text-decoration-color 0.28s ease;
 }
 
+.body a * {
+  color: inherit !important;
+}
+
 .body a:hover,
 .body a:focus-visible {
-  color: rgba(255, 255, 255, 0.98);
-  text-decoration-color: rgba(201, 177, 138, 0.64);
+  color: rgba(255, 255, 255, 0.98) !important;
+  text-decoration-color: rgba(201, 177, 138, 0.66);
   outline: none;
 }
 
@@ -426,8 +450,9 @@
   border-top: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-.body strong {
-  color: rgba(255, 255, 255, 0.96);
+.body strong,
+.body b {
+  color: rgba(255, 255, 255, 0.96) !important;
   font-weight: 600;
 }
 
@@ -437,7 +462,7 @@
   border: 1px solid rgba(255, 255, 255, 0.08);
   background: rgba(255, 255, 255, 0.045);
 
-  color: rgba(238, 226, 204, 0.92);
+  color: rgba(238, 226, 204, 0.92) !important;
   font-size: 0.92em;
 }
 
@@ -478,7 +503,7 @@
   border: 1px solid rgba(255, 255, 255, 0.08);
   background: rgba(255, 255, 255, 0.01);
 
-  color: rgba(255, 255, 255, 0.82);
+  color: rgba(255, 255, 255, 0.82) !important;
   font-size: 0.94rem;
   line-height: 1.8;
 }
@@ -486,7 +511,7 @@
 .body thead th {
   text-align: left;
   font-weight: 600;
-  color: rgba(255, 255, 255, 0.92);
+  color: rgba(255, 255, 255, 0.92) !important;
 
   background: rgba(255, 255, 255, 0.03);
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
@@ -630,6 +655,13 @@
   opacity: 1;
   transform: translate3d(0, 0, 0) scale(1);
   filter: blur(0);
+}
+
+/* 本文だけはIntersectionObserver不発でも読めるよう保険 */
+.body.reveal {
+  opacity: 1;
+  transform: none;
+  filter: none;
 }
 
 /* AQ safety */

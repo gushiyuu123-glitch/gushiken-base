@@ -129,7 +129,6 @@ export default function FloatingFAQ({ variant = "default" }) {
 
     const lenis = getLenisLike();
     if (!lenis) return undefined;
-
     if (!isOpen) return undefined;
 
     try {
@@ -215,6 +214,7 @@ export default function FloatingFAQ({ variant = "default" }) {
     const handler = (event) => {
       const wrap = wrapRef.current;
       if (!wrap) return;
+
       if (!wrap.contains(event.target)) {
         closePanel(false);
       }
@@ -293,12 +293,20 @@ export default function FloatingFAQ({ variant = "default" }) {
   }, [isOpen]);
 
   const panelProps = useMemo(() => {
-    return {
+    const props = {
       "data-open": isOpen ? "true" : "false",
       "data-reduced": prefersReducedMotion() ? "true" : "false",
-      "aria-hidden": !isOpen,
-      inert: !isOpen ? "" : undefined,
     };
+
+    // ✅ Reactでは boolean属性の inert に空文字を渡さない
+    // 閉じている時だけ inert=true / aria-hidden=true
+    // 開いている時は属性ごと消す
+    if (!isOpen) {
+      props["aria-hidden"] = "true";
+      props.inert = true;
+    }
+
+    return props;
   }, [isOpen]);
 
   return (
