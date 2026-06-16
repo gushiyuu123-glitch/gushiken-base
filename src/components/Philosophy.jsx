@@ -1,6 +1,5 @@
 // src/sections/Philosophy.jsx
 import React, { useEffect, useMemo, useRef } from "react";
-import { Link } from "react-router-dom";
 import SectionSvgTitle from "../components/SectionSvgTitle";
 import styles from "./Philosophy.module.css";
 
@@ -16,7 +15,7 @@ const PRINCIPLES = [
       <>
         何をしているか、誰に向いているか。
         <br />
-        最初の数秒で判断できる順序へ整えます。
+        最初の数秒で判断できる順序に組みます。
       </>
     ),
   },
@@ -27,9 +26,9 @@ const PRINCIPLES = [
     type: "atmosphere",
     text: (
       <>
-        写真・言葉・余白の温度を揃える。
+        写真・言葉・余白の温度を合わせる。
         <br />
-        見た後に、静かに残る空気を作ります。
+        見た後に、静かに残る印象を作ります。
       </>
     ),
   },
@@ -42,7 +41,7 @@ const PRINCIPLES = [
       <>
         不安が出る前に、必要な答えを置く。
         <br />
-        迷わず問い合わせへ進める流れを設計します。
+        問い合わせまで自然に進める流れを作ります。
       </>
     ),
   },
@@ -133,7 +132,7 @@ export default function Philosophy() {
 
   useEffect(() => {
     const root = sectionRef.current;
-    if (!root) return;
+    if (!root) return undefined;
 
     const flowTargets = Array.from(root.querySelectorAll("[data-reveal-flow]"));
     const principlesTarget = root.querySelector("[data-reveal-principles]");
@@ -143,7 +142,7 @@ export default function Philosophy() {
     if (reduceMotion || typeof IntersectionObserver === "undefined") {
       flowTargets.forEach(reveal);
       if (principlesTarget) reveal(principlesTarget);
-      return;
+      return undefined;
     }
 
     const io = new IntersectionObserver(
@@ -203,7 +202,7 @@ export default function Philosophy() {
             <br />
             読み進めても迷わない。
             <br />
-            その先で、<span>相談したくなる流れ</span>まで整えます。
+            その先に、<span>相談したくなる理由</span>を置く。
           </p>
 
           <p className={cx(styles.body, styles.flow, styles.flow3)} data-reveal-flow>
@@ -213,8 +212,8 @@ export default function Philosophy() {
             <span>何をしているか／誰に向いているか</span>が自然に入る状態を作ります。
             <br />
             <br />
-            きれいに整えるだけで終わらせず、
-            <span>不安を先回りで潰し</span>、問い合わせまでの導線も一緒に設計します。
+            きれいに並べるだけで終わらせず、
+            <span>不安を先回りで消し</span>、問い合わせまでの導線も一緒に設計します。
           </p>
 
           <VisualPrinciples />
@@ -230,7 +229,6 @@ export default function Philosophy() {
               「ここなら任せやすそう」と感じてもらえることを、成果の前提に置いています。
             </em>
           </p>
-
         </div>
       </div>
     </section>

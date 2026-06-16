@@ -127,9 +127,9 @@ export default function Contact() {
             className={cx(styles.lead, styles.reveal, styles.r2)}
             data-contact-reveal
           >
-            この空気が、
+            この印象を、
             <br />
-            <span>あなたのサービスにも必要なら。</span>
+            <span>あなたのサービスにも。</span>
           </p>
 
           <p
@@ -138,8 +138,7 @@ export default function Contact() {
           >
             まだ内容が固まっていなくても大丈夫です。
             <br />
-            業種・目的・写真・予算感を聞きながら、
-            印象の方向と必要な見せ方を整理します。
+            業種・目的・写真・予算感を聞きながら、必要な見せ方と進め方を一緒に決めていきます。
           </p>
         </div>
 

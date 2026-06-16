@@ -40,7 +40,7 @@ const STYLE_ITEMS = [
   },
   {
     title: "見え方のトーンを揃える",
-    text: "写真・色・文字・余白の温度を合わせ、全体の印象がばらつかないよう整えます。",
+    text: "写真・色・文字・余白の温度を合わせ、印象がひとつの方向へ流れるようにします。",
   },
   {
     title: "迷わない導線をつくる",
@@ -366,17 +366,17 @@ export default function About() {
           </header>
 
           <div className={styles["about-intro"]}>
-            <p
-              className={cx(
-                styles["about-lead"],
-                styles["about-flow"],
-                styles["about-flow-2"]
-              )}
-            >
-              その空気が、
-              <br />
-              <span>選ばれる理由になる。</span>
-            </p>
+<p
+  className={cx(
+    styles["about-lead"],
+    styles["about-flow"],
+    styles["about-flow-2"]
+  )}
+>
+  感覚だけで終わらせず、
+  <br />
+  <span>理由のある景色にする。</span>
+</p>
 
             <p
               className={cx(
@@ -387,7 +387,7 @@ export default function About() {
             >
               写真、言葉、余白、導線。
               <br />
-              ひとつずつ整えることで、商品・空間・サービスの印象は変わります。
+              どこに何を置くかで、商品・空間・サービスの印象は変わります。
               <br />
               見た目だけで終わらせず、<span>読み手が判断しやすい流れ</span>まで設計します。
             </p>
@@ -411,8 +411,8 @@ export default function About() {
             <p className={styles["about-text"]}>
               沖縄を拠点に、ホームページ制作・LP制作・Webデザインを行っています。
               <br />
-              構成からデザイン、実装、公開まで一貫して対応し、
-              <span>印象と使いやすさ</span>を両立したWebサイトへ整えます。
+             構成からデザイン、実装、公開まで一貫して対応し、
+              <span>見た目と使いやすさ</span>が両立するWebサイトとして形にします。
             </p>
 
             <div className={styles["about-links"]}>
@@ -573,7 +573,7 @@ export default function About() {
           >
             <p>
               あなたのサービスの魅力を、
-              <span>選ばれる入口として機能するWebサイト</span>へ整えます。
+              <span>初見で伝わるWebサイトとして</span>形にします。
             </p>
           </div>
         </div>
