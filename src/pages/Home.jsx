@@ -7,6 +7,8 @@ import HeroGate from "../sections/HeroGate";
 import Works from "../components/Works";
 import WorksSP from "../components/WorksSP";
 
+import ClientVoice from "../components/ClientVoice";
+
 import Philosophy from "../components/Philosophy";
 import PhilosophySP from "../components/PhilosophySP";
 
@@ -319,6 +321,11 @@ export default function Home() {
         {/* WORKS：Footer /#works の着地点 */}
         <div id="works" style={ANCHOR_STYLE}>
           {isDesktop ? (isWorksDesktop ? <Works /> : <WorksSP />) : <WorksSP />}
+        </div>
+
+        {/* CLIENT VOICE：実案件・お客様の声 */}
+        <div id="client-voice" style={ANCHOR_STYLE}>
+          <ClientVoice />
         </div>
 
         {/* PHILOSOPHY：Footer /#philosophy の着地点 */}
