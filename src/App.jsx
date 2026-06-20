@@ -19,6 +19,7 @@ import LenisManager from "./components/Lenis";
 import Home from "./pages/Home";
 import WorksList from "./pages/WorksList";
 import WorkDetail from "./pages/WorkDetail";
+import AboutPage from "./pages/AboutPage";
 
 // Works
 import NoirLux from "./pages/works/NoirLux";
@@ -72,6 +73,7 @@ import OkinawaBridalWebsite from "./pages/entry/OkinawaBridalWebsite";
 import KouRyuiEntry from "./pages/entry/KouRyuiEntry";
 import BlackPapillonEntry from "./pages/entry/BlackPapillonEntry";
 
+// SEO / Entry pages
 import Okinawa from "./pages/Okinawa";
 import Online from "./pages/Online";
 
@@ -81,8 +83,6 @@ import NewsDetail from "./pages/NewsDetail";
 
 // Experiments
 import Layer0 from "./pages/Layer0";
-
-import AboutPage from "./pages/AboutPage";
 
 /* ============================================================================
    SEO Bridge
@@ -132,6 +132,13 @@ const PAGE_SEO = {
     title: `PRICE｜${BASE_TITLE}`,
     description:
       "制作プランと料金の目安。LP制作・小規模サイト・印象重視のWebサイト制作など、目的に合わせて制作範囲を整理します。",
+    imagePath: DEFAULT_IMAGE_PATH,
+  },
+
+  "/about": {
+    title: `ABOUT｜${BASE_TITLE}`,
+    description:
+      "GUSHIKEN DESIGNの制作者背景、制作方針、Webデザインへの考え方を紹介します。沖縄県浦添市を拠点にホームページ制作・LP制作・Webデザインを行っています。",
     imagePath: DEFAULT_IMAGE_PATH,
   },
 
@@ -219,6 +226,7 @@ const STATIC_ROUTE_PATHS = new Set([
   "/news",
   "/contact",
   "/price",
+  "/about",
   "/okinawa",
   "/online",
   "/terms",
@@ -608,8 +616,31 @@ function Layout() {
       >
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/works" element={<WorksList />} />
 
+          {/* Main pages */}
+          <Route path="/works" element={<WorksList />} />
+          <Route path="/price" element={<PriceDetail />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/about" element={<AboutPage />} />
+
+          {/* News */}
+          <Route path="/news" element={<NewsList />} />
+          <Route path="/news/:id" element={<NewsDetail />} />
+
+          {/* Policy pages */}
+          <Route path="/terms" element={<Terms />} />
+          <Route path="/refund" element={<Refund />} />
+          <Route path="/legal" element={<Legal />} />
+          <Route path="/privacy" element={<Privacy />} />
+
+          {/* SEO entry pages */}
+          <Route path="/okinawa" element={<Okinawa />} />
+          <Route path="/online" element={<Online />} />
+
+          {/* Experiments */}
+          <Route path="/layer0" element={<Layer0 />} />
+
+          {/* Works */}
           <Route path="/works/noir-lux" element={<NoirLux />} />
           <Route path="/works/resonance" element={<Resonance />} />
 
@@ -659,12 +690,7 @@ function Layout() {
           <Route path="/works/ReCamp" element={<ReCamp />} />
           <Route path="/works/MiyahiraDental" element={<MiyahiraDental />} />
           <Route path="/works/SakuraiDerm" element={<SakuraiDerm />} />
-
-          <Route
-            path="/works/WhiteDarkCacao"
-            element={<WhiteDarkCacao />}
-          />
-
+          <Route path="/works/WhiteDarkCacao" element={<WhiteDarkCacao />} />
           <Route path="/works/AxisRoom" element={<AxisRoom />} />
           <Route path="/works/TakumiRoom" element={<TakumiRoom />} />
           <Route path="/works/RoseRoom" element={<RoseRoom />} />
@@ -684,10 +710,6 @@ function Layout() {
             element={<BlackPapillonEntry />}
           />
 
-          {/* 集客ページ */}
-          <Route path="/okinawa" element={<Okinawa />} />
-          <Route path="/online" element={<Online />} />
-
           {/* 旧URL・別名URLは正規URLへ集約 */}
           <Route
             path="/okinawa-bridal-website"
@@ -704,18 +726,6 @@ function Layout() {
 
           {/* fallback works */}
           <Route path="/works/:slug" element={<WorkDetail />} />
-
-          <Route path="/price" element={<PriceDetail />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/terms" element={<Terms />} />
-          <Route path="/refund" element={<Refund />} />
-          <Route path="/legal" element={<Legal />} />
-          <Route path="/privacy" element={<Privacy />} />
-<Route path="/about" element={<AboutPage />} />
-          <Route path="/news" element={<NewsList />} />
-          <Route path="/news/:id" element={<NewsDetail />} />
-
-          <Route path="/layer0" element={<Layer0 />} />
 
           {/* 404 */}
           <Route path="*" element={<NotFound />} />
@@ -740,10 +750,6 @@ export default function App() {
   const currentScrollKeyRef = useRef("");
 
   const pathname = normalizePathname(location.pathname);
-
-  // index.html 側の FOUC 対策に対応。
-  // #root.show が付かない事故をApp側でも防ぐ。
-
 
   // ブラウザ戻る/進む時のネイティブ復元を止める。
   // 復元はLenis込みでApp側が管理する。

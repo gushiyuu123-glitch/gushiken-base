@@ -20,6 +20,7 @@ const baseHtml = fs.readFileSync(BASE_HTML_PATH, "utf-8");
 const commonLinks = [
   ["制作実績を見る", "/works"],
   ["料金を見る", "/price"],
+  ["制作者について", "/about"],
   ["沖縄で相談する", "/okinawa"],
   ["全国オンライン対応を見る", "/online"],
   ["相談する", "/contact"],
@@ -45,6 +46,7 @@ const pages = [
     links: [
       ["相談する", "/contact"],
       ["料金を見る", "/price"],
+      ["制作者について", "/about"],
       ["沖縄向け制作", "/okinawa"],
       ["全国オンライン対応", "/online"],
     ],
@@ -79,6 +81,7 @@ const pages = [
     links: [
       ["相談する", "/contact"],
       ["制作実績を見る", "/works"],
+      ["制作者について", "/about"],
       ["沖縄向け制作", "/okinawa"],
       ["全国オンライン対応", "/online"],
     ],
@@ -113,6 +116,7 @@ const pages = [
     links: [
       ["制作実績を見る", "/works"],
       ["料金を見る", "/price"],
+      ["制作者について", "/about"],
       ["沖縄向け制作", "/okinawa"],
       ["全国オンライン対応", "/online"],
     ],
@@ -124,6 +128,41 @@ const pages = [
       breadcrumb: [
         ["ホーム", "/"],
         ["お問い合わせ", "/contact"],
+      ],
+    }),
+  },
+
+  {
+    path: "/about",
+    title: "ABOUT｜GUSHIKEN DESIGN｜沖縄のWebデザイン・ホームページ制作",
+    description:
+      "GUSHIKEN DESIGNの制作者背景、制作方針、Webデザインへの考え方を紹介します。沖縄県浦添市を拠点にホームページ制作・LP制作・Webデザインを行っています。",
+    label: "ABOUT / GUSHIKEN DESIGN",
+    h1: "制作者について",
+    lead:
+      "GUSHIKEN DESIGNは、沖縄県浦添市を拠点にホームページ制作・LP制作・Webデザインを行う個人制作スタジオです。現場で拾った感覚を、画面の設計へ変えることを大切にしています。",
+    points: [
+      "写真・言葉・余白・導線を整え、初めて見る人が判断しやすいWebサイトを制作します。",
+      "美容室・飲食店・ブライダル・観光体験・アパレル・タトゥースタジオなど、印象で選ばれる業種と相性が良いです。",
+      "構成・デザイン・実装・公開まで、一貫して制作します。",
+    ],
+    note:
+      "感覚だけで終わらせず、理由のある景色にする。GUSHIKEN DESIGNでは、見た瞬間の印象と、読み進めた先の分かりやすさを両方整えます。",
+    links: [
+      ["制作実績を見る", "/works"],
+      ["料金を見る", "/price"],
+      ["沖縄向け制作", "/okinawa"],
+      ["全国オンライン対応", "/online"],
+      ["相談する", "/contact"],
+    ],
+    jsonLd: webPageJsonLd({
+      path: "/about",
+      name: "制作者について｜GUSHIKEN DESIGN",
+      description:
+        "GUSHIKEN DESIGNの制作者背景、制作方針、Webデザインへの考え方を紹介します。",
+      breadcrumb: [
+        ["ホーム", "/"],
+        ["制作者について", "/about"],
       ],
     }),
   },
@@ -166,6 +205,7 @@ const pages = [
       ["沖縄で相談する", "/contact"],
       ["制作例を見る", "/works"],
       ["料金を見る", "/price"],
+      ["制作者について", "/about"],
       ["全国オンライン対応", "/online"],
     ],
     jsonLd: okinawaJsonLd(),
@@ -210,6 +250,7 @@ const pages = [
       ["進め方を見る", "/online#route"],
       ["制作事例を見る", "/works"],
       ["料金ページを見る", "/price"],
+      ["制作者について", "/about"],
     ],
     jsonLd: onlineJsonLd(),
   },
@@ -522,7 +563,9 @@ function escapeAttr(value = "") {
 
 function normalizePath(value = "/") {
   const raw = String(value || "/").split("#")[0].split("?")[0];
+
   if (!raw || raw === "/") return "/";
+
   const withSlash = raw.startsWith("/") ? raw : `/${raw}`;
   return withSlash.replace(/\/+$/, "") || "/";
 }
@@ -555,6 +598,7 @@ function removeTags(html, selectorName) {
   };
 
   const pattern = patterns[selectorName];
+
   if (!pattern) return next;
 
   return next.replace(pattern, "");
@@ -630,6 +674,7 @@ ${jsonLdScripts}
 
 function normalizeJsonLdList(jsonLd) {
   if (!jsonLd) return [];
+
   return Array.isArray(jsonLd) ? jsonLd.filter(Boolean) : [jsonLd];
 }
 
@@ -653,7 +698,9 @@ function renderFallback(page) {
         ${
           points.length
             ? `<ul class="seo-fallback__points" aria-label="要点">
-          ${points.map((point) => `<li>${escapeHtml(point)}</li>`).join("\n          ")}
+          ${points
+            .map((point) => `<li>${escapeHtml(point)}</li>`)
+            .join("\n          ")}
         </ul>`
             : ""
         }
@@ -666,7 +713,9 @@ function renderFallback(page) {
                 ? ` target="_blank" rel="noopener noreferrer"`
                 : "";
 
-              return `<a href="${escapeAttr(safeHref)}"${target}>${escapeHtml(text)}</a>`;
+              return `<a href="${escapeAttr(safeHref)}"${target}>${escapeHtml(
+                text
+              )}</a>`;
             })
             .join("\n          ")}
         </nav>

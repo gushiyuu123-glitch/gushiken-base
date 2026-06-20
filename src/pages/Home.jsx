@@ -313,27 +313,27 @@ export default function Home() {
         {/* HERO：h1はHero側に1つだけ */}
         <HeroGate isDesktop={isDesktop} />
 
-        {/* ABOUT：Footer /#about の着地点 */}
-        <div id="about" style={ANCHOR_STYLE}>
-          <About />
-        </div>
-
-        {/* WORKS：Footer /#works の着地点 */}
+        {/* WORKS：Nav /#works の着地点 */}
         <div id="works" style={ANCHOR_STYLE}>
           {isDesktop ? (isWorksDesktop ? <Works /> : <WorksSP />) : <WorksSP />}
         </div>
 
-        {/* CLIENT VOICE：実案件・お客様の声 */}
-        <div id="client-voice" style={ANCHOR_STYLE}>
+        {/* VOICE：Nav /#voice の着地点 */}
+        <div id="voice" style={ANCHOR_STYLE}>
           <ClientVoice />
         </div>
 
-        {/* PHILOSOPHY：Footer /#philosophy の着地点 */}
+        {/* ABOUT：Nav /#about の着地点 */}
+        <div id="about" style={ANCHOR_STYLE}>
+          <About />
+        </div>
+
+        {/* POLICY：Nav /#philosophy の着地点 */}
         <div id="philosophy" style={ANCHOR_STYLE}>
           {isDesktop ? <Philosophy /> : <PhilosophySP />}
         </div>
 
-        {/* PRICE：Footer /#price の着地点 */}
+        {/* PRICE：Nav /#price の着地点 */}
         <div id="price" style={ANCHOR_STYLE}>
           {isDesktop ? <Price /> : <PriceSP />}
         </div>
@@ -341,7 +341,7 @@ export default function Home() {
         {/* NEWS：更新・判断ログ */}
         <NewsSection />
 
-        {/* CONTACT：Footer /#contact の着地点 */}
+        {/* CONTACT：Nav /#contact の着地点 */}
         <div id="contact" style={ANCHOR_STYLE}>
           <Contact />
         </div>

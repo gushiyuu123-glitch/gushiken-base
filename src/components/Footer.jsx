@@ -10,6 +10,7 @@ const NOTE_URL = "https://note.com/noahgushi123";
 
 const MENU_LINKS = [
   { type: "hash", label: "WORKS", hash: "#works" },
+  { type: "hash", label: "VOICE", hash: "#voice" },
   { type: "hash", label: "ABOUT", hash: "#about" },
   { type: "hash", label: "POLICY", hash: "#philosophy" },
   { type: "hash", label: "PRICE", hash: "#price" },
