@@ -1,5 +1,11 @@
 // src/components/NewsSection.jsx
-import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { Link } from "react-router-dom";
 import { getNewsList } from "../lib/microcms";
 import SectionSvgTitle from "./SectionSvgTitle";
@@ -16,7 +22,6 @@ export default function NewsSection() {
   const mountedRef = useRef(false);
   const requestIdRef = useRef(0);
   const newsRef = useRef([]);
-
   const revealObserverRef = useRef(null);
 
   useEffect(() => {
@@ -45,7 +50,10 @@ export default function NewsSection() {
     requestIdRef.current = requestId;
 
     try {
-      if (!silent || newsRef.current.length === 0) setLoading(true);
+      if (!silent || newsRef.current.length === 0) {
+        setLoading(true);
+      }
+
       setError(false);
 
       const res = await getNewsList({ limit: 3 });
@@ -71,8 +79,13 @@ export default function NewsSection() {
       if (!mountedRef.current) return;
       if (requestId !== requestIdRef.current) return;
 
-      if (!silent) setLoading(false);
-      if (silent && newsRef.current.length === 0) setLoading(false);
+      if (!silent) {
+        setLoading(false);
+      }
+
+      if (silent && newsRef.current.length === 0) {
+        setLoading(false);
+      }
     }
   }, []);
 
@@ -113,19 +126,21 @@ export default function NewsSection() {
       target.classList.add(styles.isIn);
     };
 
+    const targets = Array.from(root.querySelectorAll("[data-news-reveal]"));
+
     if (typeof IntersectionObserver === "undefined") {
-      Array.from(root.querySelectorAll("[data-news-reveal]")).forEach(reveal);
+      targets.forEach(reveal);
       return undefined;
     }
 
     if (!revealObserverRef.current) {
-      const observer = new IntersectionObserver(
+      revealObserverRef.current = new IntersectionObserver(
         (entries) => {
           entries.forEach((entry) => {
             if (!entry.isIntersecting) return;
 
             reveal(entry.target);
-            observer.unobserve(entry.target);
+            revealObserverRef.current?.unobserve(entry.target);
           });
         },
         {
@@ -133,12 +148,9 @@ export default function NewsSection() {
           rootMargin: "0px 0px -8% 0px",
         }
       );
-
-      revealObserverRef.current = observer;
     }
 
     const observer = revealObserverRef.current;
-    const targets = Array.from(root.querySelectorAll("[data-news-reveal]"));
 
     targets.forEach((target) => {
       if (!target.classList.contains(styles.isIn)) {
@@ -227,7 +239,7 @@ export default function NewsSection() {
           )}
 
           {!loading && !error && hasNews && (
-            <div className={styles.list}>
+            <div className={styles.list} aria-label="最新のお知らせ">
               {news.map((item, index) => {
                 const date = item.publishedAt || item.createdAt || null;
                 const title = item.title || "無題のお知らせ";
@@ -237,7 +249,7 @@ export default function NewsSection() {
                     to={`/news/${item.id}`}
                     key={item.id}
                     className={cx(styles.item, styles.itemReveal)}
-                    aria-label={`お知らせ: ${title}`}
+                    aria-label={`${title} を読む`}
                     style={{ "--item-index": index }}
                     data-news-reveal
                   >
@@ -266,9 +278,12 @@ export default function NewsSection() {
             className={cx(styles.moreWrap, styles.reveal, styles.reveal3)}
             data-news-reveal
           >
-            <Link to="/news" className={styles.more}>
+            <Link
+              to="/news"
+              className={styles.more}
+              aria-label="すべてのお知らせを見る"
+            >
               <span>VIEW ALL NEWS</span>
-           
             </Link>
           </div>
         )}

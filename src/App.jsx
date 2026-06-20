@@ -82,6 +82,8 @@ import NewsDetail from "./pages/NewsDetail";
 // Experiments
 import Layer0 from "./pages/Layer0";
 
+import AboutPage from "./pages/AboutPage";
+
 /* ============================================================================
    SEO Bridge
    - head専用
@@ -709,7 +711,7 @@ function Layout() {
           <Route path="/refund" element={<Refund />} />
           <Route path="/legal" element={<Legal />} />
           <Route path="/privacy" element={<Privacy />} />
-
+<Route path="/about" element={<AboutPage />} />
           <Route path="/news" element={<NewsList />} />
           <Route path="/news/:id" element={<NewsDetail />} />
 

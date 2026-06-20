@@ -59,7 +59,7 @@ const WORKS = [
 ];
 
 function isExternal(url) {
-  return /^https?:\/\//i.test(url);
+  return /^https?:\/\//i.test(url || "");
 }
 
 function getCurtainStrength(kind) {
@@ -178,7 +178,6 @@ export default function Works() {
     const coarse = window.matchMedia?.("(pointer: coarse)")?.matches ?? false;
     const narrow = window.matchMedia?.("(max-width: 980px)")?.matches ?? false;
 
-    // PCのみ。SP/タブレットは成立優先で静的。
     if (reduce || coarse || narrow) return undefined;
 
     const ctx = gsap.context(() => {
@@ -623,14 +622,14 @@ export default function Works() {
         </h2>
 
         <p className={styles.lead} data-works-intro>
-          見た瞬間の印象から、
+          美容・飲食・観光・ブライダルなど、
           <br />
-          相談したくなる流れまで設計した制作事例。
+          世界観で選ばれる業種の制作事例をまとめています。
         </p>
 
         <p className={styles.leadSub} data-works-intro>
-          美容・飲食・観光・ブライダル・ブランドサイトなど、
-          印象で選ばれる業種を中心に制作しています。
+          画面の雰囲気だけでなく、見る人が内容を理解し、
+          相談前に判断できる流れまで考えて制作しています。
         </p>
       </header>
 
@@ -684,7 +683,7 @@ export default function Works() {
 
       <div className={styles.tail} aria-label="Works archive">
         <p className={styles.tailCopy}>
-          作品全体を見たあと、今のサイトやSNSで損している部分も整理できます。
+          業種や雰囲気に近い事例から、見せ方の方向を確認できます。
         </p>
 
         <div className={styles.tailLinks}>
@@ -695,8 +694,6 @@ export default function Works() {
           >
             VIEW ALL WORKS
           </Link>
-
-
         </div>
       </div>
     </section>

@@ -21,14 +21,14 @@ const PRINCIPLES = [
   },
   {
     number: "02",
-    title: "印象を編集する",
+    title: "温度をそろえる",
     en: "ATMOSPHERE",
     type: "atmosphere",
     text: (
       <>
-        写真・言葉・余白の温度を合わせる。
+        写真・言葉・余白のトーンを合わせる。
         <br />
-        見た後に、静かに残る印象を作ります。
+        らしさが静かに残る画面を作ります。
       </>
     ),
   },
@@ -39,7 +39,7 @@ const PRINCIPLES = [
     type: "flow",
     text: (
       <>
-        不安が出る前に、必要な答えを置く。
+        必要な答えを、先に置く。
         <br />
         問い合わせまで自然に進める流れを作ります。
       </>
@@ -50,7 +50,10 @@ const PRINCIPLES = [
 function PrincipleVisual({ type }) {
   if (type === "atmosphere") {
     return (
-      <div className={cx(styles.vpVisual, styles.vpAtmosphere)} aria-hidden="true">
+      <div
+        className={cx(styles.vpVisual, styles.vpAtmosphere)}
+        aria-hidden="true"
+      >
         <span className={styles.vpGoldBar} />
         <div className={styles.vpLines}>
           <span className={cx(styles.vpGoldLine, styles.vpGoldStrong)} />
@@ -178,7 +181,12 @@ export default function Philosophy() {
         </div>
 
         <div
-          className={cx(styles.sideLine, styles.flow, styles.flowLine, styles.flow1)}
+          className={cx(
+            styles.sideLine,
+            styles.flow,
+            styles.flowLine,
+            styles.flow1
+          )}
           data-reveal-flow
           aria-hidden="true"
         />
@@ -197,37 +205,41 @@ export default function Philosophy() {
         </header>
 
         <div className={styles.copy}>
-          <p className={cx(styles.lead, styles.flow, styles.flow2)} data-reveal-flow>
+          <p
+            className={cx(styles.lead, styles.flow, styles.flow2)}
+            data-reveal-flow
+          >
             <span>見た瞬間に伝わり</span>、
             <br />
             読み進めても迷わない。
-            <br />
-            その先に、<span>相談したくなる理由</span>を置く。
           </p>
 
-          <p className={cx(styles.body, styles.flow, styles.flow3)} data-reveal-flow>
-            Webサイトは、じっくり読まれる前に印象で判断されます。
+          <p
+            className={cx(styles.body, styles.flow, styles.flow3)}
+            data-reveal-flow
+          >
+            情報の順序、文字量、写真の見え方、余白のトーンを整えると、
             <br />
-            だからこそ、情報の順序、文字量、写真の見え方、余白の温度を編集し、
-            <span>何をしているか／誰に向いているか</span>が自然に入る状態を作ります。
+            初めて見る人は
+            <span>自然に判断しやすく</span>なります。
             <br />
             <br />
-            きれいに並べるだけで終わらせず、
-            <span>不安を先回りで消し</span>、問い合わせまでの導線も一緒に設計します。
+            不安が出る前に必要な答えを置き、
+            <br />
+            問い合わせまでの流れも一緒に設計します。
           </p>
 
           <VisualPrinciples />
 
-          <p className={cx(styles.last, styles.flow, styles.flow5)} data-reveal-flow>
+          <p
+            className={cx(styles.last, styles.flow, styles.flow5)}
+            data-reveal-flow
+          >
             <span>
-              迷わない。伝わる。決められる。
+              「ここなら相談できそう」と思ってもらえることを、
               <br />
-              この3つが揃うと、サイトは強くなります。
+              制作のすべての起点にしています。
             </span>
-            <br />
-            <em>
-              「ここなら任せやすそう」と感じてもらえることを、成果の前提に置いています。
-            </em>
           </p>
         </div>
       </div>

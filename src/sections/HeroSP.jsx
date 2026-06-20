@@ -159,19 +159,19 @@ export default function HeroSP() {
 
           <div className={styles.copy} data-hero="leftItem">
             <p className={styles.copyMeta}>
-              沖縄拠点 / 全国オンライン対応 / HP・LP制作
+              沖縄県浦添市 / 全国対応 / HP・LP制作
             </p>
 
             <p className={styles.copyLead}>
-              その空気が、
+              写真・言葉・余白を整えて、
               <br />
-              選ばれる理由になる。
+              予約・問い合わせにつながるWebへ。
             </p>
 
             <p className={styles.copySub}>
-              写真・言葉・余白・導線を整え、
+              美容室・飲食店・ブライダルなど、
               <br />
-              予約・問い合わせにつながるWebへ。
+              印象で選ばれる業種に対応。
             </p>
 
             <p className="visually-hidden">

@@ -213,9 +213,9 @@ export default function WorksSP() {
         </h2>
 
         <p className={styles.lead} data-reveal style={{ "--d": "140ms" }}>
-          ただ作っただけではなく、
+          美容・観光・ブライダルなど、
           <br />
-          印象まで設計した制作物。
+          世界観で選ばれる業種の制作事例。
         </p>
       </header>
 

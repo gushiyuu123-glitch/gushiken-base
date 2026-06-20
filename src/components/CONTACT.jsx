@@ -7,11 +7,9 @@ import styles from "./Contact.module.css";
 const cx = (...a) => a.filter(Boolean).join(" ");
 
 const STARTERS = [
-  "まだ内容が固まっていない",
-  "今のサイトが弱く見える",
-  "印象を上質に整えたい",
-  "写真や文章の見せ方を整えたい",
-  "予約・問い合わせの流れを作りたい",
+  "内容がまだ固まっていない",
+  "今のサイトを整え直したい",
+  "はじめてWebサイトをつくる",
 ];
 
 function ContactVisual() {
@@ -127,9 +125,9 @@ export default function Contact() {
             className={cx(styles.lead, styles.reveal, styles.r2)}
             data-contact-reveal
           >
-            この印象を、
+            ここから、
             <br />
-            <span>あなたのサービスにも。</span>
+            <span>整えていく。</span>
           </p>
 
           <p
@@ -138,7 +136,8 @@ export default function Contact() {
           >
             まだ内容が固まっていなくても大丈夫です。
             <br />
-            業種・目的・写真・予算感を聞きながら、必要な見せ方と進め方を一緒に決めていきます。
+            業種・目的・写真・予算感を聞きながら、
+            必要な見せ方と進め方を一緒に決めていきます。
           </p>
         </div>
 

@@ -13,10 +13,10 @@ export const clientVoices = [
       "デザインに妥協しない姿勢が、サイトの細部からしっかり伝わってきました。",
     body:
       "こちらの想いやお店の世界観を丁寧に汲み取り、初めて訪れる方にも雰囲気が自然に伝わるWebサイトに仕上げていただきました。",
-    siteUrl: "https://yorisoi-nine.vercel.app",
+    siteUrl: "https://yorisoi-nine.vercel.app/",
     articleUrl: "/news/1266ftbzme",
     previewImage: "/images/client-voice/yorisoi.webp",
     previewAlt:
-      "沖縄県浦添市のメンズ専門理容室 YORISOI Hair & Spa 公式Webサイトのプレビュー",
+      "YORISOI Hair & Spa 様 公式Webサイトのプレビュー",
   },
 ];

@@ -17,8 +17,8 @@ const MENU_LINKS = [
 ];
 
 const AREA_LINKS = [
-  { label: "沖縄のHP制作", to: "/okinawa" },
-  { label: "全国対応のWeb制作", to: "/online" },
+  { label: "沖縄のホームページ制作", to: "/okinawa" },
+  { label: "全国オンライン対応", to: "/online" },
 ];
 
 const PROJECT_LINKS = [
@@ -392,7 +392,7 @@ export default function Footer() {
                 </span>
 
                 <span className={styles.brandPlace} translate="no">
-                  Web Design / Okinawa
+                  Web Design / Urasoe, Okinawa
                 </span>
               </span>
             </Link>
@@ -400,7 +400,7 @@ export default function Footer() {
             <p className={styles.brandCopy}>
               沖縄を拠点に、
               <br />
-              世界観と導線を設計するWeb制作を行っています。
+              ホームページ制作・LP制作・Webデザインを行っています。
             </p>
 
             <Link

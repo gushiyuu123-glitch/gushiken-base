@@ -10,6 +10,7 @@ const FALLBACK_NAV_HEIGHT = 68;
 
 const HOME_ITEMS = [
   { href: "#works", label: "WORKS" },
+  { href: "#voice", label: "VOICE" },
   { href: "#about", label: "ABOUT" },
   { href: "#philosophy", label: "POLICY" },
   { href: "#price", label: "PRICE" },
@@ -25,6 +26,7 @@ const GLOBAL_ITEMS = [
 
 const OBSERVE_IDS = [
   "works",
+  "voice",
   "about",
   "philosophy",
   "price",
@@ -41,6 +43,11 @@ const MOBILE_META = {
     title: "WORKS",
     kana: "制作実績を見る",
     desc: "まずは、作ったものを見てください。",
+  },
+  VOICE: {
+    title: "VOICE",
+    kana: "お客様の声",
+    desc: "実際の制作後の感想。",
   },
   ABOUT: {
     title: "ABOUT",
@@ -103,12 +110,13 @@ function prefersReducedMotion() {
 /* =========================================================
    Body Scroll Lock
 ========================================================= */
+
 function useBodyScrollLock(locked) {
   const scrollYRef = useRef(0);
   const prevRef = useRef(null);
 
   useEffect(() => {
-    if (!locked) return;
+    if (!locked) return undefined;
 
     const body = document.body;
     const docEl = document.documentElement;
@@ -159,10 +167,13 @@ function useBodyScrollLock(locked) {
 /* =========================================================
    Scroll helpers
 ========================================================= */
+
 function scrollToY(y) {
+  if (typeof window === "undefined") return;
+
   const safeY = Math.max(0, Math.round(y));
   const reduce = prefersReducedMotion();
-  const lenis = window?.__gd_lenis;
+  const lenis = window.__gd_lenis__;
 
   if (lenis?.scrollTo) {
     if (reduce) {
@@ -184,6 +195,8 @@ function scrollToY(y) {
 }
 
 function scrollToHash(hash, offsetPx) {
+  if (typeof window === "undefined") return;
+  if (typeof document === "undefined") return;
   if (!hash?.startsWith("#")) return;
 
   const el = document.querySelector(hash);
@@ -316,7 +329,7 @@ export default function NavGlobal({ mode, tone = "auto" }) {
   }, []);
 
   useEffect(() => {
-    if (!isHome) return;
+    if (!isHome) return undefined;
 
     const syncHash = () => setActiveHash(window.location.hash || "");
     syncHash();
@@ -331,7 +344,7 @@ export default function NavGlobal({ mode, tone = "auto" }) {
   }, [isHome]);
 
   useEffect(() => {
-    if (!isHome) return;
+    if (!isHome) return undefined;
 
     let observer = null;
     let timer = null;
@@ -405,7 +418,7 @@ export default function NavGlobal({ mode, tone = "auto" }) {
   }, [isHome]);
 
   useEffect(() => {
-    if (!open) return;
+    if (!open) return undefined;
 
     const onKey = (e) => {
       if (e.key !== "Escape") return;
@@ -422,7 +435,7 @@ export default function NavGlobal({ mode, tone = "auto" }) {
   }, [open]);
 
   useEffect(() => {
-    if (!open) return;
+    if (!open) return undefined;
 
     const t = window.setTimeout(() => {
       firstLinkRef.current?.focus();
@@ -503,7 +516,7 @@ export default function NavGlobal({ mode, tone = "auto" }) {
         : isRouteActive(pathname, item.to);
 
       const variant =
-        item.label === "WORKS"
+        item.label === "WORKS" || item.label === "VOICE"
           ? "primary"
           : ["PRICE", "CONTACT"].includes(item.label)
             ? "action"
@@ -595,7 +608,10 @@ export default function NavGlobal({ mode, tone = "auto" }) {
         ref={navRef}
         data-theme={theme}
         data-open={open ? "true" : "false"}
-        className={cx(styles.navRoot, scrolled ? styles.navActive : styles.navIdle)}
+        className={cx(
+          styles.navRoot,
+          scrolled ? styles.navActive : styles.navIdle
+        )}
         aria-label="Global Navigation"
       >
         <div className={styles.navInner}>
@@ -756,24 +772,26 @@ export default function NavGlobal({ mode, tone = "auto" }) {
           </div>
 
           <div className={styles.mobileSeaCommand}>
-<section className={styles.mobileSeaStatement}>
-  <p className={styles.mobileSeaStatementEyebrow}>
-    PORTFOLIO / OKINAWA
-  </p>
+            <section className={styles.mobileSeaStatement}>
+              <p className={styles.mobileSeaStatementEyebrow}>
+                PORTFOLIO / OKINAWA
+              </p>
 
-  <h2 className={styles.mobileSeaStatementTitle}>
-    つくったものを、
-    <br />
-    見てください。
-  </h2>
+              <h2 className={styles.mobileSeaStatementTitle}>
+                作品と声を、
+                <br />
+                見てください。
+              </h2>
 
-  <p className={styles.mobileSeaStatementBody}>
-    Works / Price / Contact
-  </p>
-</section>
+              <p className={styles.mobileSeaStatementBody}>
+                Works / Voice / Contact
+              </p>
+            </section>
 
             <nav className={styles.mobileSeaMenu} aria-label="Site sections">
-              {mobileItems.map((item, index) => renderMobileSeaLink(item, index))}
+              {mobileItems.map((item, index) =>
+                renderMobileSeaLink(item, index)
+              )}
             </nav>
           </div>
 
