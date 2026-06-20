@@ -7,8 +7,9 @@ import {
 } from "../data/clientVoices";
 import styles from "./ClientVoice.module.css";
 
-const DURATION = 7200;
-const PAGE_TURN_DURATION = 520;
+const DURATION = 7600;
+const TURN_OUT = 340;
+const TURN_IN = 260;
 
 function formatVoiceNumber(index) {
   return `VOICE ${String(index + 1).padStart(2, "0")}`;
@@ -23,56 +24,77 @@ export default function ClientVoice({
   minItems = CLIENT_VOICE_MIN_COUNT,
 }) {
   const voices = useMemo(
-    () => items.filter((item) => item && item.client && item.quote),
+    () =>
+      items.filter(
+        (item) => item && item.client && (item.quote || item.body)
+      ),
     [items]
   );
 
+  const sectionRef = useRef(null);
+
   const [idx, setIdx] = useState(0);
-  const [visible, setVisible] = useState(true);
+  const [phase, setPhase] = useState("idle");
   const [paused, setPaused] = useState(false);
-  const [turning, setTurning] = useState(false);
   const [direction, setDirection] = useState("next");
+  const [hasEntered, setHasEntered] = useState(false);
 
-  const timerRef = useRef(null);
+  const autoTimerRef = useRef(null);
   const turnTimerRef = useRef(null);
+  const resetTimerRef = useRef(null);
 
-  const shouldRender = voices.length >= minItems;
+  /*
+    重要:
+    minItems が 3 のままでも、voices が1件あれば表示されるようにする。
+    ここで詰まるとセクションごと return null になる。
+  */
+  const safeMinItems = Math.max(
+    1,
+    Math.min(Number(minItems) || 1, voices.length || 1)
+  );
+
+  const shouldRender = voices.length >= safeMinItems;
   const hasMultipleVoices = voices.length > 1;
   const current = voices[idx] ?? voices[0];
 
   const clearTimers = useCallback(() => {
-    if (timerRef.current) {
-      window.clearTimeout(timerRef.current);
-      timerRef.current = null;
+    if (autoTimerRef.current) {
+      window.clearTimeout(autoTimerRef.current);
+      autoTimerRef.current = null;
     }
 
     if (turnTimerRef.current) {
       window.clearTimeout(turnTimerRef.current);
       turnTimerRef.current = null;
     }
+
+    if (resetTimerRef.current) {
+      window.clearTimeout(resetTimerRef.current);
+      resetTimerRef.current = null;
+    }
   }, []);
 
   const goTo = useCallback(
     (nextIndex, nextDirection = "next") => {
       if (!hasMultipleVoices) return;
+      if (phase !== "idle") return;
       if (nextIndex === idx) return;
       if (nextIndex < 0 || nextIndex > voices.length - 1) return;
 
       clearTimers();
       setDirection(nextDirection);
-      setTurning(true);
-      setVisible(false);
+      setPhase("turningOut");
 
       turnTimerRef.current = window.setTimeout(() => {
         setIdx(nextIndex);
-        setVisible(true);
+        setPhase("turningIn");
 
-        turnTimerRef.current = window.setTimeout(() => {
-          setTurning(false);
-        }, 160);
-      }, PAGE_TURN_DURATION);
+        resetTimerRef.current = window.setTimeout(() => {
+          setPhase("idle");
+        }, TURN_IN);
+      }, TURN_OUT);
     },
-    [clearTimers, hasMultipleVoices, idx, voices.length]
+    [clearTimers, hasMultipleVoices, idx, phase, voices.length]
   );
 
   const goNext = useCallback(() => {
@@ -86,6 +108,50 @@ export default function ClientVoice({
   }, [goTo, hasMultipleVoices, idx, voices.length]);
 
   useEffect(() => {
+    const el = sectionRef.current;
+
+    if (!el || typeof window === "undefined") {
+      setHasEntered(true);
+      return undefined;
+    }
+
+    /*
+      IntersectionObserver が動かない環境でも必ず表示する保険。
+      これがないと、鉛筆や writeTrace が opacity: 0 のままになる可能性がある。
+    */
+    const fallbackTimer = window.setTimeout(() => {
+      setHasEntered(true);
+    }, 500);
+
+    if (!("IntersectionObserver" in window)) {
+      setHasEntered(true);
+      window.clearTimeout(fallbackTimer);
+      return undefined;
+    }
+
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry?.isIntersecting) return;
+
+        setHasEntered(true);
+        window.clearTimeout(fallbackTimer);
+        io.disconnect();
+      },
+      {
+        threshold: 0.12,
+        rootMargin: "0px 0px -6% 0px",
+      }
+    );
+
+    io.observe(el);
+
+    return () => {
+      window.clearTimeout(fallbackTimer);
+      io.disconnect();
+    };
+  }, []);
+
+  useEffect(() => {
     if (!shouldRender) return;
 
     if (idx > voices.length - 1) {
@@ -95,18 +161,17 @@ export default function ClientVoice({
 
   useEffect(() => {
     if (!shouldRender || !hasMultipleVoices) {
-      setVisible(true);
-      setTurning(false);
+      clearTimers();
+      setPhase("idle");
+      return;
+    }
+
+    if (paused || phase !== "idle") {
       clearTimers();
       return;
     }
 
-    if (paused || turning) {
-      clearTimers();
-      return;
-    }
-
-    timerRef.current = window.setTimeout(() => {
+    autoTimerRef.current = window.setTimeout(() => {
       goNext();
     }, DURATION);
 
@@ -114,24 +179,32 @@ export default function ClientVoice({
   }, [
     idx,
     paused,
-    turning,
+    phase,
     shouldRender,
     hasMultipleVoices,
     goNext,
     clearTimers,
   ]);
 
-  useEffect(() => {
-    return clearTimers;
-  }, [clearTimers]);
+  useEffect(() => clearTimers, [clearTimers]);
 
   if (!shouldRender || !current) return null;
 
   const metaLine = buildMetaLine(current);
 
+  const phaseClass =
+    phase === "turningOut"
+      ? styles.isTurningOut
+      : phase === "turningIn"
+        ? styles.isTurningIn
+        : styles.isIdle;
+
   return (
     <section
-      className={`${styles.voice} aq-fade`}
+      ref={sectionRef}
+      className={`${styles.voice} ${
+        hasEntered ? styles.hasEntered : ""
+      } aq-fade`}
       aria-labelledby="client-voice-title"
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
@@ -163,17 +236,17 @@ export default function ClientVoice({
         <div
           className={[
             styles.stage,
-            visible ? styles.isVisible : styles.isHidden,
-            turning ? styles.isTurning : "",
+            phaseClass,
             direction === "prev" ? styles.isPrev : styles.isNext,
           ].join(" ")}
           aria-live="polite"
         >
           <div className={styles.tornPaper} aria-hidden="true" />
+          <div className={styles.noteSheet} aria-hidden="true" />
 
           <div className={styles.handNoteLeft} aria-hidden="true">
             <span>project note</span>
-            <strong>{current.id || "case"}</strong>
+            <strong>{current.id}</strong>
             <em>web site</em>
             <small>2026.06</small>
           </div>
@@ -182,6 +255,15 @@ export default function ClientVoice({
             <span>thank you.</span>
             <small>{formatVoiceNumber(idx).toLowerCase()}</small>
           </div>
+
+          <figure className={styles.pencil} aria-hidden="true">
+            <img
+              src="/images/client-voice/pencil.png"
+              alt=""
+              loading="eager"
+              decoding="async"
+            />
+          </figure>
 
           {current.previewImage && (
             <figure className={styles.preview}>
@@ -197,9 +279,11 @@ export default function ClientVoice({
           )}
 
           <article className={styles.mainPaper}>
+            <div className={styles.paperFold} aria-hidden="true" />
+
             <div className={styles.quoteArea}>
               <blockquote className={styles.quote}>
-                <p>{current.quote}</p>
+                {current.quote && <p>{current.quote}</p>}
                 {current.body && <p>{current.body}</p>}
               </blockquote>
 
@@ -226,6 +310,14 @@ export default function ClientVoice({
                   )}
                 </div>
               )}
+
+              <span
+                key={`${current.id}-${idx}`}
+                className={styles.writeTrace}
+                aria-hidden="true"
+              >
+                checked / direction
+              </span>
             </div>
 
             <div className={styles.stamp} aria-hidden="true">
@@ -260,6 +352,7 @@ export default function ClientVoice({
                 className={`${styles.pageNav} ${styles.prevVoice}`}
                 onClick={goPrev}
                 aria-label="前のお客様の声を表示"
+                disabled={phase !== "idle"}
               >
                 PREV
               </button>
@@ -269,6 +362,7 @@ export default function ClientVoice({
                 className={`${styles.pageNav} ${styles.nextVoice}`}
                 onClick={goNext}
                 aria-label="次のお客様の声を表示"
+                disabled={phase !== "idle"}
               >
                 NEXT
               </button>
@@ -283,7 +377,8 @@ export default function ClientVoice({
                 key={`${current.id}-${idx}`}
                 style={{
                   animationDuration: `${DURATION}ms`,
-                  animationPlayState: paused || turning ? "paused" : "running",
+                  animationPlayState:
+                    paused || phase !== "idle" ? "paused" : "running",
                 }}
               />
             </div>
@@ -297,6 +392,7 @@ export default function ClientVoice({
                   aria-current={i === idx ? "true" : undefined}
                   className={i === idx ? styles.activeDot : ""}
                   onClick={() => goTo(i, i > idx ? "next" : "prev")}
+                  disabled={phase !== "idle"}
                 />
               ))}
             </div>
@@ -306,3 +402,4 @@ export default function ClientVoice({
     </section>
   );
 }
+
