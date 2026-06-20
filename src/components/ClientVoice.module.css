@@ -1,6 +1,3 @@
-
-/* src/components/ClientVoice.module.css */
-
 .voice {
   position: relative;
   overflow: hidden;
@@ -216,12 +213,11 @@
   font-size: 16px;
 }
 
-/* 鉛筆の切り抜き画像 */
 .pencil {
   position: absolute;
   z-index: 4;
-  right: 92px;
-  top: 28px;
+  right: 170px;
+  top: 10px;
   width: clamp(118px, 11vw, 164px);
   margin: 0;
   pointer-events: none;
@@ -239,7 +235,61 @@
   height: auto;
 }
 
-/* 実案件のHero断片。明るく、証拠として見せる */
+.writingPencil {
+  opacity: 0.84;
+  will-change: transform, opacity;
+}
+
+.isWriting .writingPencil {
+  animation: pencil-write var(--write-duration, 4200ms)
+    cubic-bezier(0.18, 0.72, 0.22, 1) both;
+}
+
+.writingPencil img {
+  transform-origin: 74% 82%;
+}
+
+.isWriting .writingPencil img {
+  animation: none;
+}
+
+@keyframes pencil-write {
+  0% {
+    opacity: 0;
+    transform: translate(-520px, 92px) rotate(-24deg);
+  }
+
+  8% {
+    opacity: 0.88;
+  }
+
+  20% {
+    transform: translate(-458px, 126px) rotate(-18deg);
+  }
+
+  36% {
+    transform: translate(-352px, 166px) rotate(-21deg);
+  }
+
+  52% {
+    transform: translate(-236px, 210px) rotate(-16deg);
+  }
+
+  70% {
+    transform: translate(-118px, 258px) rotate(-20deg);
+  }
+
+  88% {
+    opacity: 0.86;
+    transform: translate(-44px, 292px) rotate(-14deg);
+  }
+
+  100% {
+    opacity: 0.84;
+    transform: translate(58px, 0) rotate(-17deg);
+  }
+}
+
 .preview {
   position: absolute;
   z-index: 1;
@@ -280,7 +330,6 @@
   transform: scale(1.015);
 }
 
-/* 主役の紙 */
 .mainPaper {
   position: absolute;
   z-index: 2;
@@ -351,22 +400,6 @@
   z-index: 1;
 }
 
-/* 書き込み跡。文字として読ませず、痕跡だけ */
-.quoteArea::after {
-  content: "checked / direction";
-  position: absolute;
-  right: 12px;
-  bottom: -18px;
-  pointer-events: none;
-  font-family: "Segoe Script", "Bradley Hand", "Snell Roundhand", cursive;
-  font-size: 17px;
-  line-height: 1;
-  letter-spacing: 0.015em;
-  color: rgba(74, 64, 53, 0.13);
-  transform: rotate(-6deg);
-  white-space: nowrap;
-}
-
 .quote {
   margin: 0;
 }
@@ -404,6 +437,78 @@
   line-height: 2.02;
   letter-spacing: 0;
   color: rgba(44, 38, 31, 0.78);
+}
+
+.inkLine {
+  display: block;
+}
+
+.inkChar {
+  display: inline-block;
+  opacity: 1;
+  transform: none;
+  filter: none;
+  will-change: opacity, transform, filter;
+}
+
+.isWriting .inkChar {
+  animation-name: ink-char;
+  animation-duration: 520ms;
+  animation-timing-function: cubic-bezier(0.2, 0.72, 0.24, 1);
+  animation-fill-mode: both;
+}
+
+@keyframes ink-char {
+  0% {
+    opacity: 0;
+    transform: translateY(5px);
+    filter: blur(1.6px);
+  }
+
+  55% {
+    opacity: 0.74;
+    filter: blur(0.35px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
+
+.writeTrace {
+  position: absolute;
+  right: 12px;
+  bottom: -20px;
+  pointer-events: none;
+  font-family: "Segoe Script", "Bradley Hand", "Snell Roundhand", cursive;
+  font-size: 17px;
+  line-height: 1;
+  letter-spacing: 0.015em;
+  color: rgba(74, 64, 53, 0.14);
+  transform: rotate(-6deg);
+  white-space: nowrap;
+  opacity: 1;
+}
+
+.isWriting .writeTrace {
+  animation: trace-in 620ms ease both;
+  animation-delay: calc(var(--write-duration, 4200ms) - 160ms);
+}
+
+@keyframes trace-in {
+  from {
+    opacity: 0;
+    transform: rotate(-6deg) translateY(5px);
+    filter: blur(1px);
+  }
+
+  to {
+    opacity: 1;
+    transform: rotate(-6deg) translateY(0);
+    filter: blur(0);
+  }
 }
 
 .links {
@@ -675,7 +780,6 @@
   transform: rotate(180deg) translateX(3px);
 }
 
-/* 紙めくり/差し替え */
 .isTurningOut .mainPaper {
   opacity: 0.66;
 }
@@ -703,6 +807,10 @@
   opacity: 0.72;
 }
 
+.isTurningOut .writingPencil {
+  animation: none;
+}
+
 .isTurningIn .mainPaper {
   animation: paper-in 260ms cubic-bezier(0.2, 0.72, 0.24, 1) both;
 }
@@ -715,7 +823,7 @@
   animation: preview-in 320ms cubic-bezier(0.2, 0.72, 0.24, 1) both;
 }
 
-.isTurningIn .pencil {
+.isTurningIn .pencil:not(.writingPencil) {
   animation: pencil-in 320ms cubic-bezier(0.2, 0.72, 0.24, 1) both;
 }
 
@@ -859,8 +967,8 @@
   }
 
   .pencil {
-    right: 42px;
-    top: 34px;
+    right: 100px;
+    top: 22px;
     width: 132px;
   }
 
@@ -874,6 +982,38 @@
 
   .nextVoice {
     right: 8px;
+  }
+
+  @keyframes pencil-write {
+    0% {
+      opacity: 0;
+      transform: translate(-410px, 92px) rotate(-24deg);
+    }
+
+    8% {
+      opacity: 0.88;
+    }
+
+    22% {
+      transform: translate(-340px, 126px) rotate(-18deg);
+    }
+
+    40% {
+      transform: translate(-258px, 166px) rotate(-21deg);
+    }
+
+    58% {
+      transform: translate(-172px, 212px) rotate(-16deg);
+    }
+
+    78% {
+      transform: translate(-80px, 258px) rotate(-20deg);
+    }
+
+    100% {
+      opacity: 0.84;
+      transform: translate(54px, 0) rotate(-17deg);
+    }
   }
 }
 
@@ -928,7 +1068,7 @@
     top: auto;
     justify-self: end;
     width: 116px;
-    margin: -20px 34px -8px 0;
+    margin: -30px 56px -8px 0;
     transform: rotate(-14deg);
     opacity: 0.72;
   }
@@ -1007,6 +1147,34 @@
   .isTurningOut .pencil {
     transform: rotate(-14deg) translateY(6px);
   }
+
+  @keyframes pencil-write {
+    0% {
+      opacity: 0;
+      transform: translate(-238px, -236px) rotate(-20deg);
+    }
+
+    12% {
+      opacity: 0.72;
+    }
+
+    34% {
+      transform: translate(-176px, -204px) rotate(-15deg);
+    }
+
+    56% {
+      transform: translate(-116px, -164px) rotate(-18deg);
+    }
+
+    78% {
+      transform: translate(-58px, -120px) rotate(-13deg);
+    }
+
+    100% {
+      opacity: 0.72;
+      transform: translate(42px, 0) rotate(-14deg);
+    }
+  }
 }
 
 @media (max-width: 640px) {
@@ -1074,12 +1242,6 @@
     padding: 42px 24px 64px;
   }
 
-  .quoteArea::after {
-    right: 6px;
-    bottom: -16px;
-    font-size: 14px;
-  }
-
   .quote p:first-child {
     font-size: clamp(19px, 5vw, 25px);
     line-height: 1.86;
@@ -1097,6 +1259,12 @@
     letter-spacing: 0;
   }
 
+  .writeTrace {
+    right: 6px;
+    bottom: -18px;
+    font-size: 14px;
+  }
+
   .links {
     margin-top: 30px;
     gap: 12px;
@@ -1108,7 +1276,7 @@
 
   .pencil {
     width: 96px;
-    margin-right: 22px;
+    margin: -28px 42px -8px 0;
     opacity: 0.62;
   }
 
@@ -1119,6 +1287,34 @@
 
   .stamp {
     opacity: 0.28;
+  }
+
+  @keyframes pencil-write {
+    0% {
+      opacity: 0;
+      transform: translate(-192px, -232px) rotate(-20deg);
+    }
+
+    12% {
+      opacity: 0.64;
+    }
+
+    36% {
+      transform: translate(-142px, -200px) rotate(-15deg);
+    }
+
+    58% {
+      transform: translate(-96px, -160px) rotate(-18deg);
+    }
+
+    80% {
+      transform: translate(-48px, -116px) rotate(-13deg);
+    }
+
+    100% {
+      opacity: 0.62;
+      transform: translate(34px, 0) rotate(-14deg);
+    }
   }
 }
 
@@ -1138,6 +1334,24 @@
   .progress span {
     animation: none;
     width: 100%;
+  }
+
+  .inkChar,
+  .writeTrace,
+  .writingPencil,
+  .writingPencil img {
+    animation: none;
+  }
+
+  .inkChar,
+  .writeTrace {
+    opacity: 1;
+    transform: none;
+    filter: none;
+  }
+
+  .writingPencil {
+    opacity: 0.72;
   }
 
   .isTurningOut .mainPaper,

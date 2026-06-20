@@ -1,5 +1,3 @@
-// src/components/ClientVoice.jsx
-
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
   clientVoices,
@@ -11,12 +9,33 @@ const DURATION = 7600;
 const TURN_OUT = 340;
 const TURN_IN = 260;
 
+const WRITE_SPEED = 23;
+const WRITE_START_DELAY = 420;
+
 function formatVoiceNumber(index) {
   return `VOICE ${String(index + 1).padStart(2, "0")}`;
 }
 
 function buildMetaLine(item) {
   return [item.area, item.category, item.project].filter(Boolean).join(" / ");
+}
+
+function renderInkText(text = "", startIndex = 0) {
+  return Array.from(text).map((char, i) => {
+    const delay = WRITE_START_DELAY + (startIndex + i) * WRITE_SPEED;
+
+    return (
+      <span
+        key={`${char}-${i}`}
+        className={styles.inkChar}
+        style={{
+          animationDelay: `${delay}ms`,
+        }}
+      >
+        {char === " " ? "\u00A0" : char}
+      </span>
+    );
+  });
 }
 
 export default function ClientVoice({
@@ -38,16 +57,12 @@ export default function ClientVoice({
   const [paused, setPaused] = useState(false);
   const [direction, setDirection] = useState("next");
   const [hasEntered, setHasEntered] = useState(false);
+  const [isWriting, setIsWriting] = useState(false);
 
   const autoTimerRef = useRef(null);
   const turnTimerRef = useRef(null);
   const resetTimerRef = useRef(null);
 
-  /*
-    重要:
-    minItems が 3 のままでも、voices が1件あれば表示されるようにする。
-    ここで詰まるとセクションごと return null になる。
-  */
   const safeMinItems = Math.max(
     1,
     Math.min(Number(minItems) || 1, voices.length || 1)
@@ -112,20 +127,25 @@ export default function ClientVoice({
 
     if (!el || typeof window === "undefined") {
       setHasEntered(true);
+      setIsWriting(true);
       return undefined;
     }
 
-    /*
-      IntersectionObserver が動かない環境でも必ず表示する保険。
-      これがないと、鉛筆や writeTrace が opacity: 0 のままになる可能性がある。
-    */
-    const fallbackTimer = window.setTimeout(() => {
+    const startWriting = () => {
       setHasEntered(true);
-    }, 500);
+
+      window.requestAnimationFrame(() => {
+        setIsWriting(true);
+      });
+    };
+
+    const fallbackTimer = window.setTimeout(() => {
+      startWriting();
+    }, 1200);
 
     if (!("IntersectionObserver" in window)) {
-      setHasEntered(true);
       window.clearTimeout(fallbackTimer);
+      startWriting();
       return undefined;
     }
 
@@ -133,13 +153,13 @@ export default function ClientVoice({
       ([entry]) => {
         if (!entry?.isIntersecting) return;
 
-        setHasEntered(true);
         window.clearTimeout(fallbackTimer);
+        startWriting();
         io.disconnect();
       },
       {
         threshold: 0.12,
-        rootMargin: "0px 0px -6% 0px",
+        rootMargin: "0px 0px -8% 0px",
       }
     );
 
@@ -160,7 +180,7 @@ export default function ClientVoice({
   }, [idx, shouldRender, voices.length]);
 
   useEffect(() => {
-    if (!shouldRender || !hasMultipleVoices) {
+    if (!shouldRender || !hasMultipleVoices || !hasEntered) {
       clearTimers();
       setPhase("idle");
       return;
@@ -182,6 +202,7 @@ export default function ClientVoice({
     phase,
     shouldRender,
     hasMultipleVoices,
+    hasEntered,
     goNext,
     clearTimers,
   ]);
@@ -191,6 +212,19 @@ export default function ClientVoice({
   if (!shouldRender || !current) return null;
 
   const metaLine = buildMetaLine(current);
+
+  const quoteText = current.quote || "";
+  const bodyText = current.body || "";
+
+  const quoteLength = Array.from(quoteText).length;
+  const bodyLength = Array.from(bodyText).length;
+
+  const writeCount = quoteLength + bodyLength;
+
+  const writingMs = Math.min(
+    6200,
+    Math.max(3200, WRITE_START_DELAY + writeCount * WRITE_SPEED + 1100)
+  );
 
   const phaseClass =
     phase === "turningOut"
@@ -204,7 +238,7 @@ export default function ClientVoice({
       ref={sectionRef}
       className={`${styles.voice} ${
         hasEntered ? styles.hasEntered : ""
-      } aq-fade`}
+      } ${isWriting ? styles.isWriting : ""} aq-fade`}
       aria-labelledby="client-voice-title"
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
@@ -239,6 +273,9 @@ export default function ClientVoice({
             phaseClass,
             direction === "prev" ? styles.isPrev : styles.isNext,
           ].join(" ")}
+          style={{
+            "--write-duration": `${writingMs}ms`,
+          }}
           aria-live="polite"
         >
           <div className={styles.tornPaper} aria-hidden="true" />
@@ -256,7 +293,11 @@ export default function ClientVoice({
             <small>{formatVoiceNumber(idx).toLowerCase()}</small>
           </div>
 
-          <figure className={styles.pencil} aria-hidden="true">
+          <figure
+            key={`pencil-${current.id}-${idx}`}
+            className={`${styles.pencil} ${styles.writingPencil}`}
+            aria-hidden="true"
+          >
             <img
               src="/images/client-voice/pencil.png"
               alt=""
@@ -282,9 +323,21 @@ export default function ClientVoice({
             <div className={styles.paperFold} aria-hidden="true" />
 
             <div className={styles.quoteArea}>
-              <blockquote className={styles.quote}>
-                {current.quote && <p>{current.quote}</p>}
-                {current.body && <p>{current.body}</p>}
+              <blockquote
+                key={`quote-${current.id}-${idx}`}
+                className={styles.quote}
+              >
+                {quoteText && (
+                  <p className={styles.inkLine}>
+                    {renderInkText(quoteText, 0)}
+                  </p>
+                )}
+
+                {bodyText && (
+                  <p className={styles.inkLine}>
+                    {renderInkText(bodyText, quoteLength + 10)}
+                  </p>
+                )}
               </blockquote>
 
               {(current.siteUrl || current.articleUrl) && (
@@ -312,7 +365,7 @@ export default function ClientVoice({
               )}
 
               <span
-                key={`${current.id}-${idx}`}
+                key={`trace-${current.id}-${idx}`}
                 className={styles.writeTrace}
                 aria-hidden="true"
               >
@@ -402,4 +455,3 @@ export default function ClientVoice({
     </section>
   );
 }
-
