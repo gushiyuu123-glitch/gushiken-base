@@ -1,7 +1,7 @@
 /* ============================================================
-   GUSHIKEN DESIGN Core Index v11
+   GUSHIKEN DESIGN Core Index v12
    Paper Frame × Champagne Gold × Island Safe Mode
-   全ページ共通OS
+   Typography Boost / 全ページ共通OS
 ============================================================ */
 
 @tailwind base;
@@ -41,6 +41,19 @@
   --subaccent-dim: rgba(38, 50, 66, 0.18);
   --subaccent-border: rgba(38, 50, 66, 0.22);
   --subaccent-glow: rgba(38, 50, 66, 0.045);
+
+  /* ===== Typography ===== */
+  --font-body-size: clamp(16px, 0.96vw, 17px);
+  --font-body-size-sp: 16px;
+  --leading-body: 1.86;
+  --leading-relaxed: 1.95;
+  --tracking-body: 0.025em;
+  --tracking-copy: 0.035em;
+
+  --text-xs: 0.75rem;
+  --text-sm: 0.84rem;
+  --text-body: 1rem;
+  --text-lead: clamp(1.02rem, 1.16vw, 1.18rem);
 
   /* ===== Legacy aliases ===== */
   --black-900: rgba(10, 10, 10, 0.98);
@@ -121,6 +134,10 @@ html {
   scroll-padding-top: 84px;
   color-scheme: light;
   scrollbar-gutter: stable;
+
+  font-size: var(--font-body-size);
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
 }
 
 body {
@@ -142,10 +159,41 @@ body {
       rgba(239, 231, 219, 0.78)
     ),
     var(--main);
+
   color: var(--assort);
   overflow-x: hidden;
+
+  font-size: 1rem;
+  line-height: var(--leading-body);
+  letter-spacing: var(--tracking-body);
+
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
+}
+
+/* 本文系の読みやすさだけ底上げ */
+p,
+li,
+dd,
+figcaption {
+  line-height: var(--leading-body);
+}
+
+p {
+  letter-spacing: var(--tracking-copy);
+  overflow-wrap: break-word;
+}
+
+main p,
+article p,
+section p {
+  text-wrap: pretty;
+}
+
+small {
+  font-size: var(--text-sm);
+  line-height: 1.75;
 }
 
 body::before {
@@ -196,6 +244,8 @@ svg {
 
 a {
   color: inherit;
+  text-decoration-thickness: from-font;
+  text-underline-offset: 0.18em;
 }
 
 button,
@@ -390,18 +440,47 @@ html.lenis body {
 }
 
 .gd-caption {
-  font-size: 0.72rem;
-  line-height: 1.7;
-  letter-spacing: 0.12em;
+  font-size: 0.78rem;
+  line-height: 1.82;
+  letter-spacing: 0.13em;
   color: var(--assort-faint);
 }
 
 .gd-kicker {
-  font-size: 0.68rem;
-  line-height: 1;
+  font-size: 0.72rem;
+  line-height: 1.2;
   letter-spacing: 0.24em;
   color: var(--assort-faint);
   text-transform: uppercase;
+}
+
+/* 文章用の共通補助。必要なところだけ使える */
+.gd-copy {
+  font-size: 1rem;
+  line-height: var(--leading-body);
+  letter-spacing: var(--tracking-copy);
+  color: var(--assort-soft);
+}
+
+.gd-copy-muted {
+  font-size: 0.96rem;
+  line-height: var(--leading-relaxed);
+  letter-spacing: var(--tracking-copy);
+  color: var(--assort-muted);
+}
+
+.gd-lead {
+  font-size: var(--text-lead);
+  line-height: 1.9;
+  letter-spacing: 0.04em;
+  color: var(--assort-soft);
+}
+
+.gd-note {
+  font-size: 0.86rem;
+  line-height: 1.8;
+  letter-spacing: 0.08em;
+  color: var(--assort-faint);
 }
 
 /* ------------------------------------------------------------
@@ -782,5 +861,77 @@ body.is-okinawa-page::-webkit-scrollbar-thumb {
   .gd-sharp,
   .work-list-card.work-rise {
     opacity: 1 !important;
+  }
+}
+
+/* ------------------------------------------------------------
+   14) Mobile Typography Safety
+------------------------------------------------------------ */
+@media (max-width: 768px) {
+  :root {
+    --leading-body: 1.84;
+    --leading-relaxed: 1.92;
+    --tracking-body: 0.018em;
+    --tracking-copy: 0.025em;
+  }
+
+  html {
+    font-size: var(--font-body-size-sp);
+    scroll-padding-top: 72px;
+  }
+
+  body {
+    line-height: var(--leading-body);
+  }
+
+  p,
+  li,
+  dd,
+  figcaption {
+    line-height: var(--leading-body);
+  }
+
+  .gd-caption {
+    font-size: 0.8rem;
+    line-height: 1.8;
+    letter-spacing: 0.105em;
+  }
+
+  .gd-kicker {
+    font-size: 0.72rem;
+    letter-spacing: 0.2em;
+  }
+
+  .gd-copy,
+  .gd-copy-muted {
+    font-size: 1rem;
+  }
+
+  .gd-lead {
+    font-size: 1.04rem;
+    line-height: 1.86;
+  }
+
+  .gd-note {
+    font-size: 0.88rem;
+  }
+}
+
+/* ------------------------------------------------------------
+   15) Small Mobile Fine Tune
+------------------------------------------------------------ */
+@media (max-width: 420px) {
+  :root {
+    --tracking-copy: 0.018em;
+  }
+
+  .gd-caption {
+    font-size: 0.79rem;
+    letter-spacing: 0.09em;
+  }
+
+  .gd-kicker {
+    font-size: 0.7rem;
+    letter-spacing: 0.18em;
   }
 }

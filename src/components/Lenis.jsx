@@ -11,7 +11,7 @@ export default function LenisManager({
   enabled = true,
   lerp = 0.085,
   smoothWheel = true,
-  anchors = true,
+  anchors = false, // hash移動はScrollManagerに任せる
   stopInertiaOnNavigate = true,
   syncTouch = false, // PCでも基本false推奨
 }) {
@@ -22,16 +22,25 @@ export default function LenisManager({
   const refreshRafRef = useRef([]);
 
   const clearScheduledRefresh = () => {
-    refreshRafRef.current.forEach((id) => cancelAnimationFrame(id));
+    refreshRafRef.current.forEach((id) => {
+      cancelAnimationFrame(id);
+    });
+
     refreshRafRef.current = [];
   };
 
   const scheduleRefresh = (force = true) => {
+    if (typeof window === "undefined") return;
+
     clearScheduledRefresh();
 
     const raf1 = requestAnimationFrame(() => {
       const raf2 = requestAnimationFrame(() => {
-        ScrollTrigger.refresh(force);
+        try {
+          ScrollTrigger.refresh(force);
+        } catch {
+          // ignore
+        }
       });
 
       refreshRafRef.current.push(raf2);
@@ -41,6 +50,7 @@ export default function LenisManager({
   };
 
   useEffect(() => {
+    if (typeof window === "undefined") return undefined;
     if (!enabled) return undefined;
 
     // StrictMode / dev の二重起動ガード
@@ -48,10 +58,11 @@ export default function LenisManager({
 
     const reduce =
       window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches ?? false;
+
     const coarse =
       window.matchMedia?.("(pointer: coarse)")?.matches ?? false;
 
-    // SP / reduce は完全OFF
+    // SP / reduced motion は完全OFF
     if (reduce || coarse) return undefined;
 
     const lenis = new Lenis({
@@ -64,40 +75,120 @@ export default function LenisManager({
 
     lenisRef.current = lenis;
 
-    // ScrollTrigger同期
-    lenis.on("scroll", ScrollTrigger.update);
+    const onLenisScroll = () => {
+      try {
+        ScrollTrigger.update();
+      } catch {
+        // ignore
+      }
+    };
+
+    lenis.on("scroll", onLenisScroll);
 
     // GSAP tickerでLenisを一元駆動
     const onTick = (time) => {
-      lenis.raf(time * 1000);
+      try {
+        lenis.raf(time * 1000);
+      } catch {
+        // ignore
+      }
     };
 
     tickRef.current = onTick;
+
     gsap.ticker.add(onTick);
     gsap.ticker.lagSmoothing(0);
 
-    // App.jsx / 各ページから触るためのグローバル窓口
-    window.__gd_lenis__ = {
-      // App側の getLenisLike() に合わせる
+    let destroyed = false;
+
+    const destroyCurrent = () => {
+      if (destroyed) return;
+      destroyed = true;
+
+      clearScheduledRefresh();
+
+      try {
+        lenis.off?.("scroll", onLenisScroll);
+      } catch {
+        // ignore
+      }
+
+      try {
+        if (tickRef.current) {
+          gsap.ticker.remove(tickRef.current);
+        }
+      } catch {
+        // ignore
+      }
+
+      tickRef.current = null;
+
+      try {
+        lenis.destroy();
+      } catch {
+        // ignore
+      }
+
+      lenisRef.current = null;
+
+      try {
+        if (window.__gd_lenis__ === api) {
+          delete window.__gd_lenis__;
+        }
+      } catch {
+        // ignore
+      }
+
+      requestAnimationFrame(() => {
+        try {
+          ScrollTrigger.refresh(true);
+        } catch {
+          // ignore
+        }
+      });
+    };
+
+    // App.jsx / ScrollManager / 各ページから触るためのグローバル窓口
+    const api = {
       lenis,
       instance: lenis,
+
+      get scroll() {
+        return typeof lenis.scroll === "number" ? lenis.scroll : 0;
+      },
+
+      get animatedScroll() {
+        return typeof lenis.animatedScroll === "number"
+          ? lenis.animatedScroll
+          : this.scroll;
+      },
+
+      get isStopped() {
+        return Boolean(lenis.isStopped);
+      },
 
       start: () => {
         try {
           lenis.start();
-        } catch {}
+        } catch {
+          // ignore
+        }
       },
 
       stop: () => {
         try {
           lenis.stop();
-        } catch {}
+        } catch {
+          // ignore
+        }
       },
 
       resize: () => {
         try {
           lenis.resize?.();
-        } catch {}
+        } catch {
+          // ignore
+        }
       },
 
       scrollToTop: (opts = {}) => {
@@ -108,41 +199,32 @@ export default function LenisManager({
             duration: 0,
             ...opts,
           });
-        } catch {}
+        } catch {
+          // ignore
+        }
       },
 
       scrollTo: (target, opts = {}) => {
         try {
           lenis.scrollTo(target, opts);
-        } catch {}
+        } catch {
+          // ignore
+        }
       },
 
-      destroy: () => {
-        clearScheduledRefresh();
-
+      refresh: (force = true) => {
         try {
-          if (tickRef.current) {
-            gsap.ticker.remove(tickRef.current);
-          }
-        } catch {}
-
-        tickRef.current = null;
-
-        try {
-          lenis.destroy();
-        } catch {}
-
-        lenisRef.current = null;
-
-        try {
-          delete window.__gd_lenis__;
-        } catch {}
-
-        requestAnimationFrame(() => {
-          ScrollTrigger.refresh(true);
-        });
+          lenis.resize?.();
+          ScrollTrigger.refresh(force);
+        } catch {
+          // ignore
+        }
       },
+
+      destroy: destroyCurrent,
     };
+
+    window.__gd_lenis__ = api;
 
     // 初回だけ、フォント・画像配置が落ち着いてからrefresh
     let cancelled = false;
@@ -152,92 +234,85 @@ export default function LenisManager({
         if (document.fonts?.ready) {
           await document.fonts.ready;
         }
-      } catch {}
+      } catch {
+        // ignore
+      }
 
-      if (cancelled) return;
+      if (cancelled || destroyed) return;
+
+      try {
+        lenis.resize?.();
+      } catch {
+        // ignore
+      }
 
       scheduleRefresh(true);
     })();
 
     return () => {
       cancelled = true;
-
-      clearScheduledRefresh();
-
-      try {
-        if (tickRef.current) {
-          gsap.ticker.remove(tickRef.current);
-        }
-      } catch {}
-
-      tickRef.current = null;
-
-      try {
-        lenis.destroy();
-      } catch {}
-
-      lenisRef.current = null;
-
-      try {
-        delete window.__gd_lenis__;
-      } catch {}
-
-      requestAnimationFrame(() => {
-        ScrollTrigger.refresh(true);
-      });
+      destroyCurrent();
     };
   }, [enabled, lerp, smoothWheel, anchors, stopInertiaOnNavigate, syncTouch]);
 
   // ルート変更時のLenis / ScrollTrigger再同期
+  // ※ スクロール位置の決定はScrollManagerに任せる
   useEffect(() => {
+    if (typeof window === "undefined") return undefined;
     if (!enabled) return undefined;
 
     const lenis = lenisRef.current;
     if (!lenis) return undefined;
 
-    // hash遷移はアンカー挙動を優先
-    if (location.hash) return undefined;
-
     let raf1 = 0;
     let raf2 = 0;
+    let raf3 = 0;
 
     try {
-      lenis.stop();
-
-      lenis.scrollTo(0, {
-        immediate: true,
-        force: true,
-        duration: 0,
-      });
-
       lenis.resize?.();
       ScrollTrigger.update();
-    } catch {}
+    } catch {
+      // ignore
+    }
 
     raf1 = requestAnimationFrame(() => {
       try {
-        lenis.scrollTo(0, {
-          immediate: true,
-          force: true,
-          duration: 0,
-        });
-
         lenis.resize?.();
         ScrollTrigger.refresh(true);
-      } catch {}
+      } catch {
+        // ignore
+      }
 
       raf2 = requestAnimationFrame(() => {
         try {
-          lenis.start();
-        } catch {}
+          lenis.resize?.();
+          ScrollTrigger.update();
+        } catch {
+          // ignore
+        }
+
+        raf3 = requestAnimationFrame(() => {
+          try {
+            lenis.resize?.();
+          } catch {
+            // ignore
+          }
+        });
       });
     });
 
     return () => {
       cancelAnimationFrame(raf1);
       cancelAnimationFrame(raf2);
+      cancelAnimationFrame(raf3);
     };
-  }, [enabled, location.pathname, location.search, location.hash]);
+  }, [
+    enabled,
+    location.key,
+    location.pathname,
+    location.search,
+    location.hash,
+  ]);
 
   return null;
 }

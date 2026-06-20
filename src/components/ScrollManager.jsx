@@ -38,13 +38,19 @@ function loadPositions() {
   })();
 
   const obj = safeParse(raw);
-  if (!Array.isArray(obj.__order)) obj.__order = [];
+
+  if (!Array.isArray(obj.__order)) {
+    obj.__order = [];
+  }
+
   return (_cache = obj);
 }
 
 function flushPositionsNow() {
   if (typeof window === "undefined") return;
+
   const pos = loadPositions();
+
   try {
     sessionStorage.setItem(STORAGE_KEY, JSON.stringify(pos));
   } catch {
@@ -64,15 +70,21 @@ function scheduleFlush() {
 
 function touchKey(positions, key) {
   if (!key) return;
+
   const order = positions.__order || (positions.__order = []);
 
   const idx = order.indexOf(key);
-  if (idx !== -1) order.splice(idx, 1);
+  if (idx !== -1) {
+    order.splice(idx, 1);
+  }
+
   order.push(key);
 
   while (order.length > MAX_KEYS) {
     const old = order.shift();
-    if (old && old in positions) delete positions[old];
+    if (old && old in positions) {
+      delete positions[old];
+    }
   }
 }
 
@@ -89,12 +101,21 @@ function getScrollRoot() {
 }
 
 /**
- * ✅ Lenis参照を統一
- * - 推奨: window.__gd_lenis__（Proxy API）
+ * Lenis参照を統一
+ * - 推奨: window.__gd_lenis__
  * - 互換: window.lenis / window.__lenis
  */
 function getLenis() {
+  if (typeof window === "undefined") return null;
   return window.__gd_lenis__ || window.lenis || window.__lenis || null;
+}
+
+function decodeHashId(hash) {
+  try {
+    return decodeURIComponent(hash.slice(1));
+  } catch {
+    return hash.slice(1);
+  }
 }
 
 function getCurrentScrollPosition(fallback = { x: 0, y: 0 }) {
@@ -119,8 +140,12 @@ function getCurrentScrollPosition(fallback = { x: 0, y: 0 }) {
   // body fixed（モーダル/FAQなど）時の復元
   if (body.style.position === "fixed" && body.style.top) {
     const fixedY = Math.abs(parseInt(body.style.top, 10));
+
     if (Number.isFinite(fixedY)) {
-      return { x: fallback.x || 0, y: fixedY };
+      return {
+        x: fallback.x || 0,
+        y: fixedY,
+      };
     }
   }
 
@@ -139,6 +164,7 @@ function savePosition(location, position) {
   if (!location || !position) return;
 
   const positions = loadPositions();
+
   const entryKey = getEntryKey(location);
   const routeKey = getRouteKey(location);
 
@@ -153,7 +179,12 @@ function savePosition(location, position) {
 
 function getSavedPosition(location) {
   const positions = loadPositions();
-  return positions[getEntryKey(location)] || positions[getRouteKey(location)] || null;
+
+  return (
+    positions[getEntryKey(location)] ||
+    positions[getRouteKey(location)] ||
+    null
+  );
 }
 
 function isNear(a, b, eps = EPS) {
@@ -167,7 +198,10 @@ function forceScrollTo(position) {
   const y = position.y || 0;
 
   const current = getCurrentScrollPosition({ x, y });
-  if (isNear(current.y, y) && isNear(current.x, x)) return;
+
+  if (isNear(current.y, y) && isNear(current.x, x)) {
+    return;
+  }
 
   const root = getScrollRoot();
   const lenis = getLenis();
@@ -181,18 +215,27 @@ function forceScrollTo(position) {
   html.style.scrollBehavior = "auto";
   body.style.scrollBehavior = "auto";
 
-  // Lenisが使えるならLenis優先（window.scrollToは最終保険）
+  // Lenisが使えるならLenis優先
   if (lenis && typeof lenis.scrollTo === "function") {
     try {
-      lenis.scrollTo(y, { immediate: true, force: true, lock: false });
+      lenis.scrollTo(y, {
+        immediate: true,
+        force: true,
+        lock: false,
+      });
     } catch {
-      // ignore
+      // fallbackへ
     }
   }
 
-  window.scrollTo({ left: x, top: y, behavior: "auto" });
+  // 最終保険
+  window.scrollTo({
+    left: x,
+    top: y,
+    behavior: "auto",
+  });
 
-  // 最後の保険（環境差でscrollingElementがズレても戻す）
+  // 環境差対策
   root.scrollTop = y;
   html.scrollTop = y;
   body.scrollTop = y;
@@ -203,6 +246,7 @@ function forceScrollTo(position) {
 
 function getMaxScrollY() {
   const root = getScrollRoot();
+
   return Math.max(
     0,
     root.scrollHeight - window.innerHeight,
@@ -220,13 +264,19 @@ function restorePosition(location) {
   const apply = () => {
     const maxY = getMaxScrollY();
     const safeY = Math.min(targetY, maxY);
-    forceScrollTo({ x: position.x || 0, y: safeY });
+
+    forceScrollTo({
+      x: position.x || 0,
+      y: safeY,
+    });
   };
 
   apply();
   requestAnimationFrame(apply);
 
-  const timers = [60, 200, 520].map((delay) => window.setTimeout(apply, delay));
+  const timers = [60, 200, 520].map((delay) =>
+    window.setTimeout(apply, delay)
+  );
 
   const handleLoad = () => apply();
   window.addEventListener("load", handleLoad, { once: true });
@@ -237,6 +287,7 @@ function restorePosition(location) {
   if ("ResizeObserver" in window) {
     resizeObserver = new ResizeObserver(() => apply());
     resizeObserver.observe(document.body);
+
     stopObserverTimer = window.setTimeout(() => {
       resizeObserver?.disconnect();
     }, 1100);
@@ -245,26 +296,57 @@ function restorePosition(location) {
   return () => {
     timers.forEach(clearTimeout);
     window.removeEventListener("load", handleLoad);
+
     resizeObserver?.disconnect();
-    clearTimeout(stopObserverTimer);
+
+    if (stopObserverTimer) {
+      clearTimeout(stopObserverTimer);
+    }
   };
 }
 
 function scrollToTop() {
   const top = { x: 0, y: 0 };
+
   forceScrollTo(top);
-  requestAnimationFrame(() => forceScrollTo(top));
-  window.setTimeout(() => forceScrollTo(top), 90);
+
+  requestAnimationFrame(() => {
+    forceScrollTo(top);
+  });
+
+  window.setTimeout(() => {
+    forceScrollTo(top);
+  }, 90);
 }
 
 function scrollToHash(hash) {
   if (!hash || hash.length <= 1) return false;
 
-  const id = decodeURIComponent(hash.slice(1));
+  const id = decodeHashId(hash);
   const target = document.getElementById(id);
+
   if (!target) return false;
 
-  target.scrollIntoView({ behavior: "auto", block: "start" });
+  const lenis = getLenis();
+
+  if (lenis && typeof lenis.scrollTo === "function") {
+    try {
+      lenis.scrollTo(target, {
+        immediate: true,
+        force: true,
+        lock: false,
+      });
+      return true;
+    } catch {
+      // fallbackへ
+    }
+  }
+
+  target.scrollIntoView({
+    behavior: "auto",
+    block: "start",
+  });
+
   return true;
 }
 
@@ -282,6 +364,7 @@ export default function ScrollManager() {
     if ("scrollRestoration" in window.history) {
       window.history.scrollRestoration = "manual";
     }
+
     return () => {
       if ("scrollRestoration" in window.history) {
         window.history.scrollRestoration = "auto";
@@ -293,20 +376,25 @@ export default function ScrollManager() {
     locationRef.current = location;
   }, [location]);
 
-  // 保存（デバウンスflush）
+  // 保存
   useEffect(() => {
     let ticking = false;
 
     const saveCurrent = () => {
       if (isProgrammaticScrollRef.current) return;
 
-      latestScrollRef.current = getCurrentScrollPosition(latestScrollRef.current);
+      latestScrollRef.current = getCurrentScrollPosition(
+        latestScrollRef.current
+      );
+
       savePosition(locationRef.current, latestScrollRef.current);
     };
 
     const onScroll = () => {
       if (ticking) return;
+
       ticking = true;
+
       requestAnimationFrame(() => {
         ticking = false;
         saveCurrent();
@@ -315,7 +403,7 @@ export default function ScrollManager() {
 
     const onBeforeLeave = () => {
       saveCurrent();
-      flushPositionsNow(); // 離脱系は即flush
+      flushPositionsNow();
     };
 
     // 初回も保存
@@ -327,7 +415,7 @@ export default function ScrollManager() {
     window.addEventListener("pagehide", onBeforeLeave);
     window.addEventListener("beforeunload", onBeforeLeave);
 
-    // リンククリック直前の取りこぼし防止（ただし書き込みは即flushしない）
+    // リンククリック直前の取りこぼし防止
     document.addEventListener("click", saveCurrent, true);
     window.addEventListener("popstate", onBeforeLeave);
 
@@ -369,15 +457,21 @@ export default function ScrollManager() {
     // hash → 対象へ
     if (hasHash) {
       const moved = scrollToHash(location.hash);
+
       if (!moved) {
         const hashTimer = window.setTimeout(() => {
           scrollToHash(location.hash);
         }, 120);
-        restoreCleanupRef.current = () => clearTimeout(hashTimer);
+
+        restoreCleanupRef.current = () => {
+          clearTimeout(hashTimer);
+        };
       }
+
       window.setTimeout(() => {
         isProgrammaticScrollRef.current = false;
       }, 180);
+
       updatePreviousLocation();
       return;
     }
@@ -385,10 +479,14 @@ export default function ScrollManager() {
     // 戻る/進む → 保存位置へ
     if (navigationType === "POP") {
       const cleanup = restorePosition(location);
+
       if (!cleanup && !getSavedPosition(location) && !isSamePathname) {
         scrollToTop();
       }
-      if (typeof cleanup === "function") restoreCleanupRef.current = cleanup;
+
+      if (typeof cleanup === "function") {
+        restoreCleanupRef.current = cleanup;
+      }
 
       window.setTimeout(() => {
         isProgrammaticScrollRef.current = false;
@@ -401,6 +499,7 @@ export default function ScrollManager() {
     // 同一パス（クエリだけ等）→ 現在位置保持
     if (isSamePathname) {
       const current = getCurrentScrollPosition(latestScrollRef.current);
+
       latestScrollRef.current = current;
       savePosition(location, current);
 
@@ -414,6 +513,7 @@ export default function ScrollManager() {
 
     // 通常遷移 → top
     scrollToTop();
+
     window.setTimeout(() => {
       isProgrammaticScrollRef.current = false;
     }, 240);
@@ -425,10 +525,17 @@ export default function ScrollManager() {
       restoreCleanupRef.current = null;
 
       const current = getCurrentScrollPosition(latestScrollRef.current);
+
       latestScrollRef.current = current;
       savePosition(location, current);
     };
-  }, [location.key, location.pathname, location.search, location.hash, navigationType]);
+  }, [
+    location.key,
+    location.pathname,
+    location.search,
+    location.hash,
+    navigationType,
+  ]);
 
   return null;
 }

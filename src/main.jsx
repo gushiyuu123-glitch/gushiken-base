@@ -1,13 +1,13 @@
 // src/main.jsx
 /* ============================================================================
-   GUSHIKEN DESIGN Core Init v5.8
+   GUSHIKEN DESIGN Core Init v5.9
    - FOUC Prevention
    - Helmet Provider
    - Browser Scroll Restoration: manual before React render
    - Vercel Analytics: live domain only
    - Lenis / route scroll: App.jsx 側で管理
    - Stable Service Worker: live domain only
-   - Non-live Cache Clear
+   - Non-live Cache Clear: once per session
 =========================================================================== */
 
 import { StrictMode, Suspense, lazy } from "react";
@@ -31,16 +31,32 @@ const LIVE_HOSTS = new Set([
   "www.gushikendesign.com",
 ]);
 
+const NON_LIVE_CLEAR_KEY = "gd-non-live-cache-cleared-v1";
+
 function isLiveSiteHost() {
   if (!isBrowser()) return false;
 
   return import.meta.env.PROD && LIVE_HOSTS.has(window.location.hostname);
 }
 
+function safeSessionGet(key) {
+  try {
+    return window.sessionStorage.getItem(key);
+  } catch {
+    return null;
+  }
+}
+
+function safeSessionSet(key, value) {
+  try {
+    window.sessionStorage.setItem(key, value);
+  } catch {
+    // ignore
+  }
+}
+
 /* ============================================================================
    Browser Scroll Restoration
-   - PCブラウザの戻る/進むUIで前回スクロール位置へ飛ぶのを止める
-   - App.jsx の useEffect より前、React render 前に必ず設定する
 =========================================================================== */
 
 if (isBrowser() && "scrollRestoration" in window.history) {
@@ -49,8 +65,6 @@ if (isBrowser() && "scrollRestoration" in window.history) {
 
 /* ============================================================================
    Analytics
-   - gushikendesign.com / www.gushikendesign.com のみ有効
-   - Vercel Preview URL / localhost では読み込まない
 =========================================================================== */
 
 const ENABLE_VERCEL_ANALYTICS = isLiveSiteHost();
@@ -67,6 +81,10 @@ const AnalyticsLazy = ENABLE_VERCEL_ANALYTICS
    0) Root
 =========================================================================== */
 
+if (!isBrowser()) {
+  throw new Error("Browser environment was not found.");
+}
+
 const rootEl = document.getElementById("root");
 
 if (!rootEl) {
@@ -75,8 +93,6 @@ if (!rootEl) {
 
 /* ============================================================================
    1) Initial Reveal
-   - #root.show を付けるだけ
-   - スクロールやクリックには触らない
 =========================================================================== */
 
 function revealRoot() {
@@ -96,12 +112,13 @@ if (document.readyState === "loading") {
 
 /* ============================================================================
    2) Ambient Glow
-   - body.scrolled を一度だけ付与
-   - クリック・ルーティングには関与しない
 =========================================================================== */
 
 function initAmbientGlow() {
   if (!isBrowser()) return;
+
+  if (document.body.classList.contains("scrolled")) return;
+  if (document.getElementById("gd-ambient-sentinel")) return;
 
   if (!("IntersectionObserver" in window)) {
     const onScroll = () => {
@@ -117,6 +134,7 @@ function initAmbientGlow() {
 
   const sentinel = document.createElement("div");
 
+  sentinel.id = "gd-ambient-sentinel";
   sentinel.setAttribute("aria-hidden", "true");
   sentinel.style.position = "absolute";
   sentinel.style.top = "120vh";
@@ -153,11 +171,19 @@ if (document.readyState === "loading") {
 
 /* ============================================================================
    3) Service Worker
-   - 本番独自ドメインだけ登録
-   - Preview / localhost では古いSWとCacheを掃除
 =========================================================================== */
 
 async function clearNonLiveServiceWorkersAndCaches() {
+  if (!isBrowser()) return;
+
+  const alreadyCleared = safeSessionGet(NON_LIVE_CLEAR_KEY);
+
+  if (alreadyCleared === "1") {
+    return;
+  }
+
+  safeSessionSet(NON_LIVE_CLEAR_KEY, "1");
+
   try {
     if ("serviceWorker" in navigator) {
       const registrations = await navigator.serviceWorker.getRegistrations();
