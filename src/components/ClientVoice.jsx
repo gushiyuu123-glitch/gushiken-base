@@ -1,4 +1,6 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+// src/components/ClientVoice.jsx
+
+import { useCallback, useEffect, useId, useMemo, useRef, useState } from "react";
 import {
   clientVoices,
   CLIENT_VOICE_MIN_COUNT,
@@ -11,6 +13,13 @@ const TURN_IN = 260;
 
 const WRITE_SPEED = 23;
 const WRITE_START_DELAY = 420;
+const WRITE_MIN_DURATION = 3200;
+const WRITE_MAX_DURATION = 6200;
+const WRITE_END_BUFFER = 1100;
+
+function cx(...classes) {
+  return classes.filter(Boolean).join(" ");
+}
 
 function formatVoiceNumber(index) {
   return `VOICE ${String(index + 1).padStart(2, "0")}`;
@@ -20,9 +29,26 @@ function buildMetaLine(item) {
   return [item.area, item.category, item.project].filter(Boolean).join(" / ");
 }
 
+function getTextLength(text = "") {
+  return Array.from(text).length;
+}
+
+function getWritingDuration(quote = "", body = "") {
+  const totalLength = getTextLength(quote) + getTextLength(body);
+
+  return Math.min(
+    WRITE_MAX_DURATION,
+    Math.max(
+      WRITE_MIN_DURATION,
+      WRITE_START_DELAY + totalLength * WRITE_SPEED + WRITE_END_BUFFER
+    )
+  );
+}
+
 function renderInkText(text = "", startIndex = 0) {
   return Array.from(text).map((char, i) => {
     const delay = WRITE_START_DELAY + (startIndex + i) * WRITE_SPEED;
+    const safeChar = char === " " ? "\u00A0" : char;
 
     return (
       <span
@@ -32,7 +58,7 @@ function renderInkText(text = "", startIndex = 0) {
           animationDelay: `${delay}ms`,
         }}
       >
-        {char === " " ? "\u00A0" : char}
+        {safeChar}
       </span>
     );
   });
@@ -42,6 +68,15 @@ export default function ClientVoice({
   items = clientVoices,
   minItems = CLIENT_VOICE_MIN_COUNT,
 }) {
+  const titleId = useId();
+
+  const sectionRef = useRef(null);
+  const hasStartedWritingRef = useRef(false);
+
+  const autoTimerRef = useRef(null);
+  const turnTimerRef = useRef(null);
+  const resetTimerRef = useRef(null);
+
   const voices = useMemo(
     () =>
       items.filter(
@@ -50,7 +85,15 @@ export default function ClientVoice({
     [items]
   );
 
-  const sectionRef = useRef(null);
+  const voiceCount = voices.length;
+
+  const safeMinItems = Math.max(
+    1,
+    Math.min(Number(minItems) || 1, voiceCount || 1)
+  );
+
+  const shouldRender = voiceCount >= safeMinItems;
+  const hasMultipleVoices = voiceCount > 1;
 
   const [idx, setIdx] = useState(0);
   const [phase, setPhase] = useState("idle");
@@ -59,24 +102,19 @@ export default function ClientVoice({
   const [hasEntered, setHasEntered] = useState(false);
   const [isWriting, setIsWriting] = useState(false);
 
-  const autoTimerRef = useRef(null);
-  const turnTimerRef = useRef(null);
-  const resetTimerRef = useRef(null);
-
-  const safeMinItems = Math.max(
-    1,
-    Math.min(Number(minItems) || 1, voices.length || 1)
-  );
-
-  const shouldRender = voices.length >= safeMinItems;
-  const hasMultipleVoices = voices.length > 1;
   const current = voices[idx] ?? voices[0];
 
-  const clearTimers = useCallback(() => {
+  const clearAutoTimer = useCallback(() => {
+    if (typeof window === "undefined") return;
+
     if (autoTimerRef.current) {
       window.clearTimeout(autoTimerRef.current);
       autoTimerRef.current = null;
     }
+  }, []);
+
+  const clearTurnTimers = useCallback(() => {
+    if (typeof window === "undefined") return;
 
     if (turnTimerRef.current) {
       window.clearTimeout(turnTimerRef.current);
@@ -89,14 +127,29 @@ export default function ClientVoice({
     }
   }, []);
 
+  const clearAllTimers = useCallback(() => {
+    clearAutoTimer();
+    clearTurnTimers();
+  }, [clearAutoTimer, clearTurnTimers]);
+
+  const pause = useCallback(() => {
+    setPaused(true);
+  }, []);
+
+  const resume = useCallback(() => {
+    setPaused(false);
+  }, []);
+
   const goTo = useCallback(
     (nextIndex, nextDirection = "next") => {
       if (!hasMultipleVoices) return;
       if (phase !== "idle") return;
       if (nextIndex === idx) return;
-      if (nextIndex < 0 || nextIndex > voices.length - 1) return;
+      if (nextIndex < 0 || nextIndex > voiceCount - 1) return;
+      if (typeof window === "undefined") return;
 
-      clearTimers();
+      clearAllTimers();
+
       setDirection(nextDirection);
       setPhase("turningOut");
 
@@ -104,98 +157,112 @@ export default function ClientVoice({
         setIdx(nextIndex);
         setPhase("turningIn");
 
+        turnTimerRef.current = null;
+
         resetTimerRef.current = window.setTimeout(() => {
           setPhase("idle");
+          resetTimerRef.current = null;
         }, TURN_IN);
       }, TURN_OUT);
     },
-    [clearTimers, hasMultipleVoices, idx, phase, voices.length]
+    [clearAllTimers, hasMultipleVoices, idx, phase, voiceCount]
   );
 
   const goNext = useCallback(() => {
     if (!hasMultipleVoices) return;
-    goTo((idx + 1) % voices.length, "next");
-  }, [goTo, hasMultipleVoices, idx, voices.length]);
+
+    goTo((idx + 1) % voiceCount, "next");
+  }, [goTo, hasMultipleVoices, idx, voiceCount]);
 
   const goPrev = useCallback(() => {
     if (!hasMultipleVoices) return;
-    goTo((idx - 1 + voices.length) % voices.length, "prev");
-  }, [goTo, hasMultipleVoices, idx, voices.length]);
+
+    goTo((idx - 1 + voiceCount) % voiceCount, "prev");
+  }, [goTo, hasMultipleVoices, idx, voiceCount]);
+
+  useEffect(() => {
+    if (!shouldRender) return;
+
+    if (idx > voiceCount - 1) {
+      setIdx(0);
+    }
+  }, [idx, shouldRender, voiceCount]);
 
   useEffect(() => {
     const el = sectionRef.current;
 
-    if (!el || typeof window === "undefined") {
-      setHasEntered(true);
-      setIsWriting(true);
-      return undefined;
-    }
-
     const startWriting = () => {
+      if (hasStartedWritingRef.current) return;
+
+      hasStartedWritingRef.current = true;
       setHasEntered(true);
+
+      if (typeof window === "undefined") {
+        setIsWriting(true);
+        return;
+      }
 
       window.requestAnimationFrame(() => {
         setIsWriting(true);
       });
     };
 
-    const fallbackTimer = window.setTimeout(() => {
-      startWriting();
-    }, 1200);
-
-    if (!("IntersectionObserver" in window)) {
-      window.clearTimeout(fallbackTimer);
+    if (typeof window === "undefined") {
       startWriting();
       return undefined;
     }
 
-    const io = new IntersectionObserver(
+    if (!el) {
+      const raf = window.requestAnimationFrame(() => {
+        startWriting();
+      });
+
+      return () => {
+        window.cancelAnimationFrame(raf);
+      };
+    }
+
+    if (!("IntersectionObserver" in window)) {
+      startWriting();
+      return undefined;
+    }
+
+    const observer = new IntersectionObserver(
       ([entry]) => {
         if (!entry?.isIntersecting) return;
 
-        window.clearTimeout(fallbackTimer);
         startWriting();
-        io.disconnect();
+        observer.disconnect();
       },
       {
-        threshold: 0.12,
-        rootMargin: "0px 0px -8% 0px",
+        threshold: 0.18,
+        rootMargin: "0px 0px -12% 0px",
       }
     );
 
-    io.observe(el);
+    observer.observe(el);
 
     return () => {
-      window.clearTimeout(fallbackTimer);
-      io.disconnect();
+      observer.disconnect();
     };
   }, []);
 
   useEffect(() => {
-    if (!shouldRender) return;
+    if (typeof window === "undefined") return undefined;
 
-    if (idx > voices.length - 1) {
-      setIdx(0);
-    }
-  }, [idx, shouldRender, voices.length]);
+    clearAutoTimer();
 
-  useEffect(() => {
-    if (!shouldRender || !hasMultipleVoices || !hasEntered) {
-      clearTimers();
-      setPhase("idle");
-      return;
-    }
-
-    if (paused || phase !== "idle") {
-      clearTimers();
-      return;
-    }
+    if (!shouldRender) return undefined;
+    if (!hasMultipleVoices) return undefined;
+    if (!hasEntered) return undefined;
+    if (paused) return undefined;
+    if (phase !== "idle") return undefined;
 
     autoTimerRef.current = window.setTimeout(() => {
       goNext();
     }, DURATION);
 
-    return clearTimers;
+    return clearAutoTimer;
   }, [
     idx,
     paused,
@@ -204,10 +271,12 @@ export default function ClientVoice({
     hasMultipleVoices,
     hasEntered,
     goNext,
-    clearTimers,
+    clearAutoTimer,
   ]);
 
-  useEffect(() => clearTimers, [clearTimers]);
+  useEffect(() => {
+    return clearAllTimers;
+  }, [clearAllTimers]);
 
   if (!shouldRender || !current) return null;
 
@@ -216,34 +285,36 @@ export default function ClientVoice({
   const quoteText = current.quote || "";
   const bodyText = current.body || "";
 
-  const quoteLength = Array.from(quoteText).length;
-  const bodyLength = Array.from(bodyText).length;
-
-  const writeCount = quoteLength + bodyLength;
-
-  const writingMs = Math.min(
-    6200,
-    Math.max(3200, WRITE_START_DELAY + writeCount * WRITE_SPEED + 1100)
-  );
+  const quoteLength = getTextLength(quoteText);
+  const writingMs = getWritingDuration(quoteText, bodyText);
 
   const phaseClass =
     phase === "turningOut"
       ? styles.isTurningOut
       : phase === "turningIn"
         ? styles.isTurningIn
-        : styles.isIdle;
+        : "";
+
+const sectionClassName = cx(
+  styles.voice,
+  hasEntered && styles.hasEntered,
+  isWriting && styles.isWriting
+);
+  const stageClassName = cx(
+    styles.stage,
+    phaseClass,
+    direction === "prev" ? styles.isPrev : styles.isNext
+  );
 
   return (
     <section
       ref={sectionRef}
-      className={`${styles.voice} ${
-        hasEntered ? styles.hasEntered : ""
-      } ${isWriting ? styles.isWriting : ""} aq-fade`}
-      aria-labelledby="client-voice-title"
-      onMouseEnter={() => setPaused(true)}
-      onMouseLeave={() => setPaused(false)}
-      onFocusCapture={() => setPaused(true)}
-      onBlurCapture={() => setPaused(false)}
+      className={sectionClassName}
+      aria-labelledby={titleId}
+      onPointerEnter={pause}
+      onPointerLeave={resume}
+      onFocusCapture={pause}
+      onBlurCapture={resume}
     >
       <div className={styles.texture} aria-hidden="true" />
 
@@ -257,7 +328,7 @@ export default function ClientVoice({
             <span />
           </div>
 
-          <h2 id="client-voice-title" className={styles.title}>
+          <h2 id={titleId} className={styles.title}>
             いただいたお客様の声
           </h2>
 
@@ -268,15 +339,13 @@ export default function ClientVoice({
         </header>
 
         <div
-          className={[
-            styles.stage,
-            phaseClass,
-            direction === "prev" ? styles.isPrev : styles.isNext,
-          ].join(" ")}
+          className={stageClassName}
           style={{
             "--write-duration": `${writingMs}ms`,
           }}
           aria-live="polite"
+          aria-atomic="true"
+          data-voice-id={current.id}
         >
           <div className={styles.tornPaper} aria-hidden="true" />
           <div className={styles.noteSheet} aria-hidden="true" />
@@ -315,6 +384,7 @@ export default function ClientVoice({
                   `${current.client} Webサイトのプレビュー`
                 }
                 loading="lazy"
+                decoding="async"
               />
             </figure>
           )}
@@ -347,7 +417,7 @@ export default function ClientVoice({
                       href={current.siteUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      aria-label={`${current.client} の公式サイトを開く`}
+                      aria-label={`${current.client} の公式サイトを新しいタブで開く`}
                     >
                       公式サイト
                     </a>
