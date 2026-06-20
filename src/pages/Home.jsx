@@ -313,6 +313,11 @@ export default function Home() {
         {/* HERO：h1はHero側に1つだけ */}
         <HeroGate isDesktop={isDesktop} />
 
+        {/* ABOUT：Nav /#about の着地点 */}
+        <div id="about" style={ANCHOR_STYLE}>
+          <About />
+        </div>
+
         {/* WORKS：Nav /#works の着地点 */}
         <div id="works" style={ANCHOR_STYLE}>
           {isDesktop ? (isWorksDesktop ? <Works /> : <WorksSP />) : <WorksSP />}
@@ -321,11 +326,6 @@ export default function Home() {
         {/* VOICE：Nav /#voice の着地点 */}
         <div id="voice" style={ANCHOR_STYLE}>
           <ClientVoice />
-        </div>
-
-        {/* ABOUT：Nav /#about の着地点 */}
-        <div id="about" style={ANCHOR_STYLE}>
-          <About />
         </div>
 
         {/* POLICY：Nav /#philosophy の着地点 */}
