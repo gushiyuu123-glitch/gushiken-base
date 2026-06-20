@@ -47,74 +47,144 @@ export default function HeroSP() {
     const reduce =
       window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches ?? false;
 
+    if (reduce) return;
+
+    let rafId = 0;
+
     const ctx = gsap.context(() => {
-      if (reduce) return;
-
       const q = (sel) => root.querySelector(sel);
-      const qa = (sel) => root.querySelectorAll(sel);
+      const qa = (sel) => gsap.utils.toArray(root.querySelectorAll(sel));
 
-      gsap.set(q('[data-hero="bgPhoto"]'), { opacity: 0, y: 14 });
-      gsap.set(q('[data-hero="bgType"]'), { opacity: 0 });
-      gsap.set(q('[data-hero="readPad"]'), { opacity: 0 });
-      gsap.set(qa('[data-hero="leftItem"]'), { opacity: 0, y: 16 });
+      const bgPhoto = q('[data-hero="bgPhoto"]');
+      const bgType = q('[data-hero="bgType"]');
+      const readPad = q('[data-hero="readPad"]');
 
-      gsap.set(q('[data-hero="frameVow"]'), {
-        opacity: 0,
-        y: 34,
-        scale: 0.988,
+      const leftItems = qa('[data-hero="leftItem"]');
+      const frameVow = q('[data-hero="frameVow"]');
+      const frameKou = q('[data-hero="frameKou"]');
+
+      const introTargets = [
+        bgPhoto,
+        bgType,
+        readPad,
+        frameVow,
+        frameKou,
+        ...leftItems,
+      ].filter(Boolean);
+
+      gsap.set(introTargets, {
+        force3D: true,
+        backfaceVisibility: "hidden",
+        willChange: "transform, opacity",
       });
 
-      gsap.set(q('[data-hero="frameKou"]'), {
-        opacity: 0,
-        y: 46,
-        scale: 0.988,
+      gsap.set(bgPhoto, {
+        autoAlpha: 0,
+        y: 10,
       });
 
-      const tl = gsap.timeline({ defaults: { ease: [0.22, 1, 0.36, 1] } });
+      gsap.set(bgType, {
+        autoAlpha: 0,
+      });
 
-      tl.to(q('[data-hero="bgType"]'), { opacity: 1, duration: 0.9 }, 0)
-        .to(
-          q('[data-hero="bgPhoto"]'),
-          { opacity: 1, y: 0, duration: 0.82 },
-          0.02
-        )
-        .to(q('[data-hero="readPad"]'), { opacity: 1, duration: 0.55 }, 0.1)
-        .to(
-          qa('[data-hero="leftItem"]'),
-          {
-            opacity: 1,
-            y: 0,
-            duration: 0.66,
-            stagger: 0.085,
+      gsap.set(readPad, {
+        autoAlpha: 0,
+      });
+
+      gsap.set(leftItems, {
+        autoAlpha: 0,
+        y: 10,
+      });
+
+      gsap.set(frameVow, {
+        autoAlpha: 0,
+        y: 22,
+      });
+
+      gsap.set(frameKou, {
+        autoAlpha: 0,
+        y: 28,
+      });
+
+      const createScrollMotion = () => {
+        const scrollTl = gsap.timeline({
+          defaults: {
+            ease: "none",
+            overwrite: "auto",
+            force3D: true,
           },
-          0.14
-        )
-        .to(
-          q('[data-hero="frameVow"]'),
-          { opacity: 1, y: 0, scale: 1, duration: 0.76 },
-          0.4
-        )
-        .to(
-          q('[data-hero="frameKou"]'),
-          { opacity: 1, y: 0, scale: 1, duration: 0.76 },
-          0.48
-        );
+        });
 
-      ScrollTrigger.create({
-        trigger: root,
-        start: "top top",
-        end: "bottom top",
-        scrub: 0.55,
-        invalidateOnRefresh: true,
-        animation: gsap
-          .timeline()
-          .to(q('[data-hero="bgPhoto"]'), { y: -10 }, 0)
-          .to(q('[data-hero="frameVow"]'), { y: -6 }, 0)
-          .to(q('[data-hero="frameKou"]'), { y: -4 }, 0),
+        if (bgPhoto) scrollTl.to(bgPhoto, { y: -8 }, 0);
+        if (frameVow) scrollTl.to(frameVow, { y: -5 }, 0);
+        if (frameKou) scrollTl.to(frameKou, { y: -3 }, 0);
+
+        ScrollTrigger.create({
+          trigger: root,
+          start: "top top",
+          end: "bottom top",
+          scrub: 0.45,
+          invalidateOnRefresh: true,
+          animation: scrollTl,
+        });
+
+        rafId = requestAnimationFrame(() => {
+          ScrollTrigger.refresh();
+        });
+      };
+
+      const tl = gsap.timeline({
+        defaults: {
+          ease: "power3.out",
+          overwrite: "auto",
+          force3D: true,
+        },
+        onComplete: () => {
+          gsap.set(introTargets, {
+            clearProps: "willChange",
+          });
+
+          createScrollMotion();
+        },
       });
+
+      tl.to(bgType, { autoAlpha: 1, duration: 0.58 }, 0)
+        .to(bgPhoto, { autoAlpha: 1, y: 0, duration: 0.62 }, 0)
+        .to(readPad, { autoAlpha: 1, duration: 0.42 }, 0.08)
+        .to(
+          leftItems,
+          {
+            autoAlpha: 1,
+            y: 0,
+            duration: 0.46,
+            stagger: 0.052,
+          },
+          0.12
+        )
+        .to(
+          frameVow,
+          {
+            autoAlpha: 1,
+            y: 0,
+            duration: 0.58,
+          },
+          0.34
+        )
+        .to(
+          frameKou,
+          {
+            autoAlpha: 1,
+            y: 0,
+            duration: 0.58,
+          },
+          0.42
+        );
     }, root);
 
-    return () => ctx.revert();
+    return () => {
+      cancelAnimationFrame(rafId);
+      ctx.revert();
+    };
   }, []);
 
   return (
@@ -159,13 +229,15 @@ export default function HeroSP() {
 
           <div className={styles.copy} data-hero="leftItem">
             <p className={styles.copyMeta}>
-              沖縄県浦添市 / 全国対応 / HP・LP制作
+              沖縄県浦添市 / 全国オンライン対応 / HP・LP制作
             </p>
 
             <p className={styles.copyLead}>
               写真・言葉・余白を整えて、
               <br />
-              予約・問い合わせにつながるWebへ。
+              予約・問い合わせにつながる
+              <br />
+              Webをつくります。
             </p>
 
             <p className={styles.copySub}>
@@ -175,7 +247,9 @@ export default function HeroSP() {
             </p>
 
             <p className="visually-hidden">
-              沖縄県内・全国オンライン対応で、ホームページ制作・LP制作・Webデザインを行います。美容室、飲食店、ブライダル、観光体験、タトゥースタジオなど、印象で選ばれる業種に向けて、構成・デザイン・実装まで一貫して制作します。
+              沖縄県内・全国オンライン対応で、ホームページ制作・LP制作・Webデザインを行います。
+              美容室、飲食店、ブライダル、観光体験、タトゥースタジオなど、
+              印象で選ばれる業種に向けて、構成・デザイン・実装まで一貫して制作します。
             </p>
           </div>
 
@@ -185,7 +259,7 @@ export default function HeroSP() {
               to="/contact"
               aria-label="ホームページ制作・LP制作の相談をする"
             >
-              <span>相談する</span>
+              <span>制作を相談する</span>
             </Link>
           </div>
 

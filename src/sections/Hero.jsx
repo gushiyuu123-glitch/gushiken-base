@@ -7,6 +7,7 @@ import styles from "./Hero.module.css";
 
 gsap.registerPlugin(ScrollTrigger);
 
+// 内部導線（SEO / 回遊 / 迷子防止）
 const VOW_PATH = "/works/vow-in-light";
 const KOU_PATH = "/works/kou-ryui";
 
@@ -27,6 +28,7 @@ export default function Hero() {
     const ctx = gsap.context(() => {
       const q = (sel) => root.querySelector(sel);
 
+      // 背景 / フレームだけ初期化（文字は初期表示のまま）
       gsap.set(q('[data-hero="bgPhoto"]'), { opacity: 0, y: 18 });
       gsap.set(q('[data-hero="bgType"]'), { opacity: 0 });
       gsap.set(q('[data-hero="selected"]'), { opacity: 0, y: 10 });
@@ -43,7 +45,9 @@ export default function Hero() {
         scale: 0.985,
       });
 
-      const tl = gsap.timeline({ defaults: { ease: [0.22, 1, 0.36, 1] } });
+      const tl = gsap.timeline({
+        defaults: { ease: [0.22, 1, 0.36, 1] },
+      });
 
       tl.to(q('[data-hero="bgType"]'), { opacity: 1, duration: 0.9 }, 0)
         .to(q('[data-hero="bgPhoto"]'), { opacity: 1, y: 0, duration: 0.9 }, 0)
@@ -63,6 +67,7 @@ export default function Hero() {
           0.3
         );
 
+      // Ken Burns（窓パララックス）
       const amt = coarse ? 3.5 : 7;
       const sc = coarse ? 1.035 : 1.055;
 
@@ -104,6 +109,7 @@ export default function Hero() {
         -amt * 0.8
       );
 
+      // 深度だけ
       ScrollTrigger.create({
         trigger: root,
         start: "top top",
@@ -173,7 +179,9 @@ export default function Hero() {
             <p className={styles.copyLead}>
               写真・言葉・余白を整えて、
               <br />
-              予約・問い合わせにつながる<br />Webをつくります。
+              予約・問い合わせにつながる
+              <br />
+              Webをつくります。
             </p>
 
             <p className={styles.copySub}>
@@ -183,7 +191,9 @@ export default function Hero() {
             </p>
 
             <p className="visually-hidden">
-              沖縄県内・全国オンライン対応で、ホームページ制作・LP制作・Webデザインを行います。美容室、飲食店、ブライダル、観光体験、タトゥースタジオなど、印象で選ばれる業種に向けて、構成・デザイン・実装まで一貫して制作します。
+              沖縄県内・全国オンライン対応で、ホームページ制作・LP制作・Webデザインを行います。
+              美容室、飲食店、ブライダル、観光体験、タトゥースタジオなど、
+              印象で選ばれる業種に向けて、構成・デザイン・実装まで一貫して制作します。
             </p>
           </div>
 
