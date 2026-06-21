@@ -1,6 +1,11 @@
 // src/lib/microcms.js
 import axios from "axios";
 
+/* =========================================================
+   NEWS
+   既存運用：触らない
+========================================================= */
+
 const API_KEY = import.meta.env.VITE_MICROCMS_API_KEY;
 const SERVICE_DOMAIN = import.meta.env.VITE_MICROCMS_SERVICE_DOMAIN;
 
@@ -33,10 +38,6 @@ function assertMicroCmsEnv() {
 function createCacheBuster() {
   return Date.now();
 }
-
-/* =========================================================
-   NEWS
-========================================================= */
 
 export async function getNewsList({ limit = 10, offset = 0 } = {}) {
   assertMicroCmsEnv();
@@ -89,14 +90,41 @@ export async function getNewsDetail(id) {
 
 /* =========================================================
    SKETCHBOOK
+   専用環境変数で分離
    microCMS endpoint: /sketchbook
 ========================================================= */
 
+const SKETCH_API_KEY = import.meta.env.VITE_MICROCMS_SKETCH_API_KEY;
+const SKETCH_SERVICE_DOMAIN = import.meta.env
+  .VITE_MICROCMS_SKETCH_SERVICE_DOMAIN;
+
+const hasSketchEnv = Boolean(SKETCH_API_KEY && SKETCH_SERVICE_DOMAIN);
+
+if (!hasSketchEnv) {
+  console.warn("❗ Sketchbook用のmicroCMS環境変数が設定されていません");
+}
+
+const sketchClient = axios.create({
+  baseURL: hasSketchEnv
+    ? `https://${SKETCH_SERVICE_DOMAIN}.microcms.io/api/v1`
+    : "",
+  headers: {
+    "X-MICROCMS-API-KEY": SKETCH_API_KEY || "",
+  },
+  timeout: 8000,
+});
+
+function assertSketchEnv() {
+  if (!hasSketchEnv) {
+    throw new Error("Sketchbook用のmicroCMS環境変数が設定されていません");
+  }
+}
+
 export async function getSketchbookList({ limit = 100, offset = 0 } = {}) {
-  assertMicroCmsEnv();
+  assertSketchEnv();
 
   try {
-    const res = await client.get("/sketchbook", {
+    const res = await sketchClient.get("/sketchbook", {
       params: {
         limit,
         offset,
