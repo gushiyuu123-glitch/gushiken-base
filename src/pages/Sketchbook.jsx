@@ -29,18 +29,39 @@ function formatDate(value) {
 function normalizeType(type) {
   if (!type) return "";
 
-  const value = String(type).trim().toLowerCase();
+  const raw = String(type).trim();
+
+  const value = raw
+    .toLowerCase()
+    .replace(/\s*\/\s*/g, " / ")
+    .trim();
+
+  const primary = value.split(" / ")[0]?.trim();
 
   const labels = {
-    drawing: "DRAWING",
+    doodle: "DOODLE",
     rough: "ROUGH",
     layout: "LAYOUT",
+    composition: "COMPOSITION",
     idea: "IDEA",
-    sketch: "SKETCH",
     memo: "MEMO",
+    typography: "TYPOGRAPHY",
+
+    // 旧データ・保険
+    drawing: "DRAWING",
+    sketch: "SKETCH",
+
+    // 日本語だけで入れた場合の保険
+    落書き: "DOODLE",
+    ラフ: "ROUGH",
+    レイアウト: "LAYOUT",
+    構図メモ: "COMPOSITION",
+    アイデア: "IDEA",
+    メモ: "MEMO",
+    タイポ練習: "TYPOGRAPHY",
   };
 
-  return labels[value] || value.toUpperCase();
+  return labels[primary] || labels[value] || raw.toUpperCase();
 }
 
 function normalizeSketchItem(item) {
@@ -199,9 +220,11 @@ export default function Sketchbook() {
                     {hasMeta && (
                       <span className={styles.captionMeta}>
                         {item.type && <span>{item.type}</span>}
+
                         {item.type && dateText && (
                           <span aria-hidden="true">/</span>
                         )}
+
                         {dateText && <span>{dateText}</span>}
                       </span>
                     )}
