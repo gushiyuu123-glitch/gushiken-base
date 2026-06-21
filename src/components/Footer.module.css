@@ -1035,3 +1035,16 @@
   white-space: nowrap;
   border: 0;
 }
+.hiddenRooms {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1.05rem;
+  margin-top: 1.55rem;
+}
+@media (max-width: 768px) {
+  .hiddenRooms {
+    gap: 1rem;
+    margin-top: 1.45rem;
+  }
+}

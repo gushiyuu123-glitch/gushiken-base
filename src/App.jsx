@@ -14,7 +14,7 @@ import Seo from "./components/Seo";
 import NavGlobal from "./components/NavGlobal";
 import Footer from "./components/Footer";
 import LenisManager from "./components/Lenis";
-
+import Sketchbook from "./pages/Sketchbook";
 // Pages
 import Home from "./pages/Home";
 import WorksList from "./pages/WorksList";
@@ -698,7 +698,7 @@ function Layout() {
           <Route path="/works/KisuiRoom" element={<KisuiRoom />} />
           <Route path="/works/OriginRoom" element={<OriginRoom />} />
           <Route path="/works/NoahRoom" element={<NoahRoom />} />
-
+<Route path="/sketchbook" element={<Sketchbook />} />
           {/* 専門ページ */}
           <Route
             path="/works/vow-in-light"

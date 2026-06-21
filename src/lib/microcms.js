@@ -34,6 +34,10 @@ function createCacheBuster() {
   return Date.now();
 }
 
+/* =========================================================
+   NEWS
+========================================================= */
+
 export async function getNewsList({ limit = 10, offset = 0 } = {}) {
   assertMicroCmsEnv();
 
@@ -79,6 +83,41 @@ export async function getNewsDetail(id) {
     return res.data;
   } catch (err) {
     console.error(`❌ NEWS詳細取得エラー（id: ${id}）`, err);
+    throw err;
+  }
+}
+
+/* =========================================================
+   SKETCHBOOK
+   microCMS endpoint: /sketchbook
+========================================================= */
+
+export async function getSketchbookList({ limit = 100, offset = 0 } = {}) {
+  assertMicroCmsEnv();
+
+  try {
+    const res = await client.get("/sketchbook", {
+      params: {
+        limit,
+        offset,
+        orders: "-publishedAt",
+
+        // Sketchbookで使うフィールドだけ取得
+        fields: "id,title,image,type,note,publishedAt,createdAt",
+
+        // 古い画像リストを掴ませないためのキャッシュ対策
+        _t: createCacheBuster(),
+      },
+    });
+
+    return {
+      contents: Array.isArray(res.data?.contents) ? res.data.contents : [],
+      totalCount: res.data?.totalCount ?? 0,
+      limit: res.data?.limit ?? limit,
+      offset: res.data?.offset ?? offset,
+    };
+  } catch (err) {
+    console.error("❌ Sketchbook一覧取得エラー:", err);
     throw err;
   }
 }

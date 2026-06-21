@@ -403,14 +403,23 @@ export default function Footer() {
               <br />
               ホームページ制作・LP制作・Webデザインを行っています。
             </p>
+<div className={styles.hiddenRooms} aria-label="秘密のページ">
+  <Link
+    to="/layer0"
+    className={styles.lab}
+    onClick={(event) => handleRouteClick(event, "/layer0")}
+  >
+    HIDDEN LABORATORY
+  </Link>
 
-            <Link
-              to="/layer0"
-              className={styles.lab}
-              onClick={(event) => handleRouteClick(event, "/layer0")}
-            >
-              HIDDEN LABORATORY
-            </Link>
+  <Link
+    to="/sketchbook"
+    className={styles.lab}
+    onClick={(event) => handleRouteClick(event, "/sketchbook")}
+  >
+    SKETCHBOOK
+  </Link>
+</div>
           </section>
 
           <nav
