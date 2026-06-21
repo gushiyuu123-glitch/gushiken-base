@@ -192,20 +192,22 @@ export default function About() {
             <span>制作者ページにまとめています。</span>
           </p>
 
-          <div className={styles["about-links"]}>
-            <Link to="/about" className={styles["about-main-link"]}>
-              制作者の背景を見る
-            </Link>
+<div className={styles["about-links"]}>
+  <Link to="/about" className={styles["about-main-link"]}>
+    制作者について知る
+  </Link>
 
-            <a
-              href="https://note.com/noahgushi123"
-              target="_blank"
-              rel="noopener noreferrer"
-              className={styles["about-note-link"]}
-            >
-              制作の裏側を見る
-            </a>
-          </div>
+  <a
+    href="https://note.com/noahgushi123"
+    target="_blank"
+    rel="noopener noreferrer"
+    className={styles["about-note-link"]}
+  >
+    制作記録を読む
+  </a>
+</div>
+
+
         </div>
       </div>
     </section>
