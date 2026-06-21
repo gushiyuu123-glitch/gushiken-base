@@ -23,7 +23,7 @@ function createCacheBuster() {
 
 function normalizeSketchItem(item) {
   return {
-    id: item?.id,
+    id: item?.id || "",
     title: item?.title || "Untitled",
     image: item?.image || null,
     type: item?.type || "",
@@ -43,23 +43,27 @@ export async function getSketchbookItems({ limit = 100, offset = 0 } = {}) {
     _t: String(createCacheBuster()),
   });
 
-  const res = await fetch(
-    `https://${SERVICE_DOMAIN}.microcms.io/api/v1/${ENDPOINT}?${params}`,
-    {
+  const url = `https://${SERVICE_DOMAIN}.microcms.io/api/v1/${ENDPOINT}?${params}`;
+
+  try {
+    const res = await fetch(url, {
       headers: {
         "X-MICROCMS-API-KEY": API_KEY,
       },
+    });
+
+    if (!res.ok) {
+      throw new Error(`Failed to fetch sketchbook items: ${res.status}`);
     }
-  );
 
-  if (!res.ok) {
-    throw new Error(`Failed to fetch sketchbook items: ${res.status}`);
+    const data = await res.json();
+    const contents = Array.isArray(data?.contents) ? data.contents : [];
+
+    return contents
+      .map(normalizeSketchItem)
+      .filter((item) => item.id && item.image?.url);
+  } catch (error) {
+    console.error("❌ Sketchbook取得エラー:", error);
+    throw error;
   }
-
-  const data = await res.json();
-  const contents = Array.isArray(data?.contents) ? data.contents : [];
-
-  return contents
-    .map(normalizeSketchItem)
-    .filter((item) => item.id && item.image?.url);
 }
