@@ -201,6 +201,7 @@
   min-height: 100svh;
   padding: 104px 36px 54px;
 }
+
 .left {
   position: relative;
   z-index: 3;
@@ -209,6 +210,7 @@
     clamp(-158px, -10.5vw, -68px)
   );
 }
+
 /* =========================
    LEFT TEXT
 ========================= */
@@ -244,8 +246,9 @@
 ========================= */
 .copy {
   position: relative;
-  max-width: 418px;
+  max-width: 414px;
   padding-left: 18px;
+  text-rendering: optimizeLegibility;
 }
 
 .copy::before {
@@ -257,7 +260,7 @@
   height: calc(100% - 10px);
   background: linear-gradient(
     180deg,
-    rgba(184, 144, 90, 0.56),
+    rgba(184, 144, 90, 0.52),
     rgba(184, 144, 90, 0.18),
     rgba(184, 144, 90, 0)
   );
@@ -266,48 +269,50 @@
 .copy::after {
   content: "WEB DESIGN / OKINAWA";
   display: block;
-  margin-top: 17px;
-  color: rgba(28, 28, 28, 0.28);
+  margin-top: 16px;
+  color: rgba(28, 28, 28, 0.25);
   font-size: 8.5px;
   line-height: 1;
-  letter-spacing: 0.24em;
-}
-
-.copyMeta {
-  margin: 0 0 15px;
-  color: rgba(28, 28, 28, 0.42);
-  font-size: 10px;
-  line-height: 1.82;
-  letter-spacing: 0.165em;
+  letter-spacing: 0.22em;
 }
 
 .copy p {
   margin: 0;
 }
 
+.copyMeta {
+  margin: 0 0 13px;
+  color: rgba(28, 28, 28, 0.4);
+  font-size: 10px;
+  line-height: 1.75;
+  letter-spacing: 0.14em;
+}
+
 .copyLead {
   color: rgba(18, 18, 18, 0.86);
   font-family: "Shippori Mincho", "Yu Mincho", "Hiragino Mincho ProN", serif;
-  font-size: clamp(16px, 1.12vw, 20px);
-  line-height: 1.86;
-  letter-spacing: 0.085em;
+  font-size: clamp(16px, 1.08vw, 19px);
+  font-weight: 400;
+  line-height: 1.84;
+  letter-spacing: 0.052em;
+  font-feature-settings: normal;
 }
 
 .copyLead::after {
   content: "";
   display: block;
-  width: 42px;
+  width: 38px;
   height: 1px;
-  margin: 16px 0 14px;
-  background: rgba(184, 144, 90, 0.4);
+  margin: 15px 0 14px;
+  background: rgba(184, 144, 90, 0.38);
 }
 
 .copySub {
-  max-width: 370px;
-  color: rgba(28, 28, 28, 0.57);
+  max-width: 374px;
+  color: rgba(28, 28, 28, 0.55);
   font-size: 12px;
-  line-height: 2.04;
-  letter-spacing: 0.04em;
+  line-height: 2;
+  letter-spacing: 0.032em;
 }
 
 /* =========================
@@ -655,26 +660,34 @@
   .copyMeta {
     margin-bottom: 12px;
     font-size: 9.5px;
-    line-height: 1.86;
-    letter-spacing: 0.145em;
+    line-height: 1.78;
+    letter-spacing: 0.125em;
   }
 
   .copyLead {
     font-size: 15px;
-    line-height: 1.92;
-    letter-spacing: 0.075em;
+    font-weight: 400;
+    line-height: 1.82;
+    letter-spacing: 0.045em;
+    font-feature-settings: normal;
+  }
+
+  .copyLead::after {
+    width: 36px;
+    margin: 14px 0 13px;
   }
 
   .copySub {
     max-width: 320px;
     font-size: 11.5px;
-    line-height: 2.04;
-    letter-spacing: 0.035em;
+    line-height: 1.98;
+    letter-spacing: 0.026em;
   }
 
   .copy::after {
     margin-top: 14px;
     font-size: 8px;
+    letter-spacing: 0.19em;
   }
 
   .ctaRow {
@@ -810,19 +823,22 @@
   }
 
   .copyLead {
-    font-size: 14px;
-    line-height: 1.88;
+    font-size: 14.5px;
+    line-height: 1.8;
+    letter-spacing: 0.038em;
   }
 
   .copySub {
     max-width: 300px;
     color: rgba(28, 28, 28, 0.56);
     font-size: 11px;
-    line-height: 2.02;
+    line-height: 1.94;
+    letter-spacing: 0.022em;
   }
 
   .copyMeta {
     font-size: 9px;
+    letter-spacing: 0.105em;
   }
 
   .lg .frameInner {

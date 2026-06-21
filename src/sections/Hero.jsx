@@ -21,6 +21,7 @@ export default function Hero() {
 
     const reduce =
       window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches ?? false;
+
     if (reduce) return;
 
     const coarse = window.matchMedia?.("(pointer: coarse)")?.matches ?? false;
@@ -74,6 +75,7 @@ export default function Hero() {
       const bindKenBurns = (shotSel, triggerSel, from, to) => {
         const shot = q(shotSel);
         const trigger = q(triggerSel);
+
         if (!shot || !trigger) return;
 
         gsap.set(shot, {
@@ -177,11 +179,11 @@ export default function Hero() {
             </p>
 
             <p className={styles.copyLead}>
-              写真・言葉・余白を整えて、
+              写真・言葉・余白を整え、
               <br />
-              予約・問い合わせにつながる
+              予約や問い合わせにつながる
               <br />
-              Webをつくります。
+              Webサイトをつくります。
             </p>
 
             <p className={styles.copySub}>
