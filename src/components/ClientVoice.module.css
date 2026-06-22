@@ -295,6 +295,7 @@
   pointer-events: none;
   opacity: 0.84;
   transform: rotate(-17deg);
+  transform-origin: 74% 82%;
   filter:
     drop-shadow(0 12px 18px rgba(61, 48, 35, 0.14))
     saturate(0.92)
@@ -309,14 +310,33 @@
 
 .writingPencil {
   opacity: 0.84;
-  will-change: transform, opacity;
+  will-change: transform, opacity, filter;
 }
 
+/* 鉛筆の先端が紙に触れている“気配”。揺れではなく、筆圧の余韻だけ */
+.writingPencil::after {
+  content: "";
+  position: absolute;
+  left: 70%;
+  top: 79%;
+  width: 18px;
+  height: 7px;
+  pointer-events: none;
+  border-radius: 999px;
+  opacity: 0;
+  background: rgba(45, 36, 27, 0.13);
+  filter: blur(5px);
+  transform: translate(-50%, -50%) rotate(-18deg) scale(0.72);
+  transform-origin: center;
+}
+
+/* 親：紙の上を滑らかに進む。infiniteなし＝書き終わったら静止 */
 .isWriting .writingPencil {
   animation: pencil-write var(--write-duration, 4200ms)
     cubic-bezier(0.18, 0.72, 0.22, 1) both;
 }
 
+/* 画像自体は揺らさない。震え防止 */
 .writingPencil img {
   transform-origin: 74% 82%;
 }
@@ -325,6 +345,16 @@
   animation: none;
 }
 
+/* 接地点はゆっくり濃淡だけ。これで“書いている感”を足す */
+.isWriting .writingPencil::after {
+  animation: pencil-tip-pressure var(--write-duration, 4200ms)
+    ease-in-out both;
+}
+
+/*
+  基軸は元の滑らかな移動。
+  ただし終盤だけ“書き終わってペンを少し持ち上げる”ように整理。
+*/
 @keyframes pencil-write {
   0% {
     opacity: 0;
@@ -333,10 +363,12 @@
 
   5% {
     opacity: 0;
+    transform: translate(-510px, 98px) rotate(-23deg);
   }
 
   12% {
     opacity: 0.88;
+    transform: translate(-486px, 112px) rotate(-20deg);
   }
 
   20% {
@@ -355,14 +387,58 @@
     transform: translate(-118px, 258px) rotate(-20deg);
   }
 
-  88% {
+  84% {
+    opacity: 0.87;
+    transform: translate(-56px, 288px) rotate(-15deg);
+  }
+
+  91% {
     opacity: 0.86;
-    transform: translate(-44px, 292px) rotate(-14deg);
+    transform: translate(-36px, 296px) rotate(-14deg);
+  }
+
+  96% {
+    opacity: 0.85;
+    transform: translate(42px, 146px) rotate(-16deg);
   }
 
   100% {
     opacity: 0.84;
     transform: translate(108px, 0) rotate(-17deg);
+  }
+}
+
+/* 筆圧。点滅・震えではなく、紙に乗っている気配だけ */
+@keyframes pencil-tip-pressure {
+  0%,
+  8% {
+    opacity: 0;
+    transform: translate(-50%, -50%) rotate(-18deg) scale(0.58);
+  }
+
+  18% {
+    opacity: 0.13;
+    transform: translate(-50%, -50%) rotate(-18deg) scale(0.82);
+  }
+
+  42% {
+    opacity: 0.22;
+    transform: translate(-50%, -50%) rotate(-18deg) scale(1);
+  }
+
+  68% {
+    opacity: 0.18;
+    transform: translate(-50%, -50%) rotate(-18deg) scale(0.92);
+  }
+
+  86% {
+    opacity: 0.12;
+    transform: translate(-50%, -50%) rotate(-18deg) scale(0.82);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) rotate(-18deg) scale(0.58);
   }
 }
 
@@ -547,9 +623,10 @@
   opacity: 1;
   transform: none;
   filter: none;
-  will-change: opacity, transform, filter;
+  will-change: opacity, filter;
 }
 
+/* 文字は揺らさない。鉛筆に合わせて、にじむように出るだけ */
 .isWriting .inkChar {
   animation-name: ink-char;
   animation-duration: 520ms;
@@ -560,18 +637,16 @@
 @keyframes ink-char {
   0% {
     opacity: 0;
-    transform: translateY(5px);
-    filter: blur(1.6px);
+    filter: blur(1.3px);
   }
 
   55% {
-    opacity: 0.74;
-    filter: blur(0.35px);
+    opacity: 0.72;
+    filter: blur(0.32px);
   }
 
   100% {
     opacity: 1;
-    transform: translateY(0);
     filter: blur(0);
   }
 }
@@ -1110,12 +1185,14 @@
       transform: translate(-410px, 92px) rotate(-24deg);
     }
 
-    5% {
+    6% {
       opacity: 0;
+      transform: translate(-398px, 98px) rotate(-23deg);
     }
 
     12% {
-      opacity: 0.88;
+      opacity: 0.86;
+      transform: translate(-372px, 116px) rotate(-20deg);
     }
 
     22% {
@@ -1132,6 +1209,16 @@
 
     78% {
       transform: translate(-80px, 258px) rotate(-20deg);
+    }
+
+    92% {
+      opacity: 0.86;
+      transform: translate(-24px, 278px) rotate(-15deg);
+    }
+
+    97% {
+      opacity: 0.85;
+      transform: translate(18px, 132px) rotate(-16deg);
     }
 
     100% {
@@ -1297,10 +1384,12 @@
 
     6% {
       opacity: 0;
+      transform: translate(-232px, -232px) rotate(-19deg);
     }
 
     16% {
       opacity: 0.72;
+      transform: translate(-210px, -222px) rotate(-17deg);
     }
 
     34% {
@@ -1313,6 +1402,11 @@
 
     78% {
       transform: translate(-58px, -120px) rotate(-13deg);
+    }
+
+    92% {
+      opacity: 0.72;
+      transform: translate(-18px, -78px) rotate(-14deg);
     }
 
     100% {
@@ -1444,10 +1538,12 @@
 
     6% {
       opacity: 0;
+      transform: translate(-186px, -226px) rotate(-19deg);
     }
 
     16% {
       opacity: 0.64;
+      transform: translate(-168px, -214px) rotate(-17deg);
     }
 
     36% {
@@ -1460,6 +1556,11 @@
 
     80% {
       transform: translate(-48px, -116px) rotate(-13deg);
+    }
+
+    92% {
+      opacity: 0.64;
+      transform: translate(-16px, -76px) rotate(-14deg);
     }
 
     100% {
@@ -1531,7 +1632,8 @@
   .inkChar,
   .writeTrace,
   .writingPencil,
-  .writingPencil img {
+  .writingPencil img,
+  .writingPencil::after {
     animation: none;
   }
 
@@ -1544,6 +1646,10 @@
 
   .writingPencil {
     opacity: 0.72;
+  }
+
+  .writingPencil::after {
+    opacity: 0;
   }
 
   .isTurningOut .mainPaper,
