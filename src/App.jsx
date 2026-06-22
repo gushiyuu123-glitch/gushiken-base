@@ -15,6 +15,7 @@ import NavGlobal from "./components/NavGlobal";
 import Footer from "./components/Footer";
 import LenisManager from "./components/Lenis";
 import Sketchbook from "./pages/Sketchbook";
+
 // Pages
 import Home from "./pages/Home";
 import WorksList from "./pages/WorksList";
@@ -96,7 +97,7 @@ const SITE_ORIGIN = "https://gushikendesign.com";
 
 const BASE_TITLE = `${SITE_NAME}｜沖縄のWebデザイン・ホームページ制作`;
 const BASE_DESC =
-  "沖縄を拠点に、世界観と導線を設計するWeb制作を行っています。LP制作・ホームページ制作・Webデザインを、構成から公開まで一貫して仕上げます。";
+  "GUSHIKEN DESIGNは、沖縄を拠点にLP制作・ホームページ制作・Webデザインを行う個人制作スタジオです。美容室・飲食店・ブライダル・観光体験・タトゥースタジオなど、世界観や体験価値が大切な業種に向けて、見た人の記憶に残り、予約・問い合わせのきっかけになるWebサイトを制作します。";
 
 const DEFAULT_IMAGE_PATH = "/ogp-v4.png";
 
@@ -110,73 +111,80 @@ const PAGE_SEO = {
   "/works": {
     title: `WORKS｜${BASE_TITLE}`,
     description:
-      "制作したWebサイトの事例一覧。ブライダル・美容・飲食・観光・アパレルなど、世界観と導線を両立したWebデザインをまとめています。",
+      "GUSHIKEN DESIGNの制作事例一覧。ブライダル・美容・飲食・観光体験・アパレルなど、世界観や体験価値が大切な業種に向けたWebデザインをまとめています。",
     imagePath: DEFAULT_IMAGE_PATH,
   },
 
   "/news": {
     title: `NEWS｜${BASE_TITLE}`,
     description:
-      "制作の更新・設計の記録。作品の背景や判断の文脈を短く残しています。",
+      "GUSHIKEN DESIGNの更新・制作記録。作品の背景、制作で考えたこと、Webデザインの判断を短く残しています。",
     imagePath: DEFAULT_IMAGE_PATH,
   },
 
   "/contact": {
     title: `CONTACT｜${BASE_TITLE}`,
     description:
-      "ホームページ制作・LP制作・Webデザインの相談窓口。目的・必要な内容・素材の有無を元に、最適なスコープで提案します。",
+      "ホームページ制作・LP制作・Webデザインの相談窓口。写真や文章、予算、公開時期がまだ曖昧な段階でも相談できます。今ある情報をもとに、必要な内容と進め方を一緒に整理します。",
     imagePath: DEFAULT_IMAGE_PATH,
   },
 
   "/price": {
     title: `PRICE｜${BASE_TITLE}`,
     description:
-      "制作プランと料金の目安。LP制作・小規模サイト・印象重視のWebサイト制作など、目的に合わせて制作範囲を整理します。",
+      "GUSHIKEN DESIGNの制作プランと料金の目安。LP制作、小規模ホームページ制作、印象重視のWebサイト制作など、目的に合わせて制作範囲を整理します。",
     imagePath: DEFAULT_IMAGE_PATH,
   },
 
   "/about": {
     title: `ABOUT｜${BASE_TITLE}`,
     description:
-      "GUSHIKEN DESIGNの制作者背景、制作方針、Webデザインへの考え方を紹介します。沖縄県浦添市を拠点にホームページ制作・LP制作・Webデザインを行っています。",
+      "GUSHIKEN DESIGNの制作者ページ。制作者の背景、Web制作への考え方、制作事例、資格・学習領域などをまとめています。",
     imagePath: DEFAULT_IMAGE_PATH,
   },
 
   "/okinawa": {
     title: "沖縄の店舗・サロン向けホームページ制作｜GUSHIKEN DESIGN",
     description:
-      "GUSHIKEN DESIGNは、沖縄県内の店舗・サロン・個人事業主向けにLP制作・ホームページ制作・Webデザインを行う個人制作スタジオです。浦添を拠点に、予約・問い合わせにつながる構成・デザイン・実装まで一貫して対応します。",
+      "GUSHIKEN DESIGNは、沖縄県内の店舗・サロン・個人事業主向けにLP制作・ホームページ制作・Webデザインを行う個人制作スタジオです。予約・問い合わせのきっかけになる見せ方を、内容整理から公開まで一緒に整えます。",
     imagePath: DEFAULT_IMAGE_PATH,
   },
 
   "/online": {
     title: "全国対応のLP制作・ホームページ制作｜GUSHIKEN DESIGN",
     description:
-      "GUSHIKEN DESIGNは、全国オンライン対応でLP制作・ホームページ制作・Webデザインを行う個人制作スタジオです。美容室・ブライダル・アパレル・アーティスト・個人ブランドなど、世界観や印象で選ばれる業種向けに、構成・デザイン・実装まで一貫して制作します。",
+      "GUSHIKEN DESIGNは、全国オンライン対応でLP制作・ホームページ制作・Webデザインを行う個人制作スタジオです。美容室・ブライダル・アパレル・アーティスト・個人ブランドなど、世界観や体験価値が大切な業種向けに制作します。",
+    imagePath: DEFAULT_IMAGE_PATH,
+  },
+
+  "/sketchbook": {
+    title: `SKETCHBOOK｜${BASE_TITLE}`,
+    description:
+      "GUSHIKEN DESIGNのSketchbook。Webデザインやホームページ制作の途中で残ったラフ、スケッチ、構図メモなどを置いていくページです。",
     imagePath: DEFAULT_IMAGE_PATH,
   },
 
   "/terms": {
     title: `TERMS｜${BASE_TITLE}`,
-    description: "利用規約。",
+    description: "GUSHIKEN DESIGNの利用規約です。",
     imagePath: DEFAULT_IMAGE_PATH,
   },
 
   "/privacy": {
     title: `PRIVACY｜${BASE_TITLE}`,
-    description: "プライバシーポリシー。",
+    description: "GUSHIKEN DESIGNのプライバシーポリシーです。",
     imagePath: DEFAULT_IMAGE_PATH,
   },
 
   "/legal": {
     title: `LEGAL｜${BASE_TITLE}`,
-    description: "特定商取引法に基づく表記。",
+    description: "GUSHIKEN DESIGNの特定商取引法に基づく表記です。",
     imagePath: DEFAULT_IMAGE_PATH,
   },
 
   "/refund": {
     title: `REFUND｜${BASE_TITLE}`,
-    description: "返金ポリシー。",
+    description: "GUSHIKEN DESIGNの返金ポリシーです。",
     imagePath: DEFAULT_IMAGE_PATH,
   },
 
@@ -193,21 +201,21 @@ const WORK_SEO = {
     title:
       "Vow in Light｜ブライダル・フォトウェディング向けWebサイト制作",
     description:
-      "Vow in Lightは、ブライダル・フォトウェディング向けのWebサイト制作事例です。写真の上質さ、余白、スマホ導線、問い合わせまでの流れを整え、比較検討中のユーザーが相談しやすい構成にしています。",
+      "Vow in Lightは、ブライダル・フォトウェディング向けのWebサイト制作事例です。写真の余韻、スマホでの見やすさ、料金や相談前の不安を整理し、予約・問い合わせのきっかけにつながる構成にしています。",
     imagePath: "/works/vow-in-light-entry.webp",
   },
 
   "kou-ryui": {
     title: "KOU RYUI｜琉装・沖縄文化体験向けWebサイト制作",
     description:
-      "KOU RYUIは、琉装体験・沖縄文化体験・観光体験向けのWebサイト制作事例です。旅行中の不安を減らし、料金・所要時間・持ち物・アクセス・予約導線を分かりやすく整理しています。",
+      "KOU RYUIは、琉装体験・沖縄文化体験・観光体験向けのWebサイト制作事例です。旅行中の不安を減らし、料金・所要時間・持ち物・アクセス・予約までの流れをわかりやすく整理しています。",
     imagePath: "/works/kouryui.webp",
   },
 
   "black-papillon": {
     title: "BLACK PAPILLON｜タトゥースタジオ向けホームページ制作",
     description:
-      "BLACK PAPILLONは、タトゥースタジオ向けのWebサイト制作事例です。施術スタイル、治癒後の仕上がり、料金目安、相談導線、アフターケアを、世界観を崩さずに整理しています。",
+      "BLACK PAPILLONは、タトゥースタジオ向けのホームページ制作事例です。施術スタイル、治癒後の仕上がり、料金目安、相談のしやすさ、アフターケアを、世界観を崩さずに整理しています。",
     imagePath: "/works1/BlackPapillonRoom2.png",
   },
 };
@@ -229,6 +237,7 @@ const STATIC_ROUTE_PATHS = new Set([
   "/about",
   "/okinawa",
   "/online",
+  "/sketchbook",
   "/terms",
   "/privacy",
   "/legal",
@@ -433,7 +442,7 @@ function SeoBridge() {
       seo = {
         title: `${pretty}｜WORKS｜${SITE_NAME}`,
         description:
-          "制作事例。世界観と導線を一貫して設計し、印象がきちんと伝わる見せ方を制作しています。",
+          "GUSHIKEN DESIGNの制作事例。世界観や見せ方を整え、見る人が迷わず内容を理解できるWebサイトを制作しています。",
         imagePath: DEFAULT_IMAGE_PATH,
       };
     }
@@ -446,7 +455,8 @@ function SeoBridge() {
   if (newsMatch?.params?.id) {
     seo = {
       title: `NEWS｜${BASE_TITLE}`,
-      description: "更新記事。制作の背景や判断の文脈を短く残しています。",
+      description:
+        "GUSHIKEN DESIGNの更新記事。制作の背景や判断の文脈を短く残しています。",
       imagePath: DEFAULT_IMAGE_PATH,
     };
     ogType = "article";
@@ -473,6 +483,7 @@ function SeoBridge() {
       ogType={ogType}
       titleMode="raw"
       imagePath={seo.imagePath || DEFAULT_IMAGE_PATH}
+      imageAlt={seo.imageAlt || seo.title}
     />
   );
 }
@@ -622,6 +633,7 @@ function Layout() {
           <Route path="/price" element={<PriceDetail />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/about" element={<AboutPage />} />
+          <Route path="/sketchbook" element={<Sketchbook />} />
 
           {/* News */}
           <Route path="/news" element={<NewsList />} />
@@ -698,7 +710,7 @@ function Layout() {
           <Route path="/works/KisuiRoom" element={<KisuiRoom />} />
           <Route path="/works/OriginRoom" element={<OriginRoom />} />
           <Route path="/works/NoahRoom" element={<NoahRoom />} />
-<Route path="/sketchbook" element={<Sketchbook />} />
+
           {/* 専門ページ */}
           <Route
             path="/works/vow-in-light"

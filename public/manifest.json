@@ -2,17 +2,36 @@
   "id": "/",
   "name": "GUSHIKEN DESIGN",
   "short_name": "GUSHIKEN",
-  "description": "GUSHIKEN DESIGN｜沖縄のWeb制作・Webデザイン。美容・店舗・EC向けに、上品で見やすく、価値が自然に伝わるWebサイトを制作します。",
+  "description": "GUSHIKEN DESIGNは、沖縄を拠点にLP制作・ホームページ制作・Webデザインを行う個人制作スタジオです。美容室・飲食店・ブライダル・観光体験・タトゥースタジオなど、世界観や体験価値が大切な業種に向けて、見た人の記憶に残り、予約・問い合わせのきっかけになるWebサイトを制作します。",
   "lang": "ja",
+  "dir": "ltr",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
   "display_override": ["standalone", "browser"],
-  "background_color": "#0b0b0b",
+  "orientation": "portrait-primary",
   "theme_color": "#0b0b0b",
+  "background_color": "#0b0b0b",
+  "categories": ["business", "design", "productivity"],
+  "prefer_related_applications": false,
   "icons": [
-    { "src": "/android-chrome-192x192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
-    { "src": "/android-chrome-512x512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
-    { "src": "/android-chrome-512x512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+    {
+      "src": "/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
   ]
 }

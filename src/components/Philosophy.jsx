@@ -21,14 +21,14 @@ const PRINCIPLES = [
   },
   {
     number: "02",
-    title: "温度をそろえる",
+    title: "余韻を残す",
     en: "ATMOSPHERE",
     type: "atmosphere",
     text: (
       <>
-        写真・言葉・余白のトーンを合わせる。
+        見たあとに残る手触りをつくる。
         <br />
-        らしさが静かに残る画面を作ります。
+        らしさが静かに続く画面にします。
       </>
     ),
   },
@@ -41,7 +41,7 @@ const PRINCIPLES = [
       <>
         必要な答えを、先に置く。
         <br />
-        問い合わせまで自然に進める流れを作ります。
+        迷いが増える前に、次の行動へ進めます。
       </>
     ),
   },
@@ -209,24 +209,32 @@ export default function Philosophy() {
             className={cx(styles.lead, styles.flow, styles.flow2)}
             data-reveal-flow
           >
-            <span>見た瞬間に伝わり</span>、
+            <span>何度も見たくなるサイトをつくる。</span>
             <br />
-            読み進めても迷わない。
+            一度見て終わらないWebへ。
           </p>
 
           <p
             className={cx(styles.body, styles.flow, styles.flow3)}
             data-reveal-flow
           >
-            情報の順序、文字量、写真の見え方、余白のトーンを整えると、
+            ただ情報を並べるだけでは、
             <br />
-            初めて見る人は
-            <span>自然に判断しやすく</span>なります。
+            その店やサービスの魅力は伝わりきりません。
             <br />
             <br />
-            不安が出る前に必要な答えを置き、
+            何を先に見せるか、どんな言葉にするか。
             <br />
-            問い合わせまでの流れも一緒に設計します。
+            写真をどう見せるか、余白をどう取るか。
+            <br />
+            その小さな判断を整えて、
+            <br />
+            初めて見る人にも伝わるページにしていきます。
+            <br />
+            <br />
+            必要な答えは先に置き、
+            <br />
+            相談や問い合わせまで自然に進める流れも一緒につくります。
           </p>
 
           <VisualPrinciples />
@@ -236,9 +244,11 @@ export default function Philosophy() {
             data-reveal-flow
           >
             <span>
-              「ここなら相談できそう」と思ってもらえることを、
+              「また見たい」と思えることと、
               <br />
-              制作のすべての起点にしています。
+              「ここなら相談できそう」と思えること。
+              <br />
+              その両方を、制作の中心に置いています。
             </span>
           </p>
         </div>

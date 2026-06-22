@@ -10,20 +10,20 @@ const PROOFS = [
   {
     no: "01",
     label: "OBSERVE",
-    title: "らしさの輪郭を拾う",
-    text: "写真や文章が揃う前の段階から、そのサービスらしさや見せるべき空気を整理します。",
+    title: "らしさの手がかりを見る",
+    text: "写真や文章が揃っていない段階でも、そのサービスらしさや見せるべき方向を一緒に整理します。",
   },
   {
     no: "02",
     label: "EDIT",
-    title: "伝える量と順番を整える",
-    text: "言葉を増やすのではなく、初めて見る人が判断しやすい順番と余白に整えます。",
+    title: "伝わる順番にする",
+    text: "言葉を増やす前に、初めて見る人が必要な情報へ進みやすい順番に整えます。",
   },
   {
     no: "03",
     label: "SHAPE",
-    title: "画面として最後まで形にする",
-    text: "構成、デザイン、実装、公開までを一貫して見ながら、使いやすいWebサイトに仕上げます。",
+    title: "公開できる形にする",
+    text: "見た目だけで終わらせず、スマホでの見やすさや相談までの流れも確認しながら仕上げます。",
   },
 ];
 
@@ -115,9 +115,9 @@ export default function About() {
               styles["about-flow-2"]
             )}
           >
-            説明より先に、
+            見せ方だけでなく、
             <br />
-            <span>印象が届く状態をつくる。</span>
+            <span>伝わり方まで見る。</span>
           </p>
 
           <p
@@ -127,9 +127,11 @@ export default function About() {
               styles["about-flow-3"]
             )}
           >
-            写真の置き方、言葉の量、余白と導線。
+            初めて訪れた人が、何のサイトか、誰に向いているか、
             <br />
-            初めて見た人が<span>自然に判断できる入口</span>をつくることから始めます。
+            どこから相談できるかを自然に理解できるように。
+            <br />
+            <span>言葉・写真・流れ</span>を整えるところから始めます。
           </p>
         </div>
 
@@ -149,9 +151,11 @@ export default function About() {
           </p>
 
           <p className={styles["about-text"]}>
-            世界観をつくることと、読みにくさを減らすこと。
+            世界観を大切にしながら、
+            見る人が迷いやすい部分を減らすことを意識しています。
             <br />
-            その両方を見ながら、構成・デザイン・実装まで一貫して制作します。
+            お店やサービスの魅力がきちんと伝わり、
+            相談しやすい状態まで整えるWeb制作を行っています。
             <br />
             沖縄を拠点に、<span>ホームページ制作・LP制作・Webデザイン</span>を行っています。
           </p>
@@ -187,27 +191,25 @@ export default function About() {
           )}
         >
           <p>
-            制作の背景や、Web制作で大切にしている考え方を、
+            制作の背景や、より詳しい考え方は、
             <br />
             <span>制作者ページにまとめています。</span>
           </p>
 
-<div className={styles["about-links"]}>
-  <Link to="/about" className={styles["about-main-link"]}>
-    制作者について知る
-  </Link>
+          <div className={styles["about-links"]}>
+            <Link to="/about" className={styles["about-main-link"]}>
+              制作者について知る
+            </Link>
 
-  <a
-    href="https://note.com/noahgushi123"
-    target="_blank"
-    rel="noopener noreferrer"
-    className={styles["about-note-link"]}
-  >
-    制作記録を読む
-  </a>
-</div>
-
-
+            <a
+              href="https://note.com/noahgushi123"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles["about-note-link"]}
+            >
+              制作記録を読む
+            </a>
+          </div>
         </div>
       </div>
     </section>

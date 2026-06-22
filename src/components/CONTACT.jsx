@@ -7,9 +7,9 @@ import styles from "./Contact.module.css";
 const cx = (...a) => a.filter(Boolean).join(" ");
 
 const STARTERS = [
-  "内容がまだ固まっていない",
-  "今のサイトを整え直したい",
-  "はじめてWebサイトをつくる",
+  "写真や文章がまだ揃っていない",
+  "予算や公開時期を相談したい",
+  "今のサイトを見直したい",
 ];
 
 function ContactVisual() {
@@ -18,7 +18,7 @@ function ContactVisual() {
       className={cx(styles.visual, styles.reveal, styles.r4)}
       data-contact-reveal
     >
-      <p className={styles.visualLabel}>こんな段階から</p>
+      <p className={styles.visualLabel}>相談できること</p>
 
       <div className={styles.starterList} role="list">
         {STARTERS.map((text, index) => (
@@ -43,7 +43,7 @@ function ContactVisual() {
 
       <div className={styles.visualNote} aria-hidden="true">
         <span />
-        <p>まだ具体的でなくても、大丈夫です。</p>
+        <p>決まっていないことがあっても大丈夫です。</p>
         <span />
       </div>
     </div>
@@ -125,19 +125,18 @@ export default function Contact() {
             className={cx(styles.lead, styles.reveal, styles.r2)}
             data-contact-reveal
           >
-            ここから、
+            まだ曖昧なままでも、
             <br />
-            <span>整えていく。</span>
+            <span>相談できます。</span>
           </p>
 
           <p
             className={cx(styles.leadSub, styles.reveal, styles.r3)}
             data-contact-reveal
           >
-            まだ内容が固まっていなくても大丈夫です。
+            目的・写真・文章・予算感・公開時期が決まっていなくても大丈夫です。
             <br />
-            業種・目的・写真・予算感を聞きながら、
-            必要な見せ方と進め方を一緒に決めていきます。
+            今ある情報をもとに、必要な内容と進め方を一緒に整理します。
           </p>
         </div>
 
@@ -148,7 +147,7 @@ export default function Contact() {
           data-contact-reveal
         >
           <Link to="/contact" className={styles.btn}>
-            <span>お問い合わせへ進む</span>
+            <span>相談内容を送る</span>
           </Link>
         </div>
 
@@ -156,9 +155,9 @@ export default function Contact() {
           className={cx(styles.footer, styles.reveal, styles.r6)}
           data-contact-reveal
         >
-          ※ 時期や内容により、開始時期のご相談をお願いする場合があります。
+          内容を確認後、通常24時間以内に返信します。
           <br />
-          その際も、できるだけ丁寧にご案内いたします。
+          制作時期や内容により、開始時期をご相談する場合があります。
         </p>
       </div>
     </section>

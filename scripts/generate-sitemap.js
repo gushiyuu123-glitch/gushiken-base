@@ -19,7 +19,9 @@ const NEWS_MAX = Number(process.env.SITEMAP_NEWS_MAX || 60);
 
 // microCMS env（無ければ news はスキップ）
 const SERVICE_DOMAIN =
-  process.env.MICROCMS_SERVICE_DOMAIN || process.env.VITE_MICROCMS_SERVICE_DOMAIN;
+  process.env.MICROCMS_SERVICE_DOMAIN ||
+  process.env.VITE_MICROCMS_SERVICE_DOMAIN;
+
 const API_KEY =
   process.env.MICROCMS_API_KEY || process.env.VITE_MICROCMS_API_KEY;
 
@@ -95,10 +97,13 @@ function formatDate(dateString) {
 }
 
 function newerDate(a, b) {
-  const da = new Date(formatDate(a)).getTime();
-  const db = new Date(formatDate(b)).getTime();
+  const fa = formatDate(a);
+  const fb = formatDate(b);
 
-  return db > da ? b : a;
+  const da = new Date(fa).getTime();
+  const db = new Date(fb).getTime();
+
+  return db > da ? fb : fa;
 }
 
 // Room / Teaser / Intro は sitemap から除外
@@ -139,7 +144,11 @@ function mergeUrl(map, item) {
   const prev = map.get(key);
 
   if (!prev) {
-    map.set(key, { ...item, path: key });
+    map.set(key, {
+      ...item,
+      path: key,
+      lastmod: formatDate(item.lastmod),
+    });
     return;
   }
 
@@ -171,39 +180,45 @@ async function fetchNewsPages() {
   const pages = [];
   let offset = 0;
 
-  while (pages.length < hardLimit) {
-    const limit = Math.min(100, hardLimit - pages.length);
+  try {
+    while (pages.length < hardLimit) {
+      const limit = Math.min(100, hardLimit - pages.length);
 
-    const res = await client.get("/news", {
-      params: {
-        limit,
-        offset,
-        orders: "-publishedAt",
-        fields: "id,publishedAt,updatedAt",
-      },
-    });
-
-    const data = res.data || {};
-    const contents = Array.isArray(data.contents) ? data.contents : [];
-
-    if (contents.length === 0) break;
-
-    for (const item of contents) {
-      if (!item?.id) continue;
-
-      pages.push({
-        path: `/news/${encodeURIComponent(String(item.id))}`,
-        lastmod: formatDate(item.updatedAt || item.publishedAt),
-        changefreq: "monthly",
-        priority: "0.55",
+      const res = await client.get("/news", {
+        params: {
+          limit,
+          offset,
+          orders: "-publishedAt",
+          fields: "id,publishedAt,updatedAt",
+        },
       });
 
-      if (pages.length >= hardLimit) break;
+      const data = res.data || {};
+      const contents = Array.isArray(data.contents) ? data.contents : [];
+
+      if (contents.length === 0) break;
+
+      for (const item of contents) {
+        if (!item?.id) continue;
+
+        pages.push({
+          path: `/news/${encodeURIComponent(String(item.id))}`,
+          lastmod: formatDate(item.updatedAt || item.publishedAt),
+          changefreq: "monthly",
+          priority: "0.55",
+        });
+
+        if (pages.length >= hardLimit) break;
+      }
+
+      offset += limit;
+
+      if (offset >= (data.totalCount || 0)) break;
     }
-
-    offset += limit;
-
-    if (offset >= (data.totalCount || 0)) break;
+  } catch (error) {
+    console.warn("📰 microCMS news fetch failed. News pages skipped.");
+    console.warn(error?.message || error);
+    return pages;
   }
 
   return pages;
@@ -225,7 +240,9 @@ async function getWorksFromIndex() {
         priority: "0.8",
         lastmod: formatDate(w.updatedAt || w.createdAt || TODAY),
       }));
-  } catch {
+  } catch (error) {
+    console.warn("🖼️ worksIndex import failed. Falling back to worksData.");
+    console.warn(error?.message || error);
     return [];
   }
 }
@@ -234,8 +251,8 @@ async function getWorksFromData() {
   try {
     const mod = await import("../src/data/worksData.js");
     const worksData = Array.isArray(mod.worksData) ? mod.worksData : [];
-    const items = worksData.flatMap((c) =>
-      Array.isArray(c?.items) ? c.items : []
+    const items = worksData.flatMap((category) =>
+      Array.isArray(category?.items) ? category.items : []
     );
 
     return items
@@ -247,7 +264,9 @@ async function getWorksFromData() {
         priority: "0.8",
         lastmod: formatDate(w.updatedAt || w.createdAt || TODAY),
       }));
-  } catch {
+  } catch (error) {
+    console.warn("🖼️ worksData import failed. Required works only.");
+    console.warn(error?.message || error);
     return [];
   }
 }
@@ -272,6 +291,24 @@ async function getWorkPages() {
   return Array.from(map.values());
 }
 
+/* ---------------- output ---------------- */
+
+function writeSitemap(xml) {
+  const publicOut = path.resolve(process.cwd(), "public", "sitemap.xml");
+  const distOut = path.resolve(process.cwd(), "dist", "sitemap.xml");
+
+  fs.mkdirSync(path.dirname(publicOut), { recursive: true });
+  fs.writeFileSync(publicOut, xml, "utf-8");
+
+  console.log(`✅ wrote: ${path.relative(process.cwd(), publicOut)}`);
+
+  // build後に実行しても事故らない保険
+  if (fs.existsSync(path.dirname(distOut))) {
+    fs.writeFileSync(distOut, xml, "utf-8");
+    console.log(`✅ wrote: ${path.relative(process.cwd(), distOut)}`);
+  }
+}
+
 /* ---------------- generate ---------------- */
 
 async function generate() {
@@ -279,18 +316,24 @@ async function generate() {
   const newsPages = await fetchNewsPages();
 
   const latestWork = workPages.reduce(
-    (acc, p) => newerDate(acc, p.lastmod),
+    (acc, page) => newerDate(acc, page.lastmod),
     TODAY
   );
 
   const latestNews = newsPages.reduce(
-    (acc, p) => newerDate(acc, p.lastmod),
+    (acc, page) => newerDate(acc, page.lastmod),
     TODAY
   );
 
-  // 正規URLだけを載せる。リダイレクト用URL、noindexページ、実験ページは載せない。
+  // 正規URLだけを載せる。
+  // リダイレクト用URL、noindexページ、実験ページ、薄い作品ページは載せない。
   const staticPages = [
-    { path: "/", changefreq: "weekly", priority: "1.0", lastmod: TODAY },
+    {
+      path: "/",
+      changefreq: "weekly",
+      priority: "1.0",
+      lastmod: TODAY,
+    },
     {
       path: "/works",
       changefreq: "weekly",
@@ -312,6 +355,7 @@ async function generate() {
       lastmod: TODAY,
     },
 
+    // 信頼・相談ページ
     {
       path: "/price",
       changefreq: "monthly",
@@ -325,10 +369,26 @@ async function generate() {
       lastmod: TODAY,
     },
     {
+      path: "/about",
+      changefreq: "monthly",
+      priority: "0.75",
+      lastmod: TODAY,
+    },
+
+    // 制作ログ・更新
+    {
       path: "/news",
       changefreq: "weekly",
       priority: "0.7",
       lastmod: latestNews,
+    },
+
+    // 制作の裏側
+    {
+      path: "/sketchbook",
+      changefreq: "monthly",
+      priority: "0.55",
+      lastmod: TODAY,
     },
 
     // 法務系
@@ -362,7 +422,10 @@ async function generate() {
 
   // 重複排除 + lastmod最大
   const map = new Map();
-  all.forEach((u) => mergeUrl(map, u));
+
+  all.forEach((url) => {
+    mergeUrl(map, url);
+  });
 
   const unique = Array.from(map.values()).sort((a, b) =>
     normalizePath(a.path).localeCompare(normalizePath(b.path), "en")
@@ -383,18 +446,13 @@ ${unique
 </urlset>
 `;
 
-  const out = path.resolve(process.cwd(), "public", "sitemap.xml");
-
-  fs.mkdirSync(path.dirname(out), { recursive: true });
-  fs.writeFileSync(out, xml, "utf-8");
+  writeSitemap(xml);
 
   console.log(`🗺️ sitemap.xml generated: ${unique.length} urls`);
   console.log(`🌐 site: ${SITE}`);
   console.log(`🧭 static in sitemap: ${staticPages.length}`);
   console.log(`📰 news in sitemap: ${newsPages.length} (cap=${NEWS_MAX})`);
-  console.log(
-    `🖼️ works in sitemap: ${workPages.length} (indexed works only)`
-  );
+  console.log(`🖼️ works in sitemap: ${workPages.length} (indexed works only)`);
 }
 
 generate().catch((err) => {

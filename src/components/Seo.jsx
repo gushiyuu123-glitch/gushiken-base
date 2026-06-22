@@ -360,7 +360,11 @@ export default function Seo({
 
       {ogType === "article" && normalizedArticleTags.length
         ? normalizedArticleTags.map((tag) => (
-            <meta key={`article-tag-${tag}`} property="article:tag" content={tag} />
+            <meta
+              key={`article-tag-${tag}`}
+              property="article:tag"
+              content={tag}
+            />
           ))
         : null}
 
@@ -377,6 +381,8 @@ export default function Seo({
       {ogImage ? (
         <meta name="twitter:image:alt" content={safeImageAlt} />
       ) : null}
+
+      <meta name="twitter:url" content={canonical} />
 
       {twitterSite ? <meta name="twitter:site" content={twitterSite} /> : null}
 
