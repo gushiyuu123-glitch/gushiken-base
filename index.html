@@ -58,10 +58,10 @@
   <title>GUSHIKEN DESIGN｜沖縄のWebデザイン・ホームページ制作</title>
 
   <!-- Fallback SEO -->
-<meta
-  name="description"
-  content="GUSHIKEN DESIGNは、沖縄を拠点にLP制作・ホームページ制作・Webデザインを行う個人制作スタジオです。美容室・理容室・飲食店・ブライダル・タトゥースタジオなど、世界観や体験価値が大切な業種に向けて、見た人の記憶に残り、予約・問い合わせのきっかけになるWebサイトを制作します。"
-/>
+  <meta
+    name="description"
+    content="GUSHIKEN DESIGNは、沖縄を拠点にLP制作・ホームページ制作・Webデザインを行う個人制作スタジオです。美容室・理容室・飲食店・ブライダル・タトゥースタジオなど、世界観や体験価値が大切な業種に向けて、見た人の記憶に残り、予約・問い合わせのきっかけになるWebサイトを制作します。"
+  />
   <meta
     name="robots"
     content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1"
@@ -299,51 +299,77 @@
     }
   </style>
 
-  <!-- Google Analytics (GA4) - self exclude + url scrub -->
+  <!-- Google Analytics (GA4) - self exclude + URL scrub -->
   <script>
     (function () {
-      const KEY = "__gd_internal__";
+      const GA_ID = "G-NM83YP0V4Q";
+      const STORAGE_KEY = "__gd_noanalytics__";
 
       /*
         自分のアクセス除外用。
-        使い方:
-        https://gushikendesign.com/?internal=1&k=gd-2026-yuto-internal-7pyrks
-        解除:
+
+        除外ON:
+        https://gushikendesign.com/?noanalytics=1
+
+        除外OFF:
+        https://gushikendesign.com/?analytics=1
+
+        旧URLも一応対応:
+        https://gushikendesign.com/?internal=1
         https://gushikendesign.com/?internal=0
+
+        仕様:
+        - localStorageに保存するので、そのブラウザでは以後ずっとGAを送らない
+        - Safari / Chrome / アプリ内ブラウザは別扱い
+        - URLの ?noanalytics=1 などは即座に消して、通常URLに戻す
+        - 除外ONのブラウザではGAタグ自体を読み込まない
+        - React側で window.gtag を呼んでもエラーにならない
       */
-      const INTERNAL_KEY = "gd-2026-yuto-internal-7pyrks";
 
       const safeStorage = {
         get(key) {
           try {
-            return localStorage.getItem(key);
+            return window.localStorage.getItem(key);
           } catch {
             return null;
           }
         },
         set(key, value) {
           try {
-            localStorage.setItem(key, value);
+            window.localStorage.setItem(key, value);
           } catch {}
         },
         del(key) {
           try {
-            localStorage.removeItem(key);
+            window.localStorage.removeItem(key);
           } catch {}
         },
       };
 
       const params = new URLSearchParams(window.location.search);
 
-      if (params.get("internal") === "1" && params.get("k") === INTERNAL_KEY) {
-        safeStorage.set(KEY, "1");
+      const shouldDisableAnalytics =
+        params.get("noanalytics") === "1" || params.get("internal") === "1";
+
+      const shouldEnableAnalytics =
+        params.get("analytics") === "1" || params.get("internal") === "0";
+
+      if (shouldDisableAnalytics) {
+        safeStorage.set(STORAGE_KEY, "1");
       }
 
-      if (params.get("internal") === "0") {
-        safeStorage.del(KEY);
+      if (shouldEnableAnalytics) {
+        safeStorage.del(STORAGE_KEY);
       }
 
-      if (params.has("internal") || params.has("k")) {
+      if (
+        params.has("noanalytics") ||
+        params.has("analytics") ||
+        params.has("internal") ||
+        params.has("k")
+      ) {
+        params.delete("noanalytics");
+        params.delete("analytics");
         params.delete("internal");
         params.delete("k");
 
@@ -357,15 +383,21 @@
       }
 
       window.dataLayer = window.dataLayer || [];
+
       window.gtag =
         window.gtag ||
         function () {
           window.dataLayer.push(arguments);
         };
 
-      if (safeStorage.get(KEY) === "1") return;
+      const isAnalyticsDisabled = safeStorage.get(STORAGE_KEY) === "1";
 
-      const GA_ID = "G-NM83YP0V4Q";
+      window.__GD_ANALYTICS_DISABLED__ = isAnalyticsDisabled;
+
+      if (isAnalyticsDisabled) {
+        window["ga-disable-" + GA_ID] = true;
+        return;
+      }
 
       if (
         !document.querySelector(
@@ -378,8 +410,8 @@
         document.head.appendChild(script);
       }
 
-      gtag("js", new Date());
-      gtag("config", GA_ID, {
+      window.gtag("js", new Date());
+      window.gtag("config", GA_ID, {
         send_page_view: false,
       });
     })();
