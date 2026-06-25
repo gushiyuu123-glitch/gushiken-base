@@ -37,21 +37,21 @@ const DESIGN_STUDIES = [
     no: "01",
     title: "BLACK PAPILLON",
     meta: "Tattoo Studio / Naha, Okinawa",
-    text: "タトゥースタジオ向けに、黒・余白・言葉の温度で空気を組み立てたデザインスタディ。",
+    text: "タトゥースタジオ向けに、黒・余白・言葉の温度で印象を組み立てたデザインスタディ。",
     link: "/works/black-papillon",
   },
   {
     no: "02",
     title: "Vow in Light",
     meta: "Bridal / Photowedding / Web Design",
-    text: "ブライダル・フォトウェディング向けに、光・静けさ・余白で世界観を伝える構成を試したデザインスタディ。",
+    text: "ブライダル・フォトウェディング向けに、光・静けさ・予約前の安心感を整理した制作。",
     link: "/works/vow-in-light",
   },
   {
     no: "03",
     title: "KOU RYUI",
     meta: "Ryukyu Costume / Culture Experience",
-    text: "沖縄文化体験・琉装撮影向けに、文化性と予約前の安心感を両立する見せ方を検証したデザインスタディ。",
+    text: "沖縄文化体験・琉装撮影向けに、文化性と体験の魅力が伝わる構成を検証した制作。",
     link: "/works/kou-ryui",
   },
 ];
@@ -65,7 +65,14 @@ function CrownIcon({ className = "" }) {
       xmlns="http://www.w3.org/2000/svg"
       aria-hidden="true"
     >
-      <line x1="4" y1="22" x2="36" y2="22" strokeWidth="1" strokeLinecap="round" />
+      <line
+        x1="4"
+        y1="22"
+        x2="36"
+        y2="22"
+        strokeWidth="1"
+        strokeLinecap="round"
+      />
       <polyline
         points="4,22 4,10 13,17 20,4 27,17 36,10 36,22"
         strokeWidth="1"
@@ -113,8 +120,22 @@ function FocusIcon({ className = "" }) {
       <circle cx="20" cy="20" r="14" strokeWidth="0.8" strokeDasharray="2.5 3" />
       <circle cx="20" cy="20" r="5.5" strokeWidth="0.8" />
       <circle cx="20" cy="20" r="1.6" strokeWidth="0.9" />
-      <line x1="20" y1="18.4" x2="20" y2="7" strokeWidth="0.9" strokeLinecap="round" />
-      <line x1="21.4" y1="20.8" x2="30" y2="25.5" strokeWidth="0.9" strokeLinecap="round" />
+      <line
+        x1="20"
+        y1="18.4"
+        x2="20"
+        y2="7"
+        strokeWidth="0.9"
+        strokeLinecap="round"
+      />
+      <line
+        x1="21.4"
+        y1="20.8"
+        x2="30"
+        y2="25.5"
+        strokeWidth="0.9"
+        strokeLinecap="round"
+      />
     </svg>
   );
 }
@@ -363,7 +384,7 @@ export default function AboutPage() {
                   styles["ap-flow-2"]
                 )}
               >
-                OKINAWA / WEB DESIGN / FIELD TO SCREEN
+                OKINAWA / FIELD EXPERIENCE / WEB DESIGN
               </p>
 
               <p
@@ -373,25 +394,27 @@ export default function AboutPage() {
                   styles["ap-flow-2"]
                 )}
               >
-                現場で拾った感覚を、
-                <br />
-                <span>画面の流れに変える。</span>
+                売り場で見た差を、<span>Webの設計へ。</span>
               </p>
 
-              <p
+              <div
                 className={cx(
                   styles["ap-text"],
                   styles["ap-flow"],
                   styles["ap-flow-3"]
                 )}
               >
-                GUSHIKEN DESIGNは、沖縄県浦添市を拠点に、
-                ホームページ制作・LP制作・Webデザインを行う個人制作スタジオです。
-                <br />
-                きれいに見せるだけではなく、
-                その店やサービスの<span>空気・言葉・導線</span>が伝わるように、
-                構成から公開まで一貫して制作します。
-              </p>
+                <p>
+                  GUSHIKEN DESIGNは、沖縄県浦添市を拠点に、
+                  ホームページ制作・LP制作・Webデザインを行う個人制作スタジオです。
+                </p>
+
+                <p>
+                  前職の営業で見てきた
+                  <span>見られ方・選ばれ方・安心の置き方</span>
+                  をもとに、事業の印象と相談までの道筋を整えます。
+                </p>
+              </div>
             </div>
           </div>
         </section>
@@ -402,30 +425,26 @@ export default function AboutPage() {
               <p className={styles["story-label"]}>PHILOSOPHY</p>
 
               <p className={styles["story-lead"]}>
-                感覚だけで終わらせず、
-                <br />
-                <span>理由のある景色にする。</span>
+                見た目の奥に、<span>伝わる理由を置く。</span>
               </p>
 
-              <p className={styles["story-text"]}>
-                写真、言葉、余白、導線。
-                <br />
-                どこに何を置くかで、商品・空間・サービスの伝わり方は変わります。
-                <br />
-                初めて見る人が、迷わず理解できる状態まで整えることを大切にしています。
-              </p>
+              <div className={styles["story-text"]}>
+                <p>写真、言葉、余白、情報の順番。</p>
+                <p>
+                  どこに何を置くかで、商品・空間・サービスの受け取られ方は変わります。
+                </p>
+              </div>
 
               <div className={styles["story-prose"]}>
                 <p>
-                  最初に見える写真、言葉の量、余白の取り方、情報の順番。
-                  それぞれに小さな判断が積み重なっています。
-                  その積み重ねが、見た人の受け取り方と行動を変えると考えています。
+                  良い雰囲気に見せるだけなら、表面を整えることでもできます。
+                  でも、見た人が安心して読み進め、相談や予約を考えるところまで進むには、
+                  その見せ方に理由が必要です。
                 </p>
 
                 <p>
-                  その店やサービスらしさを最初に届け、見た人が
-                  「ここは自分に合いそうだ」と判断できる状態をつくること。
-                  それが、制作の目標です。
+                  最初に目に入る写真、言葉の量、余白の取り方、料金や実績を出す順番。
+                  小さな判断の積み重ねが、見た人の理解と行動を変えると考えています。
                 </p>
               </div>
             </article>
@@ -439,36 +458,35 @@ export default function AboutPage() {
             >
               <div className={styles["story-heading-row"]}>
                 <p className={styles["story-label"]}>ORIGIN / FIELD EXPERIENCE</p>
-                <span className={styles["story-index"]}>01</span>
               </div>
 
               <p className={styles["story-lead"]}>
-                現場で見た、
-                <br />
-                <span>伝わり方の差。</span>
+                小さな反応の差を、<span>見逃さない。</span>
               </p>
 
-              <p className={styles["story-text"]}>
-                Web制作に入る前は、沖縄県内の観光土産卸の営業として、
-                店舗や売り場を回っていました。
-                <br />
-                商品がどこで見られ、どう説明され、どんな置き方なら手に取られるのか。
-                その違いを、現場で見てきました。
-              </p>
-
-              <div className={styles["story-prose"]}>
+              <div className={styles["story-text"]}>
                 <p>
-                  店舗を回っていると、同じ商品でも、置かれる場所や見え方、
-                  伝え方によって反応が変わることがあります。
-                  商品そのものの良さだけではなく、最初に何が目に入り、
-                  どこで安心できるか。
-                  その小さな違いが、選ばれるかどうかに関わっていました。
+                  Web制作に入る前は、沖縄県内の観光土産卸の営業として、
+                  店舗や売り場を回っていました。
                 </p>
 
                 <p>
-                  その経験が、今のWeb制作に直接つながっています。
-                  最初に何が目に入るか、どこで迷うか、どこで安心するか。
-                  現場で見てきた流れと同じことを、画面の中で組み立てています。
+                  商品がどこで見られ、どう説明され、どんな置き方なら手に取られるのか。
+                  その違いを現場で見てきました。
+                </p>
+              </div>
+
+              <div className={styles["story-prose"]}>
+                <p>
+                  同じ商品でも、置かれる場所や見え方、説明のされ方によって反応が変わる。
+                  商品そのものの良さだけではなく、最初に何が目に入り、
+                  どこで安心できるかが、選ばれるかどうかに関わっていました。
+                </p>
+
+                <p>
+                  その感覚は、今のWeb制作にもつながっています。
+                  サイトでも、最初に見える印象、読み進める順番、不安が消える場所によって、
+                  相談や予約までの進み方は変わります。
                 </p>
               </div>
 
@@ -484,62 +502,60 @@ export default function AboutPage() {
             <article className={cx(styles["story-block"], styles["ap-flow"])}>
               <div className={styles["story-heading-row"]}>
                 <p className={styles["story-label"]}>WEB DESIGN</p>
-                <span className={styles["story-index"]}>02</span>
               </div>
 
               <p className={styles["story-lead"]}>
-                現場の感覚を、
-                <br />
-                <span>画面の流れに変える。</span>
+                見られ方を、<span>設計に変える。</span>
               </p>
 
-              <p className={styles["story-text"]}>
-                Webでも、最初に何が目に入るかで受け取り方は変わります。
-                <br />
-                写真、言葉、料金、実績、問い合わせまでの流れ。
-                <br />
-                見た人が迷わず進めるように、必要な情報を必要な順番で置いていきます。
-              </p>
+              <div className={styles["story-text"]}>
+                <p>Webでも、最初の数秒で受け取られる印象は大きく変わります。</p>
+                <p>
+                  何を見せ、何を説明し、どこで相談できるようにするか。
+                  その順番を整理しながら制作します。
+                </p>
+              </div>
 
-              <div className={styles["method-strip"]}>
-                <div>
-                  <span>01</span>
-                  <p>誰に届けるかを決める</p>
-                </div>
+              <div className={styles["story-prose"]}>
+                <p>
+                  まず、誰に見てほしいサイトなのかを決めます。
+                  次に、その人が最初に受け取る印象を整えます。
+                  写真・見出し・余白・言葉の量は、そこで大きく変わります。
+                </p>
 
-                <div>
-                  <span>02</span>
-                  <p>最初に見せる景色を決める</p>
-                </div>
-
-                <div>
-                  <span>03</span>
-                  <p>相談までの流れをつくる</p>
-                </div>
+                <p>
+                  その上で、料金、実績、FAQ、問い合わせまでの流れを組み立てます。
+                  世界観で惹きつけるだけではなく、迷わず相談できる状態まで整えることを大切にしています。
+                </p>
               </div>
             </article>
 
             <article className={cx(styles["works-block"], styles["ap-flow"])}>
               <div className={styles["story-heading-row"]}>
                 <p className={styles["story-label"]}>DESIGN STUDIES</p>
-                <span className={styles["story-index"]}>03</span>
               </div>
 
               <p className={styles["story-lead"]}>
-                業種ごとの空気を、
-                <br />
-                <span>画面の中で試す。</span>
+                作品制作を、<span>検証として残す。</span>
               </p>
 
-              <p className={styles["story-text"]}>
-                作品制作では、業種ごとの見せ方・言葉・導線を試しています。
-                <br />
-                ただ数を増やすためではなく、実際の制作で使える判断を増やすための検証です。
-              </p>
+              <div className={styles["story-text"]}>
+                <p>
+                  作品制作では、業種ごとの見せ方・言葉・情報の置き方を試しています。
+                </p>
+
+                <p>
+                  ただ数を増やすためではなく、実際の制作で使える判断を増やすための検証です。
+                </p>
+              </div>
 
               <div className={styles["works-list"]}>
                 {DESIGN_STUDIES.map((work) => (
-                  <Link key={work.no} to={work.link} className={styles["works-item"]}>
+                  <Link
+                    key={work.no}
+                    to={work.link}
+                    className={styles["works-item"]}
+                  >
                     <span className={styles["works-no"]}>{work.no}</span>
 
                     <span className={styles["works-main"]}>
@@ -558,15 +574,15 @@ export default function AboutPage() {
               <p className={styles["story-label"]}>BASIS / FOCUS</p>
 
               <p className={styles["story-lead"]}>
-                感覚を支える、
-                <br />
-                <span>基礎と検証。</span>
+                感覚に、<span>根拠を添える。</span>
               </p>
 
-              <p className={styles["qualification-intro"]}>
-                HTML・CSS・Web制作の基礎、色彩設計や配色理論。
-                感覚だけに頼らず、制作の土台も少しずつ積み上げています。
-              </p>
+              <div className={styles["qualification-intro"]}>
+                <p>HTML・CSS・Web制作の基礎、色彩設計や配色理論。</p>
+                <p>
+                  感覚だけに頼らず、制作の土台も少しずつ積み上げています。
+                </p>
+              </div>
 
               <div className={styles["certificate-board"]}>
                 <button
@@ -594,11 +610,7 @@ export default function AboutPage() {
 
               <div className={styles["qualification-list"]}>
                 {QUALIFICATIONS.map((item, index) => (
-                  <div
-                    key={item.id}
-                    className={cx(styles["qrow-flow"], styles["ap-flow"])}
-                    style={{ "--q-index": index }}
-                  >
+                  <div key={item.id} className={styles["ap-flow"]}>
                     <QualificationRow
                       item={item}
                       index={index}
@@ -610,18 +622,17 @@ export default function AboutPage() {
             </article>
 
             <article className={cx(styles["closing-block"], styles["ap-flow"])}>
-  <p className={styles["closing-lead"]}>
-  入口から、
-  <br />
-  <span>一緒につくり上げましょう。</span>
-</p>
-
-              <p className={styles["closing-text"]}>
-                内容がまだ固まっていなくても大丈夫です。
-                <br />
-                業種・目的・写真・予算感を聞きながら、
-                必要な見せ方と進め方を一緒に整理します。
+              <p className={styles["closing-lead"]}>
+                今ある素材から、<span>整えます。</span>
               </p>
+
+              <div className={styles["closing-text"]}>
+                <p>内容がまだ固まっていなくても大丈夫です。</p>
+                <p>
+                  業種・目的・写真・予算感を聞きながら、
+                  必要な見せ方と進め方を一緒に整理します。
+                </p>
+              </div>
 
               <div className={styles["closing-links"]}>
                 <Link to="/contact" className={styles["ap-primary-link"]}>
