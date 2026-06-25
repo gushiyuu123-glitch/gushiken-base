@@ -42,12 +42,12 @@ export default function HeroSP() {
 
   useLayoutEffect(() => {
     const root = rootRef.current;
-    if (!root) return;
+    if (!root) return undefined;
 
     const reduce =
       window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches ?? false;
 
-    if (reduce) return;
+    if (reduce) return undefined;
 
     let rafId = 0;
 
@@ -211,10 +211,6 @@ export default function HeroSP() {
 
         <div className={styles.left}>
           <p className={styles.kicker} data-hero="leftItem">
-            OKINAWA / ONLINE WEB DESIGN
-          </p>
-
-          <p className={styles.hook} data-hero="leftItem">
             選ばれる入口を、空気から設計する。
           </p>
 
@@ -235,15 +231,15 @@ export default function HeroSP() {
             <p className={styles.copyLead}>
               見た人の記憶に残り、
               <br />
-              予約・問い合わせの
+              予約・問い合わせのきっかけになる
               <br />
-              きっかけになるWebへ。
+              Webサイトへ。
             </p>
 
             <p className={styles.copySub}>
-              美容室・飲食店・ブライダルなど、
+              美容室・飲食店・ブライダル・観光体験・タトゥースタジオなど、
               <br />
-              世界観や体験価値が大切な業種へ。
+              世界観や体験価値が大切な業種に向けて、設計から公開まで形にします。
             </p>
 
             <p className="visually-hidden">

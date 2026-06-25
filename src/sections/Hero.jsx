@@ -179,11 +179,7 @@ export default function Hero() {
             </p>
 
             <p className={styles.copyLead}>
-              見た人の記憶に残り、
-              <br />
-              予約・問い合わせの
-              <br />
-              きっかけになるWebへ。
+              見た人の記憶に残り、<br />予約・問い合わせのきっかけになる<br />Webサイトへ。
             </p>
 
             <p className={styles.copySub}>

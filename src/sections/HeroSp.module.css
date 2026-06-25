@@ -2,14 +2,15 @@
 /* =========================================
    HERO SP — Paper / Shelf / Frames
    Short Copy × Strong Visual
+   Hook Removed / Readability Fine Tune
 ========================================= */
 
 .root {
   --paper: rgba(246, 241, 232, 1);
-  --ink: rgba(22, 22, 22, 0.9);
-  --ink-strong: rgba(16, 16, 16, 0.96);
-  --muted: rgba(28, 28, 28, 0.62);
-  --faint: rgba(90, 75, 55, 0.55);
+  --ink: rgba(22, 22, 22, 0.92);
+  --ink-strong: rgba(16, 16, 16, 0.97);
+  --muted: rgba(28, 28, 28, 0.66);
+  --faint: rgba(90, 75, 55, 0.58);
   --hair: rgba(120, 95, 65, 0.18);
   --gold: #b8905a;
   --gold-soft: rgba(184, 144, 90, 0.34);
@@ -23,6 +24,10 @@
   color: var(--ink);
   overflow: hidden;
   isolation: isolate;
+
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
 
 .root *,
@@ -187,20 +192,12 @@
    LEFT TEXT
 ========================= */
 .kicker {
-  margin: 0 0 11px;
-  color: rgba(90, 75, 55, 0.54);
+  margin: 0 0 24px;
+  color: rgba(90, 75, 55, 0.62);
   font-size: 9.3px;
-  line-height: 1.7;
-  letter-spacing: 0.2em;
-}
-
-.hook {
-  margin: 0 0 19px;
-  color: rgba(22, 22, 22, 0.86);
-  font-size: 13px;
-  line-height: 1.78;
-  letter-spacing: 0.085em;
-  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.38);
+  line-height: 1.68;
+  letter-spacing: 0.15em;
+  font-feature-settings: "palt" 1;
 }
 
 .h1 {
@@ -209,7 +206,7 @@
   font-family: "Cormorant Garamond", serif;
   font-weight: 400;
   font-size: clamp(54px, 14.4vw, 82px);
-  letter-spacing: 0.02em;
+  letter-spacing: 0.018em;
   line-height: 0.96;
   text-shadow: 0 1px 0 rgba(255, 255, 255, 0.32);
 }
@@ -219,7 +216,7 @@
 ========================= */
 .copy {
   position: relative;
-  max-width: 350px;
+  max-width: 354px;
   margin: 0 0 18px;
   padding-left: 15px;
   color: var(--muted);
@@ -244,19 +241,22 @@
 .copyMeta {
   display: block;
   margin: 0 0 12px;
-  color: rgba(70, 55, 40, 0.58);
-  font-size: 8.8px;
-  line-height: 1.78;
-  letter-spacing: 0.14em;
+  color: rgba(70, 55, 40, 0.62);
+  font-size: 8.9px;
+  line-height: 1.74;
+  letter-spacing: 0.12em;
 }
 
 .copyLead {
   margin: 0;
-  color: rgba(18, 18, 18, 0.84);
+  color: rgba(18, 18, 18, 0.9);
   font-family: "Shippori Mincho", "Yu Mincho", "Hiragino Mincho ProN", serif;
-  font-size: clamp(14px, 3.9vw, 16px);
-  line-height: 1.84;
-  letter-spacing: 0.08em;
+  font-size: clamp(14.8px, 4vw, 16.8px);
+  font-weight: 400;
+  line-height: 1.76;
+  letter-spacing: 0.038em;
+  font-feature-settings: "palt" 1;
+  font-kerning: normal;
 }
 
 .copyLead::after {
@@ -265,15 +265,16 @@
   width: 34px;
   height: 1px;
   margin: 12px 0 11px;
-  background: rgba(184, 144, 90, 0.42);
+  background: rgba(184, 144, 90, 0.44);
 }
 
 .copySub {
   margin: 0;
-  color: rgba(28, 28, 28, 0.58);
+  color: rgba(28, 28, 28, 0.64);
   font-size: 11px;
-  line-height: 1.96;
-  letter-spacing: 0.035em;
+  line-height: 1.9;
+  letter-spacing: 0.026em;
+  font-feature-settings: "palt" 1;
 }
 
 .ctaRow {
@@ -285,12 +286,12 @@
   align-items: center;
   gap: 10px;
   padding: 11px 0 9px;
-  color: rgba(22, 22, 22, 0.88);
+  color: rgba(22, 22, 22, 0.9);
   text-decoration: none;
-  border-bottom: 1px solid rgba(110, 85, 55, 0.3);
+  border-bottom: 1px solid rgba(110, 85, 55, 0.32);
   font-size: 11px;
   line-height: 1;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.12em;
 }
 
 .cta::after {
@@ -298,7 +299,7 @@
   width: 24px;
   height: 1px;
   background: currentColor;
-  opacity: 0.36;
+  opacity: 0.38;
 }
 
 .cta:focus-visible {
@@ -308,10 +309,10 @@
 
 .ctaNote {
   margin: 11px 0 0;
-  color: rgba(70, 55, 40, 0.52);
+  color: rgba(70, 55, 40, 0.56);
   font-size: 9px;
-  line-height: 1.75;
-  letter-spacing: 0.12em;
+  line-height: 1.72;
+  letter-spacing: 0.095em;
 }
 
 /* =========================
@@ -457,17 +458,17 @@
 }
 
 .workTitle {
-  color: rgba(28, 28, 28, 0.86);
+  color: rgba(28, 28, 28, 0.88);
   font-size: 10.5px;
   line-height: 1.4;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.12em;
 }
 
 .workSub {
   color: var(--faint);
   font-size: 9px;
   line-height: 1.45;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.085em;
 }
 
 .scrollHint {
@@ -494,15 +495,10 @@
   }
 
   .kicker {
-    margin-bottom: 8px;
+    margin-bottom: 16px;
     font-size: 8.8px;
-    line-height: 1.6;
-  }
-
-  .hook {
-    margin-bottom: 13px;
-    font-size: 12px;
-    line-height: 1.65;
+    line-height: 1.58;
+    letter-spacing: 0.135em;
   }
 
   .h1 {
@@ -512,19 +508,21 @@
   }
 
   .copy {
-    max-width: 320px;
+    max-width: 322px;
     margin-bottom: 12px;
   }
 
   .copyMeta {
     margin-bottom: 8px;
     font-size: 8.2px;
-    line-height: 1.7;
+    line-height: 1.66;
+    letter-spacing: 0.105em;
   }
 
   .copyLead {
-    font-size: 13px;
-    line-height: 1.76;
+    font-size: 13.8px;
+    line-height: 1.7;
+    letter-spacing: 0.032em;
   }
 
   .copyLead::after {
@@ -532,18 +530,21 @@
   }
 
   .copySub {
-    font-size: 10.2px;
-    line-height: 1.8;
+    font-size: 10.3px;
+    line-height: 1.78;
+    letter-spacing: 0.022em;
   }
 
   .cta {
     padding: 8px 0 6px;
     font-size: 10px;
+    letter-spacing: 0.105em;
   }
 
   .ctaNote {
     margin-top: 8px;
     font-size: 8.4px;
+    letter-spacing: 0.085em;
   }
 
   .root {

@@ -330,27 +330,44 @@
   z-index: 88;
 
   opacity: 0;
+  visibility: hidden;
   pointer-events: none;
+
+  min-height: 100dvh;
 
   background:
     radial-gradient(
-      900px 520px at 20% 12%,
-      rgba(255, 255, 255, 0.06),
+      880px 520px at 18% 10%,
+      rgba(255, 255, 255, 0.08),
       transparent 62%
     ),
     radial-gradient(
-      900px 520px at 86% 54%,
-      rgba(217, 185, 138, 0.06),
+      760px 460px at 84% 44%,
+      rgba(217, 185, 138, 0.08),
       transparent 64%
     ),
-    rgba(0, 0, 0, 0.74);
+    radial-gradient(
+      460px 360px at 50% 100%,
+      rgba(244, 239, 230, 0.045),
+      transparent 72%
+    ),
+    rgba(0, 0, 0, 0.78);
 
-  transition: opacity 260ms ease;
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+
+  transition:
+    opacity 280ms ease,
+    visibility 0s linear 280ms;
 }
 
 .mobileOverlayOpen {
   opacity: 1;
+  visibility: visible;
   pointer-events: auto;
+  transition:
+    opacity 280ms ease,
+    visibility 0s linear 0s;
 }
 
 /* =========================================================
@@ -362,23 +379,38 @@
   inset: 0;
   z-index: 90;
 
+  width: 100%;
+  height: 100dvh;
+  min-height: 100dvh;
+
   opacity: 0;
+  visibility: hidden;
   pointer-events: none;
 
   overflow: hidden;
+  overscroll-behavior: contain;
   color: rgba(255, 252, 244, 0.94);
 
   transform: translate3d(0, -8px, 0);
+  backface-visibility: hidden;
+  contain: paint;
 
   transition:
     opacity 280ms ease,
-    transform 560ms cubic-bezier(0.22, 0.56, 0.18, 1);
+    transform 640ms cubic-bezier(0.16, 0.84, 0.18, 1),
+    visibility 0s linear 280ms;
 }
 
 .mobileOpen {
   opacity: 1;
+  visibility: visible;
   pointer-events: auto;
   transform: translate3d(0, 0, 0);
+
+  transition:
+    opacity 280ms ease,
+    transform 640ms cubic-bezier(0.16, 0.84, 0.18, 1),
+    visibility 0s linear 0s;
 }
 
 /* ===== White wave layer ===== */
@@ -394,42 +426,50 @@
 
   background:
     radial-gradient(
-      820px 560px at 46% 20%,
-      rgba(244, 239, 230, 0.12),
+      900px 620px at 42% 12%,
+      rgba(244, 239, 230, 0.14),
       transparent 66%
+    ),
+    radial-gradient(
+      620px 460px at 86% 12%,
+      rgba(217, 185, 138, 0.095),
+      transparent 70%
     ),
     linear-gradient(
       180deg,
-      #12110f 0%,
-      #090908 54%,
-      #030303 100%
+      #15130f 0%,
+      #0a0a09 52%,
+      #020202 100%
     );
 
+  will-change: opacity, transform, clip-path;
+
   transition:
-    opacity 520ms ease,
-    transform 980ms cubic-bezier(0.16, 0.84, 0.18, 1),
-    clip-path 980ms cubic-bezier(0.16, 0.84, 0.18, 1);
+    opacity 560ms ease,
+    transform 1080ms cubic-bezier(0.16, 0.84, 0.18, 1),
+    clip-path 1080ms cubic-bezier(0.16, 0.84, 0.18, 1);
 }
 
 .mobileOpen .mobileSeaLayer {
   opacity: 1;
   transform: scale(1);
-  clip-path: circle(154% at 88% 8%);
+  clip-path: circle(156% at 88% 8%);
 }
 
 .mobileSeaCanvas {
   position: absolute;
-  inset: 0;
+  inset: -2%;
 
-  width: 100%;
-  height: 100%;
+  width: 104%;
+  height: 104%;
 
-  opacity: 0.58;
+  opacity: 0.54;
   transform: scale(1.045);
 
   filter:
     contrast(1.18)
-    brightness(1.05);
+    brightness(1.06)
+    saturate(0.92);
 
   mix-blend-mode: screen;
 }
@@ -441,18 +481,23 @@
 
   background:
     radial-gradient(
-      620px 420px at 34% 18%,
-      rgba(244, 239, 230, 0.13),
+      620px 420px at 30% 16%,
+      rgba(244, 239, 230, 0.15),
       transparent 64%
+    ),
+    radial-gradient(
+      380px 300px at 74% 20%,
+      rgba(255, 252, 244, 0.055),
+      transparent 70%
     ),
     linear-gradient(
       180deg,
-      rgba(244, 239, 230, 0.045),
-      transparent 38%
+      rgba(244, 239, 230, 0.052),
+      transparent 36%
     );
 
   mix-blend-mode: screen;
-  opacity: 0.62;
+  opacity: 0.72;
   pointer-events: none;
 }
 
@@ -464,15 +509,15 @@
   background:
     linear-gradient(
       180deg,
-      rgba(6, 6, 5, 0.04),
-      rgba(6, 6, 5, 0.26) 56%,
-      rgba(2, 2, 2, 0.76)
+      rgba(6, 6, 5, 0.02),
+      rgba(6, 6, 5, 0.22) 52%,
+      rgba(2, 2, 2, 0.82)
     ),
     linear-gradient(
       90deg,
-      rgba(0, 0, 0, 0.28),
-      transparent 46%,
-      rgba(0, 0, 0, 0.24)
+      rgba(0, 0, 0, 0.34),
+      transparent 42%,
+      rgba(0, 0, 0, 0.3)
     );
 
   pointer-events: none;
@@ -486,13 +531,18 @@
   background:
     radial-gradient(
       760px 540px at 82% 76%,
-      rgba(0, 0, 0, 0.44),
+      rgba(0, 0, 0, 0.5),
       transparent 70%
     ),
     radial-gradient(
       540px 380px at 12% 88%,
-      rgba(244, 239, 230, 0.035),
+      rgba(244, 239, 230, 0.045),
       transparent 74%
+    ),
+    linear-gradient(
+      180deg,
+      transparent 0%,
+      rgba(0, 0, 0, 0.22) 100%
     );
 
   pointer-events: none;
@@ -505,10 +555,11 @@
   z-index: 2;
 
   min-height: 100dvh;
+  height: 100dvh;
   width: 100%;
 
   display: grid;
-  grid-template-rows: auto 1fr auto;
+  grid-template-rows: auto minmax(0, 1fr) auto;
 
   padding:
     max(20px, env(safe-area-inset-top))
@@ -518,17 +569,19 @@
   background:
     linear-gradient(
       90deg,
-      rgba(244, 239, 230, 0.035),
+      rgba(244, 239, 230, 0.04),
       transparent 18%,
       transparent 82%,
-      rgba(244, 239, 230, 0.026)
+      rgba(244, 239, 230, 0.028)
     ),
     linear-gradient(
       180deg,
-      rgba(244, 239, 230, 0.026),
+      rgba(244, 239, 230, 0.032),
       transparent 32%,
-      rgba(0, 0, 0, 0.22)
+      rgba(0, 0, 0, 0.24)
     );
+
+  overflow: hidden;
 }
 
 /* ===== Top ===== */
@@ -556,7 +609,7 @@
   opacity: 1;
   transform: translate3d(0, 0, 0);
   filter: blur(0);
-  transition-delay: 160ms;
+  transition-delay: 140ms;
 }
 
 .mobileSeaIdentity {
@@ -595,7 +648,9 @@
   padding: 0;
   cursor: pointer;
 
-  transition: transform 420ms cubic-bezier(0.22, 0.56, 0.18, 1);
+  transition:
+    transform 420ms cubic-bezier(0.22, 0.56, 0.18, 1),
+    opacity 280ms ease;
 }
 
 .mobileSeaClose:hover {
@@ -629,35 +684,88 @@
 /* ===== Content ===== */
 
 .mobileSeaCommand {
+  min-height: 0;
+
   display: grid;
   align-content: start;
   gap: clamp(34px, 6vh, 48px);
 
-  padding: clamp(58px, 10vh, 92px) 0 24px;
+  padding: clamp(52px, 9vh, 84px) 0 24px;
 
   overflow-y: auto;
+  overscroll-behavior: contain;
   -webkit-overflow-scrolling: touch;
+
+  scrollbar-width: none;
+
+  mask-image:
+    linear-gradient(
+      180deg,
+      transparent 0,
+      #000 22px,
+      #000 calc(100% - 28px),
+      transparent 100%
+    );
+  -webkit-mask-image:
+    linear-gradient(
+      180deg,
+      transparent 0,
+      #000 22px,
+      #000 calc(100% - 28px),
+      transparent 100%
+    );
+}
+
+.mobileSeaCommand::-webkit-scrollbar {
+  display: none;
 }
 
 /* statement */
 .mobileSeaStatement {
-  max-width: 340px;
+  position: relative;
+  max-width: 360px;
+  padding-left: 2px;
 
   opacity: 0;
-  transform: translate3d(0, 18px, 0);
+  transform: translate3d(0, 20px, 0);
   filter: blur(10px);
 
   transition:
     opacity 620ms ease,
-    transform 860ms cubic-bezier(0.16, 0.84, 0.18, 1),
-    filter 860ms ease;
+    transform 880ms cubic-bezier(0.16, 0.84, 0.18, 1),
+    filter 880ms ease;
+}
+
+.mobileSeaStatement::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: -22px;
+
+  width: 42px;
+  height: 1px;
+
+  background: rgba(244, 239, 230, 0.42);
+  transform-origin: left;
+  transform: scaleX(0);
+  opacity: 0;
+
+  transition:
+    opacity 560ms ease,
+    transform 760ms cubic-bezier(0.16, 0.84, 0.18, 1);
 }
 
 .mobileOpen .mobileSeaStatement {
   opacity: 1;
   transform: translate3d(0, 0, 0);
   filter: blur(0);
-  transition-delay: 240ms;
+  transition-delay: 220ms;
+}
+
+.mobileOpen .mobileSeaStatement::before {
+  opacity: 1;
+  transform: scaleX(1);
+  transition-delay: 360ms;
 }
 
 .mobileSeaStatementEyebrow {
@@ -665,7 +773,7 @@
 
   font-size: 10px;
   letter-spacing: 0.22em;
-  color: rgba(244, 239, 230, 0.54);
+  color: rgba(244, 239, 230, 0.56);
 }
 
 .mobileSeaStatementTitle {
@@ -676,25 +784,25 @@
     "Yu Mincho",
     "Hiragino Mincho ProN",
     serif;
-  font-size: clamp(27px, 7.6vw, 38px);
+  font-size: clamp(29px, 7.8vw, 40px);
   font-weight: 400;
-  line-height: 1.5;
-  letter-spacing: 0.04em;
-  color: rgba(255, 252, 244, 0.96);
+  line-height: 1.48;
+  letter-spacing: 0.045em;
+  color: rgba(255, 252, 244, 0.97);
 
   text-shadow:
-    0 12px 34px rgba(0, 0, 0, 0.42),
+    0 18px 46px rgba(0, 0, 0, 0.5),
     0 1px 0 rgba(255, 255, 255, 0.08);
 }
 
 .mobileSeaStatementBody {
-  margin: 13px 0 0;
+  margin: 14px 0 0;
   max-width: 300px;
 
   font-size: 12px;
   line-height: 1.9;
-  letter-spacing: 0.07em;
-  color: rgba(244, 239, 230, 0.68);
+  letter-spacing: 0.08em;
+  color: rgba(244, 239, 230, 0.7);
 }
 
 /* menu */
@@ -705,24 +813,24 @@
   border-top: 1px solid rgba(244, 239, 230, 0.28);
 
   opacity: 0;
-  transform: translate3d(0, 20px, 0);
+  transform: translate3d(0, 22px, 0);
   filter: blur(8px);
 
   transition:
     opacity 620ms ease,
-    transform 860ms cubic-bezier(0.16, 0.84, 0.18, 1),
-    filter 860ms ease;
+    transform 880ms cubic-bezier(0.16, 0.84, 0.18, 1),
+    filter 880ms ease;
 }
 
 .mobileOpen .mobileSeaMenu {
   opacity: 1;
   transform: translate3d(0, 0, 0);
   filter: blur(0);
-  transition-delay: 400ms;
+  transition-delay: 360ms;
 }
 
 /* =========================================================
-   Sea links：普通の縦メニュー
+   Sea links：縦メニュー 100点版
 ========================================================= */
 
 .mobileSeaLink {
@@ -748,14 +856,56 @@
   border-radius: 0;
   overflow: hidden;
 
+  opacity: 0;
+  transform: translate3d(0, 16px, 0);
+  filter: blur(8px);
+
   transition:
+    opacity 560ms ease,
+    filter 720ms ease,
     color 260ms ease,
-    transform 360ms cubic-bezier(0.22, 0.56, 0.18, 1);
+    transform 720ms cubic-bezier(0.16, 0.84, 0.18, 1);
+}
+
+.mobileOpen .mobileSeaLink {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+  filter: blur(0);
+  transition-delay: calc(430ms + (var(--i, 0) * 58ms));
+}
+
+.mobileSeaLink::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(244, 239, 230, 0.075),
+      transparent 42%,
+      rgba(217, 185, 138, 0.055)
+    );
+
+  opacity: 0;
+  transform: translate3d(-8px, 0, 0);
+  transition:
+    opacity 360ms ease,
+    transform 520ms cubic-bezier(0.22, 0.56, 0.18, 1);
+
+  pointer-events: none;
 }
 
 .mobileSeaLink:hover,
 .mobileSeaLink:focus-visible {
   transform: translate3d(2px, 0, 0);
+}
+
+.mobileSeaLink:hover::before,
+.mobileSeaLink:focus-visible::before,
+.mobileSeaLinkActive::before {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
 }
 
 .mobileSeaLinkNo,
@@ -771,6 +921,10 @@
   font-weight: 300;
   letter-spacing: 0.08em;
   color: rgba(244, 239, 230, 0.46);
+
+  transition:
+    color 280ms ease,
+    transform 420ms cubic-bezier(0.22, 0.56, 0.18, 1);
 }
 
 .mobileSeaLinkBody {
@@ -785,12 +939,20 @@
   letter-spacing: 0.08em;
   line-height: 1;
   color: rgba(255, 252, 244, 0.94);
+
+  text-shadow: 0 12px 34px rgba(0, 0, 0, 0.32);
+
+  transition:
+    color 280ms ease,
+    letter-spacing 360ms cubic-bezier(0.22, 0.56, 0.18, 1);
 }
 
 .mobileSeaLinkKana {
   font-size: 12px;
   letter-spacing: 0.08em;
   color: rgba(244, 239, 230, 0.68);
+
+  transition: color 280ms ease;
 }
 
 .mobileSeaLinkDesc {
@@ -808,15 +970,37 @@
   transform: scaleX(0.55);
 
   transition:
-    transform 360ms cubic-bezier(0.22, 0.56, 0.18, 1),
-    background 260ms ease;
+    transform 420ms cubic-bezier(0.22, 0.56, 0.18, 1),
+    background 260ms ease,
+    box-shadow 260ms ease;
+}
+
+.mobileSeaLink:hover .mobileSeaLinkNo,
+.mobileSeaLink:focus-visible .mobileSeaLinkNo,
+.mobileSeaLinkActive .mobileSeaLinkNo {
+  color: rgba(244, 239, 230, 0.72);
+  transform: translate3d(2px, 0, 0);
+}
+
+.mobileSeaLink:hover .mobileSeaLinkTitle,
+.mobileSeaLink:focus-visible .mobileSeaLinkTitle,
+.mobileSeaLinkActive .mobileSeaLinkTitle {
+  color: rgba(255, 252, 244, 0.99);
+  letter-spacing: 0.095em;
+}
+
+.mobileSeaLink:hover .mobileSeaLinkKana,
+.mobileSeaLink:focus-visible .mobileSeaLinkKana,
+.mobileSeaLinkActive .mobileSeaLinkKana {
+  color: rgba(244, 239, 230, 0.78);
 }
 
 .mobileSeaLink:hover .mobileSeaLinkLine,
 .mobileSeaLink:focus-visible .mobileSeaLinkLine,
 .mobileSeaLinkActive .mobileSeaLinkLine {
   transform: scaleX(1);
-  background: rgba(255, 252, 244, 0.88);
+  background: rgba(255, 252, 244, 0.9);
+  box-shadow: 0 0 24px rgba(244, 239, 230, 0.18);
 }
 
 .mobileSeaLink:focus-visible {
@@ -825,28 +1009,28 @@
 }
 
 .mobileSeaLinkPrimary {
-  min-height: 84px;
+  min-height: 86px;
 }
 
 .mobileSeaLinkPrimary .mobileSeaLinkTitle {
-  font-size: clamp(28px, 8vw, 38px);
-  letter-spacing: 0.06em;
+  font-size: clamp(30px, 8.2vw, 40px);
+  letter-spacing: 0.055em;
 }
 
 .mobileSeaLinkPrimary .mobileSeaLinkKana {
-  color: rgba(244, 239, 230, 0.74);
+  color: rgba(244, 239, 230, 0.76);
 }
 
 .mobileSeaLinkAction {
-  min-height: 72px;
+  min-height: 74px;
 }
 
 .mobileSeaLinkAction .mobileSeaLinkTitle {
-  font-size: 22px;
+  font-size: 23px;
 }
 
 .mobileSeaLinkMinor {
-  min-height: 64px;
+  min-height: 66px;
 }
 
 .mobileSeaLinkMinor .mobileSeaLinkTitle {
@@ -856,15 +1040,15 @@
 
 .mobileSeaLinkMinor .mobileSeaLinkKana {
   font-size: 11px;
-  color: rgba(244, 239, 230, 0.56);
+  color: rgba(244, 239, 230, 0.58);
 }
 
 .mobileSeaLinkEmphasis .mobileSeaLinkTitle {
-  color: rgba(255, 252, 244, 0.98);
+  color: rgba(255, 252, 244, 0.99);
 }
 
 .mobileSeaLinkEmphasis .mobileSeaLinkLine {
-  background: rgba(255, 252, 244, 0.66);
+  background: rgba(255, 252, 244, 0.7);
 }
 
 /* ===== Footer ===== */
@@ -892,7 +1076,7 @@
   opacity: 1;
   transform: translate3d(0, 0, 0);
   filter: blur(0);
-  transition-delay: 620ms;
+  transition-delay: 640ms;
 }
 
 .mobileSeaFooterText {
@@ -901,7 +1085,7 @@
   font-size: 10px;
   line-height: 1.7;
   letter-spacing: 0.12em;
-  color: rgba(244, 239, 230, 0.5);
+  color: rgba(244, 239, 230, 0.52);
 }
 
 .mobileSeaFooterCode {
@@ -909,7 +1093,7 @@
 
   font-size: 9px;
   letter-spacing: 0.16em;
-  color: rgba(244, 239, 230, 0.36);
+  color: rgba(244, 239, 230, 0.38);
   white-space: nowrap;
 }
 
@@ -924,12 +1108,12 @@
   }
 
   .mobileSeaCommand {
-    padding-top: clamp(46px, 8vh, 72px);
+    padding-top: clamp(44px, 8vh, 70px);
     gap: 28px;
   }
 
   .mobileSeaStatementTitle {
-    font-size: 26px;
+    font-size: 27px;
   }
 
   .mobileSeaStatementBody {
@@ -942,11 +1126,11 @@
   }
 
   .mobileSeaLinkPrimary {
-    min-height: 76px;
+    min-height: 78px;
   }
 
   .mobileSeaLinkPrimary .mobileSeaLinkTitle {
-    font-size: 30px;
+    font-size: 31px;
   }
 
   .mobileSeaLinkTitle {
@@ -959,6 +1143,48 @@
 
   .mobileSeaFooterCode {
     display: none;
+  }
+}
+
+/* =========================================================
+   Very Short SP
+========================================================= */
+
+@media (max-height: 700px) and (max-width: 767px) {
+  .mobileSeaCommand {
+    padding-top: 34px;
+    gap: 24px;
+  }
+
+  .mobileSeaStatementTitle {
+    font-size: clamp(25px, 7vw, 32px);
+    line-height: 1.42;
+  }
+
+  .mobileSeaStatementBody {
+    display: none;
+  }
+
+  .mobileSeaLink {
+    min-height: 58px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+
+  .mobileSeaLinkPrimary {
+    min-height: 68px;
+  }
+
+  .mobileSeaLinkPrimary .mobileSeaLinkTitle {
+    font-size: clamp(27px, 7vw, 34px);
+  }
+
+  .mobileSeaFooter {
+    padding-top: 10px;
+  }
+
+  .mobileSeaFooterText {
+    font-size: 9px;
   }
 }
 
@@ -981,9 +1207,11 @@
   .mobileSeaLayer,
   .mobileSeaTop,
   .mobileSeaStatement,
+  .mobileSeaStatement::before,
   .mobileSeaMenu,
   .mobileSeaFooter,
   .mobileSeaLink,
+  .mobileSeaLink::before,
   .mobileSeaLinkLine,
   .mobileSeaClose {
     transition: none !important;
@@ -998,9 +1226,15 @@
   .mobileSeaTop,
   .mobileSeaStatement,
   .mobileSeaMenu,
-  .mobileSeaFooter {
+  .mobileSeaFooter,
+  .mobileSeaLink {
     opacity: 1;
     transform: none;
     filter: none;
+  }
+
+  .mobileSeaStatement::before {
+    opacity: 1;
+    transform: scaleX(1);
   }
 }

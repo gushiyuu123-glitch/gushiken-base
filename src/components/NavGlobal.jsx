@@ -109,75 +109,167 @@ function prefersReducedMotion() {
 
 /* =========================================================
    Body Scroll Lock
-   - メニュー単体で閉じる: 元の位置へ復元
-   - メニュー内Linkでページ遷移: 復元しない
-   - App.jsx側のスクロールトップと衝突させない
+   - PCは基本そのまま
+   - SPメニュー開閉時に body fixed を使わない
+   - 閉じる時に window.scrollTo で現在地復元しない
+   - ぐるぐる現在地へ戻る挙動を消す
 ========================================================= */
 
-function useBodyScrollLock(locked, restoreOnUnlockRef) {
-  const scrollYRef = useRef(0);
+function useBodyScrollLock(locked) {
   const prevRef = useRef(null);
+  const touchStartYRef = useRef(0);
 
   useEffect(() => {
     if (!locked) return undefined;
+    if (typeof window === "undefined") return undefined;
+    if (typeof document === "undefined") return undefined;
+
+    const isMobile =
+      window.matchMedia?.("(max-width: 767px)")?.matches ?? false;
+
+    // PCは触らない。PCの挙動はそのまま。
+    if (!isMobile) return undefined;
 
     const body = document.body;
     const docEl = document.documentElement;
 
-    scrollYRef.current = window.scrollY || window.pageYOffset || 0;
-
     prevRef.current = {
-      overflow: body.style.overflow,
-      position: body.style.position,
-      top: body.style.top,
-      left: body.style.left,
-      right: body.style.right,
-      width: body.style.width,
-      paddingRight: body.style.paddingRight,
+      htmlOverflow: docEl.style.overflow,
+      htmlOverscrollBehavior: docEl.style.overscrollBehavior,
+      bodyOverflow: body.style.overflow,
+      bodyOverscrollBehavior: body.style.overscrollBehavior,
+      bodyPaddingRight: body.style.paddingRight,
     };
 
     const scrollbarW = Math.max(0, window.innerWidth - docEl.clientWidth);
 
+    docEl.style.overflow = "hidden";
+    docEl.style.overscrollBehavior = "none";
+
     body.style.overflow = "hidden";
-    body.style.position = "fixed";
-    body.style.top = `-${scrollYRef.current}px`;
-    body.style.left = "0";
-    body.style.right = "0";
-    body.style.width = "100%";
+    body.style.overscrollBehavior = "none";
 
     if (scrollbarW) {
       body.style.paddingRight = `${scrollbarW}px`;
     }
 
+    const getMenu = () => document.getElementById("global-mobile-navigation");
+
+    const getScrollableParent = (target, menu) => {
+      if (!(target instanceof Node)) return null;
+
+      let el = target.nodeType === 1 ? target : target.parentElement;
+
+      while (el && el !== document.body && el !== docEl) {
+        if (el === menu) {
+          const canScroll = el.scrollHeight > el.clientHeight + 1;
+          return canScroll ? el : null;
+        }
+
+        if (menu && !menu.contains(el)) return null;
+
+        const style = window.getComputedStyle(el);
+        const overflowY = style.overflowY;
+
+        const canScroll =
+          (overflowY === "auto" || overflowY === "scroll") &&
+          el.scrollHeight > el.clientHeight + 1;
+
+        if (canScroll) return el;
+
+        el = el.parentElement;
+      }
+
+      return null;
+    };
+
+    const onTouchStart = (event) => {
+      touchStartYRef.current = event.touches?.[0]?.clientY ?? 0;
+    };
+
+    const onTouchMove = (event) => {
+      const menu = getMenu();
+      const target = event.target;
+
+      // メニュー外の背景スクロールは止める
+      if (!menu || !(target instanceof Node) || !menu.contains(target)) {
+        event.preventDefault();
+        return;
+      }
+
+      const scrollable = getScrollableParent(target, menu);
+
+      // メニュー内にスクロール可能領域がないなら、背景へ逃がさない
+      if (!scrollable) {
+        event.preventDefault();
+        return;
+      }
+
+      const currentY = event.touches?.[0]?.clientY ?? 0;
+      const deltaY = currentY - touchStartYRef.current;
+
+      const atTop = scrollable.scrollTop <= 0;
+      const atBottom =
+        scrollable.scrollTop + scrollable.clientHeight >=
+        scrollable.scrollHeight - 1;
+
+      // 上端/下端でiOSの背景スクロールへ抜けるのを防ぐ
+      if ((atTop && deltaY > 0) || (atBottom && deltaY < 0)) {
+        event.preventDefault();
+      }
+    };
+
+    const onWheel = (event) => {
+      const menu = getMenu();
+      const target = event.target;
+
+      // PCは基本ここに来ないが、保険としてメニュー外だけ止める
+      if (!menu || !(target instanceof Node) || !menu.contains(target)) {
+        event.preventDefault();
+      }
+    };
+
+    document.addEventListener("touchstart", onTouchStart, {
+      passive: true,
+      capture: true,
+    });
+
+    document.addEventListener("touchmove", onTouchMove, {
+      passive: false,
+      capture: true,
+    });
+
+    document.addEventListener("wheel", onWheel, {
+      passive: false,
+      capture: true,
+    });
+
     return () => {
       const prev = prevRef.current;
       if (!prev) return;
 
-      const shouldRestore = restoreOnUnlockRef?.current !== false;
+      docEl.style.overflow = prev.htmlOverflow;
+      docEl.style.overscrollBehavior = prev.htmlOverscrollBehavior;
 
-      body.style.overflow = prev.overflow;
-      body.style.position = prev.position;
-      body.style.top = prev.top;
-      body.style.left = prev.left;
-      body.style.right = prev.right;
-      body.style.width = prev.width;
-      body.style.paddingRight = prev.paddingRight;
+      body.style.overflow = prev.bodyOverflow;
+      body.style.overscrollBehavior = prev.bodyOverscrollBehavior;
+      body.style.paddingRight = prev.bodyPaddingRight;
 
-      if (shouldRestore) {
-        window.scrollTo({
-          top: scrollYRef.current,
-          left: 0,
-          behavior: "auto",
-        });
-      }
+      document.removeEventListener("touchstart", onTouchStart, {
+        capture: true,
+      });
 
-      if (restoreOnUnlockRef) {
-        restoreOnUnlockRef.current = true;
-      }
+      document.removeEventListener("touchmove", onTouchMove, {
+        capture: true,
+      });
+
+      document.removeEventListener("wheel", onWheel, {
+        capture: true,
+      });
 
       prevRef.current = null;
     };
-  }, [locked, restoreOnUnlockRef]);
+  }, [locked]);
 }
 
 /* =========================================================
@@ -250,11 +342,6 @@ export default function NavGlobal({ mode, tone = "auto" }) {
   const firstLinkRef = useRef(null);
   const pendingHashRef = useRef(null);
 
-  // メニュー解除時に現在地復元するかどうか
-  // 通常の閉じる: true
-  // ページ遷移リンク: false
-  const restoreOnUnlockRef = useRef(true);
-
   const [navH, setNavH] = useState(FALLBACK_NAV_HEIGHT);
   const scrollOffset = navH + 12;
   const scrollOffsetRef = useRef(scrollOffset);
@@ -267,7 +354,7 @@ export default function NavGlobal({ mode, tone = "auto" }) {
     [isHome, homeLinks, globalLinks]
   );
 
-  useBodyScrollLock(open, restoreOnUnlockRef);
+  useBodyScrollLock(open);
 
   useEffect(() => setMounted(true), []);
 
@@ -329,10 +416,7 @@ export default function NavGlobal({ mode, tone = "auto" }) {
     const mq = window.matchMedia("(min-width: 768px)");
 
     const closeIfDesktop = () => {
-      if (mq.matches) {
-        restoreOnUnlockRef.current = true;
-        setOpen(false);
-      }
+      if (mq.matches) setOpen(false);
     };
 
     closeIfDesktop();
@@ -448,7 +532,6 @@ export default function NavGlobal({ mode, tone = "auto" }) {
       if (e.key !== "Escape") return;
 
       e.preventDefault();
-      restoreOnUnlockRef.current = true;
       setOpen(false);
 
       window.setTimeout(() => buttonRef.current?.focus(), 0);
@@ -483,17 +566,10 @@ export default function NavGlobal({ mode, tone = "auto" }) {
   }, [open]);
 
   const closeMenu = useCallback(() => {
-    restoreOnUnlockRef.current = true;
-    setOpen(false);
-  }, []);
-
-  const closeMenuForRouteChange = useCallback(() => {
-    restoreOnUnlockRef.current = false;
     setOpen(false);
   }, []);
 
   const toggleMenu = useCallback(() => {
-    restoreOnUnlockRef.current = true;
     setOpen((v) => !v);
   }, []);
 
@@ -506,9 +582,6 @@ export default function NavGlobal({ mode, tone = "auto" }) {
       setActiveHash((prev) => (prev === href ? prev : href));
 
       if (open) {
-        // ホーム内アンカーは「閉じたあとに目的地へスクロール」する。
-        // ここでは復元を止めない。
-        restoreOnUnlockRef.current = true;
         pendingHashRef.current = href;
         setOpen(false);
         return;
@@ -522,21 +595,13 @@ export default function NavGlobal({ mode, tone = "auto" }) {
   const handleLogoClick = useCallback(
     (e) => {
       if (!isHome) {
-        if (open) {
-          // 下層からロゴでHOMEへ遷移する時は、Nav側の位置復元を止める。
-          closeMenuForRouteChange();
-        }
-
+        if (open) closeMenu();
         return;
       }
 
       e.preventDefault();
 
-      if (open) {
-        // HOME上でロゴを押す時はトップへ戻すので、Nav側の位置復元を止める。
-        restoreOnUnlockRef.current = false;
-        setOpen(false);
-      }
+      if (open) closeMenu();
 
       if (window.location.hash) {
         window.history.replaceState(
@@ -551,7 +616,7 @@ export default function NavGlobal({ mode, tone = "auto" }) {
         scrollToY(0);
       });
     },
-    [isHome, open, closeMenuForRouteChange]
+    [isHome, open, closeMenu]
   );
 
   const renderMobileSeaLink = useCallback(
@@ -619,7 +684,7 @@ export default function NavGlobal({ mode, tone = "auto" }) {
           to={item.to}
           ref={index === 0 ? firstLinkRef : null}
           tabIndex={open ? 0 : -1}
-          onClick={closeMenuForRouteChange}
+          onClick={closeMenu}
           aria-current={active ? "page" : undefined}
           data-emphasis={item.emphasis ? "true" : "false"}
           className={className}
@@ -629,13 +694,7 @@ export default function NavGlobal({ mode, tone = "auto" }) {
         </Link>
       );
     },
-    [
-      activeHash,
-      closeMenuForRouteChange,
-      handleAnchorClick,
-      open,
-      pathname,
-    ]
+    [activeHash, closeMenu, handleAnchorClick, open, pathname]
   );
 
   if (!mounted) return null;

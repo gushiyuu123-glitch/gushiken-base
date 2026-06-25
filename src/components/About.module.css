@@ -2,6 +2,7 @@
 /* =======================================================
    TOP ABOUT — GUSHIKEN DESIGN
    Lightweight / Creator Digest
+   Short Copy / Letter Spacing Tune
 ======================================================= */
 
 .srOnly {
@@ -23,13 +24,13 @@
 .about-section {
   position: relative;
   overflow: hidden;
-  padding: 11vh 0 10vh;
+  padding: 10vh 0 9vh;
 
   background:
     radial-gradient(circle at 18% 0%, rgba(184, 144, 90, 0.06), transparent 30%),
     radial-gradient(900px 600px at 18% 18%, rgba(255, 255, 255, 0.62), rgba(255, 255, 255, 0)),
     radial-gradient(1000px 700px at 78% 38%, rgba(255, 255, 255, 0.38), rgba(255, 255, 255, 0)),
-    linear-gradient(180deg, #f5f0e7 0%, #f4efe6 28%, #f2ece3 66%, #f4efe6 100%);
+    linear-gradient(180deg, #f5f0e7 0%, #f4efe6 30%, #f2ece3 68%, #f4efe6 100%);
 }
 
 .about-section::before {
@@ -45,7 +46,7 @@
       rgba(245, 240, 231, 0.42) 13%,
       transparent 30%,
       transparent 78%,
-      rgba(7, 7, 7, 0.1) 100%
+      rgba(7, 7, 7, 0.09) 100%
     );
   opacity: 0.9;
 }
@@ -61,7 +62,7 @@
     transparent 0.42px
   );
   background-size: 4px 4px;
-  opacity: 0.022;
+  opacity: 0.02;
   mix-blend-mode: multiply;
 }
 
@@ -106,29 +107,12 @@
   transform: scaleY(1);
 }
 
-.about-flow-1 {
-  transition-delay: 40ms;
-}
-
-.about-flow-2 {
-  transition-delay: 80ms;
-}
-
-.about-flow-3 {
-  transition-delay: 120ms;
-}
-
-.about-flow-4 {
-  transition-delay: 150ms;
-}
-
-.about-flow-5 {
-  transition-delay: 170ms;
-}
-
-.about-flow-6 {
-  transition-delay: 190ms;
-}
+.about-flow-1 { transition-delay: 40ms; }
+.about-flow-2 { transition-delay: 80ms; }
+.about-flow-3 { transition-delay: 120ms; }
+.about-flow-4 { transition-delay: 150ms; }
+.about-flow-5 { transition-delay: 170ms; }
+.about-flow-6 { transition-delay: 190ms; }
 
 /* =======================================================
    SIDE LINE / HEADER
@@ -143,9 +127,9 @@
 
   background: linear-gradient(
     to bottom,
-    rgba(184, 144, 90, 0.52),
-    rgba(100, 80, 50, 0.18),
-    rgba(100, 80, 50, 0.06)
+    rgba(184, 144, 90, 0.5),
+    rgba(100, 80, 50, 0.16),
+    rgba(100, 80, 50, 0.05)
   );
   pointer-events: none;
 }
@@ -153,7 +137,7 @@
 .about-header {
   position: relative;
   padding-left: 1rem;
-  margin-bottom: 4rem;
+  margin-bottom: 3.7rem;
 }
 
 .about-svg-title {
@@ -166,10 +150,10 @@
 
 .about-sub {
   margin: 1.05rem 0 0;
-  color: rgba(28, 28, 28, 0.42);
+  color: rgba(28, 28, 28, 0.5);
   font-size: 0.82rem;
   line-height: 1;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.12em;
 }
 
 /* =======================================================
@@ -178,41 +162,47 @@
 
 .about-intro,
 .about-profile,
-.about-proof-grid,
+.about-method,
 .about-last {
   padding-left: 1rem;
 }
 
 .about-kicker {
   margin: 0 0 1rem;
-  color: rgba(184, 144, 90, 0.74);
+  color: rgba(184, 144, 90, 0.8);
   font-size: 0.68rem;
   line-height: 1.6;
-  letter-spacing: 0.22em;
+  letter-spacing: 0.18em;
 }
 
 .about-lead {
-  margin: 0 0 2.25rem;
-  color: rgba(28, 28, 28, 0.9);
+  margin: 0 0 2.05rem;
+  color: rgba(28, 28, 28, 0.94);
   font-family: "Shippori Mincho", "Yu Mincho", "Hiragino Mincho ProN", serif;
-  font-size: clamp(1.08rem, 1.5vw, 1.34rem);
-  line-height: 2.06;
-  letter-spacing: 0.06em;
+  font-size: clamp(1.16rem, 1.6vw, 1.42rem);
+  font-weight: 400;
+  line-height: 1.82;
+  letter-spacing: 0.018em;
+  font-feature-settings: "palt" 1;
+  font-kerning: normal;
 }
 
 .about-body {
-  margin: 0 0 3.1rem;
-  color: rgba(28, 28, 28, 0.62);
-  font-size: 0.96rem;
-  line-height: 2.12;
-  letter-spacing: 0.04em;
+  max-width: 720px;
+  margin: 0 0 2.8rem;
+  color: rgba(28, 28, 28, 0.72);
+  font-size: 0.95rem;
+  line-height: 1.94;
+  letter-spacing: 0.024em;
+  font-feature-settings: "palt" 1;
 }
 
 .about-lead span,
 .about-body span,
 .about-text span,
+.about-method-lead span,
 .about-last span {
-  color: rgba(28, 28, 28, 0.96);
+  color: rgba(28, 28, 28, 0.97);
 }
 
 /* =======================================================
@@ -220,110 +210,101 @@
 ======================================================= */
 
 .about-profile {
-  margin-bottom: 3.8rem;
+  margin-bottom: 3.5rem;
 }
 
 .about-name {
   margin: 0 0 0.35rem;
-  color: rgba(28, 28, 28, 0.96);
+  color: rgba(28, 28, 28, 0.97);
   font-family: "Cormorant Garamond", serif;
   font-size: 1.6rem;
   font-weight: 300;
   line-height: 1;
-  letter-spacing: 0.12em;
-}
-
-.about-role {
-  margin: 0 0 1.6rem;
-  color: rgba(184, 144, 90, 0.78);
-  font-size: 0.68rem;
-  letter-spacing: 0.2em;
-}
-
-.about-text {
-  margin: 0;
-  color: rgba(28, 28, 28, 0.58);
-  font-size: 0.92rem;
-  line-height: 2.05;
-  letter-spacing: 0.04em;
-}
-
-/* =======================================================
-   PROOF CARDS
-======================================================= */
-
-.about-proof-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1px;
-  margin-bottom: 4.2rem;
-  border-top: 1px solid rgba(100, 80, 50, 0.12);
-  border-bottom: 1px solid rgba(100, 80, 50, 0.12);
-}
-
-.about-proof-card {
-  position: relative;
-  min-height: 230px;
-  padding: 1.25rem 1rem 1.35rem;
-  border-right: 1px solid rgba(100, 80, 50, 0.12);
-  background: rgba(255, 255, 255, 0.08);
-}
-
-.about-proof-card:last-child {
-  border-right: 0;
-}
-
-.about-proof-card::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 1.25rem;
-  bottom: 1.25rem;
-  width: 1px;
-  background: linear-gradient(
-    to bottom,
-    rgba(184, 144, 90, 0.44),
-    rgba(100, 80, 50, 0.08)
-  );
-  opacity: 0.78;
-}
-
-.about-proof-head {
-  display: flex;
-  justify-content: space-between;
-  gap: 1rem;
-  align-items: baseline;
-  margin-bottom: 1.65rem;
-}
-
-.about-proof-no {
-  color: rgba(184, 144, 90, 0.82);
-  font-family: "Cormorant Garamond", serif;
-  font-size: 1.1rem;
   letter-spacing: 0.1em;
 }
 
-.about-proof-label {
-  color: rgba(28, 28, 28, 0.32);
-  font-size: 0.58rem;
+.about-role {
+  margin: 0 0 1.45rem;
+  color: rgba(184, 144, 90, 0.82);
+  font-size: 0.68rem;
+  line-height: 1.6;
+  letter-spacing: 0.16em;
+}
+
+.about-text {
+  max-width: 720px;
+  margin: 0;
+  color: rgba(28, 28, 28, 0.68);
+  font-size: 0.91rem;
+  line-height: 1.96;
+  letter-spacing: 0.024em;
+  font-feature-settings: "palt" 1;
+}
+
+/* =======================================================
+   METHOD — SHORT / LEFT ALIGNED / NO FLOAT FEEL
+======================================================= */
+
+.about-method {
+  position: relative;
+  width: min(100%, 680px);
+  margin: 0 0 4rem 0;
+  padding-top: 0.25rem;
+}
+
+.about-method::before {
+  content: "";
+  position: absolute;
+  left: 1rem;
+  top: 0.5rem;
+  width: 1px;
+  height: calc(100% - 1rem);
+  background: linear-gradient(
+    to bottom,
+    rgba(184, 144, 90, 0.38),
+    rgba(100, 80, 50, 0.12),
+    rgba(100, 80, 50, 0.03)
+  );
+  pointer-events: none;
+}
+
+.about-method-label {
+  margin: 0 0 1.1rem;
+  padding-left: 1.45rem;
+  color: rgba(184, 144, 90, 0.72);
+  font-size: 0.62rem;
+  line-height: 1;
   letter-spacing: 0.2em;
 }
 
-.about-proof-title {
-  margin: 0 0 1rem;
-  color: rgba(28, 28, 28, 0.9);
-  font-size: 0.94rem;
-  font-weight: 300;
-  line-height: 1.8;
-  letter-spacing: 0.06em;
+.about-method-lead {
+  margin: 0;
+  padding-left: 1.45rem;
+  color: rgba(28, 28, 28, 0.92);
+  font-family: "Shippori Mincho", "Yu Mincho", "Hiragino Mincho ProN", serif;
+  font-size: clamp(1.08rem, 1.48vw, 1.3rem);
+  font-weight: 400;
+  line-height: 1.82;
+  letter-spacing: 0.018em;
+  font-feature-settings: "palt" 1;
+  font-kerning: normal;
 }
 
-.about-proof-text {
+.about-method-text {
+  display: grid;
+  gap: 1rem;
+  max-width: 620px;
+  margin-top: 1.55rem;
+  padding-left: 1.45rem;
+  color: rgba(28, 28, 28, 0.68);
+  font-size: 0.89rem;
+  line-height: 1.94;
+  letter-spacing: 0.024em;
+  font-feature-settings: "palt" 1;
+}
+
+.about-method-text p {
   margin: 0;
-  color: rgba(28, 28, 28, 0.52);
-  font-size: 0.82rem;
-  line-height: 1.95;
-  letter-spacing: 0.04em;
 }
 
 /* =======================================================
@@ -331,12 +312,13 @@
 ======================================================= */
 
 .about-last p {
-  margin: 0 0 1.8rem;
-  color: rgba(28, 28, 28, 0.76);
-  font-size: 0.96rem;
+  margin: 0 0 1.7rem;
+  color: rgba(28, 28, 28, 0.78);
+  font-size: 0.95rem;
   font-weight: 300;
-  line-height: 2.08;
-  letter-spacing: 0.04em;
+  line-height: 1.96;
+  letter-spacing: 0.024em;
+  font-feature-settings: "palt" 1;
 }
 
 .about-links {
@@ -359,7 +341,7 @@
   text-decoration: none;
   font-size: 0.72rem;
   line-height: 1;
-  letter-spacing: 0.16em;
+  letter-spacing: 0.1em;
 
   transition:
     color 0.35s ease,
@@ -376,9 +358,9 @@
 }
 
 .about-note-link {
-  color: rgba(28, 28, 28, 0.72);
+  color: rgba(28, 28, 28, 0.78);
   border: 1px solid rgba(255, 255, 255, 0.72);
-  background: rgba(255, 255, 255, 0.44);
+  background: rgba(255, 255, 255, 0.5);
   box-shadow:
     0 0 0 0.5px rgba(100, 80, 50, 0.08),
     0 14px 34px rgba(60, 42, 24, 0.045);
@@ -425,42 +407,57 @@
   }
 
   .about-lead {
-    margin-bottom: 2rem;
-    font-size: 1.02rem;
-    line-height: 2.08;
+    margin-bottom: 1.9rem;
+    font-size: 1.08rem;
+    line-height: 1.84;
+    letter-spacing: 0.016em;
   }
 
   .about-body {
-    margin-bottom: 2.8rem;
+    margin-bottom: 2.65rem;
     font-size: 0.9rem;
-    line-height: 2.05;
+    line-height: 1.92;
+    letter-spacing: 0.022em;
   }
 
   .about-profile {
-    margin-bottom: 3.4rem;
+    margin-bottom: 3.25rem;
   }
 
   .about-text {
     font-size: 0.88rem;
+    line-height: 1.92;
+    letter-spacing: 0.022em;
   }
 
-  .about-proof-grid {
-    grid-template-columns: 1fr;
+  .about-method {
+    width: min(100%, 660px);
+    margin-bottom: 3.8rem;
   }
 
-  .about-proof-card {
-    min-height: auto;
-    padding: 1.1rem 0.95rem 1.25rem;
-    border-right: 0;
-    border-bottom: 1px solid rgba(100, 80, 50, 0.12);
+  .about-method-label {
+    font-size: 0.6rem;
+    letter-spacing: 0.18em;
   }
 
-  .about-proof-card:last-child {
-    border-bottom: 0;
+  .about-method-lead {
+    font-size: 1.04rem;
+    line-height: 1.84;
+    letter-spacing: 0.016em;
   }
 
-  .about-proof-head {
-    margin-bottom: 1rem;
+  .about-method-text {
+    gap: 0.95rem;
+    margin-top: 1.45rem;
+    font-size: 0.86rem;
+    line-height: 1.92;
+    letter-spacing: 0.022em;
+  }
+
+  .about-last p {
+    font-size: 0.9rem;
+    line-height: 1.92;
+    letter-spacing: 0.022em;
   }
 
   .about-links {
@@ -470,6 +467,7 @@
   .about-main-link,
   .about-note-link {
     font-size: 0.68rem;
+    letter-spacing: 0.09em;
   }
 }
 
@@ -481,7 +479,7 @@
   .about-header,
   .about-intro,
   .about-profile,
-  .about-proof-grid,
+  .about-method,
   .about-last {
     padding-left: 0.85rem;
   }
@@ -491,6 +489,50 @@
     height: calc(100% - 3.6rem);
   }
 
+  .about-method {
+    width: 100%;
+    margin-bottom: 3.55rem;
+  }
+
+  .about-method::before {
+    left: 0.85rem;
+  }
+
+  .about-method-label,
+  .about-method-lead,
+  .about-method-text {
+    padding-left: 1.25rem;
+  }
+
+  .about-method-label {
+    margin-bottom: 1rem;
+    font-size: 0.58rem;
+    letter-spacing: 0.16em;
+  }
+
+  .about-lead,
+  .about-method-lead {
+    letter-spacing: 0.012em;
+  }
+
+  .about-body,
+  .about-text,
+  .about-method-text,
+  .about-last p {
+    letter-spacing: 0.018em;
+  }
+
+  .about-method-lead {
+    font-size: 1rem;
+    line-height: 1.82;
+  }
+
+  .about-method-text {
+    margin-top: 1.35rem;
+    font-size: 0.82rem;
+    line-height: 1.88;
+  }
+
   .about-links {
     align-items: stretch;
   }
@@ -498,14 +540,6 @@
   .about-main-link,
   .about-note-link {
     width: 100%;
-  }
-
-  .about-proof-title {
-    font-size: 0.9rem;
-  }
-
-  .about-proof-text {
-    font-size: 0.78rem;
   }
 }
 

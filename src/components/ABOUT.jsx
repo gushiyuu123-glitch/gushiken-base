@@ -6,27 +6,6 @@ import styles from "./About.module.css";
 
 const cx = (...a) => a.filter(Boolean).join(" ");
 
-const PROOFS = [
-  {
-    no: "01",
-    label: "OBSERVE",
-    title: "らしさの手がかりを見る",
-    text: "写真や文章が揃っていない段階でも、そのサービスらしさや見せるべき方向を一緒に整理します。",
-  },
-  {
-    no: "02",
-    label: "EDIT",
-    title: "伝わる順番にする",
-    text: "言葉を増やす前に、初めて見る人が必要な情報へ進みやすい順番に整えます。",
-  },
-  {
-    no: "03",
-    label: "SHAPE",
-    title: "公開できる形にする",
-    text: "見た目だけで終わらせず、スマホでの見やすさや相談までの流れも確認しながら仕上げます。",
-  },
-];
-
 export default function About() {
   const sectionRef = useRef(null);
 
@@ -51,6 +30,7 @@ export default function About() {
       (entries) => {
         entries.forEach((entry) => {
           if (!entry.isIntersecting) return;
+
           reveal(entry.target);
           observer.unobserve(entry.target);
         });
@@ -115,9 +95,7 @@ export default function About() {
               styles["about-flow-2"]
             )}
           >
-            見せ方だけでなく、
-            <br />
-            <span>伝わり方まで見る。</span>
+            見える景色を、<span>伝わる流れに。</span>
           </p>
 
           <p
@@ -127,11 +105,10 @@ export default function About() {
               styles["about-flow-3"]
             )}
           >
-            初めて訪れた人が、何のサイトか、誰に向いているか、
-            <br />
+            初めて訪れた人が、何のサイトか、誰に向いているか、   <br />
             どこから相談できるかを自然に理解できるように。
             <br />
-            <span>言葉・写真・流れ</span>を整えるところから始めます。
+            <span>言葉・写真・導線</span>を整えるところから制作します。
           </p>
         </div>
 
@@ -151,36 +128,38 @@ export default function About() {
           </p>
 
           <p className={styles["about-text"]}>
-            世界観を大切にしながら、
-            見る人が迷いやすい部分を減らすことを意識しています。
+            沖縄を拠点に、
+            <span>ホームページ制作・LP制作・Webデザイン</span>
+            を行っています。
             <br />
-            お店やサービスの魅力がきちんと伝わり、
-            相談しやすい状態まで整えるWeb制作を行っています。
-            <br />
-            沖縄を拠点に、<span>ホームページ制作・LP制作・Webデザイン</span>を行っています。
+            世界観だけで終わらせず、相談しやすい流れまで整えることを大切にしています。
           </p>
         </div>
 
         <div
           className={cx(
-            styles["about-proof-grid"],
+            styles["about-method"],
             styles["about-flow"],
             styles["about-flow-5"]
           )}
         >
-          {PROOFS.map((item) => (
-            <article key={item.no} className={styles["about-proof-card"]}>
-              <div className={styles["about-proof-head"]}>
-                <span className={styles["about-proof-no"]}>{item.no}</span>
-                <span className={styles["about-proof-label"]}>
-                  {item.label}
-                </span>
-              </div>
+          <p className={styles["about-method-label"]}>HOW I BUILD</p>
 
-              <h3 className={styles["about-proof-title"]}>{item.title}</h3>
-              <p className={styles["about-proof-text"]}>{item.text}</p>
-            </article>
-          ))}
+          <p className={styles["about-method-lead"]}>
+            らしさを拾い、<span>相談まで整える。</span>
+          </p>
+
+          <div className={styles["about-method-text"]}>
+            <p>
+              写真や文章が揃っていない段階から、   <br />
+              その店やサービスらしさを拾い、見せる方向と情報の順番を整理します。
+            </p>
+
+            <p>
+              世界観だけで終わらせず、スマホでの読みやすさや、
+              問い合わせまでの流れも含めて仕上げます。
+            </p>
+          </div>
         </div>
 
         <div
