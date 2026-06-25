@@ -109,9 +109,12 @@ function prefersReducedMotion() {
 
 /* =========================================================
    Body Scroll Lock
+   - メニュー単体で閉じる: 元の位置へ復元
+   - メニュー内Linkでページ遷移: 復元しない
+   - App.jsx側のスクロールトップと衝突させない
 ========================================================= */
 
-function useBodyScrollLock(locked) {
+function useBodyScrollLock(locked, restoreOnUnlockRef) {
   const scrollYRef = useRef(0);
   const prevRef = useRef(null);
 
@@ -150,6 +153,8 @@ function useBodyScrollLock(locked) {
       const prev = prevRef.current;
       if (!prev) return;
 
+      const shouldRestore = restoreOnUnlockRef?.current !== false;
+
       body.style.overflow = prev.overflow;
       body.style.position = prev.position;
       body.style.top = prev.top;
@@ -158,10 +163,21 @@ function useBodyScrollLock(locked) {
       body.style.width = prev.width;
       body.style.paddingRight = prev.paddingRight;
 
-      window.scrollTo(0, scrollYRef.current);
+      if (shouldRestore) {
+        window.scrollTo({
+          top: scrollYRef.current,
+          left: 0,
+          behavior: "auto",
+        });
+      }
+
+      if (restoreOnUnlockRef) {
+        restoreOnUnlockRef.current = true;
+      }
+
       prevRef.current = null;
     };
-  }, [locked]);
+  }, [locked, restoreOnUnlockRef]);
 }
 
 /* =========================================================
@@ -234,6 +250,11 @@ export default function NavGlobal({ mode, tone = "auto" }) {
   const firstLinkRef = useRef(null);
   const pendingHashRef = useRef(null);
 
+  // メニュー解除時に現在地復元するかどうか
+  // 通常の閉じる: true
+  // ページ遷移リンク: false
+  const restoreOnUnlockRef = useRef(true);
+
   const [navH, setNavH] = useState(FALLBACK_NAV_HEIGHT);
   const scrollOffset = navH + 12;
   const scrollOffsetRef = useRef(scrollOffset);
@@ -246,7 +267,7 @@ export default function NavGlobal({ mode, tone = "auto" }) {
     [isHome, homeLinks, globalLinks]
   );
 
-  useBodyScrollLock(open);
+  useBodyScrollLock(open, restoreOnUnlockRef);
 
   useEffect(() => setMounted(true), []);
 
@@ -308,7 +329,10 @@ export default function NavGlobal({ mode, tone = "auto" }) {
     const mq = window.matchMedia("(min-width: 768px)");
 
     const closeIfDesktop = () => {
-      if (mq.matches) setOpen(false);
+      if (mq.matches) {
+        restoreOnUnlockRef.current = true;
+        setOpen(false);
+      }
     };
 
     closeIfDesktop();
@@ -424,6 +448,7 @@ export default function NavGlobal({ mode, tone = "auto" }) {
       if (e.key !== "Escape") return;
 
       e.preventDefault();
+      restoreOnUnlockRef.current = true;
       setOpen(false);
 
       window.setTimeout(() => buttonRef.current?.focus(), 0);
@@ -457,8 +482,20 @@ export default function NavGlobal({ mode, tone = "auto" }) {
     });
   }, [open]);
 
-  const closeMenu = useCallback(() => setOpen(false), []);
-  const toggleMenu = useCallback(() => setOpen((v) => !v), []);
+  const closeMenu = useCallback(() => {
+    restoreOnUnlockRef.current = true;
+    setOpen(false);
+  }, []);
+
+  const closeMenuForRouteChange = useCallback(() => {
+    restoreOnUnlockRef.current = false;
+    setOpen(false);
+  }, []);
+
+  const toggleMenu = useCallback(() => {
+    restoreOnUnlockRef.current = true;
+    setOpen((v) => !v);
+  }, []);
 
   const handleAnchorClick = useCallback(
     (href) => (e) => {
@@ -469,6 +506,9 @@ export default function NavGlobal({ mode, tone = "auto" }) {
       setActiveHash((prev) => (prev === href ? prev : href));
 
       if (open) {
+        // ホーム内アンカーは「閉じたあとに目的地へスクロール」する。
+        // ここでは復元を止めない。
+        restoreOnUnlockRef.current = true;
         pendingHashRef.current = href;
         setOpen(false);
         return;
@@ -482,13 +522,21 @@ export default function NavGlobal({ mode, tone = "auto" }) {
   const handleLogoClick = useCallback(
     (e) => {
       if (!isHome) {
-        if (open) closeMenu();
+        if (open) {
+          // 下層からロゴでHOMEへ遷移する時は、Nav側の位置復元を止める。
+          closeMenuForRouteChange();
+        }
+
         return;
       }
 
       e.preventDefault();
 
-      if (open) setOpen(false);
+      if (open) {
+        // HOME上でロゴを押す時はトップへ戻すので、Nav側の位置復元を止める。
+        restoreOnUnlockRef.current = false;
+        setOpen(false);
+      }
 
       if (window.location.hash) {
         window.history.replaceState(
@@ -503,7 +551,7 @@ export default function NavGlobal({ mode, tone = "auto" }) {
         scrollToY(0);
       });
     },
-    [isHome, open, closeMenu]
+    [isHome, open, closeMenuForRouteChange]
   );
 
   const renderMobileSeaLink = useCallback(
@@ -571,7 +619,7 @@ export default function NavGlobal({ mode, tone = "auto" }) {
           to={item.to}
           ref={index === 0 ? firstLinkRef : null}
           tabIndex={open ? 0 : -1}
-          onClick={() => setOpen(false)}
+          onClick={closeMenuForRouteChange}
           aria-current={active ? "page" : undefined}
           data-emphasis={item.emphasis ? "true" : "false"}
           className={className}
@@ -581,7 +629,13 @@ export default function NavGlobal({ mode, tone = "auto" }) {
         </Link>
       );
     },
-    [activeHash, handleAnchorClick, open, pathname]
+    [
+      activeHash,
+      closeMenuForRouteChange,
+      handleAnchorClick,
+      open,
+      pathname,
+    ]
   );
 
   if (!mounted) return null;
@@ -759,7 +813,7 @@ export default function NavGlobal({ mode, tone = "auto" }) {
             <button
               type="button"
               onClick={() => {
-                setOpen(false);
+                closeMenu();
                 window.setTimeout(() => buttonRef.current?.focus(), 0);
               }}
               aria-label="Close navigation"

@@ -748,11 +748,6 @@ function Layout() {
     </>
   );
 }
-
-/* ============================================================================
-   App
-=========================================================================== */
-
 export default function App() {
   const location = useLocation();
   const navigationType = useNavigationType();
@@ -760,6 +755,12 @@ export default function App() {
   const observerRef = useRef(null);
   const scrollPositionsRef = useRef(new Map());
   const currentScrollKeyRef = useRef("");
+
+  // location.keyだけ変わった「同じページ遷移」を判定するための保持用
+  const previousRouteRef = useRef({
+    pathname: normalizePathname(location.pathname),
+    search: location.search || "",
+  });
 
   const pathname = normalizePathname(location.pathname);
 
@@ -836,11 +837,32 @@ export default function App() {
   }, [pathname]);
 
   // 本拠地標準スクロール制御
-  // 通常リンク遷移: トップへ
+  // 通常リンク遷移: 別ページならトップへ
+  // 同じページのナビクリック: スクロールに触らない
   // ブラウザ戻る/進む: 前回のscroll位置へ復元
   // hash遷移: #about / #works などを邪魔しない
   useEffect(() => {
     if (location.hash) return undefined;
+
+    const currentPathname = normalizePathname(location.pathname);
+    const currentSearch = location.search || "";
+
+    const previousRoute = previousRouteRef.current;
+    const sameRoute =
+      previousRoute.pathname === currentPathname &&
+      previousRoute.search === currentSearch;
+
+    previousRouteRef.current = {
+      pathname: currentPathname,
+      search: currentSearch,
+    };
+
+    // ここが今回の修正ポイント。
+    // ナビ開閉や同じページへのLinkクリックで location.key だけ変わった場合は、
+    // スクロールトップも復元も走らせない。
+    if (sameRoute && navigationType !== "POP") {
+      return undefined;
+    }
 
     const key = getScrollStorageKey(location);
     const savedY = scrollPositionsRef.current.get(key);
@@ -873,7 +895,6 @@ export default function App() {
     return () => {
       cancelAnimationFrame(rafA);
       cancelAnimationFrame(rafB);
-
       window.clearTimeout(timerA);
       window.clearTimeout(timerB);
     };
