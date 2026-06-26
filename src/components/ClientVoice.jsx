@@ -7,7 +7,7 @@ import {
 } from "../data/clientVoices";
 import styles from "./ClientVoice.module.css";
 
-const DURATION = 7600;
+const SLIDE_DURATION = 7600;
 const TURN_OUT = 340;
 const TURN_IN = 260;
 
@@ -23,10 +23,6 @@ function cx(...classes) {
 
 function formatVoiceNumber(index) {
   return `VOICE ${String(index + 1).padStart(2, "0")}`;
-}
-
-function buildMetaLine(item) {
-  return [item.area, item.category, item.project].filter(Boolean).join(" / ");
 }
 
 function getTextLength(text = "") {
@@ -45,23 +41,64 @@ function getWritingDuration(quote = "", body = "") {
   );
 }
 
+function buildMetaLine(item) {
+  return [item.area, item.category, item.project].filter(Boolean).join(" / ");
+}
+
+function normalizeVoice(item, index) {
+  if (!item || !item.client || !(item.quote || item.body)) return null;
+
+  return {
+    ...item,
+    id: item.id || `client-voice-${index + 1}`,
+    quote: item.quote || "",
+    body: item.body || "",
+  };
+}
+
 function renderInkText(text = "", startIndex = 0) {
   return Array.from(text).map((char, i) => {
-    const delay = WRITE_START_DELAY + (startIndex + i) * WRITE_SPEED;
     const safeChar = char === " " ? "\u00A0" : char;
+    const delay = WRITE_START_DELAY + (startIndex + i) * WRITE_SPEED;
 
     return (
       <span
         key={`${char}-${i}`}
         className={styles.inkChar}
-        style={{
-          animationDelay: `${delay}ms`,
-        }}
+        style={{ animationDelay: `${delay}ms` }}
       >
         {safeChar}
       </span>
     );
   });
+}
+
+function VoiceLinks({ item }) {
+  if (!item.siteUrl && !item.articleUrl) return null;
+
+  return (
+    <div className={styles.links}>
+      {item.siteUrl && (
+        <a
+          href={item.siteUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={`${item.client} の公式サイトを新しいタブで開く`}
+        >
+          公式サイト
+        </a>
+      )}
+
+      {item.articleUrl && (
+        <a
+          href={item.articleUrl}
+          aria-label={`${item.client} の制作記事を開く`}
+        >
+          制作記事
+        </a>
+      )}
+    </div>
+  );
 }
 
 export default function ClientVoice({
@@ -72,16 +109,12 @@ export default function ClientVoice({
 
   const sectionRef = useRef(null);
   const hasStartedWritingRef = useRef(false);
-
   const autoTimerRef = useRef(null);
   const turnTimerRef = useRef(null);
   const resetTimerRef = useRef(null);
 
   const voices = useMemo(
-    () =>
-      items.filter(
-        (item) => item && item.client && (item.quote || item.body)
-      ),
+    () => items.map(normalizeVoice).filter(Boolean),
     [items]
   );
 
@@ -149,14 +182,12 @@ export default function ClientVoice({
       if (typeof window === "undefined") return;
 
       clearAllTimers();
-
       setDirection(nextDirection);
       setPhase("turningOut");
 
       turnTimerRef.current = window.setTimeout(() => {
         setIdx(nextIndex);
         setPhase("turningIn");
-
         turnTimerRef.current = null;
 
         resetTimerRef.current = window.setTimeout(() => {
@@ -170,13 +201,11 @@ export default function ClientVoice({
 
   const goNext = useCallback(() => {
     if (!hasMultipleVoices) return;
-
     goTo((idx + 1) % voiceCount, "next");
   }, [goTo, hasMultipleVoices, idx, voiceCount]);
 
   const goPrev = useCallback(() => {
     if (!hasMultipleVoices) return;
-
     goTo((idx - 1 + voiceCount) % voiceCount, "prev");
   }, [goTo, hasMultipleVoices, idx, voiceCount]);
 
@@ -213,9 +242,7 @@ export default function ClientVoice({
     }
 
     if (!el) {
-      const raf = window.requestAnimationFrame(() => {
-        startWriting();
-      });
+      const raf = window.requestAnimationFrame(startWriting);
 
       return () => {
         window.cancelAnimationFrame(raf);
@@ -258,20 +285,18 @@ export default function ClientVoice({
     if (paused) return undefined;
     if (phase !== "idle") return undefined;
 
-    autoTimerRef.current = window.setTimeout(() => {
-      goNext();
-    }, DURATION);
+    autoTimerRef.current = window.setTimeout(goNext, SLIDE_DURATION);
 
     return clearAutoTimer;
   }, [
+    clearAutoTimer,
+    goNext,
+    hasEntered,
+    hasMultipleVoices,
     idx,
     paused,
     phase,
     shouldRender,
-    hasMultipleVoices,
-    hasEntered,
-    goNext,
-    clearAutoTimer,
   ]);
 
   useEffect(() => {
@@ -281,28 +306,19 @@ export default function ClientVoice({
   if (!shouldRender || !current) return null;
 
   const metaLine = buildMetaLine(current);
+  const quoteLength = getTextLength(current.quote);
+  const writingMs = getWritingDuration(current.quote, current.body);
 
-  const quoteText = current.quote || "";
-  const bodyText = current.body || "";
+  const sectionClassName = cx(
+    styles.voice,
+    hasEntered && styles.hasEntered,
+    isWriting && styles.isWriting
+  );
 
-  const quoteLength = getTextLength(quoteText);
-  const writingMs = getWritingDuration(quoteText, bodyText);
-
-  const phaseClass =
-    phase === "turningOut"
-      ? styles.isTurningOut
-      : phase === "turningIn"
-        ? styles.isTurningIn
-        : "";
-
-const sectionClassName = cx(
-  styles.voice,
-  hasEntered && styles.hasEntered,
-  isWriting && styles.isWriting
-);
   const stageClassName = cx(
     styles.stage,
-    phaseClass,
+    phase === "turningOut" && styles.isTurningOut,
+    phase === "turningIn" && styles.isTurningIn,
     direction === "prev" ? styles.isPrev : styles.isNext
   );
 
@@ -333,16 +349,14 @@ const sectionClassName = cx(
           </h2>
 
           <p className={styles.lead}>
-            実際にWebサイトを制作させていただいたお客様から、
+            沖縄の店舗・個人事業向けにWebサイトを制作したお客様から、
             掲載許可をいただいた感想を紹介しています。
           </p>
         </header>
 
         <div
           className={stageClassName}
-          style={{
-            "--write-duration": `${writingMs}ms`,
-          }}
+          style={{ "--write-duration": `${writingMs}ms` }}
           aria-live="polite"
           aria-atomic="true"
           data-voice-id={current.id}
@@ -389,7 +403,10 @@ const sectionClassName = cx(
             </figure>
           )}
 
-          <article className={styles.mainPaper}>
+          <article
+            className={styles.mainPaper}
+            aria-label={`${current.client} のお客様の声`}
+          >
             <div className={styles.paperFold} aria-hidden="true" />
 
             <div className={styles.quoteArea}>
@@ -397,42 +414,20 @@ const sectionClassName = cx(
                 key={`quote-${current.id}-${idx}`}
                 className={styles.quote}
               >
-                {quoteText && (
+                {current.quote && (
                   <p className={styles.inkLine}>
-                    {renderInkText(quoteText, 0)}
+                    {renderInkText(current.quote, 0)}
                   </p>
                 )}
 
-                {bodyText && (
+                {current.body && (
                   <p className={styles.inkLine}>
-                    {renderInkText(bodyText, quoteLength + 10)}
+                    {renderInkText(current.body, quoteLength + 10)}
                   </p>
                 )}
               </blockquote>
 
-              {(current.siteUrl || current.articleUrl) && (
-                <div className={styles.links}>
-                  {current.siteUrl && (
-                    <a
-                      href={current.siteUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label={`${current.client} の公式サイトを新しいタブで開く`}
-                    >
-                      公式サイト
-                    </a>
-                  )}
-
-                  {current.articleUrl && (
-                    <a
-                      href={current.articleUrl}
-                      aria-label={`${current.client} の制作記事を開く`}
-                    >
-                      制作記事
-                    </a>
-                  )}
-                </div>
-              )}
+              <VoiceLinks item={current} />
 
               <span
                 key={`trace-${current.id}-${idx}`}
@@ -448,7 +443,7 @@ const sectionClassName = cx(
             </div>
           </article>
 
-          <aside className={styles.sidePaper}>
+          <aside className={styles.sidePaper} aria-label="制作実績の概要">
             <span className={styles.clip} aria-hidden="true" />
 
             <p className={styles.voiceNo}>{formatVoiceNumber(idx)}</p>
@@ -499,7 +494,7 @@ const sectionClassName = cx(
               <span
                 key={`${current.id}-${idx}`}
                 style={{
-                  animationDuration: `${DURATION}ms`,
+                  animationDuration: `${SLIDE_DURATION}ms`,
                   animationPlayState:
                     paused || phase !== "idle" ? "paused" : "running",
                 }}
