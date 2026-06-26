@@ -8,9 +8,16 @@ import styles from "./Sketchbook.module.css";
 
 const SITE_URL = "https://gushikendesign.com";
 
+const PAGE_PATH = "/sketchbook";
+const PAGE_URL = `${SITE_URL}${PAGE_PATH}`;
+
 const PAGE_TITLE = "Sketchbook | GUSHIKEN DESIGN";
 const PAGE_DESCRIPTION =
-  "GUSHIKEN DESIGNのSketchbook。Webデザインやホームページ制作の途中で残ったラフ、スケッチ、構図メモなどを置いていくページです。";
+  "GUSHIKEN DESIGNのSketchbook。ラフ、線、構図メモ、制作前のスケッチや趣味で描いたものを、淡々と置いていくページです。";
+
+const OGP_IMAGE = `${SITE_URL}/ogp/sketchbook.png`;
+const OGP_IMAGE_ALT =
+  "GUSHIKEN DESIGNのSketchbook。ラフ、線、構図メモを置いていくページ。";
 
 const cx = (...classes) => classes.filter(Boolean).join(" ");
 
@@ -140,22 +147,63 @@ export default function Sketchbook() {
       .filter((item) => item.id && item.image?.url);
   }, [rawItems]);
 
+  const jsonLd = useMemo(() => {
+    return {
+      "@context": "https://schema.org",
+      "@type": "CollectionPage",
+      "@id": `${PAGE_URL}#webpage`,
+      url: PAGE_URL,
+      name: PAGE_TITLE,
+      description: PAGE_DESCRIPTION,
+      inLanguage: "ja",
+      isPartOf: {
+        "@id": `${SITE_URL}/#website`,
+      },
+      about: {
+        "@type": "CreativeWork",
+        name: "Sketchbook",
+        description:
+          "ラフ、線、構図メモ、制作前のスケッチや趣味で描いたものを置いていくページ。",
+      },
+      creator: {
+        "@id": `${SITE_URL}/#person`,
+      },
+      publisher: {
+        "@id": `${SITE_URL}/#organization`,
+      },
+    };
+  }, []);
+
   return (
     <>
       <Helmet>
         <title>{PAGE_TITLE}</title>
         <meta name="description" content={PAGE_DESCRIPTION} />
-        <link rel="canonical" href={`${SITE_URL}/sketchbook`} />
+        <link rel="canonical" href={PAGE_URL} />
 
+        <meta property="og:locale" content="ja_JP" />
         <meta property="og:type" content="website" />
+        <meta property="og:site_name" content="GUSHIKEN DESIGN" />
+        <meta property="og:url" content={PAGE_URL} />
         <meta property="og:title" content={PAGE_TITLE} />
         <meta property="og:description" content={PAGE_DESCRIPTION} />
-        <meta property="og:url" content={`${SITE_URL}/sketchbook`} />
-        <meta property="og:site_name" content="GUSHIKEN DESIGN" />
+        <meta property="og:image" content={OGP_IMAGE} />
+        <meta property="og:image:secure_url" content={OGP_IMAGE} />
+        <meta property="og:image:type" content="image/jpeg" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta property="og:image:alt" content={OGP_IMAGE_ALT} />
 
         <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:url" content={PAGE_URL} />
         <meta name="twitter:title" content={PAGE_TITLE} />
         <meta name="twitter:description" content={PAGE_DESCRIPTION} />
+        <meta name="twitter:image" content={OGP_IMAGE} />
+        <meta name="twitter:image:alt" content={OGP_IMAGE_ALT} />
+
+        <script type="application/ld+json">
+          {JSON.stringify(jsonLd)}
+        </script>
       </Helmet>
 
       <main className={styles.page}>
