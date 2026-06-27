@@ -1814,6 +1814,80 @@ export const worksData = [
     },
 
     {
+      title: "NOAH — SF Web Chronicle",
+      slug: "NoahRoom",
+      desc:
+        "愛、AI、残響。孤独な少年と人工知能NOAHの物語を、文章・ビジュアル・Web体験で構築した3シーズン構成のSF作品。",
+      link: "/works/NoahRoom",
+      img: "/works/noah-main.webp",
+      isNew: true,
+      createdAt: "2026-04-11",
+      tags: [
+        "NEW",
+        "Art",
+        "SF",
+        "AI",
+        "Story",
+        "Worldview",
+        "Web Experience",
+        "3 Seasons",
+      ],
+      detail: {
+        concept:
+          "NOAHは、孤独な少年アラタと人工知能NOAHの出会いから始まり、愛・喪失・崩壊・継承へ進んでいくSF Web作品。単なるストーリーページではなく、文章、余白、ビジュアル、スクロール、画面の温度を一体化させ、物語そのものを触れられる体験として再構築した。GUSHIKEN DESIGNの中でも、感情・構造・世界観が強く出ている作品。",
+        tech: [
+          "React",
+          "Vite",
+          "Tailwind",
+          "GSAP",
+          "IntersectionObserver",
+          "PC/SP 完全分離",
+        ],
+      },
+      seo: {
+        title:
+          "NOAH｜愛とAIの境界を描く3シーズン構成のSF Web作品｜GUSHIKEN DESIGN",
+        description:
+          "NOAHは、孤独な少年と人工知能の出会いから始まり、愛・喪失・崩壊・継承へ進む3シーズン構成のSF Web作品です。物語とWeb体験を一体化させたアート寄りの代表作です。",
+        keywords:
+          "NOAH, SF作品, AI作品, 物語サイト, Web作品, 世界観デザイン, アートサイト, GUSHIKEN DESIGN",
+        ogImage: "https://gushikendesign.com/ogp/noah.png",
+      },
+    },
+{
+  title: "Sketchbook — Rough Notes",
+  slug: "sketchbook",
+  desc:
+    "完成作品になる前のラフ、構図メモ、線の練習、趣味で描いた絵を置いていく小さな記録。GUSHIKEN DESIGNの制作前後に残った、手元の断片を並べたページ。",
+  link: "/sketchbook",
+  img: "/works/sketchbook.webp",
+  isNew: true,
+  createdAt: "2026-06-27",
+  tags: [
+    "NEW",
+    "Sketchbook",
+    "Rough",
+    "Drawing",
+    "Memo",
+    "Composition",
+    "Personal",
+    "Art",
+  ],
+  detail: {
+    concept:
+      "Sketchbookは、完成作品として整える前のラフ、構図メモ、線の練習、趣味で描いた絵をそのまま置いていく場所。商業的な実績ではなく、GUSHIKEN DESIGNの表現や観察の根っこに近い、小さな記録として扱う。",
+    tech: ["React", "Vite", "microCMS", "CSS Modules"],
+  },
+  seo: {
+    title: "Sketchbook｜GUSHIKEN DESIGN",
+    description:
+      "GUSHIKEN DESIGNのSketchbook。Webデザインやホームページ制作の途中で残ったラフ、スケッチ、構図メモなどを置いていくページです。",
+    keywords:
+      "Sketchbook, スケッチ, ラフ, 構図メモ, Webデザイン, GUSHIKEN DESIGN",
+    ogImage: "https://gushikendesign.com/ogp/sketchbook.png",
+  },
+},
+    {
       title: "TRUTH / EDITION — ISSUE 00",
       slug: "TruthEdition",
       desc:
@@ -1855,90 +1929,6 @@ export const worksData = [
       },
     },
 
-    {
-      title: "NOAH — SF Web Chronicle",
-      slug: "NoahRoom",
-      desc:
-        "愛、AI、残響。孤独な少年と人工知能NOAHの物語を、文章・ビジュアル・Web体験で構築した3シーズン構成のSF作品。",
-      link: "/works/NoahRoom",
-      img: "/works/noah-main.webp",
-      isNew: true,
-      createdAt: "2026-04-11",
-      tags: [
-        "NEW",
-        "Art",
-        "SF",
-        "AI",
-        "Story",
-        "Worldview",
-        "Web Experience",
-        "3 Seasons",
-      ],
-      detail: {
-        concept:
-          "NOAHは、孤独な少年アラタと人工知能NOAHの出会いから始まり、愛・喪失・崩壊・継承へ進んでいくSF Web作品。単なるストーリーページではなく、文章、余白、ビジュアル、スクロール、画面の温度を一体化させ、物語そのものを触れられる体験として再構築した。GUSHIKEN DESIGNの中でも、感情・構造・世界観が強く出ている作品。",
-        tech: [
-          "React",
-          "Vite",
-          "Tailwind",
-          "GSAP",
-          "IntersectionObserver",
-          "PC/SP 完全分離",
-        ],
-      },
-      seo: {
-        title:
-          "NOAH｜愛とAIの境界を描く3シーズン構成のSF Web作品｜GUSHIKEN DESIGN",
-        description:
-          "NOAHは、孤独な少年と人工知能の出会いから始まり、愛・喪失・崩壊・継承へ進む3シーズン構成のSF Web作品です。物語とWeb体験を一体化させたアート寄りの代表作です。",
-        keywords:
-          "NOAH, SF作品, AI作品, 物語サイト, Web作品, 世界観デザイン, アートサイト, GUSHIKEN DESIGN",
-        ogImage: "https://gushikendesign.com/ogp/noah.png",
-      },
-    },
-
-    {
-      title: "Expression Lab — 扉が映すもの",
-      slug: "ExpressionLabRoom",
-      desc:
-        "扉を開くたびに、違う表現に出会う。文字、光、奥行き、感覚をひとつずつ確かめながら、Web表現そのものを作品として扱ったアートサイト。",
-      link: "https://expression-lab.vercel.app/",
-      img: "/works/expression-lab.webp",
-      isNew: true,
-      createdAt: "2026-06-07",
-      tags: [
-        "NEW",
-        "Art",
-        "Art Site",
-        "Expression",
-        "Door",
-        "Worldview",
-        "Interactive",
-        "Light",
-        "Depth",
-      ],
-      detail: {
-        concept:
-          "Expression Labは、Webサイトを情報の置き場ではなく、表現の部屋として扱った実験作品。扉を開く、奥へ進む、光に触れる、文字を見る。その一つひとつを画面遷移ではなく体験として組み、GUSHIKEN DESIGNが何に反応し、何を美しいと感じるのかをそのまま置いた。商業サイトの前にある、表現の原液に近い作品。",
-        tech: [
-          "React",
-          "Vite",
-          "CSS Modules",
-          "GSAP",
-          "IntersectionObserver",
-          "PC/SP 完全分離",
-        ],
-      },
-      seo: {
-        title:
-          "Expression Lab｜扉・光・奥行きで表現をめぐるアートサイト｜GUSHIKEN DESIGN",
-        description:
-          "Expression Labは、扉を開くたびに違う表現に出会うアートサイトです。文字、光、奥行き、感覚をめぐりながら、Web表現そのものを作品として扱った実験的な制作例です。",
-        keywords:
-          "Expression Lab, アートサイト, 実験的Webデザイン, インタラクティブサイト, 扉, 光の表現, 奥行きデザイン, GUSHIKEN DESIGN",
-        ogImage: "https://gushikendesign.com/ogp/expression-lab.png",
-      },
-    },
 
     {
       title: "MEISHIKI — 命式メモ",
@@ -2027,6 +2017,48 @@ export const worksData = [
       },
     },
 
+    {
+      title: "Expression Lab — 扉が映すもの",
+      slug: "ExpressionLabRoom",
+      desc:
+        "扉を開くたびに、違う表現に出会う。文字、光、奥行き、感覚をひとつずつ確かめながら、Web表現そのものを作品として扱ったアートサイト。",
+      link: "https://expression-lab.vercel.app/",
+      img: "/works/expression-lab.webp",
+      isNew: true,
+      createdAt: "2026-06-07",
+      tags: [
+        "NEW",
+        "Art",
+        "Art Site",
+        "Expression",
+        "Door",
+        "Worldview",
+        "Interactive",
+        "Light",
+        "Depth",
+      ],
+      detail: {
+        concept:
+          "Expression Labは、Webサイトを情報の置き場ではなく、表現の部屋として扱った実験作品。扉を開く、奥へ進む、光に触れる、文字を見る。その一つひとつを画面遷移ではなく体験として組み、GUSHIKEN DESIGNが何に反応し、何を美しいと感じるのかをそのまま置いた。商業サイトの前にある、表現の原液に近い作品。",
+        tech: [
+          "React",
+          "Vite",
+          "CSS Modules",
+          "GSAP",
+          "IntersectionObserver",
+          "PC/SP 完全分離",
+        ],
+      },
+      seo: {
+        title:
+          "Expression Lab｜扉・光・奥行きで表現をめぐるアートサイト｜GUSHIKEN DESIGN",
+        description:
+          "Expression Labは、扉を開くたびに違う表現に出会うアートサイトです。文字、光、奥行き、感覚をめぐりながら、Web表現そのものを作品として扱った実験的な制作例です。",
+        keywords:
+          "Expression Lab, アートサイト, 実験的Webデザイン, インタラクティブサイト, 扉, 光の表現, 奥行きデザイン, GUSHIKEN DESIGN",
+        ogImage: "https://gushikendesign.com/ogp/expression-lab.png",
+      },
+    },
     {
       title: "GLASS ROOM — Shards & Words",
       slug: "GlassRoom",
