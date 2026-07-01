@@ -409,46 +409,6 @@ export const worksData = [
     },
 
     {
-      title: "LÜMIN — Minimal Audio EC",
-      slug: "LuminRoom",
-      desc:
-        "白銀の余白と精度で、音の透明感を視覚化したミニマルAVブランドEC。スペックより先に、プロダクトの静かな所有感が伝わるよう設計した。",
-      link: "https://lumin-audio.vercel.app/",
-      img: "/works/lumin-main.webp",
-      isNew: true,
-      createdAt: "2026-02-02",
-      tags: [
-        "PICKUP",
-        "Audio",
-        "Minimal",
-        "WhiteSilver",
-        "EC",
-        "Precision",
-      ],
-      detail: {
-        concept:
-          "オーディオプロダクトの価値を、機能説明だけでなく“精度のある静けさ”として見せる。白銀の余白、光、距離感を揃え、透明な音のイメージとプロダクトの所有感を両立したEC体験にした。",
-        tech: [
-          "React",
-          "Vite",
-          "Tailwind",
-          "GSAP",
-          "IntersectionObserver",
-          "PC/SP 完全分離",
-        ],
-      },
-      seo: {
-        title:
-          "LÜMIN｜白銀と精度で魅せるミニマルオーディオEC｜GUSHIKEN DESIGN",
-        description:
-          "LÜMINは、白銀の余白と精度で音の透明感を視覚化したミニマルオーディオECです。プロダクトの静かな所有感と選びやすい導線を両立しています。",
-        keywords:
-          "オーディオEC, イヤホンEC, ヘッドホンEC, 白銀デザイン, ミニマルプロダクト, 高級感EC, GUSHIKEN DESIGN",
-        ogImage: "https://gushikendesign.com/ogp/lumin-main.png",
-      },
-    },
-
-    {
       title: "ROSE VEIL — Fragrance Shampoo",
       slug: "RoseRoom",
       desc:
