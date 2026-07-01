@@ -1,4 +1,5 @@
 // scripts/seo-pages.mjs
+import "dotenv/config";
 import fs from "node:fs";
 import path from "node:path";
 
@@ -7,6 +8,17 @@ const SITE_NAME = "GUSHIKEN DESIGN";
 const DIST_DIR = path.resolve("dist");
 const BASE_HTML_PATH = path.join(DIST_DIR, "index.html");
 const DEFAULT_IMAGE = `${SITE_ORIGIN}/ogp-v4.png`;
+
+const MICROCMS_API_KEY =
+  process.env.VITE_MICROCMS_API_KEY || process.env.MICROCMS_API_KEY || "";
+
+const MICROCMS_SERVICE_DOMAIN =
+  process.env.VITE_MICROCMS_SERVICE_DOMAIN ||
+  process.env.MICROCMS_SERVICE_DOMAIN ||
+  "";
+
+const MICROCMS_NEWS_ENDPOINT = "news";
+const MICROCMS_LIMIT = 100;
 
 if (!fs.existsSync(BASE_HTML_PATH)) {
   console.error(
@@ -25,6 +37,217 @@ const commonLinks = [
   ["全国オンライン対応を見る", "/online"],
   ["相談する", "/contact"],
 ];
+
+function stripHtmlForSeo(html = "") {
+  return String(html)
+    .replace(/<script[\s\S]*?>[\s\S]*?<\/script>/gi, "")
+    .replace(/<style[\s\S]*?>[\s\S]*?<\/style>/gi, "")
+    .replace(/<[^>]+>/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function clampSeoText(text = "", max = 120) {
+  const clean = String(text || "").trim();
+  if (!clean) return "";
+  return clean.length > max ? `${clean.slice(0, max)}…` : clean;
+}
+
+function normalizeMicroCmsImage(image) {
+  const url = image?.url || "";
+
+  if (!url) return DEFAULT_IMAGE;
+  if (/^https?:\/\//i.test(url)) return url;
+
+  return `${SITE_ORIGIN}${url.startsWith("/") ? "" : "/"}${url}`;
+}
+
+function getArticleDate(article) {
+  return article?.publishedAt || article?.createdAt || article?.updatedAt || "";
+}
+
+function getArticleModifiedDate(article) {
+  return article?.updatedAt || article?.publishedAt || article?.createdAt || "";
+}
+
+function hasMicroCmsBuildEnv() {
+  return Boolean(MICROCMS_API_KEY && MICROCMS_SERVICE_DOMAIN);
+}
+
+async function fetchMicroCmsNewsPage({
+  limit = MICROCMS_LIMIT,
+  offset = 0,
+} = {}) {
+  if (!hasMicroCmsBuildEnv()) {
+    throw new Error(
+      "microCMS の環境変数がありません。VITE_MICROCMS_API_KEY / VITE_MICROCMS_SERVICE_DOMAIN を確認してください。"
+    );
+  }
+
+  const url = new URL(
+    `https://${MICROCMS_SERVICE_DOMAIN}.microcms.io/api/v1/${MICROCMS_NEWS_ENDPOINT}`
+  );
+
+  url.searchParams.set("limit", String(limit));
+  url.searchParams.set("offset", String(offset));
+  url.searchParams.set("orders", "-publishedAt");
+  url.searchParams.set(
+    "fields",
+    "id,title,body,eyecatch,publishedAt,createdAt,updatedAt"
+  );
+
+  const res = await fetch(url, {
+    headers: {
+      "X-MICROCMS-API-KEY": MICROCMS_API_KEY,
+    },
+  });
+
+  if (!res.ok) {
+    const body = await res.text().catch(() => "");
+    throw new Error(
+      `microCMS NEWS取得エラー: ${res.status} ${res.statusText}
+${body}`
+    );
+  }
+
+  return res.json();
+}
+
+async function fetchAllNewsArticles() {
+  if (!hasMicroCmsBuildEnv()) {
+    console.warn(
+      "⚠️ microCMS の環境変数がないため、NEWS詳細SEOページの生成をスキップします。"
+    );
+    return [];
+  }
+
+  const articles = [];
+  let offset = 0;
+  let totalCount = 0;
+
+  do {
+    const data = await fetchMicroCmsNewsPage({
+      limit: MICROCMS_LIMIT,
+      offset,
+    });
+
+    const contents = Array.isArray(data?.contents) ? data.contents : [];
+
+    articles.push(...contents);
+
+    totalCount = Number(data?.totalCount || 0);
+    offset += MICROCMS_LIMIT;
+  } while (offset < totalCount);
+
+  return articles.filter((article) => article?.id);
+}
+
+function newsArticleJsonLd(article, page) {
+  const pageUrl = absoluteUrl(page.path);
+  const published = getArticleDate(article);
+  const modified = getArticleModifiedDate(article);
+
+  return {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "NewsArticle",
+        "@id": `${pageUrl}#article`,
+        mainEntityOfPage: {
+          "@id": `${pageUrl}#webpage`,
+        },
+        headline: page.h1,
+        description: page.description,
+        image: page.image ? [page.image] : [DEFAULT_IMAGE],
+        datePublished: published || undefined,
+        dateModified: modified || published || undefined,
+        author: {
+          "@id": `${SITE_ORIGIN}/#person`,
+        },
+        publisher: {
+          "@id": `${SITE_ORIGIN}/#organization`,
+        },
+        inLanguage: "ja",
+      },
+      {
+        "@type": "WebPage",
+        "@id": `${pageUrl}#webpage`,
+        url: pageUrl,
+        name: page.title,
+        description: page.description,
+        inLanguage: "ja",
+        isPartOf: {
+          "@id": `${SITE_ORIGIN}/#website`,
+        },
+        breadcrumb: {
+          "@id": `${pageUrl}#breadcrumb`,
+        },
+      },
+      breadcrumbJsonLd(page.path, [
+        ["ホーム", "/"],
+        ["NEWS", "/news"],
+        [page.h1, page.path],
+      ]),
+    ],
+  };
+}
+
+function articleToNewsSeoPage(article) {
+  const id = article.id;
+  const rawTitle = String(article.title || "NEWS").trim();
+  const bodyText = stripHtmlForSeo(article.body || "");
+
+  const description =
+    clampSeoText(bodyText, 120) ||
+    "GUSHIKEN DESIGNの制作記録・更新記事です。制作の背景、実績、Webデザインの判断を記録しています。";
+
+  const image = normalizeMicroCmsImage(article.eyecatch);
+
+  const page = {
+    path: `/news/${id}`,
+    title: `${rawTitle}｜${SITE_NAME}`,
+    description,
+    image,
+    ogType: "article",
+    publishedTime: getArticleDate(article),
+    modifiedTime: getArticleModifiedDate(article),
+    label: "NEWS / DESIGN LOG",
+    h1: rawTitle,
+    lead: description,
+    points: [
+      "GUSHIKEN DESIGNの制作記録・更新記事です。",
+      "制作の背景、実績、Webデザインの判断を記録しています。",
+      "沖縄を拠点に、LP制作・ホームページ制作・Webデザインを行っています。",
+    ],
+    note:
+      clampSeoText(bodyText, 420) ||
+      "この記事では、GUSHIKEN DESIGNの制作・更新に関する内容を記録しています。",
+    links: [
+      ["NEWS一覧へ戻る", "/news"],
+      ["制作実績を見る", "/works"],
+      ["料金を見る", "/price"],
+      ["相談する", "/contact"],
+    ],
+  };
+
+  page.jsonLd = newsArticleJsonLd(article, page);
+
+  return page;
+}
+
+async function buildNewsSeoPages() {
+  try {
+    const articles = await fetchAllNewsArticles();
+    const newsPages = articles.map(articleToNewsSeoPage);
+
+    console.log(`NEWS detail pages: ${newsPages.length}`);
+
+    return newsPages;
+  } catch (err) {
+    console.error("❌ NEWS詳細SEOページ生成エラー:", err);
+    return [];
+  }
+}
 
 const pages = [
   {
@@ -754,7 +977,21 @@ function injectHeadTags(html, page) {
   <meta property="og:image:alt" content="${escapeAttr(title)}" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
-
+${
+  ogType === "article" && page.publishedTime
+    ? `  <meta property="article:published_time" content="${escapeAttr(
+        page.publishedTime
+      )}" />
+`
+    : ""
+}${
+  ogType === "article" && page.modifiedTime
+    ? `  <meta property="article:modified_time" content="${escapeAttr(
+        page.modifiedTime
+      )}" />
+`
+    : ""
+}
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="${escapeAttr(title)}" />
   <meta name="twitter:description" content="${escapeAttr(description)}" />
@@ -1172,6 +1409,8 @@ function workJsonLd({
   };
 }
 
-for (const page of pages) {
+const newsPages = await buildNewsSeoPages();
+
+for (const page of [...pages, ...newsPages]) {
   writePage(page);
 }

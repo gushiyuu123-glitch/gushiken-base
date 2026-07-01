@@ -417,6 +417,18 @@ function SeoBridge() {
   const workMatch = matchPath({ path: "/works/:slug", end: true }, pathname);
   const newsMatch = matchPath({ path: "/news/:id", end: true }, pathname);
 
+  /*
+    NEWS詳細ページは NewsDetail.jsx 側に任せる。
+
+    理由:
+    - /news/:id は microCMS から記事を取得して title / description / OGP を作る
+    - App.jsx 側で共通NEWS SEOを当てると、全記事が同じtitle/descriptionになりやすい
+    - ここでは何も返さず、記事詳細側のhead更新と衝突させない
+  */
+  if (newsMatch?.params?.id) {
+    return null;
+  }
+
   let seo = PAGE_SEO[pathname] || {
     title: BASE_TITLE,
     description: BASE_DESC,
@@ -426,8 +438,7 @@ function SeoBridge() {
   let noindex = Boolean(seo.noindex);
   let ogType = "website";
 
-  const isKnownRoute =
-    STATIC_ROUTE_PATHS.has(pathname) || Boolean(workMatch) || Boolean(newsMatch);
+  const isKnownRoute = STATIC_ROUTE_PATHS.has(pathname) || Boolean(workMatch);
 
   if (workMatch?.params?.slug) {
     const slug = workMatch.params.slug;
@@ -450,16 +461,6 @@ function SeoBridge() {
     if (isRoomLikeSlug(slug) || !INDEXED_WORK_SLUGS.has(slugKey)) {
       noindex = true;
     }
-  }
-
-  if (newsMatch?.params?.id) {
-    seo = {
-      title: `NEWS｜${BASE_TITLE}`,
-      description:
-        "GUSHIKEN DESIGNの更新記事。制作の背景や判断の文脈を短く残しています。",
-      imagePath: DEFAULT_IMAGE_PATH,
-    };
-    ogType = "article";
   }
 
   if (!isKnownRoute) {
